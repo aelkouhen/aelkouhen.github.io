@@ -7,7 +7,7 @@ GO
 CREATE TABLE [dbo].[Employee](
 	[EFULLNAME] [varchar](30) NULL,
 	[SAL] [numeric](20, 12) NULL,
-  [EMPNO] BIGINT           IDENTITY (1, 1) NOT NULL,
+  	[EMPNO] BIGINT           IDENTITY (1, 1) NOT NULL,
 CONSTRAINT [PK_Employee] PRIMARY KEY CLUSTERED ([EMPNO] ASC)
 );
 GO
