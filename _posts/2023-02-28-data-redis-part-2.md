@@ -80,7 +80,8 @@ The simplest way to write and execute a Gears Function can be done using Redis c
 
 Once at the `redis-cli` prompt, type in the following and then hit the `<ENTER>` to execute it:
 ```python
-redis-cli -h cluster.redis-process.demo.redislabs.com -p 12000 cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
+$ redis-cli -h cluster.redis-process.demo.redislabs.com -p 12000 
+cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
 
 1) (empty array)  
 2) (empty array)
