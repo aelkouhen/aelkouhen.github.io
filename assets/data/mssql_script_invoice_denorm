@@ -1,0 +1,28 @@
+USE MASTER
+GO
+CREATE DATABASE FO
+GO
+USE FO 
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Invoice](
+	[Total] [numeric](20, 12) NULL,
+	[BillingPostalCode] [varchar](20) NULL,
+	[BillingCountry] [varchar](20) NULL,
+	[BillingState] [varchar](20) NULL,
+	[BillingCity] [varchar](20) NULL,
+	[BillingAddress] [varchar](50) NULL,
+	[InvoiceDate] [varchar](20) NULL,
+	[CustomerId] [bigint] NULL,
+	[InvoiceId] [bigint] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_Invoice] PRIMARY KEY CLUSTERED 
+(
+	[InvoiceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+INSERT INTO Invoice(InvoiceID,CustomerID,InvoiceDate,BillingAddress,BillingCity,BillingState,BillingCountry,BillingPostalCode,Total) VALUES(1,2,'1230768000000','Theodor-Heuss-Straße 34','Stuttgart',NULL,'Germany','70174',1.98);
