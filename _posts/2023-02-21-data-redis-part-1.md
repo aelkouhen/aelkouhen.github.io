@@ -2,8 +2,8 @@
 layout: post
 title: Data & Redis series - part 1
 subtitle:  Data Ingestion with Redis (Hands-on)
-thumbnail-img: /assets/img/connect.png
-share-img: /assets/img/connect.png
+thumbnail-img: /assets/img/redis-ingest.svg
+share-img: /assets/img/redis-ingest.svg
 tags: [CDC,Debezium,Hands-On,RDI,batch ingestion,data ingestion,RIOT,stream ingestion,redis]
 comments: true
 ---
