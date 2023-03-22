@@ -95,10 +95,10 @@ A [Reader](https://oss.redis.com/redisgears/glossary.html#reader) is the mandat
 There are several [reader types](https://oss.redis.com/redisgears/readers.html) that the engine offers. A function's reader type is always declared during the initialization of its `GearsBuilder()` context. Unless explicitly declared, a function's reader defaults to the [KeysReader](https://oss.redis.com/redisgears/readers.html#keysreader), meaning the following lines are interchangeable:
 
 ```python
-GearsBuilder()                        # the context builder's default is
-GearsBuilder('KeysReader')            # the same as using the string 'KeysReader'
-GearsBuilder(reader='KeysReader')    # and as providing the 'reader' argument
-GB()                                  # GB() is an alias for GearsBuilder()
+GearsBuilder()                      # the context builder's default is
+GearsBuilder('KeysReader')          # the same as using the string 'KeysReader'
+GearsBuilder(reader='KeysReader')   # and as providing the 'reader' argument
+GB()                                # GB() is an alias for GearsBuilder()
 ```
 
 Let's add a couple of Hashes to represent fictitious personas and a hash that represents a country. Execute these Redis commands :
