@@ -1,0 +1,20 @@
+{
+"InvoiceId" : 1,
+"CustomerId" : 2,
+"InvoiceDate" : "1230768000000",
+"BillingAddress" : "Theodor-Heuss-Straße 34"
+"BillingPostalCode" : "70174",
+"BillingCity" : "Stuttgart",
+"BillingState" : null,
+"BillingCountry" : "Germany",
+"Total" : 1.98,
+"InvoiceLineItems" : {
+                     1 : {
+                          "UnitPrice" : 0.99,
+                          "Quantity" : 3,
+                          "TrackId" : 2,
+                          "InvoiceId" : 1,
+                          "InvoiceLineId" : 1
+                          }
+                      }
+}
