@@ -4,7 +4,7 @@ title: About me
 subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Amine El Kouhen and here is a summary of my life in a simple picture:
+My name is Amine El Kouhen and bellow a summary of my life :
 
 ![parcours](https://user-images.githubusercontent.com/22400454/226952473-466eef28-ba77-4d3a-9cba-0923eff7a100.png)
 
