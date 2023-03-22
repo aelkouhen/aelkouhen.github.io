@@ -9,7 +9,7 @@
 "BillingCountry" : "Germany",
 "Total" : 1.98,
 "InvoiceLineItems" : {
-                     1 : {
+                     "1" : {
                           "UnitPrice" : 0.99,
                           "Quantity" : 3,
                           "TrackId" : 2,
