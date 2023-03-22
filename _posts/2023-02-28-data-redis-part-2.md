@@ -29,7 +29,9 @@ Once you have created a Redis Enterprise cluster, you have to create a target da
 Now, let's install [RedisGears](https://redis.com/modules/redis-gears/) on the cluster. In case it’s missing, follow [this guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) to install. 
 ```shell
 mkdir ~/tmp
-curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu18.04-x86_64.1.2.5.zip -o ~/tmp/redis-gears.zipcd ~/tmpcurl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@./redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
+curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu18.04-x86_64.1.2.5.zip -o ~/tmp/redis-gears.zip
+cd ~/tmp
+curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@./redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
 ```
 
 ## Data processing using RedisGears
@@ -77,8 +79,8 @@ Each shard of the Redis Cluster executes its own ‘instance’ of the Gear Func
 The simplest way to write and execute a Gears Function can be done using Redis client ([`redis-cli`](https://redis.io/topics/rediscli)). 
 
 Once at the `redis-cli` prompt, type in the following and then hit the `<ENTER>` to execute it:
-```
-$ redis-cli -h cluster.redis-process.demo.redislabs.com -p 12000  cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
+```python
+$ redis-cli -h cluster.redis-process.demo.redislabs.com -p 12000 cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
 
 1) (empty array)  
 2) (empty array)
@@ -91,11 +93,11 @@ A [Reader](https://oss.redis.com/redisgears/glossary.html#reader) is the mandat
 
 There are several [reader types](https://oss.redis.com/redisgears/readers.html) that the engine offers. A function's reader type is always declared during the initialization of its `GearsBuilder()` context. Unless explicitly declared, a function's reader defaults to the [KeysReader](https://oss.redis.com/redisgears/readers.html#keysreader), meaning the following lines are interchangeable:
 
-```
-GearsBuilder()                        \# the context builder's default is
-GearsBuilder('KeysReader')            \# the same as using the string 'KeysReader'
-GearsBuilder(reader\='KeysReader')    \# and as providing the 'reader' argument
-GB()                                  \# GB() is an alias for GearsBuilder()
+```python
+GearsBuilder()                        # the context builder's default is
+GearsBuilder('KeysReader')            # the same as using the string 'KeysReader'
+GearsBuilder(reader='KeysReader')    # and as providing the 'reader' argument
+GB()                                  # GB() is an alias for GearsBuilder()
 ```
 
 Let's add a couple of Hashes to represent fictitious personas and a hash that represents a country. Execute these Redis commands :
@@ -108,7 +110,7 @@ HSET country:FR name "France" continent "Europe"
 
 Now that there are three keys in the database, the function returns three result records, one for each.
   
-```
+```python
 RG.PYEXECUTE "GearsBuilder().run()"  
 
 1) 1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
@@ -121,8 +123,8 @@ By default, the KeysReader reads all keys in the database. This behaviour can be
 
 The reader's key names' pattern is set to "\*" by default, so any key name matches it. One way to override the default pattern is from the context's `run()` method. To have input records consisting only of persons, we can use the pattern `person:*` to discard keys that don't match it by providing it like so:
 
-```
-RG.PYEXECUTE "GearsBuilder().run('person:\*')"  
+```python
+RG.PYEXECUTE "GearsBuilder().run('person:*')"  
 
 1) 1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
    2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
@@ -133,8 +135,8 @@ The reader can generate any number of input records as its output. These records
 
 To see how this works in practice, we'll refactor our function to use a [filter()](https://oss.redis.com/redisgears/operations.html#filter) operation as a step instead of the reader's keys pattern:
   
-```
-RG.PYEXECUTE "GearsBuilder().filter(lambda x: x\['key'\].startswith('person:')).run()"
+```python
+RG.PYEXECUTE "GearsBuilder().filter(lambda x: x['key'].startswith('person:')).run()"
 
 1) 1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
    2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
@@ -150,7 +152,7 @@ Functions can be as complex as needed and can consist of any number of steps tha
 Typing it into the prompt (`redis-cli`) is already becoming tiresome. You can imagine when you have complex data processing logic to implement. For this reason, instead of using the interactive mode, you can store your functions' code in a regular text file and have the `redis-cli` send its contents for execution.
 
 ```shell
-cat myFunction.py | redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE
+cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE
 ```
 
 ### 3 - RedisGears : Batch processing
@@ -247,7 +249,7 @@ The default behaviour for `RG.PYEXECUTE` is to block the client that had called.
 Blocking greatly simplifies the client's logic, but for long-running tasks, it is sometimes desired to have the client continue its work while the function is executed. RedisGears batch functions can be executed in this non-client-blocking mode by adding the `UNBLOCKING` argument to the `RG.PYEXECUTE` command. For example, we can run the first version of our simple function in a nonblocking fashion like so:
 
 ```shell
-cat myFunction.py | redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE UNBLOCKING  
+cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE UNBLOCKING  
 "0000000000000000000000000000000000000000-0"
 ```
 
@@ -255,8 +257,8 @@ When executing in `UNBLOCKING` mode, the engine replies with an [Execution ID](h
 
 By calling the [RG.DUMPEXECUTIONS](https://oss.redis.com/redisgears/commands.html#rgdumpexecutions) command, we can fetch the engine's executions list, which currently has just one entry representing the function we've just run:
 
-```
-redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
+```shell
+redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
   
 1)  1) "executionId"   
     2) "0000000000000000000000000000000000000000-0"   
@@ -266,14 +268,14 @@ redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c R
 
 Because the function's execution is finished, as indicated by the value done of the status field, we can now obtain its execution results with the [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) command. As the name suggests, the command returns the results of the execution specified by its ID:
 
-```
-redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-0  
+```shell
+redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-0  
   
-1)  1)"\['age', '35', 'fname', 'Beth', 'lname', 'Smith'\]"
-    2)"\['age', '70', 'fname', 'Rick', 'lname', 'Sanchez'\]"
-    3)"\['age', '87', 'fname', 'Shrimply', 'lname', 'Pibbles'\]"
-    4)"\['age', '14', 'fname', 'Morty', 'lname', 'Smith'\]"
-    5)"\['age', '17', 'fname', 'Summer', 'lname', 'Smith'\]"
+1)  1)"['age', '35', 'fname', 'Beth', 'lname', 'Smith']"
+    2)"['age', '70', 'fname', 'Rick', 'lname', 'Sanchez']"
+    3)"['age', '87', 'fname', 'Shrimply', 'lname', 'Pibbles']"
+    4)"['age', '14', 'fname', 'Morty', 'lname', 'Smith']"
+    5)"['age', '17', 'fname', 'Summer', 'lname', 'Smith']"
 ```
 
 Before the done status, the engine would have replied with an error.
@@ -323,8 +325,8 @@ HSET person:6 name "Amine El-Kouhen" age 36
 
 Now, as soon as a new person is set into Redis, the function will be executed, and the results can be obtained when the execution status shows done.
 
-```
-redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
+```shell
+redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
 
 1) 1) "executionId" 
    2) "0000000000000000000000000000000000000000-119" 
@@ -337,9 +339,9 @@ redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c R
 You can then get the execution results of the execution specified by its ID with the [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) command :
 
 ```
-redis-cli \-h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-119  
+redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-119  
   
-1) 1) "\['age', '36', 'fname', 'Amine', 'lname', 'El-Kouhen'\]"
+1) 1) "['age', '36', 'fname', 'Amine', 'lname', 'El-Kouhen']"
 2) (empty array)
 ```
 
