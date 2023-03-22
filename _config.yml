@@ -22,7 +22,12 @@ author: Amine El Kouhen - DnA Factory
 navbar-links:
   About Me: "aboutme"
   Resources:
-    - LinkedIn profil: "https://www.linkedin.com/in/amine-elkouhen/"
+    - My LinkedIn profil: "https://www.linkedin.com/in/amine-elkouhen/"
+    - Buz Blog: "https://buz.dev/"
+    - SwirlAI newsletter : "https://www.newsletter.swirlai.com/"
+    - Martin Fowler's Blog : "https://martinfowler.com/"
+    - Kai Waehner's Blog : "https://www.kai-waehner.de/"
+    - François Cerbelle's Blog : "https://fcerbell.github.io/pages/en/"
   Author's home: "https://aelkouhen.github.io"
 
 ################
