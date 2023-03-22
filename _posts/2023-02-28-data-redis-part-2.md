@@ -2,8 +2,8 @@
 layout: post
 title: Data & Redis series - part 2
 subtitle:  Data Processing with Redis Gears (Hands-on)
-thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYapyglV0JECz86YWoT2Par7IobD6QDvgbfMiW5j-gMv1t01CTRKqwHidxIV8PDcuesUNiadKFX0hEv5eEQ-WC8oWXqOw5pWYL4CfSNi5gvC7lH6nn0Sz_8_kXwnRlTe4i_-hBIaUAxPbppVe2V1UIxSVW6uTPEGwE4Q5pqwnQdGdc2bz4FQr4oAUO
-share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYapyglV0JECz86YWoT2Par7IobD6QDvgbfMiW5j-gMv1t01CTRKqwHidxIV8PDcuesUNiadKFX0hEv5eEQ-WC8oWXqOw5pWYL4CfSNi5gvC7lH6nn0Sz_8_kXwnRlTe4i_-hBIaUAxPbppVe2V1UIxSVW6uTPEGwE4Q5pqwnQdGdc2bz4FQr4oAUO
+thumbnail-img: assets/img/redis-gears.svg
+share-img: assets/img/redis-gears.svg
 tags: [Gears,functions,Hands-On,stream processing,data processing,batch processing,data transformation,redis]
 comments: true
 ---
