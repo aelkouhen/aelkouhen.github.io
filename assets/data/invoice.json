@@ -7,7 +7,7 @@
   "BillingCity" : "Stuttgart",
   "BillingState" : null,
   "BillingCountry" : "Germany",
-  "Total" : 1.98,
+  "Total" : 71.61,
   "InvoiceLineItems" : {
                        "1": {
                             "UnitPrice": 0.99,
