@@ -4,12 +4,9 @@ title: About me
 subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Amine El Kouhen. I have the following qualities:
+My name is Amine El Kouhen and here is a summary of my life in a simple picture:
 
-- I rock a great mustache
-- I'm extremely loyal to my family
-
-What else do you need?
+![parcours](https://user-images.githubusercontent.com/22400454/226952473-466eef28-ba77-4d3a-9cba-0923eff7a100.png)
 
 ### Amine's Story
-With more than 15 years of experience in building and promoting Data/BI platforms, I was involved in the design and the implementation of thousands of Data pipelines and Analytics artifacts (DWH/Datamarts data models) for Financial Reporting, Sales Analysis, Operational KPIs and Cost Allocation Drivers. I hold a Ph.D. in Computer Sciences from University of Lille (North of France) and M.Sc. in Information Systems from University of Lorraine (Nancy - France). I'm also certified from Harvard Business School in Business Strategy.
+With more than 15 years of experience in building and promoting Data/BI platforms, I was involved in the design and the implementation of thousands of Data pipelines and Analytics artifacts (DWH/Datamarts data models) for Financial Reporting, Sales Analysis, Operational KPIs and Cost Allocation Drivers. I hold a Ph.D. in Computer Sciences from University of Lille (North of France) and a Certificate of Specialization in Business Strategy from Harvard Business School.
