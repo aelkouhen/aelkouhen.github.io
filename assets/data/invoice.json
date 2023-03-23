@@ -5,7 +5,7 @@
   "BillingAddress" : "Theodor-Heuss-Straße 34",
   "BillingPostalCode" : "70174",
   "BillingCity" : "Stuttgart",
-  "BillingState" : null,
+  "BillingState" : "Baden-Württemberg",
   "BillingCountry" : "Germany",
   "Total" : 71.61,
   "InvoiceLineItems" : {
