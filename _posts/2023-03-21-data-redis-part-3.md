@@ -157,7 +157,7 @@ However, if you want to customize this default mapping or add a new transformati
 ├── jobs
 │   └── README.md
 └── config.yaml
-```shell 
+``` 
 
 We've seen in [part 5](https://dna-factory.blogspot.com/2023/02/data-101-series-part-5.html), that the pipelines required to run the transformation processes, can be implemented using one of these approaches:
 
