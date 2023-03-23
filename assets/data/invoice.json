@@ -2,7 +2,7 @@
   "InvoiceId" : 1,
   "CustomerId" : 2,
   "InvoiceDate" : "1230768000000",
-  "BillingAddress" : "Theodor-Heuss-Straße 34"
+  "BillingAddress" : "Theodor-Heuss-Straße 34",
   "BillingPostalCode" : "70174",
   "BillingCity" : "Stuttgart",
   "BillingState" : null,
