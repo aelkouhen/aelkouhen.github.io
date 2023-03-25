@@ -10,26 +10,26 @@ comments: true
 
 Data has become a buzzword nowadays, with many companies touting its potential to revolutionize their operations. But beyond the hype, data can provide real value for businesses that leverage it effectively. The most obvious benefit of data is improved decision-making and forecasting capabilities.
 
-While most organizations consider their data as a strategic asset, many of them are not taking full advantage of it to get ahead. Organizations cannot unlock the full potential of Data without having a clear and well-prepared Data Strategy.
+While most organizations consider their data as a strategic asset, many of them need to take full advantage of it to get ahead. Organizations cannot unlock Data's full potential without a clear and well-prepared Data Strategy.
 
-In this article, you will learn about data strategies, why are they so important for modern organizations and how such strategies are designed to maximize return on investments made both in terms of money and effort expended.
+In this article, you will learn about data strategies, why they are so important for modern organizations, and how such strategies are designed to maximize return on investments made in terms of money and effort expended.
 
 ## Data Strategy
 
 Strategy is defined as a plan of actions designed to achieve a long-term or overall aim.
 
-A Data Strategy is a plan of actions that outlines how an organization will collect, store, manage and use its data. It should include goals for the short-term and long-term usage of data as well as rules to ensure compliance with relevant laws and regulations.
+A Data Strategy is a plan of actions that outlines how an organization collects, stores, manages, and uses data. It should include goals for the short-term and long-term usage of data as well as rules to ensure compliance with relevant laws and regulations.
 
 > > "A data strategy is a highly dynamic process employed to support the acquisition, organization, analysis, and delivery of data in support of business objectives". 
 > > **Gartner glossary**
 
-A successful data strategy also includes plans for analyzing collected information in order to gain insights about customer behavior or other trends within the business environment and thus to make informed decisions. 
+A successful data strategy also includes plans for analyzing collected information to gain insights about customer behavior or other trends within the business environment and thus make informed decisions. 
 
-The aim of a data strategy is to determine how the whole company can use data in order to make business decisions, and create an approach that combines people, processes and technology into one cohesive plan. This will ensure that the plan becomes achievable.
+A data strategy aims to determine how the company can use data to make business decisions and create an approach combining people, processes, and technology into one cohesive plan. This will ensure that the plan becomes achievable.
 
-## Why a data strategy is necessary ?
+## Why a data strategy is necessary?
 
-Data is no longer just a business byproduct – it’s a vital asset that can drive decision making and thus revenue. Having a data strategy is essential for organizations to remain competitive and innovative in the face of constant change. By collecting, organizing and utilizing their data effectively, businesses can achieve their objectives while unlocking new opportunities that will benefit them. 
+Data is no longer just a business byproduct – it’s a vital asset that can drive decision-making and, thus, revenue. Having a data strategy is essential for organizations to remain competitive and innovative in the face of constant change. Businesses can achieve their objectives by collecting, organizing, and utilizing their data effectively while unlocking new opportunities that will benefit them. 
 
 Having a data strategy in place allows organizations to be innovative, empowers business users to work effectively, and keeps the business competitive. Without a proper data strategy in place, organizations encounter these common business challenges:
 
@@ -38,19 +38,19 @@ Having a data strategy in place allows organizations to be innovative, empowers 
 *   A lack of clarity about current business needs (a problem that descriptive analytics can help solve) and goals (which predictive and prescriptive analytics can help identify),
 *   Inefficient movement of information between different parts of the business, and duplication of sources of truth by multiple business units (Data Silos).
 
-In short terms, without a data strategy, a business is unlikely to be able to operate efficiently and profitably or experience successful growth.
+In short terms, without a data strategy, a business is unlikely to operate efficiently and profitably or experience successful growth.
 
-## Data-Centric vs Data-Driven organizations
+## Data-Centric vs. Data-Driven organizations
 
 Many organizations claim to be data-driven or data-centric, using the two terms interchangeably. But the two are not the same and have particular applications.
 
-Data-Centric organizations focus on the data itself, collecting and analyzing it to gain insights. They use this information to inform decisions about how they operate their business. Data is seen as a valuable asset that can be used for competitive advantage.
+Data-Centric organizations focus on the data itself, collecting and analyzing it to gain insights. Then, they use this information to inform decisions about how they operate their business. As a result, data is seen as a valuable asset that can be used for competitive advantage.
 
 Data-Driven organizations take an even more proactive approach by using data not only to make informed decisions but also actively drive change in their operations and strategies based on what the data tells them. This type of organization puts greater emphasis on leveraging technology such as predictive analytics or machine learning algorithms which allow them to identify patterns within large datasets quickly and accurately so they can act upon those findings faster than ever before possible with traditional methods alone.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnhffoDfWP6MSf6V0hnycGyNAYiXV5nvcUVaq3FiboQEMT-3YN5vTm1XK-Fgeq6e-mQG3kz_zAa79tkgOIFgKo1kCYiTpK-ThZVBBugDZsnkbD0zY3lzUxSQP_wJBn8ENpbrkUI5VEAtWxfnxWJ6SYXRyiaCN4jVtdnXr0_DPCQ7pEzwq-9vIMcGk5){: .mx-auto.d-block :} *Data-Driven vs Data-Centric decisions*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnhffoDfWP6MSf6V0hnycGyNAYiXV5nvcUVaq3FiboQEMT-3YN5vTm1XK-Fgeq6e-mQG3kz_zAa79tkgOIFgKo1kCYiTpK-ThZVBBugDZsnkbD0zY3lzUxSQP_wJBn8ENpbrkUI5VEAtWxfnxWJ6SYXRyiaCN4jVtdnXr0_DPCQ7pEzwq-9vIMcGk5){: .mx-auto.d-block :} *Data-Driven vs. Data-Centric decisions*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-In simple words, Data-Centric companies are organizations driven by their business models and uses data as a lever to gain insights and inform decisions about how they operate their business. 
+In simple words, Data-Centric companies are organizations driven by their business models and use data as a lever to gain insights and inform decisions about how they operate their business. 
 
 Data-Driven companies are organizations driven by data. They drive change in their businesses based on what the data tells them.
 
@@ -58,27 +58,27 @@ Data-Driven companies are organizations driven by data. They drive change in the
 
 ### 1 - Business Strategy
 
-Business Strategy must be "THE DRIVER" for your Data Strategy. A successful Data Strategy should reinforce your overall business strategy and must address the business needs first to generate real and palpable value.
+Business Strategy must be "THE DRIVER" for your Data Strategy. A successful Data Strategy should reinforce your overall business strategy and must address the business needs first to generate accurate and palpable value.
 
-Any misalignment with business strategy might came up with the risk of prioritizing the wrong projects, generating false or useless insights, wasting time and money by allocating scarce resources to unprofitable activities, or even worst, losing interest and confidence in any data initiative throughout the organization !
+Any misalignment with a business strategy might come up with the risk of prioritizing the wrong projects, generating false or useless insights, wasting time and money by allocating scarce resources to unprofitable activities, or even worst, losing interest and confidence in any data initiative throughout the organization!
 
-Moreover, your data strategy will not succeed without executive support. Your executives will not support your initiative without a clear alignment of you Data Strategy and the overall Business Strategy. Demonstrating how data can support their goals and plans then identifying and encouraging business champions to view data as a valuable asset for their specific departments or functions, should be the first step of a successful Data Strategy.
+Moreover, your data strategy will not succeed without executive support. Your executives will not support your initiative without clearly aligning your Data Strategy and the overall Business Strategy. The first step of a successful Data Strategy is to demonstrate how data can support their goals and plans and then identify and encourage business champions to view data as a valuable asset for their specific departments or functions.
 
 To that end, establish clear goals and measurable objectives for your data strategy that serve your larger business strategy.
 
 ### 2 - Data Strategy goals and roadmap
 
-The second important element of building a data strategy is defining measurable goals. When constructing a data strategy, it is essential to set both short-term and long-term objectives that are quantifiable. As a data initiative leader, you are tasked with the challenge of achieving success in three key areas: revenue growth, operational efficiency and security/privacy risk management. By establishing metrics of success, you prioritize based on what matters most in this moment for your organization.
+The second important element of building a data strategy is defining measurable goals. When constructing a data strategy, it is essential to set both short-term and long-term objectives that are quantifiable. As a data initiative leader, you are tasked with the challenge of achieving success in three key areas: revenue growth, operational efficiency, and security/privacy risk management. By establishing metrics of success, you prioritize based on what matters most at this moment for your organization.
 
-Additionally, departments or teams should have their own local goals which can be achieved through the use of data. For instance, each department/function needs to answer the question “What do we want to accomplish by next year ?” with an action plan outlining how they will utilize data in order to reach their desired outcome(s).
+Additionally, departments or teams should have their own local goals, which can be achieved through data. For instance, each department/function needs to answer the question “What do we want to accomplish by next year?” with an action plan outlining how they will utilize data in order to reach their desired outcome(s).
 
-For every goal that has been set, there should be an actionable plan as to how to accomplish it. Plans should be specific and include information like who owns the goal, which technology and process they will use, the cost of reaching the objective, the time needed to achieve the goal and the intended outcome of completing the objective. Plans should also remain flexible to account for unforeseen circumstances or unexpected changes.
+Every goal set should have an actionable plan for accomplishing it. Plans should be specific and include information like who owns the goal, which technology and process they will use, the cost of reaching the objective, the time needed to achieve the goal, and the intended outcome of completing the objective. Plans should also remain flexible to account for unforeseen circumstances or unexpected changes.
 
-The roadmap is the result of all the hard work you've done, of gathering short and long-term objectives, identifying the global and local goals, and negotiating priorities of such measurements1, making it possible to put into action what you have planned. You know where you are and where you want to be but before beginning any design, build or training process or changing a business procedure, it's critical that activities are prioritized first.
+The roadmap results from all the hard work you've done of gathering short and long-term objectives, identifying the global and local goals, and negotiating priorities of such measurements^1, making it possible to put into action what you have planned. You know where you are and where you want to be. Still, before beginning any design, build, or training process or changing a business procedure, activities must be prioritized first.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7GTKv0vZt4WFQKqbsIvTokTtHd5rKroa-N7aRJCLWFBezhqqg2duvELBOHCPgpglG4g3tFy__n11ppZwCFVUOHUk89v-hoJH6ThvFC7_DHrGrO04TvVQUuZc2GxkOZRvKkhhlZn21hqdn_wot3QPtQr2zxqCGuFy3kDbgG0e64c7wOEnyhsGJearD){: .mx-auto.d-block :} *Prioritization matrix*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-Prioritize activities that are easiest to implement and provide quick wins for the business2, while assessing the feasibility and expected value of each recommendation designed to bridge from current state to future state.  
+Prioritize activities that are easiest to implement and provide quick wins for the business^2 while assessing the feasibility and expected value of each recommendation designed to bridge the current state to the future.
 
 Don't forget to include the following constraints in your data strategy roadmap:
 
@@ -89,60 +89,60 @@ Don't forget to include the following constraints in your data strategy roadmap:
 
 ### 3 - Data maturity evaluation
 
-Having secured support from executives, and identified the end goals, it is time to evaluate the current state of your ecosystem. Consider what aspects are functioning well and which ones need improvement in order to create a data-driven experience. Additionally, identify any obstacles that may be preventing you from executing your roadmap. 
+Having secured support from executives and identified the end goals, it is time to evaluate the current state of your ecosystem. Consider what aspects are functioning well and which need improvement to create a data-driven experience. Additionally, identify any obstacles preventing you from executing your roadmap. 
 
-You can rely on existing data initiatives as a starting point of your Data Strategy. This might help you set attainable quick-wins and take realistic, incremental steps to become more data-driven. 
+You can rely on existing data initiatives as a starting point for your Data Strategy. This might help you set attainable quick wins and take realistic, incremental steps to become more data-driven. 
 
-With a complete understanding of your current situation, it is possible to recognize any shortcomings, existing pain points and what needs to be improved - whether that involves technology, processes or people - in order for the organization's goals to be achieved.
+With a complete understanding of your current situation, it is possible to recognize any shortcomings, existing pain points, and what needs to be improved - whether that involves technology, processes, or people - for the organization's goals to be achieved.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgr_HWVrq5OthOlD3M74S8a5PYmSe7NSSl3CmkmMfBslZjjBRdy_-Q_XfDeVDXuowsn5DGAao0g8itUKBzi9cXZ_Iu8vpVXUaIl0EQAEUnaS6H10bb43d27N-1g2Diwpq0HR1cYDyBXQXTjysIwCdbvTkoLkk6aWwJO6nCFl5ukn7MqB7L26YQsidBr){: .mx-auto.d-block :} *Data maturity assessment*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-This maturity evaluation exercice, will help you to prioritize some of your goals, set some quick-wins, and offers to you a benchmark to measure progress as you bridge the gap from current state to future state.
+This maturity evaluation exercise will help you prioritize some of your goals, set some quick wins, and offer a benchmark to measure progress as you bridge the gap from the current state to the future state.
 
 ### 4 - Data Architecture
 
-For any successful data strategy, it is required to review existing data infrastructures (called "**_data platforms_**" in rest of the series) and analyze how business users can take advantage of them. Any data strategy requires the right tools and technologies to work as planned. This will help identify potential gaps that need resolution. The next step involves making technology-centric decisions based on specific requirements such as data quality, data compliance and of course the main characteristics of Data (see [part 1](https://aelkouhen.github.io/2023-01-22-data-101-part-1/)).
+For any successful data strategy, it is required to review existing data infrastructures (called "**_data platforms_**" in the rest of the series) and analyze how business users can take advantage of them. Any data strategy requires the right tools and technologies to work as planned. This will help identify potential gaps that need resolution. The next step involves making technology-centric decisions based on specific requirements such as data quality, data compliance, and of course, the main characteristics of Data (see [part 1](https://aelkouhen.github.io/2023-01-22-data-101-part-1/)).
 
-Data architecture consists of the tools and processes that allow you to design the data value chain (called "**_data journey_**" in rest of the series). It provides a blueprint for how data will be collected, stored within an organization's technology environment as well as how it will flow between different data sources and applications. These elements may include various kinds of on-premises and cloud-based hardware and software. Ultimately, the main goal of Data Architecture is to make your data as accessible, shareable, and actionable as possible for all stakeholders who need it, with the right security controls in place.
+Data architecture consists of the tools and processes that allow you to design the data value chain (called "**_data journey_**" in the rest of the series). It provides a blueprint for how data will be collected, and stored within an organization's technology environment as well as how it will flow between different data sources and applications. These elements may include various kinds of on-premises and cloud-based hardware and software. Ultimately, the main goal of Data Architecture is to make your data as accessible, shareable, and actionable as possible for all stakeholders who need it, with the right security controls in place.
 
-To begin constructing your data architecture, it is essential to identify the datasets that are present within different business units of the company. Utilizing a data catalog can be beneficial for this purpose; however, if one does not exist already then you should consult with both your team and users who use the information regularly in order to review all available sources.Then, it is necessary to store it in a single repository like a data warehouse or data lake, to effectively analyze and work on your data.
+To begin constructing your data architecture, it is essential to identify the datasets present within different business units of the company. Utilizing a data catalog can be beneficial for this purpose; however, if one still needs to exist, you should consult with both your team and users who use the information regularly to review all available sources. Then, storing it in a single repository like a data warehouse or data lake is necessary to effectively analyze and work on your data.
 
-Additionally, you may want to ingest raw data from disparate sources and replicate it to a destination for storage and analysis. You may also need integrate or transform the stored information into an alternate format that will make analysis easier. This how the data pipelines come in the overall picture.
+Additionally, you can ingest raw data from disparate sources and replicate it to a destination for storage and analysis. You may also need to integrate or transform the stored information into an alternate format to make analysis easier. This is how the data pipelines come into the overall picture.
 
-Data identification, ingestion, storage, transformation and analysis are all parts of data architecture. Having a well- documented and implemented data architecture is essential for having an effective, reliable data strategy, because it makes scaling your data operations simpler when the need arises.
+Data architecture includes data identification, ingestion, storage, transformation, and analysis. A well-documented and implemented data architecture is essential for an effective, reliable data strategy because it simplifies scaling your data operations when the need arises.
 
 The upcoming articles of this series will focus particularly on the different data architectures that exist and detail their main components, as they are the concrete manifestation of any data initiative.
 
 ### 5 - People
 
-To become a data-driven organization, you need more than just technology. The right people in the right roles are essential to ensure technology and processes are adopted and business objectives are met. The data strategy team typically includes representatives from the executive board, business analytics and IT teams.
+To become a data-driven organization, you need more than just technology. The right people in the right roles are essential to ensure technology and processes are adopted, and business objectives are met. For example, the data strategy team typically includes representatives from the executive board, business analytics, and IT teams.
 
-When considering who uses data in your organization, think about everyone - even those whose job responsibilities don't primarily revolve around working with data. Moreover, when an organization has multiple data sets, you should specify which data set belongs to which "owner", meaning who is responsible for storing, processing, and interpreting the different data sets.
+When considering who uses data in your organization, think about everyone - even those whose job responsibilities primarily revolve around something other than working with data. Moreover, when an organization has multiple data sets, you should specify which data set belongs to which "owner," meaning who is responsible for storing, processing, and interpreting the different data sets.
 
 The first step to building an effective data strategy team is choosing or identifying your operating model. Your operating model dictates the team structure and roles necessary to meet your goals.
 
-There are three types of operating models an organization can subscribe to: **_decentralized_**, **_centralized_**, and **_hybrid_**.
+An organization can subscribe to three types of operating models: **_decentralized_**, **_centralized_**, and **_hybrid_**.
 
-*   _Decentralized_ : distributes responsibilities across different lines of businesses (LoBs) and IT. Creating a Data Strategy using this approach is called Data offense. It recognizes that multiple business units interpret the same data differently. It accommodates those different interpretations by permitting controlled data transformations for reporting that can be reliably mapped back to the single source of truth. This results to a collaborative approach (multi-disciplinary teams, cross-functional guilds...)
-*   _Centralized_ : in which everything is falling under the responsibility of a specific executive function. This operational model often called Data defense is a highly centralized, control-oriented approach to data management. The data architecture typically includes a single source of truth for every broad data category. This allows easier governance and faster decision-making processes.
-*   _Hybrid_ : a mix of the decentralized and centralized model, with one central authority for governance and decentralized business unit groups across the organization. This model brings a consistent data management and more autonomy and flexibility for each lines of business (LoB), to handle their own data assets.
+*   _Decentralized_: distributes responsibilities across different lines of businesses (LoBs) and IT. Creating a Data Strategy using this approach is called Data offense. It recognizes that multiple business units interpret the same data differently. It accommodates those different interpretations by permitting controlled data transformations for reporting that can be reliably mapped back to the single source of truth. This results to a collaborative approach (multi-disciplinary teams, cross-functional guilds...)
+*   _Centralized_: in which everything falls under the responsibility of a specific executive function. This operational model, often called Data defense, is a highly centralized, control-oriented approach to data management. The data architecture typically includes a single source of truth for every broad data category. This allows more accessible governance and faster decision-making processes.
+*   _Hybrid_: a mix of the decentralized and centralized model, with one central authority for governance and decentralized business unit groups across the organization. This model brings consistent data management and more autonomy and flexibility for each line of business (LoB) to handle their own data assets.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj3Fggspv_vI_XXlQZNAIkl8Y6oE5KezVGT6NPwEGY3SrOng3VSm3ih01eXloUTXSSerfrGXHyINay9yoRe3GURudgrhQo8OSYTtYieJBKByhTN4IdLOpHKLeyIfgW__JF75S7XEvErzveqv5Vi_ocWMuy28tuGvRYSiw9swzbGRdD5RTD2k7z7BEHe){: .mx-auto.d-block :} *Offense defense spectrum ©HBR*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-The decision on which type of model to use comes down to the size and resources of your organization and its current and future data needs. There is no model that is better than the others; it all depends on the specific needs of the organization.
+The decision on which type of model to use comes down to the size and resources of your organization and its current and future data needs. No model is better than the others; it all depends on the organization's specific needs.
 
-Finally, you should evaluate and understand the skillset of your data team. Their strengths and where they’ll need support (eg., what level of data literacy does everyone have?, Do you need to hire additional people with specific skillsets ? What kind of training does your staff need?...).
+Finally, you should evaluate and understand the skillset of your data team. Their strengths and where they’ll need support (eg., what level of data literacy does everyone have?, Do you need to hire additional people with specific skill sets? What kind of training does your staff need?...).
 
-Bellow, some examples of personas who come together to create and implement a data strategy:
+Below, are some examples of personas that come together to create and implement a data strategy:
 
-*   Data engineers : a data engineer is a professional who designs, builds, maintains, and troubleshoots the data journey. They are responsible for creating efficient pipelines to collect, store and process large amounts of data from multiple sources in order to provide insights that can be used by businesses or organizations. Data Engineers also develop tools and processes that allow the organization's stakeholders access to this information quickly and accurately.
-*   Data architects : a data architect is a professional responsible for designing, creating, deploying and managing an organization's data architecture. They are often involved in the design of large-scale databases or enterprise information systems that store and manage critical business applications. Data architects must have strong technical knowledge as well as experience with data engineering, database management systems (DBMS), software engineering principles, system security protocols, cloud computing solutions and other related technologies.
-*   Data scientists : a data scientist is a professional who uses scientific methods, processes, algorithms and systems to extract knowledge or insights from the data that the pipeline delivers. Data scientists typically use advanced techniques such as machine learning, predictive analytics, natural language processing (NLP), artificial intelligence (AI) and deep learning to analyze large datasets in order to uncover patterns that can be used for decision-making purposes. They also develop new ways of collecting information through surveys or experiments.
-*   Data analysts : a data analyst is a professional who uses data to analyze and interpret patterns, trends, and relationships in order to provide insights that can be used for decision-making. Data analysts typically use statistical techniques such as regression analysis or predictive analytics to identify meaningful information from large datasets. They then present their findings through reports or visualizations so stakeholders can make informed decisions about the business.
-*   Business analysts : a business analyst is a professional who works with an organization to help identify and solve problems related to its operations, processes, strategies, and systems. Business analysts use data analysis techniques such as process mapping and gap analyses in order to understand the current state of the company's operations. They then develop solutions that will improve efficiency or reduce costs while meeting customer needs.
-*   Business managers or Data owners : a business manager is a professional who oversees the day-to-day operations of an organization. They are responsible for developing and implementing strategies to ensure that their company meets its goals, as well as managing personnel, budgets, resources and other aspects of running a successful business. They are also the owners of their data assets.
-*   Data managers : a data manager is a person who is responsible for storage, privacy, security, and compliance of data within an organization. They are usually in charge of ensuring that all systems are secure from unauthorized access or manipulation and managing backups so that data can be recovered if lost. Additionally they may also provide training on how to use/access data.
-*   Chief Data Officers : a Chief Data Officer (CDO) is a senior executive responsible for the enterprise-wide data strategy, architecture, and governance. This emerging role was created to address the increased need for organizations to manage their data as a strategic asset.
+*   Data engineers: a data engineer is a professional who designs, builds, maintains, and troubleshoots the data journey. They are responsible for creating efficient pipelines to collect, store and process large amounts of data from multiple sources in order to provide insights that can be used by businesses or organizations. Data Engineers also develop tools and processes that allow the organization's stakeholders access to this information quickly and accurately.
+*   Data architects: a data architect is a professional responsible for designing, creating, deploying, and managing an organization's data architecture. They are often involved in the design of large-scale databases or enterprise information systems that store and manage critical business applications. Data architects must have strong technical knowledge as well as experience with data engineering, database management systems (DBMS), software engineering principles, system security protocols, cloud computing solutions, and other related technologies.
+*   Data scientists: a data scientist is a professional who uses scientific methods, processes, algorithms and systems to extract knowledge or insights from the data that the pipeline delivers. Data scientists typically use advanced techniques such as machine learning, predictive analytics, natural language processing (NLP), artificial intelligence (AI), and deep learning to analyze large datasets in order to uncover patterns that can be used for decision-making purposes. They also develop new ways of collecting information through surveys or experiments.
+*   Data analysts: a data analyst is a professional who uses data to analyze and interpret patterns, trends, and relationships in order to provide insights that can be used for decision-making. Data analysts typically use statistical techniques such as regression analysis or predictive analytics to identify meaningful information from large datasets. They then present their findings through reports or visualizations so stakeholders can make informed decisions about the business.
+*   Business analysts: a business analyst is a professional who works with an organization to help identify and solve problems related to its operations, processes, strategies, and systems. Business analysts use data analysis techniques such as process mapping and gap analyses in order to understand the current state of the company's operations. They then develop solutions that will improve efficiency or reduce costs while meeting customer needs.
+*   Business managers or Data owners: a business manager is a professional who oversees the day-to-day operations of an organization. They are responsible for developing and implementing strategies to ensure that their company meets its goals, as well as managing personnel, budgets, resources, and other aspects of running a successful business. They are also the owners of their data assets.
+*   Data managers: a data manager is a person who is responsible for the storage, privacy, security, and compliance of data within an organization. They are usually in charge of ensuring that all systems are secure from unauthorized access or manipulation and managing backups so that data can be recovered if lost. Additionally, they may also provide training on how to use/access data.
+*   Chief Data Officers: a Chief Data Officer (CDO) is a senior executive responsible for the enterprise-wide data strategy, architecture, and governance. This emerging role was created to address the increased need for organizations to manage their data as a strategic asset.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPdiHaXrStv0b7iBHImAIiXzpTL0pGGvnhRu2TXIRPpL4jQD00VhuMxwAfMh1zrnJM7uMrKNhd-brGXf5zN0_bCEXWlaxrmxiXZW_17kTGB9Pf-VjIg2trf5TRATRuJYd9Q3KobqcBTcJZbt9ih-dDKdq-hF6UuSt0knCgxNP7vzDr1Spl5cKx-KGn){: .mx-auto.d-block :} *Data Team (Datasmiths)*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
   
@@ -150,34 +150,34 @@ Bellow, some examples of personas who come together to create and implement a da
 
 If you've looked at your near entourage, you've probably seen stories of businesses with great data strategies that have failed. Their data strategies were sound, but they failed to implement them effectively because they could not create an internal organization that could deliver both value from their data assets to internal customers and generate adequate levels of profit from it (return on investments).
 
-Some organizations, made poor decisions about how to accompagne change and allocate scarce resources to reach the Data Strategy goals. Not surprisingly, they were not able to unlock the full potential of their data assets and their competitiveness in the market fell off a cliff as more focused competitors began offering superior and more affordable services to consumers, thanks to better data-driven decisions.
+Some organizations could have made better decisions about accompanying change and allocating scarce resources to reach the Data Strategy goals. Not surprisingly, they were not able to unlock the full potential of their data assets and their competitiveness in the market fell off a cliff as more focused competitors began offering superior and more affordable services to consumers, thanks to better data-driven decisions.
 
 > > "By one estimate, 37% of company value across all industries is lost due to poor strategy execution." 
 > > **_Harvard Business Review (HBR)_** 
 
-There are many stories like this. In each we find a data strategy that was well formulated but poorly executed. And while you can find lots of advice on how to devise better strategies, there's very little guidance on how to execute those strategies.
+There are many stories like this. In each, we find a data strategy that was well formulated but could have been better executed. And while you can find lots of advice on how to devise better strategies, there needs to be more guidance on how to execute those strategies.
 
 This is why Data Governance is a key element of any successful Data Strategy as It establishes control over data assets and is directly accountable for the data strategy execution.
 
 Data governance encourages all team members to view data as a valuable asset, rather than just an output of business operations. It also ensures that everyone in the organization follows established policies when dealing with data.
 
-As your business evolves so should its governance rules; Data Governance sets out processes and responsibilities to guarantee the strict alignement of data strategy with the business strategy.
+As your business evolves so should its governance rules; Data Governance sets out processes and responsibilities to guarantee the strict alignment of data strategy with the business strategy.
 
 ### 7 - Change Management
 
 Having created your data strategy, you are now ready to move forward with the relevant initiatives. It is essential that change management is addressed carefully during this process as it will involve a lot of changes for teams and potentially new responsibilities or expectations. Without accompanying the culture shift, the potential benefits from your data strategy may not be fully realized.
 
-Having assessed the skillsets of your data team and addressed any gaps they have, it is now time to create a plan to equip them with the knowledge they need to be successful. This should include orientation and training on data literacy, technical enablement, best practices and business goals awareness.
+Having assessed the skillsets of your data team and addressed any gaps they have, it is time to create a plan to equip them with the knowledge they need to succeed. This should include orientation and training on data literacy, technical enablement, best practices, and business goals awareness.
 
-To ensure ongoing financial support for all items in your roadmap as well as unforeseen changes, you must demonstrate how implementing this strategy has helped meet business objectives - going beyond simply measuring 'hours saved'. Lean on your champions and stakeholders to support and vouch for your ROI messaging.
+To ensure ongoing financial support for all items in your roadmap and unforeseen changes, you must demonstrate how implementing this strategy has helped meet business objectives - beyond simply measuring 'hours saved'. Lean on your champions and stakeholders to support and vouch for your ROI messaging.
 
-Finally, a communication plan needs also be put into place detailing who should receive information about process or technical changes; which metrics are discussed; upcoming initiatives etc., while staying consistent with messaging that highlights progress made plus its impact on business goals. Executive backing will help make an even bigger difference here too !
+Finally, a communication plan needs also be put into place detailing who should receive information about the process or technical changes; which metrics are discussed; upcoming initiatives, etc., while staying consistent with messaging that highlights progress made plus its impact on business goals. Executive backing will help make an even bigger difference here too!
 
 ## Summary
 
-This article explores the importance of data strategy in the modern business landscape. It examines the impact of data\-driven decision making on business operations, and the potential benefits of developing a comprehensive data strategy beyond the hype.
+This article explores the importance of data strategy in the modern business landscape. It examines the impact of data-driven decision-making on business operations, and the potential benefits of developing a comprehensive data strategy beyond the hype. 
 
-It looks at the key components of a data strategy, such as alignement with business strategy, forming the data team, identifying goals and roadmap, evaluating data maturity, implementing modern data architectures, putting in place a suitable governance, and finally accompanying the organization in the culture shift to create a competitive advantage.
+It looks at the key components of a data strategy, such as alignment with business strategy, forming the data team, identifying goals and roadmap, evaluating data maturity, implementing modern data architectures, putting in place suitable governance, and finally accompanying the organization in the culture shift to create a competitive advantage.
 
 ## References
 
@@ -188,5 +188,5 @@ It looks at the key components of a data strategy, such as alignement with busin
 *   https://www.ibm.com/resources/the-data-differentiator/data-strategy
 
 ---
-1. In most of companies, the different departments functions might have different priorities depending on their points of interest. So there is always a negotiation phase, when you define a global data roadmap.
-2. Including a timeline in your roadmap that allows for recognition of the small quick wins achieved along the way will help to keep morale and motivation high among your team.
+1. In most of companies, the different departments\' functions have different priorities depending on their points of interest. So there is always a negotiation phase when you define a global data roadmap.
+2. Including a timeline in your roadmap that recognizes the small quick wins achieved along the way will help keep morale and motivation high among your team.
