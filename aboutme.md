@@ -10,4 +10,4 @@ My name is Amine El Kouhen and this a summary of my life (so far):
 
 
 ### Amine's Story
-With more than 15 years of experience building and promoting Data/BI platforms, I designed and implemented thousands of Data pipelines and Analytics artifacts (DWH/Datamarts data models) for Financial Reporting, Sales Analysis, Operational KPIs, and Cost Allocation Drivers. I hold a Ph.D. in Computer Sciences from the University of Lille (North of France) and a Certificate of Specialization in Business Strategy from the Harvard Business School.
+With more than 15 years of experience building and promoting Data/BI platforms, I designed and implemented thousands of Data pipelines and Analytics artifacts (DWH/Datamarts data models) for Financial Reporting, Sales Analysis, Operational KPIs, and Cost Allocation Drivers. I hold a Ph.D. in Computer Sciences from the University of Lille (North of France) and a Certificate of Specialization in Business Strategy from the Harvard Business School (HBS).
