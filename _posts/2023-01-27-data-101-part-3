@@ -97,7 +97,7 @@ All data is unbounded until it’s bounded. Indeed, Business processes have long
 
 Storage refers to how data is stored once it has been acquired. Data should be securely stored on a reliable platform with appropriate backup systems for disaster recovery if needed. Access control measures must also be implemented to protect sensitive information from unauthorized users or malicious actors who may try to gain access illegally. 
 
-Data storage has a few characteristics, such as storage lifecycle (how data will evolve), storage options (how data can be stored efficiently), storage layers, storage systems (how data should be stored, independently on the raw storage support), and the storage technologies (storage abstractions) in which data are kept.
+Data storage has a few characteristics, such as storage lifecycle (how data will evolve), storage options (how data can be stored efficiently), storage layers, storage systems (how data should be stored, regardless of the raw storage support), and the storage technologies (storage abstractions) in which data are kept.
 
 ### Storage lifecycle
 
@@ -220,7 +220,7 @@ Processing involves transforming raw data into valuable insights through analysi
 
 You’ve reached the last stage of the data journey. Now that the data has been ingested, stored, and processed into coherent and valuable structures, it’s time to get value from your data. “Getting value” from data means different things to different users.
 
-Data serving is the most exciting part of the data lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, machin Learning, and more.
+Data serving is the most exciting part of the data lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, machine Learning, and more.
 
 Analytics is the core of most data endeavors. It consists of interpreting and drawing insights from processed data to make informed decisions or predictions about future trends. But, again, data visualization tools can be used here to help visualize the data more meaningfully. 
 
