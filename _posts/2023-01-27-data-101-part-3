@@ -264,6 +264,7 @@ Finally, we put data team roles in the data journey landscape. We observed that 
 
 *   https://hevodata.com/learn/incremental-data-load-vs-full-load/
 *   https://www.databricks.com/blog/2019/08/14/productionizing-machine-learning-with-delta-lake.html
+*   Reis, J. and Housley M. Fundamentals of data engineering: Plan and build robust data systems. O’Reilly Media (2022).
 *   https://dzone.com/articles/data-lake-governance-best-practices
 *   https://www.newsletter.swirlai.com/p/sai-22-decomposing-the-data-system
 *   https://www.redhat.com/en/topics/data-storage/file-block-object-storage
