@@ -220,7 +220,7 @@ Processing involves transforming raw data into valuable insights through analysi
 
 You’ve reached the last stage of the data journey. Now that the data has been ingested, stored, and processed into coherent and valuable structures, it’s time to get value from your data. “Getting value” from data means different things to different users.
 
-Data serving is the most exciting part of the data lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, machine Learning, and more.
+Data serving is the most exciting part of the data lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, machine learning, and more.
 
 Analytics is the core of most data endeavors. It consists of interpreting and drawing insights from processed data to make informed decisions or predictions about future trends. But, again, data visualization tools can be used here to help visualize the data more meaningfully. 
 
