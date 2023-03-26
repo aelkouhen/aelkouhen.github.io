@@ -1,4 +1,4 @@
----
+9---
 layout: post
 title: Data 101 series - part 3
 subtitle: Data journey
@@ -81,7 +81,7 @@ All data is unbounded until it’s bounded. Indeed, Business processes have long
 
    Size-based batch ingestion is quite common when data is moved from a streaming-based system into object storage; ultimately, you must cut the data into discrete blocks for future processing in a data lake. Some size-based ingestion systems can break data into objects based on various criteria, such as the size in bytes of the total number of events.
 
-   When implementing batch ingestion data engineers must consider a few issues such as snapshots vs. differential extraction, which action precedes the other transforming or loading (ETL vs. ELT), batch size, and data migration constraints...
+   When implementing batch ingestion data engineers must consider a few issues such as snapshots vs. differential extraction, which action precedes the other - transforming or loading (ETL vs. ELT), batch size, and other data migration constraints...
 
 * Stream ingestion data transport: Real-time or Stream-based transport is essential for organizations to rapidly respond to new information in time-sensitive use cases, such as stock market trading or sensors monitoring. In addition, real-time data acquisition is vital when making rapid operational decisions or acting on fresh insights.
 
@@ -97,7 +97,7 @@ All data is unbounded until it’s bounded. Indeed, Business processes have long
 
 Storage refers to how data is stored once it has been acquired. Data should be securely stored on a reliable platform with appropriate backup systems for disaster recovery if needed. Access control measures must also be implemented to protect sensitive information from unauthorized users or malicious actors who may try to gain access illegally. 
 
-Data storage has a few characteristics, such as storage lifecycle (how data will evolve), storage options (how data can be stored efficiently), storage layers, storage formats (how data should be stored depending on data access frequency), and the storage technologies in which data are kept.
+Data storage has a few characteristics, such as storage lifecycle (how data will evolve), storage options (how data can be stored efficiently), storage layers, storage systems (how data should be stored, independently on the raw storage support), and the storage technologies (storage abstractions) in which data are kept.
 
 ### Storage lifecycle
 
@@ -212,7 +212,7 @@ A **data lakehouse** combines the low-cost, scalable storage of a data lake and 
   
 ### 3 - Data Processing
 
-After you’ve ingested and stored data, you need to do something with it. The next stage of the data engineering lifecycle is transformation, meaning data needs to be changed from its original form into something useful for downstream use cases.
+After you’ve ingested and stored data, you need to do something with it. The next stage of the data journey is transformation, meaning data needs to be changed from its original form into something useful for downstream use cases.
 
 Processing involves transforming raw data into valuable insights through analysis techniques like machine learning algorithms or statistical models depending on what type of problem needs solving within an organization's context. The goal here is accuracy and efficiency since this stage requires significant computing power, which could become costly over time without proper optimization strategies. The Data processing stage will be extensively detailed in the next blog posts.
 
@@ -220,7 +220,7 @@ Processing involves transforming raw data into valuable insights through analysi
 
 You’ve reached the last stage of the data journey. Now that the data has been ingested, stored, and processed into coherent and valuable structures, it’s time to get value from your data. “Getting value” from data means different things to different users.
 
-Data serving is the most exciting part of the data engineering lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, ML, and more.
+Data serving is the most exciting part of the data lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, machin Learning, and more.
 
 Analytics is the core of most data endeavors. It consists of interpreting and drawing insights from processed data to make informed decisions or predictions about future trends. But, again, data visualization tools can be used here to help visualize the data more meaningfully. 
 
@@ -237,7 +237,7 @@ Data analysis can be organized into six categories:
 
 Finally, when the curated data passes through these analyses, the outcomes (insights) can be: shared with stakeholders or other interested parties. This could be done through reports, presentations, dashboards, etc., depending on what kind of information needs to be shared and with whom it’s being shared. Curated data and/or insights can also be shared "as-is" for further purposes, such as feature stores for machine learning algorithms, data monetization, API, etc.
 
-The different types of Data Analytics will be extensively detailed in the second part of this blog.
+The different types of Data Analytics will be extensively detailed in the second part of this blog (Analytics 101).
 
 ## Data Chain of Value
 
@@ -267,7 +267,6 @@ To support this reasoning, I consider the Data Science Hierarchy of Needs (figur
 Although many data scientists may be excited to develop and fine-tune machine learning models, the truth is that approximately 70% to 80% of their time is devoted to the lower three levels of the hierarchy - data collection, data cleaning, and data processing - with only a small fraction of their time allocated to analysis and machine learning. To address this, **_Rogati_** argues that companies must establish a strong data foundation at the bottom levels of the hierarchy before embarking on areas such as AI and ML. 
 
 Data scientists typically do not receive training on creating production-grade data systems and perform this work haphazardly because they need more assistance and resources from a data engineer. Ideally, data scientists should devote more than 90% of their time to the upper levels of the hierarchy, including analytics, experimentation, and ML. When data engineers concentrate on these lower portions of the hierarchy, they establish a robust foundation for data scientists to excel.
-
 
 ## Summary
 
