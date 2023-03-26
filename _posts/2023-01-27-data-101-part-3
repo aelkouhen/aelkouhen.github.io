@@ -220,6 +220,8 @@ Data analysis can be organized into six categories:
 
 Finally, when the curated data passes through these analyses, the outcomes (insights) can be: shared with stakeholders or other interested parties. This could be done through reports, presentations, dashboards, etc., depending on what kind of information needs to be shared and with whom it’s being shared. Curated data and/or insights can also be shared "as-is" for further purposes, such as feature stores for machine learning algorithms, data monetization, API, etc.
 
+The different types of Data Analytics will be extensively detailed in the second part of this blog.
+
 ## Data Chain of Value
 
 Remember the data roles we introduced in [Data 101 - part 2](https://aelkouhen.github.io/2023-01-24-data-101-part-2/) of this series. Let's put every role in the data journey perspective. We can observe that everyone has predefined tasks, skills, and interface contracts with the other ones. The data value increases through the data journey landscape thanks to this synergy. Throughout the process, from one end of the value chain to another and back again, there should be constant feedback between producers and stakeholders.
