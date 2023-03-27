@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Data 101 series - part 5
-subtitle: Data processing
+subtitle: Data Processing
 thumbnail-img: https://www.esds.co.in/blog/wp-content/uploads/2019/05/Digital-Solutions.gif
 share-img: https://www.esds.co.in/blog/wp-content/uploads/2019/05/Digital-Solutions.gif
 tags: [Parquet,ORC,data formatting,CSV,data lineage,JSON,AVRO,normalized data,data preparation,data quality,data cleaning,XML,denormalized data,join types,data discovery,data transformation]
