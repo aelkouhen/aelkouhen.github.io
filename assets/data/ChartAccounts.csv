@@ -1,0 +1,1802 @@
+ACCOUNTNUM,Nature,Statement,Description,AccountingNatureCode
+10110000,Statutory,BS,"""Uncalled shared capital""",A10900
+10120000,Statutory,BS,"""Called-up - not paid shared capital""",P10100
+10120080,Statutory,BS,"""Called-up - not paid shared capital - inflation""",P10100
+10130000,Statutory,BS,"""Called-up - paid shared capital""",P10100
+10180000,Statutory,BS,"""Other Subscribed capital""",P10100
+10410000,Statutory,BS,"""Share premiums""",P10400
+10410080,Statutory,BS,"""Share premiums - inflation""",P10400
+10420000,Statutory,BS,"""Merger premiums""",P10400
+10430000,Statutory,BS,"""Contribution premiums""",P10400
+10440000,Statutory,BS,"""Other share premium""",P10400
+10500000,Statutory,BS,"""Revaluation differences""",P10500
+10611000,Statutory,BS,"""Basic legal reserve""",P10601
+10611080,Statutory,BS,"""Basic legal reserve - inflation""",P10601
+10620000,Statutory,BS,"""Undistributable reserves""",P10600
+10630000,Statutory,BS,"""Statutory or contractual reserves""",P10600
+10640000,Statutory,BS,"""Other reserves""",P10600
+10640001,Statutory,BS,"""Other reserves - reserve for loss coverage""",P10600
+10688000,Statutory,BS,"""Other reserves - Shareholders payments for future capital increase""",P10600
+10900000,Statutory,BS,"""Shareholders: Subscribed capital uncalled""",A10900
+11000000,Statutory,BS,"""Profit carried forward""",P10600
+11000001,Statutory,BS,"""Closing of Balance Sheet""",P10600
+11000002,Statutory,BS,"""Opening of Balance Sheet""",P10600
+11000080,Statutory,BS,"""Profit carried forward - inflation""",P10600
+11900000,Statutory,BS,"""Loss carried forward""",P10600
+12000000,Statutory,BS,"""Profit for the financial year""",P10600
+12000001,Statutory,BS,"""Profit / loss of past years""",P10600
+12900000,Statutory,BS,"""Loss for the financial year""",P10600
+13110000,Statutory,BS,"""Investment grants - Fixed installations""",P13000
+13210000,Statutory,BS,"""Investment grants - Rolling stock""",P13200
+13911000,Statutory,BS,"""Investment grants credited to the profit and loss account - Fixed installations""",P13900
+13921000,Statutory,BS,"""Investment grants credited to the profit and loss account - Rolling stock""",P13920
+14200000,Statutory,BS,"""Tax-regulated provisions""",P14800
+14500000,Statutory,BS,"""Accelerated tax depreciation""",P14700
+15110100,Statutory,BS,"""Provisions for commercial litigation - > 1 year""",P15110
+15110200,Statutory,BS,"""Provisions for commercial  litigation - < 1 year""",P15111
+15110300,Statutory,BS,"""Provision for non-commercial litigations > 1 year""",P15110
+15110400,Statutory,BS,"""Provision for non-commercial litigations < 1 year""",P15111
+15140000,Statutory,BS,"""Provision for fines and penalties >1 year""",P15800
+15141000,Statutory,BS,"""Provision for fines and penalties <1 year""",P15810
+15150100,Statutory,BS,"""Provision for unrealized foreign currency losses - trade""",P15150
+15150200,Statutory,BS,"""Provision for unrealized foreign currency losses - non trade""",P15150
+15170100,Statutory,BS,"""Provisions for contract termination costs > 1 year""",P15125
+15170200,Statutory,BS,"""Provisions for contract termination costs < 1 year""",P15126
+15170300,Statutory,BS,"""Provisions for onerous contracts > 1 year""",P15160
+15170400,Statutory,BS,"""Provisions for onerous contracts < 1 year""",P15161
+15180100,Statutory,BS,"""Provisions for social liabilities - > 1 year""",P15170
+15180200,Statutory,BS,"""Provisions for social liabilities - < 1 year""",P15171
+15180300,Statutory,BS,"""Provisions for tax liabilities < 1 year""",P15181
+15180400,Statutory,BS,"""Provisions for tax liabilities > 1 year""",P15180
+15181000,Statutory,BS,"""Provisions for losses and damage - > 1 year""",P15155
+15181100,Statutory,BS,"""Provisions for losses and damage - < 1 year""",P15156
+15182000,Statutory,BS,"""Provisions for warranty - > 1 year""",P15120
+15182100,Statutory,BS,"""Provisions for warranty - < 1 year""",P15121
+15183000,Statutory,BS,"""Provisions for self-insurer - > 1 year""",P15190
+15183100,Statutory,BS,"""Provisions for self-insurer - < 1 year""",P15191
+15184000,Statutory,BS,"""Provisions for vacant surface area of leased premises > 1 year""",P15165
+15184100,Statutory,BS,"""Provisions for vacant surface area of leased premises < 1 year""",P15166
+15185000,Statutory,BS,"""Provisions for environmental risks -  > 1 year""",P15130
+15185100,Statutory,BS,"""Provisions for environmental risks -  < 1 year""",P15131
+15186000,Statutory,BS,"""Provisions for losses in subsidiaries - > 1 year""",P15140
+15186100,Statutory,BS,"""Provisions for losses in subsidiaries - < 1 year""",P15141
+15301000,Statutory,BS,"""Provision for retirement benefits > 1 year (France)""",P15300
+15302000,Statutory,BS,"""Provision for retirement benefits < 1 year (France)""",P15301
+15303000,Statutory,BS,"""Provisions for other pensions plan (Excluding retirement benefits for France & Italy) - > 1 year""",P15310
+15304000,Statutory,BS,"""Provisions for other pensions plan (Excluding retirement benefits for France & Italy) - < 1 year""",P15311
+15305000,Statutory,BS,"""Provisions for long-service awards (jubilee)  > 1 year""",P15350
+15305001,Statutory,BS,"""Provisions for indemnisation""",P15350
+15306000,Statutory,BS,"""Provisions for long-service awards (jubilee) < 1 year""",P15351
+15311000,Statutory,BS,"""Provisions for employee disputes - > 1 year""",P15110
+15312000,Statutory,BS,"""Provisions for employee disputes - < 1 year""",P15111
+15401000,Statutory,BS,"""Provisions for restructuring costs - > 1 year""",P15400
+15402000,Statutory,BS,"""Provisions for restructuring costs - < 1 year""",P15410
+15721000,Statutory,BS,"""Provision for major maintenance and repairs - > 1 year""",P15700
+15722000,Statutory,BS,"""Provision for major maintenance and repairs - < 1 year""",P15700
+15723000,Statutory,BS,"""Provisions to repair leased assets - > 1 year""",P15750
+15723100,Statutory,BS,"""Provisions to repair leased assets - transport equipment - > 1 year""",P15750
+15723200,Statutory,BS,"""Provisions to repair leased assets - additionnal kilometers - > 1 year""",P15750
+15724000,Statutory,BS,"""Provisions to repair leased assets - < 1 year""",P15751
+15725000,Statutory,BS,"""Provisions for Tires renewal - > 1 year""",P15750
+15726000,Statutory,BS,"""Provisions  for Tires renewal  - < 1 year""",P15751
+15813100,Statutory,BS,"""Other provision for risks and expenses- > 1 year""",P15800
+15813200,Statutory,BS,"""Other provision for risks and expenses - < 1 year""",P15810
+15813300,Statutory,BS,"""Provisions - other employee benefits (E.g. LTIP) - > 1 year""",P15360
+15813400,Statutory,BS,"""Provisions - other employee benefits (E.g. LTIP) - < 1 year""",P15361
+16010000,Statutory,BS,"""Lease liabilities - non currrent > 1 year""",P16840
+16011000,Statutory,BS,"""Lease liabilities - current < 1 year""",P16845
+16410000,Statutory,BS,"""Borrowings from credit institutions - < 1 year""",P16410
+16420000,Statutory,BS,"""Borrowings from credit institutions - >1 year < 5 years""",P16400
+16430000,Statutory,BS,"""Borrowings from credit institutions - > 5 years""",P16400
+16510000,Statutory,BS,"""Deposits and guarantees (liabilities) - < 1 year""",P16570
+16510001,Statutory,BS,"""Deposits and guarantees (liabilities) - < 1 year - deposit for customer VAT""",P16570
+16520000,Statutory,BS,"""Deposits and guarantees (liabilities) - > 1 year < 5 years""",P16580
+16530000,Statutory,BS,"""Deposits and guarantees (liabilities) - > 5 years""",P16580
+16600000,Statutory,BS,"""Employee profit sharing plan""",P16650
+16811000,Statutory,BS,"""Intercompany borrowings - < 1 year""",P16810
+16812000,Statutory,BS,"""Intercompany borrowings - > 1 year""",P16800
+16884000,Statutory,BS,"""Accrued interests on credit institution borrowings""",P16882
+16885000,Statutory,BS,"""Accrued interests on Deposits and guarantees (liabilities)""",P16580
+16886000,Statutory,BS,"""Accrued interests on employee profit sharing plan""",P16650
+16889000,Statutory,BS,"""Accrued interests on intercompany borrowings""",P16880
+17100000,Statutory,BS,"""Debts payable related to participating interests""",P16800
+17100100,Statutory,BS,"""Debts payable related to participating interests < 1 an""",P16810
+18000000,Statutory,BS,"""Inter-unit liaison accounts""",A99999/P99999
+20100000,Statutory,BS,"""Start-up expenses / Initial costs""",A20100
+20300000,Statutory,BS,"""Research and development costs""",A20300
+20510000,Statutory,BS,"""Computer software purchased and developped""",A20500
+20510080,Statutory,BS,"""Computer software purchased and developped - inflation""",A20500
+20520000,Statutory,BS,"""Other patents, concessions and similar rights""",A20500
+20600000,Statutory,BS,"""Leasing rights""",A20600
+20700000,Statutory,BS,"""Business goodwill""",A20700
+20800000,Statutory,BS,"""Other intangible assets""",A20800
+20810000,Statutory,BS,"""Technical losses on merger allocated to intangible fixed assets (except purchased goodwill))""",A20700
+20820000,Statutory,BS,"""Technical losses on merger allocated to purchased goodwill""",A20700
+21110000,Statutory,BS,"""Land and land improvements - freehold""",A21100
+21110080,Statutory,BS,"""Land and land improvements - freehold - inflation""",A21100
+21200000,Statutory,BS,"""Land improvements - non-freehold""",A21100
+21310000,Statutory,BS,"""Building - freehold""",A21300
+21310001,Statutory,BS,"""Industrial property complexes (GER)""",A21300
+21310080,Statutory,BS,"""Building - freehold - inflation""",A21300
+21320000,Statutory,BS,"""Building fixtures and fittings - freehold""",A21300
+21330000,Statutory,BS,"""Finance leases - Real Estate (transition period account)""",A21410
+21380000,Statutory,BS,"""Infrastructure - freehold""",A21300
+21400000,Statutory,BS,"""Building - non-freehold""",A21300
+21442000,Statutory,BS,"""Infrastructure - non-freehold""",A21300
+21511000,Statutory,BS,"""Technical installations""",A21500
+21511100,Statutory,BS,"""Tools & equipments""",A21500
+21512000,Statutory,BS,"""Finance leases - Equipment and other tangible assets (transition period account)""",A21440
+21711000,Statutory,BS,"""Rail transport equipment""",A21750
+21712000,Statutory,BS,"""Truck and tractor""",A21700
+21721000,Statutory,BS,"""Trailers and semi-articulated trucks""",A21700
+21738000,Statutory,BS,"""Containers and swap bodies""",A21700
+21739000,Statutory,BS,"""Geo-tracking boxes""",A21700
+21810000,Statutory,BS,"""Other Fixtures and fitting - non-freehold""",A21800
+21810080,Statutory,BS,"""Other Fixtures and fitting - non-freehold - inflation""",A21800
+21820000,Statutory,BS,"""Commercial vehicles (not used in operating cycle)""",A21800
+21820080,Statutory,BS,"""Commercial vehicles (not used in operating cycle) - inflation""",A21800
+21830000,Statutory,BS,"""Computer hardware""",A21570
+21830080,Statutory,BS,"""Computer hardware - inflation""",A21570
+21831000,Statutory,BS,"""Office equipment""",A21800
+21831080,Statutory,BS,"""Office equipment - inflation""",A21800
+21832000,Statutory,BS,"""Other Operating vehicles (used in operating cycle)""",A21700
+21840000,Statutory,BS,"""Furniture""",A21800
+21840080,Statutory,BS,"""Furniture - inflation""",A21800
+21860000,Statutory,BS,"""Recoverable packaging""",A21800
+21880000,Statutory,BS,"""Other tangible assets""",A21800
+21880001,Statutory,BS,"""Low unit value assets (GER)""",A21800
+21881000,Statutory,BS,"""Technical losses on merger allocated to tangible fixed assets""",A20700
+23130000,Statutory,BS,"""Tangible assets in progress - Building""",A23100
+23140000,Statutory,BS,"""Tangible assets in progress - Lands""",A23100
+23150000,Statutory,BS,"""Tangible assets in progress - Technical installations, tools & equipments""",A23100
+23151000,Statutory,BS,"""Tangible assets in progress - Transport equipment""",A23100
+23152000,Statutory,BS,"""Tangible assets in progress - Rail transport equipment""",A23100
+23180000,Statutory,BS,"""Tangible assets in progress - Others""",A23100
+23200000,Statutory,BS,"""Other intangible assets in progress""",A23200
+23210000,Statutory,BS,"""Intangible assets in progress - software""",A23200
+23700000,Statutory,BS,"""Advances and down payments on intangible assets""",A23700
+23800000,Statutory,BS,"""Advances and down payments on tangible assets""",A23800
+26110000,Statutory,BS,"""Financial assets - equity interests""",A26100
+26180000,Statutory,BS,"""Financial asset acquisition costs""",A26100
+26600000,Statutory,BS,"""Other equity interests""",A26100
+26710000,Statutory,BS,"""Loans and financial receivables related to equity interests > 1 year""",A26710
+26720000,Statutory,BS,"""Loans and financial receivables related to equity interests < 1 year""",A26720
+26780000,Statutory,BS,"""Accrued interest on loans and financial receivables related to equity interests""",A26780
+27410000,Statutory,BS,"""Loans - < 1 year""",A27810
+27410100,Statutory,BS,"""Loans to employees < 1 year""",A27810
+27420000,Statutory,BS,"""Loans - > 1 year < 5 years""",A27800
+27421001,Statutory,BS,"""Other loans, controlled companies >  1 year""",A27800
+27430000,Statutory,BS,"""Loans - > 5 years""",A27800
+27510000,Statutory,BS,"""Deposits paid and guarantee paid (assets) - < 1 year""",A27510
+27520000,Statutory,BS,"""Deposits paid and guarantee paid (assets) - > 1 year < 5 years""",A27500
+27530000,Statutory,BS,"""Deposits paid and guarantee paid (assets) - > 5 years""",A27500
+27540000,Statutory,BS,"""Factoring - guarantee deposit paid""",A27510
+27600100,Statutory,BS,"""Other financial receivables < 1 year""",A27800
+27600200,Statutory,BS,"""Other financial receivables > 1 year and < 5 years""",A27800
+27600300,Statutory,BS,"""Other financial receivables > 5 years""",A27800
+27810000,Statutory,BS,"""Accrued interests on loans and other financial receivables""",A27820
+27820000,Statutory,BS,"""Accrued interests on Deposits and guarantees (assets)""",A27820
+27830000,Statutory,BS,"""Technical losses on merger allocated to financial fixed assets""",A20700
+28010000,Statutory,BS,"""Amort. - Start-up expenses / Initial costs""",A28010
+28030000,Statutory,BS,"""Amort. - Research and development costs""",A28030
+28051000,Statutory,BS,"""Amort. - Computer software purchased and developped""",A28050
+28051080,Statutory,BS,"""Amort. - Computer software purchased and developped - inflation""",A28050
+28052000,Statutory,BS,"""Amort. - Other patents, concessions and similar rights""",A28050
+28060000,Statutory,BS,"""Amort. - Leasing rights""",A28060
+28070000,Statutory,BS,"""Amort. - Business goodwill""",A28070
+28080000,Statutory,BS,"""Amort. - Other intangible assets""",A28080
+28081100,Statutory,BS,"""Amort. Technical losses on merger allocated to intangible assets (except purchased goodwill)""",A28070
+28082000,Statutory,BS,"""Amort. Technical losses on merger allocated to purchased goodwill""",A28070
+28111000,Statutory,BS,"""Amort. Land improvements - freehold""",A28110
+28120000,Statutory,BS,"""Amort. Land improvements - non-freehold""",A28130
+28131000,Statutory,BS,"""Amort. Building - freehold""",A28130
+28131080,Statutory,BS,"""Amort. Building - freehold - inflation""",A28130
+28132000,Statutory,BS,"""Amort. Building fixtures and fittings - freehold""",A28130
+28132001,Statutory,BS,"""Amort. Industrial property complexes (GER)""",A28130
+28133000,Statutory,BS,"""Amortization - Finance leases - Real Estate (transition period account)""",A28141
+28138000,Statutory,BS,"""Amort. Infrastructure - freehold""",A28130
+28140000,Statutory,BS,"""Amort. Building - non-freehold""",A28130
+28144000,Statutory,BS,"""Amort. - Infrastructure - non-freehold""",A28130
+28151100,Statutory,BS,"""Amort. Technical installations""",A28150
+28151200,Statutory,BS,"""Amortization - Finance leases - Equipment and other tangible assets (transition period account)""",A28144 
+28151300,Statutory,BS,"""Amort. tools & equipments""",A28150
+28171100,Statutory,BS,"""Amort. Rail transport equipment""",A28175
+28171200,Statutory,BS,"""Amort. Truck and tractor""",A28170
+28172100,Statutory,BS,"""Amort. Trailers and semi-articulated trucks""",A28170
+28173800,Statutory,BS,"""Amort. Containers and swap bodies""",A28170
+28173900,Statutory,BS,"""Amort. Geo-tracking boxes""",A28170
+28181000,Statutory,BS,"""Depreciation - Other Fixtures and fitting - non-freehold""",A28180
+28181080,Statutory,BS,"""Depreciation - Other Fixtures and fitting - non-freehold - inflation""",A28180
+28182000,Statutory,BS,"""Amort. Commercial vehicles (not used in operating cycle)""",A28180
+28182080,Statutory,BS,"""Amort. Commercial vehicles (not used in operating cycle) - inflation""",A28180
+28183000,Statutory,BS,"""Amort. computer hardware""",A28157
+28183080,Statutory,BS,"""Amort. computer hardware - inflation""",A28157
+28183100,Statutory,BS,"""Amort. Office equipment""",A28180
+28183180,Statutory,BS,"""Amort. Office equipment - inflation""",A28180
+28183200,Statutory,BS,"""Amort. Commercial vehicles (used in operating cycle)""",A28170
+28184000,Statutory,BS,"""Amort. Furniture""",A28180
+28184080,Statutory,BS,"""Amort. Furniture - inflation""",A28180
+28186000,Statutory,BS,"""Amort. Recoverable packaging""",A28180
+28188000,Statutory,BS,"""Amort. Other tangible assets""",A28180
+28188001,Statutory,BS,"""Amort. Low unit value assets (GER)""",A28180
+28188100,Statutory,BS,"""Amort. .Technical losses on merger allocated to tangible fixed assets""",A28070
+29030000,Statutory,BS,"""Impair. - Research and development costs""",A28030
+29051000,Statutory,BS,"""Impair. - Computer software purchased and developped""",A29050
+29052000,Statutory,BS,"""Impair. - Other patents, concessions and similar rights""",A29050
+29060000,Statutory,BS,"""Impair. - Leasing rights""",A29060
+29070000,Statutory,BS,"""Impair. - Business goodwill""",A29070
+29080000,Statutory,BS,"""Impair. - Other intangible assets""",A29080
+29081100,Statutory,BS,"""Impair. - Technical losses on merger allocated to intangible fixed assets (except purchased goodwill)""",A29070
+29082000,Statutory,BS,"""Impair. - Technical losses on merger allocated to purchased goodwill""",A29070
+29111000,Statutory,BS,"""Impair. - Lands and land improvements - freehold""",A29110
+29120000,Statutory,BS,"""Impair. - Land improvements - non-freehold""",A29110
+29131000,Statutory,BS,"""Impair. - Buildings - freehold""",A29130
+29132000,Statutory,BS,"""Impair. - Building fixtures and fittings - freehold""",A29130
+29138000,Statutory,BS,"""Impair. - Infrastructure - freehold""",A29130
+29140000,Statutory,BS,"""Impair. - Building - non-freehold""",A29130
+29144000,Statutory,BS,"""Impair. - Infrastructure - non-freehold""",A29130
+29151100,Statutory,BS,"""Impair. - Technical installations""",A29150
+29151300,Statutory,BS,"""Impair. - Tools and equipments""",A29150
+29171100,Statutory,BS,"""Impair. - Rail transport equipment""",A29175
+29171200,Statutory,BS,"""Impair. - Truck and tractor""",A29170
+29172100,Statutory,BS,"""Impair. Trailers and semi-articulated trucks""",A29170
+29173800,Statutory,BS,"""Impair. Containers and swap bodies""",A29170
+29173900,Statutory,BS,"""Impair. Geo-tracking boxes""",A29180
+29181000,Statutory,BS,"""Impair. - Other Fixtures and fitting - non-freehold""",A29180
+29182000,Statutory,BS,"""Impair. - Commercial vehicles (not used in operating cycle)""",A29180
+29183000,Statutory,BS,"""Impair. - computer hardware""",A29157
+29183100,Statutory,BS,"""Impair. - Office equipment""",A29180
+29183200,Statutory,BS,"""Impair. - Commercial vehicles (used in operating cycle)""",A29170
+29184000,Statutory,BS,"""Impair. Furniture""",A29180
+29186000,Statutory,BS,"""Impair. Recoverable packaging""",A29180
+29188000,Statutory,BS,"""Impair. - Other tangible assets""",A29180
+29188100,Statutory,BS,"""Impair. - Technical losses on merger allocated to tangible fixed assets""",A29070
+29310000,Statutory,BS,"""Impair. - Tangible assets in progress - Building""",A29310
+29315100,Statutory,BS,"""Impair. - Tangible assets in progress - Transport equipment""",A29310
+29318000,Statutory,BS,"""Impair. - Tangible assets in progress - Others""",A29310
+29320000,Statutory,BS,"""Impair. - Other intangible assets in progress""",A29320
+29321000,Statutory,BS,"""Impair. - Intangible assets in progress - software""",A29320
+29380000,Statutory,BS,"""Impair. - Advances and down payments on tangible assets""",A29380
+29390000,Statutory,BS,"""Impair. - Advances and down payments on intangible assets""",A29370
+29610000,Statutory,BS,"""Impair. - Financial assets - equity interests""",A29610
+29660000,Statutory,BS,"""Impair. - Other equity interests""",A29610
+29671000,Statutory,BS,"""Impair. - Loans and financial receivables related to equity interests > 1 year""",A29670
+29672000,Statutory,BS,"""Impair. - Loans and financial receivables related to equity interests < 1 year""",A29680
+29678000,Statutory,BS,"""Impair. - Accrued interest on loans and financial receivables related to equity interests""",A29670
+29686300,Statutory,BS,"""Impair. - Accrued interests on other financial receivables""",A29780
+29686400,Statutory,BS,"""Impair. - Accrued interests on Deposits and guarantees (assets)""",A29750
+29688000,Statutory,BS,"""Impair. - Technical losses on merger allocated to financial fixed assets""",A29070
+29741000,Statutory,BS,"""Impair. - Loans - < 1 year""",A29790
+29742000,Statutory,BS,"""Impair. - Loans - > 1 year < 5 years""",A29780
+29743000,Statutory,BS,"""Impair. - Loans - > 5 years""",A29780
+29751000,Statutory,BS,"""Impair. - Deposits and guarantee (assets) - < 1 year""",A29751
+29752000,Statutory,BS,"""Impair. - Deposits and guarantee (assets) - > 1 year  < 5 years""",A29750
+29753000,Statutory,BS,"""Impair. - Deposits and guarantee (assets) - > 5 years""",A29750
+29761000,Statutory,BS,"""Impair. - Other financial receivables - > 1 year""",A29750
+31000000,Statutory,BS,"""Inventory - Raw materials and furnitures""",A31000
+32200000,Statutory,BS,"""Inventory - Other consumables""",A31000
+32211000,Statutory,BS,"""Inventory - Fuels""",A31000
+32212000,Statutory,BS,"""Inventory - Lubricants""",A31000
+32230000,Statutory,BS,"""Inventory - Spare parts""",A31000
+37000000,Statutory,BS,"""Inventory - Goods""",A37000
+39100000,Statutory,BS,"""Impairment on inventory - Raw materials and furnitures""",A39100
+39220000,Statutory,BS,"""Impairment on inventory - Other consumables""",A39100
+39221100,Statutory,BS,"""Impairment on inventory - Fuels""",A39100
+39221200,Statutory,BS,"""Impairment on inventory - Lubricants""",A39100
+39223000,Statutory,BS,"""Impairment on inventory - Spare parts""",A39100
+39700000,Statutory,BS,"""Impairment on inventory - Goods""",A39700
+40100000,Statutory,BS,"""Suppliers""",P40000
+40100001,Statutory,BS,"""Suppliers - domestic""",P40000
+40100002,Statutory,BS,"""Suppliers - International""",P40000
+40100100,Statutory,BS,"""Suppliers - Revaluation""",P40000
+40100200,Statutory,BS,"""Suppliers - Reclassification""",P40000
+40100300,Statutory,BS,"""Suppliers - Agents""",P46040
+40100400,Statutory,BS,"""Suppliers - Purchases of goods and services overhead""",P40000
+40100500,Statutory,BS,"""Suppliers - guarantee deduction""",P40000
+40121000,Statutory,BS,"""Suppliers - Group""",P40000
+40121001,Statutory,BS,"""Suppliers - Group - international""",P40000
+40121002,Statutory,BS,"""Suppliers - Group - domestic""",P40000
+40121003,Statutory,BS,"""Suppliers - Group - parent company""",P40000
+40121004,Statutory,BS,"""Suppliers - Group - controlled company""",P40000
+40200001,Statutory,BS,"""Correspondents - non back-to-back operation""",P40000
+40300000,Statutory,BS,"""Suppliers - Bills payable""",P40000
+40400100,Statutory,BS,"""Suppliers - Intangible assets acquisition""",P40500
+40400200,Statutory,BS,"""Suppliers - Tangible assets acquisition""",P40510
+40400201,Statutory,BS,"""Suppliers - Cash discount for assets (Germany)""",P40510
+40400300,Statutory,BS,"""Suppliers - Financial assets acquisition""",P40550
+40400400,Statutory,BS,"""Suppliers - Intangible assets acquisition - GROUP""",P40500
+40400500,Statutory,BS,"""Suppliers - assets acquisition - holdback deduction""",P40510
+40800000,Statutory,BS,"""Deferred rent liabilities related to an IFRS 16 leased asset - accrual for invoice not received""",P48720
+40810000,Statutory,BS,"""Suppliers  - automatic accrual for invoice not received""",P40800
+40810080,Statutory,BS,"""Suppliers  - automatic accrual for invoice not received - reversal""",P40800
+40810100,Statutory,BS,"""Suppliers  - manual accrual for invoice not received""",P40800
+40810101,Statutory,BS,"""Suppliers  - manual accrual for invoice not received - entertainment & promotion (CN)""",P40800
+40810300,Statutory,BS,"""Suppliers - Agents - accrual for invoice not received""",P40800
+40810400,Statutory,BS,"""Supplier - Overhead - accrual for invoice not received""",P40800
+40813000,Statutory,BS,"""Supplier - semi-automatic accrual for invoice not received""",P40800
+40814100,Statutory,BS,"""Suppliers - Overhead - manual accrual for invoice not received""",P40800
+40814180,Statutory,BS,"""Suppliers - manual accrual for invoice not received - audit fees""",P40800
+40820000,Statutory,BS,"""Suppliers - Group - accrual for invoice not received""",P40800
+40821000,Statutory,BS,"""Suppliers Group - manual accrual for invoice not received""",P40800
+40821001,Statutory,BS,"""Suppliers Group - manual accrual for invoice not received - submitted to withholding tax""",P40800
+40830000,Statutory,BS,"""Suppliers - Deferred rent liabilities - accrual for invoice not received""",P48700
+40840100,Statutory,BS,"""Suppliers - Intangible assets acquisition - Accrual for invoice not received""",P40800
+40840200,Statutory,BS,"""Suppliers - Tangible assets acquisition - accrual for invoice not received""",P40800
+40910000,Statutory,BS,"""Suppliers - Advances & down payments""",A40910
+40910300,Statutory,BS,"""Suppliers - Agents - advances & down payments""",A40910
+40910400,Statutory,BS,"""Suppliers Overhead - Advances & down payments""",P40000
+40920000,Statutory,BS,"""Suppliers - Group - advances & down payments""",A40910
+40940100,Statutory,BS,"""Suppliers - Intangible assets acquisition - Advances & down payments""",A23700
+40940200,Statutory,BS,"""Suppliers - Tangible assets acquisition - Advances & down payments""",A23800
+40971100,Statutory,BS,"""Other Suppliers in debit""",A40910
+40971200,Statutory,BS,"""Other Suppliers in debit - Asset suppliers""",A40910
+40981000,Statutory,BS,"""Suppliers - Credit notes to be received""",A40910
+40981300,Statutory,BS,"""Suppliers - Agents - credit notes to be received""",A40910
+40982001,Statutory,BS,"""Suppliers - Group - Credit notes to be received""",A40910
+40984100,Statutory,BS,"""Suppliers - Intangible assets acquisition - Credit notes to be received""",A40910
+40984200,Statutory,BS,"""Suppliers - Tangible assets acquisition - Credit notes to be received""",A40910
+41100000,Statutory,BS,"""Customers""",A41000
+41100001,Statutory,BS,"""Customers - domestic""",A41000
+41100002,Statutory,BS,"""Customers - international""",A41000
+41100100,Statutory,BS,"""Customers - Reclassifications""",A41000
+41100200,Statutory,BS,"""Customers - Revaluation""",A41000
+41100300,Statutory,BS,"""Customers - Agents""",A46040
+41100400,Statutory,BS,"""Factoring - customer balance purchase""",A41000
+41100500,Statutory,BS,"""Customer - holdback deduction""",A41000
+41100600,Statutory,BS,"""Customers - Group""",A41000
+41100601,Statutory,BS,"""Customers - Group - parent company""",A41000
+41100602,Statutory,BS,"""Customers - Group - controlled company""",A41000
+41200000,Statutory,BS,"""Customers - Subcontracting (not offset)""",A41000
+41300000,Statutory,BS,"""Customers - Bills receivable""",A41000
+41320000,Statutory,BS,"""Customers - Pending payment""",A41000
+41600000,Statutory,BS,"""Customers - Doubtful""",A41600
+41600001,Statutory,BS,"""Customers - Doubtful - foreign""",A41600
+41600300,Statutory,BS,"""Customers Agent - Doubtful""",A41600
+41612000,Statutory,BS,"""Customers Group - Doubtful""",A41600
+41800000,Statutory,BS,"""Customers - Automatic invoices to be issued""",A41800
+41800100,Statutory,BS,"""Customers - manual invoices to be issued""",A41800
+41800101,Statutory,BS,"""Customers - invoices to be issued - past years""",A41800
+41800300,Statutory,BS,"""Customers - Agents - Invoices to be issued""",A41800
+41800400,Statutory,BS,"""Customers - Deferred rent liabilities - Group - Invoices to be issued""",A48600
+41800500,Statutory,BS,"""Customers - Deferred rent liabilities - Non-Group - Invoices to be sent""",A48600
+41812000,Statutory,BS,"""Customers Group - Invoices to be issued""",A41800
+41900000,Statutory,BS,"""Customers - Advances & down payments""",P41900
+41900300,Statutory,BS,"""Customers - Agents - advances & down payments""",P41900
+41912000,Statutory,BS,"""Customers Groupe - advances & down payments""",P41900
+41980000,Statutory,BS,"""Customers -  credits notes to establish""",P41900
+41981200,Statutory,BS,"""Customers - Groupe -  credits notes to establish""",P41900
+41983000,Statutory,BS,"""Other Customers credit balance""",P41900
+42110000,Statutory,BS,"""Liabilities from payroll due to employees""",P42000
+42110004,Statutory,BS,"""Liabilities from payroll due to employees - mid-month (BR)""",P42000
+42110005,Statutory,BS,"""Liabilities from payroll due to employees - educational support (BR)""",P42000
+42110100,Statutory,BS,"""Liabilities from payroll due to employees - payroll not claimed""",A42000
+42110200,Statutory,BS,"""Liabilities from payroll due to employees - negative payroll""",A42000
+42200000,Statutory,BS,"""Works council""",P42000
+42200001,Statutory,BS,"""European Consultation Council""",P42000
+42210000,Statutory,BS,"""Other staff benefits and social welfare""",P42000
+42300000,Statutory,BS,"""Employer's complementary contribution to employee saving plan & pension saving plan""",P42000
+42300100,Statutory,BS,"""Optional Profit-sharing / Profit scheme""",P42000
+42400000,Statutory,BS,"""Mandatory Profit-sharing plan - liability""",P42000
+42500000,Statutory,BS,"""Salaries advances""",A42000
+42500001,Statutory,BS,"""Salaries advances - Salary advance for bank loan amortization""",A42000
+42500002,Statutory,BS,"""Salaries advances - vacation paid """,A42000
+42500003,Statutory,BS,"""Salaries advances - Additionnal months of salary paid""",A42000
+42500004,Statutory,BS,"""Salaries advances - Life insurance""",A42000
+42500100,Statutory,BS,"""Advances on travel expenses""",A42000
+42600000,Statutory,BS,"""Staff deposit""",A42000
+42700000,Statutory,BS,"""Wage withholding""",P42000
+42820000,Statutory,BS,"""Provision for holiday pay accrual - liability""",P42000
+42820001,Statutory,BS,"""Provision for holiday pay accrual - Current period""",P42000
+42820002,Statutory,BS,"""Provision for holiday pay accrual - Vacation allowance""",P42000
+42830000,Statutory,BS,"""Provision for accrued salaries to be paid""",P42000
+42830001,Statutory,BS,"""Provision for accrued salaries to be paid - National Labour Contract (IT)""",P42000
+42830002,Statutory,BS,"""Provision for accrued salaries to be paid - Termination payment""",P42000
+42830100,Statutory,BS,"""Provision for profit scheme (optional)""",P42000
+42840000,Statutory,BS,"""Provision for profit sharing plan (mandatory)""",P42000
+42850100,Statutory,BS,"""Provision for accrued allowances/bonus""",P42000
+42850101,Statutory,BS,"""Provision for accrued allowances/bonus paid in December""",P42000
+42850180,Statutory,BS,"""Provision for accrued commercial bonus""",P42000
+42850200,Statutory,BS,"""Provision for accrued additionnal month of salaries""",P42000
+42850201,Statutory,BS,"""Provision for accrued additionnal month of salaries 2""",P42000
+42850300,Statutory,BS,"""Provision for accrued remuneration (others than bonus)""",P42000
+42850301,Statutory,BS,"""Provision for accrued remuneration - Overtime payable""",P42000
+42850400,Statutory,BS,"""Provision for retirement benefits > 1 year (Italy)""",P42000
+42850500,Statutory,BS,"""Provision for retirement benefits < 1 year (Italy)""",P42000
+42860000,Statutory,BS,"""Provision for accrued T&E""",P42000
+42860100,Statutory,BS,"""Provision for other accrued HR charges 2""",P42000
+42860101,Statutory,BS,"""Provision for other accrued HR charges 2""",P42000
+42870000,Statutory,BS,"""Salaries refundable""",A42000
+43110000,Statutory,BS,"""Social security liabilities""",P43000
+43110001,Statutory,BS,"""Social Security - Italy Enasarco""",P43000
+43110002,Statutory,BS,"""Crédit to Social Security - INPS""",P43000
+43110003,Statutory,BS,"""Revaluation TFR""",P43000
+43110004,Statutory,BS,"""Social Security - COMETA""",P43000
+43110005,Statutory,BS,"""Social Security - CADGE""",P43000
+43110006,Statutory,BS,"""Social security liabilities - employee portion for medical insurance""",P43000
+43110007,Statutory,BS,"""Social security liabilities - Employer real estate contribution - Infonavit (MX)""",P43000
+43110008,Statutory,BS,"""Social security liabilities - Employer contribution to accident and disability (MX)""",P43000
+43110009,Statutory,BS,"""Social security liabilities - employee portion for retirement""",P43000
+43110010,Statutory,BS,"""Social security liabilities - Employee contribution to accident and disability (MX)""",P43000
+43110011,Statutory,BS,"""Social security liabilities - Employee real estate contribution - Infonavit (MX)""",P43000
+43110012,Statutory,BS,"""Social security liabilities - suspens account""",P43000
+43120000,Statutory,BS,"""Social security liabilities - expatriates""",P43000
+43711000,Statutory,BS,"""Health insurance fund liabilities""",P43000
+43711001,Statutory,BS,"""Health insurance fund liabilities - Executives""",P43000
+43711002,Statutory,BS,"""Health insurance fund liabilities - Payable to INAIL""",P43000
+43711003,Statutory,BS,"""Health insurance fund liabilities - Reimbursement from INAIL""",P43000
+43711004,Statutory,BS,"""Health insurance fund liabilities - (Italy, ZACAD)""",P43000
+43712000,Statutory,BS,"""Health insurance fund liabilities - expatriates""",P43000
+43721000,Statutory,BS,"""Pension fund liabilities""",P43000
+43721001,Statutory,BS,"""Pension fund liabilities - Executive""",P43000
+43721002,Statutory,BS,"""Pension fund liabilities""",P43000
+43721003,Statutory,BS,"""Supplementary pension""",P43000
+43721004,Statutory,BS,"""Pension fund liabilities - NQDC (US specific)""",P42000
+43721005,Statutory,BS,"""Pension fund liabilities - 401K (US)""",P42000
+43721006,Statutory,BS,"""Pension fund liabilities - employee part""",P42000
+43722000,Statutory,BS,"""Pension fund liabilities - expatriates""",P43000
+43731000,Statutory,BS,"""Health insurance additional fund liabilities (death/disability)""",P43000
+43732000,Statutory,BS,"""Health insurance additional fund liabilities (death/disability) - Expatriates""",P43000
+43741000,Statutory,BS,"""Unemployement liabilities""",P43000
+43742000,Statutory,BS,"""Unemployement liabilities - expatriates""",P43000
+43748000,Statutory,BS,"""Other social organisms (liabilities)""",P43000
+43748001,Statutory,BS,"""Other social organisms (liabilities) - Employer contribution - Infonavit (MX)""",P43000
+43748100,Statutory,BS,"""Voucher liability""",P43000
+43748200,Statutory,BS,"""Other social organisms liabilities - Trade unions""",P43000
+43750100,Statutory,BS,"""Medical Insurance Reserve (US specific)""",P42000
+43750200,Statutory,BS,"""Contribution to Employee fringe benefits (US specific)""",P42000
+43750300,Statutory,BS,"""Contribution to health benefits (US specific)""",P42000
+43750400,Statutory,BS,"""Contribution to life insurance fund (US specific)""",P42000
+43750500,Statutory,BS,"""Contribution to unemployment fund (US specific)""",P42000
+43750600,Statutory,BS,"""Other Payroll Taxes (US specific)""",P42000
+43750700,Statutory,BS,"""United Way charity Payable""",P42000
+43820000,Statutory,BS,"""Provision for social contributions on holiday pay accrual""",P43000
+43820001,Statutory,BS,"""Provision for tax contributions on holiday pay accrual""",P43000
+43830000,Statutory,BS,"""Provision for social security on accrued salaries to be paid""",P43000
+43830001,Statutory,BS,"""Provision for tax charges on accrued salaries to be paid""",P43000
+43840000,Statutory,BS,"""Provision for social security mandatory profit sharing plan""",P43000
+43840001,Statutory,BS,"""Tax charges on profit sharing plan (mandatory)""",P43000
+43841000,Statutory,BS,"""Provision for social security profit scheme""",P43000
+43841001,Statutory,BS,"""Tax charges on profit scheme (optional)""",P43000
+43850000,Statutory,BS,"""Provision for social security on accrued remuneration""",P43000
+43850001,Statutory,BS,"""Tax charges on various remunerations and allowances accrued (fiscal charges)""",P43000
+43851000,Statutory,BS,"""Provision for social security on accrued allowances/bonus""",P43000
+43851001,Statutory,BS,"""Provision for tax charges on accrued allowances/bonus""",P43000
+43852000,Statutory,BS,"""Provision for social security on accrued additionnal month of salaries""",P43000
+43852001,Statutory,BS,"""Provision for tax contributions on accrued additional month of salaries""",P43000
+43861000,Statutory,BS,"""Other charges to be paid by employer (tax)""",P43000
+43861001,Statutory,BS,"""Other charges to be paid by employer (tax) - Apprenticeship tax""",P43000
+43861002,Statutory,BS,"""Other charges to be paid by employer (tax) - Vocational training""",P43000
+43861003,Statutory,BS,"""Other charges to be paid by employer (tax) - Building tax""",P43000
+43861004,Statutory,BS,"""Other charges to be paid by employer (tax) - Agefiph""",P43000
+43861005,Statutory,BS,"""Other charges to be paid by employer (tax) - Corporate social contribution""",P43000
+43861006,Statutory,BS,"""Other charges to be paid by employer (tax) - Fillon Annualization""",P43000
+43861007,Statutory,BS,"""Other charges to be paid by employer (tax) - reduction of family allowances""",P43000
+43861008,Statutory,BS,"""Other charges to be paid by employer (tax) - Occupational Health""",P43000
+43861009,Statutory,BS,"""Other charges to be paid by employer (tax) - Social Charges (Ireland)""",P43000
+43861010,Statutory,BS,"""Other charges to be paid by employer (tax) - Tax for the benefit of local authorities""",P43000
+43861011,Statutory,BS,"""Other charges to be paid by employer (tax) - Vocational training - other rate""",P43000
+43871000,Statutory,BS,"""Social Security liabilities - refundable""",P43000
+44110000,Statutory,BS,"""Investment Grants and subsidies - to be received""",A44500
+44170000,Statutory,BS,"""Operating Grants - to be received""",A46700
+44250000,Statutory,BS,"""Withholding taxes (on dividends …)- liability""",P44000
+44250001,Statutory,BS,"""Withholding taxes (financial instruments, bank interests …) - liability""",P44000
+44251000,Statutory,BS,"""Withholding taxes (on employee revenues)- liability""",P44210
+44251100,Statutory,BS,"""Withholding taxes (on third party revenue) - liability""",A44000/P44000
+44251101,Statutory,BS,"""Withholding taxes (on third party revenue) - CSSL/PIS/COFINS receivable withholding tax (BR)""",A44000/P44000
+44251102,Statutory,BS,"""Withholding taxes (on third party revenue) - IRRF receivable withholding tax (BR)""",A44000/P44000
+44251103,Statutory,BS,"""Withholding taxes (on third party revenue) - IRRF payable withholding tax (BR)""",A44000/P44000
+44251104,Statutory,BS,"""Withholding taxes (on third party revenue) - IRRF receivable withholding tax on interests (BR)""",A44000/P44000
+44251105,Statutory,BS,"""Withholding taxes (on third party revenue) - CSSL/PIS/COFINS payable withholding tax (BR)""",A44000/P44000
+44251106,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Receivable withholding tax 4% clients (MX)""",A44000/P44000
+44251107,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Receivable withholding tax 6% clients (MX)""",A44000/P44000
+44251108,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Withholding""",A44000/P44000
+44251109,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Liability withholding tax 4%""",A44000/P44000
+44251110,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - settlement account""",A44000/P44000
+44251111,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Liability withholding tax 6%""",A44000/P44000
+44251112,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Withholding 10,66% Honorarios""",A44000/P44000
+44251113,Statutory,BS,"""Withholding taxes (on third party revenue) - VAT - Withholding 10,66% Arrendamientos""",A44000/P44000
+44251114,Statutory,BS,"""Withholding taxes (on third party revenue) - ICT - Liability withholding tax 10% Honorarios""",A44000/P44000
+44251115,Statutory,BS,"""Withholding taxes (on third party revenue) - ICT - Liability withholding tax 10% Arrendamientos""",A44000/P44000
+44251116,Statutory,BS,"""Withholding taxes (on third party revenue) - independant professionnal providers""",A44000/P44000
+44251117,Statutory,BS,"""Withholding taxes (on third party revenue) - real estate rental expenses""",A44000/P44000
+44251200,Statutory,BS,"""Withholding taxes (on employee revenues)- liability (except. FR)""",P42000
+44251201,Statutory,BS,"""Income tax - retained cod.1001""",P42000
+44251202,Statutory,BS,"""Income tax - Retained cod.1004""",P42000
+44251203,Statutory,BS,"""Income tax - Retained cod.1030""",P42000
+44251204,Statutory,BS,"""Tax - Retained on TFR, DL 47/2000""",P42000
+44251205,Statutory,BS,"""Tax - Credit for advance IRPEF/TFR Law 662/96""",P42000
+44251206,Statutory,BS,"""Withholding taxes (on employee revenues in kind) - liability""",P42000
+44411000,Statutory,BS,"""Income tax receivable (advances)""",A44400
+44411001,Statutory,BS,"""Corporate tax receivable (advances) (BR)""",A44400
+44411002,Statutory,BS,"""Social Contribution on Net Profits (CSSL) tax receivable (advances) (BR)""",A44400
+44412000,Statutory,BS,"""Income tax payable""",P44400
+44412001,Statutory,BS,"""Municipal trade tax""",P44400
+44412002,Statutory,BS,"""Corporate tax""",P44400
+44412003,Statutory,BS,"""Social Contribution on Net Profits (CSSL) tax (BR)""",P44400
+44412004,Statutory,BS,"""Income tax payable - withheld abroad""",P44400
+44412100,Statutory,BS,"""Income tax payable - accrual""",P44400
+44483000,Statutory,BS,"""Tax credit - not based on net result""",A46710
+44483001,Statutory,BS,"""Tax credit - based on paid vacation to staff (BR)""",A46710
+44484000,Statutory,BS,"""Tax credit - based on net result""",P44400
+44551000,Statutory,BS,"""VAT to be paid""",P44000
+44551001,Statutory,BS,"""Unpaid VAT Changeover""",P44000
+44551002,Statutory,BS,"""VAT payable - payable balance""",P44000
+44551003,Statutory,BS,"""VAT to be paid - local""",P44000
+44551004,Statutory,BS,"""VAT to be paid - regional""",P44000
+44551005,Statutory,BS,"""VAT to be paid - national""",P44000
+44551006,Statutory,BS,"""VAT to be paid - accrual""",P44000
+44551100,Statutory,BS,"""Foreign VAT to be paid""",P44000
+44561000,Statutory,BS,"""Input VAT - Intra-EU""",A44000
+44562000,Statutory,BS,"""Input VAT on tangible and Intangible Assets""",A44570
+44562100,Statutory,BS,"""Foreign Input VAT on tangible and Intangible Assets""",A44570
+44566100,Statutory,BS,"""Input VAT""",A44000
+44566101,Statutory,BS,"""Input VAT on cashout""",A44000
+44566102,Statutory,BS,"""Changeover input VAT (CN)""",A44000
+44566104,Statutory,BS,"""Input VAT - PIS (BR)""",A44000
+44566105,Statutory,BS,"""Input VAT - COFINS/PIS previous year (BR)""",A44000
+44566106,Statutory,BS,"""Input VAT - 4% (MX)""",A44000
+44566107,Statutory,BS,"""Input VAT - 8% (MX)""",A44000
+44566108,Statutory,BS,"""Input VAT - 16% (MX)""",A44000
+44566200,Statutory,BS,"""Input VAT - Intermediate rate""",A44000
+44566300,Statutory,BS,"""Input VAT - Discounted rate""",A44000
+44566400,Statutory,BS,"""Input VAT - Other rates""",A44000
+44566500,Statutory,BS,"""Input VAT - Foreign VAT""",A44000
+44567000,Statutory,BS,"""VAT to be carried forward""",A44000
+44567001,Statutory,BS,"""VAT deposit""",A44000
+44567002,Statutory,BS,"""VAT receivable - recoverable balance""",A44000
+44567100,Statutory,BS,"""Foreign VAT to be carried forward""",A44000
+44571000,Statutory,BS,"""Output VAT - Intra-EU""",P44000
+44571100,Statutory,BS,"""Output VAT""",P44000
+44571101,Statutory,BS,"""Output VAT on cash in""",P44000
+44571102,Statutory,BS,"""Changeover output VAT (CN)""",P44000
+44571103,Statutory,BS,"""Output VAT - COFINS (BR)""",P44000
+44571104,Statutory,BS,"""Output VAT - PIS (BR)""",P44000
+44571105,Statutory,BS,"""Output VAT - IOF (BR)""",P44000
+44571106,Statutory,BS,"""Output VAT - ICMS (BR)""",P44000
+44571107,Statutory,BS,"""Output VAT - ISS (BR)""",P44000
+44571108,Statutory,BS,"""Output VAT - 4% (MX)""",P44000
+44571109,Statutory,BS,"""Output VAT - 8% (MX)""",P44000
+44571110,Statutory,BS,"""Output VAT - 16% (MX)""",P44000
+44571200,Statutory,BS,"""Output VAT - Intermediate rate""",P44000
+44571300,Statutory,BS,"""Output VAT - Discounted rate""",P44000
+44571400,Statutory,BS,"""Output VAT - Other rates""",P44000
+44572000,Statutory,BS,"""Output VAT on fixed assets disposal""",P44560
+44574000,Statutory,BS,"""Output VAT - Foreign VAT""",P44000
+44575001,Statutory,BS,"""VAT collected split payment""",P44000
+44579000,Statutory,BS,"""VAT to be adjusted""",P44000
+44583000,Statutory,BS,"""Requested VAT reimbursement""",A44000
+44583001,Statutory,BS,"""Requested VAT reimbursement (under validation)""",A44000
+44583100,Statutory,BS,"""Requested foreign VAT reimbursement""",A44000
+44586000,Statutory,BS,"""VAT on purchase invoice not received or credit note to issue""",A44000
+44586001,Statutory,BS,"""VAT on purchase invoice not received or credit note to issue - 4% (MX)""",A44000
+44586002,Statutory,BS,"""VAT on purchase invoice not received or credit note to issue - 8% (MX)""",A44000
+44586003,Statutory,BS,"""VAT on purchase invoice not received or credit note to issue - 16% (MX)""",A44000
+44587000,Statutory,BS,"""VAT on sale invoice to be sent or credit note to receive""",P44000
+44587001,Statutory,BS,"""VAT on sale invoice to be sent or credit note to receive - 4% (MX)""",P44000
+44587002,Statutory,BS,"""VAT on sale invoice to be sent or credit note to receive - 8% (MX)""",P44000
+44587003,Statutory,BS,"""VAT on sale invoice to be sent or credit note to receive - 16% (MX)""",P44000
+44587004,Statutory,BS,"""VAT on sale invoice to be sent or credit note to receive - 6% (MX)""",P44000
+44711000,Statutory,BS,"""Tax based on salaries and wages due to other organisms (except tax administration)""",P43000
+44711001,Statutory,BS,"""Tax based on salaries and wages due to other organisms - Tax Universal Social Charges""",P43000
+44711002,Statutory,BS,"""Tax based on salaries and wages due to other organisms - Tax for the benefit of local authorities""",P43000
+44712000,Statutory,BS,"""Tax based on salaries and wages due to Tax Administration""",P43000
+44712001,Statutory,BS,"""Tax based on salaries and wages due to Foreign Tax Administration""",P43000
+44720000,Statutory,BS,"""Tax on property""",P44000
+44720001,Statutory,BS,"""Tax on property - accrual""",P44000
+44731000,Statutory,BS,"""Asset-based tax - fixed installations - liabilities""",P44000
+44731001,Statutory,BS,"""Asset-based tax - fixed installations - accrual""",P44000
+44732000,Statutory,BS,"""Tax on transport equipments - liabilities""",P44000
+44732001,Statutory,BS,"""Tax on transport equipments - accrual""",P44000
+44740000,Statutory,BS,"""Other tax on intermediary balance""",P44000
+44740001,Statutory,BS,"""Other tax on intermediary balance - accrual""",P44000
+44750000,Statutory,BS,"""Registration and stamp duties - liability""",P44000
+44760000,Statutory,BS,"""Customs duties and other freight taxes - liability""",P44000
+44760001,Statutory,BS,"""Customs duties and other freight taxes - accrual""",P44000
+44771000,Statutory,BS,"""Environmental tax - liability""",P44000
+44772000,Statutory,BS,"""Energy tax - liability""",P44000
+44780000,Statutory,BS,"""Other taxes - liability""",P44000
+44780001,Statutory,BS,"""Other taxes - accrual""",P44000
+44780002,Statutory,BS,"""Other taxes - Financial tax (BR)""",P44000
+44861011,Statutory,BS,"""Other charges to be paid by employer (tax) - Tax for the benefit of Foreign Tax Administration""",P43000
+44863200,Statutory,BS,"""Other tax charges due by employer""",P43000
+44868000,Statutory,BS,"""Tax - Accrual - other charges to be paid""",P44000
+44870000,Statutory,BS,"""Tax - Accrual - other income to be received""",A44000
+45100000,Statutory,BS,"""Current account - SNCF cash pooling""",A45200/P45120
+45110000,Statutory,BS,"""Current account - Geodis SA cash pooling""",A45200/P45120
+45120000,Statutory,BS,"""Current account - Tax group""",A44200/P44200
+45120001,Statutory,BS,"""Customers - Group - controlled company - tax consolidation""",A44200/P44200
+45120002,Statutory,BS,"""Customers - Group - controlled company - VAT consolidation""",A44200/P44200
+45120003,Statutory,BS,"""Receivables - Tax consolidation""",A44200/P44200
+45120004,Statutory,BS,"""Suppliers - Group - controlled comp, tax conso""",A44200/P44200
+45120005,Statutory,BS,"""Suppliers - Group - controlled comp, VAT conso""",A44200/P44200
+45120006,Statutory,BS,"""Suppliers - Group -  parent comp, tax conso""",A44200/P44200
+45120007,Statutory,BS,"""Suppliers - Group - parent comp, VAT conso""",A44200/P44200
+45120008,Statutory,BS,"""Payables - Tax consolidation""",A44200/P44200
+45130000,Statutory,BS,"""Current account - Group companies GEODIS SA excluded""",A45100/P45100
+45131000,Statutory,BS,"""Current account - Non Group""",A45100/P45100
+45132000,Statutory,BS,"""Current account - Group - intra entity""",P45300
+45140000,Statutory,BS,"""Interests on current accounts""",A45101/P45101
+45620000,Statutory,BS,"""Shareholders - Subscribed capital called up, unpaid""",A46700/P46700
+45670000,Statutory,BS,"""Shareholders - other capital stock transactions""",A45100P45100
+45700000,Statutory,BS,"""Shareholders - Dividends payable""",P45700
+45800000,Statutory,BS,"""Shareholders - Joint or EIG operations""",A46870/P46860
+46211000,Statutory,BS,"""Debts - Receivable - Group - tangible assets disposal""",A46210
+46212000,Statutory,BS,"""Debts - Receivable - Non-Group - tangible assets disposal""",A46210
+46221000,Statutory,BS,"""Debts - Receivable - Group - intangible assets disposal""",A46200
+46222000,Statutory,BS,"""Debts - Receivable - Non-Group - intangible assets disposal""",A46200
+46231000,Statutory,BS,"""Debts - Receivable - Group - financial investments disposal""",A46400
+46232000,Statutory,BS,"""Debts - Receivable - Non-Group - financial investments disposal""",A46400
+46610000,Statutory,BS,"""Recoverable customs duties""",A46700/P46700
+46620000,Statutory,BS,"""Other recoverable duties""",A46700/P46700
+46620100,Statutory,BS,"""Transactions on behalf of group companies""",A46700/P46700
+46620200,Statutory,BS,"""Procurement on behalf of group companies""",A46700/P46700
+46630000,Statutory,BS,"""Refund to be returned to customers""",P46700
+46640000,Statutory,BS,"""IATA Clearing""",A46700/P46700
+46700000,IFRS,BS,"""Correspondent (debit/credit) - transitory account""",A46030/P46030
+46700100,Statutory,BS,"""Suspens accounts - Group Netting""",A46700/P46700
+46700200,Statutory,BS,"""Factoring - Factor current account""",P46700
+46711000,Statutory,BS,"""Group Correspondents""",P46700
+46711001,Statutory,BS,"""Correspondants Groupe - Débit""",P46700
+46712000,Statutory,BS,"""Correspondents- Domestic - invoice not received""",P46700
+46713000,Statutory,BS,"""Correspondents - Domestic - credits notes to establish""",P46700
+46714000,Statutory,BS,"""Correspondents - Domestic - Invoices to be sent""",P46700
+46715000,Statutory,BS,"""Correspondents - Domestic - credit notes to receive""",P46700
+46720000,Statutory,BS,"""Other debtors""",A46700
+46721000,Statutory,BS,"""Other creditors""",P46700
+46722000,Statutory,BS,"""Other creditors - guarantee deposit""",P46700
+46730000,Statutory,BS,"""Customs duties payable""",A46700/P46700
+46731000,Statutory,BS,"""Other duties payable""",A46700/P46700
+46780000,IFRS,BS,"""Derivatives (rates & fx )- portion > 1 year""",A46750/P46750
+46781000,IFRS,BS,"""Derivatives (rates & fx ) - portion < 1 year""",A46750/P46750
+46860000,Statutory,BS,"""Other liabilities""",A46700/P46700
+46861000,Statutory,BS,"""Swap accrued interests payable""",P46320
+46870000,Statutory,BS,"""Swap accrued interests receivable""",A47320
+46871000,Statutory,BS,"""Others receivables""",A46700/P46700
+46872000,Statutory,BS,"""Dividends receivable""",A46875
+46900000,Statutory,BS,"""Advances received on assets disposals""",P46900
+47110000,Statutory,BS,"""Suspense account - Suppliers""",A46700/P46700
+47120000,Statutory,BS,"""Suspense account - Customers""",A46700/P46700
+47130000,Statutory,BS,"""Suspense account - fixed assets""",A46700/P46700
+47140000,Statutory,BS,"""Suspense account - miscellenaous""",A46700/P46700
+47150000,Statutory,BS,"""Suspense account - Payroll""",A46700/P46700
+47610000,Statutory,BS,"""Unrealized foreign exchange loss asset- decrease of commercial receivables""",A47600
+47620000,Statutory,BS,"""Unrealized foreign exchange loss asset - increase of commercial payables""",A47600
+47630000,Statutory,BS,"""Unrealized foreign exchange loss asset - decrease of financial receivables""",A47600
+47640000,Statutory,BS,"""Unrealized foreign exchange loss asset - increase of financial payables""",A47600
+47710000,Statutory,BS,"""Unrealized foreign exchange loss liabilities - increase of commercial receivables""",P47700
+47720000,Statutory,BS,"""Unrealized foreign exchange  loss liabilities - decrease of commercial payables""",P47700
+47730000,Statutory,BS,"""Unrealized foreign exchange  loss liabilities - increase of financial receivables""",P47700
+47740000,Statutory,BS,"""Unrealized foreign exchange  loss liabilities - decrease of financial payables""",P47700
+48160000,Statutory,BS,"""Bank borrowing issuance costs""",A48100
+48610000,Statutory,BS,"""Prepaid expenses - Group""",A48600
+48610100,Statutory,BS,"""Prepaid expenses - manual - Group""",A48600
+48620000,Statutory,BS,"""Prepaid expenses - Non-Group""",A48600
+48620100,Statutory,BS,"""Prepaid expenses - manual - Non-Group""",A48600
+48620180,Statutory,BS,"""Prepaid expenses - manual - Non-Group - insurance (AU)""",A48600
+48650000,Statutory,BS,"""Prepaid expenses - semi-automatic expenses""",A48600
+48660000,Statutory,BS,"""Prepaid access right related to IFRS 16 lease contract""",A48600
+48670000,Statutory,BS,"""Prepaid rent costs related to IFRS 16 lease contract""",A48600
+48700000,Statutory,BS,"""Deferred income related to an IFRS 16 leased asset""",P48720
+48700100,Statutory,BS,"""Other deferred income""",P48720
+48710000,Statutory,BS,"""Deferred income - Group""",P48700
+48710100,Statutory,BS,"""Deferred income - manual - Group""",P48700
+48720000,Statutory,BS,"""Deferred income - Non-Group""",P48700
+48720100,Statutory,BS,"""Deferred income - manual - Non-Group""",P48700
+48800000,Statutory,BS,"""Periodic allocation of charges and income""",A99999/P99999
+49110000,Statutory,BS,"""Impairment of receivables due to doubtful customers""",A49160
+49120000,Statutory,BS,"""Impairment of overdue/non-overdue individualised commercial receivables""",A49100
+49130000,Statutory,BS,"""Impairment of overdue commercial receivables (statistical depreciation - > 30 days and < 60 days)""",A49100
+49131000,Statutory,BS,"""Impairment of overdue commercial receivables (statistical depreciation - > 60 days and < 90 days)""",A49100
+49132000,Statutory,BS,"""Impairment of overdue commercial receivables (statistical depreciation - > 90 days and < 180 days)""",A49100
+49133000,Statutory,BS,"""Impairment of overdue commercial receivables (statistical depreciation -  > 180 days and < 360 days)""",A49100
+49134000,Statutory,BS,"""Impairment of overdue commercial receivables (statistical depreciation -  > 360 days)""",A49100
+49140000,Statutory,BS,"""Impairment of advances & down payments""",A49000
+49150000,Statutory,BS,"""Impairment of employee receivables""",A49200
+49510000,Statutory,BS,"""Impairment - Group Current accounts""",A49510
+49550000,Statutory,BS,"""Impairment - Current accounts - other shareholders""",A49510
+49590000,Statutory,BS,"""Impairment - Current accounts - Tax relief""",A49510
+49620000,Statutory,BS,"""Impairment - Receivable on assets disposal""",A49620
+49670000,Statutory,BS,"""Impairment - Other debtors""",A49700
+49680000,Statutory,BS,"""Impairment - Correspondents""",A49602
+51100000,Statutory,BS,"""Cheques and bills presented for collection""",A51000
+51101000,Statutory,BS,"""Banking transactions USD - Dollar""",A51000
+51102000,Statutory,BS,"""Banking transactions EUR - Euro""",A51000
+51103000,Statutory,BS,"""Banking transactions AED - Dirham""",A51000
+51104000,Statutory,BS,"""Banking transactions ARS - Argentine Peso""",A51000
+51105000,Statutory,BS,"""Banking transactions AUD - Australia Dollar""",A51000
+51106000,Statutory,BS,"""Banking transactions BGN - Bulgarian Lev""",A51000
+51107000,Statutory,BS,"""Banking transactions BHD - Bahraini Dinar""",A51000
+51108000,Statutory,BS,"""Banking transactions BND - Brunei Dollar""",A51000
+51109000,Statutory,BS,"""Banking transactions BRL - Brazilian real""",A51000
+51110000,Statutory,BS,"""Banking transactions CAD - Canadian Dollar""",A51000
+51111000,Statutory,BS,"""Banking transactions CHF - Swiss Franc""",A51000
+51112000,Statutory,BS,"""Banking transactions CLP - Chilean Peso""",A51000
+51113000,Statutory,BS,"""Banking transactions CNY - Chinese Yuan""",A51000
+51114000,Statutory,BS,"""Banking transactions COP - Colombian Peso""",A51000
+51115000,Statutory,BS,"""Banking transactions CZK - Czech Crown""",A51000
+51116000,Statutory,BS,"""Banking transactions DKK - Danish Crown""",A51000
+51117000,Statutory,BS,"""Banking transactions GBP - Pound Sterling""",A51000
+51118000,Statutory,BS,"""Banking transactions HKD - Hong Kong Dollar""",A51000
+51119000,Statutory,BS,"""Banking transactions HRK - Croatian Kuna""",A51000
+51120000,Statutory,BS,"""Banking transactions HUF - Hungarian Forint""",A51000
+51121000,Statutory,BS,"""Banking transactions IDR - Indonesian Rupee""",A51000
+51122000,Statutory,BS,"""Banking transactions ILS - Israeli Shekel""",A51000
+51123000,Statutory,BS,"""Banking transactions INR - Indian Rupee""",A51000
+51124000,Statutory,BS,"""Banking transactions JPY - Japanese Yen""",A51000
+51125000,Statutory,BS,"""Banking transactions KRW - Korean Won""",A51000
+51126000,Statutory,BS,"""Banking transactions KWD - Kuwaiti Dinar""",A51000
+51127000,Statutory,BS,"""Banking transactions MXN - Mexican Peso""",A51000
+51128000,Statutory,BS,"""Banking transactionsk MYR - Malaysian Ringgit""",A51000
+51129000,Statutory,BS,"""Banking transactions NOK - Novegian Crown""",A51000
+51130000,Statutory,BS,"""Banking transactions NZD - New Zealand Dollar""",A51000
+51131000,Statutory,BS,"""Banking transactions PEN - Peruvian soil""",A51000
+51132000,Statutory,BS,"""Banking transactions PHP - Phillipine Peso""",A51000
+51133000,Statutory,BS,"""Banking transactions PLN - Polish zloty""",A51000
+51134000,Statutory,BS,"""Banking transactions QAR - Qatari Riyal""",A51000
+51135000,Statutory,BS,"""Banking transactions RON - Romanian Leu""",A51000
+51136000,Statutory,BS,"""Banking transactions RSD - Serbian Dinar""",A51000
+51137000,Statutory,BS,"""Banking transactions RUR - Ruble""",A51000
+51138000,Statutory,BS,"""Banking transactions SAR - Saudi Riyal""",A51000
+51139000,Statutory,BS,"""Banking transactions SEK - Swedish Crown""",A51000
+51140000,Statutory,BS,"""Banking transactions SGD - Singaporean Dollar""",A51000
+51141000,Statutory,BS,"""Banking transactions THB - Thai Baht""",A51000
+51142000,Statutory,BS,"""Banking transactions TND - Tunisian Dinar""",A51000
+51143000,Statutory,BS,"""Banking transactions TRY - Turkish Lira""",A51000
+51144000,Statutory,BS,"""Banking transactions TWD - Taiwan Dollar""",A51000
+51145000,Statutory,BS,"""Banking transactions URU - Uruguayan Peso""",A51000
+51146000,Statutory,BS,"""Banking transactions VEN - Venezuelan Bolivar""",A51000
+51147000,Statutory,BS,"""Banking transactions VND - Vietnamese Dong""",A51000
+51148000,Statutory,BS,"""Banking transactions XOF - CFA Franc""",A51000
+51149000,Statutory,BS,"""Banking transactions XPF - CFP Franc""",A51000
+51150000,Statutory,BS,"""Banking transactions ZAR - South African Rand""",A51000
+51200000,Statutory,BS,"""Bank - generic account for transition period""",A51000/P51900
+51201000,Statutory,BS,"""Bank USD - Dollar""",A51000/P51900
+51202000,Statutory,BS,"""Bank EUR - Euro""",A51000/P51900
+51202600,Statutory,BS,"""Bank KWD - Kuwaiti Dinar""",A51000/P51900
+51203000,Statutory,BS,"""Bank AED - Dirham""",A51000/P51900
+51204000,Statutory,BS,"""Bank ARS - Argentine Peso""",A51000/P51900
+51205000,Statutory,BS,"""Bank AUD - Australia Dollar""",A51000/P51900
+51206000,Statutory,BS,"""Bank BGN - Bulgarian Lev""",A51000/P51900
+51207000,Statutory,BS,"""Bank BHD - Bahraini Dinar""",A51000/P51900
+51208000,Statutory,BS,"""Bank BND - Brunei Dollar""",A51000/P51900
+51209000,Statutory,BS,"""Bank BRL - Brazilian real""",A51000/P51900
+51210000,Statutory,BS,"""Bank CAD - Canadian Dollar""",A51000/P51900
+51210100,Statutory,BS,"""Bank 1 - Main Account""",A51000/P51900
+51210200,Statutory,BS,"""Bank 1 - Cash Payment""",A51000/P51900
+51210300,Statutory,BS,"""Bank 1 - Cash Receipt""",A51000/P51900
+51210400,Statutory,BS,"""Bank 1 - Electronic Payment In""",A51000/P51900
+51210500,Statutory,BS,"""Bank 1 - Electronic Payment Out""",A51000/P51900
+51210600,Statutory,BS,"""Bank 1 - Bill of Exchange Out""",A51000/P51900
+51210700,Statutory,BS,"""Bank 1 - Bill of Exchange In""",A51000/P51900
+51210800,Statutory,BS,"""Bank 1 - Check Out""",A51000/P51900
+51210900,Statutory,BS,"""Bank 1 - Check In""",A51000/P51900
+51211000,Statutory,BS,"""Bank CHF - Swiss Franc""",A51000/P51900
+51212000,Statutory,BS,"""Bank CLP - Chilean Peso""",A51000/P51900
+51213000,Statutory,BS,"""Bank CNY - Chinese Yuan""",A51000/P51900
+51214000,Statutory,BS,"""Bank COP - Colombian Peso""",A51000/P51900
+51215000,Statutory,BS,"""Bank CZK - Czech Crown""",A51000/P51900
+51216000,Statutory,BS,"""Bank DKK - Danish Crown""",A51000/P51900
+51217000,Statutory,BS,"""Bank GBP - Pound Sterling""",A51000/P51900
+51218000,Statutory,BS,"""Bank HKD - Hong Kong Dollar""",A51000/P51900
+51219000,Statutory,BS,"""Bank HRK - Croatian Kuna""",A51000/P51900
+51220000,Statutory,BS,"""Bank HUF - Hungarian Forint""",A51000/P51900
+51221000,Statutory,BS,"""Bank IDR - Indonesian Rupee""",A51000/P51900
+51222000,Statutory,BS,"""Bank ILS - Israeli Shekel""",A51000/P51900
+51223000,Statutory,BS,"""Bank INR - Indian Rupee""",A51000/P51900
+51224000,Statutory,BS,"""Bank JPY - Japanese Yen""",A51000/P51900
+51225000,Statutory,BS,"""Bank KRW - Korean Won""",A51000/P51900
+51227000,Statutory,BS,"""Bank MXN - Mexican Peso""",A51000/P51900
+51228000,Statutory,BS,"""Bank MYR - Malaysian Ringgit""",A51000/P51900
+51229000,Statutory,BS,"""Bank NOK - Novegian Crown""",A51000/P51900
+51230000,Statutory,BS,"""Bank NZD - New Zealand Dollar""",A51000/P51900
+51231000,Statutory,BS,"""Bank PEN - Peruvian soil""",A51000/P51900
+51232000,Statutory,BS,"""Bank PHP - Phillipine Peso""",A51000/P51900
+51233000,Statutory,BS,"""Bank PLN - Polish zloty""",A51000/P51900
+51234000,Statutory,BS,"""Bank QAR - Qatari Riyal""",A51000/P51900
+51235000,Statutory,BS,"""Bank RON - Romanian Leu""",A51000/P51900
+51236000,Statutory,BS,"""Bank RSD - Serbian Dinar""",A51000/P51900
+51237000,Statutory,BS,"""Bank RUR - Ruble""",A51000/P51900
+51238000,Statutory,BS,"""Bank SAR - Saudi Riyal""",A51000/P51900
+51239000,Statutory,BS,"""Bank SEK - Swedish Crown""",A51000/P51900
+51240000,Statutory,BS,"""Bank SGD - Singaporean Dollar""",A51000/P51900
+51241000,Statutory,BS,"""Bank THB - Thai Baht""",A51000/P51900
+51242000,Statutory,BS,"""Bank TND - Tunisian Dinar""",A51000/P51900
+51243000,Statutory,BS,"""Bank TRY - Turkish Lira""",A51000/P51900
+51244000,Statutory,BS,"""Bank TWD - Taiwan Dollar""",A51000/P51900
+51245000,Statutory,BS,"""Bank URU - Uruguayan Peso""",A51000/P51900
+51246000,Statutory,BS,"""Bank VEN - Venezuelan Bolivar""",A51000/P51900
+51247000,Statutory,BS,"""Bank VND - Vietnamese Dong""",A51000/P51900
+51248000,Statutory,BS,"""Bank XOF - CFA Franc""",A51000/P51900
+51249000,Statutory,BS,"""Bank XPF - CFP Franc""",A51000/P51900
+51250000,Statutory,BS,"""Bank ZAR - South African Rand""",A51000/P51900
+51810000,Statutory,BS,"""Accrued interests payable""",P51980
+51880000,Statutory,BS,"""Accrued interests receivable""",A51800
+52000000,Statutory,BS,"""Treasury instruments""",A50100
+52000001,Statutory,BS,"""NQDC Company Owned Investments""",A50100
+53000000,Statutory,BS,"""Petty Cash""",A51000
+53100000,Statutory,BS,"""Prepaid cards""",A51000
+58000000,Statutory,BS,"""Internal transfers""",A51000
+58000100,Statutory,BS,"""Transfer account Factoring (cash received from CGA)""",A51000
+58100000,Statutory,BS,"""Internal transfers - Netting""",A51000
+60000000,IFRS,PL,"""Derivative - Changes in fair value (loss)""",R60205
+60100000,Statutory,PL,"""Purchases - Stored - Raw materials and furnitures""",R60100
+60221100,Statutory,PL,"""Purchases - Stored - fuel""",R60210
+60223100,Statutory,PL,"""Purchases - Stored - Spare parts""",R60100
+60223200,Statutory,PL,"""Purchases - Stored - Lubrificants""",R60100
+60224000,Statutory,PL,"""Purchases - Stored - other consumables""",R60100
+60310000,Statutory,PL,"""Inventory changes - Raw materials and furnitures""",R60310
+60320100,Statutory,PL,"""Inventory changes - Fuel""",R60210
+60320200,Statutory,PL,"""Inventory changes - Lubricants""",R60310
+60320300,Statutory,PL,"""Inventory changes - Spare parts""",R60310
+60320400,Statutory,PL,"""Inventory changes - Other consummables""",R60310
+60370000,Statutory,PL,"""Inventory changes - Goods""",R60310
+60400000,Statutory,PL,"""Projects studies & assessment including in operating cycle""",R60850
+60610100,Statutory,PL,"""Purchases - Non-storable - water""",R60220
+60610200,Statutory,PL,"""Purchases - Non-storable - Energy - Buildings electricity""",R60220
+60610500,Statutory,PL,"""Purchases - Non-storable - Energy - Gas""",R60220
+60610600,Statutory,PL,"""Purchases - Non-storable - gas for operating equipment""",R60210
+60610700,Statutory,PL,"""Purchases - Non-storable - vehicle fuel""",R60210
+60610800,Statutory,PL,"""Purchases - Not stockable - Electric traction energy""",R60200
+60610900,Statutory,PL,"""Purchases - Not stockable - Energy outside traction""",R60220
+60620000,Statutory,PL,"""Purchases - not stockable - small operating equipment""",R60100
+60620001,Statutory,PL,"""Purchases - not stockable - low unit assets""",R60100
+60630000,Statutory,PL,"""Purchases - Not stockable - Security clothing""",R64800
+60631000,Statutory,PL,"""Purchases - not stockable - small equipment and supplies""",R60100
+60640100,Statutory,PL,"""Purchases - Non-storable - Office supplies""",R60100
+60640200,Statutory,PL,"""Purchases - Non-storable - IT supplies""",R60100
+60640300,Statutory,PL,"""Purchases - Non-storable - Cleaning products""",R60100
+60650100,Statutory,PL,"""Purchases - Non-storable - Labels and preprinted docs""",R60100
+60650200,Statutory,PL,"""Purchases - Non-storable - Packaging""",R60100
+60650300,Statutory,PL,"""Purchases - Non-storable - Pallets""",R60100
+60650400,Statutory,PL,"""Purchases - Non-storable - Lubricants""",R60100
+60650500,Statutory,PL,"""Purchases - Not stockable - Tires""",R60100
+60650600,Statutory,PL,"""Purchases - Not stockable - Tires  (tire procedure)""",R60100
+60650700,Statutory,PL,"""Purchase -Not stockable -spare parts""",R60100
+60710000,Statutory,PL,"""Purchase of goods for resale - other""",R60100
+60740000,Statutory,PL,"""Purchase of goods for resale - Pallets for resale""",R60100
+60800000,Statutory,PL,"""Purchase related expenses""",R60100
+60810000,Statutory,PL,"""Stopover agreements expenses""",R61150
+60910000,Statutory,PL,"""Discounts received on stored and un-storable  purchases""",R60100
+60910001,Statutory,PL,"""Discounts received - reimbursement of tax on energy products""",R60250
+61110100,Statutory,PL,"""Subcontracting – Trucks""",R61015
+61110200,Statutory,PL,"""Subcontracting – Road Transport / Delivery services""",R61015
+61110500,Statutory,PL,"""Subcontracting – Logistic services""",R61015
+61110600,Statutory,PL,"""Subcontracting – Tractors""",R61015
+61110800,Statutory,PL,"""Subcontracting – Customs clearance services and other duties""",R61015
+61110801,Statutory,PL,"""Subcontracting – Customs clearance services and other duties - accrual""",R61015
+61110900,Statutory,PL,"""Subcontracting – Other transport""",R61015
+61110901,Statutory,PL,"""Subcontracting – Other transport - accrual""",R61015
+61110902,Statutory,PL,"""Subcontracting – Other transport - not deductible""",R61015
+61111000,Statutory,PL,"""Subcontracting – Waste / reverse""",R61015
+61114000,Statutory,PL,"""Subcontracting – IT professionnal services""",R62821
+61117000,Statutory,PL,"""Subcontracting - Porterage Costs (facchinaggio)""",R61015
+61120000,Statutory,PL,"""Subcontracting – Others""",R61015
+61120001,Statutory,PL,"""Subcontracting – Others - accrual""",R61015
+61121000,Statutory,PL,"""Subcontracting – Duties""",R61015
+61121080,Statutory,PL,"""Subcontracting – Duties - accrual""",R61015
+61220100,Statutory,PL,"""Finance leases with a bargain purchase option - buildings""",R61220
+61220200,Statutory,PL,"""Finance leases with a bargain purchase option – Transport equipment""",R61220
+61220300,Statutory,PL,"""Finance leases with a bargain purchase option – administrative equipment""",R61220
+61220400,Statutory,PL,"""Finance leases with a bargain purchase option – IT equipment""",R61220
+61220500,Statutory,PL,"""Finance leases with a bargain purchase option – handling and logistic equipement""",R61220
+61300100,Statutory,PL,"""Real Estate costs  - in the scope""",R61310
+61300101,Statutory,PL,"""Real Estate costs - company appartment - in the scope""",R61310
+61300102,Statutory,PL,"""Real Estate costs - office - in the scope""",R61310
+61300180,Statutory,PL,"""Real Estate costs - rebilled""",R61310
+61300200,Statutory,PL,"""Operating transport equipment rent costs - in the scope""",R61305
+61300300,Statutory,PL,"""Non operating transport rent costs - in the scope""",R61325
+61300400,Statutory,PL,"""Handling & Logistic equipment rent costs (Forklift, rack…) - in the scope""",R61325
+61300401,Statutory,PL,"""Operational equipement - non movable - rent costs (Forklift, rack…) - in the scope""",R61325
+61300500,Statutory,PL,"""Other operating materials and equipments rent costs (Security cameras, dumpster - excluding IT equipment) - in the scope""",R61325
+61300600,Statutory,PL,"""IT equipment rent costs - in the scope""",R61325
+61300700,Statutory,PL,"""Administrative equipements rent costs excluding IT (ie. copy machine) - in the scope""",R61325
+61300800,Statutory,PL,"""Rail equipment  rent costs - in the scope""",R61300
+61300900,Statutory,PL,"""Finance leases - rent costs (transition period account)""",R61325
+61301000,Statutory,PL,"""Toll expenses Rail""",R61120
+61301700,Statutory,PL,"""Access right straigh lining related to IFRS 16 lease contracts - Real estate lease""",R61390
+61301800,Statutory,PL,"""Rent free period and other advantages granted by the lessor straigh lining related to IFRS 16 lease contracts - Real estate lease""",R61390
+61305000,Statutory,PL,"""Variable rent costs (ex. Additional  kilometers) - out of scope""",R61330
+61305100,Statutory,PL,"""Real estate rent costs (Short term contracts, …) - out of scope""",R61330
+61305101,Statutory,PL,"""Real Estate costs - company appartment - out of scope""",R61330
+61305102,Statutory,PL,"""Real Estate costs - office - out of scope""",R61330
+61305200,Statutory,PL,"""Operating transport equipments rent costs  - out of scope""",R61330
+61305300,Statutory,PL,"""Non operating transport equipment  rent expenses (Short term contracts) - out of scope""",R61330
+61305400,Statutory,PL,"""Handling & Logistics equipment rent costs (Forklift, rack…) - out of scope""",R61330
+61305401,Statutory,PL,"""Operational equipement - non movable - rent costs (Forklift, rack…) - out of scope""",R61330
+61305500,Statutory,PL,"""Other operating materials and equipments rent costs (Security cameras, dumpster  - excluding IT) - out of scope""",R61330
+61305600,Statutory,PL,"""IT equipment rent costs - out of scope""",R61330
+61305700,Statutory,PL,"""Phone equipment rent costs - out of scope""",R61330
+61305800,Statutory,PL,"""Small operating materials rent costs  (Geo-tracking machines…) - out of scope""",R61330
+61305900,Statutory,PL,"""Non operating equipements (administrative) rent costs - (coffee machine, water fountain…) - out of scope""",R61330
+61306000,Statutory,PL,"""Rail equipment  rent costs - out of scope""",R61330
+61307000,Statutory,PL,"""Tires rent costs (miles based) - out of scope""",R61330
+61400100,Statutory,PL,"""Occupancy costs""",R61440
+61400101,Statutory,PL,"""Occupancy costs - non operational""",R61440
+61400200,Statutory,PL,"""Occupancy costs - tax rebilled by the lessor""",R61440
+61525000,Statutory,PL,"""Maintenance and repairs - Buildings and lands""",R60850
+61525001,Statutory,PL,"""Maintenance and repairs - Buildings and lands - Office""",R60850
+61550200,Statutory,PL,"""Maintenance and repairs - Other transport equipment (trailers, containers, tyre, spare parts…)""",R61500
+61550300,Statutory,PL,"""Maintenance and repairs - Transport equipment""",R61500
+61550301,Statutory,PL,"""Maintenance and repairs - Transport equipment - company cars""",R61500
+61550302,Statutory,PL,"""Maintenance and repairs - commercial vehicles (partially deductible)""",R60850
+61550400,Statutory,PL,"""Maintenance and repairs - Computer hardware equipment""",R62821
+61550500,Statutory,PL,"""Maintenance and repairs - Software""",R62821
+61550600,Statutory,PL,"""Maintenance and repairs - Office equipment""",R60850
+61550700,Statutory,PL,"""Maintenance and repairs - Rail transport equipment""",R61515
+61550800,Statutory,PL,"""Maintenance and repairs -  operational technical installations""",R60850
+61550900,Statutory,PL,"""Maintenance and repairs - other non operational equipments""",R60850
+61551000,Statutory,PL,"""Maintenance and repairs - operational tools and logistic equipments""",R61500
+61551100,Statutory,PL,"""Cleaning costs - transport equipment""",R61500
+61552000,Statutory,PL,"""Cleaning costs - transport equipment""",R61500
+61553000,Statutory,PL,"""Cleaning costs - warehouse""",R60850
+61610100,Statutory,PL,"""Insurance premiums - comprehensive insurance""",R61600
+61610200,Statutory,PL,"""Insurance premiums - Building""",R61600
+61610300,Statutory,PL,"""Insurance premiums - Operational risks""",R61600
+61620100,Statutory,PL,"""Insurance premiums - Civil liability insurance""",R61600
+61620101,Statutory,PL,"""Insurance premiums - Civil liability insurance for employees""",R61600
+61620102,Statutory,PL,"""Insurance premiums - Civil liability insurance company manager""",R61600
+61620103,Statutory,PL,"""Insurance premiums - Civil liability insurance - group/collective accident""",R61600
+61630100,Statutory,PL,"""Insurance premiums - Operating vehicles""",R61600
+61630101,Statutory,PL,"""Insurance premiums - Operating vehicles - drivers""",R61600
+61632000,Statutory,PL,"""Insurance premiums - Other vehicles (company cars, passenger cars, etc.)""",R61600
+61640100,Statutory,PL,"""Insurance premiums - Other equipments (excluding transport equipment)""",R61600
+61650100,Statutory,PL,"""Insurance premiums - credit insurance""",R61600
+61660100,Statutory,PL,"""Insurance premiums - Losses and damages""",R61600
+61670100,Statutory,PL,"""Insurance premiums - Goods in transit""",R61600
+61671000,Statutory,PL,"""Self insurer - Litigations, losses and damages costs""",R62800
+61673000,Statutory,PL,"""Self insurer - transport equipmemt""",R61600
+61674000,Statutory,PL,"""Self insurer - goods in transit""",R61600
+61678000,Statutory,PL,"""Self insurer -other""",R61600
+61680100,Statutory,PL,"""Other Insurances""",R61600
+61810100,Statutory,PL,"""Miscellaneous expenses - General and technical documentation/ subscription""",R62800
+61850100,Statutory,PL,"""Seminar and conference costs""",R62800
+61910100,Statutory,PL,"""Discounts on external services""",R62800
+62110100,Statutory,PL,"""Temporary staff costs""",R62150
+62110180,Statutory,PL,"""Contract staff fr. third party""",R62150
+62140100,Statutory,PL,"""Seconded staff costs""",R64600
+62140180,Statutory,PL,"""Seconded staff costs - rebilled""",R64600
+62200000,Statutory,PL,"""Direct costs paid to initiate IFRS 16 contract""",R62200
+62210100,Statutory,PL,"""Commissions and brokerage fees on sales and purchases""",R62283
+62260100,Statutory,PL,"""Legal consulting fees""",R62200
+62260200,Statutory,PL,"""Audit fees""",R62200
+62260300,Statutory,PL,"""Recruiting  and payroll fees""",R62200
+62260400,Statutory,PL,"""Strategy, organisation and consulting fees""",R62200
+62260500,Statutory,PL,"""Other fees""",R62200
+62260580,Statutory,PL,"""Other fees - rebilled""",R62200
+62260600,Statutory,PL,"""IT contractor fee""",R62821
+62260700,Statutory,PL,"""Training, coaching and outplacement fees""",R60340
+62260800,Statutory,PL,"""Fees - survey/ financial investigation""",R62200
+62260900,Statutory,PL,"""Tax consulting fees""",R62200
+62261000,Statutory,PL,"""Fees - Insurance""",R62200
+62261100,Statutory,PL,"""Fees - Tax review (part of statutory audit)""",R62200
+62261200,Statutory,PL,"""Fees - Accounting advisory & Outscourced book keeping services""",R62200
+62270000,Statutory,PL,"""Legal and litigation fees""",R62283
+62310100,Statutory,PL,"""Advertising, publications, public relations - Announcements and advertisements, Publications, Catalogues and printed material""",R62300
+62330100,Statutory,PL,"""Advertising, publications, public relations - Exhibitions""",R62300
+62340100,Statutory,PL,"""Advertising, publications, public relations - Gifts to customers (deductible)""",R62300
+62340200,Statutory,PL,"""Advertising, publications, public relations - Gifts to customers (not deductible)""",R62300
+62340201,Statutory,PL,"""Advertising, publications, public relations - Gifts to customers (not deductible - national)""",R62300
+62340202,Statutory,PL,"""Advertising, publications, public relations - Gifts to customers (not deductible - international)""",R62300
+62380100,Statutory,PL,"""Advertising, publications, public relations - Grants & Donations""",R62300
+62380300,Statutory,PL,"""Advertising, publications, public relations - Sponsoring""",R62300
+62411000,Statutory,PL,"""Freight on purchase and sales""",R62800
+62470100,Statutory,PL,"""Employee transportation""",R62800
+62480100,Statutory,PL,"""Miscellaneous transportation costs""",R62800
+62481000,Statutory,PL,"""Waste removal""",R62800
+62510100,Statutory,PL,"""Cost of travel for drivers""",R62500
+62510200,Statutory,PL,"""Cost of travel for internal staff - Taxi, toll and parking""",R62500
+62510201,Statutory,PL,"""Cost of travel for internal staff (Non deductable)""",R62500
+62510202,Statutory,PL,"""Cost of travel for internal staff - Fixed amount reimbursment""",R62500
+62510300,Statutory,PL,"""Cost of travel for internal staff - Kilometric allowance""",R62500
+62510400,Statutory,PL,"""Cost of travel for internal staff - Relocation costs""",R62500
+62510500,Statutory,PL,"""Cost of travel for internal staff - airplane, train""",R62500
+62510600,Statutory,PL,"""Cost of travel for internal staff - Accomodation costs (hotel…)""",R62500
+62510700,Statutory,PL,"""Cost of travel for internal staff - Catering expenses""",R62500
+62510800,Statutory,PL,"""Cost of travel for internal staff - overseas""",R62500
+62510900,Statutory,PL,"""Cost of travel for internal staff - domestic""",R62500
+62510980,Statutory,PL,"""Cost of travel for internal staff - rebilled part""",R62500
+62560200,Statutory,PL,"""Costs related to entertainments and representations""",R62500
+62560201,Statutory,PL,"""Costs related to entertainments and representations (not deductible)""",R62500
+62560202,Statutory,PL,"""reception expenses submitted to wage taxes""",R62500
+62560203,Statutory,PL,"""Reception expnses not submitted to wage taxes""",R62500
+62560204,Statutory,PL,"""Reception expenses third party deductible""",R62500
+62600100,Statutory,PL,"""Postage - Telecommunication costs (fix and mobile)""",R62620
+62600101,Statutory,PL,"""Postage - Telecommunication costs (fix and mobile) - not deductible""",R62620
+62600200,Statutory,PL,"""IT networks costs""",R62821
+62600300,Statutory,PL,"""Telex & fax costs""",R62620
+62600400,Statutory,PL,"""Postage & courier costs""",R62620
+62600500,Statutory,PL,"""Freight Transportation Platforms""",R61100
+62600600,Statutory,PL,"""On-board computer subscription costs""",R62620
+62781000,Statutory,PL,"""Factoring commissions""",R62700
+62782000,Statutory,PL,"""Netting fines""",R62700
+62788000,Statutory,PL,"""Bank charges""",R62700
+62788100,Statutory,PL,"""Bank charges - Guarantees""",R62700
+62810100,Statutory,PL,"""Other expenses - Miscellaneous contributions""",R62800
+62820100,Statutory,PL,"""Other expenses - Road tolls trucks""",R61100
+62820101,Statutory,PL,"""Other expenses - Road tolls trucks - non deductible""",R61100
+62820200,Statutory,PL,"""Other expenses - Ferries and tunnels tolls""",R61120
+62830100,Statutory,PL,"""Building - Security personnel and services costs""",R62800
+62840100,Statutory,PL,"""Building - Cleaning costs""",R61440
+62840200,Statutory,PL,"""Treatment of scrap material""",R62800
+62850000,Statutory,PL,"""Internal IT invoicing - charges""",R62821
+62850080,Statutory,PL,"""Internal IT reinvoicing - rebilled part""",R62821
+62860000,Statutory,PL,"""Shared services center fees (excluding IT fees) - intra/inter Region/Lob""",R62800
+62870000,Statutory,PL,"""Tank inside cleaning costs""",R62800
+62880000,Statutory,PL,"""Personnel recruitment costs""",R62800
+62880100,Statutory,PL,"""Other expenses - Others""",R62800
+62880101,Statutory,PL,"""Other expenses - Others - not deductible""",R62800
+62880103,Statutory,PL,"""Unexpected costs related to previous years""",R62800
+62880180,Statutory,PL,"""Other expenses - rebilled part""",R62800
+62880200,Statutory,PL,"""Canteen costs / Compensation for lunch""",R62800
+62880300,Statutory,PL,"""Other expenses - other subscription costs""",R62800
+62880400,Statutory,PL,"""Start-up costs""",R62800
+62881000,Statutory,PL,"""Integration costs related to investments - Other external expenses""",R62845
+62890000,Statutory,PL,"""Allocation related to non-personal costs""",R62800
+62910100,Statutory,PL,"""Discounts received - Other external services""",R62800
+62910200,Statutory,PL,"""Discounts received - temporary workers agency""",R62150
+63110000,Statutory,PL,"""Other taxes based on salaries and wages""",R63110
+63110001,Statutory,PL,"""Other taxes based on salaries and wages - Apprenticeship tax""",R63110
+63110002,Statutory,PL,"""Other taxes based on salaries ans wages - Vocational training""",R63110
+63110003,Statutory,PL,"""Other taxes based on salaries and wages - Building & Construction taxes""",R63110
+63110004,Statutory,PL,"""Other taxes based on salaries and wages - Fringe benefits""",R63110
+63120000,Statutory,PL,"""Taxes based on salaries and wages""",R63100
+63180000,Statutory,PL,"""Fiscal charges on salaries""",R63110
+63180001,Statutory,PL,"""Tax contributions on provisions for paid vacations""",R63110
+63180002,Statutory,PL,"""Provision for tax contributions on accrued additional month of salaries""",R63110
+63180003,Statutory,PL,"""Tax contributions on provision for salaries to be paid""",R63110
+63180004,Statutory,PL,"""Tax contributions on provision for bonus to be paid""",R63110
+63210000,Statutory,PL,"""Property tax - Real-estate""",R63720
+63210100,Statutory,PL,"""CFE (Corporate Land Contribution) - France only""",R63212
+63220000,Statutory,PL,"""Asset-based tax - fixed installations""",R63720
+63230000,Statutory,PL,"""Tax on transport equipments""",R63700
+63310000,Statutory,PL,"""Participation of the employer to public transport""",R63110
+63320000,Statutory,PL,"""Contribution sociale de solidarité à la charge des sociétés""",R63110
+63410000,Statutory,PL,"""Other tax on intermediary balance to be paid""",R63210
+63410100,Statutory,PL,"""Other tax on intermediary balance to be paid""",R63700
+63420000,Statutory,PL,"""Taxes assessed on revenue""",R63705
+63500000,Statutory,PL,"""Registration and stamp duty""",R63700
+63500001,Statutory,PL,"""Tax stamps for purchase invoices - VAT exempt""",R63700
+63600000,Statutory,PL,"""Customs duties and other freight taxes""",R63700
+63710000,Statutory,PL,"""Environmental tax""",R63700
+63720000,Statutory,PL,"""Energy tax""",R63700
+63800000,Statutory,PL,"""Other taxes""",R63700
+63800001,Statutory,PL,"""Other taxes - PIS (BR)""",R63700
+63800002,Statutory,PL,"""Other taxes - COFINS (BR)""",R63700
+63800003,Statutory,PL,"""Other taxes - ISS (BR)""",R63700
+63800005,Statutory,PL,"""Other taxes - city tax""",R63700
+63800006,Statutory,PL,"""Other taxes - City Construction Tax (CN)""",R63700
+63800007,Statutory,PL,"""Other taxes - Tax on publicity expenses""",R63700
+63800008,Statutory,PL,"""Other taxes - tax on commercial chamber and other trade associations subscription """,R63700
+63800009,Statutory,PL,"""Other taxes not deductible""",R63700
+63800010,Statutory,PL,"""Other taxes - ICMS (BR)""",R63700
+63800011,Statutory,PL,"""Other taxes - VAT not deductible""",R63700
+63810100,Statutory,PL,"""Withholding taxes on salaries and wages""",R63100
+63810200,Statutory,PL,"""Withholding taxes (excluding withholding taxes on salaries and wages)""",R63700
+64000200,Statutory,PL,"""Transfer of employee benefits""",R64006
+64111000,Statutory,PL,"""Wages and salaries""",R64100
+64111001,Statutory,PL,"""Wages and salaries - mini-jobs (DE)""",R64100
+64111002,Statutory,PL,"""Wages and salaries - termination payment""",R64100
+64111003,Statutory,PL,"""Wages and salaries - sick leave""",R64100
+64111004,Statutory,PL,"""Wages and salaries - employer contribution employee's transport""",R64100
+64111005,Statutory,PL,"""Wages and salaries - employer contribution to educational costs""",R64100
+64111006,Statutory,PL,"""Wages and salaries - hourly""",R64100
+64112000,Statutory,PL,"""Wages and salaries - Expartriates""",R64100
+64113000,Statutory,PL,"""Wages and salaries - Not taxable""",R64100
+64113001,Statutory,PL,"""Wages and salaries - personnal selection budget (NL)""",R64100
+64121000,Statutory,PL,"""Paid vacations""",R64100
+64121001,Statutory,PL,"""Annual leave loading""",R64100
+64121002,Statutory,PL,"""Paid vacations - hourly""",R64100
+64131000,Statutory,PL,"""Additionnal  months of salaries""",R64100
+64131001,Statutory,PL,"""Additionnal months of salaries 1""",R64100
+64131002,Statutory,PL,"""Additionnal months of salaries 2""",R64100
+64132000,Statutory,PL,"""Overtime and extra months""",R64100
+64133000,Statutory,PL,"""Shift Allowances""",R64100
+64133001,Statutory,PL,"""Shift Allowances - non taxable""",R64100
+64134000,Statutory,PL,"""Incentive compensations paid""",R64100
+64134001,Statutory,PL,"""Incentive compensations paid - hourly""",R64100
+64134100,Statutory,PL,"""Commercial bonuses paid""",R64100
+64135000,Statutory,PL,"""Bonuses paid (not based on KPIs or annual objectives)""",R64100
+64136000,Statutory,PL,"""Seniority gratifications""",R64100
+64137000,Statutory,PL,"""Miscellaneous benefits""",R64100
+64141000,Statutory,PL,"""End of contract bonus paid - Short term contracts""",R64100
+64141100,Statutory,PL,"""Traineeship allowance""",R64100
+64142000,Statutory,PL,"""End of contract bonus paid (incl. severance and termination benefits)""",R64100
+64142001,Statutory,PL,"""End of contract bonus paid (incl. severance and termination benefits) - non-taxable""",R64100
+64143000,Statutory,PL,"""Retirement benefits""",R64100
+64143001,Statutory,PL,"""Retirement benefits - non taxable""",R64100
+64144000,Statutory,PL,"""Other allowance, compensations or indemnities""",R64100
+64144001,Statutory,PL,"""Other allowance, compensations or indemnities non taxable""",R64100
+64144002,Statutory,PL,"""Other allowance, compensations or indemnities - fuel coupons""",R64100
+64144003,Statutory,PL,"""Other allowance, compensations or indemnities - meal coupons bonus""",R64100
+64145000,Statutory,PL,"""Benefits in kind / fringe benefits""",R64100
+64145001,Statutory,PL,"""Benefits in kind / fringe benefits - Company Pensions""",R64100
+64145002,Statutory,PL,"""Fringe Benefit - Rental (CN)""",R64100
+64145003,Statutory,PL,"""Fringe Benefit - Meal (CN)""",R64100
+64145004,Statutory,PL,"""Fringe Benefit - Transportation (CN)""",R64100
+64145005,Statutory,PL,"""Fringe Benefit - Telephone (CN)""",R64100
+64145006,Statutory,PL,"""Fringe Benefit - Expatriate (CN)""",R64100
+64145100,Statutory,PL,"""Benefits in kind / fringe benefits - non-taxable""",R64100
+64146000,Statutory,PL,"""Employee benefits, internal transfer""",R64100
+64160000,Statutory,PL,"""Workforce Grants""",R64100
+64190000,Statutory,PL,"""Allocation related to personal costs""",R64100
+64310000,Statutory,PL,"""Provision for paid vacations""",R64100
+64311000,Statutory,PL,"""Provision for holidays bonus paid""",R64100
+64320000,Statutory,PL,"""Provision for accrued remuneration""",R64100
+64330000,Statutory,PL,"""Provision for severance and termination benefits""",R64100
+64340000,Statutory,PL,"""Other staff provisions""",R64100
+64350000,Statutory,PL,"""Provision for accrued additionnal month of salaries""",R64100
+64350001,Statutory,PL,"""Provision for accrued additionnal month of salaries 1""",R64100
+64360000,Statutory,PL,"""Provision for accrued allowances/bonus""",R64100
+64360001,Statutory,PL,"""Provision for accrued allowances/bonus - Boni CSG Germany""",R64100
+64360002,Statutory,PL,"""Provision for accrued allowances/bonus - Incentive compensation""",R64100
+64370000,Statutory,PL,"""Provision for salaries to be paid""",R64100
+64370001,Statutory,PL,"""Provision for salaries to be paid - TFR Italy""",R64100
+64511000,Statutory,PL,"""Social security costs""",R64500
+64511001,Statutory,PL,"""Social Security costs - Italy Enasarco""",R64500
+64511002,Statutory,PL,"""Social Security costs - Italy contributions""",R64500
+64511003,Statutory,PL,"""Social Security costs - Industrial accident""",R64500
+64511004,Statutory,PL,"""Social Security costs - part time wages""",R64500
+64511005,Statutory,PL,"""Social Security costs - sick pay advanced""",R64500
+64511006,Statutory,PL,"""Social Security costs - Overtime""",R64500
+64511007,Statutory,PL,"""Social security contribution costs - social fees (FR)""",R64500
+64511008,Statutory,PL,"""Social security contribution costs - reduction of social contribution (FR)""",R64500
+64511009,Statutory,PL,"""Social security contribution costs - short contract""",R64500
+64511010,Statutory,PL,"""Social security contribution costs - contribution to accident and disability""",R64500
+64511011,Statutory,PL,"""Social security contribution costs - real estate contribution - Infonavit (MX)""",R64500
+64511012,Statutory,PL,"""Social security contribution costs - retirement contribution (MX)""",R64500
+64511013,Statutory,PL,"""Social security contribution costs""",R64500
+64511014,Statutory,PL,"""Social security costs - hourly""",R64500
+64511015,Statutory,PL,"""Social security costs - suspens account""",R64500
+64512000,Statutory,PL,"""Social Security costs - expatriates""",R64500
+64513000,Statutory,PL,"""Health insurance fund costs""",R64500
+64513001,Statutory,PL,"""Health insurance fund contribution costs - executives""",R64500
+64514000,Statutory,PL,"""Health insurance fund costs - expatriates""",R64500
+64515000,Statutory,PL,"""Health insurance additional fund costs (death/disability)""",R64500
+64516000,Statutory,PL,"""Health insurance additional fund costs (death/disability) - expatriates""",R64500
+64517000,Statutory,PL,"""Pension fund costs""",R64500
+64517001,Statutory,PL,"""Contributions Social Sécurity - Pensions Executive""",R64500
+64517002,Statutory,PL,"""Pension insurance premiums""",R64500
+64517003,Statutory,PL,"""Pension insurance premiums - reduction of premium""",R64500
+64517004,Statutory,PL,"""Pension insurance premiums - manual part""",R64500
+64518000,Statutory,PL,"""Pension fund costs - expatriates""",R64500
+64519000,Statutory,PL,"""Unemployement costs""",R64500
+64519001,Statutory,PL,"""Unemployement costs - hourly""",R64500
+64521000,Statutory,PL,"""Unemployement costs - expatriates""",R64500
+64522000,Statutory,PL,"""Social contributions on provisions for paid vacations""",R64500
+64522001,Statutory,PL,"""Social contributions on provision for paid vacations""",R64500
+64523000,Statutory,PL,"""Social contributions on provisions for accrued remuneration""",R64500
+64524000,Statutory,PL,"""Social contributions on other provisions""",R64500
+64524001,Statutory,PL,"""Social contributions on other provisions - family allowance""",R64500
+64524002,Statutory,PL,"""Social contributions on other provisions - Fillon""",R64500
+64525000,Statutory,PL,"""Social contributions on provisions for accrued additionnal month of salaries""",R64500
+64526000,Statutory,PL,"""Social contributions on provisions for accrued allowances/bonus""",R64500
+64526001,Statutory,PL,"""Social contributions on provisions for accrued allowances/bonus - Boni CSG Germany""",R64500
+64527000,Statutory,PL,"""Social contributions on provisions for salaries t obe paid""",R64500
+64530100,Statutory,PL,"""Medical expenses (US specific)""",R64500
+64530101,Statutory,PL,"""Medical expenses (US specific) - hourly""",R64500
+64530200,Statutory,PL,"""Statutory accident insurance (US specific)""",R64500
+64530201,Statutory,PL,"""Statutory accident insurance (US specific) - hourly""",R64500
+64530300,Statutory,PL,"""Health benefits expenses (US specific)""",R64500
+64530301,Statutory,PL,"""Health benefits expenses (US specific) - hourly""",R64500
+64530400,Statutory,PL,"""Contribution to life insurance fund """,R64500
+64530500,Statutory,PL,"""Contribution to unemployment fund """,R64500
+64530700,Statutory,PL,"""Retirement plan - Defined contribution Plan (401 K)""",R64500
+64580000,Statutory,PL,"""Other social contributions""",R64500
+64580001,Statutory,PL,"""Other social contributions - hourly""",R64500
+64710000,Statutory,PL,"""Direct allowances""",R64800
+64710001,Statutory,PL,"""Direct allowances - Healt insurance (death/disability)""",R64800
+64720000,Statutory,PL,"""Employer contribution to Work Council""",R64800
+64720001,Statutory,PL,"""Employer contribution to CCE""",R64800
+64740000,Statutory,PL,"""Employer contribution to other staff benefits and social welfare""",R64800
+64750000,Statutory,PL,"""Employer contribution to occupational health, pharmacy""",R64800
+64760000,Statutory,PL,"""Employer contribution to canteen & luncheon vouchers""",R64800
+64770000,Statutory,PL,"""Pension - Payment to assets plan""",R64800
+64810000,Statutory,PL,"""Long-service awards (jubilee) costs""",R64800
+64820000,Statutory,PL,"""Incentive plan costs""",R69100
+64830000,Statutory,PL,"""Other staff costs""",R64800
+64831000,Statutory,PL,"""Other staff costs - non taxable""",R64800
+64840000,Statutory,PL,"""Swag to reward employees""",R64800
+64881000,Statutory,PL,"""Integration costs related to investments - staff expenses""",R64845
+65000000,Statutory,PL,"""Trademark fees""",R65100
+65010000,Statutory,PL,"""License fees software""",R62821
+65020000,Statutory,PL,"""Other royalties, and licence fees""",R65100
+65030000,Statutory,PL,"""management lease contract costs""",R65100
+65111000,Statutory,PL,"""Group management fees - costs""",R65200
+65112000,Statutory,PL,"""Region/LoB management fees""",R65200
+65310000,Statutory,PL,"""Attendance fees""",R62800
+65400000,Statutory,PL,"""Bad debt write-offs""",R65400
+65400001,Statutory,PL,"""Bad debt write-offs - tax free""",R65400
+65500000,Statutory,PL,"""Share of joint venture losses""",R65500
+65610000,Statutory,PL,"""Realized - Foreign exchange losses- commercial accounts""",R66610
+65620000,Statutory,PL,"""Unrealized - Foreign exchange losses - commercial accounts""",R66610
+65810000,Statutory,PL,"""NBV of recurring disposals - transport equipment""",R65560
+65810100,Statutory,PL,"""NBV of recurring disposals - material handling equipment""",R65560
+65820000,Statutory,PL,"""Other operating expenses""",R65000
+65830000,Statutory,PL,"""Settlement differences - charge""",R65000
+65840000,Statutory,PL,"""Unrecoverable VAT""",R62800
+66116000,Statutory,PL,"""Interest costs on bank borrowings and similar debts""",R66100
+66116100,Statutory,PL,"""Overdraft costs""",R66100
+66116200,Statutory,PL,"""Interest costs on employee profit sharing plan""",R66820
+66116300,Statutory,PL,"""Interest costs on intercompany borrowings""",R66100
+66116400,Statutory,PL,"""Interest on debts from subsidiaries and associates""",R66100
+66116500,Statutory,PL,"""Interest costs on current accounts""",R66100
+66116600,Statutory,PL,"""Cash Pooling interests""",R66100
+66116700,Statutory,PL,"""Interest on loans and debts on finance lease (transition period account)""",R66140
+66180000,Statutory,PL,"""Interests on commercial debt""",R66820
+66410000,Statutory,PL,"""Losses due to granted financial debt waivers""",R67840
+66420000,Statutory,PL,"""Financial cost of benefits granted to employees""",R66400
+66500000,Statutory,PL,"""Discounts granted""",R66820
+66605000,Statutory,PL,"""Loss on derivative exercise (e.g. forward sale/purchase)""",R66200
+66610000,Statutory,PL,"""Realized - Foreign exchange losses - Financial operations""",R66100
+66620000,Statutory,PL,"""Unrealized - Foreign exchange losses - Financial operations""",R66200
+66810000,Statutory,PL,"""Merger costs""",R66850
+66820000,Statutory,PL,"""Other fiancial expenses""",R66820
+66820001,Statutory,PL,"""Other fiancial expenses - not deductible""",R66820
+66820002,Statutory,PL,"""Financial tax on financial services - IOF (BR)""",R66820
+66820003,Statutory,PL,"""Financial cost of benefits granted to employees - Defined contribution Plan (NQDC)""",R66820
+66830000,Statutory,PL,"""Factor interests""",R66820
+66840000,Statutory,PL,"""Financial instrument - Change in fair value (losse)""",R66200
+67110000,Statutory,PL,"""Tax / legal penalties and fines""",R67800
+67110001,Statutory,PL,"""Tax Interest Expense""",R67800
+67120000,Statutory,PL,"""Granted commercial debt waivers""",R65400
+67130000,Statutory,PL,"""Market penalties""",R67800
+67170000,Statutory,PL,"""Tax adjustments (excl. Income tax)""",R63700
+67180000,Statutory,PL,"""Other non-recurring expenses from transactions""",R67800
+67181000,Statutory,PL,"""Damages paid""",R67800
+67182100,Statutory,PL,"""Non-recurring expenses on restructuring plan - staff costs""",R67841
+67182200,Statutory,PL,"""Non-recurring expenses on restructuring plan - other costs""",R67843
+67183000,Statutory,PL,"""Integration costs""",R67845
+67518000,Statutory,PL,"""NBV - Intangible assets""",R67510
+67518100,Statutory,PL,"""NBV - Technical losses on merger""",R67510
+67518200,Statutory,PL,"""NBV - Software""",R67510
+67521000,Statutory,PL,"""NBV - Transport equipments""",R67530
+67521100,Statutory,PL,"""NBV - Lands and Improvements""",R67520
+67521300,Statutory,PL,"""NBV - Buildings""",R67520
+67521500,Statutory,PL,"""NBV - Operating equipment""",R67520
+67521700,Statutory,PL,"""NBV - railway equipment""",R67530
+67522000,Statutory,PL,"""NBV - Other tangible assets""",R67520
+67522100,Statutory,PL,"""NBV -Hardware""",R67520
+67560000,Statutory,PL,"""NBV - non consolidated securities sold""",R67560
+67561000,Statutory,PL,"""NBV - consolidated securities sold""",R67560
+68101000,Statutory,PL,"""Amortization expenses - Start-up expenses / Initial costs""",R68111
+68103000,Statutory,PL,"""Amortization expenses - Research and development costs""",R68111
+68105200,Statutory,PL,"""Amortization expenses - Other patents, concessions and similar rights""",R68111
+68106000,Statutory,PL,"""Amortization expenses - Leasing rights""",R68111
+68107000,Statutory,PL,"""Amortization expenses - Business goodwill""",R68111
+68108000,Statutory,PL,"""Amortization expense - Other intangible assets""",R68111
+68108100,Statutory,PL,"""Amortization expenses - Technical losses on merger allocated to intangible fixed assets (except purchased goodwill))""",R68111
+68108200,Statutory,PL,"""Amortization expenses - Technical losses on merger allocated to purchased goodwill""",R68111
+68111000,Statutory,PL,"""Amortization expense - Software""",R68111
+68111100,Statutory,PL,"""Amortization expenses - Land and land improvements - freehold""",R68112
+68112000,Statutory,PL,"""Amortization expenses - Land improvements - non-freehold""",R68112
+68113100,Statutory,PL,"""Amortization expenses - Building - freehold""",R68112
+68113200,Statutory,PL,"""Amortization expenses - Building fixtures and fittings - freehold""",R68112
+68113800,Statutory,PL,"""Amortization expenses - Infrastructure - freehold""",R68112
+68114000,Statutory,PL,"""Amortization expenses - Building - non-freehold""",R68112
+68114400,Statutory,PL,"""Amortization expenses - Infrastructure - non-freehold""",R68112
+68115100,Statutory,PL,"""Amortization expenses - Technical installations""",R68112
+68115200,Statutory,PL,"""Amortization expenses - Tools & logistic equipments""",R68112
+68117000,Statutory,PL,"""Amortization expenses - Rail transport equipment""",R68113
+68117100,Statutory,PL,"""Amortization expenses - Truck and tractor""",R68113
+68117200,Statutory,PL,"""Amortization expenses - Trailers and semi-articulated trucks""",R68113
+68117300,Statutory,PL,"""Amortization expenses - Containers and swap bodies""",R68113
+68117400,Statutory,PL,"""Amortization expenses - Geo-tracking boxes""",R68113
+68118100,Statutory,PL,"""Amortization expenses - Other Fixtures and fitting - non-freehold""",R68112
+68118200,Statutory,PL,"""Amortization expenses - Commercial vehicles (not used in operating cycle)""",R68113
+68118201,Statutory,PL,"""Amortization expenses - Commercial vehicles (not used in operating cycle) - non deductable""",R68113
+68118300,Statutory,PL,"""Amortization expense - Hardware""",R68112
+68118400,Statutory,PL,"""Amortization expenses - Furniture""",R68112
+68118480,Statutory,PL,"""Amortization expenses - Furniture - inflation""",R68112
+68118500,Statutory,PL,"""Amortization expenses - Office equipment""",R68112
+68118600,Statutory,PL,"""Amortization expenses - Recoverable packaging""",R68112
+68118700,Statutory,PL,"""Amortization expenses - other operating vehicles (used in operating cycle)""",R68113
+68118800,Statutory,PL,"""Amortization expense - Other tangible assets""",R68112
+68118900,Statutory,PL,"""Amortization expense - Technical losses on merger allocated to tangible fixed assets""",R68111
+68151100,Statutory,PL,"""Provisions expense for commercial litigation""",R68150
+68151200,Statutory,PL,"""Provisions expense for operating tax liabilities""",R63740
+68151300,Statutory,PL,"""Provisions expense for social liabilities""",R64830
+68151400,Statutory,PL,"""Provisions expense for contract termination costs""",R68150
+68151500,Statutory,PL,"""Provisions expense for retirement indemnities(France)""",R68160
+68151600,Statutory,PL,"""Provisions expense for employee litigation""",R64830
+68151700,Statutory,PL,"""Provisions expense for unrealized foreign currency losses - Commercial operations""",R68670
+68151800,Statutory,PL,"""Provisions expense for major maintenance and repairs""",R68150
+68151900,Statutory,PL,"""Provisions expense for losses and damages""",R68150
+68152000,Statutory,PL,"""Provisions expense for vacant surface area of leased premises""",R68150
+68152100,Statutory,PL,"""Provisions expense to Tires renewal""",R68150
+68152200,Statutory,PL,"""Provisions expense for onerous contracts""",R68150
+68152300,Statutory,PL,"""Provisions expense for other employee benefits (E.g. LTIP)""",R68160
+68152400,Statutory,PL,"""Provisions expense for long-service awards (jubilee)""",R68160
+68152401,Statutory,PL,"""Provisions expense for indemnisation (MX)""",R68160
+68152600,Statutory,PL,"""Provisions expense to repair leased assets""",R68150
+68152700,Statutory,PL,"""Provisions expense for warranty""",R68150
+68152800,Statutory,PL,"""Provisions expense for self-insurer""",R68150
+68152900,Statutory,PL,"""Provisions expense for environmental risks""",R68150
+68153000,Statutory,PL,"""Provisions expense for other risks and expenses""",R68150
+68153100,Statutory,PL,"""Provisions expense for other pensions plan (Excluding retirement indemnities for France & Italy)""",R68160
+68160100,Statutory,PL,"""Provisions / impairment expense for Start-up expenses / Initial costs""",R68130
+68160200,Statutory,PL,"""Provisions / impairment expense for Research and development costs""",R68130
+68160300,Statutory,PL,"""Provisions / impairment expense for Software""",R68130
+68160400,Statutory,PL,"""Provisions / impairment expense for Other patents, concessions and similar rights""",R68130
+68160500,Statutory,PL,"""Provisions / impairment expense for Leasing rights""",R68130
+68160600,Statutory,PL,"""Provisions / impairment expense for Business goodwill""",R68130
+68160700,Statutory,PL,"""Provisions / impairment expense for other  intangible assets""",R68130
+68160800,Statutory,PL,"""Provisions / impairment expense for Technical losses on merger allocated to intangible fixed assets (except purchased goodwill))""",R68130
+68160900,Statutory,PL,"""Provisions / impairment expense for Technical losses on merger allocated to purchased goodwill""",R68130
+68161100,Statutory,PL,"""Provisions / impairment expense for Land and land improvements - freehold""",R68131
+68162000,Statutory,PL,"""Provisions / impairment expense for Land improvements - non-freehold""",R68131
+68163100,Statutory,PL,"""Provisions / impairment expense for Building - freehold""",R68131
+68163200,Statutory,PL,"""Provisions / impairment expense for Building fixtures and fittings - freehold""",R68131
+68163800,Statutory,PL,"""Provisions / impairment expense for Infrastructure - freehold""",R68131
+68164000,Statutory,PL,"""Provisions / impairment expense for Building - non-freehold""",R68131
+68164400,Statutory,PL,"""Provisions / impairment expense for Infrastructure - non-freehold""",R68131
+68165100,Statutory,PL,"""Provisions / impairment expense for Technical installations""",R68131
+68165200,Statutory,PL,"""Provisions / impairment expense for tools & equipments""",R68131
+68167000,Statutory,PL,"""Provisions / impairment expense for Rail transport equipment""",R68132
+68167100,Statutory,PL,"""Provisions / impairment expense for Truck and tractor""",R68132
+68167200,Statutory,PL,"""Provisions / impairment expense for Trailers and semi-articulated trucks""",R68132
+68167300,Statutory,PL,"""Provisions / impairment expense for Containers and swap bodies""",R68132
+68167400,Statutory,PL,"""Provisions / impairment expense for Geo-tracking boxes""",R68132
+68168100,Statutory,PL,"""Provisions / impairment expense for Other Fixtures and fitting - non-freehold""",R68131
+68168200,Statutory,PL,"""Provisions / impairment expense for Commercial vehicles (not used in operating cycle)""",R68132
+68168300,Statutory,PL,"""Provisions / impairment expense for Hardware""",R68131
+68168400,Statutory,PL,"""Provisions / impairment expense for Furniture""",R68131
+68168500,Statutory,PL,"""Provisions / impairment expense for Office equipment""",R68131
+68168600,Statutory,PL,"""Provisions / impairment expense for Recoverable packaging""",R68131
+68168700,Statutory,PL,"""Provisions / impairment expense for Commercial vehicles (used in operating cycle)""",R68132
+68168800,Statutory,PL,"""Provisions / impairment expense for other tangible assets""",R68131
+68168900,Statutory,PL,"""Provisions / impairment expense for technical losses on merger allocated to tangible fixed assets""",R68130
+68173000,Statutory,PL,"""Provisions / impairment expense for inventories""",R68170
+68174100,Statutory,PL,"""Provisions / impairment expense for receivable due to doubtful customers""",R68180
+68174200,Statutory,PL,"""Provisions / impairment expense for overdue/non-overdue individualised commercial receivables""",R68180
+68174300,Statutory,PL,"""Provisions / impairment expense for overdue commercial receivables (statistical depreciation)""",R68180
+68174400,Statutory,PL,"""Provisions / impairment expense for current accounts (Group and external)""",R68190
+68174700,Statutory,PL,"""Provisions / impairment expense for other debtors""",R68190
+68190000,Statutory,PL,"""Allocation related to fixed assets""",R68112
+68611000,Statutory,PL,"""Provisions / impairment expense for equity interests""",R68660
+68612000,Statutory,PL,"""Provisions / impairment expense for other financial assets""",R68660
+68650000,Statutory,PL,"""Provisions expense for unrealized foreign currency losses - Financial operation""",R68670
+68651000,Statutory,PL,"""Provisions expense for losses in subsidiaries""",R68150
+68711100,Statutory,PL,"""Amortization expense - Intangible assets""",R68770
+68711300,Statutory,PL,"""Amortization expense - Software""",R68111
+68712100,Statutory,PL,"""Amortization expense - Transport equipment""",R68113
+68712200,Statutory,PL,"""Amortization expense - Other tangible assets""",R68770
+68712300,Statutory,PL,"""Amortization expense - Hardware""",R68112
+68725000,Statutory,PL,"""Accelerated tax amortization expenses""",R68720
+68726000,Statutory,PL,"""Provisions expense - Other tax-regulated Provisions""",R68720
+68750000,Statutory,PL,"""Provisions expense for income tax""",R68900
+68751000,Statutory,PL,"""Provisions expense for fines and penalties""",R68150
+68752000,Statutory,PL,"""Provision expense for exceptionnal liabilities and charges""",R68150
+68754000,Statutory,PL,"""Provisions expense for restructuring costs""",R68090
+68762000,Statutory,PL,"""Provisions / impairment expense for technical losses on merger allocated to financial fixed assets""",R68130
+69100000,Statutory,PL,"""Profit-sharing plan""",R69100
+69510000,Statutory,PL,"""Income tax due to Tax Administration""",R69500
+69510001,Statutory,PL,"""Business tax due to Tax Administration""",R69500
+69510002,Statutory,PL,"""Corporate tax due to Tax Administration""",R69500
+69510003,Statutory,PL,"""CSSL due to Tax administration (BR)""",R69500
+69510100,Statutory,PL,"""Income tax due to Tax Administration - previous years""",R69500
+69520000,Statutory,PL,"""Additional Income tax adjustment""",R69850
+69530000,Statutory,PL,"""Deferred taxes""",R69400
+69530001,Statutory,PL,"""Deferred taxes - employee saving plan""",R69400
+69540000,Statutory,PL,"""Additional contribution to income tax""",R69500
+69550000,Statutory,PL,"""Carry back""",R69900
+69800000,Statutory,PL,"""Income tax due to Tax relief""",R69500
+69910000,Statutory,PL,"""Tax credit attributed (IAS 12 scope)""",R69860
+69910001,Statutory,PL,"""Tax credit attributed (IAS 12 scope) - 1""",R69860
+69910002,Statutory,PL,"""Tax credit attributed (IAS 12 scope) - 2""",R69860
+69910003,Statutory,PL,"""Tax credit attributed (IAS 12 scope) - 3""",R69860
+69910004,Statutory,PL,"""Tax credit attributed (IAS 12 scope) - 4""",R69860
+69920000,Statutory,PL,"""Tax credit attributed (out of IAS 12 scope)""",R69870
+70000000,Statutory,PL,"""Derivative - Change in fair value (gain)""",R60205
+70110000,Statutory,PL,"""Sales of finished products""",R70070
+70160100,Statutory,PL,"""(Sub) Lease revenue - Included in Operating lease receivable measurement""",R70160
+70160200,Statutory,PL,"""(Sub) Lease revenue - Included in Finance lease receivable measurement - GEODIS""",R70160
+70160300,Statutory,PL,"""(Sub) Lease revenue - Included in Finance lease receivable measurement""",R70160
+70165100,Statutory,PL,"""(Sub) Lease revenue - Outside Finance lease receivable measurement""",R70165
+70165200,Statutory,PL,"""(Sub) Lease revenue - Outside Finance lease receivable measurement - GEODIS""",R70165
+70165300,Statutory,PL,"""(Sub) Lease revenue - Outside Finance lease receivable measurement - SNCF""",R70165
+70611000,Statutory,PL,"""Sales - Transport services""",R70070
+70611001,Statutory,PL,"""Sales - Transport services - accrual""",R70070
+70611100,Statutory,PL,"""Sales - Transport services - not taxable""",R70070
+70611300,Statutory,PL,"""Sales of customs clearance services""",R70070
+70611400,Statutory,PL,"""Customs duties and other freight taxes paid on behalf""",R61015
+70611500,Statutory,PL,"""Customs duties and other freight taxes paid on behalf - accrual""",R61015
+70612000,Statutory,PL,"""Sales - Logistic services""",R70070
+70612100,Statutory,PL,"""Sales - Logistic services - surfaces""",R70070
+70612200,Statutory,PL,"""Sales - Logistic services - start up revenue""",R70070
+70613000,Statutory,PL,"""Sales - Other services""",R70070
+70613001,Statutory,PL,"""Sales - Other services - accruals""",R70070
+70613002,Statutory,PL,"""Sales - Other services - VAT 0% (MX)""",R70070
+70613003,Statutory,PL,"""Sales - Other services - VAT 16% (MX)""",R70070
+70613100,Statutory,PL,"""Sales - Other services - sales of packaging (material and services)""",R70070
+70614000,Statutory,PL,"""External rebilling - Truck washing & fuel tank cleaning""",R70070
+70615000,Statutory,PL,"""Sales - Other services - maintenance workshop""",R70070
+70616000,Statutory,PL,"""Sales - Other services - taxes other than duties""",R61015
+70616080,Statutory,PL,"""Sales - Other services - taxes other than duties - accrual""",R61015
+70650000,Statutory,PL,"""Sales - IT services - External""",R70070
+70660000,Statutory,PL,"""Property rental""",R70060
+70700000,Statutory,PL,"""Sales of goods to resale - Fuels""",R70825
+70710000,Statutory,PL,"""Sales of goods to resale""",R70820
+70720000,Statutory,PL,"""Sales of goods to resale - tires""",R70820
+70730000,Statutory,PL,"""Sales of goods to resale - wastes""",R70820
+70740000,Statutory,PL,"""Sales of goods to resale - palets""",R70820
+70810000,Statutory,PL,"""Rebilled - Packaging""",R70820
+70811000,Statutory,PL,"""Rebilled - Pallets""",R70820
+70812000,Statutory,PL,"""Rebilled - Transport subcontracting""",R70820
+70813000,Statutory,PL,"""Rebilled - Maintenance and repairs - Transport (Tyres, trailers, …)""",R70820
+70814000,Statutory,PL,"""Rebilled - Insurance & litigation""",R70820
+70815000,Statutory,PL,"""Rebilled - building rent costs""",R70820
+70817000,Statutory,PL,"""Rebilled - vehicles rent costs""",R70820
+70818000,Statutory,PL,"""Rebilled - Computer hardware equipment rent costs""",R70820
+70819000,Statutory,PL,"""Rebilled - other equipments rent costs""",R70820
+70820000,Statutory,PL,"""Rebilled - Occupancy costs""",R70820
+70821000,Statutory,PL,"""Rebilled - Salaries & wages""",R70840
+70821100,Statutory,PL,"""Rebilled - social charges, bonus/primes""",R70840
+70822000,Statutory,PL,"""Rebilled - Other staff costs (Training, …)""",R70820
+70823000,Statutory,PL,"""Rebilled - travel, hospitality and entertaining expenses""",R70820
+70824000,Statutory,PL,"""Rebilled - tax and duties""",R70830
+70825000,Statutory,PL,"""Rebilled - fees paid to third parties""",R70820
+70826000,Statutory,PL,"""Rebilled - Postage and telecommunication costs""",R70820
+70827000,Statutory,PL,"""Rebilled - Road, ferries and tunnel tolls""",R70820
+70828000,Statutory,PL,"""Rebilled - Building maintenance and repairs""",R70820
+70829000,Statutory,PL,"""Rebilled - Bank charges""",R70820
+70830000,Statutory,PL,"""Internal IT invoicing - revenue""",R70820
+70831000,Statutory,PL,"""Rebilled -  IT services fees""",R70820
+70832000,Statutory,PL,"""Rebilled - computer network costs""",R70820
+70834000,Statutory,PL,"""Rebilled - Employees transfert costs - salaries & wages""",R70840
+70834100,Statutory,PL,"""Rebilled - Employees transfert costs - social charges, bonus""",R70840
+70835000,Statutory,PL,"""Tires renewal contribution""",R70820
+70836000,Statutory,PL,"""Service supplies - Shared services center - Intra Lob - income""",R70820
+70837000,Statutory,PL,"""Re-invoicing - Fuel""",R70825
+70840000,Statutory,PL,"""Rebilled -  Miscellaneous""",R70820
+70850000,Statutory,PL,"""Rebilled - Cleaning costs""",R70820
+70880000,Statutory,PL,"""Other regular operating income """,R70860
+70961000,Statutory,PL,"""Discounts on sales of services""",R70070
+70962000,Statutory,PL,"""Discounts on sales of other services (non-core)""",R70860
+70971000,Statutory,PL,"""Discounts on sales of goods""",R70070
+71351000,Statutory,PL,"""Variation of stock semi-finished goods""",R71000
+72000100,Statutory,PL,"""Capitalised production - fixed installations""",R72000
+72000200,Statutory,PL,"""Capitalised production - transport equipment""",R72100
+72000300,Statutory,PL,"""Capitalised production - intangible assets""",R72000
+72000400,Statutory,PL,"""Capitalised production -Software""",R72000
+74000000,Statutory,PL,"""Operating grants and subsidies from authorities""",R74000
+74100000,Statutory,PL,"""Benefits paid and reduction in benefits granted""",R74100
+75100000,Statutory,PL,"""GEODIS Trademark fees - revenue""",R75100
+75110000,Statutory,PL,"""Management lease contract revenues""",R75100
+75111000,Statutory,PL,"""Group management fees - revenue""",R75200
+75112000,Statutory,PL,"""Region/LoB management fees - revenue""",R75200
+75500000,Statutory,PL,"""Share of joint venture profit""",R75500
+75610000,Statutory,PL,"""Realized - Foreign exchange gains trade accounts""",R76610
+75620000,Statutory,PL,"""Unrealized - Foreign exchange gains commercial accounts""",R76610
+75810000,Statutory,PL,"""Proceeds from dispoal of transport equipment - Recurring part""",R75560
+75810100,Statutory,PL,"""Proceeds from dispoal of material handling equipment - Recurring part - """,R75560
+75820000,Statutory,PL,"""Other operating income""",R70860
+75830000,Statutory,PL,"""Settlement differences - revenue""",R65000
+76110000,Statutory,PL,"""Revenue from participating interests and shares""",R76110
+76116600,Statutory,PL,"""Cash Pooling interests""",R76300
+76140000,Statutory,PL,"""Finance income on finance lease receivables (IFRS 16)""",R76140
+76170000,Statutory,PL,"""Interests from loans and financial receivables related to equity interests""",R76500
+76170001,Statutory,PL,"""Interests from loans and financial receivables related to equity interests - controlled company""",R76500
+76310000,Statutory,PL,"""Income from commercial receivables""",R76820
+76410000,Statutory,PL,"""Financial debt waivers obtained""",R77810
+76500000,Statutory,PL,"""Discounts obtained""",R76820
+76605000,Statutory,PL,"""Gain on derivatives (e.g. forward sale/purchase)""",R76200
+76610000,Statutory,PL,"""Realized Foreign exchange gains - Financial operations""",R76300
+76620000,Statutory,PL,"""Unrealized Foreign exchange gains - Financial operations""",R76200
+76810000,Statutory,PL,"""Merger income""",R76850
+76820000,Statutory,PL,"""Other financial income""",R76820
+76820001,Statutory,PL,"""Other financial income - NQDC dividend (US)""",R76820
+76820002,Statutory,PL,"""Financial cost of benefits granted to employees - Defined contribution Plan (NQDC)""",R76820
+76820100,Statutory,PL,"""Bank interests""",R76300
+76840000,Statutory,PL,"""Financial instrument - Change in fair value (gain)""",R76200
+77110000,Statutory,PL,"""Forfeits and penalties on purchases and sales""",R77800
+77120000,Statutory,PL,"""Debt waivers received -  commercial accounts""",R70860
+77130000,Statutory,PL,"""Damages and compensations received""",R77800
+77170000,Statutory,PL,"""Tax relief (excluding income tax relief)""",R77800
+77180000,Statutory,PL,"""Other extraordinary income on transactions""",R77800
+77518000,Statutory,PL,"""Proceeds from disposals of intangible assets""",R77510
+77518200,Statutory,PL,"""Proceeds from disposals of software""",R77510
+77521000,Statutory,PL,"""Proceeds from disposals of PP&E - transport equipments""",R77530
+77521100,Statutory,PL,"""Proceeds from disposals of lands and improvements""",R77520
+77521300,Statutory,PL,"""Proceeds from disposals of buildings""",R77520
+77521500,Statutory,PL,"""Proceeds from disposals of operating equipment""",R77520
+77521700,Statutory,PL,"""Proceeds from disposals of railway equipment""",R77530
+77522000,Statutory,PL,"""Proceeds from disposals of PP&E - other tangible assets""",R77520
+77522100,Statutory,PL,"""Proceeds from disposals of PP&E - Hardware""",R77520
+77560000,Statutory,PL,"""Proceeds from disposals of financial assets""",R77560
+77561000,Statutory,PL,"""Proceeds from disposals of securities (consolidated)""",R77560
+77710000,Statutory,PL,"""Government grants recognised in income - fixed installations""",R77700
+77720000,Statutory,PL,"""Government grants recognised in income - transport equipment""",R77710
+78101000,Statutory,PL,"""Reversal of provisions for litigation - Utilized""",R78140
+78101100,Statutory,PL,"""Reversal of provisions for litigation - Not utilized""",R78150
+78101200,Statutory,PL,"""Reversal of  provisions for contrat termination costs - utilized""",R78150
+78101300,Statutory,PL,"""Reversal of  provisions for contrat termination costs - Not utilized""",R78150
+78101400,Statutory,PL,"""Reversal of provisions for onerous contracts - utilized""",R78140
+78101500,Statutory,PL,"""Reversal of provisions for onerous contracts - Not utilized""",R78150
+78101600,Statutory,PL,"""Reversal of provisions for tax liabilities - Utilized""",R63750
+78101700,Statutory,PL,"""Reversal of provisions for tax liabilities - Not utilized""",R63750
+78101800,Statutory,PL,"""Reversal of provisions for social liabilities - Utilized""",R64840
+78101900,Statutory,PL,"""Reversal of provisions for social liabilities - Not utilized""",R78150
+78102000,Statutory,PL,"""Reversal of provisions for retirement benefits (France) - Utilized""",R78160
+78102100,Statutory,PL,"""Reversal of provisions for retirement benefits (France) - Not utilized""",R78160
+78102200,Statutory,PL,"""Reversal of provisions for other pensions plan (Excluding retirement benefits for France & Italy)""",R78160
+78102300,Statutory,PL,"""Reversal of provisions for other pensions plan (Excluding retirement benefits for France & Italy) - Not utilized""",R78160
+78102400,Statutory,PL,"""Reversal of provisions for long-service awards (jubilee) - Utilized""",R78160
+78102500,Statutory,PL,"""Reversal of provisions for long-service awards (jubilee) - Not Utilized""",R78160
+78102600,Statutory,PL,"""Reversal of provisions for retirement benefits (Italy)""",R78160
+78102700,Statutory,PL,"""Reversal of provisions for retirement benefits (Italy) - Not utilized""",R78160
+78102800,Statutory,PL,"""Reversal of provisions for employee litigation - utilized""",R64840
+78102900,Statutory,PL,"""Reversal of provisions for employee litigation - Not utilized""",R78150
+78103200,Statutory,PL,"""Reversal of  provisions for expense for major maintenance and  repairs - Utilized""",R78140
+78103300,Statutory,PL,"""Reversal of  provisions for expense for major maintenance and  repairs - Not utilized""",R78150
+78103400,Statutory,PL,"""Reversal of provisions to repair leased assets - Utilized""",R78140
+78103500,Statutory,PL,"""Reversal of provisions to repair leased assets - Not utilized""",R78150
+78103600,Statutory,PL,"""Reversal of provisions for losses and damage - Utilized""",R78140
+78103700,Statutory,PL,"""Reversal of provisions for losses and damage - Not utilized""",R78150
+78103800,Statutory,PL,"""Reversal of provisions for warranty - Utilized""",R78140
+78103900,Statutory,PL,"""Reversal of provisions for warranty - Not utilized""",R78150
+78104000,Statutory,PL,"""Reversal of provisions for self-insurer - Utilized""",R78140
+78104100,Statutory,PL,"""Reversal of provisions for self-insurer - Not utilized""",R78150
+78104200,Statutory,PL,"""Reversal of provisions for vacant surface area of leased premises - Utilized""",R78140
+78104300,Statutory,PL,"""Reversal of provisions for vacant surface area of leased premises - Not utilized""",R78150
+78104400,Statutory,PL,"""Reversal of  provisions for environmental risks - Utilized""",R78140
+78104500,Statutory,PL,"""Reversal of  provisions for environmental risks - Not utilized""",R78150
+78104800,Statutory,PL,"""Other reversal of  provisions for other risks and expenses - Utilized""",R78140
+78104900,Statutory,PL,"""Other reversal of  provisions for other risks and expenses - Not utilized""",R78150
+78105000,Statutory,PL,"""Reversal of provisions for other employee benefits (E.g. LTIP) - Utilized""",R78160
+78105100,Statutory,PL,"""Reversal of provisions for other employee benefits (E.g. LTIP) - Not utilized""",R78160
+78105200,Statutory,PL,"""Reversal of inventory impairment""",R78170
+78105300,Statutory,PL,"""Reversal of impairment of receivable due to doubtful customers""",R78180
+78105400,Statutory,PL,"""Reversal of impairment of overdue/non-overdue individualised commercial receivables""",R78180
+78105500,Statutory,PL,"""Reversal of impairment of overdue commercial receivables (statistical depreciation)""",R78180
+78105600,Statutory,PL,"""Reversal of impairment of current accounts (Group and external)""",R78190
+78105700,Statutory,PL,"""Reversal of impairment of other debtors""",R78190
+78105800,Statutory,PL,"""Reversal of provisions for  tires renewal  - Utilized""",R78140
+78105900,Statutory,PL,"""Reversal of provisions for  tires renewal  - Not  Utilized""",R78150
+78151700,Statutory,PL,"""Reversal of  provisions for foreign currency losses - commercial operations""",R78670
+78160100,Statutory,PL,"""Impairment reversal - Start-up expenses / Initial costs""",R78111
+78160200,Statutory,PL,"""Impairment reversal - Research and development costs""",R78111
+78160300,Statutory,PL,"""Reversal of software impairment""",R78111
+78160400,Statutory,PL,"""Impairment reversal - Other patents, concessions and similar rights""",R78111
+78160500,Statutory,PL,"""Impairment reversal - Leasing rights""",R78111
+78160600,Statutory,PL,"""Impairment reversal - Business goodwill""",R78111
+78160700,Statutory,PL,"""Reversal of other intagible assets impairment""",R78111
+78160800,Statutory,PL,"""Reversal Impairment of Technical losses on merger allocated to intangible fixed assets""",R78111
+78160900,Statutory,PL,"""Impairment reversal - Technical losses on merger allocated to purchased goodwill""",R78111
+78161100,Statutory,PL,"""Impairment reversal - Land and land improvements - freehold""",R78112
+78162000,Statutory,PL,"""Impairment reversal - Land improvements - non-freehold""",R78112
+78163100,Statutory,PL,"""Impairment reversal - Building - freehold""",R78112
+78163200,Statutory,PL,"""Impairment reversal - Building fixtures and fittings - freehold""",R78112
+78163800,Statutory,PL,"""Impairment reversal - Infrastructure - freehold""",R78112
+78164000,Statutory,PL,"""Impairment reversal - Building - non-freehold""",R78112
+78164400,Statutory,PL,"""Impairment reversal - Infrastructure - non-freehold""",R78112
+78165100,Statutory,PL,"""Impairment reversal - Technical installations""",R78112
+78165200,Statutory,PL,"""Impairment reversal - Tools & equipments""",R78112
+78167000,Statutory,PL,"""Impairment reversal - Rail transport equipment""",R78113
+78167100,Statutory,PL,"""Impairment reversal - Truck and tractor""",R78113
+78167200,Statutory,PL,"""Impairment reversal - Trailers and semi-articulated trucks""",R78113
+78167300,Statutory,PL,"""Impairment reversal - Containers and swap bodies""",R78113
+78167400,Statutory,PL,"""Impairment reversal - Geo-tracking boxes""",R78113
+78168100,Statutory,PL,"""Impairment reversal - Other Fixtures and fitting - non-freehold""",R78112
+78168200,Statutory,PL,"""Impairment reversal - Commercial vehicles (not used in operating cycle)""",R78113
+78168300,Statutory,PL,"""Reversal of hardware  impairment""",R78112
+78168400,Statutory,PL,"""Impairment reversal - Furniture""",R78112
+78168500,Statutory,PL,"""Impairment reversal - Office equipment""",R78112
+78168600,Statutory,PL,"""Impairment reversal - Recoverable packaging""",R78112
+78168700,Statutory,PL,"""Impairment reversal - Commercial vehicles (used in operating cycle)""",R78113
+78168800,Statutory,PL,"""Reversal of other tangible assets impairment""",R78112
+78168900,Statutory,PL,"""Reversal Impairment of Technical losses on merger allocated to tangible fixed assets""",R78111
+78611000,Statutory,PL,"""Reversal of impairment for equity interests""",R78660
+78612000,Statutory,PL,"""Reversal of impairment for other financial assets""",R78650
+78650000,Statutory,PL,"""Reversal of provisions for foreign currency losses - Financial operation""",R78670
+78651000,Statutory,PL,"""Reversal of provisions for losses in subsidiaries - Utilized""",R78150
+78651100,Statutory,PL,"""Reversal of Provisions for losses in subsidiaries - Not utilized""",R78150
+78662000,Statutory,PL,"""Reversal Impairment of Technical losses on merger allocated to financial fixed assets""",R78111
+78725000,Statutory,PL,"""Reversal of tax regulated provisions""",R78720
+78726000,Statutory,PL,"""Reversal of other tax regulated provisions""",R78720
+78751000,Statutory,PL,"""Reversal of provisions expense for fines and penalties - Utilized""",R78140
+78751100,Statutory,PL,"""Reversal of provisions expense for fines and penalties - Not utilized""",R78150
+78752000,Statutory,PL,"""Provision expense for exceptionnal liabilities and charges utilized""",R78140
+78752100,Statutory,PL,"""Provision expense for exceptionnal liabilities and charges""",R78150
+78754000,Statutory,PL,"""Reversal of provisions for restructuring costs - Utilized""",R78140
+78754100,Statutory,PL,"""Reversal of provisions for restructuring costs - Not utilized""",R78090
+78910000,Statutory,PL,"""Reversal of provisions for income tax - Utilized""",R68910
+78920000,Statutory,PL,"""Reversal of provisions for income tax - Not utilized""",R68920
+79110000,Statutory,PL,"""Operating expenses reallocated - Personnel restructuring costs""",R79110
+79120000,Statutory,PL,"""Other Operating expenses reallocated""",R79100
+79600000,Statutory,PL,"""Financial expenses reallocated""",R79600
+79999900,Statutory,PL,"""Technical account class 7""",R99999
+86000000,Internal allocation,Internal allocation,"""Internal reallocation costs """,R99999
+86022400,Internal allocation,Internal allocation,"""Internal reallocation revenue - Purchases - Stored - other consumables""",R99999
+86056500,Internal allocation,Internal allocation,"""Internal reallocation costs - Purchases - Not stockable - Tires""",R99999
+86061700,Internal allocation,Internal allocation,"""Internal reallocation costs - Purchases - Non-storable - vehicle fuel""",R99999
+86065200,Internal allocation,Internal allocation,"""Internal reallocation costs - Purchases - Non-storable - Packaging""",R99999
+86065300,Internal allocation,Internal allocation,"""Internal reallocation costs - Purchases - Non-storable - Pallets""",R99999
+86069000,Internal allocation,Internal allocation,"""Internal reallocation costs - Direct operating costs""",R99999
+86069100,Internal allocation,Internal allocation,"""Internal reallocation costs - Returned vehicles""",R99999
+86069200,Internal allocation,Internal allocation,"""Internal reallocation costs - Other vehicles purchased""",R99999
+86069300,Internal allocation,Internal allocation,"""Internal reallocation costs - Other operational purchasing""",R99999
+86069400,Internal allocation,Internal allocation,"""Internal reallocation costs - Patronage""",R99999
+86069500,Internal allocation,Internal allocation,"""Internal reallocation costs - Central services""",R99999
+86069600,Internal allocation,Internal allocation,"""Internal reallocation costs - Miscelleanous expenses""",R99999
+86069700,Internal allocation,Internal allocation,"""Internal reallocation costs - Administraive costs of purchasing""",R99999
+86111000,Internal allocation,Internal allocation,"""Internal reallocation costs - Subcontracting – Road Transport / Delivery services""",R99999
+86111400,Internal allocation,Internal allocation,"""Internal reallocation costs - Costs of computer processing""",R99999
+86112000,Internal allocation,Internal allocation,"""Internal reallocation costs - Subcontracting – Tractors""",R99999
+86113000,Internal allocation,Internal allocation,"""Internal reallocation costs - Subcontracting – Trucks""",R99999
+86114000,Internal allocation,Internal allocation,"""Internal reallocation costs - Subcontracting – Logistic services""",R99999
+86130100,Internal allocation,Internal allocation,"""Internal reallocation costs - Real Estate costs  - in the scope""",R99999
+86130200,Internal allocation,Internal allocation,"""Internal reallocation costs - Operating transport equipment rent costs - in the scope""",R99999
+86130500,Internal allocation,Internal allocation,"""Internal reallocation costs - Other operating materials and equipments rent costs (Security cameras, dumpster - excluding IT equipment) - in the scope""",R99999
+86130600,Internal allocation,Internal allocation,"""Internal reallocation costs - IT equipment rent costs - in the scope""",R99999
+86152000,Internal allocation,Internal allocation,"""Internal reallocation costs - Maintenance and repairs - Buildings and lands""",R99999
+86155000,Internal allocation,Internal allocation,"""Internal reallocation costs - Maintenance and repairs - Transport equipment""",R99999
+86156200,Internal allocation,Internal allocation,"""Internal reallocation costs - Cleaning costs - transport equipment""",R99999
+86167100,Internal allocation,Internal allocation,"""Internal reallocation costs - Self insurer - Litigations, losses and damages costs""",R99999
+86167300,Internal allocation,Internal allocation,"""Internal reallocation costs - Self insurer - transport equipmemt""",R99999
+86200000,Internal allocation,Internal allocation,"""Internal reallocation costs - External services""",R99999
+86210000,Internal allocation,Internal allocation,"""Internal reallocation costs - Other external services""",R99999
+86211000,Internal allocation,Internal allocation,"""Internal reallocation costs - Temporary staff costs""",R99999
+86241100,Internal allocation,Internal allocation,"""Internal reallocation costs - Freight on purchase and sales""",R99999
+86251000,Internal allocation,Internal allocation,"""Internal reallocation costs - Cost of travel for drivers""",R99999
+86260000,Internal allocation,Internal allocation,"""Internal reallocation costs - IT networks costs""",R99999
+86282000,Internal allocation,Internal allocation,"""Internal reallocation costs - Other expenses - Road tolls trucks""",R99999
+86285000,Statutory,Internal allocation,"""Internal IT invoicing - charges""",R99999
+86286000,Statutory,Internal allocation,"""Shared services center fees (excluding IT) - intra/inter Region/Lob""",R99999
+86411100,Internal allocation,Internal allocation,"""Internal reallocation costs - Wages and salaries""",R99999
+86500000,Internal allocation,Internal allocation,"""Internal reallocation costs - Trademark fees""",R99999
+86511000,Internal allocation,Internal allocation,"""Internal reallocation costs - Group management fees""",R99999
+86512000,Internal allocation,Internal allocation,"""Internal reallocation costs - Region/LoB management fees""",R99999
+86600000,Internal allocation,Internal allocation,"""Internal reallocation costs - Financial costs""",R99999
+86951000,Internal allocation,Internal allocation,"""Internal reallocation costs - Income tax due to Tax Administration""",R99999
+87000000,Internal allocation,Internal allocation,"""Internal reallocation revenue""",R99999
+87022400,Internal allocation,Internal allocation,"""Internal reallocation revenue - Purchases - Stored - other consumables""",R99999
+87056500,Internal allocation,Internal allocation,"""Internal reallocation revenue - Purchases - Not stockable - Tires""",R99999
+87061700,Internal allocation,Internal allocation,"""Internal reallocation revenue - Purchases - Non-storable - vehicle fuel""",R99999
+87065200,Internal allocation,Internal allocation,"""Internal reallocation revenue - Purchases - Non-storable - Packaging""",R99999
+87065300,Internal allocation,Internal allocation,"""Internal reallocation revenue - Purchases - Non-storable - Pallets""",R99999
+87069000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Direct operating costs""",R99999
+87069100,Internal allocation,Internal allocation,"""Internal reallocation revenue - Returned vehicles""",R99999
+87069200,Internal allocation,Internal allocation,"""Internal reallocation revenue - Other vehicles purchased""",R99999
+87069300,Internal allocation,Internal allocation,"""Internal reallocation revenue - Other operational purchasing""",R99999
+87069400,Internal allocation,Internal allocation,"""Internal reallocation revenue - Patronage""",R99999
+87069500,Internal allocation,Internal allocation,"""Internal reallocation revenue - Central services""",R99999
+87069600,Internal allocation,Internal allocation,"""Internal reallocation revenue - Miscelleanous revenues""",R99999
+87069700,Internal allocation,Internal allocation,"""Internal reallocation revenue - Administrative costs of purchasing""",R99999
+87111400,Internal allocation,Internal allocation,"""Internal reallocation revenue - Subcontracting – IT professionnal services""",R99999
+87130100,Internal allocation,Internal allocation,"""Internal reallocation revenue - Real Estate costs  - in the scope""",R99999
+87130200,Internal allocation,Internal allocation,"""Internal reallocation revenue - Operating transport equipment rent costs - in the scope""",R99999
+87130500,Internal allocation,Internal allocation,"""Internal reallocation revenue - Other operating materials and equipments rent costs (Security cameras, dumpster - excluding IT equipment) - in the scope""",R99999
+87130600,Internal allocation,Internal allocation,"""Internal reallocation revenue - IT equipment rent costs - in the scope""",R99999
+87152000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Maintenance and repairs - Buildings and lands""",R99999
+87155000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Maintenance and repairs - Transport equipment""",R99999
+87156200,Internal allocation,Internal allocation,"""Internal reallocation revenue - Cleaning costs - transport equipment""",R99999
+87167100,Internal allocation,Internal allocation,"""Internal reallocation revenue - Self insurer - Litigations, losses and damages costs""",R99999
+87167300,Internal allocation,Internal allocation,"""Internal reallocation revenue - Self insurer - transport equipmemt""",R99999
+87200000,Internal allocation,Internal allocation,"""Internal reallocation revenue - External services""",R99999
+87210000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Other external services""",R99999
+87211000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Temporary staff costs""",R99999
+87241100,Internal allocation,Internal allocation,"""Internal reallocation revenue - Freight on purchase and sales""",R99999
+87251000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Cost of travel for drivers""",R99999
+87260000,Internal allocation,Internal allocation,"""Internal reallocation revenue - IT networks costs""",R99999
+87282000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Other expenses - Road tolls trucks""",R99999
+87285000,Statutory,Internal allocation,"""Internal IT invoicing - revenue""",R99999
+87411100,Internal allocation,Internal allocation,"""Internal reallocation revenue - Wages and salaries""",R99999
+87500000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Trademark fees""",R99999
+87511000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Group management fees""",R99999
+87512000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Region/LoB management fees""",R99999
+87600000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Financial costs""",R99999
+87951000,Internal allocation,Internal allocation,"""Internal reallocation revenue - Income tax due to Tax Administration""",R99999
+89999900,Statutory,Internal allocation,"""Technical account class 8""",R99999
+99991000,Statutory,BS,"""Carry-forward migration""",A99999/P99999
+87286000,Statutory,Internal allocation,"""Shared services center fees (excluding IT) - intra/inter Region/Lob""",R99999
+I1068820,IFRS,BS,"""Transferrable reserves""",P10650
+I1068830,IFRS,BS,"""Non transferrable reserves""",P10660
+I1510000,IFRS 16,BS,"""Provision to repair or for dismantling costs related to IFRS 16 leased assets""",P15750
+I1684010,IFRS 16,BS,"""Lease Liability - real estate - part > 1 year""",P16840
+I1684020,IFRS 16,BS,"""Lease Liability - operating transport equipment - part > 1 year""",P16840
+I1684030,IFRS 16,BS,"""Lease Liability - handling and logistic equipement - part > 1 year""",P16840
+I1684040,IFRS 16,BS,"""Lease Liability - non operating equipment (administrative) - part > 1 year""",P16840
+I1684050,IFRS 16,BS,"""Lease liability- non operating  transport equipment- part > 1 year""",P16840
+I1684060,IFRS 16,BS,"""Lease liability- other operating materials and equipment - part > 1 year""",P16840
+I1684070,IFRS 16,BS,"""Lease liability- IT equipment - part > 1 year""",P16840
+I1684080,IFRS 16,BS,"""Lease liability- rail equipment - part > 1 year""",P16840
+I1684510,IFRS 16,BS,"""Lease Liability - real estate - part < 1 year""",P16845
+I1684520,IFRS 16,BS,"""Lease Liability - operating transport equipment - part < 1 year""",P16845
+I1684530,IFRS 16,BS,"""Lease liability - handling and logistic equipement - part < 1 year""",P16845
+I1684540,IFRS 16,BS,"""Lease liability- non operating equipment (administrative) - part < 1 year""",P16845
+I1684550,IFRS 16,BS,"""Lease liability - non operating transport equipment - part < 1 year""",P16845
+I1684560,IFRS 16,BS,"""Lease liability - other operating materials and equipment - part < 1 year""",P16845
+I1684570,IFRS 16,BS,"""Lease liability- IT equipment - part < 1 year""",P16845
+I1684580,IFRS 16,BS,"""Lease liability- rail equipment - part < 1 year""",P16845
+I1688800,IFRS 16,BS,"""Accrued interests on lease liabilities""",P16888
+I2141000,IFRS 16,BS,"""Right of Use - Real estate""",A21410
+I2141100,IFRS 16,BS,"""Right of Use - operating transport equipment""",A21430
+I2141200,IFRS 16,BS,"""Right of Use - non operating transport equipment""",A21440
+I2141300,IFRS 16,BS,"""Right of Use - handling and logistic equipement""",A21440
+I2141400,IFRS 16,BS,"""Right of Use - other operating materials and equipment""",A21440
+I2141500,IFRS 16,BS,"""Right of Use - non operating equipment (Office equipment)""",A21440
+I2141600,IFRS 16,BS,"""Right of Use - IT equipment""",A21440
+I2141700,IFRS 16,BS,"""Right of Use - rail equipment""",A21420
+I2420000,IFRS 16,BS,"""Finance lease receivables - part > 1 year""",A24200
+I2421000,IFRS 16,BS,"""Finance lease receivables - part < 1 year""",A24210
+I2422000,IFRS 16,BS,"""Accrued interests on Finance lease receivables""",A24220
+I2760000,IFRS,BS,"""Pension asset""",A27700
+I2814100,IFRS 16,BS,"""Depreciation of Right of Use - Real estate""",A28141
+I2814110,IFRS 16,BS,"""Depreciation of Right of Use - operating transport equipment""",A28143
+I2814120,IFRS 16,BS,"""Depreciation of Right of Use - non operating transport equipment""",A28144
+I2814130,IFRS 16,BS,"""Depreciation of Right of Use - handling and logistic equipement""",A28144
+I2814140,IFRS 16,BS,"""Depreciation of Right of Use - other operating materials and equipment""",A28144
+I2814150,IFRS 16,BS,"""Depreciation of Right of Use - non operating equipment (Office equipment)""",A28144
+I2814160,IFRS 16,BS,"""Depreciation of Right of Use - IT equipment""",A28144
+I2814170,IFRS 16,BS,"""Depreciation of Right of Use - rail equipment""",A28142
+I2914100,IFRS 16,BS,"""Impairment of Right of Use - Real estate""",A29141
+I2914110,IFRS 16,BS,"""Impairment of Right of Use - operating transport equipment""",A29143
+I2914120,IFRS 16,BS,"""Impairment of Right of Use - non operating transport equipment""",A29144
+I2914130,IFRS 16,BS,"""Impairment of Right of Use - handling and logistic equipement""",A29144
+I2914140,IFRS 16,BS,"""Impairment of Right of Use - other operating materials and equipment""",A29144
+I2914150,IFRS 16,BS,"""Impairment of Right of Use - non operating equipment (Office equipment)""",A29144
+I2914160,IFRS 16,BS,"""Impairment of Right of Use - rail equipment""",A29142
+I2914170,IFRS 16,BS,"""Impairment of Right of Use - IT equipment""",A29144
+I2942000,IFRS 16,BS,"""Impairment of finance lease receivables -  part > 1 year""",A29420
+I2942100,IFRS 16,BS,"""Impairment of finance lease receivables - part < 1 year""",A29421
+I4448100,IFRS,BS,"""Differed Tax - asset""",A44100
+I4448101,IFRS,BS,"""Differed Tax - asset - employee saving plan""",A44100
+I4448200,IFRS,BS,"""Differed Tax - liability""",P44100
+I4670000,IFRS,BS,"""IFRS16 Liability Lease manual adjust lease contract""",P46740
+I4675000,IFRS,BS,"""Fair value of derivatives""",A46750/P46750
+I4676000,IFRS,BS,"""Assets related to group of assets held for Sale""",A600I
+I4677000,IFRS,BS,"""Liabilities related to group of assets held for Sale""",P600I
+I6130090,IFRS 16,PL,"""Cancelation - Real Estate costs  > 12 months""",R61310
+I6130100,IFRS 16,PL,"""Cancelation - Operating transport equipment rent costs> 12 months""",R61305
+I6130110,IFRS 16,PL,"""Cancelation - Non operating transport rent costs > 12 months""",R61325
+I6130120,IFRS 16,PL,"""Cancelation - Handling & Logistic equipment rent costs > 12 months (Forklift, rack…)""",R61325
+I6130130,IFRS 16,PL,"""Cancelation - Other operating materials and equipments rent costs > 12 months (Security cameras, dumpster - excluding IT)""",R61325
+I6130140,IFRS 16,PL,"""Cancelation - IT equipment rent costs > 12 months""",R61325
+I6130150,IFRS 16,PL,"""Cancelation - Administrative equipements rent costs (ie. copy machine) - > 12 months""",R61325
+I6130160,IFRS 16,PL,"""Cancelation - Rail equipment  rent costs > 12 months""",R61300
+I6140000,IFRS,PL,"""Occupancy costs - in the scope of IFRS 16""",R61440
+I6400010,IFRS,PL,"""Cost of vested rights""",R64000
+I6400030,IFRS,PL,"""Net benefits on reimbursement rights""",R64007
+I6614100,IFRS 16,PL,"""Interest expense on IFRS 16 debt - real estate""",R66140
+I6614110,IFRS 16,PL,"""Interest expense on IFRS 16 debt - operating transport equipment (Trucks…)""",R66140
+I6614120,IFRS 16,PL,"""Interest expense on IFRS 16 debt - non operating transport equipment""",R66140
+I6614130,IFRS 16,PL,"""Interest expense on IFRS 16 debt - logistic equipment (Forklifts, racks…)""",R66140
+I6614140,IFRS 16,PL,"""Interest expense on IFRS 16 debt - other operating materials and equipment (Security cameras, dumpster…)""",R66140
+I6614150,IFRS 16,PL,"""Interest expense on IFRS 16 debt - non operating equipment (administrative)""",R66140
+I6614160,IFRS 16,PL,"""Interest expense on IFRS 16 debt - IT equipment""",R66140
+I6614170,IFRS 16,PL,"""Interest expense on IFRS 16 debt - rail equipment""",R66140
+I6642000,IFRS,PL,"""Financial cost of benefits granted to employees""",R66400
+I6757000,IFRS 16,PL,"""NBV of right of use assets""",R67570
+I6787000,IFRS 16,PL,"""Profit / loss on lease termination/transfer""",R67870
+I6810000,IFRS 16,PL,"""Provision expense for repair or for dismantling costs related to IFRS 16 leased assets""",R68150
+I6810100,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - real estate""",R68120
+I6810200,IFRS 16,PL,"""Charge/Impairment of Right of use assets - real estate""",R68125
+I6810210,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - operating transport equipment""",R68120
+I6810220,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - non operating transport equipment""",R68120
+I6810230,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - handling and logistic equipement""",R68120
+I6810240,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - other operating materials and equipment""",R68120
+I6810250,Statutory,PL,"""Charge/Depreciation of Right of use assets - IT equipment""",R68120
+I6810260,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - non operating equipement ((Office equipment excluding IT)""",R68120
+I6810270,IFRS 16,PL,"""Charge/Depreciation of Right of use assets - rail equipement""",R68120
+I6810280,IFRS 16,PL,"""Charge/Impairment of Right of use assets - operating transport equipment""",R68125
+I6810290,IFRS 16,PL,"""Charge/Impairment of Right of use assets - non operating transport equipment""",R68125
+I6810300,IFRS 16,PL,"""Charge/Impairment of Right of use assets - handling and logistic equipment""",R68125
+I6810310,IFRS 16,PL,"""Charge/Impairment of Right of use assets - other operating materials and equipment""",R68125
+I6810320,IFRS,PL,"""Charge/Impairment of Right of use assets - IT equipment""",R68125
+I6810330,IFRS,PL,"""Charge/Impairment of Right of use assets - non operating equipment (Office equipment excluding IT)""",R68125
+I6810340,IFRS 16,PL,"""Charge/Impairment of Right of use assets - rail equipment""",R68125
+I6840000,IFRS 16,PL,"""Charge/Impairment on IFRS 16 finance lease receivables""",R68410
+I7642000,IFRS,PL,"""Financial gains on employee benefits""",R76400
+I7643000,IFRS,PL,"""Implicit return on reimbursement rights""",R76410
+I7684000,IFRS 16,PL,"""Profit / loss on lease liability reassessment""",R76840
+I7757000,IFRS 16,PL,"""Selling profit on right of use assets""",R77570
+I7810000,Statutory,PL,"""Reversal of provision for repair or for dismantling costs related to IFRS 16 leased assets""",R78150
+I7812500,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - real estate""",R78125
+I7812510,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - operating transport equipment""",R78125
+I7812520,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - handling and logistic equipment""",R78125
+I7812530,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - non operating equipment (administrative)""",R78125
+I7812540,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - non operating transport equipment""",R78125
+I7812550,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - other operating materials and equipment""",R78125
+I7812560,IFRS,PL,"""Reversal/Impairment of Right of Use assets - non operating equipment (Office equipment excluding IT)""",R78125
+I7812570,IFRS 16,PL,"""Reversal/Impairment of Right of Use assets - rail equipment""",R78125
+I7841000,IFRS 16,PL,"""Reversal/Impairment of Finance lease receivables""",R78410
