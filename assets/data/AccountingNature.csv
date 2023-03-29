@@ -156,10 +156,10 @@ P40000,"Trade payables","This account records all liabilities to non group suppl
 - accruals concerning invoices not yet received (#408) 
 - downpayments to suppliers (#409)
 recorded in a separate accounts.
-This account therefore includes the unpaid balance of supplier invoices received & notes payable at the closing date.","Paybales"
-P40500,"Payable on intangible assets acquisition","","Paybales"
-P40510,"Payable on intangible assets acquisition","","Paybales"
-P40800,"Trade payables - accruals for invoices not yet received","This account records accruals related to intangible fixed assets acquisition.","Paybales"
+This account therefore includes the unpaid balance of supplier invoices received & notes payable at the closing date.","Payables"
+P40500,"Payable on intangible assets acquisition","","Payables"
+P40510,"Payable on intangible assets acquisition","","Payables"
+P40800,"Trade payables - accruals for invoices not yet received","This account records accruals related to intangible fixed assets acquisition.","Payables"
 P41900,"Trade receivables : prepaid amounts  and down payment on receivables","This account records payments on account from customers related to revenues as described under #41130000.","Receivables"
 P42000,"Social debts","This account records the amounts due to the employee representative bodies (work council…).","Employee related liabilities"
 P43000,"Staff & Social security payable","This account records premium to be paid to a mutual insurance company for expatriates.","Employee related liabilities"
@@ -887,11 +887,11 @@ P40000,"Trade payables","This account records all liabilities to non group suppl
 - accruals concerning invoices not yet received (#408) 
 - downpayments to suppliers (#409)
 recorded in a separate accounts.
-This account therefore includes the unpaid balance of supplier invoices received & notes payable at the closing date.","Paybales"
+This account therefore includes the unpaid balance of supplier invoices received & notes payable at the closing date.","Payables"
 P40500,"Payable on intangible assets acquisition","This account records all liabilities to suppliers in connection with the purchase or production of intangible assets. This includes unpaid supplier invoices received and notes payable at the closing date.
-Accruals must be recorded in separate accounts (#4084).","Paybales"
+Accruals must be recorded in separate accounts (#4084).","Payables"
 P40510,"Payable on tangible assets acquisition","This account records all liabilities tosuppliers in connection with the purchase or production of property, plant and equipment. This includes unpaid supplier invoices received and notes payable at the closing date. 
-Accruals must be recorded in separate accounts (#4084).","Paybales"
+Accruals must be recorded in separate accounts (#4084).","Payables"
 P40550,"Payable on securities acquisition","This account records amounts due to suppliers but not paid in connection with the purchase of investments, including the impacts of business combinations. 
 This mainly concerns:
 - in connection with business combinations, earn-outs payable in cash to the seller in the event contractually listed future events should occur,
@@ -899,8 +899,8 @@ This mainly concerns:
 NB
 IFRS : Subsequent reestimates of earn-outs are offset against goodwill if they occur during the allocation period. 
 Should they arise from events subsequent to the allocation period, changes in fair value should be recorded in accordance with the IAS39 classification of the underlying financial instrument: 
-for debt instruments recognized in this account, fair value through P&L (cash liabilities) or equity (e.g. quoted shares). ).","Paybales"
-P40800,"Trade payables - accruals for invoices not yet received","This account records accruals in connection with expenses. This includes invoices to be received from suppliers except for suppliers of fixed assets, intangible assets and tangible assets (#4048).","Paybales"
+for debt instruments recognized in this account, fair value through P&L (cash liabilities) or equity (e.g. quoted shares). ).","Payables"
+P40800,"Trade payables - accruals for invoices not yet received","This account records accruals in connection with expenses. This includes invoices to be received from suppliers except for suppliers of fixed assets, intangible assets and tangible assets (#4048).","Payables"
 P41900,"Trade receivables : prepaid amounts  and down payment on receivables","This account records payments on account from customers related to revenues as described under #41110000.
 N.B.
 With regard to the rendering of services, revenue should be recognized according to the progress of the service at the closing date. Except for long-term contracts accounted for using the percentage completion method (actual costs incurred), payments on account from customers are never recognized in revenue if they do not correspond to a service actually rendered during the period. The amounts received therefore represent a liability for the company.","Receivables"
@@ -931,17 +931,17 @@ P46040,"Payables agents","This account records all liabilities relating to commi
 - downpayments to suppliers (#409)
 recorded in a separate accounts.
 Further information regarding the description of the services supplied by an agent is provided under the account #41130000.
-This account therefore includes the unpaid balance of supplier invoices received & notes payable at the closing date.","Paybales"
+This account therefore includes the unpaid balance of supplier invoices received & notes payable at the closing date.","Payables"
 P46320,"Derivatives on interest and exchange rates - current Liabilities ( unmatured Accrued interests)","This account records accrued interest payable on liability derivative instruments.","Other receivables & payables"
 P46700,"Other liabilities","This account records receipts to be returned to customers.","Other receivables & payables"
 P46740,"","","Lease liabilities"
 P46900,"Advances received on assets disposals & on service concession arrangements","This account records advances received from third parties with regard to ongoing sales of fixed assets.","Other receivables & payables"
 P47700,"Unrealized foreign exchange gain","At the balance sheet date, trade receivables a denominated in foreign currencies are translated and recognised in the national currency based on the closing exchange rate. An unrealised foreign currency gain is recognised to match the debit to the underlying asset account.
 In the French GAAP accounts it reflects the unrealised foreign exchange gain that must not impact the net income for the period.","Other receivables & payables"
-P48700,"Deferred income related to contracts with clients","In the case of a lease with a rent-free period, the benefit arising from the latter is spread over the lease term. This account records the accrual resulting from this spreading.","Paybales"
+P48700,"Deferred income related to contracts with clients","In the case of a lease with a rent-free period, the benefit arising from the latter is spread over the lease term. This account records the accrual resulting from this spreading.","Payables"
 P48720,"Other deferred income","This account record deferred rent liabilities due to a rent free period agreed by the lessor at the beginning of the lease. This rent free period is booked on straight line basis over the lease term on some local GAAP.
 This account record such deferred rent liabilities concerning IFRS 16 lease contracts.
-This account is cancelled in consolidated financial statements.","Paybales"
+This account is cancelled in consolidated financial statements.","Payables"
 P51980,"Accrued interest not outstanding- Liabilities","This account records the accrued bank account interests to be paid, cash pooling excluded.
 This interest is recognised through financial expenses recognised in year Y (#66116100 overdraft fees), even if the interest falls due in year Y+1.","Cash"
 P600I,"Liabilities included in disposal groups classified as held for sale","This account records the amount of liabilities relating to a group of current and non-current assets held for sale and/or a discontinued operation falling within the scope of IFRS5. 
