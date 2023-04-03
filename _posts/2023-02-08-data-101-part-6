@@ -206,8 +206,16 @@ Note that GDPR and other privacy regulations have significantly influenced stora
 
 ## Summary
 
-We highlighted the different ways to extract data, the different options for storing it, and how data can be retained and used without turning the storage area into an unmanageable "data swamp." For this, we overviewed the evolution of storage technologies from the 80's of the last century to the last few years.
+This post presented the different abstraction levels that form storage in a data journey. First, I discussed raw storage supports, systems, and other features that make storage more resilient and performant. Next, I illustrated the technologies used to store data and how data can be retained and used without turning the storage area into an unmanageable "data swamp." For this, I overviewed the evolution of storage technologies from the 80's of the last century to the last few years.
 
-...
+Finally, I highlighted that the most critical task for any data engineer is understanding the data to be retained, predicting access methods and patterns, and performing a sizing evaluation to know the required throughput, frequency of access, and updates of this data. These elements are necessary when you choose reliable and efficient storage.
 
 ## References
+
+* Reis, J. and Housley, M. Fundamentals of data engineering: Plan and build robust data systems. O’Reilly Media (2022).
+* https://hevodata.com/learn/incremental-data-load-vs-full-load/
+* https://www.databricks.com/blog/2019/08/14/productionizing-machine-learning-with-delta-lake.html
+* https://dzone.com/articles/data-lake-governance-best-practices
+* https://www.redhat.com/en/topics/data-storage/file-block-object-storage
+* https://www.trifacta.com/blog/from-raw-to-refined-the-staging-areas-of-your-data-lake-part-1/
+* https://www.healthcatalyst.com/insights/four-essential-zones-healthcare-data-lake
