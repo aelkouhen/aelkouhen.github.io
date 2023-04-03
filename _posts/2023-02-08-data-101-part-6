@@ -183,7 +183,7 @@ The key advantage of incremental storage over a full bulk load is that it minimi
 
 When using Incremental Data storage, potential challenges can arise, like incompatibility issues that may occur when new records invalidate existing data due to incompatible formats or types of data being added. This can create a bottleneck as the end user needs to get consistent and reliable insights from these corrupted data. Additionally, distributed systems used for processing incoming data could result in changes or deletions occurring in a different sequence (out-of-order events) than when it was received originally.  
 
-## Data Storage Undercurrent Activities
+## Data Storage Undelying Activities
 
 Storage underlying activities are important since storage is a critical stage for all data journey activities. Therefore, data engineers should tackle these activities carefully:
 
