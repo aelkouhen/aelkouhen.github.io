@@ -27,7 +27,7 @@ Despite some storage abstraction levels being out of data engineers' control, It
 Most references use the number of **_bytes_** as a measure of storage capacity. Data to be processed is coded in a **binary** (base-2 number) form using various encoding schemes discussed below:
 
 *   To begin with, digits 0 and 1 are **binary digits**, and each is referred to as a **bit** for short: 0 represents an OFF state, and 1 represents an ON state.
-*   Given **_n_** bits contained in a storage unit, there are 2n (read "_2 to the power or n_") ways in which zeros and ones can be arranged, e.g., given **2 binary digits (either 1 or 0)**, arrangements may be one of four (**22 or 2x2 or 4**) possibilities - **00, 01, 10 and 11**.
+*   Given **_n_** bits contained in a storage support, there are 2n (read "_2 to the power or n_") ways in which zeros and ones can be arranged, e.g., given **2 binary digits (either 1 or 0)**, arrangements may be one of four (**22 or 2x2 or 4**) possibilities - **00, 01, 10 and 11**.
 *   The industry settled on a sequence of 8-bits (given the unit name **_byte_**) as the basic storage unit.
 *   The term **_byte_** preceded by a prefix expresses the storage capacity. 
 
