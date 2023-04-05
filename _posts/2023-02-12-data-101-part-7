@@ -2,8 +2,8 @@
 layout: post
 title: Data 101 series - part 5
 subtitle: Data Processing
-thumbnail-img: https://www.esds.co.in/blog/wp-content/uploads/2019/05/Digital-Solutions.gif
-share-img: https://www.esds.co.in/blog/wp-content/uploads/2019/05/Digital-Solutions.gif
+thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEGTo70AyJ0W75SAz5-GoqiOqSikjNSSLmX0zn6d9mjMR2smeqHKON-Ixjvl8CLIO4-I4jAXGVZ26MFq_8s5ljkHGIlvrHy7yRp6QBJcPajJHdqmr0X5JuaWdY3AFkgvMYLk6AzWHJANswTZ2kmcCMf97O2E1dnqbPxVzvz-5IrUE3G5bq0BW5GV67
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEGTo70AyJ0W75SAz5-GoqiOqSikjNSSLmX0zn6d9mjMR2smeqHKON-Ixjvl8CLIO4-I4jAXGVZ26MFq_8s5ljkHGIlvrHy7yRp6QBJcPajJHdqmr0X5JuaWdY3AFkgvMYLk6AzWHJANswTZ2kmcCMf97O2E1dnqbPxVzvz-5IrUE3G5bq0BW5GV67
 tags: [Parquet,ORC,data formatting,CSV,data lineage,JSON,AVRO,normalized data,data preparation,data quality,data cleaning,XML,denormalized data,join types,data discovery,data transformation]
 comments: true
 ---
