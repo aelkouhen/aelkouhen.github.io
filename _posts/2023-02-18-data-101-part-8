@@ -78,7 +78,7 @@ But to be aligned with state of the art, the main role of data engineers here is
 
   Multiple databases can play the role of feature stores. A feature store is a centralized repository specifically designed for managing, storing, and sharing the features used in machine learning models. In machine learning, features are the input variables or predictors used to train models to make predictions or classifications. The feature store enables data scientists and engineers to store, discover, share, and reuse features across different models and applications, improving collaboration and productivity. In addition, it aims to reduce the operational burden for ML engineers by maintaining feature history and versions, supporting feature sharing among teams, and providing basic operational and orchestration capabilities, such as backfilling.
 
-  Another way to serve data for ML is through vector databases. A vector database is a type of database that stores data in the form of vectors or mathematical representations of data points. Machine Learning algorithms enable this transformation of unstructured data into numeric representations (vectors) that capture meaning and context, benefiting from advances in natural language processing and computer vision. 
+  Another way to serve data for ML is through vector databases. Another way to serve data for ML is through vector databases. A vector database is a type of feature store that holds data in the form of vectors or mathematical representations of data points. Machine Learning algorithms enable this transformation of unstructured data into numeric representations (vectors) that capture meaning and context, benefiting from advances in natural language processing and computer vision. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJ4w-mxssK7mIbkkIjrFhmKargiWNCs4-G-akokCMSIM8_5o1cZUwBWqFpQgyYR6huyzhO8Mdw10dJDj1syXuC-nvkiR1SLsbLVgenAwr6JIX788tROb8dV5WY9pAtGZokVYyNfVoKwAAW1cktIFN8aP7RyIjHKUEbtPyPNJivQazuq4Hu9F2blbxa){: .mx-auto.d-block :} *Vector databases.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
@@ -102,7 +102,6 @@ For example, a data engineer may extract customer and order data from a CRM and 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikT_4g4hpwnR6265GnKlebtrdNmHOcxE8b2D4fsWKj1U1QrXsRYdobu0UHaKkAPbZXmamAF6leYWz7TvxR720YmlP_xLkpnCCKzCOsjwFkjU2vOjS11nKlEBhUUxXIHRb9cCAkDK4E3VphWn3aDYeDZjO2ISAjxuZIhTyiJfbHpeu53V6Oouy0sZ5U){: .mx-auto.d-block :} *Reverse ETL.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
   
-
 ## Data Serving Underlying Activities
 
 In a data journey, the underlying activities come to an end with data serving. Data serving is your final chance to make your data in great shape before it gets into the hands of end-users. Therefore, data engineers should tackle the following activities carefully:
