@@ -1,7 +1,7 @@
 ---
 layout: home
-title: Data Demystified
-subtitle: "A Beginner's Guide to Understanding the Power of Data"
+title: Data & Redis
+subtitle: "Unleashing Real-Time Decision-Making"
 css: "/assets/css/index.css"
 ---
 <div class="list-filters">
