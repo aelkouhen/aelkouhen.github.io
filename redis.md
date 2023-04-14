@@ -14,11 +14,9 @@ css: "/assets/css/index.css"
 
 {% assign posts = paginator.posts | default: site.posts %}
 
-<!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
-<ul class="posts-list list-unstyled" role="list">
+<div class="posts-list list-unstyled" role="list">
   {% for post in site.tags.redis %}
-  <li class="post-preview">
-    <article>
+  <article class="post-preview">
 
       {%- capture thumbnail -%}
         {% if post.thumbnail-img %}
@@ -101,9 +99,8 @@ css: "/assets/css/index.css"
       {% endif %}
 
     </article>
-  </li>
   {% endfor %}
-</ul>
+</div>
 
 {% if paginator.total_pages > 1 %}
 <ul class="pagination main-pager">
