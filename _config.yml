@@ -22,9 +22,9 @@ author: Amine El Kouhen - DnA Factory
 navbar-links:
   Home: "/"
   Categories: 
-    - Data Demystified: "https://aelkouhen.github.io/data-101/"
+    - Data Demystified: "/data-101"
     - Data & Redis: "/data-redis"
-    - Business Analytics: "https://aelkouhen.github.io/analytics-101/"
+    - Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
     - Kai Waehner's Blog : "https://www.kai-waehner.de/"
@@ -272,13 +272,38 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      comments: true  # add comments to all blog posts
-      social-share: true # add social media sharing buttons to all blog posts
+      carbonads: true
+      comments: true
+      social-share: true
+      show-share: true
+      show-subscribe: true
+      support_promo_box: true
+      after-content: [share-section.html, scroll-box.html]
   -
     scope:
-      path: "" # any file that's not a post will be a "page" layout by default
+      path: "notblog"
+    values:
+      layout: "post"
+      carbonads: true
+      comments: true
+      social-share: true
+      show-share: true
+      show-subscribe: true
+      support_promo_box: true
+      after-content: [share-section.html, scroll-box.html]
+  -
+    scope:
+      path: "pages"
     values:
       layout: "page"
+      comments: true
+  -
+    scope:
+      path: ""
+    values:
+      layout: "page"
+      before-content: [support_promo_box.html, carbonads.html]
+      footer-extra: footer-subscribe.html
 
 # Exclude these files from production site
 exclude:
