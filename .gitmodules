@@ -3,7 +3,7 @@
 	url = http://github.com/aelkouhen/analytics-101.git
 [submodule "_posts/data-101"]
 	path = _posts
-	url = http://github.com/aelkouhen/data-101.git
+	url = http://github.com/aelkouhen/data-101
 	branch = main
 [submodule "data-redis"]
 	path = data-redis
