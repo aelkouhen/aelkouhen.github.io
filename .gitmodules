@@ -1,10 +1,9 @@
-[submodule "analytics-101"]
-	path = analytics-101
-	url = http://github.com/aelkouhen/analytics-101.git
-[submodule "_posts/data-101"]
+[submodule "_posts"]
 	path = _posts
-	url = http://github.com/aelkouhen/data-101
-	branch = main
-[submodule "data-redis"]
-	path = data-redis
-	url = http://github.com/aelkouhen/data-redis.git
+	url = http://github.com/aelkouhen/analytics-101/tree/main/_posts
+[submodule "_posts"]
+	path = _posts
+	url = https://github.com/aelkouhen/data-101/tree/main/_posts
+[submodule "_posts"]
+	path = _posts
+	url = http://github.com/aelkouhen/data-redis/tree/main/_posts
