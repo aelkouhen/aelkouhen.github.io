@@ -20,6 +20,10 @@ author: Amine El Kouhen - DnA Factory
 ###############################################
 
 navbar-links:
+  Topics: 
+    - Data 101: "https://aelkouhen.github.io/data-101/"
+    - Data & Redis: "https://aelkouhen.github.io/data-redis/"
+    - Analytics 101: "https://aelkouhen.github.io/analytics-101/"
   About Me: "aboutme"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
