@@ -2,8 +2,8 @@
 layout: post
 title: Data & Redis - Overview
 subtitle: Choosing the Right Data Architecture with Redis
-thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimY0UCmJbBGvTnlFSbKWX0NgDN3e43c5uMFiOlbYBjupnLDU_ByNdnHMKTacfs8WhbPUQ-sfO98RCBSs_-PXjdASJDkhCsQkIV7_SWyHCsmuUPOaUobxCcnV2Z37tzIGFopLBDzvfBbuCJPXwE8xqV7F_K33hyMfvh9BriT-4DJVYSZza2_CrNI-z0
-share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimY0UCmJbBGvTnlFSbKWX0NgDN3e43c5uMFiOlbYBjupnLDU_ByNdnHMKTacfs8WhbPUQ-sfO98RCBSs_-PXjdASJDkhCsQkIV7_SWyHCsmuUPOaUobxCcnV2Z37tzIGFopLBDzvfBbuCJPXwE8xqV7F_K33hyMfvh9BriT-4DJVYSZza2_CrNI-z0
+thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEyTVvCZMPKerGPE7YyDo8M5q8r8vZN0KpOKRX1uux7ApOj5JM3oruG5qzllDescDY3-FIz6Y8weE48qrG6cR9YGPOrjo200-irK8J8o6HEdAgaeoQt_NF2U1u8vQ5lq-hnCbZ9fTVZ61yUU8udfBADgSOpoK3UwHBW2fawN3OIegfvvs2twOO6LK7
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEyTVvCZMPKerGPE7YyDo8M5q8r8vZN0KpOKRX1uux7ApOj5JM3oruG5qzllDescDY3-FIz6Y8weE48qrG6cR9YGPOrjo200-irK8J8o6HEdAgaeoQt_NF2U1u8vQ5lq-hnCbZ9fTVZ61yUU8udfBADgSOpoK3UwHBW2fawN3OIegfvvs2twOO6LK7
 tags: [MQTT,Smart Cache,batch processing,Redis SQL,Redis Gears,IoT,lambda,stream processing,AWS WAF,ChatGPT,RDI,data ingestion,kappa,RIOT,Redis Streams,vector database,data serving,OPC UA]
 comments: true
 ---
@@ -63,7 +63,7 @@ In the diagram above, you can see the main components of Lambda Architecture imp
 
 While Lambda architectures offer many advantages, such as scalability, fault-tolerance, and flexibility to handle a wide range of data processing workloads (batches and streams), it also comes with drawbacks that organizations must consider before deciding whether to use or not. In fact, Lambda architecture is a complex system that uses multiple technology stacks to process and store data. In addition, the underlying logic is duplicated in the Batch and the Speed Layers for every stage. As a result, it can be challenging to set up and maintain, especially for organizations having limited resources. However, using Redis as a unique stack for both layers can help reduce the complexity encountered in Lambda architectures.
 
-Kappa data architecture with Redis
+## Kappa data architecture with Redis
 
 In 2014, when he was still working at LinkedIn, **_Jay Kreps_** started a discussion where he pointed out some drawbacks of the Lambda architecture. This discussion further led the big data community to another alternative that used fewer code resources.
 
