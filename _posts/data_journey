@@ -1,0 +1,290 @@
+---
+layout: post
+title: Data 101 series - part 4
+subtitle: The Data Journey
+thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGVfhxhGXNWmcz3KjVzMDqz-tzg9eoB8cM5FOM0MB0gb8Qq9K4JMHl8klMWGUKlv00JDq-3QWMP5o30iXbZQs4UKzdFmlmk_0zI_nNthrmckHdqMybOayDxOg3QVYn847k6810U_ObpOoll_eXzMRbfEkKIcAh-A0v5qpSm0c0HJEYDqTSSe1qeLYG
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGVfhxhGXNWmcz3KjVzMDqz-tzg9eoB8cM5FOM0MB0gb8Qq9K4JMHl8klMWGUKlv00JDq-3QWMP5o30iXbZQs4UKzdFmlmk_0zI_nNthrmckHdqMybOayDxOg3QVYn847k6810U_ObpOoll_eXzMRbfEkKIcAh-A0v5qpSm0c0HJEYDqTSSe1qeLYG
+tags: [data journey,data warehouse,data lifecycle,data analysis,OLAP,data value chain,SQL,data mart,data storage,file,NoSQL,data lakehouse,data ingestion,block,OLTP,data lake,object]
+comments: true
+---
+
+In the last episode, we've seen that successful data strategies require reviewing existing data platforms and analyzing how business users can take advantage of them. In addition, any data strategy requires the right tools and technologies to work as planned. Here, data architecture is pivotal in choosing the right tools and processes that allow you to design an adequate data platform for your organization. 
+
+In this article, I will introduce the concept of the data journey and how raw data increases in value through its multiple stages.
+
+## Overview
+
+The Data journey or the data value chain describes the different steps in which data goes from its creation to its eventual disposal. In the context of data platforms, It consists of acquisition, storage, processing, and dissemination (sharing, visualization, monetization...). This process aims to ensure that the right information is available at the right time for decision-making purposes while protecting it against unauthorized access or misuse.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGVfhxhGXNWmcz3KjVzMDqz-tzg9eoB8cM5FOM0MB0gb8Qq9K4JMHl8klMWGUKlv00JDq-3QWMP5o30iXbZQs4UKzdFmlmk_0zI_nNthrmckHdqMybOayDxOg3QVYn847k6810U_ObpOoll_eXzMRbfEkKIcAh-A0v5qpSm0c0HJEYDqTSSe1qeLYG){: .mx-auto.d-block :} *A modern data architecture represents all stages of the data journey ©Semantix*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+
+To create a performant and adequate data journey for business users, the data architects focus on how technological tools enable your organization and consequently your people to be more data-driven (see [Data 101 - part 2](https://aelkouhen.github.io/2023-01-24-data-101-part-2/)). Far from the common mindset of modernizing to modernize, he relies on a few strict rules:
+
+*   _Relevance_: Who will use the tech, and will it meet their needs? Technology should serve the business users and not the opposite. Also, ensure that each stage of the data journey has the right technology and processes to maintain data integrity and produce the most value. Instead of identifying a universal best-in-class approach, use a customized tool selection based on the data characteristics (see [Data 101 - part 1](https://aelkouhen.github.io/2023-01-22-data-101-part-1/)), your team size, and the maturity level of your organization.
+*   _Accessibility_: Data architects should consider tools and technologies that enable everyone across the organization to make data-driven decisions without obstacles when accessing data.
+*   _Performance_: Potent technologies on the market speed the data transformation process. Consider tools that will enable business users to be proactive and not reactive.
+
+## Data journey stages
+
+The data journey consists of many stages. The main ones are ingestion, storage, processing, analysis, and serving. Each stage has its own set of activities and considerations. The data journey also has a notion of "undercurrents" — critical activities across the entire lifecycle. These include security, data management, DataOps, orchestration, and software engineering. We will cover these undercurrent activities more extensively in future blog posts.
+
+Understanding each stage of the data lifecycle will help you make better choices about tools and processes you apply to your data assets, depending on what you expect from the data platform.
+
+### 1 - Data Ingestion
+
+Data ingestion is the first stage of the data lifecycle. This is where data is collected from various internal sources like databases, CRM, ERPs, legacy systems, external ones such as surveys, and third-party providers. It’s important to ensure the acquired data is accurate and up-to-date to be used effectively in subsequent stages of the cycle.
+
+In this stage, raw data are extracted from one or more data sources, replicated, then ingested into a landing storage support. Next, you must consider the data characteristics you want to acquire to ensure the data ingestion stage has the right technology and processes to meet its goals. As I've explained in [Data 101 - part 1](https://aelkouhen.github.io/2023-01-22-data-101-part-1/), data has few innate characteristics. The most relevant ones for this stage: are Volume, Variety, and Velocity.
+
+The ingestion layer can be decomposed in three sub-layers:
+
+1. **_Data sources_**:  A data source system is the origin of the data used in the data journey. For example, a source system could be an IoT device, an application message queue, or a transactional database. A data engineer consumes data from a source system but doesn’t typically own or control the source system itself. As a Data Engineer/Architect, you need to understand how the data is produced and what possible options to connect it with the Data System. Also, Data Contracts will be ideally implemented here.
+The most important characteristic of this sub-layer is the data velocity. In fact, data comes in two forms: bounded and unbounded. Unbounded data is data as it exists in reality, as events happen, either sporadically or continuously, ongoing and flowing. Bounded data is a convenient way of bucketing data across some sort of boundary, such as time. 
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfoWhDNhBVSKvvTPdWGG_dmuCdf1IRIPO6i3_0fNX4J1MRdoVUIfnvDxKtC5-KZsWD8yVits0ytaFMAecaYoI6eebO_iN18o_yetMK1l4W_TG3AbGXd-hVTx-6pjcNsFwlCNnSdu9WS1Ru8oiF_Y5rWmXTqFluuRU8IixJnsjwLWXWn8QXLGus3s8-/s846/bounded_unbounded.png){: .mx-auto.d-block :} *Bounded vs. Unbounded data*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+
+All data is unbounded until it’s bounded. Indeed, Business processes have long imposed artificial bounds on data by cutting discrete batches. Keep in mind the true unboundedness of your data; streaming ingestion systems are simply a tool for preserving the unbounded nature of data so that subsequent steps in the lifecycle can also process it continuously.
+
+2. **_Data collection_**: Rarely will the data produced by Data Sources be pushed directly downstream. This subsystem acts as a proxy between External Sources and Data Systems. You are very likely to see one of three proxy types here:
+
+    *   Collectors - applications that expose a public or private endpoint to which Data Producers can send the Events.
+    *   CDC Connectors - applications that connect to Backend DB event logs and push selected updates against the DB to the Data System.
+    *   Extractors - applications written by engineers that poll for changes in external systems like websites and push the Data down the stream.   
+
+    ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg98V1tem2vRj1Gc3uGaQJDyNo_lZI6BM_EYhb4tl529hbakML9WxFIPUs_CBIYcHgZRr6ktf40t7FDE5_jrcjWipro7HN81CRDTdypMxYDFAm9rmkPe_4nis46FppNcqM-cMRLZnww1gZDAdlSiGlxrbHFEtJSzUKy_imddfiJwpeOc64dGtLumqH4/w361-h453/ingestion-layer.png){: .mx-auto.d-block :} *Ingestion Layer @SWIRLAI*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+
+    For the data collection, three patterns are relevant to consider: the Push, the Pull, and the Poll models. In the push model of data ingestion, a source system writes data out to a target, whether a database, object store or filesystem. 
+
+    In the pull model, data is retrieved from the source system. The line between the push and pull paradigms can be quite blurry; data is often pushed and pulled as it works through various stages of a data pipeline.
+
+    Another pattern related to pulling is polling for data. Polling involves periodically checking a data source for any changes. When changes are detected, the destination pulls the data as it would in a regular pull situation.
+
+    ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeAayjkZVHnk_Py66iCkRAmAgs9fhYaZ26DxE7lzmxsdQpYTdl260l95X5WpROPAGySbTVEAXdI9WpanvvUGTkvF198BnH0tmCzXsCbG8BVnJj7WBiNxPCJdnmA-bYHp5zRDeu4zfPBk7-weTxEOsfpyFK2fOanDfmlG4kQDYPijDy35PUI0ill9Rx){: .mx-auto.d-block :} *Push vs. Pull vs. Poll patterns*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+
+    Consider, for example, the extract, transform, load (ETL) process, commonly used in batch-oriented ingestion workflows. ETL’s extract (E) part clarifies that we use a pull ingestion model. In traditional ETL, the ingestion system queries a current source table snapshot on a fixed schedule. 
+
+    In another example, consider continuous CDC, achieved in a few ways. One common method triggers a message every time a row is changed in the source database. This message is pushed to a queue, where the ingestion system picks it up.
+    
+    Another common CDC method uses binary logs, which record every commit to the database. The database pushes to its logs. The ingestion system reads the logs but doesn’t directly interact with the database otherwise. This adds little to no additional load to the source database. 
+    
+    Some versions of batch CDC use the pull pattern. For example, in timestamp-based CDC, an ingestion system queries the source database and pulls the changed rows since the previous update.
+
+3. **_Data transport_** : In most cases, you will see a Distributed Messaging system before the Data moves down the stream. Also, data validation can happen at this stage to alleviate stress from computations happening down the Data value Chain. We often interchange the terms data transport and data ingestion when discussing the velocity of data acquisition.
+
+    ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjT-eVXe6tYthglvjfCcQkzm6cKW_QBIAocbWokf5A5c6yS3PNpT0cwDwcv2g1EfI672oj053EV3er1sLwZmPCcJoVK4F-sEfWYkkqb3xVwvUl6UiQ7pNgU_k9gVB-DZAm8Zy06F_lgqydmNxKogZ7mfU2Mf1JaMaA_5UbTQENLgoDKwbAcjzHKTlp2/w463-h459/Ingestion.png){: .mx-auto.d-block :} *Data transport*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+
+   While most ingestion tools can handle a high volume of data with a wide range of formats (structured, unstructured...), they differ in how they handle the data velocity. As a result, we often distinguish three main categories of data transport: batch-based, real-time or stream-based, and hybrid. 
+
+* Batch-based data transport: Batch-based data transport is the process of collecting and transferring data in bulk according to scheduled intervals. The ingestion layer may collect data based on simple schedules, trigger events, or any other logical ordering. This means that data is ingested by taking a subset of data from a source system, based either on a time interval or the size of accumulated data. Batch-based ingestion can be useful for companies that need to collect specific data points daily or don't require data for real-time decision-making.
+
+   Time-interval batch ingestion is widespread in traditional business ETL for data warehousing. This pattern is often used to process data once a day, overnight during off-hours, to provide daily reporting, but other frequencies can also be used.
+
+   Size-based batch ingestion is quite common when data is moved from a streaming-based system into object storage; ultimately, you must cut the data into discrete blocks for future processing in a data lake. Some size-based ingestion systems can break data into objects based on various criteria, such as the size in bytes of the total number of events.
+
+   When implementing batch ingestion data engineers must consider a few issues such as snapshots vs. differential extraction, which action precedes the other - transforming or loading (ETL vs. ELT), batch size, and other data migration constraints...
+
+* Stream ingestion data transport: Real-time or Stream-based transport is essential for organizations to rapidly respond to new information in time-sensitive use cases, such as stock market trading or sensors monitoring. In addition, real-time data acquisition is vital when making rapid operational decisions or acting on fresh insights.
+
+   Publish-subscribe (PubSub) messaging systems are relevant here, allowing real-time applications to communicate their data by publishing messages. Receivers are subscribers of these systems and receive data as soon as it is published by the data source. These kinds of tools should be highly scalable and fault-tolerant to handle high volumes of data.
+
+   When implementing stream ingestion data engineers must consider a few issues such as schema evolution, late-arriving data, out-of-order data, data replay, time to live (TTL), message size, and failure handling (e.g., Dead-Letter queues)...
+
+* Hybrid ingestion data transport: Hybrid data transport is an incremental setup that consists of both batch and stream methods. It performs a delta function between the target and the source(s) and assesses missing information. Initially, there is no data in the target. Thus, the hybrid ingestion tool extracts a snapshot of the data sources and transfers it to the landing zone as a batch. Once the initial load is done, it ingests further data as a stream. 
+
+   One of the most used tools in this category is the Change Data Capture (CDC). The CDC constantly monitors the database transaction logs or redo logs and moves changed data as a stream without interfering with the database workload.
+
+### 2 - Data Storage
+
+Storage refers to how data is stored once it has been acquired. Data should be securely stored on a reliable platform with appropriate backup systems for disaster recovery if needed. Access control measures must also be implemented to protect sensitive information from unauthorized users or malicious actors who may try to gain access illegally. 
+
+Data storage has a few characteristics, such as storage lifecycle (how data will evolve), storage options (how data can be stored efficiently), storage layers, storage systems (how data should be stored, regardless of the raw storage support), and the storage technologies (storage abstractions) in which data are kept.
+
+### Storage lifecycle
+
+Data retrieval patterns can vary significantly based on the nature of the stored data and the queries made. As a result, the concept of "temperatures" has emerged. The frequency of data access determines the temperature of the data.
+
+Data that is accessed most frequently is known as hot data. Hot data may be accessed multiple times per day or even several times per second, such as in systems that process user requests. This data must be stored in a manner that allows quick retrieval, with "fast" defined in the context of the use case. Warm data is accessed occasionally, such as once a week or month.
+
+Cold data is rarely queried and is best stored in an archival system. However, cold data is often retained for compliance reasons or as a safeguard in the event of a catastrophic failure in another system. In the past, cold data was stored on tapes and sent to remote archival facilities. In cloud environments, vendors provide specialized storage tiers with meager monthly storage costs but high retrieval fees.
+
+It is necessary to put in place some policies to handle data storage depending on data "temperature" or the degree of its reliability. This is why the storage lifecycle becomes a critical task.
+
+The storage lifecycle is the process of managing stored data throughout its entire lifecycle, from the initial creation in the support to eventual deletion. In your data platform, you should manage your data objects with a set of rules that define actions to apply when predefined conditions are verified. There are two types of actions:
+
+*   **_Transition actions_**: define when data objects transition from one isolated zone to another. In most data platforms, the landing zone is the first storage area in which raw data is ingested. It is then necessary to set transition actions to transfer data from one storage area to another (e.g., curated, augmented, or conformed...). 
+
+    You can also define when data objects transition from one storage class to another (e.g., label data as cold when it is less frequently used or archive data older than one year), which can give better control over storage costs.
+
+*   **_Expiration actions_**: you can define when your data should be removed (expired).
+
+These kinds of actions are usually performed by ETL tools, but some storage services (especially those provided by Cloud Vendors) can offer such capabilities (e.g., AWS S3 lifecycle policies).
+
+### Storage layers
+
+The data lake architecture was initially thought to be the solution for storing massive volumes of data. Still, they have instead become data swamps filled with petabytes of structured and unstructured information that cannot be used.
+
+To combat this issue, it is important to understand how to create zones within a data lake in order to effectively drain the swamp.
+
+Data lakes are divided into three main zones: Raw, Trusted, and Curated. Organizations may label these zones differently according to individual or industry preference, but their functions are identical.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4APG0odRWDdZquPXNJv3MW9IHFKGCkfWhJgFwB8CoaEZpTPEBMzKoF4oDEjyPFNiOMjjnixqW_eeRRnchpirpUkA--bWQsk0V8lscxIxfm9eId3XzYMUci7BqZ65IOerGXc4bx3_lYpOq7vFE_9MZ1ysN_Pia0ULSyVbHhOgat65jozPOTWZ62pIe){: .mx-auto.d-block :} *Storage layers: a cornerstone for modern data platforms*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+    
+Data lakes are divided into three main zones: Raw, Trusted, and Curated. Organizations may label these zones differently according to individual or industry preference, but their functions are essentially the same.
+    
+1.  **_Raw zone_**: also known as the landing zone, the bronze zone, or the swamp. In this zone, data is stored in its native format without transformation or binding to any business rules. Though all data starts in the raw zone, it’s too vast of a landscape for business end-users (less technical). Typical users of the raw zone include data engineers, data stewards, data analysts, and data scientists, who are defined by their ability to derive new knowledge and insights amid vast amounts of data. These users spend a lot of time sifting through data, then pushing it into other zones.
+2.  **_Trusted zone_**: also called the exploration zone, the sandbox, the silver zone, or the pond. This is the place where data can be discovered and explored. It includes private zones for each individual user and a shared zone for team collaboration. The trusted data zone holds data as a universal "source of truth" for downstream zones and systems. A broader group of users has applied extensive governance to this data, with more comprehensive definitions that the entire organization can stand behind.
+3.  **_Curated zone_**: also known as the refined data, the production zone, the gold zone, the service zone, or the lagoon. This is where clean, manipulated, and augmented data are stored in the optimal format to drive business decisions. In addition, it offers operational data stores that feed data warehouses and data marts. This zone has strict security measures to limit data access and provides automated delivery of read-only data for end users.
+
+In some platforms, you can find additional transient or transit zones that hold ephemeral unprocessed data (i.e., temporary copies, streaming pools...) stored temporarily before being moved to one of the three permanent zones.
+
+### Storage options
+
+Storing data collected from multiple sources to a target storage system has always been a global challenge for organizations. Therefore, the chosen storage option is an area of interest for improving the data journey. You either employ the bulk method (also called full load) or the incremental Load method for performing data storage.
+
+In bulk storage, the entire target dataset is cleared out and then entirely overwritten: replaced with an updated version during each data loading run. Performing a full data load is an easy-to-implement process requiring minimal maintenance and a simple design. This technique simply deletes the old dataset and replaces it with an entire updated dataset, eliminating the need to manage deltas (changes). Furthermore, if any errors occur during these loading processes, they can be easily rectified by rerunning them without having to do additional data cleanup/preparation.
+
+However, using the full data load approach, one may experience difficulty in sustaining data loading with a small number of records (when you need to update only a few values but you have to erase then insert millions of objects), slow performance when dealing with large datasets and an inability to preserve historical data.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiR2FA0_qQ8acGmi_A6JAqCFf0uuTLt3NrglYlKmQX72bv_xoqm01dRJkDkYjcwSDynTfSesdWMJ3UWrYmdVmnJ6tLIYxabWkseMhv8KuZIG7JQcxOz0ZMjSyBgVroYas2Xt4hd39qFcPWWwhjSGjJxNI0_Pm__iorTuZOVI4Fwmtr2ztCptatyoxqM){: .mx-auto.d-block :} *Bulk vs Incremental storage*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+  
+On the other hand, the incremental load is a selective method of storing data from one or many sources to a target storage location. The incremental load model will attempt to compare the incoming data from the source systems with the existing data present in the destination for any new or changed data values since the last loading operation. Some storage systems keep track of every modification as a versioning control system could do.
+
+The key advantage of incremental storage over a full bulk load is that it minimizes the amount of work needed with each batch. This can make incremental loading much faster overall, especially when dealing with large datasets. In addition, since only new or changed data is stored each time, there is less risk of errors introduced into the target datasets. Finally, keeping history is often easier with an incremental load approach since all data from upstream sources can be retained in the target storage system as distinct versions or releases without duplicating the full datasets.
+
+When using Incremental Data storage, potential challenges can arise, like incompatibility issues that may occur when new records invalidate existing data due to incompatible formats or types of data being added. This can create a bottleneck as the end user needs to get consistent and reliable insights from these corrupted data. Additionally, distributed systems used for processing incoming data could result in changes or deletions occurring in a different sequence (out-of-order events) than when it was received originally.
+
+### Storage systems
+
+Storage systems exist at a level of abstraction above raw storage supports. For example, magnetic disks are raw storage supports, while major cloud object storage platforms and HDFS are storage systems that utilize magnetic disks.
+
+Storage systems define how the storage layer holds, organizes, and presents data independently on the underlying storage support. Data can be stored in different formats:
+
+*   **_File storage_**: also known as file-level or file-based storage, is a method of storing data where each piece of information is kept inside a folder (hierarchical storage). To access the data, your computer needs to know the path it's located at. This kind of systems (known as File Systems) uses limited metadata that tells the computer exactly where to find the files; similar to how you would use a library card catalog for books. The most familiar type of file storage is the operating system–managed filesystems on local disk partitions (e.g., NTFS, etx4). Local filesystems generally support full read-after-write consistency; reading immediately after a write will return the written data. Operating systems also employ various locking strategies to manage concurrent writing attempts to a file. Another well-known file storage is the NAS. **_Network-Attached Storage_** or **_NAS_** systems provide a file storage system to clients over a network. NAS is a prevalent solution for servers; they quite often ship with built-in dedicated NAS interface hardware.
+*   **_Block storage_** divides data into blocks and stores them individually, each with a unique identifier. This allows the system to store these smaller pieces of information in the most efficient location. 
+    Block storage is an excellent solution for businesses that require quick and reliable access to large amounts of data. It allows users to partition their data so it can be accessed in different operating systems, allowing them to configure their own data. Additionally, block storage decouples the user’s data from its original environment by spreading it across multiple environments, which are better suited for serving this information when requested. This makes retrieving stored blocks faster than file-based solutions, as each block lives independently without relying on one single path back to the user's system. Block storage is usually deployed in Storage Area Network (SAN) environments and must be connected to an active server before use.
+*   **_Object storage_** is a flat structure in which files are broken into pieces and spread out among hardware. Instead of being kept as files in folders or blocks on servers, the data is divided into discrete units called objects with unique identifiers for retrieval over a distributed system. These objects also contain metadata describing details, such as age, privacies/securities, access contingencies, and other information related to the data's content. Object storage is best used for large amounts of unstructured data, especially when durability, unlimited storage, scalability, and complex metadata management are relevant factors for overall performance. 
+    The storage operating system uses the metadata and identifiers to retrieve the data, which distributes the load better and lets administrators apply policies that perform more robust searches. In addition, object storage offers cost efficiency since users only pay for what they use; it can easily scale up to large quantities of static data, and its agility makes it well-suited for public cloud storage applications.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgWPUcwkEYpYxIGWQW2GkBoZMyMh9e4sbOlMeEth9CneDeDoDj37f-myCXmz-5R87z5Q0hQGFj9yg3fXwfJkigJzSkQBWVgcU_zsnilqCufxb0XEIg9MBhtcHVUKlJM7bWKZ-lZpGgkQAtBjbVll8NIaa4tngy_bnIE3rpYaoDuyDgZ4kEiFvtmGXaG){: .mx-auto.d-block :} *Storage formats: Files vs. Blocks vs. Objects*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+
+### Storage technologies
+
+Choosing a storage technology depends on several factors, such as use cases, data volumes, ingestion frequency, and data format. There is no universal storage recommendation that fits all scenarios. Every storage technology has its pros and cons. With countless varieties of storage technologies available, it can be overwhelming to select the most suitable option for your data architecture.
+
+Over the past years, we've seen many storage technologies that emerged to store and manage data: databases, data warehouses, data marts, data lakes, or, recently, data lakehouses. All start with “data.” Of course, data are everywhere, but the kind of data, scope, and use will illustrate the best technology for your organization.
+
+A **database** is a structured data collection stored on a disk, memory, or both. Databases come in a variety of flavors:
+
+*   **Structured databases**: a database that stores data in an organized, pre-defined format (schemas). Structured databases typically store large amounts of information and allow for quick retrieval by using queries. Structured databases can be relational or analytical:
+
+    - **_Relational databases_** that use the relational model to organize data into tables, fields (columns), and records (rows). These tables can be linked using relationships between different fields within each table. This type of database allows complex queries (joins) on large datasets and transactions such as updates, inserts, or deletes across multiple related records at once (OLTP). OLTP systems typically use normalized tables with a few columns containing only the most essential data needed for transactional operations.
+    - **_Columnar databases_** are designed for complex analytical tasks like trend analysis and forecasting. These databases (OLAP) usually have large amounts of denormalized data stored in fewer but wider tables, with many columns containing detailed information about each transaction or event being analyzed. This kind of datastores is behind the data warehouse architecture.
+
+*   **Semi-structured & Unstructured databases** also known as **Not-Only SQL (NoSQL)** do not follow the same structure as traditional SQL databases but instead allow users to store unstructured or semi-structured data without having to define fixed schemas beforehand like you would need when working with a relational database. They also provide more flexibility than their counterparts by allowing developers to quickly add new features without needing extensive modifications or migrations from existing structures due to their dynamic nature. These databases hold data in different manners and can be classified into eight categories:
+    - **_Key-Value stores_**: This type of NoSQL database stores each item as an attribute name (or "key") together with its value; they provide a simple way to store large amounts of structured data that can be quickly accessed by specifying the unique key for each piece of information stored within them. Most key-value stores are in-memory databases that store all their data in the main memory (RAM) instead of on disk. This allows for faster access to the stored keys and provides better performance when dealing with large amounts of data.
+    - **_Wide-Columns databases_**: this type is optimized for queries over large datasets—storing columns of data separately rather than rows—and typically offers faster write performance compared to row-oriented systems like relational databases due to their ability to add new columns on the fly without having to rewrite existing records or tables entirely when schema changes occur during development cycles.
+    - **_Time-series databases_**: A time-series database is a NoSQL database optimized for storing and analyzing time-series data. Time series data is a sequence of data points, typically consisting of timestamps and values, that are collected over time. Time series databases store and analyze data such as sensor readings, stock prices, system metrics, application performance monitoring (APM), log events, website clickstreams, etc.
+    - **_Immutable Ledgers_**: An immutable ledger is a record-keeping system in which records (or "blocks") cannot be altered or deleted once written. This feature makes them well-suited for applications such as financial transactions, supply chain management, and other scenarios where it's essential to maintain a permanent auditable trail of all transactions. One of the most well-known examples of an immutable ledger is the blockchain, the underlying technology for cryptocurrencies like Bitcoin. In a blockchain, each block in the chain contains a record of multiple transactions, and once a block is added to the chain, it cannot be altered or deleted. This provides a secure, decentralized ledger of all transactions resistant to tampering and manipulation.
+    - **_Geospatial databases_**: A geospatial datastore is a type of database that specifically stores and manages geospatial data, which describes the location and spatial relationships of objects and features on the Earth's surface. Geospatial data stores are used to support a variety of applications, such as geographic information systems (GIS), mapping, and spatial analysis. They allow users to perform complex spatial analysis, create maps, and make location-based decisions based on the data they contain.
+    - **_Graph databases_**: A graph database uses nodes connected by edges, making it ideal for applications where relationships between entities need quick access times & efficient storage capacity.
+    - **_Document databases_**: These databases store data in documents organized into collections containing key-value pairs or other complex nested structures (e.g., JSON). 
+    - **_Search databases_**: Search databases are explicitly designed for searching and retrieving information based on specific criteria, such as keywords or vectors. They are commonly used in applications that require fast and efficient searching, such as e-commerce websites, online libraries, and digital archives. Search databases use various indexing and data structure techniques to optimize search performance, such as inverted indexes, B-trees, and hash tables. They often provide advanced features such as fuzzy search, synonym matching, relevance ranking, and vector similarities.
+    
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxrDRMBbMDsb9uRMH68CDGtJGjFXUov1AZzs3ej6JOqMDBkDq59FOkVTCiqvkuG1k01HE2k_r2Ji40NnHLMNVsDQc7jKzDNgGMq8dHy3p1_wds6VJJsBit-F01ymuRdtgzlwNVX8jXewYaLUXacYVm1YwDjE8JTlb04B5XVQI9bW3CarNzYwotvxx2){: .mx-auto.d-block :} *Difference between SQL and NoSQL databases*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+  
+A **data warehouse** is a system that stores highly structured information from various sources for analytical workloads. It tends to handle large amounts of data quickly, allowing users to analyze facts according to multiple dimensions in tandem (Cube). Data warehouses have been a staple in decision support and business intelligence applications since the late 1980s. However, they are not well-suited to handle large volumes of unstructured or semi-structured data with a wide variety, velocity, and volume; thus making them an inefficient choice as a big data storage technology. Data warehouses can contain a wide variety of data from different sources. For various usages (i.e., Enterprise Data Warehouse), it can be used for near real-time analysis and reporting on operational systems that are constantly changing or updating their data sets (ODS), or they can be split into many subsets and tailored for specific usages or operational purposes (i.e., **data marts**).
+
+About a decade ago, architects began to conceptualize a single system for storing data from multiple sources that could be used by various analytic products and workloads. This led to the development of data lakes. A **data lake** is a large, centralized repository of structured and unstructured data that can be used for any scale.
+
+Unlike databases or data warehouses, a data lake captures anything the organization deems valuable for future use. The data lake represents an all-in-one process. Data comes from disparate sources and serves disparate consumers. We often see data lakes working with complimentary tools like data warehouses, which provide more querying options and other analytical features, and data marts because they create the other side of the spectrum: While data lakes are enormous repositories of raw data, data marts are more focused on specialized data (subject-oriented data).
+
+The continuous need for complimentary tools pushed many technology vendors to create a new concept that combines the best elements of data lakes and data warehouses. This new technology is called data lakehouses.
+
+A **data lakehouse** combines the low-cost, scalable storage of a data lake and the structure and management features of a data warehouse. This environment allows for cost savings while still enforcing schemas on subsets of the stored data, thus avoiding becoming an unmanageable "data swamp." For this, It comes with the following features (non-exhaustive list):
+
+*   Data mutation: Most data lakes are built on top of immutable technologies (e.g., HDFS or S3). This means that any errors in the data cannot be corrected. To address this schema evolution problem, data lakehouses allow two turnarounds: copy-on-write and merge-on-read.
+*   ACID: support transactions to enable concurrent read and write operations while ensuring data is ACID (Atomic, Consistent, Isolated, and Durable).
+*   Time-travel: The transaction capability of the lakehouse allows for going back in time on a data record by keeping track of versions.
+*   Schema enforcement: Data quality has many components, but the most important is ensuring that data adheres to a schema when ingested. Any columns not present in the target table's schema must be excluded, and all column types must match up correctly.
+*   End-to-end Streaming: organizations face many challenges with streaming data. One example is the out-of-order data, which the data lakehouse solves through watermarking. It supports also merge, update, and delete operations to enable complex use cases like change-data-capture (CDC), slowly-changing-dimension (SCD) operations, streaming upserts, etc.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg2WokrhfA5eNxx6dvBUjCAhgsRChmB5PaZIzjnvgmNtxTkPU8x3H0JysIJHLWUVOdGFQ2wHsLlX_jtfunn4IztKe_mCNyp9y_O6b9fUhZiGLgdcgrWHuhS3HXb_1FtPwPFY383iwg8s5_No02zwZSYlkklVWJhCgd8Ue5HOdCsAgSdPXAk8qTZoRQD){: .mx-auto.d-block :} *Evolution of Storage technologies ©DataBricks*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+  
+### 3 - Data Processing
+
+After you’ve ingested and stored data, you need to do something with it. The next stage of the data journey is transformation, meaning data needs to be changed from its original form into something useful for downstream use cases.
+
+Processing involves transforming raw data into valuable insights through analysis techniques like machine learning algorithms or statistical models depending on what type of problem needs solving within an organization's context. The goal here is accuracy and efficiency since this stage requires significant computing power, which could become costly over time without proper optimization strategies. The Data processing stage will be extensively detailed in the next blog posts.
+
+### 4 - Data Serving
+
+You’ve reached the last stage of the data journey. Now that the data has been ingested, stored, and processed into coherent and valuable structures, it’s time to get value from your data. “Getting value” from data means different things to different users.
+
+Data serving is the most exciting part of the data lifecycle. This is where the magic happens. This is where ML engineers can apply the most advanced techniques. Let’s look at some of the popular uses of data: analytics, machine learning, and more.
+
+Analytics is the core of most data endeavors. It consists of interpreting and drawing insights from processed data to make informed decisions or predictions about future trends. But, again, data visualization tools can be used here to help visualize the data more meaningfully. 
+
+Data analysis can be organized into six categories:
+
+1.  **_Descriptive Analysis_**: This analysis answers the "What happened?" question. The descriptive analysis provides an understanding of what has occurred in the past. It consists of summarizing data to describe what is happening in the dataset, using aggregation functions (i.e., counts, averages, frequencies...) It does not attempt to explain why things happened or determine any cause-and-effect relationships; its purpose is simply to give a concise overview.
+2.  **_Exploratory Data Analysis_** (EDA): focuses on exploring and understanding a dataset by using visualizations like histograms, box plots, scatterplots, etc., to uncover patterns and relationships between variables that may not be immediately obvious from looking at summary statistics alone. 
+3.  **_Diagnostic Analysis_**: This analysis answers the "Why did it happen?" question. The diagnostic analysis aims to uncover the root cause behind an observed phenomenon. Through this type of analysis, you can identify and respond to anomalies in your data. When running diagnostic analysis, you might employ several different techniques, such as probability, regression, filtering, and time-series analysis.
+4.  **_Inferential Analysis_**: Inferential analysis is a statistical technique that uses data from a small sample to make inferences about the larger population. It relies on the central limit theorem, which states that given enough samples of random variables, their distribution will tend toward normal. It can estimate parameters in the underlying population with an associated uncertainty or standard deviation measure. To ensure accuracy, it is important for your sampling scheme to accurately represent the target population so as not to introduce bias into your results.
+5.  **_Predictive Analysis_**: This analysis answers the "What is likely to happen in the future?" question. Predictive Analysis uses statistical techniques like regression models and machine learning algorithms to predict future events or outcomes based on past (historical) or current patterns and trends in the analyzed dataset. This allows organizations to plan ahead and make informed decisions based on their forecasts; for example, if sales are predicted to go down during summer months due to seasonality factors, they may choose to launch promotional campaigns or adjust spending accordingly. It can also help identify potential risks associated with certain decisions or actions an organization takes before they happen so that appropriate measures can be taken proactively rather than reactively after something has already gone wrong.   
+6.  **_Prescriptive Analysis_**: This analysis answers the "What is the best course of action?" question. The prescriptive analysis takes the predictive analysis one step further by recommending how best to act upon those predictions. It looks at what has happened, why, and what might happen to determine what should be done next. By combining insights gained through the other kinds of analyses (listed above) with advanced modeling methods such as artificial intelligence (AI) and optimization algorithms, prescriptive analysis helps organizations make better-informed decisions about their operations while minimizing risk exposure.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEil7nAjvno-_wj2AoNXKNO0G_hu9Ps9XuBe-mjsEliWYGyrX_-5u3wiBYyb9q6h_H19ng739gCiQqnkLuhmgiTNcNqz61cEB-9ZYjbp_0fYiPTEBrwdCkrzCgDp4rfxWveQ2WZ6z4k6m1SFq_ikEm4ElkqsT0zXJfB9t4iiVUNIT42cqZpeC2IU4dKc){: .mx-auto.d-block :} *Data analytics continuum*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+
+Finally, when the curated data passes through these analyses, the outcomes (insights) can be: shared with stakeholders or other interested parties. This could be done through reports, presentations, dashboards, etc., depending on what kind of information needs to be shared and with whom it’s being shared. Curated data and/or insights can also be shared "as-is" for further purposes, such as feature stores for machine learning algorithms, data monetization, API, etc.
+
+The different types of Data Analytics will be extensively detailed in the second part of this blog (Analytics 101).
+
+## Data Chain of Value
+
+Remember the data roles we introduced in [Data 101 - part 2](https://aelkouhen.github.io/2023-01-24-data-101-part-2/) of this series. Let's put every role in the data journey perspective. We can observe that everyone has predefined tasks, skills, and interface contracts with the other ones. The data value increases through the data journey landscape thanks to this synergy. Throughout the process, from one end of the value chain to another and back again, there should be constant feedback between producers and stakeholders.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkZGn38BoudzHV0HRD_fABWFPVyrE8l-n2EfMQvQVC2m72A_fLF45bY4WsdYvJd4xeR0vl36HQjnz2hsjKUX8x2ETyqDuSPUsqtT93HYkqd6P8xyUoxZ1_K10mjOyh0Lg0mxBYTB6xRrak2jtty6rwsVNBN-th9Xrk48YYCOeoElqGA67ZPEbrC7c-){: .mx-auto.d-block :} *Data roles in the Data chain of value*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+  
+The platform engineer builds the infrastructure of the data platform for other involved data professionals to use.
+
+*   The data engineer leverages the data platform infrastructure to build and deploy pipelines that extract data from external sources, clean it, guarantee its quality, and pass it on for further modeling. If more complex processing is needed, then the ownership of data engineers would shift downstream accordingly.
+*   The data analyst communicates with business stakeholders to create an accurate and intuitively usable data model for subsequent analyses. Then, they utilize this modeled data to conduct Exploratory Data Analyses (EDA) and Descriptive Analyses to answer business-related questions with the help of dashboards and reports.
+
+MLOps engineers build out the infrastructure of an ML platform that can be used by both Machine Learning engineers and data scientists alike.
+
+*   Data scientists leverage datasets in the data platform to explore their predictive insights and build Machine Learning Models. In more mature organizations, you will find feature stores as well.
+*   Machine Learning engineers leverage ML platform capabilities to deploy ML models built by data scientists ensuring MLOps best practices. Communicate with MLOps engineers to align on and help improve and industrialize ML platform capabilities.
+
+The legit question you can ask is: Where do all these data roles fit in with data science? For example, there’s some debate, with some arguing data engineering is a sub-discipline of data science. Honestly, I believe data engineering is separate from data science and analytics. They complement each other, but they are distinctly different. Data engineering sits upstream of data science, meaning data engineers provide the inputs used by data scientists (downstream from data engineering), who convert these inputs into something useful.
+
+{: .box-warning}
+**Caution:** Being further upstream of the Data Value Chain does not mean that your value is less. Quite the opposite - any mistake upstream multiplies the impact of the downstream applications making the upstream roles have the most impact on the final value.
+
+To support this reasoning, I consider the Data Science Hierarchy of Needs (figure below). In 2017, **_Monica Rogati_** published this hierarchy in an [article](https://hackernoon.com/the-ai-hierarchy-of-needs-18f111fcc007) showing where AI and machine learning (ML) sat near more “mundane” tasks such as data collection, transformation, and infrastructure.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieHV4go-Nww19E2ng4QmwQeShHuWqu_F-d3zVRht74dFjm4-I_iPE7RftbXHClHJkg73r_3kCINxZvaTRNxIcHXcK_w1mJYMv9Q2LK6kWGEnd6fWzej-1HY6gZ-bskwX0OkzvhnCRYHCibPP8WkDCwlXGjxdNc7dHn89iiAxFfiB2ngCmJ7darjLHj){: .mx-auto.d-block :} *Data science hierarchy of needs*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+
+Although many data scientists may be excited to develop and fine-tune machine learning models, the truth is that approximately 70% to 80% of their time is devoted to the lower three levels of the hierarchy - data collection, data cleaning, and data processing - with only a small fraction of their time allocated to analysis and machine learning. To address this, **_Rogati_** argues that companies must establish a strong data foundation at the bottom levels of the hierarchy before embarking on areas such as AI and ML. 
+
+Data scientists typically do not receive training on creating production-grade data systems and perform this work haphazardly because they need more assistance and resources from a data engineer. Ideally, data scientists should devote more than 90% of their time to the upper levels of the hierarchy, including analytics, experimentation, and ML. When data engineers concentrate on these lower portions of the hierarchy, they establish a robust foundation for data scientists to excel.
+
+## Summary
+
+In this article, we introduced the concept of the data journey (data value chain), and how one can use modern technological tools to enable organizations and people to be more data-driven. Thus, we detailed the different stages of this landscape and observed that deep architectural analysis is required to choose the right technology for the right purpose. 
+
+We highlighted the different ways to extract data, the different options for storing it, and how data can be retained and used without turning the storage area into an unmanageable "data swamp". For this, we overviewed the evolution of storage technologies from the 80's of the last century to the last few years.
+
+We discovered the types of analysis that we can perform on data. Data analysis is a bit like a treasure hunt; based on clues and insights from the past, you can work out what your next move should be. With the right analysis, businesses and organizations can use their data to make smarter decisions, invest more wisely, improve internal processes, and ultimately increase their chances of success. 
+
+Finally, we put data team roles in the data journey landscape. We observed that data value increases thanks to the interactions between each one of the data teams. However, upstream activities in the data value chain do not mean less value. Instead, every stage in the data journey immediately impacts the downstream stages and, thus, the final value.
+
+## References
+
+*   https://hevodata.com/learn/incremental-data-load-vs-full-load/
+*   https://www.databricks.com/blog/2019/08/14/productionizing-machine-learning-with-delta-lake.html
+*   Reis, J. and Housley M. Fundamentals of data engineering: Plan and build robust data systems. O’Reilly Media (2022).
+*   https://dzone.com/articles/data-lake-governance-best-practices
+*   https://www.newsletter.swirlai.com/p/sai-22-decomposing-the-data-system
+*   https://www.redhat.com/en/topics/data-storage/file-block-object-storage
+*   https://www.trifacta.com/blog/from-raw-to-refined-the-staging-areas-of-your-data-lake-part-1/
+*   https://www.healthcatalyst.com/insights/four-essential-zones-healthcare-data-lake
