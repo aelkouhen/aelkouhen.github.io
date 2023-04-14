@@ -272,7 +272,6 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      carbonads: true
       comments: true
       social-share: true
       show-share: true
