@@ -1,0 +1,9 @@
+[submodule "analytics-101"]
+	path = analytics-101
+	url = http://github.com/aelkouhen/analytics-101.git
+[submodule "data-101"]
+	path = data-101
+	url = http://github.com/aelkouhen/data-101.git
+[submodule "data-redis"]
+	path = data-redis
+	url = http://github.com/aelkouhen/data-redis.git
