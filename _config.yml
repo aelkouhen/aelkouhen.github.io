@@ -20,13 +20,18 @@ author: Amine El Kouhen - DnA Factory
 ###############################################
 
 navbar-links:
-  About Me: "aboutme"
+  Home: "https://aelkouhen.github.io/"
+  Categories: 
+    - Data Demystified: "https://aelkouhen.github.io/data-101/"
+    - Data & Redis: "https://aelkouhen.github.io/data-redis/"
+    - Business Analytics: "https://aelkouhen.github.io/analytics-101/"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
     - Kai Waehner's Blog : "https://www.kai-waehner.de/"
     - François Cerbelle's Blog : "https://fcerbell.github.io/pages/en/"
     - SwirlAI newsletter : "https://www.newsletter.swirlai.com/"
     - Buz Blog: "https://buz.dev/"
+  About Me: "aboutme"
   LinkedIn profile: "https://www.linkedin.com/in/amine-elkouhen/"
 
 ################
@@ -58,7 +63,7 @@ social-network-links:
   github: aelkouhen
   linkedin: amine-elkouhen
   #twitter: yourname
-  #patreon: yourname
+  patreon: DnAFactory
   #youtube: c/yourname
 #  medium: yourname
 #  reddit: yourname
