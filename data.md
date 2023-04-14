@@ -15,7 +15,7 @@ css: "/assets/css/index.css"
 {% assign posts = paginator.posts | default: site.posts %}
 
 <div class="posts-list">
-  {% for post in site.tags.data 101 %}
+  {% for post in site.tags.data101 %}
   <article class="post-preview">
 
       {%- capture thumbnail -%}
