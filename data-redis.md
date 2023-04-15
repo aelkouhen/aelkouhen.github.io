@@ -3,6 +3,7 @@ layout: page
 title: Data and Redis
 subtitle: "Unleashing Real-Time Decision-Making"
 ---
+
 {{ content }}
 
 {% assign posts = paginator.posts | default: site.posts %}
