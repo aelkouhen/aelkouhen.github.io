@@ -20,7 +20,6 @@ author: Amine El Kouhen - DnA Factory
 ###############################################
 
 navbar-links:
-  Home: "/"
   Categories: 
     - Data Demystified: "/data-101"
     - Data & Redis: "/data-redis"
