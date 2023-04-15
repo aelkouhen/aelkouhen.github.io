@@ -4,7 +4,7 @@ title: Data & Redis series - part 3
 subtitle:  Data & Redis - Data Processing with RDI (Hands-on)
 thumbnail-img: assets/img/RDI-2.svg
 share-img: assets/img/RDI-2.svg
-tags: [Debezium,Hands-On,RDI,stream processing,data processing,data transformation,redis]
+tags: [Debezium,Hands-On,RDI,stream processing,data processing,data transformation,Redis]
 comments: true
 ---
 
