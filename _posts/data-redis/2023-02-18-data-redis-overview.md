@@ -39,7 +39,7 @@ The Lambda architecture is an ideal architecture when you have a variety of data
 
 The critical feature of Lambda architecture is that it uses two separate processing systems to handle different types of data processing workloads. The first is a batch processing system, which processes data in large batches and stores the results in a centralized data store (e.g., a data warehouse or a data lake). The second system is a stream processing system, which processes data in real-time as it arrives and stores the results in a distributed data store. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCkcInCKtYeBYeZpDv8lb3LY2xYZzqA1m85Skd68uPYjGWWSGXdWdApSeZlNmixaGlZjp0tkEgxppgt4h-ExXk7HP_hAJ0ySKalP4K5s8akDJUi-NAOKE8Gz3hIgvCGnHAkD4kQOSV0bwzKQbdL5Lur_5rlPANid7UfML5ElYHMiSdflMViLiRAutU){: .mx-auto.d-block :} *Lambda Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpRmRPL5hNac2h6edI1AhgUFpfsWSE2ZMnNRqz8jaJd8zfTZzq-QLEa1XSXrNF3AnLhv3ex2bp4oypHfrEulzaOCyEbcE5J5RTI9s1AszhhSBykTLelXotMSS-OMf3G8rv3XJxrjGlYyOmIvcBS6A-qqbQktwHRbOaa18FRG5Twt76LYrIAG2Rvda_){: .mx-auto.d-block :} *Lambda Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 In the diagram above, you can see the main components of Lambda Architecture implemented with Redis. It consists of the ingestion layer, the batch layer, the speed layer (or stream layer), and the serving layer. 
 
@@ -73,7 +73,7 @@ The principal idea behind this is that a single technology stack can be used for
 
 Kappa architecture is designed to provide a scalable, fault-tolerant, and flexible system for processing large amounts of data in real time. The Kappa architecture is considered a simpler alternative to the Lambda architecture as it uses a single technology stack to handle both real-time and historical workloads, treating everything as streams. The primary motivation for inventing the Kappa architecture was to avoid maintaining two separate code bases (pipelines) for the batch and speed layers. This allows it to provide a more streamlined and simplified data processing pipeline while providing fast and reliable access to query results.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEyTVvCZMPKerGPE7YyDo8M5q8r8vZN0KpOKRX1uux7ApOj5JM3oruG5qzllDescDY3-FIz6Y8weE48qrG6cR9YGPOrjo200-irK8J8o6HEdAgaeoQt_NF2U1u8vQ5lq-hnCbZ9fTVZ61yUU8udfBADgSOpoK3UwHBW2fawN3OIegfvvs2twOO6LK7){: .mx-auto.d-block :} *Kappa Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkAj767VKR6xeGhE0fm2aWYMqQfDN0CE-pz7F0tZQDIdTi5YHdgSnYhb7AmhpQL2aqq6PHmzQBUSae-JtPB5BHlFDg8vSzVZGnWIsHKXq2LUSNVaCXcCXRdTmU4c9Zfd-8l34m3mL59dCE4hF-wzpcyEFeUFhLeTfwjAiw_Z1Pgk4khsDYLF-77pZL){: .mx-auto.d-block :} *Kappa Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 The most important requirement for Kappa was Data reprocessing, making visible the effects of data changes on the results. Consequently, the Kappa architecture with Redis is composed of only two layers: the stream layer and the serving one. The Serving Layer of Kappa is quite similar to Lambda's one.
 
@@ -88,7 +88,7 @@ One of the most famous examples that leverage Kappa Architecture with Redis is t
 
 The data collected by IoT devices can be used for various purposes, such as monitoring and controlling devices remotely, optimizing processes, improving efficiency and productivity, and enabling new services and business models. IoT Data is generated from devices that collect data periodically or continuously from the surrounding environment and transmit it to a destination.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZcG0T34k7PgDWm-SxeP9R42wSO7tJcmvJmgOeycb4omsGmgSMGCvduBwYEmkCkp0KmcLnBewXjgNtGsKfILgnkmJUQ81Ji5UTY0zsDPyrwepqlo7F0Df-IyTSxT218VWG0IJHanKOYg2RBs08HgNm5TcRBbTnnzsWVJ4nduQxCs6NXt38wQOM6mJY){: .mx-auto.d-block :} *IoT Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheK1jOk8gU9PLt65CNI8MJfcqd8e0qeK1-YUNJL71YYjXrYxPOdTp72kIk57ZeGkX83ugMWVWUpPtPTaQ_8ArcKpDaxy7S5WAoJORa6i4BgTwlPZW-nVGcie-zjbO6fe99-hqlUiK74JwBkA7XePwo599a2giHxdUhg5E7WrtJXkQT5ZfV85S4FGMB){: .mx-auto.d-block :} *IoT Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 An event producer is a device in this architecture, which isn’t beneficial unless you can get its data. So, an IoT gateway is a critical component that collects and securely routes device data to the appropriate destinations on the internet. IoT gateways work as event brokers and use standards and protocols like MQTT<sup>1</sup> and OPC UA<sup>2</sup> to communicate over the Internet. From there, events and measurements can flow into an event ingestion architecture with all challenges it brings—e.g., late-arriving data, data structure and schema disparities, data corruption, and connection disruption. 
 
