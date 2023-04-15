@@ -39,7 +39,7 @@ The Lambda architecture is an ideal architecture when you have a variety of data
 
 The critical feature of Lambda architecture is that it uses two separate processing systems to handle different types of data processing workloads. The first is a batch processing system, which processes data in large batches and stores the results in a centralized data store (e.g., a data warehouse or a data lake). The second system is a stream processing system, which processes data in real-time as it arrives and stores the results in a distributed data store. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpRmRPL5hNac2h6edI1AhgUFpfsWSE2ZMnNRqz8jaJd8zfTZzq-QLEa1XSXrNF3AnLhv3ex2bp4oypHfrEulzaOCyEbcE5J5RTI9s1AszhhSBykTLelXotMSS-OMf3G8rv3XJxrjGlYyOmIvcBS6A-qqbQktwHRbOaa18FRG5Twt76LYrIAG2Rvda_){: .mx-auto.d-block :} *Lambda Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiG062Z8yvYoAt3yqWr7gzgAPJ8DI8cmCHD1tjoXBpzZxBk88VT2mCsEsU9jChCe6AsOCzuOPy5PODB2GmB8tW_GQfrOH71mdUvw3DzOAI0B0ny39iq3L6frbuURVKmMUFUDEu1Ke0rySyW-VS49nv9egfzNan82JwlK3lxjioK1G3u3jua-BHB_XRs){: .mx-auto.d-block :} *Lambda Architecture with Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 In the diagram above, you can see the main components of Lambda Architecture implemented with Redis. It consists of the ingestion layer, the batch layer, the speed layer (or stream layer), and the serving layer. 
 
