@@ -122,7 +122,6 @@ In this article, we will capture a SQL Server database, so choose (`sqlserver`).
 └── config.yaml
 ```
 
-
 *   `config.yaml` - Redis Data Integration configuration file (definitions of the target database, applier, etc.)
 *   `debezium/application.properties` - Debezium Server configuration file
 *   `jobs` - Data transformation jobs, [read here](https://redis-data-integration.docs.dev.redislabs.com/data-transformation/data-transformation-pipeline.html)
