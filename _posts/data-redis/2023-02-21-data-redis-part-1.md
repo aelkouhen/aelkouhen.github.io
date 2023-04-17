@@ -3,7 +3,7 @@ layout: post
 title: Data & Redis series - part 1
 subtitle:  Data Ingestion with Redis (Hands-on)
 thumbnail-img: /assets/img/redis-ingest.svg
-share-img: /assets/img/redis-ingest.svg
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5mMorLNrsY5baLqpVyX92P33jErp9nRFA_iRVJO0ELg_pu-OBcPkAjX0EyTbOIvUaZwIuuE1igbmdzmLEkQG9Vp9SShTi-eeT4Nsgnk3EQYYVLS7dQVL6Rb54jcOhODf8r7Y9PRaY30RKQOBWHKmh-m5MP3Rf-M5Lpo1lT-l_UPTQQASXnID9hHlZ
 tags: [CDC,Debezium,Hands-On,RDI,batch ingestion,data ingestion,RIOT,stream ingestion,Redis]
 comments: true
 ---
@@ -190,7 +190,7 @@ To ingest data from flat files to a Redis database, you need to execute the impo
 riot-file -h <host> -p <port> import FILE... [REDIS COMMAND...]
 ```
 
-The import command reads from files and writes to Redis. The file paths can be absolute or in a URL form. In addition, paths can include wildcard patterns (e.g., `file_*.csv`). Using the object URL, you can also ingest objects from AWS S3 or GCP storage service.
+The import command reads from files and writes to Redis. The file paths can be absolute or in a URL form. In addition, paths can include wildcard patterns (e.g., `file\_\*.csv`). Using the object URL, you can also ingest objects from AWS S3 or GCP storage service.
 
 RIOT-File will try to determine the file type from its extension (e.g., `.csv` or `.json`), but you can specify it explicitly using the `--filetype` option.
 
@@ -451,7 +451,7 @@ Here is the snapshot of the entire GeneralLedger table used as a baseline. The w
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBDKP_sZ2mh9HyXm1RmWGi-PZCYNf3dqXMgyW5WvTJ-DHPlLErRihEBK_cma_zENMGhwcNyFy2bhJ1qz2V6trR1-e3fqOPIZsza_eIjWbtaXaudADWGMUEIGVUh9uWBHYN1a_OdxN64F1E7D-VRqCwsK_5IgzAutF9vVgCBrMeJlj6dieVklR6_GV6){: .mx-auto.d-block :} *The GeneralLedger table ingested as a first snapshot.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
   
-Let's add two transactions to the general ledger and see how the CDC captures the events on the fly. The following query inserts two transactions into GeneralLedger:
+Let's add two transactions to the general ledger and see how the CDC captures the events on the fly. The following query inserts two transactions into `GeneralLedger`:
 
 {% highlight sql linenos %}
 INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFID, DIMENSION6_, SPL_JOBNUMBER, SPL_JOBDATE, JOURNALIZESEQNUM, CREATEDTRANSACTIONID, DEL_CREATEDTIME, DIMENSION, QTY, POSTING, OPERATIONSTAX, DIMENSION4_, REASONREFRECID, DIMENSION2_, DATAAREAID, CREATEDBY, SPL_LEDGERACCMIRRORING_TR, TRANSTYPE, DOCUMENTDATE, TRANSDATE, MODIFIEDBY, CREDITING, SPL_BALANCINGID, BONDBATCHTRANS_RU, RECID, MODIFIEDDATETIME, AMOUNTCUR, CURRENCYCODE, RECVERSION, CORRECT, ACCOUNTNUM, AMOUNTMST, CREATEDDATETIME, PERIODCODE, ALLOCATELEVEL, FURTHERPOSTINGTYPE, DIMENSION5_, VOUCHER, DIMENSION3_, ACKNOWLEDGEMENTDATE, EUROTRIANGULATION) VALUES ('GJN0055897','0','0.000000000000','1','NLANCOMOE','SHKGS177192','1900-01-01 00:00:00.0000000','0','5664282519','34568','NL03PC301','0.000000000000','14','0','MARI','0','34200','nl03','arie.','0','0','2020-11-18 00:00:00.0000000','2020-11-24 00:00:00.0000000','arie.','0','0','0','5734386059','2020-11-25 08:36:08.0000000','1.410.000.000.000.000','EUR','1','0','701100','1.410.000.000.000.000','2020-11-25 08:36:08.0000000','1','0','0','GENCAR','PII000866194','MISC','2020-11-24 00:00:00.0000000','0'); 
@@ -463,13 +463,15 @@ INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFI
 frameborder="0" allowfullscreen> </iframe>
 </div>
 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJ8WxmbANogGOWQ1JGIQJV4kxDZRA6EHKDmhauqyNi-AHw804eEZXQP9pQASXfMUmVLt9osq6E91Za8K4nS5DOw7WzvtDdpOZ7CG_okjgZGYnz1u4U03BegP59mPkrWzmsVrGkWk_L26ZnU05od97x37OUfOW24WZyy9SbBto2mF96cijU_UggN9pd){: .mx-auto.d-block :}
+
 You can observe that debezium captured the two inserts and sent them to the stream `data:dna-demo:FO.dbo.GeneralLedger`. RedisGears, the data processing engine of Redis, reads the stream entries and creates hashes or JSON objects for each captured row. 
 
 The workflow is quite simple. In RDBMSs, the transaction log tracks any [DLM](https://docs.oracle.com/database/121/TDDDG/tdddg_dml.htm) command received on the database. Debezium listens and captures changes in the transaction log and fires events to an event streaming system such as RedisStreams. Then RedisGears is notified to consume these events and translates them to Redis data structures (e.g., Hashes or JSON). 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5mMorLNrsY5baLqpVyX92P33jErp9nRFA_iRVJO0ELg_pu-OBcPkAjX0EyTbOIvUaZwIuuE1igbmdzmLEkQG9Vp9SShTi-eeT4Nsgnk3EQYYVLS7dQVL6Rb54jcOhODf8r7Y9PRaY30RKQOBWHKmh-m5MP3Rf-M5Lpo1lT-l_UPTQQASXnID9hHlZ){: .mx-auto.d-block :} *Redis-DI dataflow.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
   
-Let's push it further and update a specific field for a particular row in the GeneralLedger table. For example, the following query updates the field `AMOUNTMSTSECOND` of the GeneralLedger table for the transaction having the ID equal to 1000.
+Let's push it further and update a specific field for a particular row in the GeneralLedger table. For example, the following query updates the field `AMOUNTMSTSECOND` of the `GeneralLedger` table for the transaction having the `ID` equal to 1000.
 
 {% highlight sql linenos %}
 UPDATE dbo.GeneralLedger SET AMOUNTMSTSECOND = '12000000' WHERE ID = 1000;
