@@ -502,9 +502,9 @@ However, when you think about your industry, your organization's needs, and the 
 
 ## References
 
-*   https://redis-data-integration.docs.dev.redislabs.com/
-*   https://developer.redis.com/riot/riot-db/index.html
-*   https://developer.redis.com/riot/riot-file/index.html
+*   Redis Data Integration (RDI), [Developer Guide](https://redis-data-integration.docs.dev.redislabs.com/)
+*   Redis Input/Output Tools (RIOT), RIOT DB - [Documentation](https://developer.redis.com/riot/riot-db/index.html)
+*   Redis Input/Output Tools (RIOT), RIOT File - [Documentation](https://developer.redis.com/riot/riot-file/index.html)
 
 ----
 1\. RedisStreams offer up to 500 times the throughput of [Apache Kafka](https://kafka.apache.org/) at sub-millisecond scale.
