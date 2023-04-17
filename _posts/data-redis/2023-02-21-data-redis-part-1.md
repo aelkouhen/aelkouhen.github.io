@@ -463,7 +463,7 @@ INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFI
 frameborder="0" allowfullscreen> </iframe>
 </div>
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJ8WxmbANogGOWQ1JGIQJV4kxDZRA6EHKDmhauqyNi-AHw804eEZXQP9pQASXfMUmVLt9osq6E91Za8K4nS5DOw7WzvtDdpOZ7CG_okjgZGYnz1u4U03BegP59mPkrWzmsVrGkWk_L26ZnU05od97x37OUfOW24WZyy9SbBto2mF96cijU_UggN9pd){: .mx-auto.d-block :}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEitETvWk5P7yIvS9crPwvvL7CgJbL6XjYME8SBuce4HVsG5EOGGJNK5dDYtBTv3VjZaGt28HIXTrWch0DYAJ0997Ptl1vgYpgnlDP5ti6z9KR0AkWE9EUw4Kc9Ko2ty4OPtq5Fg4AUdW25DW7t_I1FHd25aj0o-HRqEEizrhDMdMDJnB8og4PgWGYi6){: .mx-auto.d-block :}
 
 You can observe that debezium captured the two inserts and sent them to the stream `data:dna-demo:FO.dbo.GeneralLedger`. RedisGears, the data processing engine of Redis, reads the stream entries and creates hashes or JSON objects for each captured row. 
 
