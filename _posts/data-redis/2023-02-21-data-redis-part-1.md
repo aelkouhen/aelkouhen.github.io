@@ -168,7 +168,7 @@ Then, start Debezium Server from `debezium-server` directory:
 ./run.sh
 ```
 
-## Batch Ingestion using RIOT
+## Batch Ingestion using RIOT {#riot}
 
 Batch ingestion is the process of collecting and transferring data in batches according to scheduled intervals. Redis Input/Output Tools (RIOT) is a series of utilities designed to help you get data in and out of Redis in a batch fashion. It consists of several modules that can ingest data from files (RIOT-File) or relational databases to Redis (RIOT-DB). It can also migrate data from/to Redis (RIOT-Redis). RIOT supports Redis open-source (OSS) and Redis Enterprise in either standalone or cluster deployments.
 
@@ -269,7 +269,7 @@ riot-db -h redis-12000.cluster.redis-ingest.demo.redislabs.com -p 12000 import "
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivlZ2rZk37rGQe8NADGTOZlfW5_Sufx30U9YDc5BR2OqQ0lrxT5GJ4vfjbMXMHH41ymME_S1GgfVFa7EZHB6XVjXK9QMQzpHgVf1zk8fmTnttl_EG5C1kOxhdz5mx_GcWaY7t7PV4kiLhXJwh11vxo43DtWIrBDC9W3BcbS7F2BJTSJGnS_HgpKpZX){: .mx-auto.d-block :} *Filtered data ingested as JSON objects.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-## Stream Ingestion using Redis Data Integration (RDI)
+## Stream Ingestion using Redis Data Integration (RDI) {#rdi}
 
 Real-time or Stream-based ingestion is essential for organizations to rapidly respond to new information in time-sensitive use cases, such as stock market trading or sensors monitoring. Real-time data acquisition is vital when making rapid operational decisions or acting on fresh insights.
 
