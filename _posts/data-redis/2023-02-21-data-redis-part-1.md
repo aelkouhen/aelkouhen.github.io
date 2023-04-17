@@ -190,7 +190,7 @@ To ingest data from flat files to a Redis database, you need to execute the impo
 riot-file -h <host> -p <port> import FILE... [REDIS COMMAND...]
 ```
 
-The import command reads from files and writes to Redis. The file paths can be absolute or in a URL form. In addition, paths can include wildcard patterns (e.g., `file\_\*.csv`). Using the object URL, you can also ingest objects from AWS S3 or GCP storage service.
+The import command reads from files and writes to Redis. The file paths can be absolute or in a URL form. In addition, paths can include wildcard patterns (e.g., `file_*.csv`). Using the object URL, you can also ingest objects from AWS S3 or GCP storage service.
 
 RIOT-File will try to determine the file type from its extension (e.g., `.csv` or `.json`), but you can specify it explicitly using the `--filetype` option.
 
