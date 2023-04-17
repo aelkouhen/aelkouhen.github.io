@@ -103,7 +103,7 @@ sudo tar xvf ~/tmp/redis-di-offline/redis-di-cli/redis-di.tar.gz -C /usr/local/b
 Run the `create` command to set up a new Redis Data Integration database instance within an existing Redis Enterprise Cluster. This database is different from the target database that holds the transformed data. The RDI database is a small data store that holds only configurations and statistics about processed data. Let's create one and expose it in port 13000:
 
 ```
-redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
+[green]#{redis-di}# create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
 ```
 
 Finally, run the `scaffold` command to generate configuration files for Redis Data Integration and Debezium Redis Sink Connector:
