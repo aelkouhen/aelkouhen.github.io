@@ -79,14 +79,14 @@ This simple implementation might be good enough for many use cases, but it is no
 
 ### 4 - Rate Limiter / Counter
 
-Redis strings provide capabilities to manipulate integers with commands like INCR and INCRBY. These commands help you implement counters, for example. The most common usage for Redis-based counters is rate limiters. You can implement one using the strings increment commands on some counters and setting expiration times on those counters. A very basic rate-limiting algorithm works this way:
+Redis strings provide capabilities to manipulate integers with commands like [INCR](https://redis.io/commands/incr/) and [INCRBY](https://redis.io/commands/incrby/). These commands help you implement counters, for example. The most common usage for Redis-based counters is rate limiters. You can implement one using the strings increment commands on some counters and setting expiration times on those counters. A very basic rate-limiting algorithm works this way:
 
 *   The request IP or user ID is used as a key for each incoming request.
-*   The number of requests for the key is incremented using the INCR command in Redis.
+*   The number of requests for the key is incremented using the `INCR` command in Redis.
 *   The current count is compared to the allowed rate limit.
 *   The request is processed if the count is within the rate limit.
 *   The request is rejected if the count exceeds the rate limit.
-*   The keys are set to expire after a  specific time window, e.g., a minute,  to reset the counts for the next time window.
+*   The keys are set to expire after a specific time window, e.g., a minute, to reset the counts for the next time window.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjI58VRw8iruBtphGIbB3n68VHxxPio5MS_7fU2PjYAAXeIBmk2LSxOPg3XRq0jGYiX8cIsJWoMvouwL5AhTKXuKw3o68r4kFkxx_zhXGyKwv79w36J6CKBZgZH2vXAbl5fhO-qkLZo37-v7E2C0yNrpPJ_GfcCAts0Krl6l7PKppXCggfdnQUClM4o){: .mx-auto.d-block :} *Implementing a Rate Limiter using Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -100,11 +100,11 @@ Redis is a delightful way to implement various gaming leaderboards for most game
 
 ### 6 - Message Queue
 
-When you need to store and process an indeterminate series of events/messages, you can consider Redis. In fact, Redis Lists (linked lists of string values) are frequently used to implement lists, stacks, LIFO queues, and FIFO queues. In addition, Redis also uses the lists to implement Pub/Sub messaging architectures. 
+When you need to store and process an indeterminate series of events/messages, you can consider Redis. In fact, Redis Lists (linked lists of string values) are frequently used to implement _Lists_, _Stacks_, _LIFO queues_, and _FIFO queues_. In addition, Redis also uses the lists to implement Pub/Sub messaging architectures. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhpRjfKrC6UeaRIV29JjbhUQ761YmfvJ2PqFNKdOokrBzqizAdqG5L1IenZW8NRz1UhwPJZAfluv6SVUNuNOLmfledWE8Vkeve5qTfx7aWIAQs5Y1brZO3xuS2bZ7_Z16IWePPNUUo4sCIA62F9TqMPOxhaMS5YwEogk6dtfl0HY9KnjUaacjWI1NxS/w475-h361/queue-stack.gif){: .mx-auto.d-block :} *Push and Pop into/from Redis Lists.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-In the publishers/subscribers (Pub/Sub) paradigm, senders (publishers) are not programmed to send their messages to specific receivers (subscribers). Instead, published messages are characterized into channels without knowledge of what (if any) subscribers there may be. Likewise, subscribers express interest in one or more channels and only receive messages that are of interest without knowing what (if any) publishers exist. This decoupling of publishers and subscribers enables the communication between different components or systems in a loosely-coupled manner, allowing greater scalability and more dynamic network topology. 
+In the publishers/subscribers (**Pub/Sub**) paradigm, senders (publishers) are not programmed to send their messages to specific receivers (subscribers). Instead, published messages are characterized into channels without knowledge of what (if any) subscribers there may be. Likewise, subscribers express interest in one or more channels and only receive messages that are of interest without knowing what (if any) publishers exist. This decoupling of publishers and subscribers enables the communication between different components or systems in a loosely-coupled manner, allowing greater scalability and more dynamic network topology. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA5drNyq6SwzMepPBF4gER0xxTjVboP3K2D2IO09SpXoltU64m49mbC53mB24D-ZPLlgotZit9WjHSwVtF7O7fR74q-PhBWgH5CJkPIVSuNaSxCatU-zS5fDIRouPk5jg2le5i4MstJy5HJvm0ATmBhRpobyJD4T4yTK0pZc1W1zlmSMtz5J70I9Hv/w461-h334/pubsub.gif){: .mx-auto.d-block :} *Publisher/Subscriber Paradigm.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -135,15 +135,15 @@ Everything about the system is optimized for traversing through data quickly, wi
 
 ### 8 - Full-Text Search
 
-Full-text search refers to searching some text content inside extensive text documents and returning results that contain some or all of the words from the query. While traditional databases are great for storing and retrieving general data (exact matching), performing full-text searches has been challenging. This is why Redis created the RedisJSON module to store JSON documents natively. This module allowed Redis to store, update, and retrieve all or a few JSON values in a Redis database, similar to any other Redis data type. 
+Full-text search refers to searching some text content inside extensive text documents and returning results that contain some or all of the words from the query. While traditional databases are great for storing and retrieving general data (exact matching), performing full-text searches has been challenging. This is why Redis created the [RedisJSON](https://redis.io/docs/stack/json) module to store JSON documents natively. This module allowed Redis to store, update, and retrieve all or a few JSON values in a Redis database, similar to any other Redis data type. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEim-JGrqIe9RfloL9QIrMKKgoMQyTey0Z0cDM4FFYiM3tdU2AZe-BJ6G-6zg3IsOUlfgNLh38c2OqUTOBJY7gWjVsFFvgE-xH7XDTgKWTYbAv0jW8y0j6No42UnP2mMiSty8FixBspcYeS7RBabFPe4hzLM5DieVFgyOMwOPXEE7Gg1rXQ2A3MHArH3/w515-h247/google_autocomplete.gif){: .mx-auto.d-block :} *Google Search Engine - Autocompletion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-RedisJSON works seamlessly with the RediSearch module to create secondary indexes and query JSON documents. In addition, RediSearch enables multi-field queries, aggregation, exact phrase matching, numeric filtering, geo-filtering, and similarity semantic search on top of text queries.
+RedisJSON works seamlessly with the [RediSearch](https://redis.io/docs/stack/search) module to create secondary indexes and query JSON documents. In addition, RediSearch enables multi-field queries, aggregation, exact phrase matching, numeric filtering, geo-filtering, and similarity semantic search on top of text queries.
 
 ### 9 - Similarity Search
 
-Another advantage of using RediSearch is the similarity search feature it provides. Similarity search allows finding data points that are similar to a given query feature in a database. The most popular use cases are Vector Similarity Search (VSS) for recommendation systems, image and video search, natural language processing, and anomaly detection. For example, if you build a recommendation system, you can use VSS to find (and suggest) products that are similar to a product in which a user previously showed interest or looks similar to another product you already bought.
+Another advantage of using RediSearch is the similarity search feature it provides. Similarity search allows finding data points that are similar to a given query feature in a database. The most popular use cases are [Vector Similarity Search (VSS)](https://redis.com/solutions/use-cases/vector-database/) for recommendation systems, image and video search, natural language processing, and anomaly detection. For example, if you build a recommendation system, you can use VSS to find (and suggest) products that are similar to a product in which a user previously showed interest or looks similar to another product you already bought.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGvGIOqRYVR2DZS4HjjlkhyUANv2y4d983SAR-sPethAjKdhgmqOx19F09FfJGUULXt8rsEcYHqg-22zQMo5CVMIg3GEXc4SUXScglZ-bxtvHC3eFPQaE-teNJcYfCXwRRZgH1ZDPBg6kL5xYDTkNPaC8fkzK1Unr58ZP6LPfzeRlYtJ16jkJlDzgO){: .mx-auto.d-block :} *Vector Similarity Search: two-tower neural network model ©GoogleResearch.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -163,13 +163,13 @@ Most string operations have algorithmic complexity of O(1), which means they're 
 
 ### 2 - Hashes
 
-Redis hashes are record-structured types as collections of field-value pairs. You can use hashes to represent basic objects and store groupings of counters, among other things. Most Redis hash commands have algorithmic complexity of O(1). A few commands - such as [HKEYS](https://redis.io/commands/hkeys), [HVALS](https://redis.io/commands/hvals), and [HGETALL](https://redis.io/commands/hgetall) - are O(n), where n is the number of field-value pairs. Every hash can store up to 4,294,967,295 (2^32 - 1) field-value pairs. Note that each field name and value is a Redis string limited to 512 MB. Therefore, the maximum size of a hash can reach up to 4,294PB (aka. (2^32 -1) x 2 x 512MB). In practice, your hashes are limited only by the overall memory on the VMs hosting your Redis deployment.
+Redis hashes are record-structured types as collections of field-value pairs. You can use hashes to represent basic objects and store groupings of counters, among other things. Most Redis hash commands have algorithmic complexity of O(1). A few commands - such as [HKEYS](https://redis.io/commands/hkeys), [HVALS](https://redis.io/commands/hvals), and [HGETALL](https://redis.io/commands/hgetall) - are O(n), where n is the number of field-value pairs. Every hash can store up to 4,294,967,295 (2<sup>32</sup> - 1) field-value pairs. Note that each field name and value is a Redis string limited to 512 MB. Therefore, the maximum size of a hash can reach up to 4,294PB (aka. (2<sup>32</sup> -1) x 2 x 512MB). In practice, your hashes are limited only by the overall memory on the VMs hosting your Redis deployment.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhLTfaWc2HaLvBQdwogSGnNElXN9RbSZT4P42bYg4mTw0bsCm8ouzHdcs7nFpFNoKAyXzmy0jKgNgM-1ZVu657xNBNtSSDZFGtepHO6duUyZZpRNgFtG8MbT_lxsyt7ee2Voa_GvXWvif-7mLn0bQQvECHNUW_xNOHBI3jYP1PiA2CPKUBi2Jg4k44Y){: .mx-auto.d-block :} *Redis Hashes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 3 - Set
 
-A Redis set is an unordered collection of unique strings (members). You can use Redis sets to efficiently track unique items (e.g., track all unique IP addresses accessing a given blog post), represent relations (e.g., the set of all users with a given role), or perform cross-sets operations such as intersection, unions, and differences. The max size of a Redis set is 4,294,967,295 (2^32 - 1) unique members, which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per set. 
+A Redis set is an unordered collection of unique strings (members). You can use Redis sets to efficiently track unique items (e.g., track all unique IP addresses accessing a given blog post), represent relations (e.g., the set of all users with a given role), or perform cross-sets operations such as intersection, unions, and differences. The max size of a Redis set is 4,294,967,295 (2<sup>32</sup> - 1) unique members, which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per set. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk4fOdr1lQ7StLvj0T9LCovBnRBNf7cjlX4yXjwVNknTmZxTzzIpDDgkHEViJbmGLBzjq_HQn8ajQ0TbOZgM01t6GV-DLaQXeBHbW-76_pF_VYjOFItvn1ox9jRkFaXJOCU9LMViQxzhzUDTGx3DRmWfwG_x8BDTiHsv2cSr8cR8MZrZ9PAmCTZOWz/s320/set.png){: .mx-auto.d-block :} *A Set of unique elements.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -179,7 +179,7 @@ Sets membership checks on large datasets (or streaming data) can use a lot of me
 
 ### 4 - SortedSet
 
-Redis sorted set is a collection of unique strings (members) ordered by an associated score. When more than one string has the same score, the strings are ordered lexicographically. The max size of a Redis sorted set is 4,294,967,295 (2^32 - 1) unique members, which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per sorted set.
+Redis sorted set is a collection of unique strings (members) ordered by an associated score. When more than one string has the same score, the strings are ordered lexicographically. The max size of a Redis sorted set is 4,294,967,295 (2<sup>32</sup> - 1) unique members, which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per sorted set.
 
 Most sorted set operations are O(log(n)), where n is the number of members. You must consider running the [ZRANGE](https://redis.io/commands/zrange) command might return large values (e.g., in the tens of thousands or more). This command's time complexity is O(log(n) + m), where m is the number of results returned.
 
@@ -191,7 +191,7 @@ They are also often used as secondary indices for range queries. For example, to
 
 ### 5 - Lists
 
-Redis lists are linked lists of string values. A list can store up to 4,294,967,295 (2^32 - 1) elements and keep the items ranked. Which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per list. Redis lists are frequently used to implement stacks and queues. Redis can add or remove an item at the bottom ([LPUSH](https://redis.io/commands/lpush), [LPOP](https://redis.io/commands/lpop)) or at the top of a list ([RPUSH](https://redis.io/commands/rpush), [RPOP](https://redis.io/commands/rpop)). 
+Redis lists are linked lists of string values. A list can store up to 4,294,967,295 (2<sup>32</sup> - 1) elements and keep the items ranked. Which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per list. Redis lists are frequently used to implement stacks and queues. Redis can add or remove an item at the bottom ([LPUSH](https://redis.io/commands/lpush), [LPOP](https://redis.io/commands/lpop)) or at the top of a list ([RPUSH](https://redis.io/commands/rpush), [RPOP](https://redis.io/commands/rpop)). 
 
 They also support blocking commands such as “get next item if there is one, or wait until there is one” ([BLPOP](https://redis.io/commands/blpop), [BLMOVE](https://redis.io/commands/blmove)). Redis can also execute cross-list commands to get and remove an item from a list and add it to another list ([BRPOPLPUSH](https://redis.io/commands/brpoplpush/)). List operations that access its head or tail are O(1), which means they're highly efficient. However, commands that manipulate elements within a list are usually O(n). Examples of these include [LINDEX](https://redis.io/commands/lindex), [LINSERT](https://redis.io/commands/linsert), and [LSET](https://redis.io/commands/lset). So exercise caution when running these commands, mainly when operating on large lists.
 
@@ -203,7 +203,7 @@ Redis stream is a data structure that acts like an append-only log. You can add 
 
 Then, you can execute a range query such as “get all records between yesterday and today.” Redis generates a unique ID for each stream entry. You can use these IDs to retrieve their associated entries later or to read and process all subsequent entries in the stream.
 
-Streams were made to store unbounded events, so theoretically, your streams are limited only by the overall memory on the VMs hosting your Redis deployment. However, each event up to 4,294,967,295 (2^32 - 1) field-value pairs. Note that each field name and value is a Redis string limited to 512 MB.
+Streams were made to store unbounded events, so theoretically, your streams are limited only by the overall memory on the VMs hosting your Redis deployment. However, each event up to 4,294,967,295 (2<sup>32</sup> - 1) field-value pairs. Note that each field name and value is a Redis string limited to 512 MB.
 
 Adding an entry to a stream is O(1). Accessing any single entry is O(n), where n is the length of the ID. Since stream IDs are typically short and of a fixed length, this effectively reduces to a constant time lookup. This was made possible only because streams were implemented using [radix trees](https://en.wikipedia.org/wiki/Radix_tree). 
 
@@ -237,7 +237,7 @@ HyperLogLog is a data structure that estimates the cardinality of a set. Usually
 
 As a probabilistic data structure, HyperLogLog trades perfect accuracy for efficient space utilization. The HyperLogLog implementation uses up to 12 KB and provides a standard error of 0.81%. 
 
-The HyperLogLog can estimate the cardinality of sets with up to 18,446,744,073,709,551,616 (2^64) members. Writing ([PFADD](https://redis.io/commands/pfadd/)) to and reading from ([PFCOUNT](https://redis.io/commands/pfcount/)) the HyperLogLog is done in constant time and space. Merging HLLs is O(n), where n is the number of sketches. 
+The HyperLogLog can estimate the cardinality of sets with up to 18,446,744,073,709,551,616 (2<sup>46</sup>) members. Writing ([PFADD](https://redis.io/commands/pfadd/)) to and reading from ([PFCOUNT](https://redis.io/commands/pfcount/)) the HyperLogLog is done in constant time and space. Merging HLLs is O(n), where n is the number of sketches. 
 
 If you want to count unique visitors on your website, you will probably use the visitors' IP addresses as a counting criterion. For example, Hyperloglog can tell you that you have one million unique IP addresses with a 0.81% accuracy. Still, it will only use 12KB of memory instead of 4MB to store one million IP addresses. 
 
