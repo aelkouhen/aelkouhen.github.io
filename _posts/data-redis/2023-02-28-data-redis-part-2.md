@@ -4,7 +4,7 @@ title: Data & Redis series - part 2
 subtitle:  Data Storage with Redis
 thumbnail-img: /assets/img/redis-enterprise-multi-model.webp
 share-img: /assets/img/redis-enterprise-multi-model.webp
-tags: [cache-aside caching data structure distributed lock full-text search message queue RAM rate limiter read-replica redis session store similarity search write-behind write-through]
+tags: [cache-aside,cache,data structure,distributed lock,full-text search,message queue,RAM,rate limiter,read-replica,Redis,session store,similarity search,write-behind,write-through]
 comments: true
 ---
 
