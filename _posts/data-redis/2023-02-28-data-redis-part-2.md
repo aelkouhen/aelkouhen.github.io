@@ -275,14 +275,14 @@ In this article, We discovered that fundamental design decisions made by the dev
 
 We discovered some of Redis' top use cases that have been battle-tested in production at various companies and at various scales. Then, I introduced the native data structures of Redis and the extended ones implemented with the Redis Modules. I also presented the algorithmic complexity of each data structure, the well-known limitations, and the maximum storage limit of each. This is an illustrated recap of this article:
 
-  
+ ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA98-0WARDly9Fd1I0fWFsZOKU561REOPjRBO-_bO6XLOMqFwVytzy9xg0i6zcgR6s7O7TGF8lNOeeqVTY4fAKmJd1FA9piZHvoiefZBf7Mcwlq4XijGibv6-jk6Bkzga13JingbQ61KJjcORvdu_pXi1_pYl1tI86D5GM2t3gUrZHjKXcc1rcH68F){: .mx-auto.d-block :}
 
 Redis is very versatile: there are many different ways to use Redis. The only limit is your creativity.
 
 ## References
 
 *   [Redis data types, redis.io](https://redis.io/docs/data-types/)
-*   [Redis 03a - Native datastructures, François Cerbelle's Blog](https://fcerbell.github.io/RedisNativeStructures1/)
-*   [Redis 03b - Native datastructures, François Cerbelle's Blog](https://fcerbell.github.io/RedisNativeStructures2/)
+*   [Redis 03 - Native datastructures (1/2), François Cerbelle's Blog](https://fcerbell.github.io/RedisNativeStructures1/)
+*   [Redis 03 - Native datastructures (2/2), François Cerbelle's Blog](https://fcerbell.github.io/RedisNativeStructures2/)
 *   ["Why is redis so fast?", ByteByteGo](https://blog.bytebytego.com/p/why-is-redis-so-fast)
 *   ["Announcing ScaNN: Efficient Vector Similarity Search", Google Research Blog](https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html)
