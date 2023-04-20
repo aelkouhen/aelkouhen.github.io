@@ -283,8 +283,8 @@ Redis is very versatile: there are many different ways to use Redis. The only li
 
 ## References
 
-*   ["Redis data types, redis.io"](https://redis.io/docs/data-types/)
-*   ["Redis 03a - Native datastructures, François Cerbelle's Blog"](https://fcerbell.github.io/RedisNativeStructures1/)
-*   ["Redis 03b - Native datastructures, François Cerbelle's Blog"](https://fcerbell.github.io/RedisNativeStructures2/)
-*   ["Why is redis so fast?, ByteByteGo"](https://blog.bytebytego.com/p/why-is-redis-so-fast)
-*   ["Announcing ScaNN: Efficient Vector Similarity Search, Google Research Blog"](https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html)
+*   [Redis data types, redis.io](https://redis.io/docs/data-types/)
+*   [Redis 03a - Native datastructures, François Cerbelle's Blog](https://fcerbell.github.io/RedisNativeStructures1/)
+*   [Redis 03b - Native datastructures, François Cerbelle's Blog](https://fcerbell.github.io/RedisNativeStructures2/)
+*   ["Why is redis so fast?", ByteByteGo](https://blog.bytebytego.com/p/why-is-redis-so-fast)
+*   ["Announcing ScaNN: Efficient Vector Similarity Search", Google Research Blog](https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html)
