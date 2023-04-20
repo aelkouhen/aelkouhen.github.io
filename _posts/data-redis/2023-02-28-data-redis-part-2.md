@@ -1,4 +1,4 @@
- ---
+---
 layout: post
 title: Data & Redis series - part 2
 subtitle:  Data Storage with Redis
