@@ -275,7 +275,7 @@ In this article, We discovered that fundamental design decisions made by the dev
 
 We discovered some of Redis' top use cases that have been battle-tested in production at various companies and at various scales. Then, I introduced the native data structures of Redis and the extended ones implemented with the Redis Modules. I also presented the algorithmic complexity of each data structure, the well-known limitations, and the maximum storage limit of each. This is an illustrated recap of this article:
 
- ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA98-0WARDly9Fd1I0fWFsZOKU561REOPjRBO-_bO6XLOMqFwVytzy9xg0i6zcgR6s7O7TGF8lNOeeqVTY4fAKmJd1FA9piZHvoiefZBf7Mcwlq4XijGibv6-jk6Bkzga13JingbQ61KJjcORvdu_pXi1_pYl1tI86D5GM2t3gUrZHjKXcc1rcH68F){: .mx-auto.d-block :}
+ ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiT8t6aATd3KHEfJotVxaa9xlxXmb3NG-BkAS5wT8cTaa44UMbMFUNUqAeDWW7oKDD2VzGGl8KreU60OvokMcsTe2Asbh80ev9K9xfC82gtttY-UTA5hLADOmhjJl865vUEU8O8rBaL9uh58LSZE7V5AyEFL6Q6GqR1xC5CAReOkJw837fu0fS3d4rN){: .mx-auto.d-block :}
 
 Redis is very versatile: there are many different ways to use it. The only limit is your creativity.
 
