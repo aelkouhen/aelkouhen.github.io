@@ -65,13 +65,13 @@ Another common use case is to use Redis as a session store to share session data
 
 Distributed locks are used when multiple nodes in an application need to coordinate access to some shared resource. Redis is used as a distributed lock with its atomic commands like SETNX (SET if Not eXists). It allows a caller to set a key only if it does not already exist. Here’s how it works at a high level:
 
-Client 1 tries to acquire the lock by setting a key with a unique value and a timeout using the SETNX command: SETNX lock "1234abcd" EX 3
+_Client 1_ tries to acquire the lock by setting a key with a unique value and a timeout using the [SETNX](https://redis.io/commands/setnx) command: `SETNX lock "1234abcd" EX 3`
 
-*   If the key was not already set, the SETNX command returns 1, indicating that the lock has been acquired by Client 1.
+*   If the key was not already set, the `SETNX` command returns 1, indicating that the lock has been acquired by _Client 1_.
     *   Client 1 finishes its work; 
     *   and releases the lock by deleting the key. 
-*   If the key was already set, the SETNX command returns 0, indicating that another client already holds the lock. 
-    *   In this case, Client 1 waits and retries the SETNX operation until the other client releases the lock.
+*   If the key was already set, the `SETNX` command returns 0, indicating that another client already holds the lock. 
+    *   In this case, _Client 1_ waits and retries the `SETNX` operation until the other client releases the lock.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDKmegh34geV661MMXSC32qgjPgtPyvHMmJNl5Rs-tIgsuJgtsnhmEOuPLsfXa7phXvJM3oW1yt2wbzLqB4rvhumtuHeL78dnpNgWbD7RiCAZrZMQYlMOtyvvGQNkT7R8U5Y-7jBuMxRsHmdnqI4UwJ8EFBrB182IPCUbdv2j79d40imROTnftGu-e/w531-h555/distributed-lock.png){: .mx-auto.d-block :} *Example of a Distributed Lock implementation.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
