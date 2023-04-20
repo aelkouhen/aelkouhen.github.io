@@ -59,7 +59,7 @@ Redis is an in-memory data structure store, and its most common usage is cachin
 
 Another common use case is to use Redis as a session store to share session data among stateless servers. When a user logs in to a web application, the session data is stored in Redis, along with a unique session ID that is returned to the client as a cookie. When the user makes a request to the application, the session ID is included in the request, and the stateless web server retrieves the session data from Redis using the ID. The session stores are behind the shopping cart you can find on the e-commerce website.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYmYre14zmKHaC2ED-EoakDhJd2lM2hg4fzJPCCNtrJSqSQ6l_OpMwA-w-phesgf9wZYu9BI_1G1uBuHWqM2YTX7VwbiI_Q4R_xFo98lx96XzJd4bXZbEMI4cEOOZ89t7lSk5NjkxXReIOAh5Ml_4-SBde9LP0FWuW2NhTVOfS76EXFZou6Ds0N1xk){: .mx-auto.d-block :} *Storing User Session using Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYmYre14zmKHaC2ED-EoakDhJd2lM2hg4fzJPCCNtrJSqSQ6l_OpMwA-w-phesgf9wZYu9BI_1G1uBuHWqM2YTX7VwbiI_Q4R_xFo98lx96XzJd4bXZbEMI4cEOOZ89t7lSk5NjkxXReIOAh5Ml_4-SBde9LP0FWuW2NhTVOfS76EXFZou6Ds0N1xk){: .mx-auto.d-block :} *Storing User Sessions using Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 3 - Distributed Lock
 
@@ -68,10 +68,10 @@ Distributed locks are used when multiple nodes in an application need to coordin
 Client 1 tries to acquire the lock by setting a key with a unique value and a timeout using the SETNX command: SETNX lock "1234abcd" EX 3
 
 *   If the key was not already set, the SETNX command returns 1, indicating that the lock has been acquired by Client 1.
-  -   Client 1 finishes its work; 
-  -   and releases the lock by deleting the key. 
+    *   Client 1 finishes its work; 
+    *   and releases the lock by deleting the key. 
 *   If the key was already set, the SETNX command returns 0, indicating that another client already holds the lock. 
-  -   In this case, Client 1 waits and retries the SETNX operation until the other client releases the lock.
+    *   In this case, Client 1 waits and retries the SETNX operation until the other client releases the lock.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDKmegh34geV661MMXSC32qgjPgtPyvHMmJNl5Rs-tIgsuJgtsnhmEOuPLsfXa7phXvJM3oW1yt2wbzLqB4rvhumtuHeL78dnpNgWbD7RiCAZrZMQYlMOtyvvGQNkT7R8U5Y-7jBuMxRsHmdnqI4UwJ8EFBrB182IPCUbdv2j79d40imROTnftGu-e/w531-h555/distributed-lock.png){: .mx-auto.d-block :} *Example of a Distributed Lock implementation.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -223,7 +223,7 @@ This data structure is not really a new native data structure but a derived data
 
 Another derivative data structure in Redis is the Bitmap. Redis bitmaps are an extension of the string data type that lets you treat a string like a bit vector. You can also perform bitwise operations on one or more strings, such as AND, OR, and XOR. For example, suppose you have 100 movement sensors deployed in a field labeled 0-99. You want to quickly determine whether a given sensor has detected a movement within the hour. All you can do is create a bitmap with a key for each hour and let the sensors set it with their ID when they capture a movement. Then, you can simply see which sensor was pinging in your field by displaying the bitmap.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7_tO_lRIm07tRXSr6nyvwFc8ZJcxV-BQihfWlREn4ngD_cLMNkIdouCipcgihwtRr0FwrvUjc3YU_bjxMRbmTXaKFFyhR9LGZ67d9nQCg1LqWcPAlwg9mLMlXOduiT6jkZXbjhfpQdWBwR_Ctik8VfOhDHg4A1AExx3Q85X_3Phhka6Qhx-CWfjV_/s1006/bitmap.gif){: .mx-auto.d-block :} *A Bitmap presenting the activated sensors in the field.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7_tO_lRIm07tRXSr6nyvwFc8ZJcxV-BQihfWlREn4ngD_cLMNkIdouCipcgihwtRr0FwrvUjc3YU_bjxMRbmTXaKFFyhR9LGZ67d9nQCg1LqWcPAlwg9mLMlXOduiT6jkZXbjhfpQdWBwR_Ctik8VfOhDHg4A1AExx3Q85X_3Phhka6Qhx-CWfjV_/w384-h385/bitmap.gif){: .mx-auto.d-block :} *A Bitmap presenting the activated sensors in the field.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 9 - Bitfield
 
