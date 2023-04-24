@@ -64,7 +64,7 @@ Gear Functions are composed of a sequence of steps or operations, such as Map, F
 
 An operation is the building block of Gears functions. Different operation types can be used to achieve a variety of results to meet various data processing needs. Operations can have zero or more arguments that control their operation. Depending on the operation's type, arguments may be language-native data types and function callbacks.
 
-The steps/operations are ‘_piped_’ together by the Redis Gears runtime such that the output of one step/operation becomes the input to the subsequent step/operation, and so on.
+The steps/operations are "_piped_" together by the Redis Gears runtime such that the output of one step/operation becomes the input to the subsequent step/operation, and so on.
 
 An action is a special type of operation that is always the function's final step. There are two types of actions:
 
@@ -161,7 +161,7 @@ cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislab
 
 ### 3 - RedisGears: Batch processing
 
-Once the data is collected in Redis, it might then enter the data preparation stage. Data preparation, often referred to as “pre-processing,” is the stage at which raw data is cleaned up and organized for the following stages of data processing. For this, RedisGears allows a few operations to help filter errors and invalid values, then prepare data for the next steps. This step aims to eliminate bad data (redundant, incomplete, or incorrect data) and create high-quality data for the best data-driven decision-making. 
+Once the data is collected in Redis, it might then enter the data preparation stage. Data preparation, often referred to as “_pre-processing_”, is the stage at which raw data is cleaned up and organized for the following stages of data processing. For this, RedisGears allows a few operations to help filter errors and invalid values, then prepare data for the next steps. This step aims to eliminate bad data (redundant, incomplete, or incorrect data) and create high-quality data for the best data-driven decision-making. 
 
 Remember this CSV [file](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/airport.csv) that we ingested in Redis (see [Data & Redis part 1](https://aelkouhen.github.io/2023-02-21-data-redis-part-1/))
 
