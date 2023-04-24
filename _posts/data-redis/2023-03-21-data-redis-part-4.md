@@ -174,33 +174,33 @@ Redis Data Integration (RDI) leverages the hybrid approach since all transformat
 The YAML files accept the following blocks/fields: 
 
 `source` - This section describes what is the table that this job works on:
- *   `server_name`: logical server name (optional)
- *   `db`: DB name (optional)
- *   `schema`: DB schema (optional)
- *   `table`: DB table
- *   `row_format`: Format of the data to be transformed: data\_only (default) - only payload, full \- complete change record 
+ * `server_name`: logical server name (optional)
+ * `db`: DB name (optional)
+ * `schema`: DB schema (optional)
+ * `table`: DB table
+ * `row_format`: Format of the data to be transformed: data\_only (default) - only payload, full \- complete change record 
 
 `transform`: his section includes a series of blocks that the data should go through. See documentation of the [supported blocks](https://redis-data-integration.docs.dev.redislabs.com/reference/data-transformation-block-types.html) and [JMESPath custom functions](https://redis-data-integration.docs.dev.redislabs.com/reference/jmespath-custom-functions.html).
 
 `output` - This section includes the outputs where the data should be written to:
 
 1. Redis:
-*  `uses: redis.write`: Write to a Redis data structure
-*  `with`:       
-   *   `connection`: Connection name
-   *   `key`: This allows to override the key of the record by applying a custom logic:
-       *   `expression`: Expression to execute
-       *   `language`: Expression language, JMESPath or SQL
+* `uses: redis.write`: Write to a Redis data structure
+* `with`:       
+ * `connection`: Connection name
+ * `key`: This allows to override the key of the record by applying a custom logic:
+  * `expression`: Expression to execute
+  * `language`: Expression language, JMESPath or SQL
 
 2. SQL:
-*  `uses: relational.write`: Write into a SQL-compatible data store
-*  `with`:
-   *   `connection`: Connection name
-   *   `schema`: Schema
-   *   `table`: Target table
-   *   `keys`: Array of key columns
-   *   `mapping`: Array of mapping columns
-   *   `opcode_field`: Name of the field in the payload that holds the operation (c - create, d - delete, u - update) for this record in the DB
+* `uses: relational.write`: Write into a SQL-compatible data store
+* `with`:
+ * `connection`: Connection name
+ * `schema`: Schema
+ * `table`: Target table
+ * `keys`: Array of key columns
+ * `mapping`: Array of mapping columns
+ * `opcode_field`: Name of the field in the payload that holds the operation (c - create, d - delete, u - update) for this record in the DB
 
 I've detailed many data transformations archetypes in [Data 101 - part 5](https://aelkouhen.github.io/2023-02-08-data-101-part-5) and find it interesting to evaluate Redis Data Integration through this list of capabilities. Thus, you can see how to perform different kinds of transformations using RDI.
 
