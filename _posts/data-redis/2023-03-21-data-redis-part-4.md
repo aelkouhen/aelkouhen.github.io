@@ -475,7 +475,7 @@ applier:
 {% endhighlight %}
 
 {: .box-warning}
-**Caution:** If you want to execute normalization/denormalization jobs, you must first get the release 0.99.0 of Redis Data Integration since it is still under development.  
+**Caution:** If you want to execute normalization/denormalization jobs, It is mandatory to load the release 0.99 (at least) of Redis Data Integration.  
 
 #### For UBUNTU18.04
 
