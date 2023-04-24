@@ -209,7 +209,7 @@ I've detailed many data transformations archetypes in [Data 101 - part 5](https
 This process selects a subset from your dataset (specific columns) that require transformation, viewing, or analysis. This selection can be based on certain criteria, such as specific values in one or more columns, and it typically results in only part of the original data being used. As a result, filtering allows you to quickly identify trends and patterns within your dataset that may not have been visible before. It also lets you focus on particular aspects of interest without sifting through all available information. In addition, this technique can reduce complexity by eliminating unnecessary details while still preserving important insights about the underlying data structure.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhO-MSwT57OBokuO4yjCcYbNJT0aQuQg9lQEo9QW5ADCVM2Z-twE8LZoijKml6sO_I72TdGd4q07SF59upIwS8mjNJUXktsJaKeqYo6Urx4blKDA17oiB31CGiwQ7wdMRxiGwZtPhI_cTM84ygG0T4D_luLgV4su8EbBo72eGjBcYptHBRGhf3RjGiN){: .mx-auto.d-block :} *Filtering a dataset.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-    
+
 Using Redis Data Integration, filtering the Employee's data ([example](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/mssql_script_emp_filter) above) to keep only people having a salary that exceeds 1,000 can be implemented using the following YAML blocks:
 
 {% highlight yaml linenos %}
@@ -222,7 +222,7 @@ transform:
       expression: SAL>1000
 {% endhighlight %}
 
-When you put this yaml file under the `jobs` folder, Redis Data Integration will capture changes from the source table and apply the filter to store only records confirming the filtering expression (see [Data & Redis - part 1](https://aelkouhen.github.io/2023-02-21-data-redis-part-1/) for RDI and SQL Server configuration).
+When you put this YAML file under the `jobs` folder, Redis Data Integration will capture changes from the source table and apply the filter to store only records confirming the filtering expression (see [Data & Redis - part 1](https://aelkouhen.github.io/2023-02-21-data-redis-part-1/) for RDI and SQL Server configuration).
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkOqC5XKj2n21j7ocaVh4bY8re2MfHv6JPLOjHohe5ZEAF6HjNf_o_dbOUx-Ldx_tHIDG39BxG943_wMn_2361Bx0KjCRya6hRbbV-RLCTe6-f9hWPLzxATwtFXz0FEAwmDDqowiDu0ZADdV64O6LMBgqdWZoRrWN3W4mKNXTnHHzmTx5dDJK8-Bw6){: .mx-auto.d-block :} *Filtering Employees having salaries of more than 1,000.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -250,7 +250,7 @@ source:
 In this configuration, we used the map block that maps each source record into a new output based on the expressions. Here we changed only the salary field that implements the `COALESCE` expression.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7T6ghjj4PSZOFufE_Ie4gD4O_spNMP_XKg04Hs60p6pfH1lrPdGXUFYpz87fIjY_XlvlII1ZYZ8UJLqZzY_oaLQ1cL7rClW7DanrLEHFw5eLI0uMQ7xcJkosM7gre-QIRYLgflQgFXGImzESW1ZB1mWo7RihmIvAqXYNDrjJ6TTomGNvMCdM2sdgH){: .mx-auto.d-block :} *Replacing missing salaries with a default value (0).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
- 
+
 If you are using SQL Server, another alternative to performing this enrichment is to use the `ISNULL` function. Thus, we can use `ISNULL(SAL, 0)` in the expression block. The `ISNULL` function and the `COALESCE` expression have a similar purpose but can behave differently. Because `ISNULL` is a function, it is evaluated only once. However, the input values for the `COALESCE` expression can be evaluated multiple times. Moreover, the data type determination of the resulting expression is different. `ISNULL` uses the data type of the first parameter, `COALESCE` follows the `CASE` expression rules and returns the data type of value with the highest precedence.  
 
 {% highlight yaml linenos %}
@@ -462,7 +462,7 @@ GO
 
 In the RDI configuration file config.yaml, you need to add some of the following settings.
 
-{% highlight sql linenos %}
+{% highlight yaml linenos %}
 connections:
   target:
     host: redis-13000.cluster.redis-ingest.demo.redislabs.com
@@ -594,7 +594,7 @@ CREATE TABLE `sales`.`InvoiceLine` (
 
 Now, let's create the following file in the jobs directory. This declarative file splits the JSON structure and creates the two tables in a MySQL database called sales. You can define different targets for these two tables by defining other connections in the `config.yaml` file.
 
-{% highlight sql linenos %}
+{% highlight yaml linenos %}
 source:
   keyspace:
     pattern : invoice:*
