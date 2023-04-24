@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data & Redis series - part 2
+title: Data & Redis series - part 3
 subtitle:  Data Processing with Redis Gears (Hands-on)
 thumbnail-img: assets/img/redis-gears.svg
 share-img: assets/img/redis-gears.svg
