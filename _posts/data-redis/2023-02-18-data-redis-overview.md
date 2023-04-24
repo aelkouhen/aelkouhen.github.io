@@ -4,7 +4,7 @@ title: Data & Redis - Overview
 subtitle: Choosing the Right Data Architecture with Redis
 thumbnail-img: assets/img/redis.svg
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEyTVvCZMPKerGPE7YyDo8M5q8r8vZN0KpOKRX1uux7ApOj5JM3oruG5qzllDescDY3-FIz6Y8weE48qrG6cR9YGPOrjo200-irK8J8o6HEdAgaeoQt_NF2U1u8vQ5lq-hnCbZ9fTVZ61yUU8udfBADgSOpoK3UwHBW2fawN3OIegfvvs2twOO6LK7
-tags: [AWS WAF,batch processing,ChatGPT,data ingestion,data serving,IoT,kappa,lambda,MQTT,OPC UA,RDI,Redis,Redis Gears,Redis SQL,Redis Streams,RIOT,Smart Cache,stream processing,vector database]
+tags: [AWS WAF,batch processing,ChatGPT,data ingestion,data processing,data storage,data serving,IoT,kappa,lambda,MQTT,OPC UA,RDI,Redis,Redis Gears,Redis SQL,Redis Streams,RIOT,Smart Cache,stream processing,vector database]
 comments: true
 ---
 
