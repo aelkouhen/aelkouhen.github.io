@@ -416,7 +416,7 @@ HSET record:7 account "Provision" amount 19300
 
 Assuming all records are actual transactions, stakeholders can get the company's financial situation in real-time, and the different revenues and expenses get updated continuously.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigcQ7wi0kzX7rUbgNyybiVTQ3apQfNfGOcUGZTVlQBMuljWZqqDrVfcjX7DXytnn-hb0LRYUynP5pfSgBma1U-8zk1BzPLZBZRESgq3hjbgFtuNdG_MET8nLC4wlZc5qqZHDrsHpXZLxKzwlVxYl0gx4ZMpFy27mbsYkkn4PMiWualWaAtkftX2aie){: .mx-auto.d-block :} *Updating the P&L statement in real-time*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigcQ7wi0kzX7rUbgNyybiVTQ3apQfNfGOcUGZTVlQBMuljWZqqDrVfcjX7DXytnn-hb0LRYUynP5pfSgBma1U-8zk1BzPLZBZRESgq3hjbgFtuNdG_MET8nLC4wlZc5qqZHDrsHpXZLxKzwlVxYl0gx4ZMpFy27mbsYkkn4PMiWualWaAtkftX2aie){: .mx-auto.d-block :} *Updating the P&L statement in real-time.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each financial record added to Redis is immediately captured, grouped by the accounting nature, and entered in the calculation of the main lines of the profit and loss statement. You can observe that the net income evolves as often as financial records keep entering Redis.
 
