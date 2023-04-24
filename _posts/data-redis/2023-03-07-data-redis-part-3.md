@@ -3,8 +3,8 @@ layout: post
 title: Data & Redis series - part 3
 subtitle:  Data Processing with Redis Gears (Hands-on)
 thumbnail-img: assets/img/redis-gears.svg
-share-img: assets/img/redis-gears.svg
-tags: [Gears,functions,Hands-On,stream processing,data processing,batch processing,data transformation,Redis]
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtmTRQc0M2a5Lt2-Rni8QuaxDSrIIkFPeqM68hCksWLs3NQjC_K7SP2EUWJnDwr0LVGSkLn8zzknzacleejTXVjIG2Bp5ko-UkzSyXNNhfIgpFkUuqZi4wVa04c2vK1Voieo0CnFnBvKuBVHwqPYwoh7p6KCWUkigaREieIhQKZxcizRCcus0UBM_B
+tags: [Gears,functions,Hands-On,stream processing,data processing,batch processing,data transformation,Profit & Loss,Real-Time Analytics,Financial,Redis]
 comments: true
 ---
 
@@ -73,9 +73,9 @@ An action is a special type of operation that is always the function's final ste
 
 Each shard of the Redis Cluster executes its own ‘instance’ of the Gear Function in parallel on the relevant local shard data unless explicitly collected or until it is implicitly reduced to its final global result at the end of the function.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtmTRQc0M2a5Lt2-Rni8QuaxDSrIIkFPeqM68hCksWLs3NQjC_K7SP2EUWJnDwr0LVGSkLn8zzknzacleejTXVjIG2Bp5ko-UkzSyXNNhfIgpFkUuqZi4wVa04c2vK1Voieo0CnFnBvKuBVHwqPYwoh7p6KCWUkigaREieIhQKZxcizRCcus0UBM_B){: .mx-auto.d-block :} *Redis Gears Processing Pipeline Overview*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtmTRQc0M2a5Lt2-Rni8QuaxDSrIIkFPeqM68hCksWLs3NQjC_K7SP2EUWJnDwr0LVGSkLn8zzknzacleejTXVjIG2Bp5ko-UkzSyXNNhfIgpFkUuqZi4wVa04c2vK1Voieo0CnFnBvKuBVHwqPYwoh7p6KCWUkigaREieIhQKZxcizRCcus0UBM_B){: .mx-auto.d-block :} *Redis Gears Processing Pipeline Overview.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-### 2 - RedisGears : first steps
+### 2 - RedisGears: first steps
 
 The simplest way to write and execute a Gears Function can be done using the Redis client interface ([`redis-cli`](https://redis.io/topics/rediscli)). 
 
@@ -289,7 +289,7 @@ Before returning the results, the coordinator of the originating shard collects 
 
 Although data is distributed across the cluster's shards, the function returns identical (order excluded) results to what a single-instance would have returned. This is because the originating shard had distributed (mapped) the function to the cluster shards and then collected the intermediate local results from all other shards before returning a merged response. This concept is known as [MapReduce](https://en.wikipedia.org/wiki/MapReduce).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjT52qGK4NaCM5ztlUwMnKDWYi_EXbGaHKRgvCpHBP7vTR_ghHNQ2nyVME_diK51u1--oMuDdTnsZHedd_QsDj4VobM6hBXmmPLDk6mG18_jdXAO8bo6vHf-CYf9Hkp1yZFZeTh-hFOLLSKZ5vyMQ0oAZGogYK-4ZA-46uYFM8GUvrbbrlno-_Jus2R){: .mx-auto.d-block :} *Distributed processing with RedisGears*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjT52qGK4NaCM5ztlUwMnKDWYi_EXbGaHKRgvCpHBP7vTR_ghHNQ2nyVME_diK51u1--oMuDdTnsZHedd_QsDj4VobM6hBXmmPLDk6mG18_jdXAO8bo6vHf-CYf9Hkp1yZFZeTh-hFOLLSKZ5vyMQ0oAZGogYK-4ZA-46uYFM8GUvrbbrlno-_Jus2R){: .mx-auto.d-block :} *Distributed processing with RedisGears.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 4 - RedisGears: Stream processing
 
@@ -350,9 +350,9 @@ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG
 
 We can use the stream processing with gears to perform aggregate functions that can evolve while data is ingested in Redis. For example, let's assume that [Apple's financial data](https://www.nasdaq.com/market-activity/stocks/aapl) are stored in Redis. Stakeholders might have a requirement to see the Profit and Loss statement in real-time. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiy6u-yECjyiXlbYdDkXiF-BguXMFQpVN4vq1D5yC4uCwxWaRYrgWyFtnoQBGnxW2vSKN_E-wu39v683VVBNcSYAwCXcIeKHR8Hc3mo0Wbbf8FoAxeRAhF3X6b3qO8sqBfv_2ySb8Wt-QZ0Lz9NdeDSA_HGINm4CRXQ0mBqGPT0u5Xc6ErIkzdooumn){: .mx-auto.d-block :} *Apple Income Statement Example (Source: [2022 10-K](https://d18rn0p25nwr6d.cloudfront.net/CIK-0000320193/b4266e40-1de6-4a34-9dfb-8632b8bd57e0.pdf))*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiy6u-yECjyiXlbYdDkXiF-BguXMFQpVN4vq1D5yC4uCwxWaRYrgWyFtnoQBGnxW2vSKN_E-wu39v683VVBNcSYAwCXcIeKHR8Hc3mo0Wbbf8FoAxeRAhF3X6b3qO8sqBfv_2ySb8Wt-QZ0Lz9NdeDSA_HGINm4CRXQ0mBqGPT0u5Xc6ErIkzdooumn){: .mx-auto.d-block :} *Apple Income Statement Example (Source: [2022 10-K](https://d18rn0p25nwr6d.cloudfront.net/CIK-0000320193/b4266e40-1de6-4a34-9dfb-8632b8bd57e0.pdf)).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-The Profit and Loss Statement (P&L) is a financial statement that starts with revenue and deducts costs and expenses to arrive at a company's net income, the profitability of a specified period. Let's first implement the logic we want to expose for our users:
+The **_Profit and Loss Statement_** (**P&L**) is a financial statement that starts with revenue and deducts costs and expenses to arrive at a company's net income, the profitability of a specified period. Let's first implement the logic we want to expose for our users:
 
 {% highlight python linenos %}
 
