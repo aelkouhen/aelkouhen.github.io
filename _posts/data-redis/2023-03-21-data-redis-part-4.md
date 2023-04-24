@@ -174,18 +174,18 @@ Redis Data Integration (RDI) leverages the hybrid approach since all transformat
 The YAML files accept the following blocks/fields: 
 
 `source` - This section describes what is the table that this job works on:
-    *   `server_name`: logical server name (optional)
-    *   `db`: DB name (optional)
-    *   `schema`: DB schema (optional)
-    *   `table`: DB table
-    *   `row_format`: Format of the data to be transformed: data_only (default) - only payload, full - complete change record 
+ *   `server_name`: logical server name (optional)
+ *   `db`: DB name (optional)
+ *   `schema`: DB schema (optional)
+ *   `table`: DB table
+ *   `row_format`: Format of the data to be transformed: data_only (default) - only payload, full - complete change record 
 
 `transform`: his section includes a series of blocks that the data should go through. See documentation of the [supported blocks](https://redis-data-integration.docs.dev.redislabs.com/reference/data-transformation-block-types.html) and [JMESPath custom functions](https://redis-data-integration.docs.dev.redislabs.com/reference/jmespath-custom-functions.html).
 
 `output` - This section includes the outputs where the data should be written to:
 
 1. Redis:
-*   *   `uses`: `redis.write`: Write to a Redis data structure
+*   `uses`: `redis.write`: Write to a Redis data structure
     *   `with`:
         *   `connection`: Connection name
         *   `key`: This allows to override the key of the record by applying a custom logic:
@@ -193,7 +193,7 @@ The YAML files accept the following blocks/fields: 
             *   `language`: Expression language, JMESPath, or SQL
 
 2. SQL:
-*   *   `uses`: `relational.write`: Write into a SQL-compatible data store
+*   `uses`: `relational.write`: Write into a SQL-compatible data store
     *   `with`:
         *   `connection`: Connection name
         *   `schema`: Schema
