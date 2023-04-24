@@ -655,4 +655,4 @@ In the previous sections, I presented a set of data transformation scenarios mor
 
 ## References
 
-*   [Redis Data Integration (RDI)](https://redis-data-integration.docs.dev.redislabs.com/), Redis.
+*   Redis Data Integration (RDI), [Developer Guide](https://redis-data-integration.docs.dev.redislabs.com/)
