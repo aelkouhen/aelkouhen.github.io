@@ -185,6 +185,7 @@ The YAML files accept the following blocks/fields: 
 `output` - This section includes the outputs where the data should be written to:
 
 1. Redis:
+
 `uses: redis.write`: Write to a Redis data structure
  *   `with`:       
      *   `connection`: Connection name
@@ -193,6 +194,7 @@ The YAML files accept the following blocks/fields: 
          *   `language`: Expression language, JMESPath or SQL
 
 2. SQL:
+
 `uses: relational.write`: Write into a SQL-compatible data store
  *   `with`:
      *   `connection`: Connection name
