@@ -429,5 +429,4 @@ We've seen how RedisGears process data in a batch fashion using the run block an
 Moreover, in the future version of RedisGears, the functions will be considered an integral part of the database (first-class artifacts of the database). Thus, Redis ensures their availability via data persistence and replication.
 
 ## References
-
-*   [Redis Gears](https://oss.redis.com/redisgears), Redis.
+*   Redis Gears, [Developer Guide](https://oss.redis.com/redisgears)
