@@ -180,7 +180,7 @@ Remember this CSV [file](https://raw.githubusercontent.com/aelkouhen/aelkouhen.
 
 We used [RIOT-File](https://developer.redis.com/riot/riot-file/index.html) to batch-ingest that CSV file into Redis as JSON objects. The objects were prefixed by the `airport`, and `AirportID` was the primary key.
 
-Let's imagine that only airports in a Radius of 2,000 Km from Paris are relevant to keep in the dataset. RedisGears can process the raw dataset as a batch chunk `airport:\*` and creates a Redis geo set with the `create_geo_set` function. This data structure is useful for finding nearby points within a given radius or bounding box. We use it to filter the airports and keep only ones in a radius of 2,000 km from the coordinates of Paris (Longitude: 2.3488, Latitude: 48.85341) as detailed in the `paris_nearest_airports` function. Finally, RedisGears drops all airports not in this specific radius and returns the count of the removed airports from the dataset.
+Let's imagine that only airports in a Radius of 2,000 Km from Paris are relevant to keep in the dataset. RedisGears can process the raw dataset as a batch chunk `airport:*` and creates a Redis geo set with the `create_geo_set` function. This data structure is useful for finding nearby points within a given radius or bounding box. We use it to filter the airports and keep only ones in a radius of 2,000 km from the coordinates of Paris (Longitude: 2.3488, Latitude: 48.85341) as detailed in the `paris_nearest_airports` function. Finally, RedisGears drops all airports not in this specific radius and returns the count of the removed airports from the dataset.
 
 {% highlight python linenos %}
 import json
