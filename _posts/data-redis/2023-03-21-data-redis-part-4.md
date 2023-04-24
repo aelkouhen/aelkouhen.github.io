@@ -174,11 +174,11 @@ Redis Data Integration (RDI) leverages the hybrid approach since all transformat
 The YAML files accept the following blocks/fields: 
 
 `source` - This section describes what is the table that this job works on:
-    *   `server_name`: logical server name (optional)
-    *   `db`: DB name (optional)
-    *   `schema`: DB schema (optional)
-    *   `table`: DB table
-    *   `row_format`: Format of the data to be transformed: data\_only (default) - only payload, full \- complete change record 
+ *   `server_name`: logical server name (optional)
+ *   `db`: DB name (optional)
+ *   `schema`: DB schema (optional)
+ *   `table`: DB table
+ *   `row_format`: Format of the data to be transformed: data\_only (default) - only payload, full \- complete change record 
 
 `transform`: his section includes a series of blocks that the data should go through. See documentation of the [supported blocks](https://redis-data-integration.docs.dev.redislabs.com/reference/data-transformation-block-types.html) and [JMESPath custom functions](https://redis-data-integration.docs.dev.redislabs.com/reference/jmespath-custom-functions.html).
 
