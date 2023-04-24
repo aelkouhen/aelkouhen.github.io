@@ -64,7 +64,7 @@ Gear Functions are composed of a sequence of steps or operations, such as Map, F
 
 An operation is the building block of Gears functions. Different operation types can be used to achieve a variety of results to meet various data processing needs. Operations can have zero or more arguments that control their operation. Depending on the operation's type, arguments may be language-native data types and function callbacks.
 
-The steps/operations are ‘piped’ together by the Redis Gears runtime such that the output of one step/operation becomes the input to the subsequent step/operation, and so on.
+The steps/operations are ‘_piped_’ together by the Redis Gears runtime such that the output of one step/operation becomes the input to the subsequent step/operation, and so on.
 
 An action is a special type of operation that is always the function's final step. There are two types of actions:
 
