@@ -621,7 +621,7 @@ output:
       connection: my-sql-target
       schema: sales
       table: InvoiceLine
-      foreach: "IL: InvoiceLineItems[]"
+      foreach: "IL: InvoiceLineItems.values(@)"
       keys:
         - IL: InvoiceLineItems.InvoiceLineId
       mapping:
