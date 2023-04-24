@@ -95,7 +95,7 @@ A [Record](https://oss.redis.com/redisgears/glossary.html#record) is the basic 
 
 A [Reader](https://oss.redis.com/redisgears/glossary.html#reader) is the mandatory first step of any function, and every function has exactly one reader. First, a reader reads data and generates input records from it. Then, the input records are consumed by the function.
 
-There are several [reader types](https://oss.redis.com/redisgears/readers.html) that the engine offers. A function's reader type is always declared during the initialization of its GearsBuilder() context. Unless explicitly declared, a function's reader defaults to the [KeysReader](https://oss.redis.com/redisgears/readers.html#keysreader), meaning the following lines are interchangeable:
+There are several [reader types](https://oss.redis.com/redisgears/readers.html) that the engine offers. A function's reader type is always declared during the initialization of its `GearsBuilder()` context. Unless explicitly declared, a function's reader defaults to the [KeysReader](https://oss.redis.com/redisgears/readers.html#keysreader), meaning the following lines are interchangeable:
 
 ```python
 GearsBuilder()                      # The context builder's default is
