@@ -173,7 +173,7 @@ Redis Data Integration (RDI) leverages the hybrid approach since all transformat
 
 The YAML files accept the following blocks/fields: 
 
-`source` - This section describes what is the table that this job works on:
+*  `source` - This section describes what is the table that this job works on:
     *   `server_name`: logical server name (optional)
     *   `db`: DB name (optional)
     *   `schema`: DB schema (optional)
