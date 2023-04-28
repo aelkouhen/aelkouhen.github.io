@@ -169,7 +169,7 @@ We've seen in [Data 101 - part 5](https://aelkouhen.github.io/2023-02-05-data-10
 
 Redis Data Integration (RDI) leverages the hybrid approach since all transformation jobs are implemented using a human-readable format (YAML files) that embeds JMESPath and/or SQL.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1RIyS7F9cX57GvSwT6djnZPyVA1vKr9wjNPZJiI_zB7M9ufEN308mV6RtIieIrtgQXnH5OuWTKY5SDwm4gOhzq4lKHX6b-bD46cgKbU30-4SQD6yVVEZwkaPMM-k2qD7wWqbZ4wY0_I6uIEoLWB8Gt0MotycqKDapLH_pv36Kt9GLYtK_x6pMyrgI){: .mx-auto.d-block :} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0LWaElVc5g_xIC6-sPtXyLIkYgqTm7F6Kk21gWaDQAzdv2ij-RPzmXHZ_iNk26lbrnbJBfAWS5lgRWd-6IVZyHUuzoNmA1TrDswryWl2hmjeUi0HoBHoQqCuTdMyRmGoYbKr5bZDnZKYx0LFcIQnlP1NRworKdN9IjrD7TTLCKPosRMG4yF02akTJ){: .mx-auto.d-block :} 
 
 The YAML files accept the following blocks/fields: 
 
@@ -525,7 +525,7 @@ One of the issues observed so far with RDI's denormalization is the nesting limi
 
 In addition to data ingest, Redis Data Integration (RDI) also allows synchronizing the data stored in a Redis DB with some downstream data stores. This scenario is called `Write-Behind`, and you can think about it as a pipeline that starts with Capture Data Change (CDC) events for a Redis DB and then filters, transforms, and maps the data to a target data store (e.g., a relational database). 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjxEAis-3v8Zm_TpE2BFDpljz5azHan10JwfqepJjIhTSiF_X8JUhWp-fm-boGbiRWGYXxhJCNW2HZYP6mJoPevdyKuSNbQKb0dr_JI15W8xjMBkRbKo5jgRXfLtawedIsVzcnTr3JR1zrLRm8TRlO0q9VbYcPTCsOis8s3rv0dTuCkszdkU7rVP7Dy){: .mx-auto.d-block :} *Redis Data Integration use cases.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh7H7BffP1pHVl05XLY5xtz0RlLbBjEHhMQIQiFKT93h83YT1uVwBE4NFPZN_b6VJWtC9tIjgVzVnGQwkNLcxWM4eAf_37z1P4ru-J-FF8apQ0z_jXZ_iLl_LTeSrhmDXRqQRxgb862IoDblYzD8-rRMkGO9Hm1jvimEyajLXTqxXm_Ox-LikmCMyNZ){: .mx-auto.d-block :} *Redis Data Integration use cases.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
   
 We've seen in the last section that we can perform data denormalization to join multiple tables with one-to-many or many-to-one relationships into one single structure in Redis. On the other side, data normalization is one of the transformations we can perform using the Write-Behind use case. Data normalization is organizing data into a logical structure that can be used to improve performance and reduce redundancy. This involves breaking down complex datasets into smaller, more manageable pieces by eliminating redundant information or consolidating related items together. Normalization also helps ensure consistency in storing and accessing data across different systems.
 
