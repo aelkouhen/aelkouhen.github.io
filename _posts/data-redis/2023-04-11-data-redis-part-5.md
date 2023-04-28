@@ -308,15 +308,15 @@ First, let's ingest these three tables using the [RIOT-file](https://developer.r
 
 We will ingest and integrate the General Ledger table as Hashes in Redis. For this, run the following command:
 
-```console
-$ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/GeneralLedger.csv --header hset --keyspace GeneralLedger --keys RECID
+```shell
+riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/GeneralLedger.csv --header hset --keyspace GeneralLedger --keys RECID
 ```
 
 We do the same for the other tables, Chart of Accounts and Accounting Nature.
 
-{% highlight console linenos %}
-$ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/ChartAccounts.csv --header hset --keyspace CoA --keys ACCOUNTNUM
-$ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/AccountingNature.csv --header hset --keyspace AccountingNature --keys AccountingNatureCode
+{% highlight shell linenos %}
+riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/ChartAccounts.csv --header hset --keyspace CoA --keys ACCOUNTNUM
+riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/AccountingNature.csv --header hset --keyspace AccountingNature --keys AccountingNatureCode
 {% endhighlight %}
 
 Once you have your data ingested into Redis. You can create secondary indices on the three tables:
