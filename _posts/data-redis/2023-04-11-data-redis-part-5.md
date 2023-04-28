@@ -342,9 +342,9 @@ FT.CREATE chart_accounts
   SCHEMA
     ACCOUNTNUM TEXT SORTABLE   
     Description TEXT NOSTEM
-    Nature TEXT SORTABLE
-    Statement TAG SORTABLE
-    AccountingNatureCode TAG SORTABLE
+    Nature TEXT SORTABLE
+    Statement TAG SORTABLE
+    AccountingNatureCode TAG SORTABLE
 {% endhighlight %}
 
 And `accounting_nature` as a secondary index for the Accounting Nature table. 
@@ -355,8 +355,8 @@ FT.CREATE accounting_nature
     PREFIX 1 "AccountingNature:"      
   SCHEMA
     AccountingNatureCode TAG SORTABLE
-    AccountingNature TEXT SORTABLE
-    Description TEXT NOSTEM  
+    AccountingNature TEXT SORTABLE
+    Description TEXT NOSTEM
     AccountGroup TAG SORTABLE  
 {% endhighlight %}
 
@@ -443,12 +443,12 @@ FT.CREATE ufo_report
   ON HASH                
     PREFIX 1 "Report:" 
 SCHEMA
-    shape TEXT SORTABLE 
-    city TEXT SORTABLE 
-    state TEXT SORTABLE 
-    country TEXT SORTABLE 
-    city_longitude NUMERIC SORTABLE 
-    city_latitude NUMERIC SORTABLE
+  shape TEXT SORTABLE
+  city TEXT SORTABLE
+  state TEXT SORTABLE
+  country TEXT SORTABLE
+  city_longitude NUMERIC SORTABLE
+  city_latitude NUMERIC SORTABLE
 {% endhighlight %}
 
 Let's test the Redis ODBC driver with a Microsoft Excel Sheet. First, we run "get data from another source" in the Data menu, then choose the menu "from an ODBC driver".
