@@ -476,9 +476,9 @@ The workflow is quite simple. In RDBMSs, the transaction log tracks any [DLM](h
   
 Let's push it further and update a specific field for a particular row in the GeneralLedger table. For example, the following query updates the field `AMOUNTMSTSECOND` of the `GeneralLedger` table for the transaction having the `ID` equal to 1000.
 
-{% highlight sql linenos %}
+```sql
 UPDATE dbo.GeneralLedger SET AMOUNTMSTSECOND = '12000000' WHERE ID = 1000;
-{% endhighlight %}
+```
 
 When you execute the query, the hash `generalledger:ID:1000` should be updated accordingly. You should also observe that you have 1002 keys since we have already inserted two transactions.
 
