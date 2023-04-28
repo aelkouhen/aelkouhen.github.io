@@ -148,7 +148,7 @@ To use Redis Smart Cache with an existing application, you must add the Redis Sm
 
 #### Maven:
 
-{% highlight xml linenos %}
+{% highlight maven linenos %}
 <dependency>
     <groupId>com.redis</groupId>
     <artifactId>redis-smart-cache-jdbc</artifactId>
