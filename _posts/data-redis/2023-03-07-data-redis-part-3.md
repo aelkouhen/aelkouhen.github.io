@@ -156,9 +156,9 @@ Functions can be as complex as needed and can consist of any number of steps tha
 
 Typing it into the prompt (`redis-cli`) is already becoming tiresome. You can imagine when you have complex data processing logic to implement. For this reason, instead of using the interactive mode, you can store your functions' code in a regular text file and have the `redis-cli` send its contents for execution.
 
-{% highlight shell linenos %}
+``` shell
 cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE
-{% endhighlight %}
+``` 
 
 ### 3 - RedisGears: Batch processing
 
@@ -250,8 +250,8 @@ The default behavior for `RG.PYEXECUTE` is to block the client that had called. 
 
 Blocking greatly simplifies the client's logic, but for long-running tasks, it is sometimes desired to have the client continue its work while the function is executed. RedisGears batch functions can be executed in this non-client-blocking mode by adding the `UNBLOCKING` argument to the `RG.PYEXECUTE` command. For example, we can run the first version of our simple function in a nonblocking fashion like so:
 
-{% highlight shell linenos %}
-cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE UNBLOCKING  
+{% highlight console linenos %}
+$ cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE UNBLOCKING  
 "0000000000000000000000000000000000000000-0"
 {% endhighlight %}
 
@@ -259,8 +259,8 @@ When executing in `UNBLOCKING` mode, the engine replies with an [Execution ID](h
 
 By calling the [RG.DUMPEXECUTIONS](https://oss.redis.com/redisgears/commands.html#rgdumpexecutions) command, we can fetch the engine's executions list, which currently has just one entry representing the function we've just run:
 
-{% highlight shell linenos %}
-redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
+{% highlight console linenos %}
+$ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
   
 1)  1) "executionId"   
     2) "0000000000000000000000000000000000000000-0"   
@@ -270,8 +270,8 @@ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG
 
 Because the function's execution is finished, as indicated by the value done in the status field, we can now obtain its execution results with the [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) command. As the name suggests, the command returns the results of the execution specified by its ID:
 
-{% highlight shell linenos %}
-redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-0  
+{% highlight console linenos %}
+$ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-0  
   
 1)  1)"['age', '35', 'fname', 'Beth', 'lname', 'Smith']"
     2)"['age', '70', 'fname', 'Rick', 'lname', 'Sanchez']"
@@ -327,8 +327,8 @@ HSET person:6 name "Amine El-Kouhen" age 36
 
 Now, as soon as a new person is set into Redis, the function will be executed, and the results can be obtained when the execution status shows done. 
 
-{% highlight shell linenos %}
-redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
+{% highlight console linenos %}
+$ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
 
 1) 1) "executionId" 
    2) "0000000000000000000000000000000000000000-119" 
@@ -340,8 +340,8 @@ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG
 
 You can then get the execution results of the execution specified by its ID with the [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) command:
 
-{% highlight shell linenos %}
-redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-119  
+{% highlight console linenos %}
+$ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-119  
   
 1) 1) "['age', '36', 'fname', 'Amine', 'lname', 'El-Kouhen']"
 2) (empty array)
