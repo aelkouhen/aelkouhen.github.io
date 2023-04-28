@@ -491,14 +491,14 @@ sudo tar xvf ~/tmp/redis-di-offline.tar.gz -C /usr/local/bin/
 
 Upgrade your Redis Data Integration (RDI) engine to comply with the new `redis-di` CLI. For this run:  
 
-```shell
-redis-di upgrade --cluster-host cluster.redis-process.demo.redislabs.com --cluster-user [CLUSTER_ADMIN_USER] --cluster-password [ADMIN_PASSWORD] --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
+```console
+$ redis-di upgrade --cluster-host cluster.redis-process.demo.redislabs.com --cluster-user [CLUSTER_ADMIN_USER] --cluster-password [ADMIN_PASSWORD] --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
 ```
 
 Then, run the deploy command to deploy the local configuration to the remote RDI config database:
 
-```shell
-redis-di deploy --rdi-host redis-12000.cluster.redis-process.demo.redislabs.com --rdi-port 12000 --rdi-password rdi-password
+```console
+$ redis-di deploy --rdi-host redis-12000.cluster.redis-process.demo.redislabs.com --rdi-port 12000 --rdi-password rdi-password
 ```
 
 Change directory to your Redis Data Integration configuration folder created by the scaffold command, then run:
