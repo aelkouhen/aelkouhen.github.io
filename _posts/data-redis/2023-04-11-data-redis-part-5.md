@@ -2,8 +2,8 @@
 layout: post
 title: Data & Redis series - part 5
 subtitle:  Data Serving with Redis (Hands-on)
-thumbnail-img: 
-share-img: 
+thumbnail-img: assets/img/redis-smartcache.png
+share-img: assets/img/redis-serving.gif
 tags: [Business Analytics,data serving,data virtualization,data visualization,feature store,JDBC,ODBC,Power BI,RDI,Redis,Redis Smart Cache,Redis SQL,reverse ETL,Tableau,Trino,SQL,vector database]
 comments: true
 ---
