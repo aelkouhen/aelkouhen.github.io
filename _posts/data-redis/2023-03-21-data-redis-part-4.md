@@ -475,12 +475,30 @@ applier:
 {% endhighlight %}
 
 {: .box-warning}
-**Caution:** If you want to execute normalization/denormalization jobs, It is mandatory to load the release 0.99 (at least) of Redis Data Integration.  
+**Caution:** If you want to execute normalization/denormalization jobs, It is mandatory to load the release 0.100 (at least) of Redis Data Integration.  
 
 #### For UBUNTU18.04
 
 ```shell
-wget https://qa-onprem.s3.amazonaws.com/redis-di/0.99.0/redis-di-ubuntu18.04-0.99.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-ubuntu18.04-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+```
+
+#### For UBUNTU20.04
+
+```shell
+wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-ubuntu18.04-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+```
+
+#### For RHEL8
+
+```shell
+wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-rhel8-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+```
+
+#### For RHEL7
+
+```shell
+wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-rhel7-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
 ```
 
 Then you install the RDI CLI by unpacking `redis-di-offline.tar.gz` into the `/usr/local/bin/` directory:
