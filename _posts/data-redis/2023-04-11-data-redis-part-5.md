@@ -516,4 +516,5 @@ Now that we’ve taken a journey through the data journey, you know how to desig
 ---------
 
 1\. Account Payables (AP): a company's short-term obligations owed to its creditors (e.g., suppliers) still need to be paid.
+
 2\. Account Receivables (AR): the money a company's customers owe for goods or services they have received but not yet paid for.
