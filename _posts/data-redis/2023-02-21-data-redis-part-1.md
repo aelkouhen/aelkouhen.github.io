@@ -82,17 +82,17 @@ wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-l
 
 Then Copy and unpack the downloaded `redis-di-offline.tar.gz` into the master node of your Redis Cluster under the `~/tmp` directory:
 
-```shell
+{% highlight shell linenos %}
 cd ~/tmp
 tar xvf redis-di-offline.tar.gz
-```
+{% endhighlight %}
 
 Switch the current user to the user with whom the cluster was created (usually redislabs or ubuntu). Install [RedisGears](https://redis.com/modules/redis-gears/) on the cluster. In case it’s missing, follow [this guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) to install it. 
 
-```bash
+{% highlight shell linenos %}
 curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu18.04-x86_64.1.2.5.zip -o ~/tmp/redis-gears.zip
 curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@./redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
-```
+{% endhighlight %}
 
 Then you install the RDI CLI by unpacking `redis-di.tar.gz` into `/usr/local/bin/` directory:
 
@@ -140,10 +140,10 @@ docker load < ~/tmp/debezium_server.tar.gz
 
 Then tag the image:
 
-```bash
+{% highlight shell linenos %}
 docker tag debezium/server:2.1.1.Final_offline debezium/server:2.1.1.Final
 docker tag debezium/server:2.1.1.Final_offline debezium/server:latest
-```
+{% endhighlight %}
 
 For the non-containerized deployment, you need to install [Java 11](https://www.oracle.com/java/technologies/downloads/#java11) or [Java 17](https://www.oracle.com/java/technologies/downloads/#java17). Then download Debezium Server 2.1.1.Final from [here](https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/2.1.1.Final/debezium-server-dist-2.1.1.Final.tar.gz).
 
@@ -157,10 +157,10 @@ Copy the scaffolded `application.properties` file (created by the [scaffold comm
 
 If you use `Oracle` as your source DB, please note that Debezium Server does not include the Oracle JDBC driver. You should download it and locate it under `debezium-server/lib` directory:
 
-```bash
+{% highlight shell linenos %}
 cd debezium-server/lib
 wget https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc8/21.1.0.0/ojdbc8-21.1.0.0.jar
-```
+{% endhighlight %}
 
 Then, start Debezium Server from `debezium-server` directory:
 
@@ -410,24 +410,24 @@ This prefix will be used in the key name of the created objects in the Redis-DI 
 
 You need to configure the Hostname and port of your SQL Server database.
 
-```properties
+{% highlight properties linenos %}
 debezium.source.database.hostname=rdi-db.cpqlgenz3kvv.eu-west-3.rds.amazonaws.com
 debezium.source.database.port=1433
-```
+{% endhighlight %}
 
 And the Username and password of the Debezium user (dbzuser).
 
-```properties
+{% highlight properties linenos %}
 debezium.source.database.user=dbzuser
 debezium.source.database.password=dbz-password
-```
+{% endhighlight %}
 
 You need to configure the endpoint of your Redis-DI config database and the password.
 
-```properties
+{% highlight properties linenos %}
 debezium.sink.redis.address=redis-13000.cluster.redis-ingest.demo.redislabs.com
 debezium.sink.redis.password=rdi-password
-```
+{% endhighlight %}
 
 All other entries in the file created through the RDI `scaffold` command can be left at their default values.
 
