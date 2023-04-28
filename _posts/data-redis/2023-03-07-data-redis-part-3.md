@@ -403,11 +403,11 @@ Let's execute these commands to create new financial records. To simplify the ex
 
 {% highlight sql linenos %}
 HSET record:1 account "Revenue" amount 316199
-HSET record:2 account "Revenue" amount 78129
-HSET record:3 account "Cost" amount 201471
-HSET record:4 account "Cost" amount 22075
-HSET record:5 account "Operating Expenses" amount 26251
-HSET record:6 account "Operating Expenses" amount 25094
+HSET record:2 account "Revenue" amount 78129
+HSET record:3 account "Cost" amount 201471
+HSET record:4 account "Cost" amount 22075
+HSET record:5 account "Operating Expenses" amount 26251
+HSET record:6 account "Operating Expenses" amount 25094
 HSET record:7 account "Provision" amount 19300
 {% endhighlight %}
 
