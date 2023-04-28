@@ -477,13 +477,13 @@ applier:
 {: .box-warning}
 **Caution:** If you want to execute normalization/denormalization jobs, It is mandatory to load the release 0.100 (at least) of Redis Data Integration.  
 
-#### For UBUNTU18.04
+#### For UBUNTU20.04
 
 ```shell
-wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-ubuntu18.04-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-ubuntu20.04-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
 ```
 
-#### For UBUNTU20.04
+#### For UBUNTU18.04
 
 ```shell
 wget https://qa-onprem.s3.amazonaws.com/redis-di/0.100.0/redis-di-ubuntu18.04-0.100.0.tar.gz -O ~/tmp/redis-di-offline.tar.gz
