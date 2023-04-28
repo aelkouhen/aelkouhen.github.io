@@ -321,7 +321,7 @@ GearsBuilder()\
 
 Let's add a new person:
 
-```
+```sql
 HSET person:6 name "Amine El-Kouhen" age 36
 ```
 
