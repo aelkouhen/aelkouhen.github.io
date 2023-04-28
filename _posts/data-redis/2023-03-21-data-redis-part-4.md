@@ -28,12 +28,12 @@ For Redis Data Integration, you need two databases: the config database exposed 
 
 Now, let's install [RedisGears](https://redis.com/modules/redis-gears/) on the cluster. In case it’s missing, follow [this guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) to install it. 
 
-```shell
+{% highlight shell linenos %}
 mkdir ~/tmp 
 curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu18.04-x86_64.1.2.5.zip -o ~/tmp/redis-gears.zip
 cd ~/tmp 
 curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@./redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
-```
+{% endhighlight %}
 
 ### 3 - Install Redis Data Integration (RDI) 
 
@@ -76,14 +76,14 @@ sudo tar xvf ~/tmp/redis-di-offline/redis-di-cli/redis-di.tar.gz -C /usr/local/b
 
 Run `create` command to set up the Redis Data Integration config database (on port `13000`) instance within an existing Redis Enterprise Cluster:
 
-```shell
-redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
+```console
+$ redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
 ```
 
 Finally, run the `scaffold` command to generate configuration files for Redis Data Integration and Debezium Redis Sink Connector:
 
-```shell
-redis-di scaffold --db-type <cassandra|mysql|oracle|postgresql|sqlserver> --dir <PATH_TO_DIR>
+```console
+$ redis-di scaffold --db-type <cassandra|mysql|oracle|postgresql|sqlserver> --dir <PATH_TO_DIR>
 ```    
 
 In our article, we will capture a SQL Server database, so choose (sqlserver). The following files will be created in the provided directory:
@@ -115,10 +115,10 @@ docker load < ~/tmp/debezium_server.tar.gz
 
 Then tag the image:
 
-```shell    
+{% highlight shell linenos %}
 docker tag debezium/server:2.1.1.Final_offline debezium/server:2.1.1.Final
 docker tag debezium/server:2.1.1.Final_offline debezium/server:latest
-```
+{% endhighlight %}
 
 For the non-containerized deployment, you need to install [Java 11](https://www.oracle.com/java/technologies/downloads/#java11) or [Java 17](https://www.oracle.com/java/technologies/downloads/#java17). Then download Debezium Server 2.1.1.Final from [here](https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/2.1.1.Final/debezium-server-dist-2.1.1.Final.tar.gz).
 
@@ -132,10 +132,10 @@ Copy the scaffolded `application.properties` file (created by the [scaffold comm
 
 If you use `Oracle` as your source DB, please note that Debezium Server does not include the Oracle JDBC driver. You should download it and locate it under the `debezium-server/lib` directory:
 
-```shell
+{% highlight shell linenos %}
 cd debezium-server/lib
 wget https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc8/21.1.0.0/ojdbc8-21.1.0.0.jar
-```
+{% endhighlight %}
 
 Then, start Debezium Server from the `debezium-server` directory:
 
@@ -537,14 +537,14 @@ In this section, we will use the database `redis-13000.cluster.redis-process.dem
 
 First, you need to create and install the RDI engine on your Redis source database so it is ready to process data. You need to run the [`configure`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-configure.html) command if you have not used this Redis database with RDI Write Behind before.
 
-```shell
-redis-di configure --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
+```console
+$ redis-di configure --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
 ```
 
 Then run the [`scaffold`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-scaffold.html) command with the type of data store you want to use, for example:
 
-```shell
-redis-di scaffold --strategy write_behind --dir . --db-type mysql
+```console
+$ redis-di scaffold --strategy write_behind --dir . --db-type mysql
 ```    
 
 This will create a template of `config.yaml` and a folder named `jobs` under the current directory. You can specify any folder name with `--dir` or use the `--preview config.yaml` option in order to get the `config.yaml` template to the terminal.
@@ -633,14 +633,14 @@ output:
 
 To start the pipeline, run the [`deploy`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-deploy.html) command:
 
-```shell
-redis-di deploy
+```console
+$ redis-di deploy
 ```    
 
 You can check that the pipeline is running, receiving, and writing data using the [`status`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-status.html) command:
 
-```shell
-redis-di status
+```console
+$ redis-di status
 ```    
 
 Once you run the deploy command, the RDI engine registers the job and listens to the keyspace notifications on the pattern `invoice:*` Thus, if you add this [JSON document](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/invoice.json), RDI will run the job and execute the data transformation accordingly.
