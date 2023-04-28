@@ -142,7 +142,7 @@ As you can imagine from its name, Redis Smart cache uses Redis to cache slow, r
 
 Redis Smart cache works as a wrapper around your backend database’s JDBC driver and puts the SQL queries that are called more often into Cache. Imagine a dashboard that takes a few minutes to refresh because it repeatedly sends the same expansive query to slow backend data stores (HDFS, Oracle...). We all know that distributed systems like HDFS made some tradeoffs regarding latency just to provide high throughput. With Redis Smart Cache, you can still preserve your legacy systems while accelerating their response time considerably. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKqF3I1Nb7CV9v76iqSsdUuRqpFI1AV_XZAsL-pPfLQc52p5mG7zjVqhykXf2sAKKBVmSMQBYk38_L71zHOehs9pEHZOfr8lP2LMNx4JZ_nPq6yPDhzwmsoameHHr0vIiM5CqU-YD8_85nEsndpoy6VTGOn3fR3PvYssde_UFbRcncJEJS2UFzIkmE){: .mx-auto.d-block :} *Redis Smart Cache: accelerated response time.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQ4gNTBUUovNDdpmWxtqPWN5fADvMj6dJQs5h9XKCDNLI0XHwUQWxZxa4Zj_ox-xvAZLmHdYVotl-jWw5XghQEqBoVkb-zaZvhqnk8-jThp-hlf1jYE81XMVbI6MMh2qYjVkhM58_x_QgC7_W7Ig_OozJTu4dqSyagYaL_EAdKJr8GkVpAdMUS5ZUH){: .mx-auto.d-block :} *Redis Smart Cache: accelerated response time.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
  
 To use Redis Smart Cache with an existing application, you must add the Redis Smart Cache JDBC driver as an application dependency.
 
