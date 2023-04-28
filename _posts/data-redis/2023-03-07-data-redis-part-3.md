@@ -211,18 +211,17 @@ Additionally, you can use RedisGears to eliminate inaccurate information and f
 
 Let's create the hashes that represent a few personas:
 
-```
+{% highlight sql linenos %}
 HSET person:1 name "Rick Sanchez" age 70
 HSET person:2 name "Morty Smith" age 14  
 HSET person:3 name "Summer Smith" age 17  
 HSET person:4 name "Beth Smith" age 35  
 HSET person:5 name "Shrimply Pibbles" age 87
-```
+{% endhighlight %}
 
 You can use the following RedisGears function to format the dataset and get the first and last names split into different fields.
 
 {% highlight python linenos %}
-
 def split_name(key):
     person_name = execute("HGET", key, "name")
     first_name = person_name.split(' ')[0]
@@ -243,7 +242,6 @@ GearsBuilder()\
 # 3) "['age', '87', 'fname', 'Shrimply', 'lname', 'Pibbles']"
 # 4) "['age', '14', 'fname', 'Morty', 'lname', 'Smith']"
 # 5) "['age', '17', 'fname', 'Summer', 'lname', 'Smith']"
-
 {% endhighlight %}
 
 The time it takes to execute a function depends on its input and complexity. Therefore, RedisGears performs batch functions asynchronously in a thread running in the background, thus allowing the main Redis process to continue serving requests while the engine is processing.
@@ -252,27 +250,27 @@ The default behavior for `RG.PYEXECUTE` is to block the client that had called. 
 
 Blocking greatly simplifies the client's logic, but for long-running tasks, it is sometimes desired to have the client continue its work while the function is executed. RedisGears batch functions can be executed in this non-client-blocking mode by adding the `UNBLOCKING` argument to the `RG.PYEXECUTE` command. For example, we can run the first version of our simple function in a nonblocking fashion like so:
 
-```shell
+{% highlight shell linenos %}
 cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE UNBLOCKING  
 "0000000000000000000000000000000000000000-0"
-```
+{% endhighlight %}
 
 When executing in `UNBLOCKING` mode, the engine replies with an [Execution ID](https://oss.redis.com/redisgears/functions.html#execution-id) that represents the function's execution internally. The execution IDs are unique. They are made of two parts, a shard identifier and a sequence, delimited by a hyphen ('-'). The shard identifier is unique for each shard in a Redis Cluster, whereas the sequence is incremented each time the engine executes a function.
 
 By calling the [RG.DUMPEXECUTIONS](https://oss.redis.com/redisgears/commands.html#rgdumpexecutions) command, we can fetch the engine's executions list, which currently has just one entry representing the function we've just run:
 
-```shell
+{% highlight shell linenos %}
 redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
   
 1)  1) "executionId"   
     2) "0000000000000000000000000000000000000000-0"   
     3) "status"   
     4) "done"
-```
+{% endhighlight %}
 
 Because the function's execution is finished, as indicated by the value done in the status field, we can now obtain its execution results with the [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) command. As the name suggests, the command returns the results of the execution specified by its ID:
 
-```shell
+{% highlight shell linenos %}
 redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-0  
   
 1)  1)"['age', '35', 'fname', 'Beth', 'lname', 'Smith']"
@@ -280,7 +278,7 @@ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG
     3)"['age', '87', 'fname', 'Shrimply', 'lname', 'Pibbles']"
     4)"['age', '14', 'fname', 'Morty', 'lname', 'Smith']"
     5)"['age', '17', 'fname', 'Summer', 'lname', 'Smith']"
-```
+{% endhighlight %}
 
 Before the done status, the engine would have replied with an error.
 
@@ -329,7 +327,7 @@ HSET person:6 name "Amine El-Kouhen" age 36
 
 Now, as soon as a new person is set into Redis, the function will be executed, and the results can be obtained when the execution status shows done. 
 
-```shell
+{% highlight shell linenos %}
 redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
 
 1) 1) "executionId" 
@@ -338,16 +336,16 @@ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG
    4) "done" 
    5) "registered" 
    6) (integer) 1 
-```
+{% endhighlight %}
 
 You can then get the execution results of the execution specified by its ID with the [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) command:
 
-```
+{% highlight shell linenos %}
 redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-119  
   
 1) 1) "['age', '36', 'fname', 'Amine', 'lname', 'El-Kouhen']"
 2) (empty array)
-```
+{% endhighlight %}
 
 We can use the stream processing with gears to perform aggregate functions that can evolve while data is ingested in Redis. For example, let's assume that [Apple's financial data](https://www.nasdaq.com/market-activity/stocks/aapl) are stored in Redis. Stakeholders might have a requirement to see the Profit and Loss statement in real-time. 
 
@@ -356,7 +354,6 @@ We can use the stream processing with gears to perform aggregate functions that 
 The **_Profit and Loss Statement_** (**P&L**) is a financial statement that starts with revenue and deducts costs and expenses to arrive at a company's net income, the profitability of a specified period. Let's first implement the logic we want to expose for our users:
 
 {% highlight python linenos %}
-
 def grouping_by_account(x):
   return x['value']['account']
 
@@ -394,7 +391,6 @@ gb.groupby(grouping_by_account, summer)
 gb.map(create_pnl)
 gb.map(consolidate_pnl)
 gb.register('record:*')
-
 {% endhighlight %}
 
 In this Gears function, we've introduced the [groupby()](https://oss.redis.com/redisgears/operations.html#groupby) operation. It performs the grouping of records according to grouping criteria and can perform aggregation by the grouping elements. Here the function makes a sum of all records grouped by an accounting nature (e.g., Revenue, Cost, etc.)
@@ -405,7 +401,7 @@ As you can observe, this function is an event-triggered procedure (aka. register
 
 Let's execute these commands to create new financial records. To simplify the example, each financial transaction consists only of an accounting nature and the transaction amount:
 
-```
+{% highlight sql linenos %}
 HSET record:1 account "Revenue" amount 316199
 HSET record:2 account "Revenue" amount 78129
 HSET record:3 account "Cost" amount 201471
@@ -413,7 +409,7 @@ HSET record:4 account "Cost" amount 22075
 HSET record:5 account "Operating Expenses" amount 26251
 HSET record:6 account "Operating Expenses" amount 25094
 HSET record:7 account "Provision" amount 19300
-```
+{% endhighlight %}
 
 Assuming all records are actual transactions, stakeholders can get the company's financial situation in real-time, and the different revenues and expenses get updated continuously.
 
