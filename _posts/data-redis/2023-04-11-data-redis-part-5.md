@@ -210,10 +210,10 @@ After adding the Redis Smart Cache dependency and setting some basic configurati
 
 If you have a MySQL server installed, you can run this example on your local machine. Or, you can just clone this git repository:
 
-```shell
+{% highlight shell linenos %}
 git clone https://github.com/redis-field-engineering/redis-smart-cache.git
 cd redis-smart-cache
-```
+{% endhighlight %}
 
 And use Docker Compose to launch containers for MySQL, Grafana, Redis Stack, and Redis Smart Cache example app instance:
 
