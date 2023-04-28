@@ -432,8 +432,8 @@ Add-OdbcDSN -Name "Redis" -DriverName "Redis" -Platform "64-bit" -DsnType "User"
   
 For this tool, we’re going to load a funny dataset! _**Tim Renner**_ put together a [dataset on data world](https://data.world/timothyrenner/ufo-sightings) with a bunch of UFO sightings – we'll load that dataset into Redis, using RIOT-File (see [Data & Redis - Part 1](https://aelkouhen.github.io/2023-02-21-data-redis-part-1/)) and see what we can do with it using some Windows-based desktop applications.
 
-```
-riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/nuforc_reports.csv.gz --process id="#index" --header hset --keyspace Report --keys id
+```console
+$ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/nuforc_reports.csv.gz --process id="#index" --header hset --keyspace Report --keys id
 ```
   
 Then, we will create a secondary index on ingested reports created by the last command::
