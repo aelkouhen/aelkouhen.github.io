@@ -110,7 +110,7 @@ Let's add a pair of Hashes representing fictitious personas and a hash that repr
 HSET person:1 name "Rick Sanchez" age 70
 HSET person:2 name "Morty Smith" age 14  
 HSET country:FR name "France" continent "Europe"
-{% highlight console linenos %}
+{% endhighlight %}
 
 
 Now that the database has three keys, the function returns three result records, one for each.
