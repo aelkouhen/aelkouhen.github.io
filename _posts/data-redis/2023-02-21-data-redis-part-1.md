@@ -237,7 +237,7 @@ riot-file -h redis-12000.cluster.redis-ingest.demo.redislabs.com -p 12000 import
 
 You can also make transformations while ingesting data using RIOT. This feature allows you to create/update/delete fields using the [Spring Expression Language](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#expressions) (SpEL). For example, you can add a new field by using `field1='foo'`, you can standardize a field values to convert temperature from Fahrenheit to Celsius `temp=(temp-32)*5/9`, you can merge two fields into one and delete the old fields `name=remove(first).concat(remove(last))`, or you can simply delete the fields that you wont use (e.g., `field2=null`).
 
-The transform processor also exposes functions and variables that can be accessed using the `#` prefix, like the date parser `#date`, get the sequence number of the item being generated with #index, and you can invoke Redis commands by using `#redis`.
+The transform processor also exposes functions and variables that can be accessed using the `#` prefix, like the date parser `#date`, get the sequence number of the item being generated with `#index`, and you can invoke Redis commands by using `#redis`.
 
 ### 2 - Relational tables ingestion using RIOT-DB 
 
