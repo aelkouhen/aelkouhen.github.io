@@ -76,14 +76,14 @@ sudo tar xvf ~/tmp/redis-di-offline/redis-di-cli/redis-di.tar.gz -C /usr/local/b
 
 Run `create` command to set up the Redis Data Integration config database (on port `13000`) instance within an existing Redis Enterprise Cluster:
 
-```console
-$ redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
+```
+redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
 ```
 
 Finally, run the `scaffold` command to generate configuration files for Redis Data Integration and Debezium Redis Sink Connector:
 
-```console
-$ redis-di scaffold --db-type <cassandra|mysql|oracle|postgresql|sqlserver> --dir <PATH_TO_DIR>
+```
+redis-di scaffold --db-type <cassandra|mysql|oracle|postgresql|sqlserver> --dir <PATH_TO_DIR>
 ```    
 
 In our article, we will capture a SQL Server database, so choose (sqlserver). The following files will be created in the provided directory:
@@ -491,14 +491,14 @@ sudo tar xvf ~/tmp/redis-di-offline.tar.gz -C /usr/local/bin/
 
 Upgrade your Redis Data Integration (RDI) engine to comply with the new `redis-di` CLI. For this run:  
 
-```console
-$ redis-di upgrade --cluster-host cluster.redis-process.demo.redislabs.com --cluster-user [CLUSTER_ADMIN_USER] --cluster-password [ADMIN_PASSWORD] --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
+```
+redis-di upgrade --cluster-host cluster.redis-process.demo.redislabs.com --cluster-user [CLUSTER_ADMIN_USER] --cluster-password [ADMIN_PASSWORD] --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
 ```
 
 Then, run the deploy command to deploy the local configuration to the remote RDI config database:
 
-```console
-$ redis-di deploy --rdi-host redis-12000.cluster.redis-process.demo.redislabs.com --rdi-port 12000 --rdi-password rdi-password
+```
+redis-di deploy --rdi-host redis-12000.cluster.redis-process.demo.redislabs.com --rdi-port 12000 --rdi-password rdi-password
 ```
 
 Change directory to your Redis Data Integration configuration folder created by the scaffold command, then run:
@@ -537,14 +537,14 @@ In this section, we will use the database `redis-13000.cluster.redis-process.dem
 
 First, you need to create and install the RDI engine on your Redis source database so it is ready to process data. You need to run the [`configure`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-configure.html) command if you have not used this Redis database with RDI Write Behind before.
 
-```console
-$ redis-di configure --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
+```
+redis-di configure --rdi-host redis-13000.cluster.redis-process.demo.redislabs.com --rdi-port 13000 --rdi-password rdi-password
 ```
 
 Then run the [`scaffold`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-scaffold.html) command with the type of data store you want to use, for example:
 
-```console
-$ redis-di scaffold --strategy write_behind --dir . --db-type mysql
+```
+redis-di scaffold --strategy write_behind --dir . --db-type mysql
 ```    
 
 This will create a template of `config.yaml` and a folder named `jobs` under the current directory. You can specify any folder name with `--dir` or use the `--preview config.yaml` option in order to get the `config.yaml` template to the terminal.
@@ -633,14 +633,14 @@ output:
 
 To start the pipeline, run the [`deploy`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-deploy.html) command:
 
-```console
-$ redis-di deploy
+```
+redis-di deploy
 ```    
 
 You can check that the pipeline is running, receiving, and writing data using the [`status`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-status.html) command:
 
-```console
-$ redis-di status
+```
+redis-di status
 ```    
 
 Once you run the deploy command, the RDI engine registers the job and listens to the keyspace notifications on the pattern `invoice:*` Thus, if you add this [JSON document](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/invoice.json), RDI will run the job and execute the data transformation accordingly.
