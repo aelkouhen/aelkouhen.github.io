@@ -429,7 +429,7 @@ Add-OdbcDSN -Name "Redis" -DriverName "Redis" -Platform "64-bit" -DsnType "User"
 
 2\. Or, with the ODBC data sources GUI:
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8vRU2PESBGRItND5YAknuBUqNW_jj6RvionpXi27uh65PXysFBwxOcgCK0C4lHoELFp4xsrlPfiQiGEj9LkjJQjko_skwCgp2aygB4MNLJnYiUJCIjLS5zpVJ1D9YkLKYY0etu5EusFAc7YYJWShX_67R4MxEA_mBTNQvLu6scBArGuYttkiBSfOD){: .mx-auto.d-block :} *Using Redis SQL Trino to Speed-up visualization queries in Tableau.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8vRU2PESBGRItND5YAknuBUqNW_jj6RvionpXi27uh65PXysFBwxOcgCK0C4lHoELFp4xsrlPfiQiGEj9LkjJQjko_skwCgp2aygB4MNLJnYiUJCIjLS5zpVJ1D9YkLKYY0etu5EusFAc7YYJWShX_67R4MxEA_mBTNQvLu6scBArGuYttkiBSfOD){: .mx-auto.d-block :} 
   
 For this tool, we’re going to load a funny dataset! _**Tim Renner**_ put together a [dataset on data world](https://data.world/timothyrenner/ufo-sightings) with a bunch of UFO sightings – we'll load that dataset into Redis, using RIOT-File (see [Data & Redis - Part 1](https://aelkouhen.github.io/2023-02-21-data-redis-part-1/)) and see what we can do with it using some Windows-based desktop applications.
 
