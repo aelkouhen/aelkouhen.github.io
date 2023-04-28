@@ -28,11 +28,11 @@ You need to install and set up a few things for this article. First, you need to
 
 For the second part of this article, you need to download and install the [Trino](https://trino.io/docs/current/installation.html) server:
 
-```shell
+{% highlight shell linenos %}
 wget https://repo1.maven.org/maven2/io/trino/trino-server/403/trino-server-403.tar.gz
 mkdir /usr/lib/trino
 tar xzvf trino-server-403.tar.gz --directory /usr/lib/trino --strip-components 1
-```
+{% endhighlight %}
 
 Trino requires a 64-bit version of **Java 17+** in addition to **Python**. Trino also needs a data directory for storing logs, etc. Therefore, creating a data directory outside the installation directory is recommended, allowing it to be easily preserved when upgrading Trino.
 
@@ -54,7 +54,7 @@ node.environment=production
 
 Create a JVM config file in `/usr/lib/trino/etc/jvm.config`
 
-```properties
+{% highlight properties linenos %}
 -server
 -Xmx16G
 -XX:InitialRAMPercentage=80
@@ -71,16 +71,16 @@ Create a JVM config file in `/usr/lib/trino/etc/jvm.config`
 -Djdk.nio.maxCachedBufferSize=2000000
 -XX:+UnlockDiagnosticVMOptions
 -XX:+UseAESCTRIntrinsics
-```
+{% endhighlight %}
 
 Create the config properties file `/usr/lib/trino/etc/config.properties`
 
-```properties
+{% highlight properties linenos %}
 coordinator=true
 node-scheduler.include-coordinator=true
 http-server.http.port=8080
 discovery.uri=http://localhost:8080
-```
+{% endhighlight %}
 
 Create a logging configuration file `/usr/lib/trino/etc/log.properties`
 
@@ -90,11 +90,11 @@ io.trino=INFO
 
 Now, you need to download the latest release of [RediSearch Connector](https://github.com/redis-field-engineering/redis-sql-trino/releases/latest) and unzip without any directory structure under `/usr/lib/trino/plugin/redisearch`:
 
-```shell
+{% highlight shell linenos %}
 mkdir /usr/lib/trino/plugin/redisearch
 wget https://github.com/redis-field-engineering/redis-sql-trino/releases/download/v0.3.3/redis-sql-trino-0.3.3.zip -O /usr/lib/trino/plugin/redisearch/redis-sql-trino-0.3.3.zip
 unzip -j /usr/lib/trino/plugin/redisearch/redis-sql-trino-0.3.3.zip -d /usr/lib/trino/plugin/redisearch
-```
+{% endhighlight %}
 
 Create the catalog subdirectory `/usr/lib/trino/etc/catalog`:
 
@@ -104,10 +104,10 @@ mkdir /usr/lib/trino/etc/catalog
 
 Create a RediSearch connector configuration in `/usr/lib/trino/etc/catalog/redisearch.properties` and change/add [properties](https://redis-field-engineering.github.io/redis-sql-trino/#properties) as needed.
 
-```properties
- connector.name=redisearch
- redisearch.uri=redis://redis-12000.cluster.redis-serving.demo.redislabs.com:12000
-```
+{% highlight properties linenos %}
+connector.name=redisearch
+redisearch.uri=redis://redis-12000.cluster.redis-serving.demo.redislabs.com:12000
+{% endhighlight %}
 
 Start the Trino server:
 
@@ -117,10 +117,10 @@ Start the Trino server:
 
 Download [trino-cli-403-executable.jar](https://repo1.maven.org/maven2/io/trino/trino-cli/403/trino-cli-403-executable.jar) to use Trino's Client Line Interface (CLI): 
 
-```shell
+{% highlight shell linenos %}
 wget https://repo1.maven.org/maven2/io/trino/trino-cli/403/trino-cli-403-executable.jar -O /usr/local/bin/trino
 chmod +x /usr/local/bin/trino
-```
+{% endhighlight %}
 
 Most real-world applications will use the [Trino JDBC driver](https://trino.io/docs/current/client/jdbc.html) to issue queries. The Trino JDBC driver allows users to access Trino from Java-based applications or non-Java applications running in a JVM. Refer to the [Trino documentation](https://trino.io/docs/current/client/jdbc.html) for setup instructions.
 
@@ -237,7 +237,7 @@ For this reason, Redis has developed a module called [RediSearch](https://redis
 
 The idea is to create secondary indices other than the keys (primary ones) and make queries on those indices. For example, we use the [`FT.CREATE`](https://redis.io/commands/ft.create) command to create an index on keys prefixed with person: with fields: name, age, and gender. Any existing hashes prefixed with person: are automatically indexed upon creation.
 
-{% highlight linenos %}
+{% highlight sql linenos %}
 FT.CREATE myIdx 
   ON HASH PREFIX 1 "person:" 
 SCHEMA 
@@ -314,9 +314,8 @@ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a re
 
 We do the same for the other tables, Chart of Accounts and Accounting Nature.
 
-{% highlight linenos %}
+{% highlight shell linenos %}
 riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/ChartAccounts.csv --header hset --keyspace CoA --keys ACCOUNTNUM
-
 riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/AccountingNature.csv --header hset --keyspace AccountingNature --keys AccountingNatureCode
 {% endhighlight %}
 
@@ -324,7 +323,7 @@ Once you have your data ingested into Redis. You can create secondary indices on
 
 `general_ledger` as a secondary index for the General Ledger table. We need Only the Account Number, the Transaction Amount (AMOUNTMST), and the Currency Code to be indexed. 
   
-{% highlight linenos %}
+{% highlight sql linenos %}
 FT.CREATE general_ledger    
   ON HASH                
     PREFIX 1 "GeneralLedger:"    
@@ -336,7 +335,7 @@ FT.CREATE general_ledger
 
 `chart_accounts` as a secondary index for the Chart of Accounts table. 
 
-{% highlight linenos %}
+{% highlight sql linenos %}
 FT.CREATE chart_accounts    
   ON HASH                
     PREFIX 1 "CoA:"    
@@ -350,7 +349,7 @@ FT.CREATE chart_accounts
 
 And `accounting_nature` as a secondary index for the Accounting Nature table. 
 
-{% highlight linenos %}
+{% highlight sql linenos %}
 FT.CREATE accounting_nature    
   ON HASH                
     PREFIX 1 "AccountingNature:"      
@@ -363,7 +362,7 @@ FT.CREATE accounting_nature
 
 Now, you can test these indices by running the following commands: 
 
-{% highlight linenos %}
+{% highlight sql linenos %}
 FT.SEARCH general_ledger "@AMOUNTMST:[(100000 inf] @CURRENCYCODE:{EUR|USD}"  
 FT.SEARCH chart_accounts "@ACCOUNTNUM:61110801"  
 FT.SEARCH accounting_nature "@AccountGroup:{Payables|Receivables}"
@@ -439,7 +438,7 @@ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a re
   
 Then, we will create a secondary index on ingested reports created by the last command::
 
-{% highlight linenos %}
+{% highlight sql linenos %}
 FT.CREATE ufo_report    
   ON HASH                
     PREFIX 1 "Report:" 
