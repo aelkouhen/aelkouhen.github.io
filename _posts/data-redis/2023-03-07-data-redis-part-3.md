@@ -116,7 +116,7 @@ HSET country:FR name "France" continent "Europe"
 Now that the database has three keys, the function returns three result records, one for each.
   
 {% highlight console linenos %}
-RG.PYEXECUTE "GearsBuilder().run()"  
+cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
 
 1)  1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
     2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
@@ -129,7 +129,7 @@ By default, the KeysReader reads all keys in the database. This behavior can be 
 The reader's key names' pattern is set to "\*" by default, so any key name matches it. One way to override the default pattern is from the context's `run()` method. To have input records consisting only of persons, we can use the pattern `person:*` to discard keys that don't match it by providing it like so:
 
 {% highlight console linenos %}
-RG.PYEXECUTE "GearsBuilder().run('person:*')"  
+cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run('person:*')"  
 
 1)  1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
     2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
@@ -141,7 +141,7 @@ The reader can generate any number of input records as its output. These records
 To see how this works in practice, we'll refactor our function to use a [filter()](https://oss.redis.com/redisgears/operations.html#filter) operation as a step instead of the reader's keys pattern:
 
 {% highlight console linenos %}
-RG.PYEXECUTE "GearsBuilder().filter(lambda x: x['key'].startswith('person:')).run()"
+cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().filter(lambda x: x['key'].startswith('person:')).run()"
 
 1)  1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
     2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
