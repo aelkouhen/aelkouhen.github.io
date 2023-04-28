@@ -52,7 +52,7 @@ Create the `/usr/lib/trino/etc/node.properties` file
 node.environment=production
 ```
 
-Create a JVM config file in /usr/lib/trino/etc/jvm.config
+Create a JVM config file in `/usr/lib/trino/etc/jvm.config`
 
 ```properties
 -server
