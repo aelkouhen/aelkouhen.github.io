@@ -156,8 +156,8 @@ Functions can be as complex as needed and can consist of any number of steps tha
 
 Typing it into the prompt (`redis-cli`) is already becoming tiresome. You can imagine when you have complex data processing logic to implement. For this reason, instead of using the interactive mode, you can store your functions' code in a regular text file and have the `redis-cli` send its contents for execution.
 
-``` console
-$ cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE
+``` shell
+cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE
 ``` 
 
 ### 3 - RedisGears: Batch processing
