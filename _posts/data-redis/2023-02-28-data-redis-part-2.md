@@ -273,7 +273,7 @@ Redis modules make it possible to extend Redis functionality using external exte
 
 In this article, We discovered that fundamental design decisions made by the developers more than a decade ago were behind Redis's performance, thus answering the question: Why is Redis so fast?
 
-We discovered some of Redis' top use cases that have been battle-tested in production at various companies and at various scales. Then, I introduced the native data structures of Redis and the extended ones implemented with the Redis Modules. I also presented the algorithmic complexity of each data structure, the well-known limitations, and the maximum storage limit of each. This is an illustrated recap of this article:
+We discovered some of Redis' top use cases that have been battle-tested in production at various companies and at various scales. Then, I introduced the native data structures of Redis and the extended ones implemented with the Redis Modules. I also presented the algorithmic complexity (Big O notation) of read/write operations of each data structure, the well-known limitations, and the maximum storage limit of each. This is an illustrated recap of this article:
 
  ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiT8t6aATd3KHEfJotVxaa9xlxXmb3NG-BkAS5wT8cTaa44UMbMFUNUqAeDWW7oKDD2VzGGl8KreU60OvokMcsTe2Asbh80ev9K9xfC82gtttY-UTA5hLADOmhjJl865vUEU8O8rBaL9uh58LSZE7V5AyEFL6Q6GqR1xC5CAReOkJw837fu0fS3d4rN){: .mx-auto.d-block :}
 
