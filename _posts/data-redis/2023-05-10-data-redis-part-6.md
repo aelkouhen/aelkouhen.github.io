@@ -4,7 +4,7 @@ title: Data & Redis series - part 6
 subtitle:  Fraud Detection with Redis Enterprise
 thumbnail-img: assets/img/fraud.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpIJykWzMHqXcycHvB369LO09zNLoe8_sIRrpXMkdPSHM2R0jUFIVMfhhmRlLZ3tjhPmwhtbRNiq3i2apf8Ok55LweD7nySq-mMXwc9R_swbkLmyoGMofvBqilIkb91HKGO5aYjx5ouuo_GurEw78SvSgE6fDNxjVv0TMzySUhaz9f7XY7pd4QKDiv
-tags: [AWS Kinesis,AWS Lambda,false positive,fraud detection,Grafana,latency,Random Cut Forest,Redis,Redis Gears,RedisBloom,RediSearch,RedisJSON,RedisTimeSeries,SageMaker,Serverless Functions,xGBoost]
+tags: [AWS,AWS Kinesis,AWS Lambda,false positive,fraud detection,Grafana,latency,Random Cut Forest,Redis,Redis Gears,RedisBloom,RediSearch,RedisJSON,RedisTimeSeries,SageMaker,Serverless Functions,xGBoost]
 comments: true
 ---
 
