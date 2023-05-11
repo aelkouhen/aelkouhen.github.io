@@ -10,11 +10,11 @@ comments: true
 
 In the rest of this series, I will highlight a set of use cases in which using Redis brings a real advantage. In this article, I'll present how Redis Enterprise can help to implement a real-time fraud detection system. 
 
-For any given transaction, this system must decide whether it's fraudulent or not and act accordingly within seconds. Failing to address fraud definitively leads to significant losses, harms organizations' brand image, tarnishes their reputation and inevitably repels customers. 
+For any given transaction, this system must decide whether it's fraudulent or not and act accordingly within seconds. Failing to address fraud definitively leads to significant losses, harms organizations' brand image, tarnishes their reputation, and inevitably repels customers. 
 
 Unfortunately, fraudsters are evolving fast and are moving in tandem with digital banking transformations, discovering innovative ways to steal or fake customers’ identities and commit fraud. As a result, traditional rules-based fraud detection systems are no longer effective. A significant challenge is to minimize false positives and accurately identify fraud in real time. 
 
-In the following sections, I'll introduce the main challenges of fraud detection and how Redis Enterprise can help to address some of them.
+In the following sections, I'll introduce the main challenges of fraud detection and how Redis Enterprise can help to address them.
 
 ## Fraud Detection Challenges
 
