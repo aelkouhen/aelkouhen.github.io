@@ -4,10 +4,10 @@ title: Data & Redis series - part 6
 subtitle:  Fraud Detection with Redis Enterprise
 thumbnail-img: assets/img/fraud.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpIJykWzMHqXcycHvB369LO09zNLoe8_sIRrpXMkdPSHM2R0jUFIVMfhhmRlLZ3tjhPmwhtbRNiq3i2apf8Ok55LweD7nySq-mMXwc9R_swbkLmyoGMofvBqilIkb91HKGO5aYjx5ouuo_GurEw78SvSgE6fDNxjVv0TMzySUhaz9f7XY7pd4QKDiv
-tags: [AWS,AWS Kinesis,AWS Lambda,false positive,fraud detection,Grafana,latency,Random Cut Forest,Redis,Redis Gears,RedisBloom,RediSearch,RedisJSON,RedisTimeSeries,SageMaker,Serverless Functions,xGBoost]
+tags: [AWS,AWS Kinesis,AWS Lambda,false positive,feature store,fraud detection,Grafana,latency,machine learning,Random Cut Forest,Redis,Redis Gears,RedisBloom,RediSearch,RedisJSON,RedisTimeSeries,SageMaker,Serverless Functions,xGBoost]
 comments: true
 ---
-
+ 
 In the rest of this series, I will highlight a set of use cases in which using Redis brings a real advantage. In this article, I'll present how Redis Enterprise can help to implement a real-time fraud detection system. 
 
 For any given transaction, this system must decide whether it's fraudulent or not and act accordingly within seconds. Failing to address fraud definitively leads to significant losses, harms organizations' brand image, tarnishes their reputation, and inevitably repels customers. 
