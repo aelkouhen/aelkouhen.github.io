@@ -41,7 +41,7 @@ The multi-layer approach is a technique used in fraud detection systems to impro
   *   Per user purchase profile: Has this user purchased in these categories before?
   *   General purchase profiles: Has this type of user purchased in these categories before?
 
-> The rules can be implemented so that it can start from a "low cost" to "high cost". If a user makes a purchase within already made categories and within min/max amounts, the app can tag the transaction as non-fraudulent and eliminate the cycles to be spent on further rules and the ML layer. 
+The rules can be implemented so that it can start from a "low cost" to "high cost". If a user makes a purchase within already made categories and within min/max amounts, the app can tag the transaction as non-fraudulent and eliminate the cycles to be spent on further rules and the ML layer. 
 
 *   **Anomaly Detection Layer**: The second layer is an anomaly detection system that identifies unusual activity based on statistical analyses of transactional data. This layer uses machine learning algorithms such as **Random Cut Forest** to identify patterns that are not typically seen in legitimate transactions.
 *   **Predictive Modeling Layer**: The third layer is a predictive modeling system that uses advanced machine learning algorithms, such as **XGBoost,** to predict the likelihood of fraud. This layer uses historical data to train the models and can detect new fraud patterns that are not detected by the previous layers.
@@ -70,7 +70,7 @@ AWS Lambda functions consume the messages from Kinesis (end-user transactions), 
 
 Remember the two main fraud detection challenges presented above. Redis can address both from different perspectives:
 
-1.  First, by applying the predefined rules to identify potential fraudulent activity (rule-based layer) - using RedisBloom/Cuckoo Filters, you can efficiently implement the blacklisting of the IP addresses. Then, with Redis geospatial native operations like GEOSEARCH, GEORADIUS, and GEOPOS, you can calculate latitude and longitude data from users' IP addresses. In addition, Redis can store and index JSON via its RedisJSON and RediSearch modules. This, along with the other Redis data types, enables the app to implement user and purchase profiling logic.
+1.  First, by applying the predefined rules to identify potential fraudulent activity (rule-based layer) - using RedisBloom/Cuckoo Filters, you can efficiently implement the blacklisting of the IP addresses. Then, with Redis geospatial native operations like `GEOSEARCH`, `GEORADIUS`, and `GEOPOS, you can calculate latitude and longitude data from users' IP addresses. In addition, Redis can store and index JSON via its RedisJSON and RediSearch modules. This, along with the other Redis data types, enables the app to implement user and purchase profiling logic.
 2.  The machine learning engine needs to quickly read the latest feature values from the online feature store and use them at inference time. Then, based on the real-time features, the ML model will score the transaction. Because of its ultra-low latency, Redis Enterprise is a great fit for online and real-time access to the feature data as part of an online feature store solution/implementation.
 3.  Finally, time-series data can be stored in Redis via the RedisTimeSeries module. This is important if you want to implement a real-time dashboard. 
 
