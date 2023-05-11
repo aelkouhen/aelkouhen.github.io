@@ -35,11 +35,11 @@ When a legitimate transaction by the user is flagged as fraud by the system, it 
 The multi-layer approach is a technique used in fraud detection systems to improve the accuracy and effectiveness of fraud detection. It involves using multiple layers of fraud detection methods and techniques to detect fraudulent activity. The multi-layer approach typically includes three layers:
 
 *   **Rule-Based Layer**: The first layer is a rule-based system that uses predefined rules to identify potential fraudulent activity. These rules are based on historical fraud data and are designed to detect known fraud patterns. Some examples of these rules:
-  *   Blacklisting fraudsters’ IP addresses
-  *   Deriving and utilizing the latitude and longitude data from users’ IP addresses
-  *   Utilizing the data on browser type and version, as well as operating system, active plugins, timezone, and language
-  *   Per user purchase profile: Has this user purchased in these categories before?
-  *   General purchase profiles: Has this type of user purchased in these categories before?
+- Blacklisting fraudsters’ IP addresses
+- Deriving and utilizing the latitude and longitude data from users’ IP addresses
+- Utilizing the data on browser type and version, as well as operating system, active plugins, timezone, and language
+- Per user purchase profile: Has this user purchased in these categories before?
+- General purchase profiles: Has this type of user purchased in these categories before?
 
 The rules can be implemented so that it can start from a "low cost" to "high cost". If a user makes a purchase within already made categories and within min/max amounts, the app can tag the transaction as non-fraudulent and eliminate the cycles to be spent on further rules and the ML layer. 
 
