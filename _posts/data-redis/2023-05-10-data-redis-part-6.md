@@ -111,9 +111,8 @@ def persistTransactionalData(payload_dict):
 
 5\. The first layer in the fraud detection multi-layer approach is a rule-based system that uses predefined rules to identify potential fraudulent activity. The rules can be implemented so that it can start from a "low cost" to "high cost". For example, using RedisBloom/Cuckoo Filters, you can efficiently implement the blacklisting of the IP addresses. Then, with Redis geospatial native operations like GEOSEARCH, GEORADIUS, and GEOPOS, you can identify latitude and longitude data from users' IP addresses and compare it with the user's address in the records. Thus, you can apply preliminary anomaly detection without using ML inference.
 
-    5b. When a rule-based anomaly is identified, you can use Redis Gears to trigger further actions.
-
-    5c. You can implement a Gears function that notifies the end user and requests validation for the transaction.
+5b. When a rule-based anomaly is identified, you can use Redis Gears to trigger further actions.
+5c. You can implement a Gears function that notifies the end user and requests validation for the transaction.
 
 6\. To avoid false positives and false negatives, the Lambda function calls the SageMaker models endpoints to assign anomaly scores and classification scores to incoming transactions.
 
