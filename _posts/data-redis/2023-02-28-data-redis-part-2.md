@@ -59,7 +59,7 @@ Redis is an in-memory data structure store, and its most common usage is cachin
 
 Another common use case is to use Redis as a session store to share session data among stateless servers. When a user logs in to a web application, the session data is stored in Redis, along with a unique session ID that is returned to the client as a cookie. When the user makes a request to the application, the session ID is included in the request, and the stateless web server retrieves the session data from Redis using the ID. The session stores are behind the shopping cart you can find on the e-commerce website.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvjZ5Oq-VlLYEB_0xlWqZuokjpP74jtOmcqY1NZOGpd8j9vzYdNRDI_BwJmL0r9Vrf7tq3-dq7z0VNNUxAHSu2DB01XtEkez_advGanW3hfW2M-rqxXiO6OuI3DVdqj79bmkRI5NRVivgT2lpYhPzVSI7fsIPSyZVguGuKNrb8-g71V94hV8ID3Eaq){: .mx-auto.d-block :} *Storing User Sessions using Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgYmYre14zmKHaC2ED-EoakDhJd2lM2hg4fzJPCCNtrJSqSQ6l_OpMwA-w-phesgf9wZYu9BI_1G1uBuHWqM2YTX7VwbiI_Q4R_xFo98lx96XzJd4bXZbEMI4cEOOZ89t7lSk5NjkxXReIOAh5Ml_4-SBde9LP0FWuW2NhTVOfS76EXFZou6Ds0N1xk){: .mx-auto.d-block :} *Storing User Sessions using Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 3 - Distributed Lock
 
