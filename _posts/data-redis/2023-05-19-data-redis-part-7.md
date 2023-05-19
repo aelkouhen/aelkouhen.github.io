@@ -3,7 +3,7 @@ layout: post
 title: Data & Redis series - part 7
 subtitle:  Online Recommendation Systems with Redis
 thumbnail-img: assets/img/redis-recommandation.png
-share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiIpjHZnx59WRCB5VdiWisD3-nq4ArNSSvdAGEIU5J8q7stCpZkFOSbxZufibAfrKu11-Hl4jaUStWMFwrb7Cc0VMCBbpex8W76hZF3-5pWhRYUyNgYPXDUexel__dvIV7e7rf34p9Gt-g_C3TbQZ6nX0pw8lZ70368Qjxv734mYMNyhc79GaWX0qlD
 tags: [BERT,Cosine,embeddings,HNSW,Hugging Face,KNN,neural network,Recommendation Systems,Redis,RediSearch,ResNet,similarity search,two-tower,vector database]
 comments: true
 ---
@@ -67,7 +67,7 @@ But most importantly, Vector representations facilitate the comparison and clust
 *   cluster and classify customers according to their preferences and attributes (age, sex, job, location, income...). This can help to find similarities between customers (**Collaborative Filtering**)
 *   suggest similar products based on their images and textual descriptions (**Content-Based Filtering**).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8){: .mx-auto.d-block :} *Online Recommendation Engine using Redis Vector Similarity Search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiIpjHZnx59WRCB5VdiWisD3-nq4ArNSSvdAGEIU5J8q7stCpZkFOSbxZufibAfrKu11-Hl4jaUStWMFwrb7Cc0VMCBbpex8W76hZF3-5pWhRYUyNgYPXDUexel__dvIV7e7rf34p9Gt-g_C3TbQZ6nX0pw8lZ70368Qjxv734mYMNyhc79GaWX0qlD){: .mx-auto.d-block :} *Online Recommendation Engine using Redis Vector Similarity Search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 ### 1 - Creating Vector Embeddings
 
