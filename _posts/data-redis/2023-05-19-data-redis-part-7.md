@@ -67,7 +67,7 @@ But most importantly, Vector representations facilitate the comparison and clust
 *   cluster and classify customers according to their preferences and attributes (age, sex, job, location, income...). This can help to find similarities between customers (**Collaborative Filtering**)
 *   suggest similar products based on images and text descriptions (**Content-Based Filtering**).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgv2kLmRZGVT67uRxBiTjc69q1Ir6np8smyckPCB0Vy3mmSagFy9HU9P29B1pnWRMYMDJxj74gqhVWsSmG4FERIclTfyVw96lgHgS7uIYN3Q5Lsymz0Xwol0j5lOC1k2jrkEpR0Fg74y5cv0j0z8AqnGWcX7VV9KRSW-xqgLhL8P81UVe2MrNM2EMFY/s3173/online-recommendation-2.png){: .mx-auto.d-block :} *Online Recommendation Engine using Redis Vector Similarity Search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8){: .mx-auto.d-block :} *Online Recommendation Engine using Redis Vector Similarity Search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 ### 1 - Creating Vector Embeddings
 
