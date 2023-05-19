@@ -50,7 +50,7 @@ Unlike offline recommendation engines that generate personalized recommendations
 
 Real-time engines would react to the customer's actions while they are still browsing your site and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg1UD8DKwTM3DuPkM4KUQqTye_DRnE1mcIEgCEJDL1CvEPA0FwZjy9i523_NS6TE8C4sNAhik_n_2IoCnNn_5ctPoiCMblqKm53v7mv39TX6hbn2Vy6Gfb_Fm0h1F5on3WZRZY1Z9oYPyL2YmTDW0DFCRAoAXKWYQIBmNTNyGjM9kKPveb_D2Dit06/w622-h280/offline-recommendation-2.png){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg1UD8DKwTM3DuPkM4KUQqTye_DRnE1mcIEgCEJDL1CvEPA0FwZjy9i523_NS6TE8C4sNAhik_n_2IoCnNn_5ctPoiCMblqKm53v7mv39TX6hbn2Vy6Gfb_Fm0h1F5on3WZRZY1Z9oYPyL2YmTDW0DFCRAoAXKWYQIBmNTNyGjM9kKPveb_D2Dit06/s3497/offline-recommendation-2.png){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 You clearly need a low-latency backend to implement such a real-time system. First, you need to present users' attributes and preferences in a specific way that allows their classification into groups. Then you need a performant representation of products that provides similarity calculation and querying in very low latency. 
 
