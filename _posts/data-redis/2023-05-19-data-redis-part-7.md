@@ -54,7 +54,7 @@ Real-time engines would react to customers' actions while they are still browsin
 
 You clearly need a low-latency backend to implement such a real-time system. First, you need to present users' attributes and preferences in a specific way that allows their classification into groups. Then you need a performant representation of products that provides similarity calculation and querying in very low latency. 
 
-Implementing such systems using Redis Enterprise is a straightforward task. First, you would consider user preferences, product attributes, and any other filtering parameters as vectors. Then, thanks to the similarity search feature provided by Redis, you can make distance calculations (scores) between these vectors and make recommendations based on these scores. 
+Implementing such systems using Redis Enterprise is a straightforward task. First, you would consider user preferences, product attributes, and any other filtering parameters as vectors. Then, thanks to the similarity search feature provided by Redis, you can make distance calculations (affinity scores) between these vectors and make recommendations based on these scores. 
 
 Vectors embeddings are mathematical representations of data points where each vector dimension corresponds to a specific feature or attribute of the data. For example, a product image can be represented as a vector where each element represents the characteristic of this product (color, shape, size...). Similarly, a product description can be transformed into a vector where each element represents the frequency or presence of a specific word or term. 
 
