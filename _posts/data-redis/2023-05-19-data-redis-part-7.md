@@ -221,7 +221,7 @@ def create_query(
 
 You can try this project out! The instructions above are a brief overview to demonstrate the building blocks for a real-time recommendation engine using Redis. I recommend two projects that leverage the VSS capability in Redis. The first one is the [Fashion Product Finder](https://redisvss.partee.io/) implemented using [redis-om-python](https://github.com/redis/redis-om-python). 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJZJt-GGnR5mZh4tAL1WqJj7I2aeYnPrzON4BjfAhyhy0YrWna_RrowmPFUEa4ttDX4AKLYRAHkrbjG_mZu9fkq_ddSeVYBdm8_nlAaW2xGlFMtfbt7MlOMziJHRxWq7E2LJYlePiNcPe7tCn69gYE5rgt7FEJWs5Rh3V-xfbqln9C6JYMepssFH0c)]
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJZJt-GGnR5mZh4tAL1WqJj7I2aeYnPrzON4BjfAhyhy0YrWna_RrowmPFUEa4ttDX4AKLYRAHkrbjG_mZu9fkq_ddSeVYBdm8_nlAaW2xGlFMtfbt7MlOMziJHRxWq7E2LJYlePiNcPe7tCn69gYE5rgt7FEJWs5Rh3V-xfbqln9C6JYMepssFH0c){: .mx-auto.d-block :}
   
 The second one is a project that uses Redis Vector Similarity Search to return similarities on an [Amazon real dataset](https://github.com/RedisAI/vecsim-demo) and provides:
 
