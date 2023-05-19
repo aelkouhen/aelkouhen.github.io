@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Data & Redis series - part 7
-subtitle:  Recommendation Engines with Redis Enterprise
+subtitle:  Recommendation Systems with Redis Enterprise
 thumbnail-img: assets/img/redis-recommandation.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8
-tags: []
+tags: [BERT,Cosine,embeddings,HNSW,Hugging Face,KNN,neural network,Recommendation Systems,Redis,RediSearch,ResNet,similarity search,two-tower,vector database]
 comments: true
 ---
 
@@ -34,7 +34,7 @@ There are several types of recommendation systems commonly used in practice:
     *   User-Based Collaborative Filtering: It identifies users with similar preferences and recommends items that users with similar tastes have enjoyed (Scenario A & B).
     *   Item-Based Collaborative Filtering: It identifies items that are similar based on user behavior and recommends items that are similar to those previously interacted with by the user (Scenario C).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTFbq8aT_kM2RSkzMNdyLY_ZC5dV2GtNefGyHl9oD-xk3R-OicaylrAd-szfCzccc7HUur3DXkS4kTiyCU8Kad20ZMR798JqBIwRqNwfQL4QNreUVHZrbOH2Z_XMwRltJzf5MPnaUInBlW3JGH0W8PZSDOC6dVCJpbNPkCRjtpPrlDGv1QCMZk1JKL){: .mx-auto.d-block :} *Collaborative Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4Ek38XSLMYES5vbgLjBogjIGdZZ6R80_i8-uPW5c5doDnloJT1zzgPDf6IBj_TE8K7DVhZYwET3spHOsdwxBxlyp3aLZ2YULB05ElhgE60OMaSU5z1FT8kBtKp47T2ahV-87kgRNmrvp_y6kHUnhQvhNrElCyMePBmKrgXVq8PrLjFGRtwJ0r6cJu){: .mx-auto.d-block :} *Collaborative Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **_Context-Aware Systems_**: These systems consider contextual information, such as time, location, and user context, to provide more relevant recommendations. For instance, a music streaming service might recommend energetic workout playlists in the morning and relaxing music in the evening. Likewise, an e-commerce website will suggest specific items when it's Black Friday or Christmas, different from what it could recommend in other periods of the year. 
 
@@ -42,7 +42,7 @@ There are several types of recommendation systems commonly used in practice:
 
 *   **_Hybrid Recommender Systems_**: These systems combine multiple recommendation techniques to provide more accurate and diverse recommendations. They leverage the strengths of different approaches, such as content-based filtering and collaborative filtering, to overcome their limitations and offer more effective suggestions.
 
-## Recommendation Engines & Redis
+## Recommendation Engines in Redis
 
 Unlike offline recommendation engines that generate personalized recommendations based on historical data, an ideal recommendation engine should prioritize resource efficiency, deliver high-performance real-time updates, and provide accurate and relevant choices to users. For example, it can be annoying to suggest to a customer an item they already bought only because your recommendation system wasn't aware of the customer's last actions.
 
@@ -54,7 +54,9 @@ Real-time engines would react to the customer's actions while they are still bro
 
 You clearly need a low-latency backend to implement such a real-time system. First, you need to present users' attributes and preferences in a specific way that allows their classification into groups. Then you need a performant representation of products that provides similarity calculation and querying in very low latency. 
 
-Implementing such systems using Redis Enterprise is a straightforward task. First, you would consider user preferences, product attributes, and any other filtering parameters as vectors. Then, thanks to the similarity search feature provided by Redis, you can make distance calculations (scoring) between these vectors and make recommendations based on these scoring. Vectors embeddings are mathematical representations of data points where each vector dimension corresponds to a specific feature or attribute of the data. For example, a product image can be represented as a vector where each element represents the characteristic of this product (color, shape, size...). Similarly, a product description can be transformed into a vector where each element represents the frequency or presence of a specific word or term. 
+Implementing such systems using Redis Enterprise is a straightforward task. First, you would consider user preferences, product attributes, and any other filtering parameters as vectors. Then, thanks to the similarity search feature provided by Redis, you can make distance calculations (scoring) between these vectors and make recommendations based on these scoring. 
+
+Vectors embeddings are mathematical representations of data points where each vector dimension corresponds to a specific feature or attribute of the data. For example, a product image can be represented as a vector where each element represents the characteristic of this product (color, shape, size...). Similarly, a product description can be transformed into a vector where each element represents the frequency or presence of a specific word or term. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyjNISJrAtiYLHJlHlsYsWHh8V7ufXx3x6Z799vwdwYekkcScwT8kDwOc3Qzm2MspbBW66hAkBjEwtsYJnXpeLs4E7tPIxG8xLVHgo9ea-zmABA8IsLluRNzqKgwv7-bInGNKLI1p8kJDWTkzPfnuB49KrxBoUeQydwzZyaDxa2dp1f98msdr49lL_/w428-h338/vectors.png){: .mx-auto.d-block :} *Product descriptions presented as vectors.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
@@ -62,8 +64,8 @@ Vector representations of data enable machine learning algorithms to process and
 
 But most importantly, Vector representations facilitate the comparison and clustering of data points in a multi-dimensional space. Similarity measures, such as cosine similarity or Euclidean distance, can be calculated between vectors to determine the similarity or dissimilarity between data points. Thus your recommendation engine can leverage vectors to:
 
-*   cluster and classify customers according to their preferences and attributes (age, sex, job, location, income...). This can help to find similarities between customers **(**Collaborative Filtering)
-*   suggest similar products based on images and text descriptions (Content-Based Filtering).
+*   cluster and classify customers according to their preferences and attributes (age, sex, job, location, income...). This can help to find similarities between customers (**Collaborative Filtering**)
+*   suggest similar products based on images and text descriptions (**Content-Based Filtering**).
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8){: .mx-auto.d-block :} *Online Recommendation Engine using Redis Vector Similarity Search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
@@ -128,7 +130,7 @@ The choice of embedding technique depends on the specific data type, task, and a
 
 ### 2 - Vector Embeddings Indexing
 
-Once you have created your embeddings, you need to store them in a Vector database. Multiple technologies allow storing vector embeddings, such as Pinecone, Milvus (oss) / Zilliz (hosted), Weaviate, Vespa, Chroma, Vald, Quadrant, Vertex Matching Engine, etc. Redis can also be used as a vector database. It manages vectors in an index data structure to enable intelligent similarity search that balances search speed and search quality. Redis supports two types of vector indexing: 
+Once you have created your embeddings, you need to store them in a Vector database. Multiple technologies allow storing vector embeddings, such as Pinecone, Milvus, Weaviate, Vespa, Chroma, Vald, Quadrant, etc. Redis can also be used as a vector database. It manages vectors in an index data structure to enable intelligent similarity search that balances search speed and search quality. Redis supports two types of vector indexing: 
 
 *   **FLAT**: A brute force approach that searches through all possible vectors. This indexing is simple and effective for small datasets or cases where interpretability is important;
 *   **Hierarchical Navigable Small Worlds (HNSW)**: An approximate search that yields faster results with lower accuracy. This is more suitable for complex tasks that require capturing intricate patterns and relationships, especially with large datasets.
@@ -197,7 +199,7 @@ FT.SEARCH idx "*=>[KNN 10 @img_vec $BLOB]" PARAMS 2 BLOB "\x12\xa9\xf5\x6c" DIAL
 ```
 FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.9 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
 ```
-  
+
 Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 20 most similar products to another one sorted by relevance score (cosine similarity set in the indexes created earlier).
 
 {% highlight python linenos %}
@@ -224,7 +226,7 @@ You can try this project out! The instructions above are a brief overview to dem
   
 The second one is a project that uses Redis Vector Similarity Search to return similarities on an [Amazon real dataset](https://github.com/RedisAI/vecsim-demo) and provides:
 
-*   Semantic Search: Given a sentence, check products with semantically similar text in the product keywords
+*   Semantic Search: Given a sentence, check products with semantically similar text in the product keywords;
 *   Visual Search: Given a query image, find the Top K most "visually" similar in the catalog.
 
 ## Summary
