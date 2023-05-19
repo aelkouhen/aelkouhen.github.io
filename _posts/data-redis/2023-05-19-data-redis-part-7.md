@@ -28,7 +28,7 @@ There are several types of recommendation systems commonly used in practice:
 
 *   **_Content-Based Filtering_**: This approach recommends items to users based on their preferences and characteristics. It analyzes the content and attributes of items that users have interacted with or rated positively and suggests similar items. For example, if a user enjoys action films in a movie recommendation system, the system would recommend other action movies.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjynkjRPyt5qhDkGlBSdfK0JwjkwvVNfqzrjxn_3x9xNjEN1v3s0OS5abWEfzT2LCVBr8UXEuY5GAVyXucG5j9WF4fAe_Q7bKmyufYZJSzX6v-gb1Gkd34EQ2Cvy7LE1YmABfYJWHpE-R_OzOKzutLp1oIFAncUVAVSMsKad6RlbLl7GsNFilBjLkMi/w489-h459/content-filtering-2.png){: .mx-auto.d-block :} *Content-Based Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjynkjRPyt5qhDkGlBSdfK0JwjkwvVNfqzrjxn_3x9xNjEN1v3s0OS5abWEfzT2LCVBr8UXEuY5GAVyXucG5j9WF4fAe_Q7bKmyufYZJSzX6v-gb1Gkd34EQ2Cvy7LE1YmABfYJWHpE-R_OzOKzutLp1oIFAncUVAVSMsKad6RlbLl7GsNFilBjLkMi/s3348/content-filtering-2.png){: .mx-auto.d-block :} *Content-Based Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **_Collaborative Filtering_**: This method recommends items based on the similarities and patterns found in the behavior and preferences of multiple users. It identifies users with similar tastes and recommends items that those users have liked or rated highly. Collaborative filtering can be further divided into two subtypes:
     *   User-Based Collaborative Filtering: It identifies users with similar preferences and recommends items that users with similar tastes have enjoyed (Scenario A & B).
@@ -38,7 +38,7 @@ There are several types of recommendation systems commonly used in practice:
 
 *   **_Context-Aware Systems_**: These systems consider contextual information, such as time, location, and user context, to provide more relevant recommendations. For instance, a music streaming service might recommend energetic workout playlists in the morning and relaxing music in the evening. Likewise, an e-commerce website will suggest specific items when it's Black Friday or Christmas, different from what it could recommend in other periods of the year. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn59TQ9XIKAzGPdB_jtZgIO1BBWIDA3AItaom8vNWM_tkbmYZj56ACpLu8CkejAHSSv-BbHUXqDb1AmX7VxU3kcnWPeuiQVbqCJYugZDF5R21sG0jR7NqJHWhQsUF31AzTTNvtXTGAeurFkx0YtFCXp4cEhnqAghHn7Ds4hDzB6t33fJlIH5GM1sIY/w547-h367/context-aware.png){: .mx-auto.d-block :} *Context-Aware Recommendations.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn59TQ9XIKAzGPdB_jtZgIO1BBWIDA3AItaom8vNWM_tkbmYZj56ACpLu8CkejAHSSv-BbHUXqDb1AmX7VxU3kcnWPeuiQVbqCJYugZDF5R21sG0jR7NqJHWhQsUF31AzTTNvtXTGAeurFkx0YtFCXp4cEhnqAghHn7Ds4hDzB6t33fJlIH5GM1sIY/s3348/context-aware.png){: .mx-auto.d-block :} *Context-Aware Recommendations.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **_Hybrid Recommender Systems_**: These systems combine multiple recommendation techniques to provide more accurate and diverse recommendations. They leverage the strengths of different approaches, such as content-based filtering and collaborative filtering, to overcome their limitations and offer more effective suggestions.
 
