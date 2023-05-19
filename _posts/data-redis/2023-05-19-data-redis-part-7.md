@@ -2,7 +2,7 @@
 layout: post
 title: Data & Redis series - part 7
 subtitle:  Recommendation Engines with Redis Enterprise
-thumbnail-img: assets/img/redis-recommendation.png
+thumbnail-img: assets/img/redis-recommandation.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8
 tags: []
 comments: true
