@@ -65,7 +65,7 @@ Vector representations of data enable machine learning algorithms to process and
 But most importantly, Vector representations facilitate the comparison and clustering of data points in a multi-dimensional space. Similarity measures, such as cosine similarity or Euclidean distance, can be calculated between vectors to determine the similarity or dissimilarity between data points. Thus your recommendation engine can leverage vectors to:
 
 *   cluster and classify customers according to their preferences and attributes (age, sex, job, location, income...). This can help to find similarities between customers (**Collaborative Filtering**)
-*   suggest similar products based on images and text descriptions (**Content-Based Filtering**).
+*   suggest similar products based on their images and textual descriptions (**Content-Based Filtering**).
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpd2L3XgbPYjvw5LbvH2PtTHnX8vrfNePcJYVGIhukFiwVhTNkZmt5SOKxVqSQAcnV7a2Lnm7HzmVg_m7dXdYTN5ylHCCmFdS2Af4QDFnJC-LzwYcLfDUsPre5bqwZWuXpBLqUgC97tUMRJ_-mn9INGdiQZYreIX3yLgj82czgLzcO7KJnKa9cEkh8){: .mx-auto.d-block :} *Online Recommendation Engine using Redis Vector Similarity Search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
