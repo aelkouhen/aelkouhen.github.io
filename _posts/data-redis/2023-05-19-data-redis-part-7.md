@@ -84,7 +84,7 @@ Vector Embeddings are created through an embedding process that maps discrete or
 *   Text Embeddings: use methods, such as Term Frequency-Inverse Document Frequency (TF-IDF), to calculate the frequency of words in a text corpus and assign weights to each word accordingly. They can use some other popular neural network-based algorithms like Word2Vec or GloVe to learn word embeddings by training neural networks on large text corpora. These algorithms capture semantic relationships between words based on their co-occurrence patterns.
 *   Image Embeddings: use Convolutional Neural Networks (CNN) such as VGG, ResNet, or Inception, which are commonly used for image feature extraction. The activations from intermediate layers or the output of the fully connected layers can serve as image embeddings. 
 *   Sequential Data Embeddings: use Recurrent Neural Networks (RNN): RNNs, such as Long Short-Term Memory (LSTM) or Gated Recurrent Unit (GRU), can learn embeddings for sequential data by capturing dependencies and temporal patterns. They can also use the Transformer model itself or its variants like BERT or GPT, which can generate contextualized embeddings for sequential data.  
-*   User Embeddings: A user’s activity on an e-commerce marketplace is not only limited to only viewing items. Users may also perform actions such as making a search query, adding an item to their shopping cart, adding an item to their watch list, and so on. These actions provide valuable signals for the generation of personalized recommendations. You can use a Recurrent Neural Network (RNN) like GRU to encode the ordering information of historical events. For further information on model training, experiments, and deployment setup, please refer to the research paper from [eBay](https://arxiv.org/pdf/2102.06156.pdf).
+*   User Embeddings: A user’s activity on an e-commerce marketplace is not only limited to only viewing items. Users may also perform actions such as making a search query, adding an item to their shopping cart, adding an item to their watch list, and so on. These actions provide valuable signals for the generation of personalized recommendations. You can use a Recurrent Neural Network (RNN) or Gated Recurrent Units (GRU) to encode the ordering information of historical events. For further information on model training, experiments, and deployment setup, please refer to the research paper from [eBay](https://arxiv.org/pdf/2102.06156.pdf).
 
 These are just a few examples of how embeddings are created. Our recommendation engine uses a variant of BERT called [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) to create sequential data embeddings for product descriptions. To generate product image embeddings, we use the [Img2Vec](https://github.com/christiansafka/img2vec) model (an implementation of Resnet-18). Both models are hosted and runnable online, with no expertise or installation required.
 
@@ -130,12 +130,12 @@ The choice of embedding technique depends on the specific data type, task, and a
 
 ### 2 - Vector Embeddings Indexing
 
-Once you have created your embeddings, you need to store them in a Vector database. Multiple technologies allow storing vector embeddings, such as Pinecone, Milvus, Weaviate, Vespa, Chroma, Vald, Quadrant, etc. Redis can also be used as a vector database. It manages vectors in an index data structure to enable intelligent similarity search that balances search speed and search quality. Redis supports two types of vector indexing: 
+Once you have created your embeddings, you need to store them in a Vector database. Various technologies support the storage of vector embeddings, including Pinecone, Milvus, Weaviate, Vespa, Chroma, Vald, Quadrant, etc. Redis can also serve as a vector database. It manages vectors in an index data structure to enable intelligent similarity search that balances search speed and search quality. Redis supports two types of vector indexing: 
 
 *   **FLAT**: A brute force approach that searches through all possible vectors. This indexing is simple and effective for small datasets or cases where interpretability is important;
 *   **Hierarchical Navigable Small Worlds (HNSW)**: An approximate search that yields faster results with lower accuracy. This is more suitable for complex tasks that require capturing intricate patterns and relationships, especially with large datasets.
 
-The choice between Flat and HNSW depends on the specific problem, your data characteristics, and your requirements.   
+The choice between Flat and HNSW depends only on your usage, data characteristics, and requirements.   
 
 Indexes only need to be created once and will automatically re-index as new hashes are stored in Redis. Both indexing methods have the same mandatory parameters: Type, Dimension, and Distance Metric.
 
@@ -143,7 +143,7 @@ Redis Enterprise uses a distance metric to measure the similarity between two ve
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheKTicWPBFMSoK53LHeSvikn9ZOklHrGfUYk0DXjDJXOrCaUd4Oeb_Nuam_xrKlTj8JvNgk2nQn9FYeKEYVE9aylJKDmNLUjiKz0uht6jOVC_HhI-qqFKGHhBDmOVddPrZsqCELjFe8H2f3vAbe1DRF5KGega_Gr4Y-DNOjAVHF2Wahsmu1BMA0wDl){: .mx-auto.d-block :} *Distance Metrics.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
-Below is an example of creating the Image and Text indexes in Redis based on the vectors created earlier.
+Below is an example of creating image and text indexes in Redis based on the vectors created earlier.
 
 {% highlight python linenos %}
 from redis import Redis
@@ -175,11 +175,11 @@ def create_hnsw_index(
     redis_conn.ft().create_index([image_field, text_field])
 {% endhighlight %}
 
-After vectors are loaded into Redis, and the index has been created, queries can be formed and executed for all kinds of similarity-based search tasks.
+After vectors are loaded into Redis and indexes have been created, queries can be formed and executed for all kinds of similarity-based search tasks.
 
 ### 3 - Vector Similarity Search
 
-Redis Vector Similarity Search (VSS) is a new feature built on top of the RediSearch Module. This allows developers to store and index vectors and make queries on them just as easily as any other field in a Redis hash or JSON. 
+Redis Vector Similarity Search (VSS) is a new feature built on top of the RediSearch Module. It allows developers to store and index vectors and make queries on them just as easily as any other field in a Redis hash or JSON. 
 
 Consequently, Redis exposes the usual search functionality, combining full text, tag, and numeric pre-filters with K Nearest Neighbors (KNN) vector search: With Redis VSS, you can query vector data stored as BLOBs in Redis hashes and choose the relevant vector distance metrics to calculate how “close” or “far apart” two vectors are. 
 
@@ -194,7 +194,9 @@ You can use vector similarity queries in the [FT.SEARCH](https://redis.io/comman
 ```
 FT.SEARCH idx "*=>[KNN 10 @img_vec $BLOB]" PARAMS 2 BLOB "\x12\xa9\xf5\x6c" DIALECT 2
 ```
-*   Range queries filter query results by the distance between a vector field value and a query vector in terms of the relevant vector field distance metric. The syntax for range query is `@<vector_field>: [VECTOR_RANGE (<radius> | $<radius_attribute>) $<blob_attribute>]`. Range queries can appear multiple times in a query, similar to `NUMERIC` and `GEO` clauses, and in particular, they can be a part of the `<primary_filter_query>` in KNN Hybrid search. In the example below, we return the same result as the previous query, but we specify the distance between the image vector stored under the **img_vec** field and the specified query vector blob no more than 0.9 (in terms of **img_vec** field `DISTANCE_METRIC`)
+*   Range queries: filter query results by the distance between a vector field value and a query vector in terms of the relevant vector field distance metric. The syntax for range query is `@<vector_field>: [VECTOR_RANGE (<radius> | $<radius_attribute>) $<blob_attribute>]`. Range queries can appear multiple times in a query, similar to `NUMERIC` and `GEO` clauses, and in particular, they can be a part of the `<primary_filter_query>` in KNN Hybrid search. For example, you can make a query that returns similar products of a given item available in stores around your home!
+
+In the example below, we return the same result as the previous query, but we specify the distance between the image vector stored under the **img_vec** field and the specified query vector blob no more than 0.9 (in terms of **img_vec** field `DISTANCE_METRIC`).
 
 ```
 FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.9 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
@@ -220,7 +222,7 @@ def create_query(
         .dialect(2)
 {% endhighlight %}
 
-You can try this project out! The instructions above are a brief overview to demonstrate the building blocks for a real-time recommendation engine using Redis. I recommend two projects that leverage the VSS capability in Redis. The first one is the [Fashion Product Finder](https://redisvss.partee.io/) implemented using [redis-om-python](https://github.com/redis/redis-om-python). 
+You can try this out! The instructions above are a brief overview to demonstrate the building blocks for a real-time recommendation engine using Redis. I recommend two projects that leverage the VSS capability in Redis. The first one is the [Fashion Product Finder](https://redisvss.partee.io/) implemented using [redis-om-python](https://github.com/redis/redis-om-python). 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJZJt-GGnR5mZh4tAL1WqJj7I2aeYnPrzON4BjfAhyhy0YrWna_RrowmPFUEa4ttDX4AKLYRAHkrbjG_mZu9fkq_ddSeVYBdm8_nlAaW2xGlFMtfbt7MlOMziJHRxWq7E2LJYlePiNcPe7tCn69gYE5rgt7FEJWs5Rh3V-xfbqln9C6JYMepssFH0c){: .mx-auto.d-block :}
   
