@@ -48,7 +48,7 @@ Unlike offline recommendation engines that generate personalized recommendations
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg1UD8DKwTM3DuPkM4KUQqTye_DRnE1mcIEgCEJDL1CvEPA0FwZjy9i523_NS6TE8C4sNAhik_n_2IoCnNn_5ctPoiCMblqKm53v7mv39TX6hbn2Vy6Gfb_Fm0h1F5on3WZRZY1Z9oYPyL2YmTDW0DFCRAoAXKWYQIBmNTNyGjM9kKPveb_D2Dit06/s3497/offline-recommendation-2.png){: .mx-auto.d-block :} *Offline Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
-Real-time engines would react to the customer's actions while they are still browsing your site and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
+Real-time engines would react to customers actions while they are still browsing your site and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgv2kLmRZGVT67uRxBiTjc69q1Ir6np8smyckPCB0Vy3mmSagFy9HU9P29B1pnWRMYMDJxj74gqhVWsSmG4FERIclTfyVw96lgHgS7uIYN3Q5Lsymz0Xwol0j5lOC1k2jrkEpR0Fg74y5cv0j0z8AqnGWcX7VV9KRSW-xqgLhL8P81UVe2MrNM2EMFY/s3497/online-recommendation-2.png){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
