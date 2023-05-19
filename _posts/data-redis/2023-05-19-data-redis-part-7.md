@@ -122,8 +122,7 @@ To create User embeddings, you can leverage the Two-Tower Neural Networks approa
 
 The two towers in the network typically receive different types of information related to user-item interactions. For example, one tower might process user-specific data, such as demographic information or past preferences, while the other tower processes item-specific data, such as product descriptions or attributes. Each tower independently learns representations or features from its respective input data using multiple layers of interconnected artificial neurons. The output of each tower's final layer is then combined or fused to generate a joint representation that captures the relationship between users and items. In the rest of this article, I will omit this part.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidyrwBesX7fAw8oF0GVkQuxWL9ZvEpsNU_wqotLVCl6Pz5HbmeQcZLG09V_Zv_3gM21PRwq5eeGC5tfBLjx3H5YeDrgkkZ1jE4l3OLggVllpYLYjRSu1zTQHX5w02mtubbMNtm86EcvPeNrww18w81aaJU1qqEci7_x-SrqTRDjPCsPdD23LaDN5DE){: .mx-auto.d-block :} *
-Two-tower Architecture used at [eBay](https://arxiv.org/pdf/2102.06156.pdf).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidyrwBesX7fAw8oF0GVkQuxWL9ZvEpsNU_wqotLVCl6Pz5HbmeQcZLG09V_Zv_3gM21PRwq5eeGC5tfBLjx3H5YeDrgkkZ1jE4l3OLggVllpYLYjRSu1zTQHX5w02mtubbMNtm86EcvPeNrww18w81aaJU1qqEci7_x-SrqTRDjPCsPdD23LaDN5DE){: .mx-auto.d-block :} *Two-tower Architecture used at [eBay](https://arxiv.org/pdf/2102.06156.pdf).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 The choice of embedding technique depends on the specific data type, task, and available resources. The [Huggingface Model Hub](https://huggingface.co/models) contains many models that can create embeddings for different kinds of data. 
 
