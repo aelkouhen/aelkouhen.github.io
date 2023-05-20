@@ -16,7 +16,7 @@ In the entertainment and content streaming industry, recommendation engines play
 
 Additionally, recommendation engines have become essential in improving user experiences on social media platforms, news websites, and even in the food delivery industry. These systems help users discover new and relevant information while driving user engagement and retention by presenting content or services that align with their interests.
 
-Fortunately, implementing a recommendation engine doesn't have to be complicated. With Redis, your company can launch an exhaustive recommendation engine in no time.
+Fortunately, implementing a recommendation engine doesn't have to be complicated. With Redis, your company can launch a comprehensive recommendation system in no time.
 
 ## Recommendation Systems
 
