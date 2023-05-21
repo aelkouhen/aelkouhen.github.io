@@ -251,7 +251,7 @@ def create_hnsw_index(
 
     redis_conn.ft().create_index([image_field, text_field])
 
-create_hnsw_index(redis_conn,4,'product_vector:')
+create_hnsw_index(redis_conn, 4, 'product_vector:')
 {% endhighlight %}
 
 After vectors are loaded into Redis and indexes have been created, queries can be formed and executed for all kinds of similarity-based search tasks.
