@@ -317,7 +317,7 @@ def create_query(
 
     query_str = f'*=>[{search_type} {number_of_results} @{vector_field_name} $query_vector]'
     return Query(query_str)\
-	     .sort_by('__img_vector_score')\
+    	.sort_by('__img_vector_score')\
         .paging(0, number_of_results)\
         .return_fields(*return_fields)\
         .dialect(2)
