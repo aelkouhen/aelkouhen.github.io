@@ -89,8 +89,14 @@ Vector Embeddings are created through an embedding process that maps discrete or
 These are just a few examples of how embeddings are created. Our recommendation engine uses a variant of BERT called [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) to create sequential data embeddings for product descriptions. To generate product image embeddings, we use the [Img2Vec](https://github.com/christiansafka/img2vec) model (an implementation of Resnet-18). Both models are hosted and runnable online, with no expertise or installation required.
 
 {% highlight python linenos %}
+import os
+import redis
+
+# data prep
 import pandas as pd
+import numpy as np
 # for creating image vector embeddings
+import urllib.request
 from PIL import Image
 from img2vec_pytorch import Img2Vec
 # for creating semantic (text-based) vector embeddings
@@ -102,9 +108,9 @@ def generate_text_vectors(products):
    # Bert variant to create text embeddings
    text_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
    # generate text vector
-   for row in products_df.iterrows():
+   for index, row in products.iterrows():
       text_vector = text_model.encode(row["description"])
-      text_vectors[row["id"]] = text_vector.astype(np.float32)
+      text_vectors[index] = text_vector.astype(np.float32)
    return text_vectors
 
 def generate_image_vectors(products):
@@ -113,14 +119,16 @@ def generate_image_vectors(products):
    converted=[]
 
    # Resnet-18 to create image embeddings
-   image_model = Img2Vec(cuda=True)
+   image_model = Img2Vec()
 
    # generate image vector
-   for row in products_df.iterrows():
-      img = Image.open(row["image_url"]).convert('RGB')
+   for index, row in products.iterrows():
+      tmp_file = str(index) + ".jpg"
+      urllib.request.urlretrieve(row["image_url"], tmp_file)
+      img = Image.open(tmp_file).convert('RGB')
       img = img.resize((224, 224))
       images.append(img)
-      converted.append(row["id"])
+      converted.append(index)
 
    vec_list = image_model.get_vec(images)
    img_vectors = dict(zip(converted, vec_list))
@@ -129,7 +137,7 @@ def generate_image_vectors(products):
 def create_product_catalog():
    # initialize product
    dataset = {
-           'id': [1253, 9976, 3626, 2746]
+           'id': [1253, 9976, 3626, 2746],
            'description': ['Herringbone Brown Classic', 'Gaston Sage Tweed Suit', 'Peaky Blinders Outfit', 'Cable Knitted Scarf and Bobble Hat'],
            'image_url': [
                  'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-3-Piece-Suit-Brown-Classic-Vintage-Tailored-Wedding-Blinders.webp',
@@ -140,17 +148,18 @@ def create_product_catalog():
            }
 
    # Create DataFrame
-   products = pd.DataFrame(dataset)
+   products = pd.DataFrame(dataset).set_index('id')
    return products
 
 def create_product_vectors():   
    product_vectors = []
    products = create_product_catalog()
+
    img_vectors = generate_image_vectors(products)
    text_vectors = generate_text_vectors(products)
 
-   for _, row in products.iterrows():
-      _id = row["id"]
+   for index, row in products.iterrows():
+      _id = index
       text_vector = text_vectors[_id].tolist()
       img_vector = img_vectors[_id].tolist()
       vector_dict = {
@@ -158,14 +167,14 @@ def create_product_vectors():
           "img_vector": img_vector,
           "product_id": _id
       }
-   product_vectors.append(vector_dict)
+      product_vectors.append(vector_dict)
    return product_vectors
  
 def store_product_vectors(redis_conn, product_vectors):
    for product in product_vectors:
       product_id = product["product_id"]
       key = "product_vector:" + str(product_id)
-      await redis_conn.hset(
+      redis_conn.hset(
          key,
          mapping={
              "product_id": product_id,
@@ -179,12 +188,12 @@ def create_redis_conn():
    port = os.environ.get("REDIS_PORT", 6379)
    db = os.environ.get("REDIS_DB", 0)
    password = os.environ.get("REDIS_PASSWORD", "vss-password")
-   url = f"redis://:{password}@{host}:{port}/{db}"
+   url =f"redis://:{password}@{host}:{port}/{db}" 
    redis_conn = redis.from_url(url)
    return redis_conn
 
-product_vectors = create_product_vectors()
 redis_conn = create_redis_conn()
+product_vectors = create_product_vectors()
 store_product_vectors(redis_conn, product_vectors)
 {% endhighlight %}
 
