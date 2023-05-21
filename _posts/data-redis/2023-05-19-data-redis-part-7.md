@@ -89,8 +89,8 @@ Vector Embeddings are created through an embedding process that maps discrete or
 These are just a few examples of how embeddings are created. Our recommendation engine uses a variant of BERT called [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) to create sequential data embeddings for product descriptions. To generate product image embeddings, we use the [Img2Vec](https://github.com/christiansafka/img2vec) model (an implementation of Resnet-18). Both models are hosted and runnable online, with no expertise or installation required.
 
 {% highlight python linenos %}
-# for creating image vector embeddings
 import pandas as pd
+# for creating image vector embeddings
 from PIL import Image
 from img2vec_pytorch import Img2Vec
 # for creating semantic (text-based) vector embeddings
