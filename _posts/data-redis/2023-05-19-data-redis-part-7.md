@@ -223,12 +223,12 @@ Redis Enterprise uses a distance metric to measure the similarity between two ve
 Below is an example of creating image and text indexes in Redis based on the vectors created earlier.
 
 {% highlight python linenos %}
-from redis import Redis
+from redis import redis
 from redis.commands.search.field import VectorField
 
 # Function to create a HNSW search index with Redis/RediSearch
 def create_hnsw_index(
-    redis_conn: Redis,
+    redis_conn,
     number_of_vectors: int,
     prefix: str,
     distance_metric: str='COSINE'
@@ -250,6 +250,8 @@ def create_hnsw_index(
                 })
 
     redis_conn.ft().create_index([image_field, text_field])
+
+create_hnsw_index(redis_conn,4,'product_vector:')
 {% endhighlight %}
 
 After vectors are loaded into Redis and indexes have been created, queries can be formed and executed for all kinds of similarity-based search tasks.
