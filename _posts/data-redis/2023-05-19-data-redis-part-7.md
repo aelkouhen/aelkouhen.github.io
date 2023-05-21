@@ -251,7 +251,7 @@ Redis Vector Similarity Search (VSS) is a new feature built on top of the Redi
 
 Consequently, Redis exposes the usual search functionality, combining full text, tag, and numeric pre-filters with K Nearest Neighbors (KNN) vector search: With Redis VSS, you can query vector data stored as BLOBs in Redis hashes and choose the relevant vector distance metrics to calculate how “close” or “far apart” two vectors are. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhgUPbIRUUdhUT-A8Bz_VkWkU3dzN1G07m2oZF1XFSoMPWrLm9dsNhbag9mSKb8_Tu_p963fpjthuRUSpTVVt8CahpRBQthOHDe9knOFwBHC6zXsRsHyvYuu4yof_SXvSEsi2r6uPQc0ITcAM_ba4qtMPF1NG9G7rQb5c0RqUazPOyJonR1SNC34tLy/w428-h338/vectors-2.png){: .mx-auto.d-block :} *Calculating Cosine Similarity between Product Descriptions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhgUPbIRUUdhUT-A8Bz_VkWkU3dzN1G07m2oZF1XFSoMPWrLm9dsNhbag9mSKb8_Tu_p963fpjthuRUSpTVVt8CahpRBQthOHDe9knOFwBHC6zXsRsHyvYuu4yof_SXvSEsi2r6uPQc0ITcAM_ba4qtMPF1NG9G7rQb5c0RqUazPOyJonR1SNC34tLy){: .mx-auto.d-block :} *Calculating Cosine Similarity between Product Descriptions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 In addition, it provides advanced search capabilities like finding the “top K” most similar vectors performing low-latency searches in large vector spaces by ranging from tens of thousands to hundreds of millions of vectors distributed across several machines.
 
