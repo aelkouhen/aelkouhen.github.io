@@ -18,7 +18,7 @@ Additionally, recommendation engines have become essential in improving user exp
 
 Fortunately, implementing a recommendation engine doesn't have to be complicated. With Redis, your company can launch a comprehensive recommendation system in no time.
 
-## Recommendation Systems
+## Recommendation Systems Overview
 
 Recommendation engines are statistical models that analyze user data, such as browsing history, purchase behavior, preferences, and demographics, to provide personalized recommendations. These recommendations can be in the form of product suggestions, content recommendations, or relevant services. 
 
@@ -28,17 +28,17 @@ There are several types of recommendation systems commonly used in practice:
 
 *   **_Content-Based Filtering_**: This approach recommends items to users based on their preferences and characteristics. It analyzes the content and attributes of items that users have interacted with or rated positively and suggests similar items. For example, if a user enjoys action films in a movie recommendation system, the system would recommend other action movies.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjynkjRPyt5qhDkGlBSdfK0JwjkwvVNfqzrjxn_3x9xNjEN1v3s0OS5abWEfzT2LCVBr8UXEuY5GAVyXucG5j9WF4fAe_Q7bKmyufYZJSzX6v-gb1Gkd34EQ2Cvy7LE1YmABfYJWHpE-R_OzOKzutLp1oIFAncUVAVSMsKad6RlbLl7GsNFilBjLkMi/s3348/content-filtering-2.png){: .mx-auto.d-block :} *Content-Based Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjynkjRPyt5qhDkGlBSdfK0JwjkwvVNfqzrjxn_3x9xNjEN1v3s0OS5abWEfzT2LCVBr8UXEuY5GAVyXucG5j9WF4fAe_Q7bKmyufYZJSzX6v-gb1Gkd34EQ2Cvy7LE1YmABfYJWHpE-R_OzOKzutLp1oIFAncUVAVSMsKad6RlbLl7GsNFilBjLkMi){: .mx-auto.d-block :} *Content-Based Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **_Collaborative Filtering_**: This method recommends items based on the similarities and patterns found in the behavior and preferences of multiple users. It identifies users with similar tastes and recommends items that those users have liked or rated highly. Collaborative filtering can be further divided into two subtypes:
     *   User-Based Collaborative Filtering: It identifies users with similar preferences and recommends items that users with similar tastes have enjoyed (Scenario A & B).
     *   Item-Based Collaborative Filtering: It identifies items that are similar based on user behavior and recommends items that are similar to those previously interacted with by the user (Scenario C).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4Ek38XSLMYES5vbgLjBogjIGdZZ6R80_i8-uPW5c5doDnloJT1zzgPDf6IBj_TE8K7DVhZYwET3spHOsdwxBxlyp3aLZ2YULB05ElhgE60OMaSU5z1FT8kBtKp47T2ahV-87kgRNmrvp_y6kHUnhQvhNrElCyMePBmKrgXVq8PrLjFGRtwJ0r6cJu/s3348/collaboration-filtering.png){: .mx-auto.d-block :} *Collaborative Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4Ek38XSLMYES5vbgLjBogjIGdZZ6R80_i8-uPW5c5doDnloJT1zzgPDf6IBj_TE8K7DVhZYwET3spHOsdwxBxlyp3aLZ2YULB05ElhgE60OMaSU5z1FT8kBtKp47T2ahV-87kgRNmrvp_y6kHUnhQvhNrElCyMePBmKrgXVq8PrLjFGRtwJ0r6cJu){: .mx-auto.d-block :} *Collaborative Filtering.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **_Context-Aware Systems_**: These systems consider contextual information, such as time, location, and user context, to provide more relevant recommendations. For instance, a music streaming service might recommend energetic workout playlists in the morning and relaxing music in the evening. Likewise, an e-commerce website will suggest specific items when it's Black Friday or Christmas, different from what it could recommend in other periods of the year. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn59TQ9XIKAzGPdB_jtZgIO1BBWIDA3AItaom8vNWM_tkbmYZj56ACpLu8CkejAHSSv-BbHUXqDb1AmX7VxU3kcnWPeuiQVbqCJYugZDF5R21sG0jR7NqJHWhQsUF31AzTTNvtXTGAeurFkx0YtFCXp4cEhnqAghHn7Ds4hDzB6t33fJlIH5GM1sIY/s3348/context-aware.png){: .mx-auto.d-block :} *Context-Aware Recommendations.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn59TQ9XIKAzGPdB_jtZgIO1BBWIDA3AItaom8vNWM_tkbmYZj56ACpLu8CkejAHSSv-BbHUXqDb1AmX7VxU3kcnWPeuiQVbqCJYugZDF5R21sG0jR7NqJHWhQsUF31AzTTNvtXTGAeurFkx0YtFCXp4cEhnqAghHn7Ds4hDzB6t33fJlIH5GM1sIY){: .mx-auto.d-block :} *Context-Aware Recommendations.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **_Hybrid Recommender Systems_**: These systems combine multiple recommendation techniques to provide more accurate and diverse recommendations. They leverage the strengths of different approaches, such as content-based filtering and collaborative filtering, to overcome their limitations and offer more effective suggestions.
 
@@ -46,11 +46,11 @@ There are several types of recommendation systems commonly used in practice:
 
 Unlike offline recommendation engines that generate personalized recommendations based on historical data, an ideal recommendation engine should prioritize resource efficiency, deliver high-performance real-time updates, and provide accurate and relevant choices to users. For example, it can be annoying to suggest to a customer an item it already bought only because your recommendation system wasn't aware of the customer's last actions.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg1UD8DKwTM3DuPkM4KUQqTye_DRnE1mcIEgCEJDL1CvEPA0FwZjy9i523_NS6TE8C4sNAhik_n_2IoCnNn_5ctPoiCMblqKm53v7mv39TX6hbn2Vy6Gfb_Fm0h1F5on3WZRZY1Z9oYPyL2YmTDW0DFCRAoAXKWYQIBmNTNyGjM9kKPveb_D2Dit06/s3497/offline-recommendation-2.png){: .mx-auto.d-block :} *Offline Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg1UD8DKwTM3DuPkM4KUQqTye_DRnE1mcIEgCEJDL1CvEPA0FwZjy9i523_NS6TE8C4sNAhik_n_2IoCnNn_5ctPoiCMblqKm53v7mv39TX6hbn2Vy6Gfb_Fm0h1F5on3WZRZY1Z9oYPyL2YmTDW0DFCRAoAXKWYQIBmNTNyGjM9kKPveb_D2Dit06){: .mx-auto.d-block :} *Offline Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Real-time engines would react to customers' actions while they are still browsing your site and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgv2kLmRZGVT67uRxBiTjc69q1Ir6np8smyckPCB0Vy3mmSagFy9HU9P29B1pnWRMYMDJxj74gqhVWsSmG4FERIclTfyVw96lgHgS7uIYN3Q5Lsymz0Xwol0j5lOC1k2jrkEpR0Fg74y5cv0j0z8AqnGWcX7VV9KRSW-xqgLhL8P81UVe2MrNM2EMFY/s3497/online-recommendation-2.png){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgv2kLmRZGVT67uRxBiTjc69q1Ir6np8smyckPCB0Vy3mmSagFy9HU9P29B1pnWRMYMDJxj74gqhVWsSmG4FERIclTfyVw96lgHgS7uIYN3Q5Lsymz0Xwol0j5lOC1k2jrkEpR0Fg74y5cv0j0z8AqnGWcX7VV9KRSW-xqgLhL8P81UVe2MrNM2EMFY){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 You clearly need a low-latency backend to implement such a real-time system. First, you need to present users' attributes and preferences in a specific way that allows their classification into groups. Then you need a performant representation of products that provides similarity calculation and querying in very low latency. 
 
@@ -58,7 +58,7 @@ Implementing such systems using Redis Enterprise is a straightforward task. Firs
 
 Vectors embeddings are mathematical representations of data points where each vector dimension corresponds to a specific feature or attribute of the data. For example, a product image can be represented as a vector where each element represents the characteristic of this product (color, shape, size...). Similarly, a product description can be transformed into a vector where each element represents the frequency or presence of a specific word or term. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyjNISJrAtiYLHJlHlsYsWHh8V7ufXx3x6Z799vwdwYekkcScwT8kDwOc3Qzm2MspbBW66hAkBjEwtsYJnXpeLs4E7tPIxG8xLVHgo9ea-zmABA8IsLluRNzqKgwv7-bInGNKLI1p8kJDWTkzPfnuB49KrxBoUeQydwzZyaDxa2dp1f98msdr49lL_/w428-h338/vectors.png){: .mx-auto.d-block :} *Product descriptions presented as vectors.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyjNISJrAtiYLHJlHlsYsWHh8V7ufXx3x6Z799vwdwYekkcScwT8kDwOc3Qzm2MspbBW66hAkBjEwtsYJnXpeLs4E7tPIxG8xLVHgo9ea-zmABA8IsLluRNzqKgwv7-bInGNKLI1p8kJDWTkzPfnuB49KrxBoUeQydwzZyaDxa2dp1f98msdr49lL_){: .mx-auto.d-block :} *Product descriptions presented as vectors.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Vector representations of data enable machine learning algorithms to process and analyze the information efficiently. These algorithms often rely on mathematical operations performed on vectors, such as dot products, vector addition, and normalization, to compute similarities, distances, and transformations.
 
@@ -90,34 +90,102 @@ These are just a few examples of how embeddings are created. Our recommendation 
 
 {% highlight python linenos %}
 # for creating image vector embeddings
+import pandas as pd
 from PIL import Image
 from img2vec_pytorch import Img2Vec
-
 # for creating semantic (text-based) vector embeddings
 from sentence_transformers import SentenceTransformer
 
-# Bert variant to create text embeddings
-text_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+def generate_text_vectors(products):
+   text_vectors = {}
+   
+   # Bert variant to create text embeddings
+   text_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+   # generate text vector
+   for row in products_df.iterrows():
+      text_vector = text_model.encode(row["description"])
+      text_vectors[row["id"]] = text_vector.astype(np.float32)
+   return text_vectors
 
-products_descriptions = [
-  "Herringbone Brown Classic",
-  "Gaston Sage Tweed Suit",
-  "Peaky Blinders Outfit",
-  "Cable Knitted Scarf and Bobble Hat"
-]
+def generate_image_vectors(products):
+   img_vectors={}
+   images=[]   
+   converted=[]
 
-# Resnet-18 to create image embeddings
-image_model = Img2Vec(cuda=True)
+   # Resnet-18 to create image embeddings
+   image_model = Img2Vec(cuda=True)
 
-products_images = [
-  Image.open("https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-3-Piece-Suit-Brown-Classic-Vintage-Tailored-Wedding-Blinders.webp").convert('RGB').resize((224, 224)),
-  Image.open("https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/house-of-cavani-gaston-sage-tweed-three-piece-suit-p1148-33775_medium.jpeg").convert('RGB').resize((224, 224)),
-  Image.open("https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg").convert('RGB').resize((224, 224)),
-  Image.open("https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/thomas-shelby-outfit-peaky-blinders-MAN-MAN-01.jpeg").convert('RGB').resize((224, 224))
-]
+   # generate image vector
+   for row in products_df.iterrows():
+      img = Image.open(row["image_url"]).convert('RGB')
+      img = img.resize((224, 224))
+      images.append(img)
+      converted.append(row["id"])
 
-products_descriptions_embeddings = text_model.encode(products_descriptions)
-products_images_embeddings = image_model.get_vec(products_images)
+   vec_list = image_model.get_vec(images)
+   img_vectors = dict(zip(converted, vec_list))
+   return img_vectors
+    
+def create_product_catalog():
+   # initialize product
+   dataset = {
+           'id': [1253, 0976, 3626, 2746]
+           'description': ['Herringbone Brown Classic', 'Gaston Sage Tweed Suit', 'Peaky Blinders Outfit', 'Cable Knitted Scarf and Bobble Hat'],
+           'image_url': [
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-3-Piece-Suit-Brown-Classic-Vintage-Tailored-Wedding-Blinders.webp',
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/house-of-cavani-gaston-sage-tweed-three-piece-suit-p1148-33775_medium.jpeg',
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg',
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/thomas-shelby-outfit-peaky-blinders-MAN-MAN-01.jpeg'
+                 ]
+           }
+
+   # Create DataFrame
+   products = pd.DataFrame(dataset)
+   return products
+
+def create_product_vectors():   
+   product_vectors = []
+   products = create_product_catalog()
+   img_vectors = generate_image_vectors(products)
+   text_vectors = generate_text_vectors(products)
+
+   for _, row in products.iterrows():
+      _id = row["id"]
+      text_vector = text_vectors[_id].tolist()
+      img_vector = img_vectors[_id].tolist()
+      vector_dict = {
+          "text_vector": text_vector,
+          "img_vector": img_vector,
+          "product_id": _id
+      }
+      product_vectors.append(vector_dict)
+      return product_vectors
+ 
+def store_product_vectors(redis_conn, product_vectors):
+   for product in product_vectors:
+      product_id = product["product_id"]
+      key = "product_vector:" + str(product_id)
+      await redis_conn.hset(
+         key,
+         mapping={
+             "product_id": product_id,
+             # add image and text vectors as blobs
+             "img_vector": np.array(product["img_vector"], dtype=np.float32).tobytes(),
+             "text_vector": np.array(product["text_vector"], dtype=np.float32).tobytes()
+      })
+
+def create_redis_conn():
+   host = os.environ.get("REDIS_HOST", "localhost")
+   port = os.environ.get("REDIS_PORT", 6379)
+   db = os.environ.get("REDIS_DB", 0)
+   password = os.environ.get("REDIS_PASSWORD", "vss-password")
+   url = f"redis://:{password}@{host}:{port}/{db}"
+   redis_conn = redis.from_url(url)
+   return redis_conn
+
+product_vectors = create_product_vectors
+redis_conn = create_redis_conn()
+store_product_vectors(redis_conn, product_vectors)
 {% endhighlight %}
 
 To create User embeddings, you can leverage the Two-Tower Neural Networks approach. It consists of two separate neural network models, often called "towers," that process different types of input data in parallel.
