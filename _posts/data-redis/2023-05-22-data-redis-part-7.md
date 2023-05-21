@@ -284,7 +284,7 @@ In the example below, we return the same result as the previous query, but we sp
 FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.9 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
 ```
 
-Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 3 most similar products (by image) to [this one](), sorted by relevance score (cosine similarity set in the indexes created earlier).
+Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 3 most similar products (by image) to [this one](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg), sorted by relevance score (cosine similarity set in the indexes created earlier).
 
 {% highlight python linenos %}
 import numpy as np
