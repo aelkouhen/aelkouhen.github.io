@@ -251,6 +251,7 @@ def create_hnsw_index(
 
     redis_conn.ft().create_index([image_field, text_field])
 
+#Let's create an HNSW index for our four products created earlier.
 create_hnsw_index(redis_conn, 4, 'product_vector:')
 {% endhighlight %}
 
