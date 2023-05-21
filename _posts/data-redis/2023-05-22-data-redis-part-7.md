@@ -139,10 +139,10 @@ def create_product_catalog():
            'id': [1253, 9976, 3626, 2746],
            'description': ['Herringbone Brown Classic', 'Gaston Sage Tweed Suit', 'Peaky Blinders Outfit', 'Cable Knitted Scarf and Bobble Hat'],
            'image_url': [
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-3-Piece-Suit-Brown-Classic-Vintage-Tailored-Wedding-Blinders.webp',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/house-of-cavani-gaston-sage-tweed-three-piece-suit-p1148-33775_medium.jpeg',
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
                  'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/thomas-shelby-outfit-peaky-blinders-MAN-MAN-01.jpeg'
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg'
                  ]
            }
 
@@ -284,24 +284,47 @@ In the example below, we return the same result as the previous query, but we sp
 FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.9 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
 ```
 
-Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 20 most similar products to another one sorted by relevance score (cosine similarity set in the indexes created earlier).
+Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 3 most similar products (by image) to [this one](), sorted by relevance score (cosine similarity set in the indexes created earlier).
 
 {% highlight python linenos %}
+import numpy as np
 from redis.commands.search.query import Query
+
+# for creating query vector embeddings
+import urllib.request
+from PIL import Image
+from img2vec_pytorch import Img2Vec
+
+def create_query_vector():
+   query_image_url = "https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg"
+   # Resnet-18 to create image embeddings
+   image_model = Img2Vec()
+   # generate image vector
+   tmp_file = "query_image.jpg"
+   urllib.request.urlretrieve(query_image_url, tmp_file)
+   img = Image.open(tmp_file).convert('RGB')
+   img = img.resize((224, 224))
+   vector = image_model.get_vec(img)
+   query_vector = np.array(vector, dtype=np.float32).tobytes()
+   return query_vector
 
 def create_query(
     return_fields: list,
     search_type: str="KNN",
-    number_of_results: int=20,
+    number_of_results: int=3,
     vector_field_name: str="img_vector"
 ):
 
-    base_query = f'*=>[{search_type} {number_of_results} @{vector_field_name} $vec_param AS vector_score]'
-    return Query(base_query)\
-        .sort_by("vector_score")\
+    query_str = f'*=>[{search_type} {number_of_results} @{vector_field_name} $query_vector]'
+    return Query(query_str)\
+	     .sort_by('__img_vector_score')\
         .paging(0, number_of_results)\
         .return_fields(*return_fields)\
         .dialect(2)
+        
+params_dict = {"query_vector" : create_query_vector()}   
+results = redis_conn.ft('idx').search(create_query(['product_id', '__img_vector_score']), query_params=params_dict)
+print(results) 
 {% endhighlight %}
 
 You can try this out! The instructions above are a brief overview to demonstrate the building blocks for a real-time recommendation engine using Redis. I recommend two projects that leverage the VSS capability in Redis. The first one is the [Fashion Product Finder](https://redisvss.partee.io/) implemented using [redis-om-python](https://github.com/redis/redis-om-python). 
