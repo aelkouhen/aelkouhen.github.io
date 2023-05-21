@@ -150,10 +150,8 @@ def create_product_catalog():
    products = pd.DataFrame(dataset).set_index('id')
    return products
 
-def create_product_vectors():   
+def create_product_vectors(products):   
    product_vectors = []
-   products = create_product_catalog()
-
    img_vectors = generate_image_vectors(products)
    text_vectors = generate_text_vectors(products)
 
@@ -193,9 +191,11 @@ def create_redis_conn():
 
 # Create a Redis connection
 redis_conn = create_redis_conn()
-# Create the vector embeddings for products
-product_vectors = create_product_vectors()
-# Store Vectors in Redis
+# Create a few products
+products = create_product_catalog()
+# Create vector embeddings for products
+product_vectors = create_product_vectors(products)
+# Store vectors in Redis
 store_product_vectors(redis_conn, product_vectors)
 {% endhighlight %}
 
