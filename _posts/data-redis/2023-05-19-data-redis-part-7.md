@@ -158,8 +158,8 @@ def create_product_vectors():
           "img_vector": img_vector,
           "product_id": _id
       }
-      product_vectors.append(vector_dict)
-      return product_vectors
+   product_vectors.append(vector_dict)
+   return product_vectors
  
 def store_product_vectors(redis_conn, product_vectors):
    for product in product_vectors:
