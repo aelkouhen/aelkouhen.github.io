@@ -183,7 +183,7 @@ def create_redis_conn():
    redis_conn = redis.from_url(url)
    return redis_conn
 
-product_vectors = create_product_vectors
+product_vectors = create_product_vectors()
 redis_conn = create_redis_conn()
 store_product_vectors(redis_conn, product_vectors)
 {% endhighlight %}
