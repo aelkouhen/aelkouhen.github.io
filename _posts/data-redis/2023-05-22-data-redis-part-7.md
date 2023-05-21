@@ -120,7 +120,6 @@ def generate_image_vectors(products):
 
    # Resnet-18 to create image embeddings
    image_model = Img2Vec()
-
    # generate image vector
    for index, row in products.iterrows():
       tmp_file = str(index) + ".jpg"
@@ -192,8 +191,11 @@ def create_redis_conn():
    redis_conn = redis.from_url(url)
    return redis_conn
 
+# Create a Redis connection
 redis_conn = create_redis_conn()
+# Create the vector embeddings for products
 product_vectors = create_product_vectors()
+# Store Vectors in Redis
 store_product_vectors(redis_conn, product_vectors)
 {% endhighlight %}
 
@@ -251,7 +253,7 @@ def create_hnsw_index(
 
     redis_conn.ft().create_index([image_field, text_field])
 
-#Let's create an HNSW index for our four products created earlier.
+# Create an HNSW search index for the products created earlier.
 create_hnsw_index(redis_conn, 4, 'product_vector:')
 {% endhighlight %}
 
