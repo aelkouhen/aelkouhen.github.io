@@ -129,7 +129,7 @@ def generate_image_vectors(products):
 def create_product_catalog():
    # initialize product
    dataset = {
-           'id': [1253, 0976, 3626, 2746]
+           'id': [1253, 9976, 3626, 2746]
            'description': ['Herringbone Brown Classic', 'Gaston Sage Tweed Suit', 'Peaky Blinders Outfit', 'Cable Knitted Scarf and Bobble Hat'],
            'image_url': [
                  'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-3-Piece-Suit-Brown-Classic-Vintage-Tailored-Wedding-Blinders.webp',
