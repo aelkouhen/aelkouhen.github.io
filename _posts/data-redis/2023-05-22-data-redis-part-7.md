@@ -50,7 +50,7 @@ Unlike offline recommendation engines that generate personalized recommendations
 
 Real-time engines would react to customers' actions while they are still browsing your site and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgv2kLmRZGVT67uRxBiTjc69q1Ir6np8smyckPCB0Vy3mmSagFy9HU9P29B1pnWRMYMDJxj74gqhVWsSmG4FERIclTfyVw96lgHgS7uIYN3Q5Lsymz0Xwol0j5lOC1k2jrkEpR0Fg74y5cv0j0z8AqnGWcX7VV9KRSW-xqgLhL8P81UVe2MrNM2EMFY){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7oZZadxRCipMxbnhsxAx8yQkIuHSDJJdTtNIu_DPT_QtvA52VDrXhYdlGueDT7I_zx1t0eWDg3qV36Gu98t1KXP-TWGluImL83qfbAihJpgkKQBl9NRngcMrUVFLWT2BDtlV8qMQB4yXYhFUp7m6vNfwLsuf5_bkgasyFU-GXlcUKj02PDSbiQpD6){: .mx-auto.d-block :} *Online Recommendation Engines.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 You clearly need a low-latency backend to implement such a real-time system. First, you need to present users' attributes and preferences in a specific way that allows their classification into groups. Then you need a performant representation of products that provides similarity calculation and querying in very low latency. 
 
@@ -58,7 +58,7 @@ Implementing such systems using Redis Enterprise is a straightforward task. Firs
 
 Vectors embeddings are mathematical representations of data points where each vector dimension corresponds to a specific feature or attribute of the data. For example, a product image can be represented as a vector where each element represents the characteristic of this product (color, shape, size...). Similarly, a product description can be transformed into a vector where each element represents the frequency or presence of a specific word or term. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyjNISJrAtiYLHJlHlsYsWHh8V7ufXx3x6Z799vwdwYekkcScwT8kDwOc3Qzm2MspbBW66hAkBjEwtsYJnXpeLs4E7tPIxG8xLVHgo9ea-zmABA8IsLluRNzqKgwv7-bInGNKLI1p8kJDWTkzPfnuB49KrxBoUeQydwzZyaDxa2dp1f98msdr49lL_){: .mx-auto.d-block :} *Product descriptions presented as vectors.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0eizIhh2_F60H_iq1B53iHZZFa9KhL1UYlUTyWnoZ2qNknZnhlGAyESe6NZOI47MMMuTmVIy4psZXz3y7cO4MRvb0FDmjAEHeeCwBWSg6r7b5tPQW8ZG-EMFWtuRVTp0NVBIXVK3MeInYxVlI9S2JrqBEKcBHb7MPLTMTsQ7vjtP0ga0o3eqzmyB_){: .mx-auto.d-block :} *Product descriptions presented as vectors.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Vector representations of data enable machine learning algorithms to process and analyze the information efficiently. These algorithms often rely on mathematical operations performed on vectors, such as dot products, vector addition, and normalization, to compute similarities, distances, and transformations.
 
@@ -137,12 +137,13 @@ def create_product_catalog():
    # initialize product
    dataset = {
            'id': [1253, 9976, 3626, 2746],
-           'description': ['Herringbone Brown Classic', 'Gaston Sage Tweed Suit', 'Peaky Blinders Outfit', 'Cable Knitted Scarf and Bobble Hat'],
+           'description': ['Herringbone Brown Classic', 'Herringbone Wool Suit Navy Blue', 'Peaky Blinders Tweed Outfit', 'Cable Knitted Scarf and Bobble Hat'],
            'image_url': [
                  'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
                  'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg'
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg',
+                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg'
+
                  ]
            }
 
@@ -227,6 +228,10 @@ Below is an example of creating image and text indexes in Redis based on the vec
 {% highlight python linenos %}
 from redis import redis
 from redis.commands.search.field import VectorField
+from redis.commands.search.indexDefinition import (
+    IndexDefinition,
+    IndexType
+)
 
 # Function to create a HNSW search index with Redis/RediSearch
 def create_hnsw_index(
@@ -240,7 +245,7 @@ def create_hnsw_index(
                     "TYPE": "FLOAT32",
                     "DIM": 512,
                     "DISTANCE_METRIC": distance_metric,
-                    "INITIAL_CAP": number_of_vectors,
+                    "INITIAL_CAP": number_of_vectors
                 })
 
     text_field = VectorField("text_vector",
@@ -248,10 +253,13 @@ def create_hnsw_index(
                     "TYPE": "FLOAT32",
                     "DIM": 768,
                     "DISTANCE_METRIC": distance_metric,
-                    "INITIAL_CAP": number_of_vectors,
+                    "INITIAL_CAP": number_of_vectors
                 })
 
-    redis_conn.ft().create_index([image_field, text_field])
+    redis_conn.ft('idx').create_index(
+        fields = [image_field, text_field],
+        definition = IndexDefinition(prefix=[prefix], index_type=IndexType.HASH)
+    )
 
 # Create an HNSW search index for the products created earlier.
 create_hnsw_index(redis_conn, 4, 'product_vector:')
@@ -265,7 +273,7 @@ Redis Vector Similarity Search (VSS) is a new feature built on top of the Redi
 
 Consequently, Redis exposes the usual search functionality, combining full text, tag, and numeric pre-filters with K Nearest Neighbors (KNN) vector search: With Redis VSS, you can query vector data stored as BLOBs in Redis hashes and choose the relevant vector distance metrics to calculate how “close” or “far apart” two vectors are. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhgUPbIRUUdhUT-A8Bz_VkWkU3dzN1G07m2oZF1XFSoMPWrLm9dsNhbag9mSKb8_Tu_p963fpjthuRUSpTVVt8CahpRBQthOHDe9knOFwBHC6zXsRsHyvYuu4yof_SXvSEsi2r6uPQc0ITcAM_ba4qtMPF1NG9G7rQb5c0RqUazPOyJonR1SNC34tLy){: .mx-auto.d-block :} *Calculating Cosine Similarity between Product Descriptions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiMJJJp4Ao2XmRx0xxB_kloh9h4uBDlH0AKcstQVRsnVxVlF3T5H5ZW9hDgQlZNzwyHqhVL0lvEREU2Q1GL63gFZ8vllGPTEmgpRTGHmcDtCGLMq5u-FFLCbuGi5R0kld9j_VJ7fbkCKOuapQBoweegCjfZ0k2JNW8pdDEB0hCm0SmZB2GsfwOZ670n){: .mx-auto.d-block :} *Calculating Cosine Similarity between Product Descriptions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 In addition, it provides advanced search capabilities like finding the “top K” most similar vectors performing low-latency searches in large vector spaces by ranging from tens of thousands to hundreds of millions of vectors distributed across several machines.
 
@@ -295,6 +303,7 @@ import urllib.request
 from PIL import Image
 from img2vec_pytorch import Img2Vec
 
+# Function to create the query parameter (query_vector)
 def create_query_vector():
    query_image_url = "https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg"
    # Resnet-18 to create image embeddings
@@ -308,6 +317,7 @@ def create_query_vector():
    query_vector = np.array(vector, dtype=np.float32).tobytes()
    return query_vector
 
+# Function to create the search query
 def create_query(
     return_fields: list,
     search_type: str="KNN",
