@@ -286,10 +286,10 @@ FT.SEARCH idx "*=>[KNN 10 @img_vec $BLOB]" PARAMS 2 BLOB "\x12\xa9\xf5\x6c" DIAL
 ```
 *   Range queries: filter query results by the distance between a vector field value and a query vector in terms of the relevant vector field distance metric. The syntax for range query is `@<vector_field>: [VECTOR_RANGE (<radius> | $<radius_attribute>) $<blob_attribute>]`. Range queries can appear multiple times in a query, similar to `NUMERIC` and `GEO` clauses, and in particular, they can be a part of the `<primary_filter_query>` in KNN Hybrid search. For example, you can make a query that returns similar products of a given item available in stores around your home!
 
-In the example below, we return the same result as the previous query, but we specify the distance between the image vector stored under the **img_vec** field and the specified query vector blob no more than 0.9 (in terms of **img_vec** field `DISTANCE_METRIC`).
+In the example below, we return the same result as the previous query, but we specify the distance between the image vector stored under the **img_vec** field and the specified query vector blob no more than 0.2 (aka. 80% of similarity score in terms of **img_vec** field `DISTANCE_METRIC`).
 
 ```
-FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.9 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
+FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.2 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
 ```
 
 Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 3 most similar products (by image) to [this one](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg), sorted by relevance score (cosine similarity set in the indexes created earlier).
