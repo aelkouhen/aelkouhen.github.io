@@ -206,6 +206,10 @@ Rules are processed in order, consisting of criteria (conditions) and actions
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP6380aHURW6kjtbnUG8vgOUWKwTt1j4wn4I8WBxKElqSpWepPWn2ptGpy1FqICFa037fDms_hmPTdlFa0xPbNas3HqNBXSEK48G-ZbcBSr-Jb5A7o-C7F9PGYWaSVCwkp49SboxYcxiqOveFrfklsHL3PXKmB1Kc-oo0VGi3vxh7rkAGcC7I0BEY6){: .mx-auto.d-block :} *Redis Smart Cache flow.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
+You can also use the [Redis Smart Cache CLI](https://github.com/redis-field-engineering/redis-smart-cache-cli) that allows managing Redis Smart Cache. While you can configure Smart Cache entirely using [JDBC properties](https://github.com/redis-field-engineering/redis-smart-cache#configuration), the CLI lets you construct query rules interactively and apply new configurations dynamically. With the CLI, you can also view your application’s parameterized queries or prepared statements and the duration of each query.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiq6eD09S1_Z3FrmPRbxCffksHS7-rSo1GrcjhYQPl7b9hZFIwkWDTRovQUc1NL2a1SksBzSs0R5wC-ZmjkOzNWAHOxgwzBTjCHlYr3o79URTFYB_ysBOSrUF8LJKgpqktM2jBGaqw9DQ4hLtwUkqd_8tA2useozkWjWiBK664kJK9HGEiJV7xRUQif){: .mx-auto.d-block :} *Definition of rules using Redis Smart Cache CLI.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 After adding the Redis Smart Cache dependency and setting some basic configuration, your JDBC application can take advantage of Redis as a cache without any changes to your code. Let's try this example to understand how Redis Smart Cache works. This [example](https://github.com/redis-field-engineering/redis-smart-cache/tree/master/demo/redis-smart-cache-demo) showcases an application that continuously performs queries against a MySQL database (extensively querying the Products, Customers, Orders, and OrderDetails tables) and uses Redis Smart Cache to cache query results. 
 
 If you have a MySQL server installed, you can run this example on your local machine. Or, you can just clone this git repository:
@@ -221,11 +225,13 @@ And use Docker Compose to launch containers for MySQL, Grafana, Redis Stack, and
 docker compose up
 ```
 
-The application starts querying the four tables while joining all of them. Then, for each order with ID x, the query asks the database to sleep x seconds to simulate a slow response time for this query. Conversely, Redis Smart Cache reads the rules from the JSON document at the key smartcache:config and creates a hash data structure containing the SQL query, the queried tables, and the CRC32 hash of the SQL query. Then, caches the query response for each query with the defined TTL. 
+The application starts querying the four tables while joining all of them. Then, for each order with ID **x**, the query asks the database to sleep **x** seconds to simulate a slow response time for this query. Conversely, Redis Smart Cache reads the rules from the JSON document at the key smartcache:config and creates a hash data structure containing the SQL query, the queried tables, and the CRC32 hash of the SQL query. Then, caches the query response for each query with the defined TTL. 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFkQ4zyQb9WootCIjVGp9d8sIun5lMuleNit9y_qhBXBxDUvHK54rdwfWTcy61G-IhplUOfqiwW_1mcw5N_5eqgisiAjFf-9Wjf5SrLT4j8Da_mFbo0TP9Wgj6Yy_OuDj9keQPJXXSxcMDGB5yvcHB1ukL2EKV-KF6M6tG3Y9ssKQ8rJxt6SXKFV_h){: .mx-auto.d-block :} 
 
 Once the application uses the Redis JDBC wrapper, It starts querying the backend database transparently. Redis Smart Cache stores the query and its results in the cache if unavailable (missing). When the application calls a query already cached (hit), Redis returns the results stored in the cache with low latency. As you can observe in the following screenshot, the average query latency passes from 3 seconds (average backend latency) to 0.7 ms (average cache latency), which means an acceleration of 4,200 times the initial latency.
+
+Redis Smart Cache captures access frequency, mean query time, query metadata, and additional metrics. These metrics are exposed via pre-built Grafana dashboards; the included visualizations help you decide which query caching rules to apply.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKlcqoRxaMZcxKPRNwI82NQSSaE7nST0AuoJOe1cZjocaQ9YT5-on7ekaAjYAY2KSkXxHO3skizQ_4_LsPwc4DgskwCKLDjhrWVT__ghH0tDLjAyivg67itWMI5MbL1CWSORXCIKHCk38MstcnZmvSokTPGaS2XCpo0nzM5OZQEizyXdDIUKG1LFr0){: .mx-auto.d-block :} *Query average latency reduced with Redis Smart Cache.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
