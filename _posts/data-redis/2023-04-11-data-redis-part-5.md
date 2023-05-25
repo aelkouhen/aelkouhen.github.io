@@ -229,9 +229,9 @@ The application starts querying the four tables while joining all of them. Then,
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFkQ4zyQb9WootCIjVGp9d8sIun5lMuleNit9y_qhBXBxDUvHK54rdwfWTcy61G-IhplUOfqiwW_1mcw5N_5eqgisiAjFf-9Wjf5SrLT4j8Da_mFbo0TP9Wgj6Yy_OuDj9keQPJXXSxcMDGB5yvcHB1ukL2EKV-KF6M6tG3Y9ssKQ8rJxt6SXKFV_h){: .mx-auto.d-block :} 
 
-Once the application uses the Redis JDBC wrapper, It starts querying the backend database transparently. Redis Smart Cache stores the query and its results in the cache if unavailable (missing). When the application calls a query already cached (hit), Redis returns the results stored in the cache with low latency. As you can observe in the following screenshot, the average query latency passes from 3 seconds (average backend latency) to 0.7 ms (average cache latency), which means an acceleration of 4,200 times the initial latency.
+Once the application uses the Redis JDBC wrapper, It starts querying the backend database transparently. Redis Smart Cache stores the query and its results in the cache if unavailable (missing). When the application calls a query already cached (hit), Redis returns the results stored in the cache with low latency.
 
-Redis Smart Cache captures access frequency, mean query time, query metadata, and additional metrics. These metrics are exposed via pre-built Grafana dashboards; the included visualizations help you decide which query caching rules to apply.
+Redis Smart Cache captures access frequency, mean query time, query metadata, and additional metrics. These metrics are exposed via pre-built Grafana dashboards; the included visualizations help you decide which query caching rules to apply. As you can observe in the following screenshot, the average query latency passes from 3 seconds (average backend latency) to 0.7 ms (average cache latency), which means an acceleration of 4,200 times the initial latency.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKlcqoRxaMZcxKPRNwI82NQSSaE7nST0AuoJOe1cZjocaQ9YT5-on7ekaAjYAY2KSkXxHO3skizQ_4_LsPwc4DgskwCKLDjhrWVT__ghH0tDLjAyivg67itWMI5MbL1CWSORXCIKHCk38MstcnZmvSokTPGaS2XCpo0nzM5OZQEizyXdDIUKG1LFr0){: .mx-auto.d-block :} *Query average latency reduced with Redis Smart Cache.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
