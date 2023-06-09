@@ -154,7 +154,7 @@ According to this [article](https://www.sciencedirect.com/science/article/pii/S2
 In the example below, the t-digest contains the following 17 observations representing the satisfaction rates collected from 17 customers' calls: 32%, 64.5%, 98%, 82%, 33%, 18.5%, 32%, 19%, 21%, 56%, 61.3%, 61%, 61%, 60%, 53%, 32%, 45%, and 46%. As you can see, this distribution is skewed to the left. For this reason, we can use the t-digest data structure of Redis Bloom that returns, for each input value, an estimation of the fraction of observations smaller than a given satisfaction rate. 
 
 {% highlight console linenos %}
-TDIGEST.CDF satisfaction-tdigest 0.75
+$ TDIGEST.CDF satisfaction-tdigest 0.75
 1) "0.88235294117647056"
 {% endhighlight %}
 
