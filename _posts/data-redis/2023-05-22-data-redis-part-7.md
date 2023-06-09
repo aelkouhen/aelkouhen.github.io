@@ -4,7 +4,7 @@ title: Data & Redis series - part 7
 subtitle:  Online Recommendation Systems with Redis
 thumbnail-img: assets/img/redis-recommandation.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiIpjHZnx59WRCB5VdiWisD3-nq4ArNSSvdAGEIU5J8q7stCpZkFOSbxZufibAfrKu11-Hl4jaUStWMFwrb7Cc0VMCBbpex8W76hZF3-5pWhRYUyNgYPXDUexel__dvIV7e7rf34p9Gt-g_C3TbQZ6nX0pw8lZ70368Qjxv734mYMNyhc79GaWX0qlD
-tags: [BERT,Cosine,embeddings,HNSW,Hugging Face,KNN,neural network,Recommendation Systems,Redis,RediSearch,ResNet,similarity search,two-tower,vector database]
+tags: [BERT,Cosine,embeddings,HNSW,Hugging Face,KNN,neural network,recommendation systems,Redis,RediSearch,ResNet,similarity search,two-tower,vector database]
 comments: true
 ---
 
