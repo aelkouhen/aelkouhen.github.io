@@ -94,7 +94,7 @@ B. An Amazon SageMaker notebook instance with different ML models will train on 
 
 3\. AWS Lambda is a serverless, event-driven compute service that lets you run code for virtually any type of application or backend service without provisioning or managing servers. You can trigger Lambda from over 200 AWS services and Software as a Service (SaaS) applications and only pay for what you use. In our solution, the Lambda function is triggered by kinesis to read the stream and perform the following actions:
 
-4\. Persist transactional data RedisJSON to enable low-latency indexing and querying of transactions.
+4\. Persist transactional data into RedisJSON to enable low-latency indexing and querying of transactions.
 
 {% highlight python linenos %}
 def persistTransactionalData(payload_dict):
