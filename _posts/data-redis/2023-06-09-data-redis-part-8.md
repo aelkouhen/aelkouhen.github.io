@@ -16,7 +16,7 @@ First, these surveys often have a significant time gap between customer interact
 
 Finally, many customers choose not to participate in surveys, resulting in low response rates. This can limit the representativeness of the data collected, potentially leading to biased conclusions.
 
-Advancements in technology, specifically sentiment analysis, have opened up new avenues for monitoring customer satisfaction in near real-time. This article explores the benefits of sentiment analysis in replacing customer satisfaction surveys, enabling companies to gain timely insights and enhance customer experiences. For this, I've joined the high velocity of Redis and the advanced capabilities of Google Cloud APIs to implement a real-time customer satisfaction monitoring system.
+Advancements in technology, specifically sentiment analysis, have opened up new avenues for monitoring customer satisfaction in near real-time. This article explores the benefits of sentiment analysis in replacing customer satisfaction surveys, enabling companies to gain timely insights and enhance customer experiences. For this, I've joined the high velocity of Redis and the advanced capabilities of Google Cloud to implement a real-time customer satisfaction monitoring system.
 
 ## What is Sentiment Analysis?
 
