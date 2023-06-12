@@ -3,7 +3,7 @@ layout: post
 title: Data & Redis series - part 6
 subtitle:  Fraud Detection with Redis & AWS
 thumbnail-img: assets/img/redis-fraud.png
-share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpIJykWzMHqXcycHvB369LO09zNLoe8_sIRrpXMkdPSHM2R0jUFIVMfhhmRlLZ3tjhPmwhtbRNiq3i2apf8Ok55LweD7nySq-mMXwc9R_swbkLmyoGMofvBqilIkb91HKGO5aYjx5ouuo_GurEw78SvSgE6fDNxjVv0TMzySUhaz9f7XY7pd4QKDiv
+share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq94kMwVFG38im1WnDmDIKr0z28a0ngHUNKc9NF4oL1c_Zl6Jouq5WVE1zmlncjLXXXdhCsZuFBP2tD4o82AEERe7J-9WF94T9ZyXpOCjdo-6vqsCsd0zr-NoLVw7qywri1WufpyoGkrOWe28iHGE0V6Eo2Voq8EXqoJ5aWBarHT7g7LUSR3yBPLfP
 tags: [AWS,AWS Kinesis,AWS Lambda,false positive,feature store,fraud detection,Grafana,latency,machine learning,Random Cut Forest,Redis,Redis Gears,RedisBloom,RediSearch,RedisJSON,RedisTimeSeries,SageMaker,Serverless Functions,xGBoost]
 comments: true
 ---
@@ -76,7 +76,7 @@ Remember the two main fraud detection challenges presented above. Redis can addr
 
 Below depicts the solution architecture implemented with Redis Enterprise and AWS and its data flow details.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpIJykWzMHqXcycHvB369LO09zNLoe8_sIRrpXMkdPSHM2R0jUFIVMfhhmRlLZ3tjhPmwhtbRNiq3i2apf8Ok55LweD7nySq-mMXwc9R_swbkLmyoGMofvBqilIkb91HKGO5aYjx5ouuo_GurEw78SvSgE6fDNxjVv0TMzySUhaz9f7XY7pd4QKDiv){: .mx-auto.d-block :} *Fraud Detection System with Redis Enterprise and AWS.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq94kMwVFG38im1WnDmDIKr0z28a0ngHUNKc9NF4oL1c_Zl6Jouq5WVE1zmlncjLXXXdhCsZuFBP2tD4o82AEERe7J-9WF94T9ZyXpOCjdo-6vqsCsd0zr-NoLVw7qywri1WufpyoGkrOWe28iHGE0V6Eo2Voq8EXqoJ5aWBarHT7g7LUSR3yBPLfP){: .mx-auto.d-block :} *Fraud Detection System with Redis Enterprise and AWS.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 A. As a pre-requisite, you need to put historical datasets of credit card transactions into an Amazon Simple Storage Service (Amazon S3) bucket. These data serve to train and test the machine learning algorithms that detect fraud and anomalies.
 
