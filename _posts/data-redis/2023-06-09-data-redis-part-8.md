@@ -163,7 +163,7 @@ $ TDIGEST.CDF satisfaction-tdigest 0.75
 
 Thus, calculating the quantile fractions using a t-digest indicates that 88.2% of customers have a lower satisfaction rate than 75%. In other terms, only 11.8% of customers exceed a satisfaction rate of 75%, which represents a low satisfaction level.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTyDHVpUp-X5UUUhn6Ec-2eTCP21CggbnPDCq-0ZpQOScNtejlLlfcq3Grp4NQvN6EwczCxUZKhNYFtMYeYj1ptnCNT3lKxD8nvb7lEkhYiigF6Z8h4Rxecw5lRfXGLngClx4gVl70X-Xd0vPLrMWozLTnSN-b9BIpo2YbYVNSIk0b6px4HtUFUCp6){: .mx-auto.d-block :} *75th percentile fraction of satisfaction rates calculated with Redis Bloom.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBA-Le8B8X0SJRtAhKvlWYUxr4Y1cwxPu1GVq9B1cRfyw72m1b3YYfQm-6BjrdNug0cPdcdmUaIq5dYR9ZKo9epg1-2VQjY6xU_K2MA-h5aiOheCbf_APFi5Q_pvbWjDqIqSVFrS9ZJvbhOoptsFda7YVE0Ag0tRORcvea_L3rYHPPjJF30TH4y3QBLa0){: .mx-auto.d-block :} *75th percentile fraction of satisfaction rates calculated with Redis Bloom.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ## Summary
 
