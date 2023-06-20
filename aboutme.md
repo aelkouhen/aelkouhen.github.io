@@ -5,7 +5,7 @@ subtitle: Know more about our Data Crafters
 ---
 <div class="row">
   <div class="column left">
-      <img src="assets/img/amine.jpg" alt="" class="mx-auto d-block"> 
+      <img src="/assets/img/amine.jpg" alt="" class="mx-auto d-block"> 
       <em style="display:block; margin-left:auto; margin-right:auto; text-align: center">Amine El Kouhen</em>    
   </div>
   <div class="column right">
