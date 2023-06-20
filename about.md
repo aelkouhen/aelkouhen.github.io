@@ -23,7 +23,7 @@ Partner with The Data Crafters Lab, and embark on a transformative data journey 
     <a href="https://www.linkedin.com/in/amine-elkouhen/" target="_blank">
       <img src="/assets/img/amine.jpg" alt="" class="mx-auto d-block"> 
       <em style="display:block; margin-left:auto; margin-right:auto; text-align: center">Amine El Kouhen</em>    
-    <a>
+    </a>
   </div>
   <div class="column right">
 With more than 15 years of experience in building and promoting Data, Analytics, and Machine Learning platforms, Amine designed and implemented thousands of data pipelines and analytics artifacts for top-tier European companies. 
