@@ -32,7 +32,7 @@ navbar-links:
     - SwirlAI newsletter : "https://www.newsletter.swirlai.com/"
     - Buz Blog: "https://buz.dev/"
   About: "about"
-  LinkedIn: "https://www.linkedin.com/in/amine-elkouhen/"
+  LinkedIn: "https://www.linkedin.com/company/data-crafters-lab/"
 
 ################
 # --- Logo --- #
@@ -60,8 +60,8 @@ social-network-links:
   email: "amine@datacrafterslab.com"
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
   #facebook: amine.elkouhen
-  github: aelkouhen
-  linkedin: amine-elkouhen
+  #github: aelkouhen
+  linkedin: data-crafters-lab
   #twitter: yourname
   patreon: DnAFactory
   #youtube: c/yourname
