@@ -31,6 +31,8 @@ With more than 15 years of experience in building and promoting Data, Analytics,
 Amine held a Ph.D. in Computer Sciences from the University of Lille (North of France) and pursued his post-doc research in Canada as a research associate in a few big academic institutions (ETS - University of Quebec, Concordia University...). He has a solid research record (authoring many Springer, ACL, and IEEE publications) in Model-Driven Engineering, Critical Systems Engineering, Language Engineering, Data Modeling, and Software Craftsmanship.
   </div>
 </div>
+<!--
 <div class="row">
     <img src="https://user-images.githubusercontent.com/22400454/227017223-32b748ba-4d34-4267-8f4c-47f7fa85e9d8.png" alt="" class="mx-auto d-block"> 
 </div>
+-->
