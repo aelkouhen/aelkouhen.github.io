@@ -425,7 +425,7 @@ debezium.source.database.password=dbz-password
 You need to configure the endpoint of your Redis-DI config database and the password.
 
 {% highlight properties linenos %}
-debezium.sink.redis.address=redis-13000.cluster.redis-ingest.demo.redislabs.com
+debezium.sink.redis.address=redis-13000.cluster.redis-ingest.demo.redislabs.com:13000
 debezium.sink.redis.password=rdi-password
 {% endhighlight %}
 
@@ -436,7 +436,7 @@ All other entries in the file created through the RDI `scaffold` command can be 
 Change directory to your Redis Data Integration configuration folder created by the `scaffold` command, then run:
 
 ```bash
-docker run -d --rm --name debezium -v $PWD/debezium:/debezium/conf debezium/server:2.1.1.Final
+docker run -d --name debezium --network=host --restart always -v $PWD/debezium:/debezium/conf --log-driver local --log-opt max-size=100m --log-opt max-file=4 --log-opt mode=non-blocking debezium/server:2.1.1.Final
 ```
 
 Check the Debezium Server log:
