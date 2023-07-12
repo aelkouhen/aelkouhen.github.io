@@ -522,7 +522,7 @@ redis-di deploy --rdi-host redis-12000.cluster.redis-process.demo.redislabs.com 
 Change directory to your Redis Data Integration configuration folder created by the scaffold command, then run:
 
 ```shell
-docker run -d --rm --name debezium -v $PWD/debezium:/debezium/conf debezium/server:2.1.1.Final
+docker run -d --name debezium --network=host --restart always -v $PWD/debezium:/debezium/conf --log-driver local --log-opt max-size=100m --log-opt max-file=4 --log-opt mode=non-blocking debezium/server:2.1.1.Final
 ```
 
 Check the Debezium Server log:
