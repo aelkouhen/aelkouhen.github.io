@@ -26,10 +26,12 @@ navbar-links:
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
-    - Kai Waehner's Blog : "https://www.kai-waehner.de/"
-    - François Cerbelle's Blog : "https://fcerbell.github.io/pages/en/"
+    - Joe Reis's Blog : https://joereis.substack.com/
     - ByteByteGo Blog : "https://blog.bytebytego.com/"
     - SwirlAI newsletter : "https://www.newsletter.swirlai.com/"
+    - Data Quality Camp : "https://dataqualitycamp.substack.com/"
+    - Kai Waehner's Blog : "https://www.kai-waehner.de/"
+    - François Cerbelle's Blog : "https://fcerbell.github.io/pages/en/"
     - Buz Blog: "https://buz.dev/"
   About: "about"
   LinkedIn: "https://www.linkedin.com/company/data-crafters-lab/"
