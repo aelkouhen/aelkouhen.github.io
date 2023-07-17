@@ -132,7 +132,7 @@ To use debezium as a docker container, download the debezium Image:
 wget https://qa-onprem.s3.amazonaws.com/redis-di/debezium/debezium_server_2.1.1.Final_offline.tar.gz -O ~/tmp/debezium_server.tar.gz
 ```
 
-and load it as a docker image.
+and load it as a docker image. Make sure that you already have docker [installed](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) in your machine.
 
 ```bash
 docker load < ~/tmp/debezium_server.tar.gz
