@@ -59,51 +59,50 @@ For the second part of this article, you will need to install Redis Data Integra
 #### UBUNTU20.04
 
 ```bash
-wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-ubuntu20.04-latest.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-ubuntu20.04-latest.tar.gz -O /tmp/redis-di-offline.tar.gz
 ```    
 
 #### UBUNTU18.04
 
 ```bash
-wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-ubuntu18.04-latest.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-ubuntu18.04-latest.tar.gz -O /tmp/redis-di-offline.tar.gz
 ```
 
 #### RHEL8
 
 ```bash
-wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel8-latest.tar.gz -O ~/tmp/redis-di-offline.tar.gz
+wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel8-latest.tar.gz -O /tmp/redis-di-offline.tar.gz
 ```    
 
 #### RHEL7
 
 ```shell
-wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-latest.tar.gz -O ~/tmp/redis-di-offline.tar.gz 
+wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-latest.tar.gz -O /tmp/redis-di-offline.tar.gz 
 ```
 
-Then Copy and unpack the downloaded `redis-di-offline.tar.gz` into the master node of your Redis Cluster under the `~/tmp` directory:
+Then Copy and unpack the downloaded `redis-di-offline.tar.gz` into the master node of your Redis Cluster under the `/tmp` directory:
 
 {% highlight shell linenos %}
-cd ~/tmp
-tar xvf redis-di-offline.tar.gz
+tar xvf /tmp/redis-di-offline.tar.gz
 {% endhighlight %}
 
 Switch the current user to the user with whom the cluster was created (usually redislabs or ubuntu). Install [RedisGears](https://redis.com/modules/redis-gears/) on the cluster. In case it’s missing, follow [this guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) to install it. 
 
 {% highlight shell linenos %}
-curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu18.04-x86_64.1.2.5.zip -o ~/tmp/redis-gears.zip
-curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@./redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
+curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu20.04-x86_64.1.2.5.zip -o /tmp/redis-gears.zip
+curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@/tmp/redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
 {% endhighlight %}
 
 Then you install the RDI CLI by unpacking `redis-di.tar.gz` into `/usr/local/bin/` directory:
 
 ```bash
-sudo tar xvf ~/tmp/redis-di-offline/redis-di-cli/redis-di.tar.gz -C /usr/local/bin/
+sudo tar xvf /tmp/redis-di-offline/redis-di-cli/redis-di.tar.gz -C /usr/local/bin/
 ```
 
 Run the `create` command to set up a new Redis Data Integration database instance within an existing Redis Enterprise Cluster. This database is different from the target database that holds the transformed data. The RDI database is a small data store that holds only configurations and statistics about processed data. Let's create one and expose it in port 13000:
 
 ```
-redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD>
+redis-di create --silent --cluster-host <CLUSTER_HOST> --cluster-user <CLUSTER_USER> --cluster-password <CLUSTER_PASSWORD> --rdi-port <RDI_PORT> --rdi-password <RDI_PASSWORD> --rdi-memory 512
 ```
 
 Finally, run the `scaffold` command to generate configuration files for Redis Data Integration and Debezium Redis Sink Connector:
@@ -129,13 +128,13 @@ In this article, we will capture a SQL Server database, so choose (`sqlserver`).
 To use debezium as a docker container, download the debezium Image:
 
 ```bash
-wget https://qa-onprem.s3.amazonaws.com/redis-di/debezium/debezium_server_2.1.1.Final_offline.tar.gz -O ~/tmp/debezium_server.tar.gz
+wget https://qa-onprem.s3.amazonaws.com/redis-di/debezium/debezium_server_2.1.1.Final_offline.tar.gz -O /tmp/debezium_server.tar.gz
 ```
 
 and load it as a docker image. Make sure that you already have docker [installed](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04) in your machine.
 
 ```bash
-docker load < ~/tmp/debezium_server.tar.gz
+docker load < /tmp/debezium_server.tar.gz
 ```
 
 Then tag the image:
