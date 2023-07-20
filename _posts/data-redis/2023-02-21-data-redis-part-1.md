@@ -83,7 +83,7 @@ wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-l
 Then Copy and unpack the downloaded `redis-di-offline.tar.gz` into the master node of your Redis Cluster under the `/tmp` directory:
 
 {% highlight shell linenos %}
-tar xvf /tmp/redis-di-offline.tar.gz
+tar xvf /tmp/redis-di-offline.tar.gz -C /tmp
 {% endhighlight %}
 
 Switch the current user to the user with whom the cluster was created (usually redislabs or ubuntu). Install [RedisGears](https://redis.com/modules/redis-gears/) on the cluster. In case it’s missing, follow [this guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) to install it. 
