@@ -63,7 +63,7 @@ wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-l
 Then Copy and unpack the downloaded `redis-di-offline.tar.gz` into the master node of your Redis Cluster under the `/tmp` directory:
 
 ```shell
-tar xvf /tmp/redis-di-offline.tar.gz
+tar xvf /tmp/redis-di-offline.tar.gz -C /tmp
 ```
 
 Then you install the RDI CLI by unpacking `redis-di.tar.gz` into `/usr/local/bin/` directory:
