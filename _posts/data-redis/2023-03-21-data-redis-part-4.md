@@ -304,7 +304,8 @@ In the [example](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io
 
 {% highlight yaml linenos %}
 source:
-  table: Employeetransform:
+  table: Employee
+transform:
   - uses: add_field
     with:
       fields:
