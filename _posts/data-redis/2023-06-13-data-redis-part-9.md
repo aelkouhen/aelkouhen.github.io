@@ -6,7 +6,6 @@ thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGgH1g
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgKgxMltMyijfUL8HoJmjfpCrvLlmymW6U4FSdtHobnGARzJsxURry7UsXNsl4DGIVA5IIwW0Lz8Lx3qOxmc-wfGFsIndteJyjsOAkDksi4iMuALAg7KzR6SBPQPA-h-5ZxIqTz_RZkjNT_SOsCVH3XvwaXJFW64xcOssRGVY-Iq6cLBCz1WmpQQiIPnZw
 tags: [ChatGPT,Cosine,embeddings,Hugging Face,KNN,LLM,Redis,RediSearch,similarity search,transformers,vector database]
 comments: true
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
 ---
 
 In today's data-driven world, information is generated and consumed at an unprecedented pace. With every click, swipe, and transaction, massive amounts of data are collected, waiting to be harnessed for insights, decision-making, and innovation. Today, more than 80% of the data organizations generate is unstructured, and the amount of this kind of data is expected to grow in the coming decades. Unstructured data is high-dimensional and noisy, making it more challenging for traditional databases to analyze and interpret using traditional methods.
@@ -162,7 +161,9 @@ Running this calculation between our query vector and the other three vectors in
 
 As you might have assumed, `That is a happy boy` is the most similar sentence to `That is a very happy person` and `That is a happy girl`, and very far from `I love dogs`. This example captures only one of many possible use cases for vector embeddings: _Semantic Similarity Search_.
 
-The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced in the head of this post. Stay tuned for the next blog posts that will talk about the advanced capabilities of Redis and VSS.
+The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced here: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
+
+Stay tuned for the next blog posts that will talk about the advanced capabilities of Redis and VSS.
 
 ## Summary
 Redis supports diverse capabilities that can significantly reduce application complexity while delivering consistently high performance, even on a large scale. Because it is an in-memory database, Redis provides very high throughput with sub-millisecond latency, using the lowest possible computational resources.
