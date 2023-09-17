@@ -8,13 +8,13 @@ tags: [ChatGPT,Cosine,embeddings,Hugging Face,KNN,LLM,Redis,RediSearch,similarit
 comments: true
 ---
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
-
 In today's data-driven world, information is generated and consumed at an unprecedented pace. With every click, swipe, and transaction, massive amounts of data are collected, waiting to be harnessed for insights, decision-making, and innovation. Today, more than 80% of the data organizations generate is unstructured, and the amount of this kind of data is expected to grow in the coming decades. Unstructured data is high-dimensional and noisy, making it more challenging for traditional databases to analyze and interpret using traditional methods.
 
 Enter the world of Vector Databases – a groundbreaking technology that is revolutionizing how we store, query, and analyze data. These databases are not just an evolution of their predecessors; they represent a quantum leap in the field of data management. In this blog post, we embark on a journey into the realm of vector databases, exploring their fundamental principles, applications, and how Redis Enterprise represents an exciting addition to this field.
 
 Whether you're a data enthusiast, a business leader seeking a competitive edge, or a developer curious about the next frontier in data storage and retrieval, this post is your gateway to understanding the power and potential of Redis as a vector database.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
 
 ## 1. Vector embeddings
 
@@ -132,7 +132,7 @@ from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 # create the vector embedding for the query
-query_embedding = model.encode("That is a happy person")
+query_embedding = model.encode("That is a happy boy")
 {% endhighlight %}
 
 Once the vectors are loaded into Redis, and the index is created, queries can be formed and executed for all kinds of similarity-based search tasks.
@@ -161,7 +161,7 @@ Running this calculation between our query vector and the other three vectors in
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8eSKJpAEasHPS_mdp0aCJWFdV9NLS2OhSgkNW-tpt8_1oPXDIXIdlYA4KcBqzA0IWOjbKh5dWQ7dHFXlZ5kVzT6rI8sa2lgGP0zlBgE2yizDNgvXQkpHjq_SRdRLxWhVgDXgwImD9fRxtQHid51O4oIMtCaczKwP46HHEDT5Lj0ROgdHZ_GBJDa_jCgI){: .mx-auto.d-block :} *Calculating Cosine distance between vectors.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-As you might have assumed, `That is a very happy person` is the most similar sentence to `That is a happy boy` and `That is a happy girl`, and very far from `I love dogs`. This example captures only one of many possible use cases for vector embeddings: _Semantic Similarity Search_.
+As you might have assumed, `That is a happy boy` is the most similar sentence to `That is a very happy person` and `That is a happy girl`, and very far from `I love dogs`. This example captures only one of many possible use cases for vector embeddings: _Semantic Similarity Search_.
 
 The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced in the head of this post. Stay tuned for the next blog posts that will talk about the advanced capabilities of Redis and VSS.
 
