@@ -52,9 +52,9 @@ The choice between Flat and HNSW depends only on your usage, data characteristic
 Below, an example of semantic similarity is shown that outlines the vector embeddings created with the **sentence_transformers** library (from [HuggingFace](https://huggingface.co/sentence-transformers)).
 
 Let’s take the following sentences:
-– `That is a happy girl`
-– `That is a very happy person`
-– `I love dogs`
+* `That is a happy girl`
+* `That is a very happy person`
+* `I love dogs`
 
 Each of these sentences can be transformed into a vector embedding. Below, a simplified representation highlights the position of these example sentences in 2-dimensional vector space relative to one another. This is useful in order to visually gauge how effectively our embeddings represent the semantic meaning of text.
 
