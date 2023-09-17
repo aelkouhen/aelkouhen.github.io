@@ -6,6 +6,7 @@ thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGgH1g
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgKgxMltMyijfUL8HoJmjfpCrvLlmymW6U4FSdtHobnGARzJsxURry7UsXNsl4DGIVA5IIwW0Lz8Lx3qOxmc-wfGFsIndteJyjsOAkDksi4iMuALAg7KzR6SBPQPA-h-5ZxIqTz_RZkjNT_SOsCVH3XvwaXJFW64xcOssRGVY-Iq6cLBCz1WmpQQiIPnZw
 tags: [ChatGPT,Cosine,embeddings,Hugging Face,KNN,LLM,Redis,RediSearch,similarity search,transformers,vector database]
 comments: true
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
 ---
 
 In today's data-driven world, information is generated and consumed at an unprecedented pace. With every click, swipe, and transaction, massive amounts of data are collected, waiting to be harnessed for insights, decision-making, and innovation. Today, more than 80% of the data organizations generate is unstructured, and the amount of this kind of data is expected to grow in the coming decades. Unstructured data is high-dimensional and noisy, making it more challenging for traditional databases to analyze and interpret using traditional methods.
@@ -13,8 +14,6 @@ In today's data-driven world, information is generated and consumed at an unprec
 Enter the world of Vector Databases – a groundbreaking technology that is revolutionizing how we store, query, and analyze data. These databases are not just an evolution of their predecessors; they represent a quantum leap in the field of data management. In this blog post, we embark on a journey into the realm of vector databases, exploring their fundamental principles, applications, and how Redis Enterprise represents an exciting addition to this field.
 
 Whether you're a data enthusiast, a business leader seeking a competitive edge, or a developer curious about the next frontier in data storage and retrieval, this post is your gateway to understanding the power and potential of Redis as a vector database.
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
 
 ## 1. Vector embeddings
 
