@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Data & Redis series - part 9
-subtitle:  RedisCover Redis in Vector Similarity Search
+subtitle:  RedisCover Redis for Vector Similarity Search
 thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGgH1gaxs8Mj60SkhlTyPDnFW5UzQaMn9GXWLbV2VoVe62C9azRjXYaEqx8AOdJCQYQIewqxJkDrSgX6BqqGEJr8iHgziuHPwA0wwurxSpvnlQ-lJNi0haib0KHz_FoBhJGri4kRHgv6hPNhSXiw2sqN21lXDlCClmwfW9aR3BttNTlavTZhJpXpGS5vU
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgKgxMltMyijfUL8HoJmjfpCrvLlmymW6U4FSdtHobnGARzJsxURry7UsXNsl4DGIVA5IIwW0Lz8Lx3qOxmc-wfGFsIndteJyjsOAkDksi4iMuALAg7KzR6SBPQPA-h-5ZxIqTz_RZkjNT_SOsCVH3XvwaXJFW64xcOssRGVY-Iq6cLBCz1WmpQQiIPnZw
 tags: [ChatGPT,Cosine,embeddings,Hugging Face,KNN,LLM,Redis,RediSearch,similarity search,transformers,vector database]
