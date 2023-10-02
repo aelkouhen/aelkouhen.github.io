@@ -2,7 +2,7 @@
 layout: post
 title: Data & Redis series - part 10
 subtitle:  Mastering the Search Multiverse with Redis
-thumbnail-img: 
+thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTJw37PNqn_eTbfBM0CtYj_CgChVnI0_G3vw8KJhxXiHviZXzbOgt61xdeBNIcd67GAQS47ZRqDaITtvKHeKwMYpgxpUSpk0mLZeZBF8FGcDy7TplKcMG9kK1rwUrGvYAkN_4fCOZ7xmVLWNhPc3QkCBuOWASnwRICWc4hMd95F_zNfbLoxy4u65lRd4g
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9ohtLHugZggP2FrYkiWRV9PhTrvIsblAUEwDs6mbWrA6z1tpz9PvG64hL9fcmNxPiQ1328_cahS52fdYVx5ZtZafRjsC1q152qSuoKcNUVtaK_SO1dCv8zaY0A5yWQgRk35ricT8EcOvPZ_2LRafQk0LIJYDzFlKvPWmtxCxZXt4oUijjxGOqdYmlwvM
 tags: [Cosine,hybrid search,recommendation systems,RediSearch,similarity search,vector database]
 comments: true
