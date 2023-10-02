@@ -8,8 +8,6 @@ tags: [Cosine,hybrid search,recommendation systems,RediSearch,similarity search,
 comments: true
 ---
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/2bis- Hybrid Search.ipynb)
-
 In the previous post, we ventured into the captivating worlds of vector databases and vector similarity search. You witnessed the transformative potential they offer in storing and retrieving unstructured data, unlocking new dimensions of understanding in various domains.
 
 Today, we embark on a new expedition—one that takes you beyond the boundaries of singular search methods. We delve into the realm of "Hybrid Search," a multifaceted approach that synergizes the strengths of vector similarity search with a rich tapestry of other search paradigms. In this article, we will explore how hybrid search harnesses the power of diverse search techniques, such as textual, numerical, conditional, geographical, and more, to provide holistic solutions for information retrieval.
@@ -33,7 +31,7 @@ The choice between Flat and HNSW depends only on your usage, data characteristic
 
 Distance metrics provide a reliable and measurable way to calculate the similarity or dissimilarity of two vectors. You can use many Distance metrics for similarity score calculation, but currently, only the [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) (L2), [Inner Product](https://en.wikipedia.org/wiki/Inner_product_space) (IP), and [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) metrics are available in Redis.
 
-#Hybrid Search
+# Hybrid Search
 
 RediSearch exposes the usual search functionality, combining full text, geographical, and numeric pre-filters along with the K Nearest Neighbors (KNN) vector search. For this, you can use vector similarity queries in the [FT.SEARCH](https://redis.io/commands/ft.search) query command and you must specify the option DIALECT 2 or greater to use a vector similarity query. For example, you can make a query that returns similar products of a given item by its image available in stores around your home!
 Let's consider the following product object. It consists of the product image, name, vector embedding of the product image, gender, and the store location in which you can find this product:
@@ -196,7 +194,9 @@ You can imagine multiple usages that you can unlock with a hybrid search. For ex
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijyUOfN5IwNumywSWITsni0TSaci-t8CCStq5WXkY0blxY-p0uR0bB-wTcsjY9Ch8AGQFUGg1Ai1T_o1Oh4mw8V7LV-CDE-E0TsVw3O3LzMxl2TmcWiD07N3Gi-EBWlLN6zac_zFBj-3idgM2wMUe7Mt6d1yRkXhETXvsTBRzQK1bVQtLXN9xKsBr5WnE){: .mx-auto.d-block :} *Implementing recommendation systems using Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-#Summary
+The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced here: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/2bis- Hybrid Search.ipynb)
+
+# Summary
 
 In this exploration of hybrid search, we've delved into the captivating world of Redis and RediSearch, discovering how they empower us to master the search multiverse. We began by revisiting vector similarity search, a powerful technique for finding similarities between vectors, and saw how Redis, through the RediSearch module, can be used to implement it efficiently.
 
@@ -204,7 +204,7 @@ We then ventured into the realm of hybrid search, where the fusion of vector sim
 
 As we conclude this journey, we find ourselves at the intersection of innovation and efficiency. Redis and RediSearch offer a versatile solution that consolidates your technology stack, simplifies the learning curve, and delivers sub-millisecond performance. Whether you're in the realm of e-commerce, healthcare, finance, or any domain where data exploration is paramount, mastering the hybrid search with Redis is your key to unlocking deeper insights and creating exceptional user experiences.
 
-#References
+# References
 
 * [Searching document data with Redis, JSON, and vector-similarity](https://www.youtube.com/watch?v=e4A_k-hFIa4), Brian Sam-Bodden.
 * [VSS documentation](https://redis.io/docs/stack/search/reference/vectors/), redis.io
