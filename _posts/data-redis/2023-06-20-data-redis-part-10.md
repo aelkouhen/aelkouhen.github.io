@@ -47,10 +47,10 @@ Let's consider the following product object. It consists of the product image, n
   "location": "50.69098, 3.17655"
 }
 {% endhighlight %}
-  
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidgdT8jEUp06JqSQNW-DpJNbqw_5lk9Ep6YNeZ84Q3e6dqZsj1WElgATgbYg8eeJrPrYPExpQbHUOKQ4FSXuO7WsFoTpvX-JXwIS95WLCNNbZxzKUlFcBIR39R66toubiD__hrXcPJpnf7Yu76VfJAxbQjNwtUc0IhqxB3_sLRIltgvIe4BY5D3UAuC8c){: .mx-auto.d-block :} *Storing Vectors in Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 For each store, multiple documents exist following the structure above and representing each product available in the store. Now, let's create a search index to query the different attributes of the product:
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidgdT8jEUp06JqSQNW-DpJNbqw_5lk9Ep6YNeZ84Q3e6dqZsj1WElgATgbYg8eeJrPrYPExpQbHUOKQ4FSXuO7WsFoTpvX-JXwIS95WLCNNbZxzKUlFcBIR39R66toubiD__hrXcPJpnf7Yu76VfJAxbQjNwtUc0IhqxB3_sLRIltgvIe4BY5D3UAuC8c){: .mx-auto.d-block :} *Storing Vectors in Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 {% highlight python linenos %}
 from redis.commands.search.field import (
@@ -103,7 +103,7 @@ def create_hybrid_index(
     )
 {% endhighlight %}
 
-You can start testing this index by performing some basic full-text searches. First, find all products with the keyword \`Addidas\`. Note we voluntarily make a typo in the brand name \`Adidas\` to test the fuzzy search. The executed search query is:
+You can start testing this index by performing some basic full-text searches. First, find all products with the keyword `Addidas`. Note we voluntarily make a typo in the brand name `Adidas` to test the fuzzy search. The executed search query is:
 
 {% highlight python linenos %}
 query = (
@@ -113,7 +113,7 @@ query = (
 results = redis_client.ft("product_index").search(query)
 {% endhighlight %}
 
-Now, we will look for the same products with a filter on price: Only product that costs less or equal to 50 euros. The executed search query is:
+Now, we will look for the same products with a filter on price: Only product that costs less or equal to `50 euros`. The executed search query is:
 
 {% highlight python linenos %}
 query = (
@@ -123,7 +123,7 @@ query = (
 results = redis_client.ft("product_index").search(query)
 {% endhighlight %}
 
-Now, we can make hybrid searches using vector similarity search and standard search. For this, we will start by looking for all products that are similar to a given image (a product image), and we will specify a pre-filtering condition to limit the search to a certain category of products (e.g., gender, footwear...). For this, we create a helper function called \`hybrid\_similarity\_search\` to create an embedding from the query image and compare it to other vectors having the same prefix according to the index created previously, in addition to filtering by the gender tag.
+Now, we can make hybrid searches using vector similarity search and standard search. For this, we will start by looking for all products that are similar to a given image (a product image), and we will specify a pre-filtering condition to limit the search to a certain category of products (e.g., gender, footwear...). For this, we create a helper function called `hybrid_similarity_search` to create an embedding from the query image and compare it to other vectors having the same prefix according to the index created previously, in addition to filtering by the gender tag.
 
 {% highlight python linenos %}
 def hybrid_similarity_search(query_image: str, query_tag: str, k: int, return_fields: tuple, index_name: str = "product_index") -> list:
@@ -153,9 +153,11 @@ query_tag = "women"
 results = hybrid_similarity_search(query_image, query_tag, k=3, return_fields=('distance', '$.product_id', '$.product_image', '$.gender'))
 {% endhighlight %}
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9ohtLHugZggP2FrYkiWRV9PhTrvIsblAUEwDs6mbWrA6z1tpz9PvG64hL9fcmNxPiQ1328_cahS52fdYVx5ZtZafRjsC1q152qSuoKcNUVtaK_SO1dCv8zaY0A5yWQgRk35ricT8EcOvPZ_2LRafQk0LIJYDzFlKvPWmtxCxZXt4oUijjxGOqdYmlwvM){: .mx-auto.d-block :} *Hybrid Search: Vector search + Tag search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+The expected result is a dataframe containing only women items similar to the given input image. 
 
-The expected result is a dataframe containing only women items similar to the given input image. Similarly, looking for products that are similar to a given one and available in stores near a given location is a simple query. For this, let's update the previous helper function to make pre-filtering by locations around Paris with a radius of 30 km.
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRWuKBmuHHApHGrid9zWU8ItSRA5uz0icrw2ZvCPl2YOfyKWm5kXwFROG66neFf5utE45qhhjaksNrYwNjxvqR1EjWyUvHTi-BgJeMBU9ffl7QS6JW5plufspghhozaDo9xpjLKop2S9op8qnkIKsV4BaLNIViEIwaiedU2eO6BW7zkHty1Y81WXEouRg){: .mx-auto.d-block :} *Hybrid Search: Vector search + Tag search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+
+Similarly, looking for products that are similar to a given one and available in stores near a given location is a simple query. For this, let's update the previous helper function to make pre-filtering by locations around `Paris` with a radius of `30 km`.
 
 {% highlight python linenos %}
 def hybrid_similarity_search(query_image: str, location: str, radius: str, k: int, return_fields: tuple, index_name: str = "product_index") -> list:
@@ -188,7 +190,7 @@ results = hybrid_similarity_search(query_image, paris_coordinates, radius, k=3, 
 
 The example above returns the same result as the previous query. Still, we specify the coordinates of Paris and the radius in which we want to perform the search between the given image vector and all the products' vectors already stored in Redis. The result can be displayed on a map for a more user-friendly interface.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj21EMkwjbplt_rzno8C4crHcdycomoxYuG9-mxBP7LyPP1nqJBcPZJTlwk4wS4AkJjj7ept9ys1jl5WiJeDAsVrO3uSyC6oxVwTSiD0ds9SDWaKvYc-){: .mx-auto.d-block :} *Hybrid Search: Geographic search + Vector search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj21EMkwjbplt_rzno8C4crHcdycomoxYuG9-mxBP7LyPP1nqJBcPZJTlwk4wS4AkJjj7ept9ys1jl5WiJeDAsVrO3uSyC6oxVwTSiD0ds9SDWaKvYc-lRpJb_FeM1tUo3wvdAM3UpXqEZoa312hX5iFOxkByqOC5OB4a6mGLIhyphenhyphen88D8AEY3Z212U4khno){: .mx-auto.d-block :} *Hybrid Search: Geographic search + Vector search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 You can imagine multiple usages that you can unlock with a hybrid search. For example, You can use it In the e-commerce industry, with recommendation engines to enable personalized product recommendations, cross-selling, and upselling. These systems help users discover new and relevant information while driving user engagement and retention by presenting content or services that align with their interests, thus improving overall user experiences. Redis combines the power of searching structured, semi-structured, and unstructured data within a single performant search engine. This is translated to flat learning curves and a more consolidated technological stack within your organization, in addition to the well-known Redis sub-millisecond performance.
 
