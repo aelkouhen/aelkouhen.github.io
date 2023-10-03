@@ -14,7 +14,7 @@ Today, we embark on a new expedition—one that takes you beyond the boundaries 
 
 # RediSearch: a versatile search engine
 
-RediSearch is a [Redis module](https://redis.io/modules) that provides querying, secondary indexing, and full-text search for Redis. Written in C, Redis Search is extremely fast compared to other open-source search engines. It implements multiple data types and commands that fundamentally change what you can do with Redis. RedisStack supports capabilities for search and filtering, such as geospatial queries, filtering by numeric ranges, retrieving documents by specific fields, and custom document scoring. Aggregations can combine map, filter, and reduce/group-by operations in custom pipelines that instantly run across millions of elements.
+RediSearch is a [Redis module](https://redis.io/modules) that provides querying, secondary indexing, and full-text search for Redis. Written in C, Redis Search is extremely fast compared to other open-source search engines. It implements multiple data types and commands that fundamentally change what you can do with Redis. RediSearch supports capabilities for search and filtering, such as geospatial queries, filtering by numeric ranges, retrieving documents by specific fields, and custom document scoring. Aggregations can combine map, filter, and reduce/group-by operations in custom pipelines that instantly run across millions of elements.
 
 RediSearch also supports auto-completion with fuzzy prefix matching and atomic real-time insertion of new documents to a search index. With the latest RediSearch release, creating a secondary index on top of your existing data is easier than ever. You can just add Search and Query capabilities to your existing Redis database, create an index, and start querying it without migrating your data or using new commands for adding data to the index. This drastically lowers the learning curve for new users and lets you create indexes on your existing Redis databases—without even restarting them.
 
@@ -33,7 +33,7 @@ Distance metrics provide a reliable and measurable way to calculate the simila
 
 # Hybrid Search
 
-RediSearch exposes the usual search functionality, combining full text, geographical, and numeric pre-filters along with the K Nearest Neighbors (KNN) vector search. For this, you can use vector similarity queries in the [FT.SEARCH](https://redis.io/commands/ft.search) query command and you must specify the option DIALECT 2 or greater to use a vector similarity query. For example, you can make a query that returns similar products of a given item by its image available in stores around your home!
+RediSearch exposes the usual search capabilities, combining full text, geographical, and numeric pre-filters along with the K Nearest Neighbors (KNN) vector search. For this, you can use vector similarity queries in the [FT.SEARCH](https://redis.io/commands/ft.search) query command and you must specify the option `DIALECT 2` or greater to use a vector similarity query. For example, you can make a query that returns similar products of a given item by its image available in stores around your home!
 Let's consider the following product object. It consists of the product image, name, vector embedding of the product image, gender, and the store location in which you can find this product:
 
 {% highlight json linenos %}
@@ -129,7 +129,7 @@ Now, we can make hybrid searches using vector similarity search and standard sea
 def hybrid_similarity_search(query_image: str, query_tag: str, k: int, return_fields: tuple, index_name: str = "product_index") -> list:
     # create a redis query object
     redis_query = (
-        Query(f"(@gender:{{{query_tag}}})=>[KNN {k} @vector $query_vector AS distance]")
+        Query(f"(@gender:\{\{{query_tag\}\}})=>[KNN {k} @vector $query_vector AS distance]")
             .sort_by("distance")
             .return_fields(*return_fields)
             .paging(0, k)
@@ -192,7 +192,7 @@ The example above returns the same result as the previous query. Still, we speci
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj21EMkwjbplt_rzno8C4crHcdycomoxYuG9-mxBP7LyPP1nqJBcPZJTlwk4wS4AkJjj7ept9ys1jl5WiJeDAsVrO3uSyC6oxVwTSiD0ds9SDWaKvYc-lRpJb_FeM1tUo3wvdAM3UpXqEZoa312hX5iFOxkByqOC5OB4a6mGLIhyphenhyphen88D8AEY3Z212U4khno){: .mx-auto.d-block :} *Hybrid Search: Geographic search + Vector search.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-You can imagine multiple usages that you can unlock with a hybrid search. For example, You can use it In the e-commerce industry, with recommendation engines to enable personalized product recommendations, cross-selling, and upselling. These systems help users discover new and relevant information while driving user engagement and retention by presenting content or services that align with their interests, thus improving overall user experiences. Redis combines the power of searching structured, semi-structured, and unstructured data within a single performant search engine. This is translated to flat learning curves and a more consolidated technological stack within your organization, in addition to the well-known Redis sub-millisecond performance.
+You can imagine the multiple usages you can unlock with a hybrid search. For example, You can use it In the e-commerce industry, with recommendation engines to enable personalized product recommendations, cross-selling, and upselling. These systems help users discover new and relevant information while driving user engagement and retention by presenting content or services that align with their interests, thus improving overall user experiences. Redis combines the power of searching structured, semi-structured, and unstructured data within a single performant search engine. This is translated to flat learning curves and a more consolidated technological stack within your organization, in addition to the well-known Redis sub-millisecond performance.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijyUOfN5IwNumywSWITsni0TSaci-t8CCStq5WXkY0blxY-p0uR0bB-wTcsjY9Ch8AGQFUGg1Ai1T_o1Oh4mw8V7LV-CDE-E0TsVw3O3LzMxl2TmcWiD07N3Gi-EBWlLN6zac_zFBj-3idgM2wMUe7Mt6d1yRkXhETXvsTBRzQK1bVQtLXN9xKsBr5WnE){: .mx-auto.d-block :} *Implementing recommendation systems using Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
