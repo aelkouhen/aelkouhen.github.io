@@ -129,7 +129,7 @@ Now, we can make hybrid searches using vector similarity search and standard sea
 def hybrid_similarity_search(query_image: str, query_tag: str, k: int, return_fields: tuple, index_name: str = "product_index") -> list:
     # create a redis query object
     redis_query = (
-        Query(f"(@gender:\{\{{query_tag\}\}})=>[KNN {k} @vector $query_vector AS distance]")
+        Query(f"(@gender:{query_tag})=>[KNN {k} @vector $query_vector AS distance]")
             .sort_by("distance")
             .return_fields(*return_fields)
             .paging(0, k)
