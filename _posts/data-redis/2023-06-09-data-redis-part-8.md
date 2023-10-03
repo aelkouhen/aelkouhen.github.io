@@ -161,7 +161,7 @@ Running this calculation between our query vector and the other three vectors in
 
 As you might have assumed, `That is a happy boy` is the most similar sentence to `That is a very happy person` and `That is a happy girl`, and very far from `I love dogs`. This example captures only one of many possible use cases for vector embeddings: _Semantic Similarity Search_.
 
-The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced here: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search%20-%20BigData.ipynb)
+The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced here: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search.ipynb)
 
 Stay tuned for the next blog posts that will talk about the advanced capabilities of Redis and VSS.
 
