@@ -4,7 +4,7 @@ title: Data & Redis series - part 7
 subtitle:  Customer Satisfaction Monitoring with Redis & GCP
 thumbnail-img: assets/img/customer-satisfaction-thumb.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgo81NnXJ7H6AtdRjEp1rGp5tFuI18ejbZe9-PATNcGMmNITpjGe7O0KmtIuaB5i-LBuVAcS-OD7zpOzTH0AQcnaWUya9J1dJUIQQR936NFEiDDQyi7dii_NY84B6cu-TvZbV5lsFPAr02Y2oL7prkxNO1E4aoE3GQc-97YqdgiRvcmi42V2oVlWgQK
-tags: [BERT,customer satisfaction,embeddings,emotion analysis,Google Cloud,Hugging Face,neural network,NLP,percentile,PubSub,Redis,RedisBloom,RedisJSON,RedisTimeSeries,sentiment analysis,Speech-to-Text,t-digest,top-k,transformers]
+tags: [BERT,customer satisfaction,emotion analysis,Google Cloud,Hugging Face,neural network,NLP,percentile,PubSub,Redis,RedisBloom,RedisJSON,RedisTimeSeries,sentiment analysis,Speech-to-Text,t-digest,top-k]
 comments: true
 ---
 
