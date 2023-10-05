@@ -4,7 +4,7 @@ title: Data & Redis series - part 4
 subtitle:  Data Processing with RDI (Hands-on)
 thumbnail-img: assets/img/RDI.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0LWaElVc5g_xIC6-sPtXyLIkYgqTm7F6Kk21gWaDQAzdv2ij-RPzmXHZ_iNk26lbrnbJBfAWS5lgRWd-6IVZyHUuzoNmA1TrDswryWl2hmjeUi0HoBHoQqCuTdMyRmGoYbKr5bZDnZKYx0LFcIQnlP1NRworKdN9IjrD7TTLCKPosRMG4yF02akTJ
-tags: [RDI,Debezium,Gears,Redis Streams,Hands-On,stream processing,data processing,data transformation,Redis]
+tags: [RDI,Redis Gears,Redis Streams,Hands-On,stream processing,data processing,data transformation,Redis]
 comments: true
 ---
 
