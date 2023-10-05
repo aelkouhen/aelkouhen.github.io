@@ -4,7 +4,7 @@ title: Data & Redis series - part 3
 subtitle:  Data Processing with Redis Gears (Hands-on)
 thumbnail-img: assets/img/redis-gears.svg
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtmTRQc0M2a5Lt2-Rni8QuaxDSrIIkFPeqM68hCksWLs3NQjC_K7SP2EUWJnDwr0LVGSkLn8zzknzacleejTXVjIG2Bp5ko-UkzSyXNNhfIgpFkUuqZi4wVa04c2vK1Voieo0CnFnBvKuBVHwqPYwoh7p6KCWUkigaREieIhQKZxcizRCcus0UBM_B
-tags: [Gears,functions,Hands-On,stream processing,data processing,distributed processing,batch processing,data transformation,MapReduce,Profit & Loss,Real-Time Analytics,Financial,Redis]
+tags: [Gears,functions,Hands-On,stream processing,data processing,distributed processing,batch processing,data transformation,MapReduce,Real-Time Analytics,Redis]
 comments: true
 ---
 
