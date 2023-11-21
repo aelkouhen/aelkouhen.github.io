@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Data on Google Cloud series - part 1
-subtitle:  Data Ingestion using GCP Services (Hands-on)
+title: Data on GCP series - part 1
+subtitle:  Data Ingestion using Google Cloud Services (Hands-on)
 thumbnail-img: 
 share-img: 
 tags: []
