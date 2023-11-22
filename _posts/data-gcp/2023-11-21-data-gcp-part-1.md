@@ -71,6 +71,7 @@ Here are some basic ways you can import data into Cloud Storage:
 - [Cloud Storage FUSE](https://cloud.google.com/storage/docs/gcs-fuse): Cloud Storage FUSE allows you to mount Cloud Storage buckets to your local file system. This enables your applications to read from a bucket or write to a bucket by using standard file system semantics.
 
 ## Sync data into Block Storage
+### Persistent Disk
 By default, each Compute Engine virtual machine (VM) instance has a single boot Persistent Disk volume that contains the operating system. When your apps require additional storage space, one possible solution is to attach additional Persistent Disk volumes to your VM.
 
 Persistent Disk volumes are durable network storage devices that your VMs can access like physical disks in a desktop or a server. The data on each persistent disk is distributed across several physical disks. Compute Engine manages the physical disks and the data distribution for you to ensure redundancy and optimal performance.
@@ -81,11 +82,14 @@ You can create and attach a non-boot zonal disk by using the [Google Cloud conso
 
 You should specify a custom device name when attaching the disk to a VM. The name you specify is used to generate a [symlink](https://cloud.google.com/compute/docs/disks/disk-symlinks) for the disk in the guest OS, making identification easier.
 
+### Hyperdisk
 Google Cloud Hyperdisk is the newest generation of network block storage service in Google Cloud. Designed for the most demanding mission-critical applications, Hyperdisk offers a scalable, high-performance storage service with a comprehensive suite of data persistence and management capabilities. With Hyperdisk you can provision, manage, and scale your Compute Engine workloads without the cost and complexity of a typical on-premises storage area network (SAN).
 
 Hyperdisk volumes are durable network storage devices that your VMs can access, similar to Persistent Disk volumes. The data on each Hyperdisk is distributed across several physical disks. Compute Engine manages the physical disks and the data distribution for you to ensure redundancy and optimal performance.
 
 Hyperdisk volumes are located independently from your VMs, so you can detach or move Hyperdisk volumes to keep your data, even after you delete your VMs. Hyperdisk performance is decoupled from size, so you can dynamically update the performance, resize your existing Hyperdisk volumes or add more Hyperdisk volumes to a VM to meet your performance and storage space requirements.
+
+### Local SSD
 
 If your workloads need high performance, low latency temporary storage, consider using Local solid-state drive (Local SSD) disks when you create your virtual machine (VM). Local SSD disks are always-encrypted solid-state storage for Compute Engine VMs.
 
@@ -105,6 +109,8 @@ rsync -a hello-world.txt root@<your.VM.IP.address>:/mnt/block-volume
 ## Import data into File Storage
 Most data on-premise is stored in file systems, as applications migrate to the cloud, their need for File storage doesn’t change, so file storage is critical to enterprise lift-and-shift and infrastructure modernization. Files are a useful abstraction, and even cloud-native applications are leveraging files.
 
+### Filestore
+
 Google Filestore is a fully managed file storage service that enables you to store and access file data on Google Cloud. It is designed for use cases that require fast, scalable, and low-latency access to file data, such as shared file systems and home directories.
 
 Filestore is integrated with other Google Cloud services, such as Compute Engine, Kubernetes Engine, and Cloud Load Balancing, allowing you to easily scale and manage your file storage needs.
@@ -123,6 +129,8 @@ Filestore offers three performance tiers: Standard, High Performance, and Extrem
 
 ![](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*j_Jxd20VF-tnLZjL){: .mx-auto.d-block :} *Filestore Tiers.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
+### Parallelstore
+
 As businesses continue to grapple with the unique storage and access demands of data-intensive AI workloads, they’re looking to the cloud to deliver highly capable, cost-effective, and easily manageable storage solutions. Google Cloud customers training AI models often turn to GPU/TPUs to get the performance they need. But let’s face it: those resources are limited and an infrastructure asset you want to fully utilize.
 
 Google Cloud Parallelstore, now in private Preview, helps you stop wasting precious GPU resources while you wait for storage I/O by providing a high-performing parallel file storage solution for AI/ML and HPC workloads. By keeping your GPUs saturated with the data you need to optimize the AI/ML training phase, Parallelstore can help you significantly reduce — or even eliminate — costs associated with idle GPUs. 
@@ -140,6 +148,8 @@ The [community examples](https://github.com/GoogleCloudPlatform/hpc-toolkit/tree
 3. As an alternative to viewing the instructions in [Deploy the DAOS Cluster Example](docs/deploy_daos_cluster_example.md) as a standalone document, you can view it as an in-context tutorial in [Cloud Shell](https://cloud.google.com/shell) by clicking the button below.
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://ssh.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/daos-stack/google-cloud-daos.git&cloudshell_git_branch=main&shellonly=true&cloudshell_tutorial=docs/deploy_daos_cluster_example.md)
+
+### NetApp Volumes
 
 In addition, Google Cloud has partenered with NetApp to offer a fully managed, cloud-native data storage service that provides advanced data management capabilities and highly scalable performance, called [Cloud Volumes Service](https://www.netapp.com/us/cloud-marketplace/google-cloud-platform.aspx).
 
