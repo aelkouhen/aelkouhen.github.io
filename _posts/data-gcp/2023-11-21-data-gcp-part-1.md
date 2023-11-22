@@ -19,6 +19,7 @@ In this stage, raw data are extracted from one or more data sources, replicated,
 Google Cloud Platform (GCP) offers various storage services designed to cater to different needs and scenarios. Some of the key storage services provided by Google Cloud include:
 
 1\. **Object storage** is a data storage architecture for storing unstructured data, which sections data into units (objects) and stores them in a structurally flat data environment. Each object includes the data, metadata, and a unique identifier that applications can use for easy access and retrieval. In Google Cloud, the [**_Cloud Storage_**](https://cloud.google.com/storage) Service is a scalable object storage service that allows you to store and retrieve data globally. It's suitable for a wide range of use cases, including data backup, serving website content, storing large data sets for analysis, and more. Cloud Storage offers different storage classes, such as Standard, Nearline, Coldline, and Archive, each optimized for specific access patterns and cost considerations.
+
 2\. **Block storage** is a technology that controls data storage and storage devices. It divides any data, like a file or database entry, into blocks of equal sizes. The block storage system then stores the data block on underlying physical storage in a manner that is optimized for fast access and retrieval. In Google Cloud, several services allow storing the blocks:
 - [**_Local SSD_**](https://cloud.google.com/local-ssd): Ephemeral locally attached block storage for virtual machines and containers.
 - [**_Persistent disk_**](https://cloud.google.com/persistent-disk) provides durable block storage for Compute Engine virtual machine instances. It offers both standard and SSD persistent disks with different performance characteristics.
@@ -27,6 +28,7 @@ Google Cloud Platform (GCP) offers various storage services designed to cater to
 - [**_Filestore_**](https://cloud.google.com/filestore): A managed file storage service for applications that require a filesystem interface and shared file storage for applications running on Compute Engine or Kubernetes Engine instances.
 - [**_Parallelstore_**](https://cloud.google.com/parallelstore): High bandwidth, high IOPS, ultra-low latency, managed parallel file service.
 - [**_NetApp Volumes_**](https://cloud.google.com/netapp-volumes): A fully managed, cloud-based data storage service that provides advanced data management capabilities and highly scalable performance.
+
 4\. **Databases**: A database is a structured data collection stored on a disk, memory, or both. Databases come in a variety of flavors:
 - _In relational databases_, information is stored in tables, rows, and columns, which typically works best for structured data. There are three relational database options in Google Cloud: Cloud SQL, AlloyDB, and Cloud Spanner.
     - [**_Cloud SQL_**](https://cloud.google.com/sql): A fully-managed relational database service that supports MySQL, PostgreSQL, and SQL Server. It's ideal for applications requiring a traditional relational database structure.
@@ -40,7 +42,9 @@ Google Cloud Platform (GCP) offers various storage services designed to cater to
 ![](https://storage.googleapis.com/gweb-cloudblog-publish/images/Which-Database_v03-22-23.max-2000x2000.jpg){: .mx-auto.d-block :} *Google Cloud database options.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 5\. **Data Warehouses**: A data warehouse is a standard OLAP data architecture (don’t dare call it an analytical database; Bill Inmon will be upset). It tends to handle large amounts of data quickly, allowing users to analyze facts according to multiple dimensions in tandem (Cube). In Google Cloud, [**_BigQuery_**](https://cloud.google.com/bigquery) is a fully managed, serverless data warehouse service that enables scalable analysis over petabytes of data.
+
 6\. **Date Lakehouses**: A data lakehouse combines the low-cost, scalable storage of a data lake and the structure and management features of a data warehouse. Google Cloud provides [**_BigLake_**](https://cloud.google.com/biglake) as a storage engine that provides a unified interface for analytics and AI engines to query multiformat, multi-cloud, and multimodal data securely, governed, and performantly. It unifies data warehouses and data lakes into a consistent format for faster data analytics across multi-cloud storage and open formats.
+
 7\. **Transfert Services**: Google Cloud provides a few transfer services to move data from other cloud providers or from a physical appliance.
 
 These services cater to different storage needs, whether you require object storage, relational databases, NoSQL databases, file storage, or other forms of data storage and management within the Google Cloud Platform. In the next sections, I will dive into each service to demonstrate how to ingest and load data into it.
