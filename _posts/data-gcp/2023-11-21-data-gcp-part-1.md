@@ -50,7 +50,7 @@ Google Cloud Platform (GCP) offers various storage services designed to cater to
 
 These services cater to different storage needs, whether you require object storage, relational databases, NoSQL databases, file storage, or other forms of data storage and management within the Google Cloud Platform. In the next sections, I will dive into each service to demonstrate how to ingest and load data into it.
 
-## Data Ingest according to Google Cloud Services
+## Data Ingest depending on Storage Service
 ### 1- Ingest data into Object Storage
 Cloud Storage is a service for storing your objects in Google Cloud. An object is an immutable piece of data consisting of a file of any format. You store objects in containers called buckets. All buckets are associated with a project, and you can group your projects under an organization. 
 
