@@ -50,8 +50,7 @@ Google Cloud Platform (GCP) offers various storage services that cater to differ
 
 These services cater to different storage needs, whether you require object storage, relational databases, NoSQL databases, file storage, or other forms of data storage and management within the Google Cloud Platform. In the following sections, I will dive into each service to demonstrate how to ingest and load data into it.
 
-## Data Ingest depending on Storage Service
-### 1- Ingest data into Object Storage
+## Ingest data into Object Storage
 Cloud Storage is a service for storing your objects in Google Cloud. An object is an immutable piece of data consisting of a file of any format. You store objects in containers called buckets. All buckets are associated with a project; you can group your projects under an organization. 
 
 ![](https://cloud.google.com/static/storage/images/gcs-intro.svg){: .mx-auto.d-block :} *Cloud Storage Structure.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
@@ -76,8 +75,8 @@ Here are some basic ways you can import data into Cloud Storage:
 - [Terraform](https://www.terraform.io/): Terraform is an infrastructure-as-code (IaC) tool that you can use to provision the infrastructure for Cloud Storage.
 - [Cloud Storage FUSE](https://cloud.google.com/storage/docs/gcs-fuse): Cloud Storage FUSE allows you to mount Cloud Storage buckets to your local file system. Standard file system semantics enable your applications to read from a bucket or write to a bucket.
 
-### 2- Sync data into Block Storage
-#### 2A. Persistent Disk
+## Sync data into Block Storage
+### 2A. Persistent Disk
 By default, each Compute Engine virtual machine (VM) instance has a single boot Persistent Disk volume that contains the operating system. When your apps require additional storage space, one possible solution is to attach additional Persistent Disk volumes to your VM.
 
 Persistent Disk volumes are durable network storage devices that your VMs can access, like physical disks in a desktop or a server. The data on each persistent disk is distributed across several physical disks. Compute Engine manages the physical disks and the data distribution for you to ensure redundancy and optimal performance.
@@ -88,14 +87,14 @@ You can create and attach a non-boot zonal disk by using the [Google Cloud conso
 
 You should specify a custom device name when attaching the disk to a VM. The name you specify is used to generate a [symlink](https://cloud.google.com/compute/docs/disks/disk-symlinks) for the disk in the guest OS, making identification easier.
 
-#### 2B. Hyperdisk
+### 2B. Hyperdisk
 Google Cloud Hyperdisk is the newest generation of network block storage service in Google Cloud. Designed for the most demanding mission-critical applications, Hyperdisk offers a scalable, high-performance storage service with a comprehensive data persistence and management capabilities suite. With Hyperdisk, you can provision, manage, and scale your Compute Engine workloads without the cost and complexity of a typical on-premises storage area network (SAN).
 
 Hyperdisk volumes are durable network storage devices that your VMs can access, similar to Persistent Disk volumes. The data on each Hyperdisk is distributed across several physical disks. Compute Engine manages the physical disks and the data distribution for you to ensure redundancy and optimal performance.
 
 Hyperdisk volumes are located independently from your VMs, so you can detach or move Hyperdisk volumes to keep your data, even after you delete your VMs. Hyperdisk performance is decoupled from size, so you can dynamically update the performance, resize your existing Hyperdisk volumes, or add more Hyperdisk volumes to a VM to meet your performance and storage space requirements.
 
-#### 2C. Local SSD
+### 2C. Local SSD
 
 If your workloads need high-performance, low-latency temporary storage, consider using Local solid-state drive (Local SSD) disks when you create your virtual machine (VM). Local SSD disks are always-encrypted solid-state storage for Compute Engine VMs.
 
@@ -112,10 +111,10 @@ Once the disk is created and attached to the VM, you have to format and mount it
 rsync -a hello-world.txt root@<your.VM.IP.address>:/mnt/block-volume
 ```
 
-### 3- Import data into File Storage
+## Import data into File Storage
 Most data on-premise is stored in file systems, and as applications migrate to the cloud, their need for File storage doesn’t change, so file storage is critical to enterprise lift-and-shift and infrastructure modernization. Files are a useful abstraction, and even cloud-native applications are leveraging files.
 
-#### 3A. Filestore
+### 3A. Filestore
 
 Google Filestore is a fully managed file storage service enabling you to store and access data on Google Cloud. It is designed for use cases that require fast, scalable, and low-latency access to file data, such as shared file systems and home directories.
 
@@ -135,7 +134,7 @@ Filestore offers three performance tiers: Standard, High Performance, and Extrem
 
 ![](https://miro.medium.com/v2/resize:fit:1400/format:webp/0*j_Jxd20VF-tnLZjL){: .mx-auto.d-block :} *Filestore Tiers.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-#### 3B. Parallelstore
+### 3B. Parallelstore
 
 As businesses continue to grapple with the unique storage and access demands of data-intensive AI workloads, they’re looking to the cloud to deliver highly capable, cost-effective, and easily manageable storage solutions. Google Cloud customers training AI models often turn to GPU/TPUs for the needed performance. But let’s face it: Those resources are limited and are an infrastructure asset you want to utilize fully.
 
@@ -155,7 +154,7 @@ The [community examples](https://github.com/GoogleCloudPlatform/hpc-toolkit/tree
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://ssh.cloud.google.com/cloudshell/open?cloudshell_git_repo=https://github.com/daos-stack/google-cloud-daos.git&cloudshell_git_branch=main&shellonly=true&cloudshell_tutorial=docs/deploy_daos_cluster_example.md)
 
-#### 3C. NetApp Volumes
+### 3C. NetApp Volumes
 
 In addition, Google Cloud has partnered with NetApp to offer a fully managed, cloud-native data storage service that provides advanced data management capabilities and highly scalable performance, called [Cloud Volumes Service](https://www.netapp.com/us/cloud-marketplace/google-cloud-platform.aspx).
 
@@ -169,14 +168,14 @@ Moreover, Google Cloud NetApp Volumes enable easy data recovery if a user or app
 
 Once you mount the File Storage instance (Filestore, Parallelstore or NetApp) to a Compute Engine instance or a Kubernetes Engine cluster as a file system, you can use it like any other file system on your instances.
 
-### 4- Load data into Google Cloud databases
-#### 4A. CloudSQL
-#### 4B. Cloud Spanner
-#### 4C. BigTable
-#### 4D. Firestore
-#### 4E. Memorystore
-### 5- Load data into Google Cloud BigQuery (Data Warehouse)
-### 6- Load data into Google Cloud BigLake (Data Lakehouse)
+### Load data into Google Cloud databases
+### 4A. CloudSQL
+### 4B. Cloud Spanner
+### 4C. BigTable
+### 4D. Firestore
+### 4E. Memorystore
+## Load data into Google Cloud BigQuery (Data Warehouse)
+## Load data into Google Cloud BigLake (Data Lakehouse)
 
 ## Summary
 
