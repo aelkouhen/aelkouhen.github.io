@@ -71,8 +71,8 @@ Here are some basic ways you can import data into Cloud Storage:
 - [Console](https://console.cloud.google.com/storage): The Google Cloud console provides a visual interface for managing your data in a browser.
 - [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with Cloud Storage through a terminal using gcloud storage commands.
 - [Client libraries](https://cloud.google.com/storage/docs/reference/libraries): The Cloud Storage client libraries allow you to manage your data using one of your preferred languages, including C++, C#, Go, Java, Node.js, PHP, Python, and Ruby.
-- REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) or [XML](https://cloud.google.com/storage/docs/xml-api) APIs.
-- [Terraform](https://www.terraform.io/): Terraform is an infrastructure-as-code (IaC) tool that you can use to provision the infrastructure for Cloud Storage.
+- REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) or [XML](https://cloud.google.com/storage/docs/xml-api) APIs. These APIs are used by many other service such as [PubSub](https://cloud.google.com/pubsub/docs/create-cloudstorage-subscription), [Dataflow](https://cloud.google.com/dataflow/docs/guides/write-to-cloud-storage), [Dataproc](https://cloud.google.com/dataproc/docs/tutorials/gcs-connector-spark-tutorial) (Apache Spark to Cloud Storage Connector), and many other connectors (e.g., Kafka, Confluent...) to import batch and Streaming data into Cloud Storage.
+- With Infrastructure-as-Code (IaC) tools, you can provision the infrastructure for Cloud Storage and run jobs to import/sync data into it.
 - [Cloud Storage FUSE](https://cloud.google.com/storage/docs/gcs-fuse): Cloud Storage FUSE allows you to mount Cloud Storage buckets to your local file system. Standard file system semantics enable your applications to read from a bucket or write to a bucket.
 
 ## Sync data into Block Storage
