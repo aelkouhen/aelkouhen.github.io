@@ -265,14 +265,14 @@ To ingest data into CloudSQL, using the SQL/CSV dump files you can use either:
   
 - [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with CloudSQL database instance through a terminal using gcloud storage commands.
 
+CSV dump file import command:
 ```shell
 gcloud sql import csv INSTANCE_NAME gs://BUCKET_NAME/FILE_NAME \
 --database=DATABASE_NAME \
 --table=TABLE_NAME
 ```
 
-or,
-
+SQL dump file import command:
 ```shell
 gcloud sql import sql INSTANCE_NAME gs://BUCKET_NAME/IMPORT_FILE_NAME \
 --database=DATABASE_NAME
@@ -307,6 +307,160 @@ Request JSON body:
 
 2\- For both Batch and Streaming data, you can use the Database Migration Service (DMS) to create migration jobs. 
 
+Database Migration Service provides options for one-time and continuous jobs to migrate data to Cloud SQL using different connectivity options, including IP allowlists, VPC peering, and reverse SSH tunnels (see documentation on connectivity options [here](https://cloud.google.com/database-migration/docs/postgresql/configure-connectivity).
+
+Migrating a database via Database Migration Service requires some preparation of the source database, including creating a dedicated user with replication rights, adding a few extensions (e.g., pglogical for PostgreSQL) to the source database and granting rights to the schema and tables in the database to be migrated, as well as the database, to that user. The following steps are mandatory to to configure a continuous Database Migration Service job to migrate databases from a PostgreSQL instance to Cloud SQL for PostgreSQL.
+
+1- Verify that the Database Migration API is enabled in GCP console.
+2- Prepare the source database for migration: In this step, you will install and configure the pglogical database extension. 
+
+In your PostgreSQL VM, you have to install the pglogical extension:
+
+```
+sudo apt install postgresql-13-pglogical
+sudo systemctl restart postgresql@13-main
+```
+
+In pg_hba.conf these commands added a rule to allow access to all hosts:
+
+```
+#GSP918 - allow access to all hosts
+host    all all 0.0.0.0/0   md5
+```
+
+In postgresql.conf, these commands set the minimal configuration for pglogical to configure it to listen on all addresses:
+
+```
+#GSP918 - added configuration for pglogical database extension
+
+wal_level = logical         # minimal, replica, or logical
+max_worker_processes = 10   # one per database needed on provider node
+                            # one per node needed on subscriber node
+max_replication_slots = 10  # one per node needed on provider node
+max_wal_senders = 10        # one per node needed on provider node
+shared_preload_libraries = 'pglogical'
+max_wal_size = 1GB
+min_wal_size = 80MB
+
+listen_addresses = '*'         # what IP address(es) to listen on, '*' is all
+The above code snippets were appended to the relevant files and the PostgreSQL service restarted.
+```
+
+Then, launch the psql tool:
+
+```
+sudo su - postgres
+psql
+```
+
+And, add the pglogical database extension to the postgres (default database), and all databases you want to migrate (e.g., orders database).
+```
+\c postgres;
+CREATE EXTENSION pglogical;
+\c orders;
+CREATE EXTENSION pglogical;
+```
+
+3- Create the database migration user: In this step you will create a dedicated user for managing database migration.
+
+In psql, enter the commands below to create a new user with the replication role:
+
+```
+CREATE USER migration_admin PASSWORD 'DMS_1s_cool!';
+ALTER DATABASE orders OWNER TO migration_admin;
+ALTER ROLE migration_admin WITH REPLICATION;
+```
+
+4- Assign permissions to the migration user: In this step you will assign the necessary permissions to the migration_admin user to enable Database Migration Service to migrate your database. 
+
+In psql, grant permissions to the pglogical schema and tables for the postgres database.
+
+```
+\c postgres;
+
+GRANT USAGE ON SCHEMA pglogical TO migration_admin;
+GRANT ALL ON SCHEMA pglogical TO migration_admin;
+
+GRANT SELECT ON pglogical.tables TO migration_admin;
+GRANT SELECT ON pglogical.depend TO migration_admin;
+GRANT SELECT ON pglogical.local_node TO migration_admin;
+GRANT SELECT ON pglogical.local_sync_status TO migration_admin;
+GRANT SELECT ON pglogical.node TO migration_admin;
+GRANT SELECT ON pglogical.node_interface TO migration_admin;
+GRANT SELECT ON pglogical.queue TO migration_admin;
+GRANT SELECT ON pglogical.replication_set TO migration_admin;
+GRANT SELECT ON pglogical.replication_set_seq TO migration_admin;
+GRANT SELECT ON pglogical.replication_set_table TO migration_admin;
+GRANT SELECT ON pglogical.sequence_state TO migration_admin;
+GRANT SELECT ON pglogical.subscription TO migration_admin;
+```
+
+In psql, grant permissions to the pglogical schema and tables for the orders database.
+```
+\c orders;
+
+GRANT USAGE ON SCHEMA pglogical TO migration_admin;
+GRANT ALL ON SCHEMA pglogical TO migration_admin;
+
+GRANT SELECT ON pglogical.tables TO migration_admin;
+GRANT SELECT ON pglogical.depend TO migration_admin;
+GRANT SELECT ON pglogical.local_node TO migration_admin;
+GRANT SELECT ON pglogical.local_sync_status TO migration_admin;
+GRANT SELECT ON pglogical.node TO migration_admin;
+GRANT SELECT ON pglogical.node_interface TO migration_admin;
+GRANT SELECT ON pglogical.queue TO migration_admin;
+GRANT SELECT ON pglogical.replication_set TO migration_admin;
+GRANT SELECT ON pglogical.replication_set_seq TO migration_admin;
+GRANT SELECT ON pglogical.replication_set_table TO migration_admin;
+GRANT SELECT ON pglogical.sequence_state TO migration_admin;
+GRANT SELECT ON pglogical.subscription TO migration_admin;
+
+GRANT USAGE ON SCHEMA public TO migration_admin;
+GRANT ALL ON SCHEMA public TO migration_admin;
+
+GRANT SELECT ON public.distribution_centers TO migration_admin;
+GRANT SELECT ON public.inventory_items TO migration_admin;
+GRANT SELECT ON public.order_items TO migration_admin;
+GRANT SELECT ON public.products TO migration_admin;
+GRANT SELECT ON public.users TO migration_admin;
+```
+
+The source databases are now prepared for migration. The permissions you have granted to the migration_admin user are all that is required for Database Migration Service to migrate the postgres and orders databases.
+
+Make the migration_admin user the owner of the tables in the orders database, so that you can edit the source data later, when you test the migration.
+
+```
+\c orders;
+\dt
+ALTER TABLE public.distribution_centers OWNER TO migration_admin;
+ALTER TABLE public.inventory_items OWNER TO migration_admin;
+ALTER TABLE public.order_items OWNER TO migration_admin;
+ALTER TABLE public.products OWNER TO migration_admin;
+ALTER TABLE public.users OWNER TO migration_admin;
+\dt
+```
+
+5- Create a Database Migration Service connection profile for a stand-alone PostgreSQL database: In this task, you will create a connection profile for the PostgreSQL source instance. For Connection profile name, enter `postgres-vm`, for Hostname or IP address, enter the internal IP for the PostgreSQL source instance that you copied in the previous task (e.g., 10.128.0.2), and for Port, enter 5432. Then, enter `migration_admin` and `DMS_1s_cool!` as username and password.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/c3b569d3-cbbe-46a7-a78c-b8bb537cad34){: .mx-auto.d-block :} *Creating a DMS connection profile.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+6- Create and start a continuous migration job: When you create a new migration job, you first define the source database instance using a previously created connection profile. For Source connection profile, select `postgres-vm`.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/7834f1eb-58c7-43c6-8f86-2185a81e07ca){: .mx-auto.d-block :} *Creating a migration job.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+Then you create a new destination database instance and configure connectivity between the source and destination instances.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/003f4271-363e-4283-94b0-7be5e082bda5){: .mx-auto.d-block :} *Creating the destination database.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+7- Test and start the continuous migration job: In the Database Migration Service tab you open earlier, review the details of the migration job. Click Test Job. After a successful test, click Create & Start Job.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/15de85e8-8c53-4437-8603-2a56e0476b3a){: .mx-auto.d-block :} *Testing and Running the migration job.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+After the job has started, the status will show as Starting and then transition to Running Full dump in progress to indicate that the initial database dump is in progress. After the initial database dump has been completed, the status will transition to Running CDC in progress to indicate that continuous migration is active.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1aab4136-c9a7-43d3-a387-4fe8ae5dd478){: .mx-auto.d-block :} *Checking migration status.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+After you create and run the migration job, you confirm that an initial copy of your database has been successfully migrated from sourse database to your Cloud SQL target instance. You also explore how continuous migration jobs apply data updates from your source database to your Cloud SQL instance. 
 
 ### 4B. Cloud Spanner
 ### 4C. BigTable
