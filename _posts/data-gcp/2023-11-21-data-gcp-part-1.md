@@ -312,23 +312,24 @@ Database Migration Service provides options for one-time and continuous jobs to 
 Migrating a database via Database Migration Service requires some preparation of the source database, including creating a dedicated user with replication rights, adding a few extensions (e.g., pglogical for PostgreSQL) to the source database and granting rights to the schema and tables in the database to be migrated, as well as the database, to that user. The following steps are mandatory to to configure a continuous Database Migration Service job to migrate databases from a PostgreSQL instance to Cloud SQL for PostgreSQL.
 
 A\- Verify that the Database Migration API is enabled in GCP console.
+
 B\- Prepare the source database for migration: In this step, you will install and configure the pglogical database extension. 
 
-In your PostgreSQL VM, you have to install the pglogical extension:
+In your PostgreSQL VM, you have to install the `pglogical` extension:
 
-```
+```shell
 sudo apt install postgresql-13-pglogical
 sudo systemctl restart postgresql@13-main
 ```
 
 In `pg_hba.conf` these commands added a rule to allow access to all hosts:
 
-```
+```config
 #GSP918 - allow access to all hosts
 host    all all 0.0.0.0/0   md5
 ```
 
-In `postgresql.conf`, these commands set the minimal configuration for pglogical to configure it to listen on all addresses:
+In `postgresql.conf`, these commands set the minimal configuration for `pglogical` to configure it to listen on all addresses:
 
 ```properties
 #GSP918 - added configuration for pglogical database extension
@@ -364,7 +365,7 @@ CREATE EXTENSION pglogical;
 
 C\- Create the database migration user: In this step you will create a dedicated user for managing database migration.
 
-In psql, enter the commands below to create a new user with the replication role:
+In `psql`, enter the commands below to create a new user with the replication role:
 
 {% highlight SQL linenos %}
 CREATE USER migration_admin PASSWORD 'DMS_1s_cool!';
@@ -372,9 +373,9 @@ ALTER DATABASE orders OWNER TO migration_admin;
 ALTER ROLE migration_admin WITH REPLICATION;
 {% endhighlight %}
 
-D\- Assign permissions to the migration user: In this step you will assign the necessary permissions to the migration_admin user to enable Database Migration Service to migrate your database. 
+D\- Assign permissions to the migration user: In this step you will assign the necessary permissions to the `migration_admin` user to enable Database Migration Service to migrate your database. 
 
-In `psql`, grant permissions to the pglogical schema and tables for the postgres database.
+In `psql`, grant permissions to the `pglogical` schema and tables for the `postgres` database.
 
 {% highlight SQL linenos %}
 \c postgres;
@@ -396,7 +397,7 @@ GRANT SELECT ON pglogical.sequence_state TO migration_admin;
 GRANT SELECT ON pglogical.subscription TO migration_admin;
 {% endhighlight %}
 
-In `psql`, grant permissions to the pglogical schema and tables for the orders database.
+In `psql`, grant permissions to the `pglogical` schema and tables for the `orders` database.
 
 {% highlight SQL linenos %}
 \c orders;
@@ -427,9 +428,9 @@ GRANT SELECT ON public.products TO migration_admin;
 GRANT SELECT ON public.users TO migration_admin;
 {% endhighlight %}
 
-The source databases are now prepared for migration. The permissions you have granted to the migration_admin user are all that is required for Database Migration Service to migrate the postgres and orders databases.
+The source databases are now prepared for migration. The permissions you have granted to the `migration_admin` user are all that is required for Database Migration Service to migrate the postgres and orders databases.
 
-Make the migration_admin user the owner of the tables in the orders database, so that you can edit the source data later, when you test the migration.
+Make the `migration_admin` user the owner of the tables in the `orders` database, so that you can edit the source data later, when you test the migration.
 
 {% highlight SQL linenos %}
 \c orders;
@@ -447,8 +448,6 @@ E\- Create a Database Migration Service connection profile for a stand-alone Pos
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/c3b569d3-cbbe-46a7-a78c-b8bb537cad34){: .mx-auto.d-block :} *Creating a DMS connection profile.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 F\- Create and start a continuous migration job: When you create a new migration job, you first define the source database instance using a previously created connection profile. For Source connection profile, select `postgres-vm`.
-
-![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/7834f1eb-58c7-43c6-8f86-2185a81e07ca){: .mx-auto.d-block :} *Creating a migration job.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Then you create a new destination database instance and configure connectivity between the source and destination instances.
 
