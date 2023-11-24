@@ -95,9 +95,9 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     blob = bucket.blob(destination_blob_name)
 
     # Optional: set a generation-match precondition to avoid potential race conditions
-    # and data corruptions. The request to upload is aborted if the object's
+    # and data corruption. The request to upload is aborted if the object's
     # generation number does not match your precondition. For a destination
-    # object that does not yet exist, set the if_generation_match precondition to 0.
+    # object that does not yet exist set the if_generation_match precondition to 0.
     # If the destination object already exists in your bucket, set instead a
     # generation-match precondition using its generation number.
     generation_match_precondition = 0
@@ -109,7 +109,7 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     )
 {% endhighlight %}
   
-- REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) or [XML](https://cloud.google.com/storage/docs/xml-api) APIs. These APIs are used by many other service such as [PubSub](https://cloud.google.com/pubsub/docs/create-cloudstorage-subscription), [Dataflow](https://cloud.google.com/dataflow/docs/guides/write-to-cloud-storage), [Dataproc](https://cloud.google.com/dataproc/docs/tutorials/gcs-connector-spark-tutorial) (Apache Spark to Cloud Storage Connector), and many other connectors (e.g., Kafka, Confluent...) to import batch and Streaming data into Cloud Storage.
+- REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) or [XML](https://cloud.google.com/storage/docs/xml-api) APIs. These APIs are used by many other services such as [PubSub](https://cloud.google.com/pubsub/docs/create-cloudstorage-subscription), [Dataflow](https://cloud.google.com/dataflow/docs/guides/write-to-cloud-storage), [Dataproc](https://cloud.google.com/dataproc/docs/tutorials/gcs-connector-spark-tutorial) (Apache Spark to Cloud Storage Connector), and many other connectors (e.g., Kafka, Confluent...) to import batch and Streaming data into Cloud Storage.
 
 ```
 POST /OBJECT_NAME HTTP/2
@@ -156,7 +156,7 @@ You should specify a custom device name when attaching the disk to a VM. The nam
 ### 2B. Hyperdisk
 Google Cloud Hyperdisk is the newest generation of network block storage service in Google Cloud. Designed for the most demanding mission-critical applications, Hyperdisk offers a scalable, high-performance storage service with a comprehensive data persistence and management capabilities suite. With Hyperdisk, you can provision, manage, and scale your Compute Engine workloads without the cost and complexity of a typical on-premises storage area network (SAN).
 
-The new variant of Persistent Disks allows users to make independent workload-based performance tuning using three metrics- IOPS, throughput and capacity. The Persistent Disks are divided into three categories – Hyperdisk Throughput, Hyperdisk Balanced and Hyperdisk Extreme.
+The new variant of Persistent Disks allows users to make independent workload-based performance tuning using three metrics- IOPS, throughput, and capacity. The Persistent Disks are divided into three categories – Hyperdisk Throughput, Hyperdisk Balanced, and Hyperdisk Extreme.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/19f069a7-2907-405c-9d14-3fa71f7991b3){: .mx-auto.d-block :} *Cloud Hyperdisk Categories.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -171,7 +171,7 @@ If your workloads need high-performance, low-latency temporary storage, consider
 Local SSD disks are ideal when you need storage for any of the following use cases:
 - Caches or storage for transient, low-value data
 - Scratch processing space for high-performance computing or data analytics
-- Temporary data storage like for the tempdb system database for Microsoft SQL Server
+- Temporary data storage like for the `tempdb` system database for Microsoft SQL Server
 
 Local SSD disks offer superior I/O operations per second (IOPS) and very low latency compared to [Persistent disk](https://cloud.google.com/persistent-disk) and Google Cloud [Hyperdisk](https://cloud.google.com/compute/docs/disks/hyperdisks). This is because Local SSD disks are physically attached to the server that hosts your VM. For this same reason, Local SSD disks can only provide temporary storage. Because Local SSD is suitable only for temporary storage, you must store data that is not temporary or ephemeral on one of our durable storage options.
 
@@ -230,7 +230,7 @@ The [community examples](https://github.com/GoogleCloudPlatform/hpc-toolkit/tree
 
 In addition, Google Cloud has partnered with NetApp to offer a fully managed, cloud-native data storage service that provides advanced data management capabilities and highly scalable performance, called [Cloud Volumes Service](https://www.netapp.com/us/cloud-marketplace/google-cloud-platform.aspx).
 
-Whether you want to migrate existing enterprise and industry-specific apps to Google Cloud or build new machine learning (ML) and Kubernetes-based apps that require persistent storage, you can accelerate deployment times while lowering costs by using Cloud Volumes Service.
+Whether you want to migrate existing enterprise and industry-specific apps to Google Cloud or build new machine learning (ML) and Kubernetes-based apps requiring persistent storage, you can accelerate deployment times while lowering costs using Cloud Volumes Service.
 
 NetApp Volumes enables data sharing for Windows/Linux applications, making it useful for user and group shares, application shares for unstructured data, SAP shared files, VDI, shared storage for MS-SQL, binaries, log files, config files, user and group shares, shared machine learning data, EDA-shared chip design data, and PACS images.
 
@@ -240,15 +240,15 @@ Moreover, Google Cloud NetApp Volumes enable easy data recovery if a user or app
 
 ![](https://lh3.googleusercontent.com/7GaEyxS3gm6uX3APRqWRNA15AmxITP59odKUGKDOF4MHcbZrkuQ1uMrY-1zvcJwZmnSIyroIGBm7lQ=s2048-w2048-rw-lo){: .mx-auto.d-block :} *Ransomware Attacks Recovery using NetApp.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Once you mount the File Storage instance (Filestore, Parallelstore or NetApp) to a Compute Engine instance or a Kubernetes Engine cluster as a file system, you can use it like any other file system on your instances.
+Once you mount the File Storage instance (Filestore, Parallelstore, or NetApp) to a Compute Engine instance or a Kubernetes Engine cluster as a file system, you can use it like any other file system on your instances.
 
 ### Ingest data into Google Cloud databases
 ### 4A. CloudSQL
-Cloud SQL supports the most popular open source and commercial engines, including MySQL, PostgreSQL, and SQL Server with rich support for extensions, configuration flags, and popular developer tools. 
+Cloud SQL supports the most popular open-source and commercial engines, including MySQL, PostgreSQL, and SQL Server, with rich support for extensions, configuration flags, and popular developer tools. 
 
-Ingesting data into these database engines are more often used to migrate local databases to managed ones (lift and shift). Depending on the source data velocity, you might consider different migration strategies:
+Ingesting data into these database engines is often used to migrate local databases to managed ones (lift and shift). Depending on the source data velocity, you might consider different migration strategies:
 
-1\- For Batch data, you can use SQL dump files or CSV dump files to import data into CloudSQL. SQL dump files are plain text files with a sequence of SQL commands. CSV dump files contain one line for each row of data fields. 
+1\- You can use SQL dump files or CSV dump files to import Batch data into CloudSQL. SQL dump files are plain text files with a sequence of SQL commands. CSV dump files contain one line for each row of data fields. 
 
 To import data from Cloud Storage, the Cloud SQL instance service account or user must have one of the following sets of roles:
 - The Cloud SQL Admin role and the `roles/storage.legacyObjectReader` IAM role
@@ -258,12 +258,12 @@ To import data from Cloud Storage, the Cloud SQL instance service account or use
     - `storage.buckets.get`
     - `storage.objects.get`
 
-To ingest data into CloudSQL, using the SQL/CSV dump files you can use either:
-- [Console](https://console.cloud.google.com/sql): The Google Cloud console provides a visual interface for importing your data in your database instance.
+To ingest data into CloudSQL, using the SQL/CSV dump files, you can use either:
+- [Console](https://console.cloud.google.com/sql ): The Google Cloud console provides a visual interface for importing data into your database instance.
 
 ![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1701f8cf-8e32-41a7-a116-ff3d41b9675f){: .mx-auto.d-block :} *Importing SQL dump files using Console.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
   
-- [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with CloudSQL database instance through a terminal using gcloud storage commands.
+- [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with CloudSQL database instances through a terminal using gcloud storage commands.
 
 CSV dump file import command:
 ```shell
@@ -305,13 +305,13 @@ Request JSON body:
 }
 {% endhighlight %}
 
-2\- For both Batch and Streaming data, you can use the Database Migration Service (DMS) to create migration jobs. 
+2\- You can use the Database Migration Service (DMS) to create migration jobs for both Batch and Streaming data. 
 
 Database Migration Service provides options for one-time and continuous jobs to migrate data to Cloud SQL using different connectivity options, including IP allowlists, VPC peering, and reverse SSH tunnels (see documentation on connectivity options [here](https://cloud.google.com/database-migration/docs/postgresql/configure-connectivity).
 
-Migrating a database via Database Migration Service requires some preparation of the source database, including creating a dedicated user with replication rights, adding a few extensions (e.g., pglogical for PostgreSQL) to the source database and granting rights to the schema and tables in the database to be migrated, as well as the database, to that user. The following steps are mandatory to to configure a continuous Database Migration Service job to migrate databases from a PostgreSQL instance to Cloud SQL for PostgreSQL.
+Migrating a database via Database Migration Service requires some preparation of the source database, including creating a dedicated user with replication rights, adding a few extensions (e.g., pglogical for PostgreSQL) to the source database, and granting rights to the schema and tables in the database to be migrated, as well as the database, to that user. The following steps are mandatory to configure a continuous Database Migration Service job to migrate databases from a PostgreSQL instance to Cloud SQL for PostgreSQL.
 
-A\- Verify that the Database Migration API is enabled in GCP console.
+A\- Verify that the Database Migration API is enabled in the GCP console.
 
 B\- Prepare the source database for migration: In this step, you will install and configure the pglogical database extension. 
 
@@ -322,7 +322,7 @@ sudo apt install postgresql-13-pglogical
 sudo systemctl restart postgresql@13-main
 ```
 
-In `pg_hba.conf` these commands added a rule to allow access to all hosts:
+In `pg_hba.conf`, these commands added a rule to allow access to all hosts:
 
 ```config
 #GSP918 - allow access to all hosts
@@ -335,26 +335,26 @@ In `postgresql.conf`, these commands set the minimal configuration for `pglogica
 #GSP918 - added configuration for pglogical database extension
 
 wal_level = logical         # minimal, replica, or logical
-max_worker_processes = 10   # one per database needed on provider node
-                            # one per node needed on subscriber node
-max_replication_slots = 10  # one per node needed on provider node
-max_wal_senders = 10        # one per node needed on provider node
+max_worker_processes = 10   # one per database needed on the provider node
+                            # One per node needed on the subscriber node
+max_replication_slots = 10  # one per node needed on the provider node
+max_wal_senders = 10        # one per node needed on the provider node
 shared_preload_libraries = 'pglogical'
 max_wal_size = 1GB
 min_wal_size = 80MB
 
 listen_addresses = '*'         # what IP address(es) to listen on, '*' is all
-The above code snippets were appended to the relevant files and the PostgreSQL service restarted.
+The above code snippets were appended to the relevant files, and the PostgreSQL service restarted.
 ```
 
-Then, launch the psql tool:
+Then, launch the `psql` tool:
 
 ```shell
 sudo su - postgres
 psql
 ```
 
-And, add the pglogical database extension to the postgres (default database), and all databases you want to migrate (e.g., orders database).
+And, add the pglogical database extension to the `postgres` (default database) and all databases you want to migrate (e.g., orders database).
 
 {% highlight SQL linenos %}
 \c postgres;
@@ -363,7 +363,7 @@ CREATE EXTENSION pglogical;
 CREATE EXTENSION pglogical;
 {% endhighlight %}
 
-C\- Create the database migration user: In this step you will create a dedicated user for managing database migration.
+C\- Create the database migration user: In this step, you will create a dedicated user for managing database migration.
 
 In `psql`, enter the commands below to create a new user with the replication role:
 
@@ -373,7 +373,7 @@ ALTER DATABASE orders OWNER TO migration_admin;
 ALTER ROLE migration_admin WITH REPLICATION;
 {% endhighlight %}
 
-D\- Assign permissions to the migration user: In this step you will assign the necessary permissions to the `migration_admin` user to enable Database Migration Service to migrate your database. 
+D\- Assign permissions to the migration user: In this step, you will assign the necessary permissions to the `migration_admin` user to enable Database Migration Service to migrate your database. 
 
 In `psql`, grant permissions to the `pglogical` schema and tables for the `postgres` database.
 
@@ -428,9 +428,9 @@ GRANT SELECT ON public.products TO migration_admin;
 GRANT SELECT ON public.users TO migration_admin;
 {% endhighlight %}
 
-The source databases are now prepared for migration. The permissions you have granted to the `migration_admin` user are all that is required for Database Migration Service to migrate the postgres and orders databases.
+The source databases are now prepared for migration. The permissions you have granted to the `migration_admin` user are all that is required for Database Migration Service to migrate the `postgres` and `orders` databases.
 
-Make the `migration_admin` user the owner of the tables in the `orders` database, so that you can edit the source data later, when you test the migration.
+Make the `migration_admin` user the owner of the tables in the `orders` database so that you can edit the source data later when you test the migration.
 
 {% highlight SQL linenos %}
 \c orders;
@@ -443,25 +443,25 @@ ALTER TABLE public.users OWNER TO migration_admin;
 \dt
 {% endhighlight %}
 
-E\- Create a Database Migration Service connection profile for a stand-alone PostgreSQL database: In this task, you will create a connection profile for the PostgreSQL source instance. For Connection profile name, enter `postgres-vm`, for Hostname or IP address, enter the internal IP for the PostgreSQL source instance that you copied in the previous task (e.g., 10.128.0.2), and for Port, enter `5432`. Then, enter `migration_admin` and `DMS_1s_cool!` as username and password.
+E\- Create a Database Migration Service connection profile for a stand-alone PostgreSQL database: In this task, you will create a connection profile for the PostgreSQL source instance. For the Connection profile name, enter `postgres-vm`; for Hostname or IP address, enter the internal IP for the PostgreSQL source instance that you copied in the previous task (e.g., 10.128.0.2); and for Port, enter `5432`. Then, enter `migration_admin` and `DMS_1s_cool!` as username and password.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/c3b569d3-cbbe-46a7-a78c-b8bb537cad34){: .mx-auto.d-block :} *Creating a DMS connection profile.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-F\- Create and start a continuous migration job: When you create a new migration job, you first define the source database instance using a previously created connection profile. For Source connection profile, select `postgres-vm`.
+F\- Create and start a continuous migration job: When you create a new migration job, you first define the source database instance using a previously created connection profile. For the Source connection profile, select `postgres-vm`.
 
-Then you create a new destination database instance and configure connectivity between the source and destination instances.
+Then, you create a new destination database instance and configure connectivity between the source and destination instances.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/003f4271-363e-4283-94b0-7be5e082bda5){: .mx-auto.d-block :} *Creating the destination database.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-G\- Test and start the continuous migration job: In the Database Migration Service tab you open earlier, review the details of the migration job. Click Test Job. After a successful test, click Create & Start Job.
+G\- Test and start the continuous migration job: In the Database Migration Service tab you opened earlier, review the details of the migration job. Click Test Job. After a successful test, click Create & Start Job.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/15de85e8-8c53-4437-8603-2a56e0476b3a){: .mx-auto.d-block :} *Testing and Running the migration job.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-After the job has started, the status will show as Starting and then transition to Running Full dump in progress to indicate that the initial database dump is in progress. After the initial database dump has been completed, the status will transition to Running CDC in progress to indicate that continuous migration is active.
+After the job starts, the status will show as Starting and then transition to Running Full dump in progress to indicate that the initial database dump is in progress. After the initial database dump has been completed, the status will transition to Running CDC in progress to indicate that continuous migration is active.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1aab4136-c9a7-43d3-a387-4fe8ae5dd478){: .mx-auto.d-block :} *Checking migration status.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-After you create and run the migration job, you confirm that an initial copy of your database has been successfully migrated from sourse database to your Cloud SQL target instance. You also explore how continuous migration jobs apply data updates from your source database to your Cloud SQL instance. 
+After you create and run the migration job, you confirm that an initial copy of your database has been successfully migrated from the source database to your Cloud SQL target instance. You also explore how continuous migration jobs apply data updates from your source database to your Cloud SQL instance. 
 
 ### 4B. Cloud Spanner
 ### 4C. BigTable
@@ -481,3 +481,4 @@ After you create and run the migration job, you confirm that an initial copy of 
 * [Distributed Asynchronous Object Storage (DAOS)](https://docs.daos.io/)
 * [Google Cloud Platform (GCP)](https://cloud.google.com/)
 * [Google Cloud HPC Toolkit](https://cloud.google.com/hpc-toolkit)
+* [Migrate to Cloud SQL for PostgreSQL using Database Migration Service, Google Cloud Skills Boost](https://www.cloudskillsboost.google/focuses/22792?parent=catalog)
