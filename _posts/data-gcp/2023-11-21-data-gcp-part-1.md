@@ -156,6 +156,10 @@ You should specify a custom device name when attaching the disk to a VM. The nam
 ### 2B. Hyperdisk
 Google Cloud Hyperdisk is the newest generation of network block storage service in Google Cloud. Designed for the most demanding mission-critical applications, Hyperdisk offers a scalable, high-performance storage service with a comprehensive data persistence and management capabilities suite. With Hyperdisk, you can provision, manage, and scale your Compute Engine workloads without the cost and complexity of a typical on-premises storage area network (SAN).
 
+The new variant of Persistent Disks allows users to make independent workload-based performance tuning using three metrics- IOPS, throughput and capacity. The Persistent Disks are divided into three categories – Hyperdisk Throughput, Hyperdisk Balanced and Hyperdisk Extreme.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/19f069a7-2907-405c-9d14-3fa71f7991b3){: .mx-auto.d-block :} *Cloud Hyperdisk Categories.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 Hyperdisk volumes are durable network storage devices that your VMs can access, similar to Persistent Disk volumes. The data on each Hyperdisk is distributed across several physical disks. Compute Engine manages the physical disks and the data distribution for you to ensure redundancy and optimal performance.
 
 Hyperdisk volumes are located independently from your VMs, so you can detach or move Hyperdisk volumes to keep your data, even after you delete your VMs. Hyperdisk performance is decoupled from size, so you can dynamically update the performance, resize your existing Hyperdisk volumes, or add more Hyperdisk volumes to a VM to meet your performance and storage space requirements.
@@ -192,6 +196,8 @@ A Filestore instance represents physical storage capacity. A share represents an
 
 Alternatively, Filestore multishares for GKE, available for enterprise-tier instances only, offer access to multiple shares on a single instance.
 
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/24db35ff-71a1-4734-835b-5a3705755447){: .mx-auto.d-block :} *Transfer data sets from Cloud Engine to Filestore.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 Instance names, or instance IDs, are used by administrators to manage instances. Clients use file share names to connect to the shares exported from those instances.
 
 You can create a Filestore instance by using either the [Google Cloud console](https://console.cloud.google.com/filestore) or the [gcloud CLI](https://cloud.google.com/sdk/gcloud/reference/filestore/instances/create).
@@ -227,6 +233,8 @@ In addition, Google Cloud has partnered with NetApp to offer a fully managed, cl
 Whether you want to migrate existing enterprise and industry-specific apps to Google Cloud or build new machine learning (ML) and Kubernetes-based apps that require persistent storage, you can accelerate deployment times while lowering costs by using Cloud Volumes Service.
 
 NetApp Volumes enables data sharing for Windows/Linux applications, making it useful for user and group shares, application shares for unstructured data, SAP shared files, VDI, shared storage for MS-SQL, binaries, log files, config files, user and group shares, shared machine learning data, EDA-shared chip design data, and PACS images.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1a20a63a-9627-4cd4-8b9c-3ececa4dd73c){: .mx-auto.d-block :} *NetApp Storage on Compute Engine.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Moreover, Google Cloud NetApp Volumes enable easy data recovery if a user or application deletes data accidentally, and scheduled snapshots provide convenient, low RPO/RTO recovery points. Users can access snapshots and self-restore data quickly and easily from within the console. For example, NetApp Volumes enables fast ransomware recovery. Quickly revert any volume back to a snapshot taken before the ransomware hit. Volume recovery time is less than one minute versus restoring from backup, which can take hours.
 
