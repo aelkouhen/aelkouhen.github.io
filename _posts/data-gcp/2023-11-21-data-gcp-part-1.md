@@ -278,7 +278,7 @@ gcloud sql import sql INSTANCE_NAME gs://BUCKET_NAME/IMPORT_FILE_NAME \
 --database=DATABASE_NAME
 ```
 
-- REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) API.
+- REST APIs: Manage your data using the [JSON](https://cloud.google.com/sql/docs/mysql/apis) API.
 
 HTTP method and URL:
 ```shell
