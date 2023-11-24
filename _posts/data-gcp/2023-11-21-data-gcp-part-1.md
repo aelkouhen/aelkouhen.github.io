@@ -259,11 +259,11 @@ To import data from Cloud Storage, the Cloud SQL instance service account or use
     - `storage.objects.get`
 
 To ingest data into CloudSQL, using the SQL/CSV dump files, you can use either:
-- [Console](https://console.cloud.google.com/sql ): The Google Cloud console provides a visual interface for importing data into your database instance.
+I\- [Console](https://console.cloud.google.com/sql ): The Google Cloud console provides a visual interface for importing data into your database instance.
 
 ![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1701f8cf-8e32-41a7-a116-ff3d41b9675f){: .mx-auto.d-block :} *Importing SQL dump files using Console.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
   
-- [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with CloudSQL database instances through a terminal using gcloud storage commands.
+II\- [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with CloudSQL database instances through a terminal using gcloud storage commands.
 
 CSV dump file import command:
 ```shell
@@ -278,7 +278,7 @@ gcloud sql import sql INSTANCE_NAME gs://BUCKET_NAME/IMPORT_FILE_NAME \
 --database=DATABASE_NAME
 ```
 
-- REST APIs: Manage your data using the [JSON](https://cloud.google.com/sql/docs/mysql/apis) API.
+III\- REST APIs: Manage your data using the [JSON](https://cloud.google.com/sql/docs/mysql/apis) API.
 
 HTTP method and URL:
 ```shell
