@@ -141,7 +141,7 @@ Authorization: AUTHENTICATION_STRING
 
 - [Cloud Storage FUSE](https://cloud.google.com/storage/docs/gcs-fuse): Cloud Storage FUSE allows you to mount Cloud Storage buckets to your local file system. Standard file system semantics enable your applications to read from a bucket or write to a bucket.
 
-## Sync data into Block Storage
+## Ingest data into Block Storage
 ### 2A. Persistent Disk
 By default, each Compute Engine virtual machine (VM) instance has a single boot Persistent Disk volume that contains the operating system. When your apps require additional storage space, one possible solution is to attach additional Persistent Disk volumes to your VM.
 
@@ -181,7 +181,7 @@ Once the disk is created and attached to the VM, you have to format and mount it
 rsync -a hello-world.txt root@<your.VM.IP.address>:/mnt/block-volume
 ```
 
-## Import data into File Storage
+## Ingest data into File Storage
 Most data on-premise is stored in file systems, and as applications migrate to the cloud, their need for File storage doesn’t change, so file storage is critical to enterprise lift-and-shift and infrastructure modernization. Files are a useful abstraction, and even cloud-native applications are leveraging files.
 
 ### 3A. Filestore
@@ -242,8 +242,68 @@ Moreover, Google Cloud NetApp Volumes enable easy data recovery if a user or app
 
 Once you mount the File Storage instance (Filestore, Parallelstore or NetApp) to a Compute Engine instance or a Kubernetes Engine cluster as a file system, you can use it like any other file system on your instances.
 
-### Load data into Google Cloud databases
+### Ingest data into Google Cloud databases
 ### 4A. CloudSQL
+Cloud SQL supports the most popular open source and commercial engines, including MySQL, PostgreSQL, and SQL Server with rich support for extensions, configuration flags, and popular developer tools. 
+
+Ingesting data into these database engines are more often used to migrate local databases to managed ones (lift and shift). Depending on the source data velocity, you might consider different migration strategies:
+1\- For Batch data, you can use SQL dump files or CSV dump files to import data into CloudSQL. SQL dump files are plain text files with a sequence of SQL commands. CSV dump files contain one line for each row of data fields. 
+
+To import data from Cloud Storage, the Cloud SQL instance service account or user must have one of the following sets of roles:
+- The Cloud SQL Admin role and the `roles/storage.legacyObjectReader` IAM role
+- A **custom role** including the following permissions:
+    - `cloudsql.instances.get`
+    - `cloudsql.instances.import`
+    - `storage.buckets.get`
+    - `storage.objects.get`
+
+To ingest data into CloudSQL, using the SQL/CSV dump files you can use either:
+- [Console](https://console.cloud.google.com/sql): The Google Cloud console provides a visual interface for importing your data in your database instance.
+
+![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1701f8cf-8e32-41a7-a116-ff3d41b9675f){: .mx-auto.d-block :} *Importing SQL dump files using Console.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+  
+- [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with CloudSQL database instance through a terminal using gcloud storage commands.
+
+```shell
+gcloud sql import csv INSTANCE_NAME gs://BUCKET_NAME/FILE_NAME \
+--database=DATABASE_NAME \
+--table=TABLE_NAME
+```
+
+or,
+
+```shell
+gcloud sql import sql INSTANCE_NAME gs://BUCKET_NAME/IMPORT_FILE_NAME \
+--database=DATABASE_NAME
+```
+
+- REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) API.
+
+```shell
+POST https://sqladmin.googleapis.com/v1/projects/project-id/instances/instance-id/import
+```
+
+{% highlight json linenos %}
+{
+ "importContext":
+   {
+      "fileType": "CSV",
+      "uri": "gs://bucket_name/path_to_csv_file",
+      "database": ["DATABASE_NAME"],
+      "csvImportOptions":
+       {
+           "table": "TABLE_NAME",
+           "escapeCharacter":  "5C",
+           "quoteCharacter": "22",
+           "fieldsTerminatedBy": "2C",
+           "linesTerminatedBy": "0A"
+       }
+   }
+}
+{% endhighlight %}
+
+2\- For both Batch and Streaming data, you can use the Database Migration Service (DMS) to create migration jobs. 
+you For this, you can use 
 ### 4B. Cloud Spanner
 ### 4C. BigTable
 ### 4D. Firestore
