@@ -247,6 +247,7 @@ Once you mount the File Storage instance (Filestore, Parallelstore or NetApp) to
 Cloud SQL supports the most popular open source and commercial engines, including MySQL, PostgreSQL, and SQL Server with rich support for extensions, configuration flags, and popular developer tools. 
 
 Ingesting data into these database engines are more often used to migrate local databases to managed ones (lift and shift). Depending on the source data velocity, you might consider different migration strategies:
+
 1\- For Batch data, you can use SQL dump files or CSV dump files to import data into CloudSQL. SQL dump files are plain text files with a sequence of SQL commands. CSV dump files contain one line for each row of data fields. 
 
 To import data from Cloud Storage, the Cloud SQL instance service account or user must have one of the following sets of roles:
@@ -279,10 +280,12 @@ gcloud sql import sql INSTANCE_NAME gs://BUCKET_NAME/IMPORT_FILE_NAME \
 
 - REST APIs: Manage your data using the [JSON](https://cloud.google.com/storage/docs/json_api) API.
 
+HTTP method and URL:
 ```shell
 POST https://sqladmin.googleapis.com/v1/projects/project-id/instances/instance-id/import
 ```
 
+Request JSON body:
 {% highlight json linenos %}
 {
  "importContext":
@@ -303,7 +306,8 @@ POST https://sqladmin.googleapis.com/v1/projects/project-id/instances/instance-i
 {% endhighlight %}
 
 2\- For both Batch and Streaming data, you can use the Database Migration Service (DMS) to create migration jobs. 
-you For this, you can use 
+
+
 ### 4B. Cloud Spanner
 ### 4C. BigTable
 ### 4D. Firestore
