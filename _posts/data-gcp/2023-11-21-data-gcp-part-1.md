@@ -71,7 +71,9 @@ Here are some basic ways you can import data into Cloud Storage:
 - [Console](https://console.cloud.google.com/storage): The Google Cloud console provides a visual interface for managing your data in a browser.
 
 ![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/980450c4-dd8e-4885-9eff-aa5973b51b8c){: .mx-auto.d-block :} *Importing Data using Console.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-  
+
+- [Datastream](https://cloud.google.com/datastream) is a serverless and easy-to-use change data capture (CDC) and replication service that lets you synchronize data reliably, and with minimal latency. Datastream provides seamless replication of data from operational databases into into Cloud Storage. You can also use Datastream to leverage the event stream directly from Cloud Storage to realize event-driven architectures. Datastream supports Oracle, MySQL and PostgreSQL (including AlloyDB for PostgreSQL) sources.
+
 - [Google Cloud CLI](https://cloud.google.com/sdk/gcloud): The gcloud CLI allows you to interact with Cloud Storage through a terminal using gcloud storage commands.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/03177189-e8e8-4db7-8cc7-4661c8cc489d){: .mx-auto.d-block :} *Importing Data using Command Line.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
@@ -464,7 +466,99 @@ After the job starts, the status will show as Starting and then transition to Ru
 
 After you create and run the migration job, you confirm that an initial copy of your database has been successfully migrated from the source database to your Cloud SQL target instance. You also explore how continuous migration jobs apply data updates from your source database to your Cloud SQL instance. 
 
+3\- [Datastream](https://cloud.google.com/datastream) is a serverless and easy-to-use change data capture (CDC) and replication service that lets you synchronize data reliably, and with minimal latency. To implement the change data capture using Datastream, you should follow the same steps explained above for DMS (creating source/destination connection profiles, create a stream, validate and run the stream)
+
+Datastream and offers streamlined integration with Dataflow templates to build custom workflows for loading data into a wide range of destinations, such as Cloud SQL. Datastream supports Oracle, MySQL and PostgreSQL (including AlloyDB for PostgreSQL) sources.
+
 ### 4B. Cloud Spanner
+
+Cloud Spanner is a fully managed, mission-critical, relational database service that offers transactional consistency at global scale, automatic, synchronous replication for high availability (99.999%), and support for two SQL dialects: GoogleSQL (ANSI 2011 with extensions) and PostgreSQL.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6a53c3a2-00db-4028-a65c-0669fbbd593a){: .mx-auto.d-block :} *Cloud Spanner High Level Architecture.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+Cloud Spanner instances provide compute and storage in one or more regions. A distributed clock called TrueTime guarantees transactions are strongly consistent even across regions. Data is automatically "split" for scalability and replicated using a synchronous, Paxos-based scheme for availability.
+
+Ingesting data into Cloud Spanner is often used for data migration. We recommend using the following tools to assist you in various stages of your migration, depending on your source database and other factors (data velocity). Some tools only support certain source databases. For some steps of the process, no tool is available, so you complete those steps manually.
+
+- [migVisor](https://solutionshub.epam.com/solution/migvisor-by-epam) is a database migration assessment tool that analyzes database workloads and identifies challenges and optimization opportunities.
+- [HarbourBridge](https://github.com/cloudspannerecosystem/harbourbridge), an open source, community-maintained tool created by Google developers, automatically builds a Spanner schema from your source database schema. You can customize the schema using the HarbourBridge schema assistant. Before migrating a schema to a Spanner schema, assess the compatibility between the schemas, and optimize your schema for Spanner. For example, you might want to change keys, drop or add indexes, or add or remove columns of existing tables.
+
+HarbourBridge ingests schema and data from one of the following locations:
+    - A dump file from a local location or Cloud Storage (MySQL, PostgreSQL, CSV)
+    - Directly from the source database (MySQL, PostgreSQL, Oracle Database, SQL Server, DynamoDB)
+
+- [Data Validation Tool (DVT)](https://github.com/GoogleCloudPlatform/professional-services-data-validator) is a standardized data validation method built by Google and supported by the open source community. You can integrate DVT into existing Google Cloud products.
+- [Datastream](https://cloud.google.com/datastream) is a Google Cloud service that lets you read change data capture (CDC) events and bulk data from a source database.
+- [Dataflow](https://cloud.google.com/dataflow) is a Google Cloud service that helps you to write large amounts of data to Spanner more efficiently using templates. These templates don't generate a dump file; the dump file needs to be generated by the source database tools or third-party tools.
+- [Dataproc](https://cloud.google.com/dataproc) provides Spark-based templates for bulk-loading data into Spanner.
+
+The following table summarizes the primary tools that we recommend for each stage of your migration for some common source databases. You can migrate from other databases with customizations.
+
+<div class="table-wrapper" markdown="block">
+
+| Source database | Assess the scope | Migrate your schema | Migrate your app | Migrate your data | Validate data migration | Configure cutover and failover |   |   |   |
+|-----------------|------------------|---------------------|------------------|-------------------|-------------------------|--------------------------------|---|---|---|
+| MySQL           | migVisor         | HarbourBridge       | Manual           | HarbourBridge     | DVT                     | Manual                         |   |   |   |
+| PostgreSQL      | migVisor         | HarbourBridge       | Manual           | HarbourBridge     | DVT                     | Manual                         |   |   |   |
+| Oracle Database | migVisor         | HarbourBridge       | Manual           | HarbourBridge     | DVT                     | Manual                         |   |   |   |
+| SQL Server      | Manual           | HarbourBridge       | Manual           | HarbourBridge*    | DVT                     | Manual                         |   |   |   |
+| DynamoDB        | Manual           | HarbourBridge       | Manual           | HarbourBridge*    | DVT                     | Manual                         |   |   |   |
+|                 |                  |                     |                  |                   |                         |                                |   |   |   |
+|                 |                  |                     |                  |                   |                         |                                |   |   |   |
+|                 |                  |                     |                  |                   |                         |                                |   |   |   |
+|                 |                  |                     |                  |                   |                         |                                |   |   |   |
+
+
+*Migrations require significant downtime.
+
+</div>
+
+Depending on your source database, you might be able to migrate your database with minimal downtime, or you might require prolonged downtime.
+
+For both minimal-downtime migrations and migrations with prolonged downtime, we recommend using Dataflow and HarbourBridge.
+
+The following table shows the differences between minimal-downtime migrations and migrations with more downtime, including supported sources, formats, size, and throughput.
+
+<div class="table-wrapper" markdown="block">
+
+|                          | Minimal-downtime migration                                     | Migration with downtime                                              |   |   |   |   |   |   |   |
+|--------------------------|----------------------------------------------------------------|----------------------------------------------------------------------|---|---|---|---|---|---|---|
+| Supported sources        | MySQL, PostgreSQL, or Oracle Database                          | SQL Server, DynamoDB, or any database that can export to CSV or Avro |   |   |   |   |   |   |   |
+| Supported data formats   | Connect directly. [See Directly connecting to a MySQL database](https://github.com/cloudspannerecosystem/harbourbridge/tree/master/sources/mysql#directly-connecting-to-a-mysql-database). | MySQL, PostgreSQL, CSV, Avro                                         |   |   |   |   |   |   |   |
+| Supported database sizes | No limit                                                       | No limit                                                             |   |   |   |   |   |   |   |
+| Max throughput           | 45 GB per hour                                                 | 200 GB per hour                                                      |   |   |   |   |   |   |   |
+|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
+|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
+|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
+|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
+|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
+
+</div>
+
+Spanner supports minimal-downtime migrations from MySQL, PostgreSQL, and Oracle Database. A minimal-downtime migration consists of two components:
+
+- A consistent snapshot of all the data in the database
+- The stream of changes (inserts and updates) since that snapshot, referred to as change data capture (CDC)
+
+While minimal-downtime migrations help protect your data, the process involves challenges, including the following:
+
+1. Storing CDC data while the snapshot is migrated.
+2. Writing the CDC data to Spanner while capturing the incoming CDC stream.
+3. Ensuring that the migration of CDC data to Spanner is faster than the incoming CDC stream.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/e15b342d-4164-4a2b-899e-d19663926aaa){: .mx-auto.d-block :} *Minimal-downtime migration in Cloud Spanner.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+For databases other than MySQL, PostgreSQL, or Oracle Database, if the database can export to CSV or Avro, then you can migrate to Spanner with downtime. We recommend using Dataflow or HarbourBridge.
+
+Migrations with downtime are recommended only for test environments or applications that can handle a few hours of downtime. On a live database, a migration with downtime can result in data loss.
+
+To perform a downtime migration, follow these high-level steps:
+
+1. Generate a dump file of the data from the source database. 
+2. Upload the dump file to Cloud Storage in a MySQL, PostgreSQL, Avro, or CSV dump format. Avro is the preferred format for a [bulk migration to Spanner](https://cloud.google.com/spanner/docs/import-non-spanner#import-files).
+3. Load the dump file into Spanner using Dataflow or HarbourBridge.
+
+
 ### 4C. BigTable
 ### 4D. Firestore
 ### 4E. Memorystore
@@ -483,3 +577,4 @@ After you create and run the migration job, you confirm that an initial copy of 
 * [Google Cloud Platform (GCP)](https://cloud.google.com/)
 * [Google Cloud HPC Toolkit](https://cloud.google.com/hpc-toolkit)
 * [Migrate to Cloud SQL for PostgreSQL using Database Migration Service, Google Cloud Skills Boost](https://www.cloudskillsboost.google/focuses/22792?parent=catalog)
+* [Migration Overview, Cloud Spanner](https://cloud.google.com/spanner/docs/migration-overview)
