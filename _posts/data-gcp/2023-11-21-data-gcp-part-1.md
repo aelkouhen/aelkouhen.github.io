@@ -310,7 +310,7 @@ Request JSON body:
 
 2\- You can use the Database Migration Service (DMS) to create migration jobs for both Batch and Streaming data. 
 
-Database Migration Service provides options for one-time and continuous jobs to migrate data to Cloud SQL using different connectivity options, including IP allowlists, VPC peering, and reverse SSH tunnels (see documentation on connectivity options [here](https://cloud.google.com/database-migration/docs/postgresql/configure-connectivity).
+Database Migration Service provides options for one-time and continuous jobs to migrate data to Cloud SQL using different connectivity options, including IP allowlists, VPC peering, and reverse SSH tunnels (see documentation on connectivity options [here](https://cloud.google.com/database-migration/docs/postgresql/configure-connectivity)).
 
 Migrating a database via Database Migration Service requires some preparation of the source database, including creating a dedicated user with replication rights, adding a few extensions (e.g., pglogical for PostgreSQL) to the source database, and granting rights to the schema and tables in the database to be migrated, as well as the database, to that user. The following steps are mandatory to configure a continuous Database Migration Service job to migrate databases from a PostgreSQL instance to Cloud SQL for PostgreSQL.
 
