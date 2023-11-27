@@ -472,7 +472,7 @@ Datastream and offers streamlined integration with Dataflow templates to build c
 
 ### 4B. Cloud Spanner
 
-Cloud Spanner is a fully managed, mission-critical, relational database service that offers transactional consistency at global scale, automatic, synchronous replication for high availability (99.999%), and support for two SQL dialects: GoogleSQL (ANSI 2011 with extensions) and PostgreSQL.
+[Cloud Spanner](https://cloud.google.com/spanner) is a fully managed, mission-critical, relational database service that offers transactional consistency at global scale, automatic, synchronous replication for high availability (99.999%), and support for two SQL dialects: GoogleSQL (ANSI 2011 with extensions) and PostgreSQL.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6a53c3a2-00db-4028-a65c-0669fbbd593a){: .mx-auto.d-block :} *Cloud Spanner High Level Architecture.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -561,7 +561,6 @@ To perform a downtime migration, follow these high-level steps:
 * [Product overview of Cloud Storage](https://cloud.google.com/storage/docs/introduction), Google Cloud Docs
 * [About Persistent Disk](https://cloud.google.com/compute/docs/disks/persistent-disks), Google Cloud Docs
 * [Distributed Asynchronous Object Storage (DAOS)](https://docs.daos.io/)
-* [Google Cloud Platform (GCP)](https://cloud.google.com/)
 * [Google Cloud HPC Toolkit](https://cloud.google.com/hpc-toolkit)
 * [Migrate to Cloud SQL for PostgreSQL using Database Migration Service](https://www.cloudskillsboost.google/focuses/22792?parent=catalog), Google Cloud Skills Boost
 * [Migration Overview](https://cloud.google.com/spanner/docs/migration-overview), Google Cloud Spanner
