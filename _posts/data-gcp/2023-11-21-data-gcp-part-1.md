@@ -481,9 +481,7 @@ Cloud Spanner instances provide compute and storage in one or more regions. A di
 Ingesting data into Cloud Spanner is often used for data migration. We recommend using the following tools to assist you in various stages of your migration, depending on your source database and other factors (data velocity). Some tools only support certain source databases. For some steps of the process, no tool is available, so you complete those steps manually.
 
 - [migVisor](https://solutionshub.epam.com/solution/migvisor-by-epam) is a database migration assessment tool that analyzes database workloads and identifies challenges and optimization opportunities.
-- [HarbourBridge](https://github.com/cloudspannerecosystem/harbourbridge), an open source, community-maintained tool created by Google developers, automatically builds a Spanner schema from your source database schema. You can customize the schema using the HarbourBridge schema assistant. Before migrating a schema to a Spanner schema, assess the compatibility between the schemas, and optimize your schema for Spanner. For example, you might want to change keys, drop or add indexes, or add or remove columns of existing tables.
-
-HarbourBridge ingests schema and data from one of the following locations:
+- [HarbourBridge](https://github.com/cloudspannerecosystem/harbourbridge), an open source, community-maintained tool created by Google developers, automatically builds a Spanner schema from your source database schema. You can customize the schema using the HarbourBridge schema assistant. Before migrating a schema to a Spanner schema, assess the compatibility between the schemas, and optimize your schema for Spanner. For example, you might want to change keys, drop or add indexes, or add or remove columns of existing tables. HarbourBridge ingests schema and data from one of the following locations:
     - A dump file from a local location or Cloud Storage (MySQL, PostgreSQL, CSV)
     - Directly from the source database (MySQL, PostgreSQL, Oracle Database, SQL Server, DynamoDB)
 
@@ -496,18 +494,13 @@ The following table summarizes the primary tools that we recommend for each stag
 
 <div class="table-wrapper" markdown="block">
 
-| Source database | Assess the scope | Migrate your schema | Migrate your app | Migrate your data | Validate data migration | Configure cutover and failover |   |   |   |
-|-----------------|------------------|---------------------|------------------|-------------------|-------------------------|--------------------------------|---|---|---|
+| Source database | Assess the scope | Migrate your schema | Migrate your app | Migrate your data | Validate data migration | Configure cutover and failover |
+|-----------------|------------------|---------------------|------------------|-------------------|-------------------------|--------------------------------|
 | MySQL           | migVisor         | HarbourBridge       | Manual           | HarbourBridge     | DVT                     | Manual                         |   |   |   |
 | PostgreSQL      | migVisor         | HarbourBridge       | Manual           | HarbourBridge     | DVT                     | Manual                         |   |   |   |
 | Oracle Database | migVisor         | HarbourBridge       | Manual           | HarbourBridge     | DVT                     | Manual                         |   |   |   |
 | SQL Server      | Manual           | HarbourBridge       | Manual           | HarbourBridge*    | DVT                     | Manual                         |   |   |   |
-| DynamoDB        | Manual           | HarbourBridge       | Manual           | HarbourBridge*    | DVT                     | Manual                         |   |   |   |
-|                 |                  |                     |                  |                   |                         |                                |   |   |   |
-|                 |                  |                     |                  |                   |                         |                                |   |   |   |
-|                 |                  |                     |                  |                   |                         |                                |   |   |   |
-|                 |                  |                     |                  |                   |                         |                                |   |   |   |
-
+| DynamoDB        | Manual           | HarbourBridge       | Manual           | HarbourBridge*    | DVT                     | Manual                         |
 
 *Migrations require significant downtime.
 
@@ -521,18 +514,12 @@ The following table shows the differences between minimal-downtime migrations an
 
 <div class="table-wrapper" markdown="block">
 
-|                          | Minimal-downtime migration                                     | Migration with downtime                                              |   |   |   |   |   |   |   |
-|--------------------------|----------------------------------------------------------------|----------------------------------------------------------------------|---|---|---|---|---|---|---|
+|                          | Minimal-downtime migration                                     | Migration with downtime                                              |
+|--------------------------|----------------------------------------------------------------|----------------------------------------------------------------------|
 | Supported sources        | MySQL, PostgreSQL, or Oracle Database                          | SQL Server, DynamoDB, or any database that can export to CSV or Avro |   |   |   |   |   |   |   |
 | Supported data formats   | Connect directly. [See Directly connecting to a MySQL database](https://github.com/cloudspannerecosystem/harbourbridge/tree/master/sources/mysql#directly-connecting-to-a-mysql-database). | MySQL, PostgreSQL, CSV, Avro                                         |   |   |   |   |   |   |   |
 | Supported database sizes | No limit                                                       | No limit                                                             |   |   |   |   |   |   |   |
-| Max throughput           | 45 GB per hour                                                 | 200 GB per hour                                                      |   |   |   |   |   |   |   |
-|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
-|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
-|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
-|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
-|                          |                                                                |                                                                      |   |   |   |   |   |   |   |
-
+| Max throughput           | 45 GB per hour                                                 | 200 GB per hour                                                      |
 </div>
 
 Spanner supports minimal-downtime migrations from MySQL, PostgreSQL, and Oracle Database. A minimal-downtime migration consists of two components:
@@ -571,10 +558,11 @@ To perform a downtime migration, follow these high-level steps:
 ## Summary
 
 ## References
-* [Product overview of Cloud Storage, Google Cloud Docs](https://cloud.google.com/storage/docs/introduction)
-* [About Persistent Disk, Google Cloud Docs](https://cloud.google.com/compute/docs/disks/persistent-disks)
+* [Product overview of Cloud Storage](https://cloud.google.com/storage/docs/introduction), Google Cloud Docs
+* [About Persistent Disk](https://cloud.google.com/compute/docs/disks/persistent-disks), Google Cloud Docs
 * [Distributed Asynchronous Object Storage (DAOS)](https://docs.daos.io/)
 * [Google Cloud Platform (GCP)](https://cloud.google.com/)
 * [Google Cloud HPC Toolkit](https://cloud.google.com/hpc-toolkit)
-* [Migrate to Cloud SQL for PostgreSQL using Database Migration Service, Google Cloud Skills Boost](https://www.cloudskillsboost.google/focuses/22792?parent=catalog)
-* [Migration Overview, Cloud Spanner](https://cloud.google.com/spanner/docs/migration-overview)
+* [Migrate to Cloud SQL for PostgreSQL using Database Migration Service](https://www.cloudskillsboost.google/focuses/22792?parent=catalog), Google Cloud Skills Boost
+* [Migration Overview](https://cloud.google.com/spanner/docs/migration-overview), Google Cloud Spanner
+* [TrueTime Spanner Consistency](https://cloud.google.com/spanner/docs/true-time-external-consistency), Google Cloud Spanner
