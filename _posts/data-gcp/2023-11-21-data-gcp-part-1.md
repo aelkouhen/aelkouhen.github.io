@@ -512,15 +512,12 @@ For both minimal-downtime migrations and migrations with prolonged downtime, we 
 
 The following table shows the differences between minimal-downtime migrations and migrations with more downtime, including supported sources, formats, size, and throughput.
 
-<div class="table-wrapper" markdown="block">
-
 |                          | Minimal-downtime migration                                     | Migration with downtime                                              |
 |--------------------------|----------------------------------------------------------------|----------------------------------------------------------------------|
 | Supported sources        | MySQL, PostgreSQL, or Oracle Database                          | SQL Server, DynamoDB, or any database that can export to CSV or Avro |
 | Supported data formats   | Connect directly. [See Directly connecting to a MySQL database](https://github.com/cloudspannerecosystem/harbourbridge/tree/master/sources/mysql#directly-connecting-to-a-mysql-database). | MySQL, PostgreSQL, CSV, Avro                                         |
 | Supported database sizes | No limit                                                       | No limit                                                             |
 | Max throughput           | 45 GB per hour                                                 | 200 GB per hour                                                      |
-</div>
 
 Spanner supports minimal-downtime migrations from MySQL, PostgreSQL, and Oracle Database. A minimal-downtime migration consists of two components:
 
