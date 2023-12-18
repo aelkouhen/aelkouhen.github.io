@@ -73,32 +73,30 @@ In the diagram above, you can see the main components of Lambda Architecture imp
 
 *   **Batch Layer**: In the batch layer, all of the incoming data is saved as batch views to ready it for indexing. This layer serves two important purposes. First, it manages the master data set where it is immutable and append-only, preserving a trusted historical record of the incoming data from all sources. Second, it precomputes the batch views. This layer helps fix errors, synchronize the data with other third-party systems, and conduct data quality checks. The processed data is stored in Snowflake in Core DWH and Data Mart layers and replaces online data from the previous day.
 
-The [COPY](https://docs.snowflake.com/en/sql-reference/sql/copy-into-table) command is highly feature-rich, giving you the flexibility to decide where in the pipeline to handle specific functions or transformations, such as using ELT (Extract/Load/Transform) instead of traditional ETL.
-
-Using the COPY command, data can be loaded from data storage in parallel, enabling loading hundreds of Terabytes (TB) in hours without compromising near real-time access to data that has been loaded. The COPY command can be executed from the Worksheet tab in the UI, just like any other DDL or DML operation, or programmatically using one of the supported languages, such as Python, Node.js, ODBC, JDBC, or Spark.
-
-In addition, The [Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/index) library provides an intuitive library for querying and processing data at scale in Snowflake. Using a library for any of three languages (Java, Python, and Scala), you can build applications that process data in Snowflake without moving data to the system where your application code runs and processes at scale as part of the elastic and serverless Snowflake engine.
+    The [COPY](https://docs.snowflake.com/en/sql-reference/sql/copy-into-table) command is highly feature-rich, giving you the flexibility to decide where in the pipeline to handle specific functions or transformations, such as using ELT (Extract/Load/Transform) instead of traditional ETL.
+    
+    Using the COPY command, data can be loaded from data storage in parallel, enabling loading hundreds of Terabytes (TB) in hours without compromising near real-time access to data that has been loaded. The COPY command can be executed from the Worksheet tab in the UI, just like any other DDL or DML operation, or programmatically using one of the supported languages, such as Python, Node.js, ODBC, JDBC, or Spark.
+    
+    In addition, The [Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/index) library provides an intuitive library for querying and processing data at scale in Snowflake. Using a library for any of three languages (Java, Python, and Scala), you can build applications that process data in Snowflake without moving data to the system where your application code runs and processes at scale as part of the elastic and serverless Snowflake engine.
 
 *   **Speed Layer**: By design, the batch layer has high latency, typically delivering batch views to the serving layer at a rate of once or twice daily. The job of the speed layer is to narrow the gap between when the data is created and when it’s available for querying. The speed layer does this by indexing all of the data in the serving layer’s current indexing job and all the data that’s arrived since the most recent indexing job began. After the serving layer completes an indexing job, all of the data included in the job is no longer needed in the speed layer and is deleted. 
 
-![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/16c5c9a1-ac79-434b-8c5a-c151dae503fd){: .mx-auto.d-block :} *Snowflake streaming API.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
-
-As part of the speed layer, the data goes through the following steps:
-
-- The source system’s asynchronous event service acts as a filter to capture traffic from the source system as JSON messages. Then, it routes the messages to Kafka topics.
-- [StreamSets Data Collector](https://streamsets.com/products/data-collector-engine/) (SDC) tool is used to consume events from Kafka topics and process them:
-    - Filters required messages,
-    - Enriches the data on the fly using the source system API (for instance, gets an entity name by passing its ID),
-    - Applies other required transformations to the data (data masking, filtering, etc.),
-    - Converts the data into CSV file format and puts the file into a data lake (e.g., S3 bucket),
-    - In parallel, original messages are put into the Data Lake.
-- A Snowflake external table (Live View on the diagram) lets us query the information directly from the Data Lake S3 bucket. Thus, the data is not stored in the database but only passes through a Snowflake Virtual Warehouse when queried from the serving layer.
+    As part of the speed layer, the data goes through the following steps:
+    
+    - The source system’s asynchronous event service acts as a filter to capture traffic from the source system as JSON messages. Then, it routes the messages to Kafka topics.
+    - [StreamSets Data Collector](https://streamsets.com/products/data-collector-engine/) (SDC) tool is used to consume events from Kafka topics and process them:
+        - Filters required messages,
+        - Enriches the data on the fly using the source system API (for instance, gets an entity name by passing its ID),
+        - Applies other required transformations to the data (data masking, filtering, etc.),
+        - Converts the data into CSV file format and puts the file into a data lake (e.g., S3 bucket),
+        - In parallel, original messages are put into the Data Lake.
+    - A Snowflake external table (Live View on the diagram) lets us query the information directly from the Data Lake S3 bucket. Thus, the data is not stored in the database but only passes through a Snowflake Virtual Warehouse when queried from the serving layer.
 
 *   **Serving Layer**: The data serving layer receives the batch views from the batch layer on a predefined schedule, combines the batch and speed layers data through Snowflake DB view, and responds to end-user ad-hoc queries. This layer also receives near real-time views from the speed layer. Here, the batch views are indexed to make them available for querying. As one indexing job runs, the serving layer queues newly arriving data for inclusion in the next indexing run. 
 
-The serving layer is implemented as a set of Snowflake DB views that combine the information from data marts (prepared in the batch dataflow) and the Snowflake external tables (Live View on the diagram). As a result, the actual data from the end-user applications is ready for consumption through customized dashboards and self-service data discovery capability. Using Live Connection mode, the end-user applications make queries directly against Snowflake DB.
-
-While Lambda architectures offer many advantages, such as scalability, fault-tolerance, and flexibility to handle a wide range of data processing workloads (batches and streams), they also come with drawbacks that organizations must consider before deciding whether to use or not. Lambda architecture is a complex system that uses multiple technology stacks to process and store data. In addition, the underlying logic is duplicated in the Batch and the Speed Layers for every stage. As a result, it can be challenging to set up and maintain, especially for organizations with limited resources. However, using Snowflake as a unique stack for both layers can help reduce the complexity encountered in Lambda architectures.
+    The serving layer is implemented as a set of Snowflake DB views that combine the information from data marts (prepared in the batch dataflow) and the Snowflake external tables (Live View on the diagram). As a result, the actual data from the end-user applications is ready for consumption through customized dashboards and self-service data discovery capability. Using Live Connection mode, the end-user applications make queries directly against Snowflake DB.
+    
+    While Lambda architectures offer many advantages, such as scalability, fault-tolerance, and flexibility to handle a wide range of data processing workloads (batches and streams), they also come with drawbacks that organizations must consider before deciding whether to use or not. Lambda architecture is a complex system that uses multiple technology stacks to process and store data. In addition, the underlying logic is duplicated in the Batch and the Speed Layers for every stage. As a result, it can be challenging to set up and maintain, especially for organizations with limited resources. However, using Snowflake as a unique stack for both layers can help reduce the complexity encountered in Lambda architectures.
 
 ## Kappa data architecture with Snowflake
 
