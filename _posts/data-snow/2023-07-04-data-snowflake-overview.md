@@ -162,3 +162,54 @@ Some of the most common reasons to choose Snowflake include ease of use and near
 Federated governance is arguably one of the most challenging parts of a data mesh journey and often requires one or more combined tools to satisfy all requirements. Snowflake supports role-based access control, row-level access policies, column-level data masking, external tokenization, data lineage, audit capabilities, and more at the platform level. Users can also assign one or more metadata tags (key-value pairs) to almost any kind of object in Snowflake, such as accounts, databases, schemas, tables, columns, compute clusters, users, roles, tasks, shares, and other objects.
 
 Tags are inherited through the object hierarchy and can be exploited to discover, track, restrict, monitor, and audit objects based on user-defined semantics. Additionally, tag-based access policies enable users to associate an access restriction with a tag such that the access policy is automatically applied to any matching data object that carries the relevant tag. 
+
+## Data Architectures with Snowflake: are they "Good" Architectures?
+
+As discussed earlier, The [AWS Well-Architected framework](https://aws.amazon.com/architecture/well-architected/) is designed to help cloud architects create secure, reliable, high-performing, cost-effective, and sustainable architectures. This system consists of six key pillars: operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability, providing customers with a consistent way to evaluate and implement scalable architectures. I borrowed inspiration for "good" data architecture principles from the AWS Well-Architected Framework and assessed whether Snowflake could make "good" data architectures or not.
+
+![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjR9yFoBtxXrguD_VI4Oe0MKeizo8gFQTHP4XuLXrjhGhzji-tPQkVOqBCf6hbOk4-8U8yHncUkHQeRxPQ3qELKWmwsMz6HA9DmI_sfH11-Vou5RE76x4gzT3t63qGviFbMjm1s8I_jYPgvObcaiE6QI36Cn5y9l4jIuimq_Sd4oFHO3-hSkko_Ej6n){: .mx-auto.d-block :} *AWS Well-Architected Framework (WAF).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+
+**_1\. Performance efficiency_** stands for the ability of a system to adapt to load changes. The Main challenge we can observe with many data architectures is the operational complexity when deploying and managing their technical tools and solutions. More often, it is difficult to anticipate and handle demand peaks of such platforms, resulting in wasted money on underused resources that are already over-provisioned due to poor scaling processes. In this [study](), the author performed synthetic benchmarks (TPC-DS) to measure the performance impacts of broadly applicable changes. In other words, how much faster has Snowflake become over time using stable building blocks (stable data warehouses and stable recurrent queries)? 
+
+![](image-10.png){: .mx-auto.d-block :} *Query Duration for Customers' Recurring Workloads Improves by 15%.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+
+**_2\. Reliability_**: "Reliability is the precondition for trust."<sup>1</sup> This mantra is valid in data architecture, especially when end-users seek real-time decision-making. Reliability stands for The ability of a system to recover from failures and continue to function as expected. The main challenge regarding a data platform's reliability is meeting the required SLAs. Downtimes or slow response times can consequently lead to revenue loss, damaged reputation, and customer churn. Snowflake provides powerful features for ensuring the maintenance and availability of your historical data (i.e., data that has been changed or deleted):
+    - Querying, cloning, and restoring historical data in tables, schemas, and databases for up to 90 days through Snowflake Time Travel.
+    - Disaster recovery of historical data (by Snowflake) through Snowflake Fail-safe.
+
+These features are included for all accounts, i.e., no additional licensing is required; however, standard Time Travel is one day. Extended Time Travel (up to 90 days) requires Snowflake Enterprise Edition. In addition, both Time Travel and Fail-safe require additional data storage, which has associated fees.
+
+Snowflake also provides several mechanisms to create **_Replication groups_** to replicate data to one or more target accounts and **_Failover groups_** that provide read-only access for the replicated objects when a failure occurs.
+
+**_3\. Cost optimization_** stands for managing costs to maximize the value delivered. Snowflake architecture separates the storage from the compute, allowing various workloads to run inside the same warehouse without any awareness of each other and, therefore, isolated to prevent them from affecting one another. The main advantage of this multi-tenancy is the ability to share infrastructure capabilities by multiple databases, thus reducing the Total Cost of Ownership (TCO) of your data platform (30% to 70% of cost reduction).
+
+Another lever that optimizes your data platform cost is reduced administration and maintenance costs (Snowflake is a fully managed platform). Using the built-in performance features, each workload in Snowflake is as fast, stable, and efficient as possible. Finally, Snowflake continuously improves customers’ price for performance through native cost and workload optimization features, performance improvements, and learning resources for cost management. Snowflake has reduced the average cost of warehouse queries by more than 20% over the last three years.
+
+**_4\. Security_** stands for protecting the data platform from threats. Although security is often perceived as a hindrance to the work of data engineers, they must recognize that security is, in fact, a vital enabler. By implementing robust security measures (encryption, network whitelisting, network peering, multi-factor authentication, Single-Sign-On, OAuth, SCIM, mutual TLS, trusted CA...) for data at rest and in motion and fine-grained data access control, a data architecture using Snowflake can enable wider data sharing and consumption within a company, leading to a significant increase in data value. In addition, the principle of least privilege is implemented through Discretionary Access Control (DAC) and Role-Based Access Control (RBAC), meaning that data access is only granted proportionally to those who require it.
+
+**_5\. Operational excellence_** is the ability to keep a system running in production optimally. First, Snowflake provides multiple integrations to allow operational monitoring of your data platform, the underlying infrastructure, and data access (audit trail). Thus, you can gain visibility and take the appropriate actions.
+
+**_6\. Sustainability_** tends to minimize your data platform's environmental footprint. Snowflake supports several deployment options that allow you to choose the region, storage technologies, and configurations that best support the business value of your data (multi-cloud, hybrid cloud). In addition, features like multi-tenancy and data tiering can reduce the provisioned infrastructure required to support your data platform and the resources needed to use it. Consequently, using Snowflake helps reduce the environmental footprint of your data platform.
+
+## Summary
+
+In this article, I introduce Snowflake as a self-service data platform that implements the most popular data architectures using the myriad of tools and features it provides. 
+
+Data types are increasing, usage patterns have grown significantly, and a renewed emphasis has been placed on building pipelines with Lambda and Kappa architectures in the form of data hubs or fabrics. Either grouped by velocity or the kind of topology they provide, data architectures are not orthogonal. The data architectures and paradigms we presented in this post can be used side-by-side, alternately when there is a need to alternate between them. In addition, of course, they can be mixed in architectures like data mesh, in which each data product is a standalone artifact. We can imagine that a Lambda architecture is implemented in some data products and Kappa architectures in others.
+
+Overall, this article provides a comprehensive overview of how Snowflake can be used as a modern data platform and the various data architectures that can be implemented. Then, I evaluated these architectures, regarding the AWS Well-Architected Framework, to assess if those are "good" data architectures. The result of this evaluation provides valuable insights into building well-architected data platforms.
+
+## References
+
+*   Reinout Korbee, Three-speed architecture on Snowflake. [Medium](https://medium.com/@reinout.korbee/three-speed-architecture-on-snowflake-ede3ed2652db) 2023.
+*   Reis, J. and Housley M. Fundamentals of data engineering: Plan and build robust data systems. O’Reilly Media (2022).
+*   ["Lambda vs. Kappa Architecture. A Guide to Choosing the Right Data Processing Architecture for Your Needs"](https://nexocode.com/blog/posts/lambda-vs-kappa-architecture/), Dorota Owczarek.
+*   ["A brief introduction to two data processing architectures — Lambda and Kappa for Big Data"](https://towardsdatascience.com/a-brief-introduction-to-two-data-processing-architectures-lambda-and-kappa-for-big-data-4f35c28005bb), Iman Samizadeh, Ph.D.
+*   ["What Is Lambda Architecture?"](https://hazelcast.com/glossary/lambda-architecture/), Hazelcast Glosary.
+*   ["What Is the Kappa Architecture?"](https://hazelcast.com/glossary/kappa-architecture/), Hazelcast Glosary.
+*   ["Kappa Architecture is Mainstream Replacing Lambda"](https://www.kai-waehner.de/blog/2021/09/23/real-time-kappa-architecture-mainstream-replacing-batch-lambda/), Kai Waehner.
+*   ["Data processing architectures – Lambda and Kappa"](https://www.ericsson.com/en/blog/2015/11/data-processing-architectures--lambda-and-kappa), Julien Forgeat.
+*   ["How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh"](https://martinfowler.com/articles/data-monolith-to-mesh.html), Zhamak Dehghani (Martin Fowler Blog).
+*   ["Data Mesh Principles and Logical Architecture"](https://martinfowler.com/articles/data-mesh-principles.html), Zhamak Dehghani (Martin Fowler Blog).
+--------
+1\. Wolfgang Schäuble - a German lawyer, politician, and statesman whose political career spans over five decades.
