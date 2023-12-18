@@ -117,7 +117,7 @@ The stream processing layer collects, processes, and stores live-streaming data.
 *   **Ingestion component**: This layer collects incoming data from various sources, such as logs, database transactions, sensors, and APIs. The data is ingested in real-time using Apache Kafka with Snowpipe Streaming API and stored in Snowflake stages for processing. 
 *   **Processing component**: The Processing component of the Kappa architecture is responsible for handling high\-volume data streams and providing fast and reliable access to query results. It uses event-processing engines like Snowpark to process incoming data in real-time. In addition, multiple Snowflake integrations exist for other event processing engines like Apache Spark Streaming ([Spark-Snowflake](https://docs.snowflake.com/en/user-guide/spark-connector)), Apache Kafka ([Snowflake Kafka connectors](https://docs.snowflake.com/en/user-guide/kafka-connector-overview)), or [dbt coonector](https://pypi.org/project/dbt-snowflake/) for Snowflake.
 
-![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/091115ae-6857-4332-90b9-8e04f9cc75b7)
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/091115ae-6857-4332-90b9-8e04f9cc75b7){: .mx-auto.d-block :} *Snowpipe streaming.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 Nowadays, real-time data beats slow data. That’s true for almost every use case. Nevertheless, Kappa Architecture cannot be taken as a substitute for Lambda architecture. On the contrary, it should be seen as an alternative to be used in those circumstances where the active performance of the batch layer is not necessary for meeting the standard quality of service.
 
