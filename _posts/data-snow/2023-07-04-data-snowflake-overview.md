@@ -211,5 +211,7 @@ Overall, this article provides a comprehensive overview of how Snowflake can be 
 *   ["Data processing architectures – Lambda and Kappa"](https://www.ericsson.com/en/blog/2015/11/data-processing-architectures--lambda-and-kappa), Julien Forgeat.
 *   ["How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh"](https://martinfowler.com/articles/data-monolith-to-mesh.html), Zhamak Dehghani (Martin Fowler Blog).
 *   ["Data Mesh Principles and Logical Architecture"](https://martinfowler.com/articles/data-mesh-principles.html), Zhamak Dehghani (Martin Fowler Blog).
+*   ["Benchmarking Real World Customer-Experienced Performance Using the Snowflake Performance Index (SPI)"](https://medium.com/snowflake/the-snowflake-performance-index-8126a47f45b5), Louis Magarshack, Medium 2023.
+
 --------
 1\. Wolfgang Schäuble - a German lawyer, politician, and statesman whose political career spans over five decades.
