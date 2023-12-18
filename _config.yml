@@ -23,6 +23,7 @@ navbar-links:
   Categories: 
     - Data Demystified: "/data-101"
     - Data & Redis: "/data-redis"
+    - Data & Snowflake: "/data-snow"
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
