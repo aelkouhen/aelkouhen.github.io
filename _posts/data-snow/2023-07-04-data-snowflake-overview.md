@@ -79,6 +79,8 @@ In the diagram above, you can see the main components of Lambda Architecture imp
     
     In addition, The [Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/index) library provides an intuitive library for querying and processing data at scale in Snowflake. Using a library for any of three languages (Java, Python, and Scala), you can build applications that process data in Snowflake without moving data to the system where your application code runs and processes at scale as part of the elastic and serverless Snowflake engine.
 
+        ![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/2ab1eedf-a848-4746-87e8-20beb7411a2e){: .mx-auto.d-block :} *StreamSets engine for Snowpark.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+
 *   **Speed Layer**: By design, the batch layer has high latency, typically delivering batch views to the serving layer at a rate of once or twice daily. The job of the speed layer is to narrow the gap between when the data is created and when it’s available for querying. The speed layer does this by indexing all of the data in the serving layer’s current indexing job and all the data that’s arrived since the most recent indexing job began. After the serving layer completes an indexing job, all of the data included in the job is no longer needed in the speed layer and is deleted. 
 
     As part of the speed layer, the data goes through the following steps:
@@ -116,8 +118,6 @@ The stream processing layer collects, processes, and stores live-streaming data.
 *   **Processing component**: The Processing component of the Kappa architecture is responsible for handling high\-volume data streams and providing fast and reliable access to query results. It uses event-processing engines like Snowpark to process incoming data in real-time. In addition, multiple Snowflake integrations exist for other event processing engines like Apache Spark Streaming ([Spark-Snowflake](https://docs.snowflake.com/en/user-guide/spark-connector)), Apache Kafka ([Snowflake Kafka connectors](https://docs.snowflake.com/en/user-guide/kafka-connector-overview)), or [dbt coonector](https://pypi.org/project/dbt-snowflake/) for Snowflake.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/091115ae-6857-4332-90b9-8e04f9cc75b7)
-
-![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/baddde53-e6d9-44d0-a3e2-b3ea95a8856e)
 
 Nowadays, real-time data beats slow data. That’s true for almost every use case. Nevertheless, Kappa Architecture cannot be taken as a substitute for Lambda architecture. On the contrary, it should be seen as an alternative to be used in those circumstances where the active performance of the batch layer is not necessary for meeting the standard quality of service.
 
