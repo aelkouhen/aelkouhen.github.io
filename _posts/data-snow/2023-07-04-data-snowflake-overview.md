@@ -3,7 +3,7 @@ layout: post
 title: Data & Snowflake - Overview
 subtitle: Choosing the Right Data Architecture with Snowflake
 thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/d8d978fb-5d63-4832-8302-0d8a9b6d5b60
-share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ef0dca3e-f847-406e-83bf-f6af7a2f3c5d
+share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6d0a9ce7-4d12-48ad-b1a6-086f8cc2c10e
 tags: [data ingestion,data processing,data storage,data serving,kappa,lambda,Snowpipe,Snowpark,Snowsight,Snowflake]
 comments: true
 ---
