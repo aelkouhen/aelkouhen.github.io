@@ -43,7 +43,7 @@ The critical feature of Lambda architecture is that it uses two separate process
 
 In the diagram above, you can see the main components of Lambda Architecture implemented with Redis. It consists of the ingestion layer, the batch layer, the speed layer (or stream layer), and the serving layer. 
 
-*   **Ingestion Layer:** In this layer, raw data are extracted from one or more data sources, replicated, then ingested into a landing storage support, for instance, a Redis database. Depending on data Volume and Velocity, you would choose batch ingestion or stream ingestion (differences are extensively discussed [here](https://dna-factory.blogspot.com/2023/02/data-101-series-part-5_02008049978.html)). Redis offers different tools that allow both kinds of ingestion: 
+*   **Ingestion Layer:** In this layer, raw data are extracted from one or more data sources, replicated, then ingested into a landing storage support, for instance, a Redis database. Depending on data Volume and Velocity, you would choose batch ingestion or stream ingestion (differences are extensively discussed [here](https://www.datacrafterslab.com/2023-02-05-data-101-part-5/)). Redis offers different tools that allow both kinds of ingestion: 
 
     First, Redis Input/Output Tools ([RIOT](https://github.com/redis-developer/riot)) collects and transfers data in and out of Redis in a batch fashion. It consists of several modules that can ingest data from files (using [RIOT-File](https://developer.redis.com/riot/riot-file/index.html)) or from relational databases (using [RIOT-DB](https://developer.redis.com/riot/riot-db/index.html)) and integrate it into Redis. 
     
