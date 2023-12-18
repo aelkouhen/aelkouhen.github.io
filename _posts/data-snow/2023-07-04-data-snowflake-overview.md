@@ -65,7 +65,7 @@ In the diagram above, you can see the main components of Lambda Architecture imp
 
     4\- Dynamic tables are the building blocks of declarative data transformation pipelines. They significantly simplify data engineering in Snowflake and provide a reliable, cost-effective, and automated way to transform your data for consumption. Instead of defining data transformation steps as a series of tasks and having to monitor dependencies and scheduling, you can determine the end state of the transformation using dynamic tables and leave the complex pipeline management to Snowflake.
 
-![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6c7e9a22-fba7-486d-8d2b-18bdaeb8aac9){: .mx-auto.d-block :} *Dynamic tables.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/0ce85521-7009-49bc-937e-25446bfd6960){: .mx-auto.d-block :} *Dynamic tables.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
     5\- Some analytical workloads, like fraud detection or complex events processing, require more horsepower. The current limitations of dynamic tables might grow less over time, for example, when UDFs become available for dynamic tables. Until then, complex analytics could be handled by an external service with a dedicated analytical tool like Apache Flink.
 
