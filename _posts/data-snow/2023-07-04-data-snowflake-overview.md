@@ -163,6 +163,8 @@ Federated governance is arguably one of the most challenging parts of a data mes
 
 Tags are inherited through the object hierarchy and can be exploited to discover, track, restrict, monitor, and audit objects based on user-defined semantics. Additionally, tag-based access policies enable users to associate an access restriction with a tag such that the access policy is automatically applied to any matching data object that carries the relevant tag. 
 
+![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6a4217ae-6220-49fa-a296-13a0a2098373"){: .mx-auto.d-block :} *Data Mesh implementation using Snowflake.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+
 ## Data Architectures with Snowflake: are they "Good" Architectures?
 
 As discussed earlier, The [AWS Well-Architected framework](https://aws.amazon.com/architecture/well-architected/) is designed to help cloud architects create secure, reliable, high-performing, cost-effective, and sustainable architectures. This system consists of six key pillars: operational excellence, security, reliability, performance efficiency, cost optimization, and sustainability, providing customers with a consistent way to evaluate and implement scalable architectures. I borrowed inspiration for "good" data architecture principles from the AWS Well-Architected Framework and assessed whether Snowflake could make "good" data architectures or not.
