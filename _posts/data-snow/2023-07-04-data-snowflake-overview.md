@@ -108,7 +108,7 @@ The principal idea behind this is that a single technology stack can be used for
 
 Kappa architecture is designed to provide a scalable, fault-tolerant, and flexible system for processing large amounts of data in real-time. The Kappa architecture is considered a simpler alternative to the Lambda architecture as it uses a single technology stack to handle both real-time and historical workloads, treating everything as streams. The primary motivation for inventing the Kappa architecture was to avoid maintaining two separate code bases (pipelines) for the batch and speed layers. This allows it to provide a more streamlined and simplified data processing pipeline while providing fast and reliable access to query results.
 
-![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/95548e68-1701-4b91-981a-ca597fa496ab){: .mx-auto.d-block :} *Kappa Architecture with Snowflake.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/c90c0e26-fd8e-4328-9b52-a55458458741){: .mx-auto.d-block :} *Kappa Architecture with Snowflake.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 The most important requirement for Kappa was Data reprocessing, making visible the effects of data changes on the results. Consequently, the Kappa architecture with Snowflake comprises only two layers: the stream layer and the serving one. The Serving Layer of Kappa is quite similar to Lambda's one.
 
