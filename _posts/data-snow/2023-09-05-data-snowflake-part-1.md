@@ -222,7 +222,7 @@ Snowpipe uses compute resources provided by Snowflake (a serverless compute mode
 
 A pipe is a named, first-class Snowflake object that contains a `COPY` statement used by Snowpipe. The `COPY` statement identifies the source location of the data files (i.e., a stage) and a target table and supports the same transformation options as when bulk loading data. All data types are supported, including semi-structured data types such as JSON and Avro.
 
-In addition, data pipelines can leverage Snowpipe to continuously load micro-batches of data into staging tables for transformation and optimization using automated tasks and the change data capture (CDC) information in streams. For instance, auto-ingesting Snowpipe is the preferred approach. This approach continuously loads new data to the target table by reacting to newly created files in the source bucket.;
+In addition, data pipelines can leverage Snowpipe to continuously load micro-batches of data into staging tables for transformation and optimization using automated tasks and the change data capture (CDC) information in streams. For instance, auto-ingesting Snowpipe is the preferred approach. This approach continuously loads new data to the target table by reacting to newly created files in the source bucket.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ccc7186f-f8bf-470e-b974-6cdb90f46fbb){: .mx-auto.d-block :} *Auto-ingest Snowpipe setup.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -264,6 +264,43 @@ But in cases where an event service can not be set up or an existing data pipeli
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/cea02511-e0b3-4b98-8e1a-c115d23f0c64){: .mx-auto.d-block :} *API-triggered Snowpipe setup.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
+Similarly to the Auto-ingest setup, you need here to create a stage, and an integration to S3 storage. The pipe is created without the SNS topic arn and the `auto_ingest` keyword.  
+
+{% highlight sql linenos %}
+create pipe snowpipe_db.public.mypipe as
+    copy into snowpipe_db.public.mytable
+    from @snowpipe_db.public.mystage
+  file_format = (type = 'JSON');
+{% endhighlight %}
+
+Then we create a user with key-pair authentication. The user credentials will be used when calling the Snowpipe API endpoints:
+
+{% highlight sql linenos %}
+use role securityadmin;
+
+create user snowpipeuser 
+  login_name = 'snowpipeuser'
+  default_role = SYSADMIN
+  default_namespace = snowpipe_test.public
+  rsa_public_key = '<RSA Public Key value>' ;
+{% endhighlight %}
+
+You can validate that the user has been successfully created by connecting via SnowSQL. Use the `--private-key-path` switch to tell SnowSQL to use key-pair authentication.
+
+```bash
+snowsql -a sedemo.us-east-1-gov.aws -u snowpipeuser --private-key-path rsa_key.p8
+```
+
+Authentication via the REST endpoint expects a valid JSON Web Token (JWT). These tokens are generally valid for about 60 minutes and then need to be regenerated. If you want to test the REST API using `Postman` or `curl`, you have to generate one of your own from the RSA certificate.
+
+Once you generate the JWT, the REST endpoint should reference your Snowflake account, as well as the fully qualified pipe name. The call you’re testing is a `POST` to the `insertFiles` method.
+
+```bash
+curl -H 'Accept: application/json' -H "Authorization: Bearer ${TOKEN}" -d @path/to/data.csv https://sedemo.us-east-1-gov.aws.snowflakecomputing.com/v1/data/pipes/snowpipe_db.public.mypipe/insertFiles
+```
+
+
+ 
 
 
 
