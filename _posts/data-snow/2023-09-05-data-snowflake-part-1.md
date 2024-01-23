@@ -14,17 +14,16 @@ As you’ve seen in previous posts, Data ingestion is the first stage of the dat
 
 In this stage, raw data are extracted from one or more data sources, replicated, and then ingested into a storage location called `stage`. Once data is integrated into Snowflake, you can use powerful features such as Snowpark, Data Sharing, and more to derive value from data to send to reporting tools, partners, and customers. 
 
-In this article, I will illustrate data ingestion and integration using Snowflake’s first-party methods to meet the different data pipeline needs, from batch to continuous ingestion. These methods include but are not limited to `INSERT`, `COPY`, `Snowpipe`, `Snowpipe Streaming`, and `Dynamic Tables`.
+In this article, I will illustrate data ingestion and integration using Snowflake’s first-party methods to meet the different data pipeline needs, from batch to continuous ingestion. These methods include but are not limited to `INSERT`, `COPY`, `Snowpipe`, `Snowpipe Streaming`, or the `Dynamic Tables`.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/4edf0d68-ed96-46f3-8c27-ded686305e4a){: .mx-auto.d-block :} *Snowflake's ingestion options.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 # Batch Ingestion
-Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are INSERT, COPY INTO, and Snowpipe.
+Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are `INSERT`, `COPY`, and `Snowpipe`.
 
 ## Insert
 
-The `INSERT` command is the most straightforward ingestion mechanism for bringing a small amount of data. It updates a table by inserting one or more rows. The values inserted into each column in the table or the query results can be explicitly specified.
-Bellow the syntax of the `INSERT` statement:
+The `INSERT` command is the most straightforward ingestion mechanism for bringing a small amount of data. It updates a table by inserting one or more rows. The values inserted into each column in the table or the query results can be explicitly specified. Bellow the syntax of the `INSERT` statement:
 
 {% highlight sql linenos %}
 INSERT [ OVERWRITE ] INTO <target_table> [ ( <target_col_name> [ , ... ] ) ]
