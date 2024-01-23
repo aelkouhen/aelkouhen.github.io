@@ -115,11 +115,11 @@ Finally, if you use the `OVERWRITE` clause with a multi-row insert, the statemen
 
 As you can see, the `INSERT` statement is the simplest way to ingest data into Snowflake, however, it has scalability and error-handling limitations when dealing with data sets exceeding the single-digit MiB range. For larger data sets, data engineers typically leverage the option to use an ETL/ELT tool to ingest data, or preferably use object storage as an intermediate step alongside `COPY INTO` or `Snowpipe`. 
 
-## COPY INTO
+## COPY
 
-The `COPY INTO` command enables loading batches of data from staged files to an existing table. The files must already be staged in one of the following locations:
+The `COPY` command enables loading batches of data from staged files to an existing table. The files must already be staged in one of the following locations:
 
-- Named internal stage (or table/user stage). Files can be staged using the PUT command.
+- Named internal stage (or table/user stage). Files can be staged using the `PUT` command.
 - Named external stage that references an external location (Amazon S3, Google Cloud Storage, or Microsoft Azure).
 - External location (Amazon S3, Google Cloud Storage, or Microsoft Azure).
 
@@ -200,7 +200,7 @@ COPY INTO [<namespace>.]<table_name> [ ( <col_name> [ , <col_name> ... ] ) ]
 [ copyOptions ]
 {% endhighlight %}
 
-The COPY command relies on a customer-managed warehouse, so there are some elements to consider when choosing the appropriate warehouse size. The most critical aspect is the degree of parallelism, as each thread can ingest a single file simultaneously. The XS Warehouse provides eight threads, and each increment of warehouse size doubles the amount of available threads. The simplified conclusion is that for a significantly large number of files, you would expect optimal parallelism for each given warehouse size, halving the time to ingest the large batch of files for every upsize step. However, this speedup can be limited by factors such as networking or I/O delays in real-life scenarios. These factors should be considered for larger ingestion jobs and might require individual benchmarking during the planning phase.
+The `COPY` command relies on a customer-managed warehouse, so there are some elements to consider when choosing the appropriate warehouse size. The most critical aspect is the degree of parallelism, as each thread can ingest a single file simultaneously. The XS Warehouse provides eight threads, and each increment of warehouse size doubles the amount of available threads. The simplified conclusion is that for a significantly large number of files, you would expect optimal parallelism for each given warehouse size, halving the time to ingest the large batch of files for every upsize step. However, this speedup can be limited by factors such as networking or I/O delays in real-life scenarios. These factors should be considered for larger ingestion jobs and might require individual benchmarking during the planning phase.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ee7bf73b-ac4d-480d-883f-0a66ad29e1d6){: .mx-auto.d-block :} *Parallel loading of files into Snowflake.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -209,6 +209,72 @@ There is a fixed, per-file overhead charge for Snowpipe in addition to compute u
 Generally, we recommend file sizes above 10 MiB, with the 100 to 250 MiB range typically offering the best price/performance. As a result, we recommend aggregating smaller data files for batch ingestion. We also recommend not exceeding 5 GiB file sizes and splitting into smaller files to take advantage of parallelization. With a larger file, an erroneous record at the end may cause an ingestion job to fail and restart depending on the `ON_ERROR` option.
 
 Finally, using the most explicit path allows `COPY` to list and load data without traversing the entire bucket, thereby saving compute and network usage.
+
+# Continuous Data Ingestion
+
+This option is designed to load small volumes of data (i.e. micro-batches) and incrementally make them available for analysis. For example, Snowpipe loads data within minutes after files are added to a stage and submitted for ingestion. This ensures users have the latest results, as soon as the raw data is available.
+
+## Snowpipe
+
+Snowpipe is a serverless service that enables loading data from files as soon as they’re available in a Snowflake stage (locations where data files are stored for loading/unloading). With Snowpipe, data can be loaded from files in micro-batches rather than executing `COPY` statements on a schedule. Unlike `COPY INTO`, which is a synchronous process that returns the load status, Snowpipe file ingestion is asynchronous, and processing status needs to be observed explicitly.
+
+Snowpipe uses compute resources provided by Snowflake (a serverless compute model). These Snowflake-provided resources are automatically resized and scaled up or down as required, and they are charged and itemized using per-second billing. Data ingestion is charged based upon the actual workloads.
+
+A pipe is a named, first-class Snowflake object that contains a `COPY` statement used by Snowpipe. The `COPY` statement identifies the source location of the data files (i.e., a stage) and a target table and supports the same transformation options as when bulk loading data. All data types are supported, including semi-structured data types such as JSON and Avro.
+
+In addition, data pipelines can leverage Snowpipe to continuously load micro-batches of data into staging tables for transformation and optimization using automated tasks and the change data capture (CDC) information in streams. For instance, auto-ingesting Snowpipe is the preferred approach. This approach continuously loads new data to the target table by reacting to newly created files in the source bucket.;
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ccc7186f-f8bf-470e-b974-6cdb90f46fbb){: .mx-auto.d-block :} *Auto-ingest Snowpipe setup.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+In the example above, Snowpipe relies on the cloud vendor-specific system for event distribution, such as AWS SQS or SNS, Azure Event Grid, or GCP Pub/Sub. This setup requires corresponding privileges to the cloud account to deliver event notifications from the source bucket to Snowpipe.
+
+The following example creates a stage named `mystage` in the active schema for the user session. The cloud storage URL includes the path files. The stage references a storage integration named `my_storage_int`. First, we create the S3 storage integration and the stage:
+
+{% highlight sql linenos %}
+CREATE STORAGE INTEGRATION my_storage_int
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = 'S3'
+  ENABLED = TRUE
+  STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::001234567890:role/myrole'
+  STORAGE_ALLOWED_LOCATIONS = ('s3://mybucket1/mypath1/', 's3://mybucket2/mypath2/')
+  STORAGE_BLOCKED_LOCATIONS = ('s3://mybucket1/mypath1/sensitivedata/', 's3://mybucket2/mypath2/sensitivedata/');
+{% endhighlight %}
+
+{% highlight sql linenos %}
+USE SCHEMA snowpipe_db.public;
+
+CREATE STAGE mystage
+  URL = 's3://mybucket/load/files'
+  STORAGE_INTEGRATION = my_storage_int;
+{% endhighlight %}
+
+Then, we create a pipe named `mypipe` in the active schema for the user session. The pipe loads the data from files staged in the `mystage` stage into the `mytable` table and subscribes to the `SNS` topic ARN that propagates the notification:
+
+{% highlight sql linenos %}
+create pipe snowpipe_db.public.mypipe
+  auto_ingest=true
+  aws_sns_topic='<sns_topic_arn>'
+  as
+    copy into snowpipe_db.public.mytable
+    from @snowpipe_db.public.mystage
+  file_format = (type = 'JSON');
+{% endhighlight %}
+
+But in cases where an event service can not be set up or an existing data pipeline infrastructure is in place, a REST API-triggered Snowpipe is a suitable alternative. It is also currently the only option if an internal stage is used for storing the raw files. Most commonly, the REST API approach is used by ETL/ELT tools that don’t want to put the burden of creating object storage on the end user and instead use a Snowflake-managed Internal Stage.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/cea02511-e0b3-4b98-8e1a-c115d23f0c64){: .mx-auto.d-block :} *API-triggered Snowpipe setup.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
