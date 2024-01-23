@@ -19,6 +19,8 @@ In this article, I will illustrate data ingestion and integration using Snowflak
 # Batch Ingestion
 Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are INSERT, COPY INTO, and Snowpipe.
 
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/4edf0d68-ed96-46f3-8c27-ded686305e4a){: .mx-auto.d-block :} *Snowflake's ingestion options.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 ## Insert
 
 The `INSERT` command is the most straightforward ingestion mechanism for bringing a small amount of data. It updates a table by inserting one or more rows. The values inserted into each column in the table or the query results can be explicitly specified.
@@ -152,36 +154,40 @@ internalStage ::=
   | @~[/<path>]
 {% endhighlight %}
 
+For example, to load files from a named internal stage into a table the command is:
+
 {% highlight sql linenos %}
-externalStage ::=
-  @[<namespace>.]<ext_stage_name>[/<path>]
+COPY INTO mytable
+FROM @my_int_stage;
+{% endhighlight %}
+
+You can load files from a named external stage you created using the `CREATE STAGE` command. The named external stage references an external location (Amazon S3, Google Cloud Storage, or Microsoft Azure). For example:
+
+{% highlight sql linenos %}
+COPY INTO mytable
+  FROM s3://mybucket/data/files
+  CREDENTIALS=(AWS_KEY_ID='$AWS_ACCESS_KEY_ID' AWS_SECRET_KEY='$AWS_SECRET_ACCESS_KEY')
+  STORAGE_INTEGRATION = myint
+  ENCRYPTION=(MASTER_KEY = 'eSx...')
+  FILE_FORMAT = (FORMAT_NAME = my_csv_format);
 {% endhighlight %}
 
 {% highlight sql linenos %}
-externalLocation (for Amazon S3) ::=
-  's3://<bucket>[/<path>]'
-  [ { STORAGE_INTEGRATION = <integration_name> } | { CREDENTIALS = ( {  { AWS_KEY_ID = '<string>' AWS_SECRET_KEY = '<string>' [ AWS_TOKEN = '<string>' ] } } ) } ]
-  [ ENCRYPTION = ( [ TYPE = 'AWS_CSE' ] [ MASTER_KEY = '<string>' ] |
-                   [ TYPE = 'AWS_SSE_S3' ] |
-                   [ TYPE = 'AWS_SSE_KMS' [ KMS_KEY_ID = '<string>' ] ] |
-                   [ TYPE = 'NONE' ] ) ]
+COPY INTO mytable
+  FROM 'gcs://mybucket/data/files'
+  STORAGE_INTEGRATION = myint
+  FILE_FORMAT = (FORMAT_NAME = my_csv_format);
 {% endhighlight %}
 
 {% highlight sql linenos %}
-externalLocation (for Google Cloud Storage) ::=
-  'gcs://<bucket>[/<path>]'
-  [ STORAGE_INTEGRATION = <integration_name> ]
-  [ ENCRYPTION = ( [ TYPE = 'GCS_SSE_KMS' ] [ KMS_KEY_ID = '<string>' ] | [ TYPE = 'NONE' ] ) ]
+COPY INTO mytable
+  FROM 'azure://myaccount.blob.core.windows.net/mycontainer/data/files'
+  CREDENTIALS=(AZURE_SAS_TOKEN='?sv=2016-05-31&ss=b&srt=sco&sp=rwdl&se=2018-06-27T10:05:50Z&st=2017-06-27T02:05:50Z&spr=https,http&sig=bgqQwoXwxzuD2GJfagRg7VOS8hzNr3QLT7rhS8OFRLQ%3D')
+  ENCRYPTION=(TYPE='AZURE_CSE' MASTER_KEY = 'kPx...')
+  FILE_FORMAT = (FORMAT_NAME = my_csv_format);
 {% endhighlight %}
 
-{% highlight sql linenos %}
-externalLocation (for Microsoft Azure) ::=
-  'azure://<account>.blob.core.windows.net/<container>[/<path>]'
-  [ { STORAGE_INTEGRATION = <integration_name> } | { CREDENTIALS = ( [ AZURE_SAS_TOKEN = '<string>' ] ) } ]
-  [ ENCRYPTION = ( [ TYPE = { 'AZURE_CSE' | 'NONE' } ] [ MASTER_KEY = '<string>' ] ) ]
-{% endhighlight %}
-
-For data load with transformation, the command syntax is as following:
+For data load with transformation, the command syntax is as follows:
 
 {% highlight sql linenos %}
 COPY INTO [<namespace>.]<table_name> [ ( <col_name> [ , <col_name> ... ] ) ]
@@ -193,6 +199,18 @@ COPY INTO [<namespace>.]<table_name> [ ( <col_name> [ , <col_name> ... ] ) ]
                     TYPE = { CSV | JSON | AVRO | ORC | PARQUET | XML } [ formatTypeOptions ] } ) ]
 [ copyOptions ]
 {% endhighlight %}
+
+The COPY command relies on a customer-managed warehouse, so there are some elements to consider when choosing the appropriate warehouse size. The most critical aspect is the degree of parallelism, as each thread can ingest a single file simultaneously. The XS Warehouse provides eight threads, and each increment of warehouse size doubles the amount of available threads. The simplified conclusion is that for a significantly large number of files, you would expect optimal parallelism for each given warehouse size, halving the time to ingest the large batch of files for every upsize step. However, this speedup can be limited by factors such as networking or I/O delays in real-life scenarios. These factors should be considered for larger ingestion jobs and might require individual benchmarking during the planning phase.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ee7bf73b-ac4d-480d-883f-0a66ad29e1d6){: .mx-auto.d-block :} *Parallel loading of files into Snowflake.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+There is a fixed, per-file overhead charge for Snowpipe in addition to compute usage costs. As a result, for smaller single-digit MiB or smaller file sizes, Snowpipe can be less cost-effective (in credits/TiB) than `COPY`, depending on file arrival rate, size of the warehouse, and non-COPY use of the Cloud Services Layer. Correspondingly, larger file sizes of at least 100 MiB are typically more efficient.
+
+Generally, we recommend file sizes above 10 MiB, with the 100 to 250 MiB range typically offering the best price/performance. As a result, we recommend aggregating smaller data files for batch ingestion. We also recommend not exceeding 5 GiB file sizes and splitting into smaller files to take advantage of parallelization. With a larger file, an erroneous record at the end may cause an ingestion job to fail and restart depending on the `ON_ERROR` option.
+
+Finally, using the most explicit path allows `COPY` to list and load data without traversing the entire bucket, thereby saving compute and network usage.
+
+
 
 
 
