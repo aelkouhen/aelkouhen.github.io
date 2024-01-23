@@ -273,7 +273,7 @@ create pipe snowpipe_db.public.mypipe as
   file_format = (type = 'JSON');
 {% endhighlight %}
 
-Then we create a user with key-pair authentication. The user credentials will be used when calling the Snowpipe API endpoints:
+Then, we create a user with key-pair authentication. The user credentials will be used when calling the Snowpipe API endpoints:
 
 {% highlight sql linenos %}
 use role securityadmin;
@@ -291,13 +291,146 @@ You can validate that the user has been successfully created by connecting via S
 snowsql -a sedemo.us-east-1-gov.aws -u snowpipeuser --private-key-path rsa_key.p8
 ```
 
-Authentication via the REST endpoint expects a valid JSON Web Token (JWT). These tokens are generally valid for about 60 minutes and then need to be regenerated. If you want to test the REST API using `Postman` or `curl`, you have to generate one of your own from the RSA certificate.
+Authentication via the REST endpoint expects a valid JSON Web Token (JWT). These tokens are generally valid for about 60 minutes and then need to be regenerated. If you want to test the REST API using `Postman` or `curl`, you must generate one from the RSA certificate.
 
-Once you generate the JWT, the REST endpoint should reference your Snowflake account, as well as the fully qualified pipe name. The call you’re testing is a `POST` to the `insertFiles` method.
+Once you generate the JWT, the REST endpoint should reference your Snowflake account and the fully qualified pipe name. The call you’re testing is a `POST` to the `insertFiles` method.
 
 ```bash
 curl -H 'Accept: application/json' -H "Authorization: Bearer ${TOKEN}" -d @path/to/data.csv https://sedemo.us-east-1-gov.aws.snowflakecomputing.com/v1/data/pipes/snowpipe_db.public.mypipe/insertFiles
 ```
+
+The responseCode should be `SUCCESS`. It’s important to remember that Snowpipe will not ingest the same exact file twice. The call will succeed, but no data will be ingested. This is by design. To retest, either use a different filename or drop and recreate the table.
+
+The ingestion should already be finished, so you can return to the Snowflake UI and run a select statement on the table.
+
+## Snowpipe Streaming
+
+Snowpipe Streaming enables serverless streaming data ingestion directly into Snowflake tables without the requirement of staging files (bypassing cloud object storage) with exact-once and ordered delivery. This architecture results in lower latencies and correspondingly lower costs for loading any volume of data, making it a powerful tool for handling near real-time data streams.
+
+The API is intended to complement Snowpipe, not replace it. Use the Snowpipe Streaming API in streaming scenarios where data is streamed via rows (for example, Apache Kafka topics) instead of writing to files. The API fits into an ingest workflow that includes an existing custom Java application that produces or receives records. The API removes the need to create files to load data into Snowflake tables and enables the automatic, continuous loading of data streams into Snowflake as the data becomes available. You also get new functionality such as exactly-once delivery, ordered ingestion, and error handling with dead-letter queue (DLQ) support.
+
+Snowpipe Streaming is also available for the Snowflake Connector for Kafka, which offers an easy upgrade path to take advantage of the lower latency and lower cost loads.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/b80c58c5-749e-4661-930f-fa5133a63a86){: .mx-auto.d-block :} *Snowpipe Streaming API.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+The API ingests rows through one or more channels. A channel represents a logical, named streaming connection to Snowflake for loading data into a table. A single channel maps to exactly one table in Snowflake; however, multiple channels can point to the same table. The Client SDK can open multiple channels to multiple tables; however, the SDK cannot open channels across accounts. The ordering of rows and their corresponding offset tokens are preserved within a channel but not across channels that point to the same table.
+
+Channels are meant to be long-lived when a client is actively inserting data and should be reused as offset token information is retained. Data inside the channel is automatically flushed every 1 second by default and doesn't need to be closed.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ebb8d629-c17a-4002-a732-bd60c9f6525c){: .mx-auto.d-block :} *Streaming channels.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+### Ingesting Kafka topics into Snowflake tables
+
+Files are a common denominator across processes that produce data—whether they’re on-premises or in the cloud. Most ingestion happens in batches, where a file forms a physical and sometimes logical batch. Today, file-based ingestion utilizing COPY or auto-ingest Snowpipe is the primary source for data that is ingested into Snowflake. 
+
+Kafka (or its cloud-specific equivalents) provides an additional data collection and distribution infrastructure to write and read streams of records. If event records need to be distributed to multiple sinks—mostly as streams—then such an arrangement makes sense. Stream processing (in contrast to batch processing) typically allows for lower data volumes at more frequent intervals for near real-time latency.
+
+In the case of the Snowflake Connector for Kafka, the same file size consideration mentioned earlier still applies due to its use of Snowpipe for data ingestion. However, there may be a trade-off between the desired maximum latency and a larger file size for cost optimization. The right file size for your application may not fit the above guidance, and that is acceptable as long as the cost implications are measured and considered. 
+
+In addition, the amount of memory available in a Kafka Connect cluster node may limit the buffer size and, therefore, the file size. In that case, it is still a good idea to configure the timer value (buffer.flush.time) to ensure that files smaller than the buffer size are less likely.
+
+Two elements—Buffer.flush.time and Buffer.flush.size—decide the total number of files per minute that you are sending to Snowflake via the Kafka connector. So tuning these parameters is very beneficial in terms of performance. Here’s a look at two examples:
+- If you set buffer.flush.time to 240 seconds instead of 120 seconds without changing anything else, it will reduce the base files/minute rate by a factor of 2 (reaching buffer size earlier than time will affect these calculations).
+- If you increase the Buffer.flush.size to 100 MB without changing anything else, the base files/minute rate will be reduced by a factor of 20 (reaching the max buffer size earlier than the max buffer time will affect these calculations).
+
+For testing this setup locally, we will need:
+- open-source Apache Kafka 2.13-3.1.0 installed locally,
+- Snowflake Kafka Connector 1.9.1.jar (or new version),
+- OpenJDK <= 15.0.2,
+- a Snowflake user for streaming snowpipe with an ssh key defined as the authentication method.
+
+First, you need to create a separate user that you are going to use for Streaming Snowpipe. Please remember to replace <YOURPUBLICKEY> with the corresponding details. Please note, in this case, you need to remove the begin/end comment lines from the key file (e.g. —–BEGIN PUBLIC KEY—–), but please keep the new-line characters.
+
+{% highlight sql linenos %}
+create user snowpipe_streaming_user password='',  default_role = accountadmin, rsa_public_key='<YOURPUBLICKEY>';
+
+grant role accountadmin  to user snowpipe_streaming_user;
+{% endhighlight %}
+
+Here, you will create the database you will use later on.
+
+{% highlight sql linenos %}
+CREATE OR REPLACE DATABASE hol_streaming;
+
+USE DATABASE hol_streaming;
+
+CREATE OR REPLACE WAREHOUSE hol_streaming_wh WITH WAREHOUSE_SIZE = 'XSMALL' MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 1 AUTO_SUSPEND = 60;
+{% endhighlight %}
+
+Then, let's open the terminal and run the following commands to download Kafka and Snowflake Kafka connector:
+
+```bash
+mkdir HOL_kafka
+cd HOL_kafka
+
+curl https://archive.apache.org/dist/kafka/3.3.1/kafka_2.13-3.3.1.tgz --output kafka_2.13-3.3.1.tgz
+tar -xzf kafka_2.13-3.3.1.tgz
+
+cd kafka_2.13-3.3.1/libs
+curl https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/1.9.1/snowflake-kafka-connector-1.9.1.jar --output snowflake-kafka-connector-1.9.1.jar
+```
+
+Create the configuration file `config/SF_connect.properties` with the following parameters. Please remember to replace <YOURACCOUNT> & <YOURPRIVATEKEY> with the corresponding details. Also, please note when adding a private key you need to remove all new line characters as well as beginning and ending comments (e.g —–BEGIN PRIVATE KEY—–):
+
+```properties
+name=snowpipe_streaming_ingest
+connector.class=com.snowflake.kafka.connector.SnowflakeSinkConnector
+tasks.max=1
+topics=customer_data_topic
+snowflake.topic2table.map=customer_data_topic:customer_data_stream_stg
+buffer.count.records=1
+buffer.flush.time=10
+buffer.size.bytes=20000000
+snowflake.url.name=<YOURACCOUNT>.snowflakecomputing.com:443
+snowflake.user.name=SNOWPIPE_STREAMING_USER
+snowflake.private.key=<YOURPRIVATEKEY>
+snowflake.database.name=HOL_STREAMING
+snowflake.schema.name=PUBLIC
+snowflake.role.name=ACCOUNTADMIN
+snowflake.ingestion.method=SNOWPIPE_STREAMING
+key.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter=org.apache.kafka.connect.json.JsonConverter
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+```
+
+Now, this is out of the way. Let's start this all together. Please note that for this step, you might get errors if you are using JDK>=v15. And you might need a few separate terminal sessions for this:
+
+Session 1:
+```bash
+bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+Session 2:
+```bash
+bin/kafka-server-start.sh config/server.properties
+```
+Session 3:
+```bash
+bin/connect-standalone.sh ./config/connect-standalone.properties ./config/SF_connect.properties
+```
+
+Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to manually put some data into the topic.
+
+```bash
+bin/kafka-console-producer.sh --topic customer_data_topic --bootstrap-server localhost:9092
+```
+
+Let's get back to Snowsight and run the following query to generate some sample customer data in JSON format:
+
+```sql
+SELECT object_construct(*)
+  FROM snowflake_sample_data.tpch_sf10.customer limit 200;
+```
+
+As you can see, Snowpipe Streaming is a fantastic new capability that can significantly reduce integration latency and improve pipeline efficiency. It also opens up new opportunities for your business, providing near-real-time insights and operational reporting, among other benefits.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/45297412-ed21-4725-b641-3a39f722e6f0)
+
+### Snowpipe Streaming and Dynamic Tables for Real-Time Ingestion
+
+
+
+
 
 
  
