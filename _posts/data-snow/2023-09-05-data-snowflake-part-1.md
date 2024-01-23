@@ -14,12 +14,12 @@ As you’ve seen in previous posts, Data ingestion is the first stage of the dat
 
 In this stage, raw data are extracted from one or more data sources, replicated, and then ingested into a storage location called `stage`. Once data is integrated into Snowflake, you can use powerful features such as Snowpark, Data Sharing, and more to derive value from data to send to reporting tools, partners, and customers. 
 
-In this article, I will illustrate data ingestion and integration using Snowflake’s first-party methods to meet the different data pipeline needs, from batch to continuous ingestion. These methods include but are not limited to `INSERT`, `COPY INTO`, `Snowpipe`, `Snowpipe Streaming` or the `Kafka Connector`.
+In this article, I will illustrate data ingestion and integration using Snowflake’s first-party methods to meet the different data pipeline needs, from batch to continuous ingestion. These methods include but are not limited to `INSERT`, `COPY`, `Snowpipe`, `Snowpipe Streaming`, and `Dynamic Tables`.
+
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/4edf0d68-ed96-46f3-8c27-ded686305e4a){: .mx-auto.d-block :} *Snowflake's ingestion options.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 # Batch Ingestion
 Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are INSERT, COPY INTO, and Snowpipe.
-
-![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/4edf0d68-ed96-46f3-8c27-ded686305e4a){: .mx-auto.d-block :} *Snowflake's ingestion options.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ## Insert
 
@@ -337,7 +337,7 @@ For testing this setup locally, we will need:
 - open-source Apache Kafka 2.13-3.1.0 installed locally,
 - Snowflake Kafka Connector 1.9.1.jar (or new version),
 - OpenJDK <= 15.0.2,
-- a Snowflake user for streaming snowpipe with an ssh key defined as the authentication method.
+- a Snowflake user for streaming snowpipe with an SSH key defined as the authentication method.
 
 First, you need to create a separate user that you are going to use for Streaming Snowpipe. Please remember to replace <YOURPUBLICKEY> with the corresponding details. Please note, in this case, you need to remove the begin/end comment lines from the key file (e.g. —–BEGIN PUBLIC KEY—–), but please keep the new-line characters.
 
@@ -370,7 +370,7 @@ cd kafka_2.13-3.3.1/libs
 curl https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/1.9.1/snowflake-kafka-connector-1.9.1.jar --output snowflake-kafka-connector-1.9.1.jar
 ```
 
-Create the configuration file `config/SF_connect.properties` with the following parameters. Please remember to replace <YOURACCOUNT> & <YOURPRIVATEKEY> with the corresponding details. Also, please note when adding a private key you need to remove all new line characters as well as beginning and ending comments (e.g —–BEGIN PRIVATE KEY—–):
+Create the configuration file `config/SF_connect.properties` with the following parameters. Remember to replace `<YOURACCOUNT>` & `<YOURPRIVATEKEY>` with the corresponding details. Also, please note when adding a private key, you need to remove all new line characters as well as beginning and ending comments (e.g., —–BEGIN PRIVATE KEY—–):
 
 ```properties
 name=snowpipe_streaming_ingest
@@ -394,7 +394,7 @@ key.converter.schemas.enable=false
 value.converter.schemas.enable=false
 ```
 
-Now, this is out of the way. Let's start this all together. Please note that for this step, you might get errors if you are using JDK>=v15. And you might need a few separate terminal sessions for this:
+Now, this is out of the way. Let's start this all together. Please note that you might get errors for this step if you use JDK>=v15. And you might need a few separate terminal sessions for this:
 
 Session 1:
 ```bash
@@ -409,7 +409,7 @@ Session 3:
 bin/connect-standalone.sh ./config/connect-standalone.properties ./config/SF_connect.properties
 ```
 
-Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to manually put some data into the topic.
+Now, you can open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to manually enter data into the topic.
 
 ```bash
 bin/kafka-console-producer.sh --topic customer_data_topic --bootstrap-server localhost:9092
