@@ -19,7 +19,7 @@ In this article, I will illustrate data ingestion and integration using Snowflak
 # Batch Ingestion
 Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are INSERT, COPY INTO, and Snowpipe.
 
-## 1. Insert
+## Insert
 
 The `INSERT` command is the most straightforward ingestion mechanism for bringing a small amount of data. It updates a table by inserting one or more rows. The values inserted into each column in the table or the query results can be explicitly specified.
 Bellow the syntax of the `INSERT` statement:
