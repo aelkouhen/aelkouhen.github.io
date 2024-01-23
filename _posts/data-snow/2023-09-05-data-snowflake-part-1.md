@@ -298,15 +298,15 @@ Once you generate the JWT, the REST endpoint should reference your Snowflake acc
 curl -H 'Accept: application/json' -H "Authorization: Bearer ${TOKEN}" -d @path/to/data.csv https://sedemo.us-east-1-gov.aws.snowflakecomputing.com/v1/data/pipes/snowpipe_db.public.mypipe/insertFiles
 ```
 
-The responseCode should be `SUCCESS`. It’s important to remember that Snowpipe will not ingest the same exact file twice. The call will succeed, but no data will be ingested. This is by design. To retest, either use a different filename or drop and recreate the table.
+The responseCode should be `SUCCESS`. It’s important to remember that Snowpipe will not ingest the same file twice. The call will succeed, but no data will be ingested. This is by design. To retest, either use a different filename or drop and recreate the table.
 
 The ingestion should already be finished, so you can return to the Snowflake UI and run a select statement on the table.
 
 ## Snowpipe Streaming
 
-Snowpipe Streaming enables serverless streaming data ingestion directly into Snowflake tables without the requirement of staging files (bypassing cloud object storage) with exact-once and ordered delivery. This architecture results in lower latencies and correspondingly lower costs for loading any volume of data, making it a powerful tool for handling near real-time data streams.
+Snowpipe Streaming enables serverless streaming data ingestion directly into Snowflake tables without requiring staging files (bypassing cloud object storage) with exact-once and ordered delivery. This architecture results in lower latencies and correspondingly lower costs for loading any volume of data, making it a powerful tool for handling near real-time data streams.
 
-The API is intended to complement Snowpipe, not replace it. Use the Snowpipe Streaming API in streaming scenarios where data is streamed via rows (for example, Apache Kafka topics) instead of writing to files. The API fits into an ingest workflow that includes an existing custom Java application that produces or receives records. The API removes the need to create files to load data into Snowflake tables and enables the automatic, continuous loading of data streams into Snowflake as the data becomes available. You also get new functionality such as exactly-once delivery, ordered ingestion, and error handling with dead-letter queue (DLQ) support.
+The API is intended to complement Snowpipe, not replace it. Use the Snowpipe Streaming API in streaming scenarios where data is streamed via rows (for example, Apache Kafka topics) instead of writing to files. The API fits into an ingest workflow including an existing custom Java application that produces or receives records. The API removes the need to create files to load data into Snowflake tables and enables the automatic, continuous loading of data streams into Snowflake as the data becomes available. You also get new functionality, such as exactly-once delivery, ordered ingestion, and error handling with dead-letter queue (DLQ) support.
 
 Snowpipe Streaming is also available for the Snowflake Connector for Kafka, which offers an easy upgrade path to take advantage of the lower latency and lower cost loads.
 
@@ -314,7 +314,7 @@ Snowpipe Streaming is also available for the Snowflake Connector for Kafka, whic
 
 The API ingests rows through one or more channels. A channel represents a logical, named streaming connection to Snowflake for loading data into a table. A single channel maps to exactly one table in Snowflake; however, multiple channels can point to the same table. The Client SDK can open multiple channels to multiple tables; however, the SDK cannot open channels across accounts. The ordering of rows and their corresponding offset tokens are preserved within a channel but not across channels that point to the same table.
 
-Channels are meant to be long-lived when a client is actively inserting data and should be reused as offset token information is retained. Data inside the channel is automatically flushed every 1 second by default and doesn't need to be closed.
+Channels are meant to be long-lived when a client actively inserts data and should be reused as offset token information is retained. Data inside the channel is automatically flushed every 1 second by default and doesn't need to be closed.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/ebb8d629-c17a-4002-a732-bd60c9f6525c){: .mx-auto.d-block :} *Streaming channels.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -336,9 +336,9 @@ For testing this setup locally, we will need:
 - open-source Apache Kafka 2.13-3.1.0 installed locally,
 - Snowflake Kafka Connector 1.9.1.jar (or new version),
 - OpenJDK <= 15.0.2,
-- a Snowflake user for streaming snowpipe with an SSH key defined as the authentication method.
+- a Snowflake user for streaming Snowpipe with an SSH key defined as the authentication method.
 
-First, you need to create a separate user that you are going to use for Streaming Snowpipe. Please remember to replace <YOURPUBLICKEY> with the corresponding details. Please note, in this case, you need to remove the begin/end comment lines from the key file (e.g. —–BEGIN PUBLIC KEY—–), but please keep the new-line characters.
+First, you need to create a separate user that you are going to use for Streaming Snowpipe. Please remember to replace <YOURPUBLICKEY> with the corresponding details. Note, in this case, you need to remove the begin/end comment lines from the key file (e.g. —–BEGIN PUBLIC KEY—–), but please keep the new-line characters.
 
 {% highlight sql linenos %}
 create user snowpipe_streaming_user password='',  default_role = accountadmin, rsa_public_key='<YOURPUBLICKEY>';
@@ -408,7 +408,7 @@ Session 3:
 bin/connect-standalone.sh ./config/connect-standalone.properties ./config/SF_connect.properties
 ```
 
-Now, you can open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to manually enter data into the topic.
+Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to put some data into the topic manually.
 
 ```bash
 bin/kafka-console-producer.sh --topic customer_data_topic --bootstrap-server localhost:9092
