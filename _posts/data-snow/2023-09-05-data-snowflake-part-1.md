@@ -109,8 +109,91 @@ INSERT INTO prospects
   }');
 {% endhighlight %}
 
-Finally, if you use the `OVERWRITE` clause with a multi-row insert, the statement rebuilds and overrides the table with the content of the VALUES clause. 
+Finally, if you use the `OVERWRITE` clause with a multi-row insert, the statement rebuilds and overrides the table with the content of the `VALUES` clause. 
 
 As you can see, the `INSERT` statement is the simplest way to ingest data into Snowflake, however, it has scalability and error-handling limitations when dealing with data sets exceeding the single-digit MiB range. For larger data sets, data engineers typically leverage the option to use an ETL/ELT tool to ingest data, or preferably use object storage as an intermediate step alongside `COPY INTO` or `Snowpipe`. 
+
+## COPY INTO
+
+The `COPY INTO` command enables loading batches of data from staged files to an existing table. The files must already be staged in one of the following locations:
+
+- Named internal stage (or table/user stage). Files can be staged using the PUT command.
+- Named external stage that references an external location (Amazon S3, Google Cloud Storage, or Microsoft Azure).
+- External location (Amazon S3, Google Cloud Storage, or Microsoft Azure).
+
+`COPY INTO` provides increased control than `INSERT` but requires the customer to manage the compute (via settings such as warehouse size and job duration). In fact, this command uses a predefined, customer-managed virtual warehouse to read the data from the remote storage, optionally transform its structure, and write it to native Snowflake tables.
+
+These on-the-fly transformations may include:
+
+- Column reordering
+- Column omission
+- Casts
+- Text truncation
+
+COPY fits nicely in an existing infrastructure where one or more warehouses are managed for size and suspension/resumption to achieve peak price to performance of various workloads, such as `SELECT` queries or data transformations. Here is the syntax of a simple `COPY INTO` command:
+
+{% highlight sql json linenos %}
+COPY INTO [<namespace>.]<table_name>
+     FROM { internalStage | externalStage | externalLocation }
+[ FILES = ( '<file_name>' [ , '<file_name>' ] [ , ... ] ) ]
+[ PATTERN = '<regex_pattern>' ]
+[ FILE_FORMAT = ( { FORMAT_NAME = '[<namespace>.]<file_format_name>' |
+                    TYPE = { CSV | JSON | AVRO | ORC | PARQUET | XML } [ formatTypeOptions ] } ) ]
+[ copyOptions ]
+[ VALIDATION_MODE = RETURN_<n>_ROWS | RETURN_ERRORS | RETURN_ALL_ERRORS ]
+{% endhighlight %}
+
+Where:
+
+{% highlight sql linenos %}
+internalStage ::=
+    @[<namespace>.]<int_stage_name>[/<path>]
+  | @[<namespace>.]%<table_name>[/<path>]
+  | @~[/<path>]
+{% endhighlight %}
+
+{% highlight sql linenos %}
+externalStage ::=
+  @[<namespace>.]<ext_stage_name>[/<path>]
+{% endhighlight %}
+
+{% highlight sql linenos %}
+externalLocation (for Amazon S3) ::=
+  's3://<bucket>[/<path>]'
+  [ { STORAGE_INTEGRATION = <integration_name> } | { CREDENTIALS = ( {  { AWS_KEY_ID = '<string>' AWS_SECRET_KEY = '<string>' [ AWS_TOKEN = '<string>' ] } } ) } ]
+  [ ENCRYPTION = ( [ TYPE = 'AWS_CSE' ] [ MASTER_KEY = '<string>' ] |
+                   [ TYPE = 'AWS_SSE_S3' ] |
+                   [ TYPE = 'AWS_SSE_KMS' [ KMS_KEY_ID = '<string>' ] ] |
+                   [ TYPE = 'NONE' ] ) ]
+{% endhighlight %}
+
+{% highlight sql linenos %}
+externalLocation (for Google Cloud Storage) ::=
+  'gcs://<bucket>[/<path>]'
+  [ STORAGE_INTEGRATION = <integration_name> ]
+  [ ENCRYPTION = ( [ TYPE = 'GCS_SSE_KMS' ] [ KMS_KEY_ID = '<string>' ] | [ TYPE = 'NONE' ] ) ]
+{% endhighlight %}
+
+{% highlight sql linenos %}
+externalLocation (for Microsoft Azure) ::=
+  'azure://<account>.blob.core.windows.net/<container>[/<path>]'
+  [ { STORAGE_INTEGRATION = <integration_name> } | { CREDENTIALS = ( [ AZURE_SAS_TOKEN = '<string>' ] ) } ]
+  [ ENCRYPTION = ( [ TYPE = { 'AZURE_CSE' | 'NONE' } ] [ MASTER_KEY = '<string>' ] ) ]
+{% endhighlight %}
+
+For data load with transformation, the command syntax is as following:
+
+{% highlight sql linenos %}
+COPY INTO [<namespace>.]<table_name> [ ( <col_name> [ , <col_name> ... ] ) ]
+     FROM ( SELECT [<alias>.]$<file_col_num>[.<element>] [ , [<alias>.]$<file_col_num>[.<element>] ... ]
+            FROM { internalStage | externalStage } )
+[ FILES = ( '<file_name>' [ , '<file_name>' ] [ , ... ] ) ]
+[ PATTERN = '<regex_pattern>' ]
+[ FILE_FORMAT = ( { FORMAT_NAME = '[<namespace>.]<file_format_name>' |
+                    TYPE = { CSV | JSON | AVRO | ORC | PARQUET | XML } [ formatTypeOptions ] } ) ]
+[ copyOptions ]
+{% endhighlight %}
+
+
 
 
