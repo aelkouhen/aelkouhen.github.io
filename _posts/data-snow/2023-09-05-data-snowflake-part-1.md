@@ -8,7 +8,7 @@ tags: [auto-ingest,copy,data ingestion,dynamic tables,insert,Kafka,Snowflake,Sno
 comments: true
 ---
 
-Organizations are experiencing significant data asset growth and leveraging Snowflake to gather data insights to grow their businesses. This data includes structured, semi-structured, and unstructured data coming in batches or streams.
+Organizations are experiencing significant growth in their data asset and leveraging Snowflake to gather data insights to grow their businesses. This data includes structured, semi-structured, and unstructured data coming in batches or streams.
 
 As you’ve seen in previous posts, Data ingestion is the first stage of the data lifecycle. Here, data is collected from various internal sources like databases, CRMs, ERPs, legacy systems, external ones such as surveys, and third-party providers. This is an important step because it ensures the excellent working of subsequent stages in the data lifecycle.
 
