@@ -519,7 +519,120 @@ select * from CDC_STREAMING_TABLE;
 select count(*) from CDC_STREAMING_TABLE;
 {% endhighlight %}
 
-You can run `Test.sh` to ensure that everything is set correctly. Snowflake is ready for ingestion now!
+You can run `Test.sh` to ensure that everything is set correctly. You are now ready to Stream data into Snowflake! 
+
+To execute the streaming simulator, run `Run_MAX.sh`.
+
+```shell
+./Run_MAX.sh
+```
+
+Which should take 10-20 seconds and returns:
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/5b50cd73-2a8c-4d5b-8f66-48e66725801a)
+
+You now have 1 million records in table `CDC_STREAMING_TABLE.`
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/f4218a7f-ea55-4857-a54d-25a6e170c5eb)
+
+Each record is a JSON payload received via the Snowpipe Streaming Ingestion API and stored in a Snowflake table as rows and variant datafields.
+
+Now you can create a more finished Dynamic Table sourcing from the landing table that reflects the "CURRENT STATE" of the source table. In this pattern, for each source table, you create a Dynamic Table:
+
+```sql
+CREATE OR REPLACE DYNAMIC TABLE ENG.LIMIT_ORDERS_CURRENT_DT
+LAG = '1 minute'
+WAREHOUSE = 'VHOL_CDC_WH'
+AS
+SELECT * EXCLUDE (score,action) from (  
+  SELECT
+    RECORD_CONTENT:transaction:primaryKey_tokenized::varchar as orderid_tokenized,
+    RECORD_CONTENT:transaction:record_after:orderid_encrypted::varchar as orderid_encrypted,
+    TO_TIMESTAMP_NTZ(RECORD_CONTENT:transaction:committed_at::number/1000) as lastUpdated,
+    RECORD_CONTENT:transaction:action::varchar as action,
+    RECORD_CONTENT:transaction:record_after:client::varchar as client,
+    RECORD_CONTENT:transaction:record_after:ticker::varchar as ticker,
+    RECORD_CONTENT:transaction:record_after:LongOrShort::varchar as position,
+    RECORD_CONTENT:transaction:record_after:Price::number(38,3) as price,
+    RECORD_CONTENT:transaction:record_after:Quantity::number(38,3) as quantity,
+    RANK() OVER (
+        partition by orderid_tokenized order by RECORD_CONTENT:transaction:committed_at::number desc) as score
+  FROM ENG.CDC_STREAMING_TABLE 
+    WHERE 
+        RECORD_CONTENT:transaction:schema::varchar='PROD' AND RECORD_CONTENT:transaction:table::varchar='LIMIT_ORDERS'
+) 
+WHERE score = 1 and action != 'DELETE';
+```
+
+{: .box-warning}
+**Warning:** If you run this right away, it will show a warning that the table is not yet ready. You have to wait a bit for the refresh period and the Dynamic Table to be built
+
+Wait for Lag Period (1 minute), then check the table:
+
+```sql
+SELECT count(*) FROM LIMIT_ORDERS_CURRENT_DT;
+```
+
+Let's work with dynamic data going forward and return to the stream simulator to provide a continuous stream. Run `Run_Slooow.sh`, and the application will stream 10 records/second until you stop the application (using Ctrl-C). If you want more volume, run the `Run_Sloow.sh` for 100/second or `Run_Slow.sh` for 1000/second stream rate. Note that the simulator is designed to run only one of these at a time (the channel name is configured in the property file).
+
+Streaming the first table is done perfectly, but you might also want to analyze how orders/records have changed and keep a historical record, for example, in a Slowly Changing Dimensions (SCD). In this case, you can do that by adding additional fields to each record to track and group them together:
+
+```sql
+CREATE OR REPLACE DYNAMIC TABLE ENG.LIMIT_ORDERS_SCD_DT
+LAG = '1 minute'
+WAREHOUSE = 'VHOL_CDC_WH'
+AS
+SELECT * EXCLUDE score from ( SELECT *,
+  CASE when score=1 then true else false end as Is_Latest,
+  LAST_VALUE(score) OVER (
+            partition by orderid_tokenized order by valid_from desc)+1-score as version
+  FROM (  
+      SELECT
+        RECORD_CONTENT:transaction:primaryKey_tokenized::varchar as orderid_tokenized,
+        --IFNULL(RECORD_CONTENT:transaction:record_after:orderid_encrypted::varchar,RECORD_CONTENT:transaction:record_before:orderid_encrypted::varchar) as orderid_encrypted,
+        RECORD_CONTENT:transaction:action::varchar as action,
+        IFNULL(RECORD_CONTENT:transaction:record_after:client::varchar,RECORD_CONTENT:transaction:record_before:client::varchar) as client,
+        IFNULL(RECORD_CONTENT:transaction:record_after:ticker::varchar,RECORD_CONTENT:transaction:record_before:ticker::varchar) as ticker,
+        IFNULL(RECORD_CONTENT:transaction:record_after:LongOrShort::varchar,RECORD_CONTENT:transaction:record_before:LongOrShort::varchar) as position,
+        RECORD_CONTENT:transaction:record_after:Price::number(38,3) as price,
+        RECORD_CONTENT:transaction:record_after:Quantity::number(38,3) as quantity,
+        RANK() OVER (
+            partition by orderid_tokenized order by RECORD_CONTENT:transaction:committed_at::number desc) as score,
+        TO_TIMESTAMP_NTZ(RECORD_CONTENT:transaction:committed_at::number/1000) as valid_from,
+        TO_TIMESTAMP_NTZ(LAG(RECORD_CONTENT:transaction:committed_at::number/1000,1,null) over 
+                         (partition by orderid_tokenized order by RECORD_CONTENT:transaction:committed_at::number desc)) as valid_to
+      FROM ENG.CDC_STREAMING_TABLE
+      WHERE 
+            RECORD_CONTENT:transaction:schema::varchar='PROD' AND RECORD_CONTENT:transaction:table::varchar='LIMIT_ORDERS'
+    ))
+;
+```
+
+Wait the lag period (~ 1 minute) then check the table again. You should now see more than the 1,000,000 initial records we loaded.
+
+This data is now ready for public use! To create access for users to consume, let's use views to allow access (note, JSON path syntax is not seen or needed except from the landing table). For our "Current View" Table:
+
+{% highlight sql linenos %}
+create or replace view PUBLIC.CURRENT_LIMIT_ORDERS_VW
+  as select orderid_tokenized, lastUpdated, client, ticker, position, quantity, price
+  FROM ENG.LIMIT_ORDERS_CURRENT_DT order by orderid_tokenized;
+
+grant select on view PUBLIC.CURRENT_LIMIT_ORDERS_VW to role PUBLIC;
+{% endhighlight %}
+
+No need to wait.. Your consumers are now able to view and analyze Limit Orders in real-time!
+
+```sql
+select * from PUBLIC.CURRENT_LIMIT_ORDERS_VW limit 1000;
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
