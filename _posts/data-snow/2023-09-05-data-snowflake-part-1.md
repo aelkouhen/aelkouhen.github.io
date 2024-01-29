@@ -530,6 +530,7 @@ To execute the streaming simulator, run `Run_MAX.sh`.
 ```
 
 Which should take 10-20 seconds and returns:
+
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/5b50cd73-2a8c-4d5b-8f66-48e66725801a)
 
 You now have 1 million records in the `CDC_STREAMING_TABLE` table.
