@@ -427,6 +427,114 @@ As you can see, Snowpipe Streaming is a fantastic new capability that can signif
 
 ### Snowpipe Streaming and Dynamic Tables for Real-Time Ingestion
 
+[Dynamic tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-about) are the building blocks of declarative data transformation pipelines. They significantly simplify data engineering in Snowflake and provide a reliable, cost-effective, and automated way to transform your data for consumption. Instead of defining data transformation steps as a series of tasks and having to monitor dependencies and scheduling, you can determine the end state of the transformation using dynamic tables and leave the complex pipeline management to Snowflake.
+
+![](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/0ce85521-7009-49bc-937e-25446bfd6960){: .mx-auto.d-block :} *Dynamic tables.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+
+Hereafter, we will take you through a scenario of using Snowflake's Snowpipe Streaming to ingest a simulated stream. Then, we will utilize Dynamic tables to transform and prepare the raw ingested JSON payloads into ready-for-analytics datasets. These are two of Snowflake's powerful Data Engineering innovations for ingestion and transformation.
+
+The simulated datafeed will be Stock Limit Orders, with new, changed, and cancelled orders represented as RDBMS transaction logs captured from INSERT, UPDATE, and DELETE database events. These events will be transmitted as JSON payloads and land into a Snowflake table with a variant data column. This is the same type of stream ingestion typically created by Change-Data-Capture (CDC) agents that parse transaction logs of a database or event notification mechanisms of modern applications. However, this could simulate any type of stream in any industry. This streaming ingestion use case was modeled similarly to one previously handled with Snowflake's Kafka Connector, but no Kafka is necessary for this use case as a Snowpipe Streaming client can enable replacing the Kafka middleware infrastructure, saving cost & complexity. Once landed, Dynamic Tables are purpose-built Snowflake objects for Data Engineering to transform the raw data into data ready for insights.
+
+Our Source ‘database' has stock trades for the Dow Jones Industrials, [30 US stocks](https://www.nyse.com/quote/index/DJI). On average 200M-400M stock trades are executed per day. Our agent will be capturing Limit Order transaction events for these 30 stocks, which are new orders, updates to orders (changes in quantity or the limit price), and orders that are canceled. For this simulation, there are 3 new orders for every 2 updates, and then one cancellation. This scenario's datastream will first reproduce a heavy workload of an initial market opening session and, secondly, a more modest continuous flow. Snowflake data consumers want to see three perspectives on limit orders: what is the "current" list of orders that filters out stale and canceled orders, a historical table showing every event on the source (in a traditional slowly changing dimension format), and current orders summarized by stock ticker symbol and by long or short position. Latency needs to be minimized, 1-2 minutes would be ideal for the end-to-end process.
+
+More Snowflake capabilities can further enrich your incoming data using Snowflake Data Marketplace data, train and deploy machine learning models, perform fraud detection, and other use cases. We will cover these in future posts.
+
+First, you need to extract this [file](/assets/java/CDCSimulatorApp.zip), which will create a CDCSimulatorApp directory and many files within it. 
+
+From your terminal, navigate to your working directory, then the directory extracted (CDCSimulatorApp) and run these two commands:
+
+{% highlight shell linenos %}
+openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out rsa_key.p8 -nocrypt
+openssl rsa -in rsa_key.p8 -pubout -out rsa_key.pub
+{% endhighlight %}
+
+In Snowflake, create a dedicated role for your Streaming Application. For this, run these commands, using the Public Key generated in the previous step (the content of `rsa_key.pub`):
+
+{% highlight sql linenos %}
+create role if not exists VHOL_CDC_AGENT;
+create or replace user vhol_streaming1 COMMENT="Creating for VHOL";
+alter user vhol_streaming1 set rsa_public_key='<Paste Your Public Key Here>';
+{% endhighlight %}
+
+You will need to edit the snowflake.properties file to match your Snowflake account name (two places):
+
+{% highlight properties linenos %}
+user=vhol_streaming1
+role=VHOL_CDC_AGENT
+account=<MY_SNOWFLAKE_ACCOUNT>
+warehouse=VHOL_CDC_WH
+private_key_file=rsa_key.p8
+host=<ACCOUNT_IDENTIFIER>.snowflakecomputing.com
+database=VHOL_ENG_CDC
+schema=ENG
+table=CDC_STREAMING_TABLE
+channel_name=channel_1
+AES_KEY=O90hS0k9qHdsMDkPe46ZcQ==
+TOKEN_KEY=11
+DEBUG=FALSE
+SHOW_KEYS=TRUE
+NUM_ROWS=1000000
+{% endhighlight %}
+
+Create new roles for this tutorial and grant permissions:
+
+{% highlight sql linenos %}
+use role ACCOUNTADMIN;
+set myname = current_user();
+create role if not exists VHOL;
+grant role VHOL to user identifier($myname);
+grant role VHOL_CDC_AGENT to user vhol_streaming1;
+{% endhighlight %}
+
+Create a dedicated virtual compute warehouse (size XS), then create the database used throughout this tutorial:
+
+{% highlight sql linenos %}
+create or replace warehouse VHOL_CDC_WH WAREHOUSE_SIZE = XSMALL, AUTO_SUSPEND = 5, AUTO_RESUME= TRUE;
+grant all privileges on warehouse VHOL_CDC_WH to role VHOL;
+{% endhighlight %}
+
+{% highlight sql linenos %}
+create database VHOL_ENG_CDC;
+use database VHOL_ENG_CDC;
+grant ownership on schema PUBLIC to role VHOL;
+revoke all privileges on database VHOL_ENG_CDC from role ACCOUNTADMIN;
+grant ownership on database VHOL_ENG_CDC to role VHOL;
+{% endhighlight %}
+
+{% highlight sql linenos %}
+use role VHOL;
+use database VHOL_ENG_CDC;
+create schema ENG;
+use VHOL_ENG_CDC.ENG;
+use warehouse VHOL_CDC_WH;
+grant usage on database VHOL_ENG_CDC to role VHOL_CDC_AGENT;
+grant usage on schema ENG to role VHOL_CDC_AGENT;
+grant usage on database VHOL_ENG_CDC to role PUBLIC;
+grant usage on schema PUBLIC to role PUBLIC;
+{% endhighlight %}
+
+Create a Staging/Landing Table, where all incoming data will land initially. Each row will contain a transaction, but JSON will be stored as a VARIANT datatype within Snowflake.
+
+{% highlight sql linenos %}
+create or replace table ENG.CDC_STREAMING_TABLE (RECORD_CONTENT variant);
+grant insert on table ENG.CDC_STREAMING_TABLE to role VHOL_CDC_AGENT;
+select * from CDC_STREAMING_TABLE;
+select count(*) from CDC_STREAMING_TABLE;
+{% endhighlight %}
+
+You can run `Test.sh` to ensure that everything is set correctly. Snowflake is ready for ingestion now!
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
