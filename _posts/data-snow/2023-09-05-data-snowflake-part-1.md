@@ -19,7 +19,7 @@ In this article, I will illustrate data ingestion and integration using Snowflak
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/4edf0d68-ed96-46f3-8c27-ded686305e4a){: .mx-auto.d-block :} *Snowflake's ingestion options.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 # Batch Ingestion
-Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are `INSERT`, `COPY`, and `Snowpipe`.
+Snowflake supports ingesting data in multiple formats and compression methods at any file volume. Features such as schema detection and schema evolution simplify data loading directly into structured tables without needing to split, merge, or convert files. First-party mechanisms for batch data ingestion are `INSERT` and `COPY`.
 
 ## Insert
 
@@ -112,7 +112,7 @@ INSERT INTO prospects
 
 Finally, if you use the `OVERWRITE` clause with a multi-row insert, the statement rebuilds and overrides the table with the content of the `VALUES` clause. 
 
-As you can see, the `INSERT` statement is the simplest way to ingest data into Snowflake, however, it has scalability and error-handling limitations when dealing with data sets exceeding the single-digit MiB range. For larger data sets, data engineers typically leverage the option to use an ETL/ELT tool to ingest data, or preferably use object storage as an intermediate step alongside `COPY INTO` or `Snowpipe`. 
+As you can see, the `INSERT` statement is the simplest way to ingest data into Snowflake, however, it has scalability and error-handling limitations when dealing with data sets exceeding the single-digit MiB range. For larger data sets, data engineers typically leverage the option to use an ETL/ELT tool to ingest data or preferably use object storage as an intermediate step alongside `COPY` or `Snowpipe`. 
 
 ## COPY
 
@@ -122,7 +122,7 @@ The `COPY` command enables loading batches of data from staged files to an exist
 - Named external stage that references an external location (Amazon S3, Google Cloud Storage, or Microsoft Azure).
 - External location (Amazon S3, Google Cloud Storage, or Microsoft Azure).
 
-`COPY INTO` provides increased control than `INSERT` but requires the customer to manage the compute (via settings such as warehouse size and job duration). In fact, this command uses a predefined, customer-managed virtual warehouse to read the data from the remote storage, optionally transform its structure, and write it to native Snowflake tables.
+`COPY` provides increased control than `INSERT` but requires the customer to manage the compute (via settings such as warehouse size and job duration). In fact, this command uses a predefined, customer-managed virtual warehouse to read the data from the remote storage, optionally transform its structure, and write it to native Snowflake tables.
 
 These on-the-fly transformations may include:
 
@@ -131,7 +131,7 @@ These on-the-fly transformations may include:
 - Casts
 - Text truncation
 
-COPY fits nicely in an existing infrastructure where one or more warehouses are managed for size and suspension/resumption to achieve peak price to performance of various workloads, such as `SELECT` queries or data transformations. Here is the syntax of a simple `COPY INTO` command:
+COPY fits nicely in an existing infrastructure where one or more warehouses are managed for size and suspension/resumption to achieve peak price to performance of various workloads, such as `SELECT` queries or data transformations. Here is the syntax of a simple `COPY` command:
 
 {% highlight sql json linenos %}
 COPY INTO [<namespace>.]<table_name>
@@ -215,7 +215,7 @@ This option is designed to load small volumes of data (i.e. micro-batches) and i
 
 ## Snowpipe
 
-Snowpipe is a serverless service that enables loading data from files as soon as they’re available in a Snowflake stage (locations where data files are stored for loading/unloading). With Snowpipe, data can be loaded from files in micro-batches rather than executing `COPY` statements on a schedule. Unlike `COPY INTO`, which is a synchronous process that returns the load status, Snowpipe file ingestion is asynchronous, and processing status needs to be observed explicitly.
+Snowpipe is a serverless service that enables loading data from files as soon as they’re available in a Snowflake stage (locations where data files are stored for loading/unloading). With Snowpipe, data can be loaded from files in micro-batches rather than executing `COPY` statements on a schedule. Unlike `COPY`, which is a synchronous process that returns the load status, Snowpipe file ingestion is asynchronous, and processing status needs to be observed explicitly.
 
 Snowpipe uses compute resources provided by Snowflake (a serverless compute model). These Snowflake-provided resources are automatically resized and scaled up or down as required, and they are charged and itemized using per-second billing. Data ingestion is charged based upon the actual workloads.
 
@@ -239,13 +239,15 @@ CREATE STORAGE INTEGRATION my_storage_int
   STORAGE_BLOCKED_LOCATIONS = ('s3://mybucket1/mypath1/sensitivedata/', 's3://mybucket2/mypath2/sensitivedata/');
 ```
 
-{% highlight sql linenos %}
+``` sql
 USE SCHEMA snowpipe_db.public;
+```
 
+``` sql
 CREATE STAGE mystage
   URL = 's3://mybucket/load/files'
   STORAGE_INTEGRATION = my_storage_int;
-{% endhighlight %}
+```
 
 Then, we create a pipe named `mypipe` in the active schema for the user session. The pipe loads the data from files staged in the `mystage` stage into the `mytable` table and subscribes to the `SNS` topic ARN that propagates the notification:
 
@@ -274,17 +276,19 @@ create pipe snowpipe_db.public.mypipe as
 
 Then, we create a user with key-pair authentication. The user credentials will be used when calling the Snowpipe API endpoints:
 
-{% highlight sql linenos %}
+``` sql
 use role securityadmin;
+```
 
+``` sql
 create user snowpipeuser 
   login_name = 'snowpipeuser'
   default_role = SYSADMIN
   default_namespace = snowpipe_test.public
   rsa_public_key = '<RSA Public Key value>' ;
-{% endhighlight %}
+```
 
-You can validate that the user has been successfully created by connecting via SnowSQL. Use the `--private-key-path` switch to tell SnowSQL to use key-pair authentication.
+Connecting via SnowSQL validates that the user has been successfully created. Use the `--private-key-path` switch to tell SnowSQL to use key-pair authentication.
 
 ```bash
 snowsql -a sedemo.us-east-1-gov.aws -u snowpipeuser --private-key-path rsa_key.p8
@@ -430,7 +434,7 @@ As you can see, Snowpipe Streaming is a fantastic new capability that can signif
 
 Hereafter, we will take you through a scenario of using Snowflake's Snowpipe Streaming to ingest a simulated stream. Then, we will utilize Dynamic tables to transform and prepare the raw ingested JSON payloads into ready-for-analytics datasets. These are two of Snowflake's powerful Data Engineering innovations for ingestion and transformation.
 
-The simulated datafeed will be Stock Limit Orders, with new, changed, and cancelled orders represented as RDBMS transaction logs captured from INSERT, UPDATE, and DELETE database events. These events will be transmitted as JSON payloads and land into a Snowflake table with a variant data column. This is the same type of stream ingestion typically created by Change-Data-Capture (CDC) agents that parse transaction logs of a database or event notification mechanisms of modern applications. However, this could simulate any type of stream in any industry. This streaming ingestion use case was modeled similarly to one previously handled with Snowflake's Kafka Connector, but no Kafka is necessary for this use case as a Snowpipe Streaming client can enable replacing the Kafka middleware infrastructure, saving cost & complexity. Once landed, Dynamic Tables are purpose-built Snowflake objects for Data Engineering to transform the raw data into data ready for insights.
+The simulated data feed will be Stock Limit Orders, with new, changed, and cancelled orders represented as RDBMS transaction logs captured from INSERT, UPDATE, and DELETE database events. These events will be transmitted as JSON payloads and land into a Snowflake table with a variant data column. This is the same type of stream ingestion typically created by Change-Data-Capture (CDC) agents that parse transaction logs of a database or event notification mechanisms of modern applications. However, this could simulate any type of stream in any industry. This streaming ingestion use case was modeled similarly to one previously handled with Snowflake's Kafka Connector, but no Kafka is necessary for this use case as a Snowpipe Streaming client can enable replacing the Kafka middleware infrastructure, saving cost & complexity. Once landed, Dynamic Tables are purpose-built Snowflake objects for Data Engineering to transform the raw data into data ready for insights.
 
 Our Source ‘database' has stock trades for the Dow Jones Industrials, [30 US stocks](https://www.nyse.com/quote/index/DJI). On average 200M-400M stock trades are executed per day. Our agent will be capturing Limit Order transaction events for these 30 stocks, which are new orders, updates to orders (changes in quantity or the limit price), and orders that are canceled. For this simulation, there are 3 new orders for every 2 updates, and then one cancellation. This scenario's datastream will first reproduce a heavy workload of an initial market opening session and, secondly, a more modest continuous flow. Snowflake data consumers want to see three perspectives on limit orders: what is the "current" list of orders that filters out stale and canceled orders, a historical table showing every event on the source (in a traditional slowly changing dimension format), and current orders summarized by stock ticker symbol and by long or short position. Latency needs to be minimized, 1-2 minutes would be ideal for the end-to-end process.
 
@@ -510,13 +514,11 @@ grant usage on database VHOL_ENG_CDC to role PUBLIC;
 grant usage on schema PUBLIC to role PUBLIC;
 {% endhighlight %}
 
-Create a Staging/Landing Table, where all incoming data will land initially. Each row will contain a transaction, but JSON will be stored as a VARIANT datatype within Snowflake.
+Create a Staging/Landing Table, where all incoming data will land initially. Each row will contain a transaction, but JSON will be stored as a `VARIANT` datatype within Snowflake.
 
 {% highlight sql linenos %}
 create or replace table ENG.CDC_STREAMING_TABLE (RECORD_CONTENT variant);
 grant insert on table ENG.CDC_STREAMING_TABLE to role VHOL_CDC_AGENT;
-select * from CDC_STREAMING_TABLE;
-select count(*) from CDC_STREAMING_TABLE;
 {% endhighlight %}
 
 You can run `Test.sh` to ensure that everything is set correctly. You are now ready to Stream data into Snowflake! 
@@ -530,7 +532,8 @@ To execute the streaming simulator, run `Run_MAX.sh`.
 Which should take 10-20 seconds and returns:
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/5b50cd73-2a8c-4d5b-8f66-48e66725801a)
 
-You now have 1 million records in table `CDC_STREAMING_TABLE.`
+You now have 1 million records in the `CDC_STREAMING_TABLE` table.
+
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/f4218a7f-ea55-4857-a54d-25a6e170c5eb)
 
 Each record is a JSON payload received via the Snowpipe Streaming Ingestion API and stored in a Snowflake table as rows and variant datafields.
@@ -610,61 +613,46 @@ Wait the lag period (~ 1 minute) then check the table again. You should now see 
 
 This data is now ready for public use! To create access for users to consume, let's use views to allow access (note, JSON path syntax is not seen or needed except from the landing table). For our "Current View" Table:
 
-{% highlight sql linenos %}
+``` sql
 create or replace view PUBLIC.CURRENT_LIMIT_ORDERS_VW
   as select orderid_tokenized, lastUpdated, client, ticker, position, quantity, price
   FROM ENG.LIMIT_ORDERS_CURRENT_DT order by orderid_tokenized;
+```
 
+```sql
 grant select on view PUBLIC.CURRENT_LIMIT_ORDERS_VW to role PUBLIC;
-{% endhighlight %}
+```
 
-No need to wait.. Your consumers are now able to view and analyze Limit Orders in real-time!
+No need to wait.. Your consumers are now able to view and analyze Limit Orders in real time!
 
 ```sql
 select * from PUBLIC.CURRENT_LIMIT_ORDERS_VW limit 1000;
 ```
 
+# Summary
 
+Snowflake offers various building blocks for working with both batch and streaming data. There is no one-size-fits-all approach, so it is important to understand the differences to address requirements effectively. In this post, we explored the ingestion options, best practices, and how concretely you can implement each of them.
 
+![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/75118283-457e-4440-98b7-5707a6845797)
 
+Regardless of the ingestion method you choose, the thorny question that remains legit is about ingestion time and cost. Both of them depend on various factors, including:
 
+- Size of the file: the core ingestion time is relative to the content, so the costs tend to be proportional to the number of records and file size but not an exact correlation. 
+- The amount of pre-processing required: Some ingestion jobs invoke complex UDFs that take significant time per row and occasionally can even run out of memory if the data size is not correctly anticipated.
+- File format, compression, nested structures... play an impact on how efficiently we can decompress and load the data. An uncompressed file with a large number of columns may take the same amount of time as a compressed file with a small number of columns but has highly nested data structures.
+  
+Therefore, it is impossible to answer the time and cost question without measuring it for each specific case.
 
+Finally, as mentioned in previous posts, there are many approaches to data ingestion, but the best practice is to reduce complexity while achieving your business requirements. Batch and Streaming ingestion can work together to provide the simplest and most cost-effective solution to your data pipelines. Streaming ingestion is not meant to replace file-based ingestion but rather to augment it for data-loading scenarios that better fit your business needs.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# References
+- [Best Practices for Data Ingestion with Snowflake: Part 1](https://www.snowflake.com/blog/best-practices-for-data-ingestion), Xin Huang and Anton Huck, Snowflake Blog. 
+- [Best Practices for Data Ingestion with Snowflake: Part 2](https://www.snowflake.com/blog/best-practices-for-data-ingestion-part-2), Xin Huang, Snowflake Blog.
+- [Best Practices for Data Ingestion with Snowflake: Part 3](https://www.snowflake.com/blog/data-ingestion-best-practices-part-three), Xin Huang and Revi Cheng, Snowflake Blog.
+- [Best practices to optimize data ingestion spend in Snowflake], Samartha Chandrashekar, Medium.
+- [Best Practices of Different Data Ingestion Options in Snowflake], Snowflake Wiki, Medium.
+- [Invoking the Snowpipe REST API from Postman](https://medium.com/snowflake/invoking-the-snowpipe-rest-api-from-postman-141070a55337), Paul Horan, Medium.
+- [Streaming Data Integration with Snowflake](https://quickstarts.snowflake.com/guide/data_engineering_streaming_integration), Snowflake Labs.
+- [Snowpipe Streaming and Dynamic Tables for Real-Time Ingestion](https://quickstarts.snowflake.com/guide/CDC_SnowpipeStreaming_DynamicTables), Snowflake Labs.
+- [Snowpipe Streaming](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-overview), Snowflake Documentation. 
+- [Automating Snowpipe for Amazon S3](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-auto-s3), Snowflake Documentation. 
