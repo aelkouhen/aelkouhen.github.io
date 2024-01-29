@@ -609,9 +609,9 @@ SELECT * EXCLUDE score from ( SELECT *,
 ;
 ```
 
-Wait the lag period (~ 1 minute) then check the table again. You should now see more than the 1,000,000 initial records we loaded.
+Wait for the lag period (~ 1 minute), then check the table again. You should now see more than the 1,000,000 initial records we loaded.
 
-This data is now ready for public use! To create access for users to consume, let's use views to allow access (note, JSON path syntax is not seen or needed except from the landing table). For our "Current View" Table:
+This data is now ready for public use! To create access for users to consume, let's use views to allow access (note: JSON path syntax is not seen or needed except from the landing table). For our "Current View" Table:
 
 ``` sql
 create or replace view PUBLIC.CURRENT_LIMIT_ORDERS_VW
@@ -623,7 +623,7 @@ create or replace view PUBLIC.CURRENT_LIMIT_ORDERS_VW
 grant select on view PUBLIC.CURRENT_LIMIT_ORDERS_VW to role PUBLIC;
 ```
 
-No need to wait.. Your consumers are now able to view and analyze Limit Orders in real time!
+No need to wait.. Your consumers can now view and analyze Limit Orders in real time!
 
 ```sql
 select * from PUBLIC.CURRENT_LIMIT_ORDERS_VW limit 1000;
@@ -631,15 +631,15 @@ select * from PUBLIC.CURRENT_LIMIT_ORDERS_VW limit 1000;
 
 # Summary
 
-Snowflake offers various building blocks for working with both batch and streaming data. There is no one-size-fits-all approach, so it is important to understand the differences to address requirements effectively. In this post, we explored the ingestion options, best practices, and how concretely you can implement each of them.
+Snowflake offers various building blocks for working with both batch and streaming data. There is no one-size-fits-all approach, so it is important to understand the differences to address requirements effectively. In this post, we explored the ingestion options, best practices, and how you can implement each concretely.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/75118283-457e-4440-98b7-5707a6845797)
 
-Regardless of the ingestion method you choose, the thorny question that remains legit is about ingestion time and cost. Both of them depend on various factors, including:
+Regardless of the ingestion method you choose, the thorny question that remains legit is the one about ingestion time and cost. Both of them depend on various factors, including:
 
 - Size of the file: the core ingestion time is relative to the content, so the costs tend to be proportional to the number of records and file size but not an exact correlation. 
 - The amount of pre-processing required: Some ingestion jobs invoke complex UDFs that take significant time per row and occasionally can even run out of memory if the data size is not correctly anticipated.
-- File format, compression, nested structures... play an impact on how efficiently we can decompress and load the data. An uncompressed file with a large number of columns may take the same amount of time as a compressed file with a small number of columns but has highly nested data structures.
+- File format, compression, nested structures... impact how efficiently we can decompress and load the data. An uncompressed file with a large number of columns may take the same amount of time as a compressed file with a small number of columns but has highly nested data structures.
   
 Therefore, it is impossible to answer the time and cost question without measuring it for each specific case.
 
@@ -649,8 +649,8 @@ Finally, as mentioned in previous posts, there are many approaches to data inges
 - [Best Practices for Data Ingestion with Snowflake: Part 1](https://www.snowflake.com/blog/best-practices-for-data-ingestion), Xin Huang and Anton Huck, Snowflake Blog. 
 - [Best Practices for Data Ingestion with Snowflake: Part 2](https://www.snowflake.com/blog/best-practices-for-data-ingestion-part-2), Xin Huang, Snowflake Blog.
 - [Best Practices for Data Ingestion with Snowflake: Part 3](https://www.snowflake.com/blog/data-ingestion-best-practices-part-three), Xin Huang and Revi Cheng, Snowflake Blog.
-- [Best practices to optimize data ingestion spend in Snowflake], Samartha Chandrashekar, Medium.
-- [Best Practices of Different Data Ingestion Options in Snowflake], Snowflake Wiki, Medium.
+- [Best practices to optimize data ingestion spend in Snowflake](https://medium.com/snowflake/data-ingestion-into-snowflake-and-best-practices-to-optimize-associated-spend-82a0325fff94), Samartha Chandrashekar, Medium.
+- [Best Practices of Different Data Ingestion Options in Snowflake](https://snowflakewiki.medium.com/best-practices-of-different-data-ingestion-options-in-snowflake-7a9f452b5fb8), Snowflake Wiki, Medium.
 - [Invoking the Snowpipe REST API from Postman](https://medium.com/snowflake/invoking-the-snowpipe-rest-api-from-postman-141070a55337), Paul Horan, Medium.
 - [Streaming Data Integration with Snowflake](https://quickstarts.snowflake.com/guide/data_engineering_streaming_integration), Snowflake Labs.
 - [Snowpipe Streaming and Dynamic Tables for Real-Time Ingestion](https://quickstarts.snowflake.com/guide/CDC_SnowpipeStreaming_DynamicTables), Snowflake Labs.
