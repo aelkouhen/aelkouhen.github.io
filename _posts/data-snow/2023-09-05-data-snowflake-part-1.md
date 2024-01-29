@@ -442,7 +442,7 @@ Our Source ‘database' has stock trades for the Dow Jones Industrials, [30 US s
 
 More Snowflake capabilities can further enrich your incoming data using Snowflake Data Marketplace data, train and deploy machine learning models, perform fraud detection, and other use cases. We will cover these in future posts.
 
-First, you need to extract this [file](/assets/java/CDCSimulatorApp.zip), creating a `CDCSimulatorApp` directory and many files within it. 
+First, you need to extract this [file](https://sfquickstarts.s3.us-west-1.amazonaws.com/data_engineering_CDC_snowpipestreaming_dynamictables/CDCSimulatorApp.zip), creating a `CDCSimulatorApp` directory and many files within it. 
 
 From your terminal, navigate to your working directory, then the directory extracted (`CDCSimulatorApp`), and run these two commands:
 
