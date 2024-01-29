@@ -2,7 +2,7 @@
 layout: post
 title: Data & Snowflake series - part 1
 subtitle:  Data Ingestion with Snowflake
-thumbnail-img: 
+thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1ecf154a-5a16-4353-ba85-c2e91a8e65fa
 share-img: 
 tags: []
 comments: true
@@ -131,7 +131,7 @@ These on-the-fly transformations may include:
 - Casts
 - Text truncation
 
-COPY fits nicely in an existing infrastructure where one or more warehouses are managed for size and suspension/resumption to achieve peak price to performance of various workloads, such as `SELECT` queries or data transformations. Here is the syntax of a simple `COPY` command:
+COPY fits nicely in an existing infrastructure where one or more warehouses are managed for size and suspension/resumption to achieve peak price-to-performance of various workloads, such as `SELECT` queries or data transformations. Here is the syntax of a simple `COPY` command:
 
 {% highlight sql json linenos %}
 COPY INTO [<namespace>.]<table_name>
@@ -153,14 +153,14 @@ internalStage ::=
   | @~[/<path>]
 {% endhighlight %}
 
-For example, to load files from a named internal stage into a table the command is:
+For example, to load files from a named internal stage into a table, the command is:
 
 {% highlight sql linenos %}
 COPY INTO mytable
 FROM @my_int_stage;
 {% endhighlight %}
 
-You can load files from a named external stage you created using the `CREATE STAGE` command. The named external stage references an external location (Amazon S3, Google Cloud Storage, or Microsoft Azure). For example:
+Using the `CREATE STAGE` command, you can load files from a named external stage you already created. The named external stage references an external location (Amazon S3, Google Cloud Storage, or Microsoft Azure). For example:
 
 {% highlight sql linenos %}
 COPY INTO mytable
@@ -211,11 +211,11 @@ Finally, using the most explicit path allows `COPY` to list and load data withou
 
 # Continuous Data Ingestion
 
-This option is designed to load small volumes of data (i.e. micro-batches) and incrementally make them available for analysis. For example, Snowpipe loads data within minutes after files are added to a stage and submitted for ingestion. This ensures users have the latest results, as soon as the raw data is available.
+This option is designed to load small volumes of data (i.e. micro-batches) and incrementally make them available for analysis. For example, Snowpipe loads data within minutes after files are added to a stage and submitted for ingestion. This ensures users have the latest results as soon as the raw data is available.
 
 ## Snowpipe
 
-Snowpipe is a serverless service that enables loading data from files as soon as they’re available in a Snowflake stage (locations where data files are stored for loading/unloading). With Snowpipe, data can be loaded from files in micro-batches rather than executing `COPY` statements on a schedule. Unlike `COPY`, which is a synchronous process that returns the load status, Snowpipe file ingestion is asynchronous, and processing status needs to be observed explicitly.
+Snowpipe is a serverless service that enables loading data from files as soon as they’re available in a Snowflake stage (locations where data files are stored for loading/unloading). Snowpipe can load data from files in micro-batches rather than executing `COPY` statements on a schedule. Unlike `COPY`, which is a synchronous process that returns the load status, Snowpipe file ingestion is asynchronous, and processing status must be observed explicitly.
 
 Snowpipe uses compute resources provided by Snowflake (a serverless compute model). These Snowflake-provided resources are automatically resized and scaled up or down as required, and they are charged and itemized using per-second billing. Data ingestion is charged based upon the actual workloads.
 
@@ -261,11 +261,11 @@ create pipe snowpipe_db.public.mypipe
   file_format = (type = 'JSON');
 ```
 
-But in cases where an event service can not be set up or an existing data pipeline infrastructure is in place, a REST API-triggered Snowpipe is a suitable alternative. It is also currently the only option if an internal stage is used for storing the raw files. Most commonly, the REST API approach is used by ETL/ELT tools that don’t want to put the burden of creating object storage on the end user and instead use a Snowflake-managed Internal Stage.
+But in cases where an event service can not be set up, or an existing data pipeline infrastructure is in place, a REST API-triggered Snowpipe is a suitable alternative. It is currently the only option if an internal stage is used to store the raw files. Most commonly, the REST API approach is used by ETL/ELT tools that don’t want to put the burden of creating object storage on the end user and instead use a Snowflake-managed Internal Stage.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/cea02511-e0b3-4b98-8e1a-c115d23f0c64){: .mx-auto.d-block :} *API-triggered Snowpipe setup.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Similarly to the Auto-ingest setup, you need here to create a stage, and an integration to S3 storage. The pipe is created without the SNS topic arn and the `auto_ingest` keyword.  
+Similar to the Auto-ingest setup, you need to create a stage, and an integration to S3 storage. The pipe is created without the SNS topic arn and the `auto_ingest` keyword.  
 
 ``` sql
 create pipe snowpipe_db.public.mypipe as
@@ -294,7 +294,7 @@ Connecting via SnowSQL validates that the user has been successfully created. Us
 snowsql -a sedemo.us-east-1-gov.aws -u snowpipeuser --private-key-path rsa_key.p8
 ```
 
-Authentication via the REST endpoint expects a valid JSON Web Token (JWT). These tokens are generally valid for about 60 minutes and then need to be regenerated. If you want to test the REST API using `Postman` or `curl`, you must generate one from the RSA certificate.
+Authentication via the REST endpoint expects a valid JSON Web Token (JWT). These tokens are generally valid for about 60 minutes and must be regenerated. If you want to test the REST API using `Postman` or `curl`, you must generate one from the RSA certificate.
 
 Once you generate the JWT, the REST endpoint should reference your Snowflake account and the fully qualified pipe name. The call you’re testing is a `POST` to the `insertFiles` method.
 
@@ -310,7 +310,7 @@ The ingestion should already be finished, so you can return to the Snowflake UI 
 
 Snowpipe Streaming enables serverless streaming data ingestion directly into Snowflake tables without requiring staging files (bypassing cloud object storage) with exact-once and ordered delivery. This architecture results in lower latencies and correspondingly lower costs for loading any volume of data, making it a powerful tool for handling near real-time data streams.
 
-The API is intended to complement Snowpipe, not replace it. Use the Snowpipe Streaming API in streaming scenarios where data is streamed via rows (for example, Apache Kafka topics) instead of writing to files. The API fits into an ingest workflow including an existing custom Java application that produces or receives records. The API removes the need to create files to load data into Snowflake tables and enables the automatic, continuous loading of data streams into Snowflake as the data becomes available. You also get new functionality, such as exactly-once delivery, ordered ingestion, and error handling with dead-letter queue (DLQ) support.
+The API is intended to complement Snowpipe, not replace it. Use the Snowpipe Streaming API in streaming scenarios where data is streamed via rows (for example, Apache Kafka topics) instead of writing to files. The API fits into an ingest workflow, including an existing custom Java application that produces or receives records. The API removes the need to create files to load data into Snowflake tables and enables the automatic, continuous loading of data streams into Snowflake as the data becomes available. You also get new functionality, such as exactly-once delivery, ordered ingestion, and error handling with dead-letter queue (DLQ) support.
 
 Snowpipe Streaming is also available for the Snowflake Connector for Kafka, which offers an easy upgrade path to take advantage of the lower latency and lower cost loads.
 
@@ -330,19 +330,19 @@ Kafka (or its cloud-specific equivalents) provides an additional data collection
 
 In the case of the Snowflake Connector for Kafka, the same file size consideration mentioned earlier still applies due to its use of Snowpipe for data ingestion. However, there may be a trade-off between the desired maximum latency and a larger file size for cost optimization. The right file size for your application may not fit the above guidance, and that is acceptable as long as the cost implications are measured and considered. 
 
-In addition, the amount of memory available in a Kafka Connect cluster node may limit the buffer size and, therefore, the file size. In that case, it is still a good idea to configure the timer value (buffer.flush.time) to ensure that files smaller than the buffer size are less likely.
+In addition, the amount of memory available in a Kafka Connect cluster node may limit the buffer size and, therefore, the file size. In that case, configuring the timer value (buffer.flush.time) is still a good idea to ensure that files smaller than the buffer size are less likely.
 
-Two elements—Buffer.flush.time and Buffer.flush.size—decide the total number of files per minute that you are sending to Snowflake via the Kafka connector. So tuning these parameters is very beneficial in terms of performance. Here’s a look at two examples:
+Two elements—Buffer.flush.time and Buffer.flush.size—decide the total number of files per minute that you are sending to Snowflake via the Kafka connector. So, tuning these parameters is very beneficial in terms of performance. Here’s a look at two examples:
 - If you set buffer.flush.time to 240 seconds instead of 120 seconds without changing anything else, it will reduce the base files/minute rate by a factor of 2 (reaching buffer size earlier than time will affect these calculations).
-- If you increase the Buffer.flush.size to 100 MB without changing anything else, the base files/minute rate will be reduced by a factor of 20 (reaching the max buffer size earlier than the max buffer time will affect these calculations).
+- If you increase the Buffer.flush.size to 100 MB without changing anything else, the base files/minute rate will be reduced by 20 (reaching the max buffer size earlier than the max buffer time will affect these calculations).
 
 For testing this setup locally, we will need:
-- open-source Apache Kafka 2.13-3.1.0 installed locally,
+- Open-source Apache Kafka 2.13-3.1.0 installed locally,
 - Snowflake Kafka Connector 1.9.1.jar (or new version),
 - OpenJDK <= 15.0.2,
 - a Snowflake user for streaming Snowpipe with an SSH key defined as the authentication method.
 
-First, you need to create a separate user that you are going to use for Streaming Snowpipe. Please remember to replace <YOURPUBLICKEY> with the corresponding details. Note, in this case, you need to remove the begin/end comment lines from the key file (e.g. —–BEGIN PUBLIC KEY—–), but please keep the new-line characters.
+First, you need to create a separate user that you are going to use for Streaming Snowpipe. Please remember to replace <YOURPUBLICKEY> with the corresponding details. In this case, you need to remove the begin/end comment lines from the key file (e.g. —–BEGIN PUBLIC KEY—–), but please keep the new-line characters.
 
 {% highlight sql linenos %}
 create user snowpipe_streaming_user password='',  default_role = accountadmin, rsa_public_key='<YOURPUBLICKEY>';
@@ -409,7 +409,7 @@ Session 3:
 bin/connect-standalone.sh ./config/connect-standalone.properties ./config/SF_connect.properties
 ```
 
-Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to manually enter data into the topic.
+Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility allows you to manually enter data into the topic.
 
 ```bash
 bin/kafka-console-producer.sh --topic customer_data_topic --bootstrap-server localhost:9092
@@ -434,22 +434,22 @@ As you can see, Snowpipe Streaming is a fantastic new capability that can signif
 
 Hereafter, we will take you through a scenario of using Snowflake's Snowpipe Streaming to ingest a simulated stream. Then, we will utilize Dynamic tables to transform and prepare the raw ingested JSON payloads into ready-for-analytics datasets. These are two of Snowflake's powerful Data Engineering innovations for ingestion and transformation.
 
-The simulated data feed will be Stock Limit Orders, with new, changed, and cancelled orders represented as RDBMS transaction logs captured from INSERT, UPDATE, and DELETE database events. These events will be transmitted as JSON payloads and land into a Snowflake table with a variant data column. This is the same type of stream ingestion typically created by Change-Data-Capture (CDC) agents that parse transaction logs of a database or event notification mechanisms of modern applications. However, this could simulate any type of stream in any industry. This streaming ingestion use case was modeled similarly to one previously handled with Snowflake's Kafka Connector, but no Kafka is necessary for this use case as a Snowpipe Streaming client can enable replacing the Kafka middleware infrastructure, saving cost & complexity. Once landed, Dynamic Tables are purpose-built Snowflake objects for Data Engineering to transform the raw data into data ready for insights.
+The simulated data feed will be Stock Limit Orders, with new, changed, and canceled orders represented as RDBMS transaction logs captured from INSERT, UPDATE, and DELETE database events. These events will be transmitted as JSON payloads and land into a Snowflake table with a variant data column. This is the same type of stream ingestion typically created by Change-Data-Capture (CDC) agents that parse transaction logs of a database or event notification mechanisms of modern applications. However, this could simulate any type of stream in any industry. This streaming ingestion use case was modeled similarly to one previously handled with Snowflake's Kafka Connector. Still, no Kafka is necessary for this use case as a Snowpipe Streaming client can enable replacing the Kafka middleware infrastructure, saving cost & complexity. Once landed, Dynamic Tables are purpose-built Snowflake objects for Data Engineering to transform the raw data into data ready for insights.
 
-Our Source ‘database' has stock trades for the Dow Jones Industrials, [30 US stocks](https://www.nyse.com/quote/index/DJI). On average 200M-400M stock trades are executed per day. Our agent will be capturing Limit Order transaction events for these 30 stocks, which are new orders, updates to orders (changes in quantity or the limit price), and orders that are canceled. For this simulation, there are 3 new orders for every 2 updates, and then one cancellation. This scenario's datastream will first reproduce a heavy workload of an initial market opening session and, secondly, a more modest continuous flow. Snowflake data consumers want to see three perspectives on limit orders: what is the "current" list of orders that filters out stale and canceled orders, a historical table showing every event on the source (in a traditional slowly changing dimension format), and current orders summarized by stock ticker symbol and by long or short position. Latency needs to be minimized, 1-2 minutes would be ideal for the end-to-end process.
+Our Source ‘database' has stock trades for the Dow Jones Industrials, [30 US stocks](https://www.nyse.com/quote/index/DJI). On average 200M-400M stock trades are executed per day. Our agent will capture Limit Order transaction events for these 30 stocks, which are new orders, updates to orders (changes in quantity or the limit price), and canceled orders. For this simulation, there are three new orders for every two updates and one cancellation. This scenario's datastream will first reproduce a heavy workload of an initial market opening session and a more modest continuous flow. Snowflake data consumers want to see three perspectives on limit orders: what is the "current" list of orders that filters out stale and canceled orders, a historical table showing every event on the source (in a traditional slowly changing dimension format), and current orders summarized by stock ticker symbol and by long or short position. Latency needs to be minimized, 1-2 minutes would be ideal for the end-to-end process.
 
 More Snowflake capabilities can further enrich your incoming data using Snowflake Data Marketplace data, train and deploy machine learning models, perform fraud detection, and other use cases. We will cover these in future posts.
 
-First, you need to extract this [file](/assets/java/CDCSimulatorApp.zip), which will create a CDCSimulatorApp directory and many files within it. 
+First, you need to extract this [file](/assets/java/CDCSimulatorApp.zip), creating a `CDCSimulatorApp` directory and many files within it. 
 
-From your terminal, navigate to your working directory, then the directory extracted (CDCSimulatorApp) and run these two commands:
+From your terminal, navigate to your working directory, then the directory extracted (`CDCSimulatorApp`), and run these two commands:
 
 {% highlight bash linenos %}
 openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out rsa_key.p8 -nocrypt
 openssl rsa -in rsa_key.p8 -pubout -out rsa_key.pub
 {% endhighlight %}
 
-In Snowflake, create a dedicated role for your Streaming Application. For this, run these commands, using the Public Key generated in the previous step (the content of `rsa_key.pub`):
+In Snowflake, create a dedicated role for your Streaming Application. For this, run these commands using the Public Key generated in the previous step (the content of `rsa_key.pub`):
 
 {% highlight sql linenos %}
 create role if not exists VHOL_CDC_AGENT;
@@ -514,7 +514,7 @@ grant usage on database VHOL_ENG_CDC to role PUBLIC;
 grant usage on schema PUBLIC to role PUBLIC;
 {% endhighlight %}
 
-Create a Staging/Landing Table, where all incoming data will land initially. Each row will contain a transaction, but JSON will be stored as a `VARIANT` datatype within Snowflake.
+Create a staging/landing table where all incoming data will land initially. Each row will contain a transaction, but JSON will be stored as a `VARIANT` datatype within Snowflake.
 
 {% highlight sql linenos %}
 create or replace table ENG.CDC_STREAMING_TABLE (RECORD_CONTENT variant);
@@ -533,13 +533,13 @@ Which should take 10-20 seconds and returns:
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/5b50cd73-2a8c-4d5b-8f66-48e66725801a)
 
-You now have 1 million records in the `CDC_STREAMING_TABLE` table.
+Then, you have 1 million records in the `CDC_STREAMING_TABLE` table.
 
 ![image](https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/f4218a7f-ea55-4857-a54d-25a6e170c5eb)
 
 Each record is a JSON payload received via the Snowpipe Streaming Ingestion API and stored in a Snowflake table as rows and variant datafields.
 
-Now you can create a more finished Dynamic Table sourcing from the landing table that reflects the "CURRENT STATE" of the source table. In this pattern, for each source table, you create a Dynamic Table:
+Now, you can create a more finished Dynamic Table sourcing from the landing table that reflects the "CURRENT STATE" of the source table. In this pattern, for each source table, you create a Dynamic Table:
 
 ```sql
 CREATE OR REPLACE DYNAMIC TABLE ENG.LIMIT_ORDERS_CURRENT_DT
@@ -567,7 +567,7 @@ WHERE score = 1 and action != 'DELETE';
 ```
 
 {: .box-warning}
-**Warning:** If you run this right away, it will show a warning that the table is not yet ready. You have to wait a bit for the refresh period and the Dynamic Table to be built
+**Warning:** If you run this immediately, it will show a warning that the table is not yet ready. You have to wait a bit for the refresh period and the Dynamic Table to be built
 
 Wait for Lag Period (1 minute), then check the table:
 
@@ -575,9 +575,9 @@ Wait for Lag Period (1 minute), then check the table:
 SELECT count(*) FROM LIMIT_ORDERS_CURRENT_DT;
 ```
 
-Let's work with dynamic data going forward and return to the stream simulator to provide a continuous stream. Run `Run_Slooow.sh`, and the application will stream 10 records/second until you stop the application (using Ctrl-C). If you want more volume, run the `Run_Sloow.sh` for 100/second or `Run_Slow.sh` for 1000/second stream rate. Note that the simulator is designed to run only one of these at a time (the channel name is configured in the property file).
+Let's work with dynamic data going forward and return to the stream simulator to provide a continuous stream. Run `Run_Slooow.sh`, and the application will stream 10 records/second until you stop the application (using Ctrl-C). If you want more volume, run the `Run_Sloow.sh` for 100/second or `Run_Slow.sh` for 1000/second stream rate. Note that the simulator is designed to run only one of these simultaneously (the channel name is configured in the property file).
 
-Streaming the first table is done perfectly, but you might also want to analyze how orders/records have changed and keep a historical record, for example, in a Slowly Changing Dimensions (SCD). In this case, you can do that by adding additional fields to each record to track and group them together:
+Streaming the first table is done perfectly, but you can also analyze how orders/records have changed and keep a historical record, for example, in a Slowly Changing Dimensions (SCD). In this case, you can do that by adding additional fields to each record to track and group them:
 
 ```sql
 CREATE OR REPLACE DYNAMIC TABLE ENG.LIMIT_ORDERS_SCD_DT
@@ -610,7 +610,7 @@ SELECT * EXCLUDE score from ( SELECT *,
 ;
 ```
 
-Wait for the lag period (~ 1 minute), then check the table again. You should now see more than the 1,000,000 initial records we loaded.
+Wait for the lag period (~ 1 minute), then recheck the table. You should now see more than the 1,000,000 initial records we loaded.
 
 This data is now ready for public use! To create access for users to consume, let's use views to allow access (note: JSON path syntax is not seen or needed except from the landing table). For our "Current View" Table:
 
@@ -638,9 +638,9 @@ Snowflake offers various building blocks for working with both batch and streami
 
 Regardless of the ingestion method you choose, the thorny question that remains legit is the one about ingestion time and cost. Both of them depend on various factors, including:
 
-- Size of the file: the core ingestion time is relative to the content, so the costs tend to be proportional to the number of records and file size but not an exact correlation. 
+- Size of the file: The core ingestion time is relative to the content, so the costs tend to be proportional to the number of records and file size but do not have an exact correlation. 
 - The amount of pre-processing required: Some ingestion jobs invoke complex UDFs that take significant time per row and occasionally can even run out of memory if the data size is not correctly anticipated.
-- File format, compression, nested structures... impact how efficiently we can decompress and load the data. An uncompressed file with a large number of columns may take the same amount of time as a compressed file with a small number of columns but has highly nested data structures.
+- File format, compression, nested structures, etc., impact how efficiently we can decompress and load the data. An uncompressed file with a large number of columns may take the same amount of time as a compressed file with a small number of columns but has highly nested data structures.
   
 Therefore, it is impossible to answer the time and cost question without measuring it for each specific case.
 
