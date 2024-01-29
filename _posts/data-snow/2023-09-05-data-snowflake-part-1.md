@@ -229,7 +229,7 @@ In the example above, Snowpipe relies on the cloud vendor-specific system for ev
 
 The following example creates a stage named `mystage` in the active schema for the user session. The cloud storage URL includes the path files. The stage references a storage integration named `my_storage_int`. First, we create the S3 storage integration and the stage:
 
-{% highlight sql linenos %}
+``` sql
 CREATE STORAGE INTEGRATION my_storage_int
   TYPE = EXTERNAL_STAGE
   STORAGE_PROVIDER = 'S3'
@@ -237,7 +237,7 @@ CREATE STORAGE INTEGRATION my_storage_int
   STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::001234567890:role/myrole'
   STORAGE_ALLOWED_LOCATIONS = ('s3://mybucket1/mypath1/', 's3://mybucket2/mypath2/')
   STORAGE_BLOCKED_LOCATIONS = ('s3://mybucket1/mypath1/sensitivedata/', 's3://mybucket2/mypath2/sensitivedata/');
-{% endhighlight %}
+```
 
 {% highlight sql linenos %}
 USE SCHEMA snowpipe_db.public;
@@ -249,7 +249,7 @@ CREATE STAGE mystage
 
 Then, we create a pipe named `mypipe` in the active schema for the user session. The pipe loads the data from files staged in the `mystage` stage into the `mytable` table and subscribes to the `SNS` topic ARN that propagates the notification:
 
-{% highlight sql linenos %}
+``` sql
 create pipe snowpipe_db.public.mypipe
   auto_ingest=true
   aws_sns_topic='<sns_topic_arn>'
@@ -257,7 +257,7 @@ create pipe snowpipe_db.public.mypipe
     copy into snowpipe_db.public.mytable
     from @snowpipe_db.public.mystage
   file_format = (type = 'JSON');
-{% endhighlight %}
+```
 
 But in cases where an event service can not be set up or an existing data pipeline infrastructure is in place, a REST API-triggered Snowpipe is a suitable alternative. It is also currently the only option if an internal stage is used for storing the raw files. Most commonly, the REST API approach is used by ETL/ELT tools that don’t want to put the burden of creating object storage on the end user and instead use a Snowflake-managed Internal Stage.
 
@@ -265,12 +265,12 @@ But in cases where an event service can not be set up or an existing data pipeli
 
 Similarly to the Auto-ingest setup, you need here to create a stage, and an integration to S3 storage. The pipe is created without the SNS topic arn and the `auto_ingest` keyword.  
 
-{% highlight sql linenos %}
+``` sql
 create pipe snowpipe_db.public.mypipe as
     copy into snowpipe_db.public.mytable
     from @snowpipe_db.public.mystage
   file_format = (type = 'JSON');
-{% endhighlight %}
+```
 
 Then, we create a user with key-pair authentication. The user credentials will be used when calling the Snowpipe API endpoints:
 
@@ -342,7 +342,6 @@ First, you need to create a separate user that you are going to use for Streamin
 
 {% highlight sql linenos %}
 create user snowpipe_streaming_user password='',  default_role = accountadmin, rsa_public_key='<YOURPUBLICKEY>';
-
 grant role accountadmin  to user snowpipe_streaming_user;
 {% endhighlight %}
 
@@ -350,15 +349,13 @@ Here, you will create the database you will use later on.
 
 {% highlight sql linenos %}
 CREATE OR REPLACE DATABASE hol_streaming;
-
 USE DATABASE hol_streaming;
-
 CREATE OR REPLACE WAREHOUSE hol_streaming_wh WITH WAREHOUSE_SIZE = 'XSMALL' MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 1 AUTO_SUSPEND = 60;
 {% endhighlight %}
 
 Then, let's open the terminal and run the following commands to download Kafka and Snowflake Kafka connector:
 
-```bash
+``` bash
 mkdir HOL_kafka
 cd HOL_kafka
 
@@ -371,7 +368,7 @@ curl https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/1.9.
 
 Create the configuration file `config/SF_connect.properties` with the following parameters. Remember to replace `<YOURACCOUNT>` & `<YOURPRIVATEKEY>` with the corresponding details. Also, please note when adding a private key, you need to remove all new line characters as well as beginning and ending comments (e.g., —–BEGIN PRIVATE KEY—–):
 
-```properties
+{% highlight properties linenos %}
 name=snowpipe_streaming_ingest
 connector.class=com.snowflake.kafka.connector.SnowflakeSinkConnector
 tasks.max=1
@@ -391,7 +388,7 @@ key.converter=org.apache.kafka.connect.json.JsonConverter
 value.converter=org.apache.kafka.connect.json.JsonConverter
 key.converter.schemas.enable=false
 value.converter.schemas.enable=false
-```
+{% endhighlight %}
 
 Now, this is out of the way. Let's start this all together. Please note that you might get errors for this step if you use JDK>=v15. And you might need a few separate terminal sessions for this:
 
@@ -408,7 +405,7 @@ Session 3:
 bin/connect-standalone.sh ./config/connect-standalone.properties ./config/SF_connect.properties
 ```
 
-Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to put some data into the topic manually.
+Now, open another terminal session (Session 4) and run the kafka-console-producer. This utility is a simple way to manually enter data into the topic.
 
 ```bash
 bin/kafka-console-producer.sh --topic customer_data_topic --bootstrap-server localhost:9092
@@ -443,7 +440,7 @@ First, you need to extract this [file](/assets/java/CDCSimulatorApp.zip), which 
 
 From your terminal, navigate to your working directory, then the directory extracted (CDCSimulatorApp) and run these two commands:
 
-{% highlight shell linenos %}
+{% highlight bash linenos %}
 openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out rsa_key.p8 -nocrypt
 openssl rsa -in rsa_key.p8 -pubout -out rsa_key.pub
 {% endhighlight %}
