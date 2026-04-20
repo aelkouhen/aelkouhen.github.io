@@ -33,11 +33,20 @@ Choosing between them is not a matter of "newer is better" — it is a question 
 
 ### Naive RAG
 
-Naive RAG is the foundational retrieve-then-generate paradigm. It implements a straightforward three-step pipeline:
+Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two distinct phases — an offline ingestion pipeline and an online retrieval-and-generation pipeline — connected through a shared vector store.
 
-1. **Embed the query** — the user's question is converted into a vector using an embedding model.
-2. **Retrieve** — cosine similarity search against a vector store returns the top-k most semantically similar document chunks.
-3. **Generate** — retrieved chunks are concatenated into the prompt and the LLM produces an answer.
+**Ingestion (offline)**
+
+1. **Chunk** — raw documents (PDFs, CSVs, HTML) are split into fixed-size overlapping text segments by a chunker.
+2. **Encode** — each chunk is converted into a high-dimensional vector by an embedding model that captures its semantic meaning.
+3. **Index** — the resulting vectors are stored and indexed in the CockroachDB Vector Store, ready for similarity search.
+
+**Retrieval & Generation (online — per query)**
+
+4. **Encode query** — the user's question is passed through the same embedding model to produce a query vector.
+5. **Similarity search** — CockroachDB compares the query vector against all indexed chunk vectors using cosine distance and returns the top-k closest matches.
+6. **Assemble context** — the retrieved chunks are combined with the original query into a single context block.
+7. **Generate** — the LLM receives context + query as a prompt and produces a grounded answer.
 
 <img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
 
@@ -55,11 +64,21 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It implements a s
 
 Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Local to Global: A Graph RAG Approach to Query-Focused Summarization"*, replaces flat vector chunks with a structured knowledge graph and hierarchical community summaries.
 
-**How it works:**
+**Indexing phase (offline)**
 
-1. **Graph construction** — an LLM extracts entities (people, places, concepts) and their relationships from source documents, building a knowledge graph.
-2. **Community detection** — closely related entities are clustered into communities; the LLM pre-generates a summary for each community.
-3. **Query time** — instead of searching raw chunks, the query is matched against community summaries. Partial answers are generated per community then synthesised into a final comprehensive response.
+1. **Chunk** — source documents are split into text segments, just as in Naive RAG.
+2. **Entity extraction** — an LLM reads each chunk and identifies named entities (people, places, concepts) and the relationships between them.
+3. **Knowledge Graph** — extracted entities and relationships are assembled into a graph stored in a dedicated Graph DB.
+4. **Community clustering** — a community detection algorithm groups closely related entities into clusters.
+5. **Community summaries** — the LLM pre-generates a natural-language summary for each cluster; summaries are stored in both the Graph DB and a Vector DB for fast lookup.
+
+**Retrieval & Generation phase (online — per query)**
+
+6. **Embed query** — the user query is converted into a vector.
+7. **Vector search** — the Vector DB is searched to find the most semantically relevant community summaries.
+8. **Graph hop** — for each matched community, the Graph DB is traversed to retrieve supporting entity relationships and fine-grained evidence.
+9. **LLM synthesis** — all retrieved summaries and graph context are passed to the LLM to compose a comprehensive answer.
+10. **Answer** — the final response is grounded in both community-level and entity-level evidence from across the entire corpus.
 
 <img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
 
@@ -75,14 +94,25 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 
 ### Agentic RAG
 
-Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results.
+Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results. The pipeline runs across three concurrent lanes.
 
-**How it works:**
+**Planning**
 
-1. **Intent and planning** — the agent analyses the request, decomposes it into sub-questions, and identifies required tools (vector search, web search, code execution, APIs).
-2. **Iterative retrieval** — the agent executes multiple retrieval rounds, inspects intermediate results, and refines subsequent queries.
-3. **Tool use and validation** — specialised tools are invoked; the agent critiques its own outputs and self-corrects.
-4. **Synthesis** — final answer assembled from all reasoning steps and retrieved evidence.
+1. The **User Query** arrives at the **Agent Planner**, which analyses intent and scope.
+2. The planner decomposes the query into **Sub-Questions**, each addressable by a specific retrieval source or tool.
+3. The **Tool Selector** routes each sub-question to the appropriate backend.
+
+**Multi-source Retrieval**
+
+4. Retrieval executes in parallel across four sources: **Vector DB** (CockroachDB for semantic search), **Web Search** (real-time), **APIs & Tools** (structured data), and **Code Executor** (programmatic computations).
+5. All results are aggregated into a **Retrieved Context** package passed to the reasoning lane.
+
+**Iterative Reasoning & Self-Correction**
+
+6. The **LLM Reasoner** processes the context and produces a **Draft Answer**.
+7. A decision gate asks: **"Need more info?"** — if YES, the agent loops back to step 3 with a refined sub-question and reruns retrieval.
+8. If NO, the **Evaluator Agent** assesses quality: **"Relevant & Complete?"** — if NO, the answer is refined and re-evaluated.
+9. If YES, the **Final Answer** is returned to the user.
 
 <img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
 
