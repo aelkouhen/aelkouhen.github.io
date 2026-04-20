@@ -356,7 +356,3 @@ By using Teleport and CockroachDB, a global payments leader not only solved a te
 Their infrastructure story is more than just about technology choice — it's about aligning architecture with business-critical goals, and building systems that can uphold the trust of a global customer base that depends on this company every second of every day. By leveraging CockroachDB, this global payments leader enabled multi-region presence, resilience to network disruptions, and consistent access control across continents.
 
 In this article, we also provided a hands-on guide to help you replicate this use case. We used CockroachDB as a storage backend to save internal states of the Teleport control plane, but also as a [Teleport Protected Resource (TPR)](https://goteleport.com/docs/enroll-resources/database-access/enroll-self-hosted-databases/cockroachdb-self-hosted/) that we secure using Teleport itself. Whether you're managing internal engineering access or scaling enterprise-wide, identity-aware infrastructure, Teleport and CockroachDB offer a powerful foundation for secure, always-on infrastructure access management.
-
-*Learn more about how CockroachDB can help you meet Tier 0 99.999% availability requirements. [Contact us to speak with an expert](https://www.cockroachlabs.com/contact/).*
-
-*Special thanks to Jason Haugland, Senior Staff Sales Engineer at Cockroach Labs, for providing context & review for this article.*
