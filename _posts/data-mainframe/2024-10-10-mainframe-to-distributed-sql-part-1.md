@@ -11,7 +11,7 @@ comments: true
 
 Mainframe systems have long been the backbone of enterprise computing, known for their reliability, scalability, and unmatched processing power. As businesses strive to modernize their IT infrastructures, understanding the fundamentals of mainframe database architecture becomes crucial.
 
-In the prior article in this series, we highlighted the enduring legacy of mainframe systems and their pivotal role in enterprise computing. We explained how mainframes had lasted so long, and why it's essential to modernize them towards a distributed and cloud-native alternative.
+In the [prior article in this series](/2024-09-17-mainframe-to-distributed-sql-intro/), we highlighted the enduring legacy of mainframe systems and their pivotal role in enterprise computing. We explained how mainframes had lasted so long, and why it's essential to modernize them towards a distributed and cloud-native alternative.
 
 This article delves into the intricate world of mainframe data storage, exploring the architectural components of traditional mainframe databases. We will examine their strengths and limitations, while evaluating performance, scalability, and operational challenges. Additionally, we will illustrate these concepts with real-world examples, highlighting the diverse use cases and industries that rely on mainframe databases.
 
@@ -142,7 +142,7 @@ Originally, CICS was used to process input from terminals. However, the technolo
 
 The prime users of CICS are Fortune 500 companies that rely on rapid online transaction processing as a mission-critical core of their business. CICS users involve insurance companies, telecommunications companies, governments, airlines, the hospitality industry, banks, stock brokerage houses, and credit card processing companies.
 
-This benchmark evaluates back-end processing for a retail application scenario involving shopping from an online catalog. During a sales promotion, the retailer must be able to handle a very high volume of requests simultaneously throughout the day. The retail catalog is held in a recoverable CICS-maintained shared data table, backed by a Virtual Storage Access Method (VSAM) key-sequenced dataset (KSDS) file.
+This [benchmark](https://www.redbooks.ibm.com/redpapers/pdfs/redp5320.pdf) evaluates back-end processing for a retail application scenario involving shopping from an online catalog. During a sales promotion, the retailer must be able to handle a very high volume of requests simultaneously throughout the day. The retail catalog is held in a recoverable CICS-maintained shared data table, backed by a Virtual Storage Access Method (VSAM) key-sequenced dataset (KSDS) file.
 
 The benchmark conclusion explains that CICS can execute up to 227,000 CICS TPS with 26 CPUs (LPAR in z13). It demonstrates how the CICS Transaction Server can scale to handle workloads with notably high transaction rates, while retaining the reliability and efficiency demanded by enterprise businesses.
 
@@ -244,7 +244,7 @@ One of the major advantages of Db2 is its versatility. This database supports mu
 
 Db2 is optimized for high performance and can handle large-scale databases with complex queries and high transaction volumes. The platform is well-known for its robustness and reliability, essential for mission-critical applications. It is designed to scale efficiently across multiple platforms. It also offers advanced analytics capabilities, including support for in-database analytics and AI for enhanced analytical insights.
 
-As per this benchmark study, Db2 (starting v11) provides many opportunities for reduced CPU use in simple online transaction workloads and more complex real-time analytics queries. Major bottlenecks were addressed to improve the scalability of applications concurrently inserting records into Db2 tables. To address the demand for high-volume ingestions, IBM introduced a new insert algorithm for tablespaces that do not require clustering. The new insert algorithm and another scalability improvement in log writes made it possible during an IBM-internal benchmark to reach 11.7 million inserts per second.
+As per this [benchmark study](https://www.redbooks.ibm.com/redbooks/pdfs/sg248404.pdf), Db2 (starting v11) provides many opportunities for reduced CPU use in simple online transaction workloads and more complex real-time analytics queries. Major bottlenecks were addressed to improve the scalability of applications concurrently inserting records into Db2 tables. To address the demand for high-volume ingestions, IBM introduced a new insert algorithm for tablespaces that do not require clustering. The new insert algorithm and another scalability improvement in log writes made it possible during an IBM-internal benchmark to reach 11.7 million inserts per second.
 
 Db2 provides robust security features, including encryption, access control, and auditing, ensuring data protection and regulatory compliance. It includes features such as data replication, clustering, and failover to ensure high availability and quick recovery in case of system failures.
 
