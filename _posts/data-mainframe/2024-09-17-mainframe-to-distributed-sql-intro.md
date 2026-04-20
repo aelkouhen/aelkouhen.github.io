@@ -8,6 +8,11 @@ share-img: /assets/img/mainframe-diagram.png
 tags: [mainframe, distributed SQL, CockroachDB, migration, database, enterprise, legacy systems]
 comments: true
 ---
+## Introduction
+
+This post introduces a new blog series about Mainframe Migration, geared towards embracing a modern distributed database architecture.
+
+In this series, we will explore the strengths and limitations of traditional mainframe databases, recognizing their historical significance while acknowledging the pressing need for change in response to shifting business demands and technological trends. The risks of inaction are obvious, from decreased agility and innovation to potential financial burdens.
 
 ## The enduring legacy of mainframe systems and their pivotal role in enterprise computing
 
@@ -77,17 +82,13 @@ But, even when organizations can recruit mainframe professionals, retaining them
 
 ---
 
-## About this CockroachDB article series, "Mainframe to Distributed SQL"
-
-This post introduces a new blog series about Mainframe Migration, geared towards embracing a modern distributed database architecture on CockroachDB.
-
-In this series, we will explore the strengths and limitations of traditional mainframe databases, recognizing their historical significance while acknowledging the pressing need for change in response to shifting business demands and technological trends. The risks of inaction are obvious, from decreased agility and innovation to potential financial burdens.
+## About this series, "Mainframe to Distributed SQL"
 
 Distributed databases like CockroachDB offer scalability, performance, fault tolerance, and resilience, addressing many of the shortcomings of mainframe database systems. Transitioning to a distributed architecture requires careful consideration of migration approaches, tools, best practices, robust change management, and risk mitigation strategies. However, the rewards are substantial, with opportunities for innovation, agility, and competitive advantage awaiting those who embrace the future of distributed databases.
 
 As we look ahead, the call to action is clear: it's time to embrace the future by harnessing the power of CockroachDB as a backbone for modern distributed architectures. By doing so, organizations can position themselves for success in an increasingly dynamic and digital world.
 
-Are you ready to learn more about successfully migrating from mainframe to a cloud-native distributed database? Visit here to speak with an expert.
+Are you ready to learn more about successfully migrating from mainframe to a cloud-native distributed database? Visit here to speak with me.
 
 ---
 
