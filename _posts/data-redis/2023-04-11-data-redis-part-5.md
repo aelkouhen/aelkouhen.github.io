@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data & Redis series - part 5
+title: "Data & Redis, Part 5"
 subtitle:  Data Serving with Redis (Hands-on)
 thumbnail-img: assets/img/redis-smartcache.png
 share-img: assets/img/redis-serving.gif

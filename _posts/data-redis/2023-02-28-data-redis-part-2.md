@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data & Redis series - part 2
+title: "Data & Redis, Part 2"
 subtitle:  Data Storage with Redis
 thumbnail-img: /assets/img/redis-enterprise-multi-model.webp
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA98-0WARDly9Fd1I0fWFsZOKU561REOPjRBO-_bO6XLOMqFwVytzy9xg0i6zcgR6s7O7TGF8lNOeeqVTY4fAKmJd1FA9piZHvoiefZBf7Mcwlq4XijGibv6-jk6Bkzga13JingbQ61KJjcORvdu_pXi1_pYl1tI86D5GM2t3gUrZHjKXcc1rcH68F
