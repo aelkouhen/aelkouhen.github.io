@@ -2,7 +2,7 @@
 layout: post
 title: "Mainframe to Distributed SQL, An Introduction"
 subtitle: "What is a Mainframe?"
-cover-img: /assets/img/mainframe-intro-cover.png
+cover-img: /assets/img/cover-mainframe.webp
 thumbnail-img: /assets/img/mainframe-diagram.png
 share-img: /assets/img/mainframe-intro-cover.png
 tags: [mainframe, distributed SQL, CockroachDB, migration, database, enterprise, legacy systems]
@@ -21,9 +21,9 @@ In 1991, the American newspaper columnist and political analyst Stewart Alsop pr
 
 In fact, the death of the mainframe was greatly exaggerated.
 
-<img src="/assets/img/mainframe-diagram.png" alt="Mainframe to Distributed SQL" style="width:100%">
-
 While there are challenges surrounding the mainframe, such as the increasing churn of seasoned mainframe staff, the "uncool" factor of the underlying technology, or the hefty costs associated with single-line items compared to the more diversified expenditure in distributed systems — nonetheless, for numerous specific use cases and industries, it remains the optimal choice in terms of value for IT investment. Many companies saw this technology as a must-have for being competitive. They would even showcase their mainframes by placing them in glass rooms at the headquarters.
+
+<img src="/assets/img/mainframe-diagram.png" alt="Mainframe to Distributed SQL" style="width:100%">
 
 This technology proved quite durable. The mainframe's reliability, consistency, security, and performance have firmly established its position as the backbone of the digital economy. The continued dependence on this platform shows no indication of waning. By 2002, Alsop admitted his previous mistake, recognizing that corporate clients still prioritize centrally managed, highly reliable computing systems — precisely the expertise that IBM provides.
 
@@ -41,11 +41,11 @@ Furthermore, mainframes are optimized for high-speed processing and transaction 
 
 Despite the emergence of new technologies and computing paradigms, mainframes continue to thrive and evolve thanks to their adaptability and compatibility with legacy systems. Mainframes have extensive support for legacy applications and systems, allowing organizations to leverage existing investments and avoid costly migrations. In addition, the most prominent vendors have heavily invested in innovations by adopting open-source software (e.g., Linux, Python…, etc.) and implementing cutting-edge advances in areas like AI, integrations, and DevOps. Many organizations rely on mainframes to run legacy applications and support core business processes, leveraging their investment in these trusted platforms.
 
+<img src="/assets/img/mainframe-why-lasted.png" alt="Mainframe to Distributed SQL - Why has the mainframe lasted so long?" style="width:100%">
+
 Indeed, mainframes are costly. However, despite the initial investment, they have shown that they can offer long-term cost savings, considering the cost per transaction, due to their security, reliability, and performance. They can consolidate multiple servers and workloads, reducing hardware, maintenance, and operational costs.
 
 Energy costs are the second most considerable expense for an IT department after headcounts. Mainframes can also offer lower energy costs because the processing is centralized. The average watt per million instructions per second (MIPS) is about 0.91, and this is declining every year.
-
-<img src="/assets/img/mainframe-why-lasted.png" alt="Mainframe to Distributed SQL - Why has the mainframe lasted so long?" style="width:100%">
 
 ---
 
