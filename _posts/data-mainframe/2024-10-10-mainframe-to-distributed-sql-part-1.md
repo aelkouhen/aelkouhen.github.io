@@ -312,8 +312,6 @@ Real-world examples demonstrate the critical role of mainframe databases in the 
 
 As organizations evolve, the modernization of mainframe systems towards cloud-native and distributed alternatives such as CockroachDB remains a key focus. Understanding the intricacies of mainframe database architecture is essential for leveraging the full potential of cloud-native and distributed database alternatives to successfully navigate the future of enterprise computing.
 
-_Learn how you can successfully migrate from mainframe to a cloud-native distributed database: Visit here to speak with an expert._
-
 ---
 
 ## References
