@@ -23,6 +23,10 @@ But RAG is not a single technique. In the past two years the field has evolved r
 
 ## The State of the Art of RAG
 
+RAG has evolved through three distinct generations, each addressing the limitations of the last. **Naive RAG** established the foundational retrieve-then-generate pattern — simple, fast, and effective for straightforward lookups, but brittle when queries require connecting facts across multiple documents. **Graph RAG** replaced flat vector chunks with a structured knowledge graph, enabling global sensemaking across large corpora at the cost of higher latency and indexing expense. **Agentic RAG** pushed further still, embedding autonomous agents that plan, retrieve iteratively, invoke external tools, and self-correct — trading predictability for the ability to tackle genuinely open-ended, multi-step reasoning tasks.
+
+Choosing between them is not a matter of "newer is better" — it is a question of matching the paradigm to the query complexity, latency budget, and cost envelope of your specific use case. The sections below break down each approach so you can make that call with confidence.
+
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
   <iframe src="https://www.youtube.com/embed/zZFQ4co4HzY" title="CockroachDB for AI/ML: LLMs and RAG" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
 </div>
