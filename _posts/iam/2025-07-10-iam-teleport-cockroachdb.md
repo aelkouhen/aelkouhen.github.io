@@ -80,7 +80,7 @@ Teleport's architecture is built from the ground up with Zero Trust Security in 
 
 At the heart of Teleport's Zero Trust implementation is the principle of identity over network. Instead of relying on IP addresses, VPNs, or trusted subnets, every request to infrastructure — whether it's a Linux server, a database, or a Kubernetes cluster — is authenticated and authorized based solely on the user's identity and role. This ensures that access is tightly scoped, contextual, and fully traceable.
 
-Let's take a closer look at the key components of Teleport's architecture:
+Let's take a closer look at the key components of Teleport's architecture.
 
 <img src="/assets/img/iam-p3-teleport-architecture.jpg" alt="Teleport Architecture" style="width:100%">
 
@@ -357,6 +357,6 @@ Their infrastructure story is more than just about technology choice — it's ab
 
 In this article, we also provided a hands-on guide to help you replicate this use case. We used CockroachDB as a storage backend to save internal states of the Teleport control plane, but also as a [Teleport Protected Resource (TPR)](https://goteleport.com/docs/enroll-resources/database-access/enroll-self-hosted-databases/cockroachdb-self-hosted/) that we secure using Teleport itself. Whether you're managing internal engineering access or scaling enterprise-wide, identity-aware infrastructure, Teleport and CockroachDB offer a powerful foundation for secure, always-on infrastructure access management.
 
-*Learn more about how CockroachDB can help you meet Tier 0 99.999% availability requirements: [contact us to speak with an expert](https://www.cockroachlabs.com/contact/).*
+*Learn more about how CockroachDB can help you meet Tier 0 99.999% availability requirements. [Contact us to speak with an expert](https://www.cockroachlabs.com/contact/).*
 
 *Special thanks to Jason Haugland, Senior Staff Sales Engineer at Cockroach Labs, for providing context & review for this article.*
