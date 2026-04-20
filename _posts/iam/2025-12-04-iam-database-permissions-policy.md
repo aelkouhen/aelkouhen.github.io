@@ -73,7 +73,8 @@ CockroachDB was built around this principle: Its serializable isolation model pr
 
 <img src="/assets/img/iam-p4-spicedb-cockroachdb.png" alt="SpiceDB internals wired to CockroachDB cluster" style="width:100%">
 
-*SpiceDB internals wired to a CockroachDB cluster*
+{: .mx-auto.d-block :}
+*SpiceDB internals wired to a CockroachDB cluster*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 CockroachDB's multi-region replication and high availability ensure that authorization decisions are consistent, low-latency, and resilient across geographies. Taken together, this architecture combines SpiceDB's flexible, API-first authorization model with CockroachDB's fault-tolerant database platform to deliver secure, fine-grained and strongly consistent access control that scales to enterprise workloads worldwide.
 
@@ -143,7 +144,8 @@ Writing one or more object type definitions is the first step in developing an a
 
 <img src="/assets/img/iam-p4-user-document-schema.png" alt="Authorization relationship schema for user and document" style="width:100%">
 
-*Authorization relationship schema*
+{: .mx-auto.d-block :}
+*Authorization relationship schema*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In the example above, we define the `user` and `document` concepts. The user can be a `viewer`, an `editor` or `admin`. The definition gives the `remove` permission to the `admin` role only. To `edit` a file the user must be either an `editor` or `admin`. The permission to `view` a document is set for viewer, editor and admin roles. The syntax of the schema definition is the following:
 
