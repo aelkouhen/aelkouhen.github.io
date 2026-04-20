@@ -23,7 +23,7 @@ Previous articles in this series:
 3. [The Imperative for Change](/2024-10-24-mainframe-to-distributed-sql-part-2/)
 4. [Distributed Database Architecture](/2024-11-14-mainframe-to-distributed-sql-part-3/)
 5. [Planning Your Data Modernization Strategy](/2024-12-09-mainframe-to-distributed-sql-part-4/)
-6. [Mainframe to Distributed SQL, Part 5: Transitioning to a Distributed Architecture](/2025-01-23-mainframe-to-distributed-sql-part-5/)
+6. [Transitioning to a Distributed Architecture](/2025-01-23-mainframe-to-distributed-sql-part-5/)
 
 ---
 
