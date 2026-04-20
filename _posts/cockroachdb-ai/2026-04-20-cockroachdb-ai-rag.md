@@ -200,7 +200,7 @@ from langchain_cockroachdb import AsyncCockroachDBVectorStore
 # Load → Split → Embed → Store
 docs   = PyPDFLoader("report.pdf").load()
 chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
-store  = AsyncCockroachDBVectorStore(engine=engine, embeddings=VertexAIEmbeddings(model="text-embedding-005"), collection_name="kb")
+store  = AsyncCockroachDBVectorStore(engine=engine, embeddings=VertexAIEmbeddings(model="gemini-embedding-001"), collection_name="kb")
 await store.aadd_documents(chunks)
 
 # Retrieve
@@ -243,7 +243,7 @@ For enterprise deployments, Memori is PCI and SOC 2 compliant, supports RBAC wit
 
 ## Tutorial: Building the RAG Pipeline
 
-The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini text embeddings + Gemini 2.0 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude Sonnet 4.6). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
+The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini Embeddings + Gemini 2.5 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude Sonnet 4.6). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
 <img src="/assets/img/ai-rag-crdb-dataflow.png" alt="RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response" style="width:100%">
 
@@ -321,12 +321,12 @@ print(f"{len(docs)} chunks ready for indexing")
 `AsyncCockroachDBVectorStore` handles table initialisation, embedding storage, and C-SPANN index management automatically via the `langchain-cockroachdb` integration.
 
 ```python
-embeddings = VertexAIEmbeddings(model="text-embedding-005")
+embeddings = VertexAIEmbeddings(model="gemini-embedding-001")
 
-# text-embedding-005 produces 768-dimensional vectors
+# gemini-embedding-001 produces up to 3072-dimensional vectors
 await engine.ainit_vectorstore_table(
     table_name="knowledge_base",
-    vector_dimension=768,
+    vector_dimension=3072,
 )
 vector_store = AsyncCockroachDBVectorStore(
     engine=engine,
@@ -340,7 +340,7 @@ print(f"{len(docs)} chunks indexed in CockroachDB")
 ### RAG Generation Pipeline
 
 ```python
-generation_model = GenerativeModel("gemini-2.0-flash-001")
+generation_model = GenerativeModel("gemini-2.5-flash")
 
 PROMPT = """You are a helpful virtual assistant. Use the sources below as context \
 to answer the question. If you don't know the answer, say so.
@@ -515,9 +515,9 @@ Both integrations produce identical results from CockroachDB's perspective — t
 
 | | **GCP Vertex AI** | **AWS Bedrock** |
 |---|---|---|
-| **Embedding model** | `text-embedding-005` (768 dims) | `amazon.titan-embed-text-v2:0` (1024 dims) |
-| **Generation model** | `gemini-2.0-flash-001` | `anthropic.claude-sonnet-4-6` |
-| **Vector dimensionality** | 768 | 1024 |
+| **Embedding model** | `gemini-embedding-001` (3072 dims) | `amazon.titan-embed-text-v2:0` (1024 dims) |
+| **Generation model** | `gemini-2.5-flash` | `anthropic.claude-sonnet-4-6` |
+| **Vector dimensionality** | 3072 | 1024 |
 | **LangChain class** | `VertexAIEmbeddings` (langchain-google-vertexai) | `BedrockEmbeddings` / `ChatBedrock` (langchain-aws) |
 | **Auth mechanism** | GCP service account / ADC | AWS IAM access keys / role |
 | **Best for** | GCP-native stacks, BigQuery integration | AWS-native stacks, multi-model choice |
@@ -526,7 +526,7 @@ Both integrations produce identical results from CockroachDB's perspective — t
 | **Compliance** | GDPR, HIPAA, SOC 2 | GDPR, HIPAA, SOC 2, FedRAMP |
 | **Latency** | ~200–400 ms (embedding) | ~300–600 ms (embedding) |
 
-**Choose Vertex AI if** you are already on GCP, use BigQuery as a data source, or need tight Gemini 2.0 integration. **Choose Bedrock if** you are on AWS, want access to multiple third-party foundation models (Anthropic Claude Sonnet 4.6, Cohere, Meta Llama) from a single API, or need FedRAMP compliance.
+**Choose Vertex AI if** you are already on GCP, use BigQuery as a data source, or need tight Gemini 2.5 integration. **Choose Bedrock if** you are on AWS, want access to multiple third-party foundation models (Anthropic Claude Sonnet 4.6, Cohere, Meta Llama) from a single API, or need FedRAMP compliance.
 
 Both are equally well-suited to any of the three RAG paradigms described above — Naive, Graph, or Agentic — with CockroachDB serving as the unified data layer across all of them.
 
