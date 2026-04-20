@@ -11,7 +11,7 @@ comments: true
 
 Mainframe systems have long been the backbone of enterprise computing, known for their reliability, scalability, and unmatched processing power. As businesses strive to modernize their IT infrastructures, understanding the fundamentals of mainframe database architecture becomes crucial.
 
-In the [prior article in this series](/2024-09-17-mainframe-to-distributed-sql-intro/), we highlighted the enduring legacy of mainframe systems and their pivotal role in enterprise computing. We explained how mainframes had lasted so long, and why it's essential to modernize them towards a distributed and cloud-native alternative.
+In the [prior article](/2024-09-17-mainframe-to-distributed-sql-intro/) in this series, we highlighted the enduring legacy of mainframe systems and their pivotal role in enterprise computing. We explained how mainframes had lasted so long, and why it's essential to modernize them towards a distributed and cloud-native alternative.
 
 This article delves into the intricate world of mainframe data storage, exploring the architectural components of traditional mainframe databases. We will examine their strengths and limitations, while evaluating performance, scalability, and operational challenges. Additionally, we will illustrate these concepts with real-world examples, highlighting the diverse use cases and industries that rely on mainframe databases.
 
