@@ -83,9 +83,7 @@ C-SPANN also avoids central coordination. Any node can serve queries or handle i
 
 Check out this demo by technical evangelist, Rob Reid, to see vector indexing in action:
 
-<div class="ratio ratio-16x9">
-  <iframe src="https://www.youtube.com/embed/j2ElRBAH8vM" title="CockroachDB Vector Indexing Demo by Rob Reid" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+<iframe src="https://www.youtube.com/embed/j2ElRBAH8vM" title="CockroachDB Vector Indexing Demo by Rob Reid" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Maintaining a Healthy Index
 
