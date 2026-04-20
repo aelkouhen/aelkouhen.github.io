@@ -2,9 +2,9 @@
 layout: post
 title: "Mainframe to Distributed SQL, Part 2"
 subtitle: "The Imperative for Change"
-cover-img: /assets/img/cover-mainframe-p2.webp
-thumbnail-img: /assets/img/cover-mainframe-p2.webp
-share-img: /assets/img/cover-mainframe-p2.webp
+cover-img: /assets/img/cover-mainframe-p2-final.webp
+thumbnail-img: /assets/img/cover-mainframe-p2-final.webp
+share-img: /assets/img/cover-mainframe-p2-final.webp
 tags: [mainframe, distributed SQL, CockroachDB, migration, modernization, cloud, database]
 comments: true
 ---
