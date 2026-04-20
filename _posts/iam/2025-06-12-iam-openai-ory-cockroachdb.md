@@ -47,7 +47,8 @@ In addition to its open-source offerings, Ory provides a fully managed SaaS solu
 
 <img src="/assets/img/iam-p2-ory-architecture.png" alt="Ory Architecture Overview" style="width:100%">
 
-*Figure 1: Ory Architecture Overview*
+{: .mx-auto.d-block :}
+*Figure 1: Ory Architecture Overview*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
@@ -59,7 +60,8 @@ The rapid expansion exposed limitations in traditional CIAM solutions, which oft
 
 <img src="/assets/img/iam-p2-chatgpt-visits.png" alt="ChatGPT Daily Visits rapid expansion" style="width:100%">
 
-*Figure 2: ChatGPT's rapid expansion*
+{: .mx-auto.d-block :}
+*Figure 2: ChatGPT's rapid expansion*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 To keep pace with product growth and evolving user expectations, OpenAI needed a CIAM solution that could scale effortlessly, support advanced analytics, and operate seamlessly across cloud environments. It wasn't just about authentication — it was about building a foundation for secure, user-centric experiences at massive scale.
 
@@ -77,7 +79,8 @@ CockroachDB is a distributed SQL database designed for global scale and high ava
 
 <img src="/assets/img/iam-p1-cloud-portability.png" alt="How CockroachDB Enables Cloud Portability" style="width:100%">
 
-*How CockroachDB Enables Cloud Portability*
+{: .mx-auto.d-block :}
+*How CockroachDB Enables Cloud Portability*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 > **Measure what matters** — Traditional benchmarks only test when everything's perfect. But you need to know what happens when everything fails. CockroachDB's benchmark, "Performance under Adversity," tests real-world scenarios: network partitions, regional outages, disk stalls, and so much more. [See it in action](https://www.cockroachlabs.com/performance-under-adversity/?referralid=blogs_pua_launch_bottom_card)
 
@@ -93,7 +96,8 @@ Each of these components relied on CockroachDB to store their state in a consist
 
 <img src="/assets/img/iam-p2-multi-region-architecture.png" alt="Ory CockroachDB Multi-Region Deployment Architecture" style="width:100%">
 
-*Figure 3: Ory, CockroachDB Multi-Region Deployment Architecture*
+{: .mx-auto.d-block :}
+*Figure 3: Ory, CockroachDB Multi-Region Deployment Architecture*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 From a technical standpoint, identity and authorization in this system are modeled as structured entities within CockroachDB. The use of CockroachDB's strongly consistent [transactions](https://www.cockroachlabs.com/docs/stable/transactions) ensures that IAM operations remain correct, even when issued concurrently from different regions or under network duress.
 
@@ -103,7 +107,8 @@ Kratos stores user identity records, recovery flows, sessions, and login attempt
 
 <img src="/assets/img/iam-p2-kratos-data-model.png" alt="Ory Kratos Data Model" style="width:100%">
 
-*Figure 4: Ory Kratos Data Model*
+{: .mx-auto.d-block :}
+*Figure 4: Ory Kratos Data Model*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each identity can be associated with one or more credentials, stored in the `identity_credentials` table. These credentials define how a user authenticates with the system, such as through a password, social login, or other mechanisms. The type of each credential — whether it's a password, an OpenID Connect token, or another method — is defined in the `identity_credential_types` table, ensuring a consistent and extensible way to categorize authentication mechanisms. To support flexible login options, the `identity_credential_identifiers` table stores unique identifiers like usernames or email addresses that are linked to specific credentials.
 
@@ -113,7 +118,8 @@ The `sessions` table keeps track of user login sessions, associating each active
 
 <img src="/assets/img/iam-p2-kratos-flow.png" alt="Interaction flow using Ory Kratos" style="width:100%">
 
-*Figure 5: Interaction flow using Ory Kratos*
+{: .mx-auto.d-block :}
+*Figure 5: Interaction flow using Ory Kratos*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The sequence diagram above illustrates a typical self-service identity flow using Ory Kratos, involving a frontend application, a backend application, and the Kratos identity service. This flow is common in scenarios like user login, registration, or profile updates, where the frontend manages the user interface while Kratos handles the identity logic.
 
@@ -131,13 +137,15 @@ The OAuth 2.0 authorization framework enables a third-party application to obtai
 
 <img src="/assets/img/iam-p2-oauth2-flow.png" alt="OAuth2 Flow" style="width:100%">
 
-*Figure 6: OAuth2 flow*
+{: .mx-auto.d-block :}
+*Figure 6: OAuth2 flow*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The OAuth 2.0 authorization flow involving a client application, the resource owner, Ory Hydra (as the authorization server), and the resource server is structured as follows:
 
 <img src="/assets/img/iam-p2-hydra-flow.png" alt="Interaction flow using Ory Hydra" style="width:100%">
 
-*Figure 7: Interaction flow using Ory Hydra*
+{: .mx-auto.d-block :}
+*Figure 7: Interaction flow using Ory Hydra*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The sequence diagram depicts the interactions between four key components: the Client, the Resource Owner (typically the user), Ory Hydra, and the Resource Server (the API or service that hosts protected resources).
 
@@ -153,7 +161,8 @@ The following data model represents the implementation of the OAuth2 flow in Ory
 
 <img src="/assets/img/iam-p2-hydra-data-model.png" alt="Ory Hydra Data Model" style="width:100%">
 
-*Figure 8: Ory Hydra Data Model*
+{: .mx-auto.d-block :}
+*Figure 8: Ory Hydra Data Model*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 At the core of this schema is the `hydra_client` table, which defines OAuth2/OIDC clients registered within a Hydra Network. These clients represent applications that can initiate authorization flows and request access tokens. Every major flow — authorization code, access token, refresh token, and device authorization — is tied back to a specific client.
 
@@ -175,7 +184,8 @@ Keto expresses access control as relationships, mapping subjects, objects, and p
 
 <img src="/assets/img/iam-p2-keto-data-model.png" alt="Ory Keto Data Model" style="width:100%">
 
-*Figure 9: Ory Keto Data Model*
+{: .mx-auto.d-block :}
+*Figure 9: Ory Keto Data Model*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In Ory Keto, authorization is checked by evaluating whether a relation tuple exists (directly or through recursive expansion) that permits a given subject to perform a relation on an object in a namespace. This data model is designed for high scalability and flexibility, enabling complex access patterns like group membership, role inheritance, and hierarchical access rights.
 
@@ -183,7 +193,8 @@ A typical interaction between a user, an application, Ory Kratos, and Ory Keto l
 
 <img src="/assets/img/iam-p2-keto-kratos-flow.png" alt="Interaction flow between Ory Keto and Ory Kratos" style="width:100%">
 
-*Figure 10: Interaction flow between Ory Keto and Ory Kratos*
+{: .mx-auto.d-block :}
+*Figure 10: Interaction flow between Ory Keto and Ory Kratos*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The process begins when the subject initiates a request to access a resource through the application. Upon receiving the request, the application first delegates the task of verifying the user's identity to Ory Kratos, which is responsible for user authentication. Kratos authenticates the subject — typically by validating credentials, session tokens, or cookies — and responds back to the application confirming the user's identity.
 
@@ -209,7 +220,8 @@ Perhaps most importantly, resilience has been a defining factor. Even amid expon
 
 <img src="/assets/img/iam-p2-uninterrupted-access.png" alt="Uninterrupted access management with CockroachDB" style="width:100%">
 
-*Figure 11: Uninterrupted access management with CockroachDB*
+{: .mx-auto.d-block :}
+*Figure 11: Uninterrupted access management with CockroachDB*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 OpenAI's deployment spans across distinct data centers, each containing a set of CockroachDB nodes. Although physically distributed, these nodes form a unified, logically consistent database. Despite the failure of a node or an entire data center, the overall system remains fully operational. This is made possible by CockroachDB's use of the [Raft consensus protocol](https://www.cockroachlabs.com/docs/stable/architecture/replication-layer.html#raft), which allows the database to continue processing reads and writes as long as a quorum of replicas is available. In this configuration, the cluster is still able to serve global OpenAI authentication traffic through the functioning nodes in the healthy datacenters without data inconsistency or service interruption.
 
@@ -221,12 +233,14 @@ Throughout the process of integrating Ory with CockroachDB, several key lessons 
 
 <img src="/assets/img/iam-p2-data-locality.png" alt="Data locality — common patterns for table locality with CockroachDB" style="width:100%">
 
-*Figure 12: Data locality — common patterns for table locality with CockroachDB*
+{: .mx-auto.d-block :}
+*Figure 12: Data locality — common patterns for table locality with CockroachDB*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Second, [monitoring and observability](https://www.cockroachlabs.com/docs/stable/monitoring-and-alerting.html) were indispensable. Combining logs, metrics, and distributed traces helped identify bottlenecks and optimize latency paths across services and regions. Finally, adopting a modular, standards-based IAM platform like Ory accelerated the implementation and made it easier to reason about failure domains and service dependencies.
 
 <img src="/assets/img/iam-p2-distributed-iam.png" alt="Distributed identity and access management (IAM) platform" style="width:100%">
 
-*Figure 13: Distributed identity and access management (IAM) platform*
+{: .mx-auto.d-block :}
+*Figure 13: Distributed identity and access management (IAM) platform*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 For organizations seeking to build similar architectures, the combination of Ory and CockroachDB offers a powerful pattern: composable, scalable IAM backed by a globally distributed, resilient SQL database. Whether you're serving users in a single region or spanning multiple continents, this approach provides a strong foundation for building secure, available, and consistent identity systems. OpenAI's journey highlights the value of investing in cloud-native, open-source technologies that work together to deliver truly always-on authentication.
