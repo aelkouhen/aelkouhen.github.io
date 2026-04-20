@@ -307,7 +307,7 @@ That's it! LangChain intercepts every LLM call, checks the cache table (llm_cach
 Exact-match cache: if the same query was asked before, internally *SQLAlchemyCache* returns the stored answer without calling the LLM. 
 This replaces the entire manual cache block (`cache_get`, `cache_put`, `@standard_llmcache` decorator, etc.). Once `set_llm_cache` is called, it applies globally to all subsequent LLM calls including inside chains and agents.                                                                      
 
-### Semantic LLM Cache (Memori)
+### Semantic LLM Cache and Conversation History (Memori)
 
 Once `mem.llm.register(client)` is called, Memori intercepts all LLM calls automatically without any decorator, nor manual cache lookup. It captures facts, preferences, and summaries into CockroachDB and injects relevant context on each subsequent call.
 
