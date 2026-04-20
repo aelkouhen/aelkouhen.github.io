@@ -176,6 +176,71 @@ RBAC, Row-Level Security, and native geo-data placement enforce fine-grained per
 
 ---
 
+## The Tools
+
+### LangChain
+
+[LangChain](https://python.langchain.com/) is an open-source framework for building applications powered by large language models. Rather than writing raw API calls and stitching together custom plumbing, LangChain gives you a set of composable abstractions — document loaders, text splitters, embedding models, vector stores, retrievers, chains, and agents — that cover the entire lifecycle of an LLM application.
+
+Its key strength for RAG is the **retrieval pipeline**:
+
+- **Document Loaders** ingest content from PDFs, CSVs, databases, Notion, Google Drive, Slack, and dozens of other sources into a standardised `Document` object.
+- **Text Splitters** break large documents into smaller, independently retrievable chunks — a critical step because embedding models have context-length limits and smaller chunks yield more precise similarity matches.
+- **Embedding Models** convert each chunk into a high-dimensional vector. LangChain supports 30+ embedding providers including Google Vertex AI, Amazon Bedrock, OpenAI, Cohere, and Ollama — all behind the same interface, so swapping providers requires changing one line.
+- **Vector Stores** store and index those embeddings for fast semantic search. LangChain integrates with 40+ backends, including the native `AsyncCockroachDBVectorStore` provided by the `langchain-cockroachdb` package.
+- **Retrievers** sit on top of vector stores and expose a single `.invoke(query)` interface — whether the underlying search is similarity-based, MMR, or hybrid with score thresholds.
+- **Chains and Agents** wire retrievers, prompts, and LLMs into end-to-end workflows. Chains follow a fixed execution path; agents let the LLM decide dynamically which tools to call and in what order — the backbone of Agentic RAG.
+
+```python
+from langchain_community.document_loaders import PyPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_google_vertexai import VertexAIEmbeddings
+from langchain_cockroachdb import AsyncCockroachDBVectorStore
+
+# Load → Split → Embed → Store
+docs   = PyPDFLoader("report.pdf").load()
+chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_documents(docs)
+store  = AsyncCockroachDBVectorStore(engine=engine, embeddings=VertexAIEmbeddings(model="text-embedding-005"), collection_name="kb")
+await store.aadd_documents(chunks)
+
+# Retrieve
+results = await store.asimilarity_search_with_score("What is the Q3 revenue?", k=3)
+```
+
+This composability is why LangChain is the de-facto standard for RAG: you can swap any component — embedding provider, vector backend, LLM — without rewriting the pipeline.
+
+### Memori
+
+[Memori](https://memorilabs.ai/) is a SQL-native, LLM-agnostic memory layer for production AI agents. Where LangChain handles the retrieval and generation pipeline, Memori handles **what the agent remembers between sessions** — turning raw conversations into structured, queryable knowledge that persists in your own database.
+
+Every time an LLM call is made, Memori automatically captures the exchange and classifies it into four memory types:
+
+| Memory type | What it stores | Example |
+|---|---|---|
+| **Facts** | Verified statements about the world or the user | "The user's account plan is Enterprise" |
+| **Preferences** | Expressed or inferred preferences | "Prefers concise answers" |
+| **Rules** | Constraints and instructions | "Never recommend competitor products" |
+| **Summaries** | Compressed conversation history | "Discussed onboarding steps in session #4" |
+
+On subsequent calls, Memori injects only the **relevant** memories as context — not the full history — using its own **tokenless recall** engine. This is the mechanism behind its claimed 98% reduction in LLM spend: instead of replaying entire conversation logs into the context window on every turn, only the semantically relevant snippets are retrieved in milliseconds from CockroachDB.
+
+Integration is a single SDK call:
+
+```python
+from memori import Memori
+
+with sql_engine.raw_connection() as conn:
+    mem = Memori(conn=conn).llm.register(vertexai)
+    mem.attribution(entity_id="user-123", process_id="my-app")
+    mem.config.storage.build()
+```
+
+After `mem.llm.register(client)`, Memori intercepts all LLM calls automatically — no decorator, no manual cache lookup, no conversation injection code. It also provides an interactive **Memory Graph** that visualises how facts, preferences, and relationships evolve across sessions, plus an **Analytics Dashboard** that tracks memory creation rates, cache hit rates, and recall usage.
+
+For enterprise deployments, Memori is PCI and SOC 2 compliant, supports RBAC with SSO/OAuth, configurable data retention and automatic purging, and full audit trails — with all data remaining in your own database by default.
+
+---
+
 ## Tutorial: Building the RAG Pipeline
 
 The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini text embeddings + Gemini 2.0 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude 3.7 Sonnet). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
