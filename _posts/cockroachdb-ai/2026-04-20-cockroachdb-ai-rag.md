@@ -140,7 +140,7 @@ The data flow: user submits a question → it is vectorised → CockroachDB perf
 
 ## Tutorial: Building the RAG Pipeline
 
-<img src="/assets/img/ai-rag-03.png" alt="Naive RAG pipeline — raw documents, embedding model, CockroachDB vector store, prompt assembly and LLM generation" style="width:100%">
+<img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
 
 The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (PaLM embeddings + text-bison generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embeddings + Claude v2). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
@@ -208,7 +208,7 @@ print(f"{len(docs)} chunks ready for indexing")
 
 `PGVector` handles table creation, embedding storage, and index management automatically.
 
-<img src="/assets/img/ai-rag-01.png" alt="RAG knowledge base — documents, embedding model, CockroachDB vector store, context retrieval and LLM generation" style="width:100%">
+<img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
 
 ```python
 embeddings = VertexAIEmbeddings(model="textembedding-gecko@001")
@@ -223,7 +223,7 @@ vector_store = PGVector.from_documents(
 
 ### RAG Generation Pipeline
 
-<img src="/assets/img/ai-rag-02.png" alt="Full GCP RAG pipeline — Vertex AI embeddings, CockroachDB vector store, LLM cache and conversation history" style="width:100%">
+<img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
 
 ```python
 generation_model = TextGenerationModel.from_pretrained("text-bison@001")
