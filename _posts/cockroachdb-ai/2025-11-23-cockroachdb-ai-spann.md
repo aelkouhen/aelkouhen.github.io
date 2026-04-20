@@ -9,13 +9,13 @@ tags: [cockroachdb-ai, CockroachDB, GenAI, vector search, vector indexing, pgvec
 comments: true
 ---
 
-<img src="/assets/img/ai-spann-01.png" alt="CockroachDB Vector Search AI workflow" style="width:100%">
-
 In a past life, I worked on an app that let users upload and share photos with friends and family. I'm amazed at how far technology has progressed since that time. It feels like magic that AI can "look" at a set of photos and "know" that they were taken at a child's first birthday party or on a hike in the mountains. Natural language queries like "show me photos from my trip to the Statue of Liberty" or even "find that photo where I'm about to collide on the soccer field with another player" are no longer science fiction.
 
 Our photo-sharing startup never reached millions of users, but I suspect that many of you reading this are working on systems that have. At that scale, it's surprisingly easy to find yourself managing billions, or even tens of billions of user-generated items. If it's a photo app, most users will have hundreds or thousands of photos. Power users or organizations might have tens or hundreds of thousands. If it's not photos, it might be documents, notes, videos, or audio. The type of content varies, but the math is the same: millions of users, each contributing hundreds or thousands of items, and you're quickly operating at billions-scale.
 
 Even with just a few hundred items, users expect fast, accurate search. If they upload something, they want to find it immediately. If they search, they want results in the blink of an eye. Increasingly, basic keyword search isn't enough. In the age of ChatGPT, users expect semantic search, with results based on the meaning of the content, not just filenames, metadata, keywords, or tags.
+
+<img src="/assets/img/ai-spann-01.png" alt="CockroachDB Vector Search AI workflow" style="width:100%">
 
 Some solutions to this problem assume that the entire dataset fits into memory on a single machine. Or, at most, they rely on a fast local SSD. Many of them don't expect your data to be distributed across regions, or to be constantly changing, or to be part of a transactional system where consistency and freshness actually matter. They often come with significant limitations, like requiring writes to be batched, returning stale results, or needing specialized hardware to perform well.
 
