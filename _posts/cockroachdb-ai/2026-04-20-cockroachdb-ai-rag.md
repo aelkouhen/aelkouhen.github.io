@@ -50,9 +50,9 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two di
 
 <img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
 
-* **Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
+- **Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
 
-* **Weaknesses:** struggles with multi-hop reasoning, cannot synthesize across many documents, susceptible to hallucination from noisy or contradictory context chunks, no awareness of relationships between entities.
+- **Weaknesses:** struggles with multi-hop reasoning, cannot synthesize across many documents, susceptible to hallucination from noisy or contradictory context chunks, no awareness of relationships between entities.
 
 - **Use it when:** you are building a prototype, queries are simple (single-concept lookups), cost and latency are primary constraints, or the document corpus is small and well-structured.
 
@@ -82,9 +82,9 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 
 <img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
 
-* **Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
+- **Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
 
-* **Weaknesses:** high latency (20–24 s average), high indexing cost ($20–500 per corpus), computationally expensive to rebuild when source data changes frequently.
+- **Weaknesses:** high latency (20–24 s average), high indexing cost ($20–500 per corpus), computationally expensive to rebuild when source data changes frequently.
 
 - **Use it when:** comprehensiveness matters more than speed, the corpus has rich interconnected relationships (legal, medical, research literature), or enterprise knowledge discovery across many documents is the goal.
 
@@ -116,9 +116,9 @@ Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an in
 
 <img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
 
-* **Strengths:** handles complex multi-step reasoning, integrates real-time data via web search and APIs, self-correcting, ideal for exploratory and discovery tasks. Accuracy of 75–90%+ on complex queries.
+- **Strengths:** handles complex multi-step reasoning, integrates real-time data via web search and APIs, self-correcting, ideal for exploratory and discovery tasks. Accuracy of 75–90%+ on complex queries.
 
-* **Weaknesses:** high latency (10–30+ s), high cost (multiple LLM calls per query), difficult to debug, non-deterministic behaviour, overkill for simple tasks.
+- **Weaknesses:** high latency (10–30+ s), high cost (multiple LLM calls per query), difficult to debug, non-deterministic behaviour, overkill for simple tasks.
 
 - **Use it when:** multi-step reasoning is essential, real-time data access is required, the task is exploratory, or human-in-the-loop validation is acceptable.
 
@@ -192,7 +192,7 @@ The data flow: user submits a question → it is vectorised → CockroachDB perf
 
 ```bash
 pip install langchain langchain-community langchain-cockroachdb pypdf tenacity \
-    psycopg2-binary sqlalchemy memori gradio "google-cloud-aiplatform==1.25.0" --upgrade
+    psycopg2-binary sqlalchemy memori "google-cloud-aiplatform==1.25.0" --upgrade
 ```
 
 ### Imports
@@ -206,7 +206,7 @@ from langchain_cockroachdb import AsyncCockroachDBVectorStore, CockroachDBEngine
 from langchain.embeddings import VertexAIEmbeddings
 from vertexai.preview.language_models import TextGenerationModel
 from sqlalchemy import create_engine, text
-import vertexai, hashlib, pandas as pd, gradio as gr
+import vertexai, hashlib, pandas as pd
 ```
 
 ### Configure GCP Vertex AI, Memori and CockroachDB
@@ -223,6 +223,7 @@ vertexai.init(project=PROJECT_ID, location=REGION)
 COCKROACHDB_URL = getpass("CockroachDB connection string: ")
 engine     = CockroachDBEngine.from_connection_string(COCKROACHDB_URL)
 sql_engine = create_engine(COCKROACHDB_URL.replace("cockroachdb://", "postgresql://"))
+
 with sql_engine.raw_connection() as conn:
     cursor = conn.cursor()
     mem = Memori(conn=conn).llm.register(vertexai)
@@ -343,7 +344,7 @@ mem.config.storage.build()
 
 ```bash
 pip install langchain langchain-community langchain-cockroachdb pypdf tenacity \
-    psycopg2-binary sqlalchemy boto3 botocore gradio --upgrade
+    psycopg2-binary sqlalchemy boto3 botocore --upgrade
 ```
 
 ### Imports
@@ -357,7 +358,7 @@ from langchain.llms import Bedrock
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from sqlalchemy import create_engine, text
-import boto3, hashlib, pandas as pd, gradio as gr
+import boto3, hashlib, pandas as pd
 ```
 
 ### Configure AWS and CockroachDB
@@ -473,7 +474,6 @@ Both are equally well-suited to any of the three RAG paradigms described above �
 ## Resources
 
 - [CockroachDB vector search documentation](https://www.cockroachlabs.com/docs/stable/vector-search.html)
-- [Tutorial: Augment your AI use case with RAG on CockroachDB](https://www.cockroachlabs.com/blog/tutorial-rag-with-cockroachdb/)
 - [langchain-cockroachdb — LangChain integration for CockroachDB](https://pypi.org/project/langchain-cockroachdb/)
 - [Agent Development with CockroachDB using LangChain](https://www.cockroachlabs.com/blog/agent-development-cockroachdb-langchain/)
 - [From Local to Global: Microsoft GraphRAG paper (arXiv 2404.16130)](https://arxiv.org/abs/2404.16130)
@@ -482,5 +482,5 @@ Both are equally well-suited to any of the three RAG paradigms described above �
 - [Google Vertex AI — Generative AI](https://cloud.google.com/vertex-ai/generative-ai/docs)
 - [Original RAG notebook — GCP](https://github.com/aelkouhen/redis-vss/blob/main/4-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20GCP.ipynb)
 - [Original RAG notebook — AWS](https://github.com/aelkouhen/redis-vss/blob/main/4bis-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20AWS.ipynb)
-- [MemoriLabs](https://memorilabs.ai/)                                  
-- [MemoriLabs Github Repository](https://github.com/MemoriLabs/Memori)
+- [Memori Labs](https://memorilabs.ai/)                                  
+- [Memori Labs Github Repository](https://github.com/MemoriLabs/Memori)
