@@ -243,7 +243,7 @@ For enterprise deployments, Memori is PCI and SOC 2 compliant, supports RBAC wit
 
 ## Tutorial: Building the RAG Pipeline
 
-The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini text embeddings + Gemini 2.0 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude 3.7 Sonnet). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
+The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini text embeddings + Gemini 2.0 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude Sonnet 4.6). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
 <img src="/assets/img/ai-rag-crdb-dataflow.png" alt="RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response" style="width:100%">
 
@@ -484,7 +484,7 @@ Answer:"""
 async def rag(query: str) -> str:
     relevant = await vector_store.asimilarity_search_with_score(query, k=3)
     sources  = "\n---\n".join(doc.page_content for doc, _ in relevant)
-    llm      = ChatBedrock(model_id="anthropic.claude-3-7-sonnet-20250219-v1:0", client=bedrock_runtime)
+    llm      = ChatBedrock(model_id="anthropic.claude-sonnet-4-6", client=bedrock_runtime)
     chain    = ConversationChain(llm=llm, verbose=False, memory=ConversationBufferMemory())
     return chain.predict(input=PROMPT.format(sources=sources, query=query))
 ```
@@ -519,7 +519,7 @@ Both integrations produce identical results from CockroachDB's perspective — t
 | | **GCP Vertex AI** | **AWS Bedrock** |
 |---|---|---|
 | **Embedding model** | `text-embedding-005` (768 dims) | `amazon.titan-embed-text-v2:0` (1024 dims) |
-| **Generation model** | `gemini-2.0-flash-001` | `anthropic.claude-3-7-sonnet-20250219-v1:0` |
+| **Generation model** | `gemini-2.0-flash-001` | `anthropic.claude-sonnet-4-6` |
 | **Vector dimensionality** | 768 | 1024 |
 | **LangChain class** | `VertexAIEmbeddings` (langchain-google-vertexai) | `BedrockEmbeddings` / `ChatBedrock` (langchain-aws) |
 | **Auth mechanism** | GCP service account / ADC | AWS IAM access keys / role |
@@ -529,7 +529,7 @@ Both integrations produce identical results from CockroachDB's perspective — t
 | **Compliance** | GDPR, HIPAA, SOC 2 | GDPR, HIPAA, SOC 2, FedRAMP |
 | **Latency** | ~200–400 ms (embedding) | ~300–600 ms (embedding) |
 
-**Choose Vertex AI if** you are already on GCP, use BigQuery as a data source, or need tight Gemini 2.0 integration. **Choose Bedrock if** you are on AWS, want access to multiple third-party foundation models (Anthropic Claude 3.7, Cohere, Meta Llama) from a single API, or need FedRAMP compliance.
+**Choose Vertex AI if** you are already on GCP, use BigQuery as a data source, or need tight Gemini 2.0 integration. **Choose Bedrock if** you are on AWS, want access to multiple third-party foundation models (Anthropic Claude Sonnet 4.6, Cohere, Meta Llama) from a single API, or need FedRAMP compliance.
 
 Both are equally well-suited to any of the three RAG paradigms described above — Naive, Graph, or Agentic — with CockroachDB serving as the unified data layer across all of them.
 
