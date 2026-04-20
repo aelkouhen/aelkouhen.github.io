@@ -20,10 +20,11 @@ author: Amine El Kouhen - Data Crafters Lab
 ###############################################
 
 navbar-links:
-  Categories: 
+  Categories:
     - Data Demystified: "/data-101"
     - Data & Redis: "/data-redis"
     - Data & Snowflake: "/data-snow"
+    - Mainframe to Distributed SQL: "/data-mainframe"
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
