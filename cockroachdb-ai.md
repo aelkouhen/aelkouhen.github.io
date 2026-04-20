@@ -8,7 +8,7 @@ subtitle: "Building AI-Ready Systems with Distributed SQL"
 
 <!-- role="list" needed so that `list-style: none` in Safari doesn't remove the list semantics -->
 <div class="posts-list list-unstyled" role="list">
-  {% for post in site.tags['cockroachdb-ai'] %}
+  {% for post in site.tags['Artificial Intelligence'] %}
   <article class="post-preview">
 
       {%- capture thumbnail -%}

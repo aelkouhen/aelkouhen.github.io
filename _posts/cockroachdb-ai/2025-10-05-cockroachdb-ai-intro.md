@@ -4,7 +4,7 @@ title: "Getting Started with GenAI Using CockroachDB"
 cover-img: /assets/img/cover-ai-intro.webp
 thumbnail-img: /assets/img/cover-ai-intro.webp
 share-img: /assets/img/cover-ai-intro.webp
-tags: [cockroachdb-ai, CockroachDB, GenAI, vector embeddings, vector search, LLM, pgvector, RAG]
+tags: [Artificial Intelligence, CockroachDB, GenAI, vector embeddings, vector search, LLM, pgvector, RAG]
 comments: true
 ---
 
