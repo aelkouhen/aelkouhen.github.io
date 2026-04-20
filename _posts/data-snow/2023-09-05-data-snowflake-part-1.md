@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data & Snowflake series - part 1
+title: "Data & Snowflake, Part 1"
 subtitle:  Data Ingestion with Snowflake
 thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1ecf154a-5a16-4353-ba85-c2e91a8e65fa
 share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/b80c58c5-749e-4661-930f-fa5133a63a86

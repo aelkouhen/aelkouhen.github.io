@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data & Snowflake - Overview
+title: "Data & Snowflake, Overview"
 subtitle: Choosing the Right Data Architecture with Snowflake
 thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/d8d978fb-5d63-4832-8302-0d8a9b6d5b60
 share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6a275ea8-de10-4356-9a47-7b6d4522a49a
