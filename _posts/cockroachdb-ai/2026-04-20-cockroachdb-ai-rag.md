@@ -35,8 +35,6 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It implements a s
 2. **Retrieve** — cosine similarity search against a vector store returns the top-k most semantically similar document chunks.
 3. **Generate** — retrieved chunks are concatenated into the prompt and the LLM produces an answer.
 
-<img src="/assets/img/ai-rag-03.png" alt="Naive RAG pipeline — raw documents, embedding model, vector store, prompt assembly and LLM generation" style="width:100%">
-
 **Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
 
 **Weaknesses:** struggles with multi-hop reasoning, cannot synthesize across many documents, susceptible to hallucination from noisy or contradictory context chunks, no awareness of relationships between entities.
@@ -57,8 +55,6 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 2. **Community detection** — closely related entities are clustered into communities; the LLM pre-generates a summary for each community.
 3. **Query time** — instead of searching raw chunks, the query is matched against community summaries. Partial answers are generated per community then synthesised into a final comprehensive response.
 
-<img src="/assets/img/ai-rag-01.png" alt="Graph RAG concepts — knowledge base, entity extraction, community summaries, LLM synthesis" style="width:100%">
-
 **Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
 
 **Weaknesses:** high latency (20–24 s average), high indexing cost ($20–500 per corpus), computationally expensive to rebuild when source data changes frequently.
@@ -72,8 +68,6 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 ### Agentic RAG
 
 Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results.
-
-<img src="/assets/img/ai-rag-02.png" alt="Agentic RAG architecture — LLM agent, multi-tool retrieval, iterative reasoning, CockroachDB vector store" style="width:100%">
 
 **How it works:**
 
@@ -146,6 +140,8 @@ The data flow: user submits a question → it is vectorised → CockroachDB perf
 
 ## Tutorial: Building the RAG Pipeline
 
+<img src="/assets/img/ai-rag-03.png" alt="Naive RAG pipeline — raw documents, embedding model, CockroachDB vector store, prompt assembly and LLM generation" style="width:100%">
+
 The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (PaLM embeddings + text-bison generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embeddings + Claude v2). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
 ---
@@ -212,6 +208,8 @@ print(f"{len(docs)} chunks ready for indexing")
 
 `PGVector` handles table creation, embedding storage, and index management automatically.
 
+<img src="/assets/img/ai-rag-01.png" alt="RAG knowledge base — documents, embedding model, CockroachDB vector store, context retrieval and LLM generation" style="width:100%">
+
 ```python
 embeddings = VertexAIEmbeddings(model="textembedding-gecko@001")
 
@@ -224,6 +222,8 @@ vector_store = PGVector.from_documents(
 ```
 
 ### RAG Generation Pipeline
+
+<img src="/assets/img/ai-rag-02.png" alt="Full GCP RAG pipeline — Vertex AI embeddings, CockroachDB vector store, LLM cache and conversation history" style="width:100%">
 
 ```python
 generation_model = TextGenerationModel.from_pretrained("text-bison@001")
