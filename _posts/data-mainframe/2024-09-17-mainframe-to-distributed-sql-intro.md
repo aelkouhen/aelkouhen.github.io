@@ -3,7 +3,7 @@ layout: post
 title: "Mainframe to Distributed SQL, An Introduction"
 subtitle: "What is a Mainframe?"
 cover-img: /assets/img/cover-mainframe.webp
-thumbnail-img: /assets/img/mainframe-diagram.png
+thumbnail-img: /assets/img/cover-mainframe.webp
 share-img: /assets/img/mainframe-intro-cover.png
 tags: [mainframe, distributed SQL, CockroachDB, migration, database, enterprise, legacy systems]
 comments: true
