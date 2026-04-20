@@ -25,6 +25,7 @@ navbar-links:
     - Data & Redis: "/data-redis"
     - Data & Snowflake: "/data-snow"
     - Mainframe to Distributed SQL: "/data-mainframe"
+    - Identity and Access Management: "/iam"
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
