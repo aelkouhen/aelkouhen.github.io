@@ -322,7 +322,7 @@ So compared to the manual approach in the tutorial:
 | | **Manual Config** | **Memori** |
 |---|---|---|
 | **Exact cache** | SHA-256 hash → SQL UPSERT | Built-in |
-| **Semantic cache** | `asimilarity_search_with_score`+ `Similarity Threshold` | Built-in tokenless recall |
+| **Semantic cache** | `asimilarity_search_with_score`+ threshold | Built-in tokenless recall |
 | **Conversation history** | `chat_history` table + manual inject | Built-in session memory |
 | **Config required** | `Similarity Threshold`, decorator, wrapper | None - intercepted automatically |
 
@@ -334,7 +334,7 @@ mem.attribution(entity_id="user-123", process_id="my-app")
 mem.config.storage.build()
 ```
 
-| Note: You cannot tune the similarity threshold directly, that's abstracted inside Memori's recall engine.                                                  
+> **_NOTE:_** : You cannot tune the similarity threshold directly, that's abstracted inside Memori's recall engine.                                                 
 ---
 
 ## Part 2: CockroachDB + Amazon Bedrock
