@@ -18,7 +18,7 @@ Enter the world of Generative AI (GenAI) – a groundbreaking technology that's 
 
 One of the most foundational — yet often overlooked — components is the use of vector embeddings. These high-dimensional representations allow GenAI models to understand, organize, and generate meaningful content. To make sense of these embeddings at scale, we need specialized systems like vector databases. These databases are not just an evolution of their predecessors; they represent an extraordinary leap in data management.
 
-This is the first of several articles I'm writing that will take you on a journey into vector databases. As the Sr. Partner Solutions Architect at Cockroach Labs, I routinely engineer distributed database deployments within diverse data ecosystems. I love sharing what I've learned in the process, such as with my [Mainframe to Distributed SQL article series](https://www.cockroachlabs.com/blog/distributed-sql-managing-change/).
+This is the first of several articles I'm writing that will take you on a journey into vector databases. As the Sr. Partner Solutions Architect at Cockroach Labs, I routinely engineer distributed database deployments within diverse data ecosystems. I love sharing what I've learned in the process, such as with my [Mainframe to Distributed SQL article series](/2025-02-05-mainframe-to-distributed-sql-part-6/).
 
 Throughout, we'll explore the GenAI realm, its foundational principles, applications and how the resilient infrastructure offered by CockroachDB represents an exciting addition to this field.
 
