@@ -19,7 +19,7 @@ This article delves into the intricate world of mainframe data storage, explorin
 
 ## Storage: different levels of abstraction
 
-"Storage means different things to different users. When we talk about storage, some people think about how data is stored physically; some focus on the raw material that holds the storage systems, while others think about the relevant storage system or technology for their use case. All these levels are important attributes of storage, but they focus on different abstraction levels."
+"[Storage](https://youtu.be/ghN3y42rHts?si=Fed7OHgrG-uG8mqP) means different things to different users. When we talk about storage, some people think about how data is stored physically; some focus on the raw material that holds the storage systems, while others think about the relevant storage system or technology for their use case. All these levels are important attributes of storage, but they focus on different abstraction levels."
 
 <img src="/assets/img/mainframe-p1-storage-abstraction.png" alt="Mainframe storage abstraction levels diagram" style="width:100%">
 
@@ -176,7 +176,7 @@ IDMS, or Integrated Database Management System, is a DBMS for mainframes develop
 
 One of the advanced features of IDMS was its built-in Integrated Data Dictionary (IDD). The IDD was primarily designed to maintain database definitions and was itself an IDMS database. Database administrators (DBAs) and other users interacted with the IDD using Data Dictionary Definition Language (DDDL). Additionally, the IDD was used to store definitions and code for other products in the IDMS family, such as ADS/Online and IDMS-DC. The extensibility of the IDD was one of its most powerful aspects, allowing users to create definitions for virtually anything. Some companies even utilized it to develop in-house documentation.
 
-Unlike relational databases that use tables, IDMS uses the CODASYL network model structure. The main structuring concepts in this model are records and sets. **Records** essentially follow the COBOL pattern, consisting of fields of different types, which allows complex internal structures such as repeating items and repeating groups.
+Unlike relational databases that use tables, IDMS uses the [CODASYL](https://en.wikipedia.org/wiki/CODASYL) network model structure. The main structuring concepts in this model are records and sets. **Records** essentially follow the COBOL pattern, consisting of fields of different types, which allows complex internal structures such as repeating items and repeating groups.
 
 <img src="/assets/img/mainframe-p1-idms.png" alt="An IDMS model" style="width:100%">
 
@@ -214,7 +214,7 @@ While traditionally used on mainframes, ADABAS supports multiple platforms, incl
 
 ### Datacom/DB
 
-Datacom DB is a high-performance, enterprise-level database management system (DBMS) developed in the early 1970s by Computer Information Management Company. Datacom was acquired by CA Technologies (formerly Computer Associates), which renamed it to CA Datacom/DB.
+Datacom DB is a high-performance, enterprise-level database management system (DBMS) developed in the early 1970s by Computer Information Management Company. Datacom was acquired by [CA Technologies](https://en.wikipedia.org/wiki/CA_Technologies) (formerly Computer Associates), which renamed it to CA Datacom/DB.
 
 Datacom was initially designed to retrieve data quickly from massive files using inverted lists. While this approach was highly effective for rapid data retrieval, it could have been more efficient for handling extensive data maintenance. To address this issue, Datacom/DB transitioned to relational technology, incorporating unique index-driven capabilities that significantly improved maintenance without sacrificing retrieval speed. This relational version of Datacom became the foundation for ongoing industry-leading enhancements, maintaining its status as a cost-effective and high-performing DBMS for IBM mainframes.
 
