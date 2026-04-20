@@ -31,7 +31,7 @@ Similarly, assessing the application architecture is essential for identifying a
 
 ### 2. Analyzing Data Structures, Schema Alignment
 
-Mainframe databases often rely on hierarchical or network models such as Information Management Systems (IMS) or Integrated Database Management Systems (IDMS), which differ significantly from modern relational databases like SQL or NoSQL. Understanding the underlying structure of the current database is critical for identifying compatibility gaps between the source and target database schemas. Key considerations during this phase include:
+Mainframe databases often rely on hierarchical or network models such as [Information Management Systems (IMS)](/2024-10-10-mainframe-to-distributed-sql-part-1/#information-management-system-ims) or [Integrated Database Management Systems (IDMS)](/2024-10-10-mainframe-to-distributed-sql-part-1/#integrated-database-management-system-idms), which differ significantly from modern relational databases like SQL or NoSQL. Understanding the underlying structure of the current database is critical for identifying compatibility gaps between the source and target database schemas. Key considerations during this phase include:
 
 - **Data model assessment**: Examine the logical and physical structure of the databases, including tables, indexes, and relationships between data entities.
 
