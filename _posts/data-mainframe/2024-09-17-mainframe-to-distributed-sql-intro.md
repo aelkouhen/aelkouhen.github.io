@@ -9,18 +9,6 @@ tags: [mainframe, distributed SQL, CockroachDB, migration, database, enterprise,
 comments: true
 ---
 
-_This article is the latest in "Mainframe to Distributed SQL", an original series from Cockroach Labs exploring the fundamentals of mainframes and the evolution of today's distributed database architecture._
-
-**Related Articles in Series:**
-- Understanding Mainframe Database Architecture
-- The Imperative for Change
-- Distributed Database Architecture
-- Planning Your Data Modernization Strategy
-- Transitioning to a Distributed Architecture
-- Managing Change
-
----
-
 ## The enduring legacy of mainframe systems and their pivotal role in enterprise computing
 
 For over 60 years, the mainframe computer has been the record system for leading businesses, governmental agencies, and learning institutions. Today, this technology has become pervasive worldwide: 92 of the world's top 100 banks, 10 of the world's top insurers, 18 of the top 25 retailers, and 70% of Fortune 500 Companies rely on the mainframe. If you've shopped, planned a vacation, or made a credit card payment, a mainframe almost certainly processed your transaction.
