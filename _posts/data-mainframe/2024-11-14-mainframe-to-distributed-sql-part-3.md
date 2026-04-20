@@ -27,7 +27,7 @@ NoSQL databases, however, sacrifice strict schema enforcement and ACID guarantee
 
 In recent years, distributed SQL databases, also known as "new SQL," have emerged to combine the advantages of NoSQL (cloud-native scalability and resilience) with the strict schema and ACID guarantees of traditional relational databases. These databases do not require manual sharding and offer ACID guarantees, making them ideal for transactional workloads and applications requiring high data consistency.
 
-Today, both NoSQL and distributed SQL databases are widely used. NoSQL databases are preferred for analytics and big data workloads, while distributed SQL databases are favored for transactional workloads and applications where data consistency is critical.
+Today, [both NoSQL and distributed SQL databases are widely used](https://www.cockroachlabs.com/blog/what-is-a-distributed-database/#Types-of-distributed-databases:-NoSQL-vs.-distributed-SQL-databases). NoSQL databases are preferred for analytics and big data workloads, while distributed SQL databases are favored for transactional workloads and applications where data consistency is critical.
 
 ---
 
@@ -45,9 +45,9 @@ Distributed systems use load-balancing techniques to distribute workloads evenly
 
 Distributed systems also enable parallel processing, where tasks are divided and processed simultaneously across multiple nodes. Large tasks can be broken down into smaller, parallel tasks, significantly speeding up processing times.
 
-Another advantage of distributed systems is that data can be stored closer to where it is needed, reducing latency and improving access times. You can also pin your data to a specific location to comply with geographical-blocking regulations (GDPR, for example).
+Another advantage of distributed systems is that data can be stored closer to where it is needed, reducing latency and improving access times. You can also pin your data to a specific location to comply with geographical-blocking regulations ([GDPR](https://www.cockroachlabs.com/customers/iam-on-cockroachdb-dedicated/), for example).
 
-Finally, distributed systems can isolate resources for different tasks or tenants, improving performance and security. Different users or applications can share the same infrastructure while being isolated from each other, enhancing resource efficiency (multi-tenancy).
+Finally, distributed systems can isolate resources for different tasks or tenants, improving performance and security. Different users or applications can share the same infrastructure while being isolated from each other, enhancing resource efficiency ([multi-tenancy](https://www.cockroachlabs.com/blog/6-takeaways-multitenancy-saas-webinar/)).
 
 ### Scalability
 
@@ -62,7 +62,7 @@ Distributed databases, in contrast, can scale horizontally simply by adding addi
 
 <img src="/assets/img/mainframe-p3-vertical-scaling.png" alt="Vertical vs horizontal scaling diagram" style="width:100%">
 
-Moreover, in serverless distributed databases, nodes can be dynamically added or removed based on demand. Resources are provisioned only when needed, reducing waste and optimizing costs. The system can handle sudden spikes in traffic without compromising performance or availability. So, your database is neither under-provisioned nor over-provisioned, which optimizes the TCO of your infrastructure.
+Moreover, in serverless distributed databases, nodes can be dynamically added or removed based on demand. Resources are provisioned only when needed, reducing waste and optimizing costs. The system can handle [sudden spikes in traffic](https://www.cockroachlabs.com/big-ideas-podcast/dom-scandinaro-cameo/) without compromising performance or availability. So, your database is neither under-provisioned nor over-provisioned, which optimizes the TCO of your infrastructure.
 
 ### Transparency
 
@@ -86,7 +86,7 @@ In this way, distributed databases can detect and recover from failures automati
 
 <img src="/assets/img/mainframe-p3-table-data.gif" alt="Table data replication across nodes" style="width:100%">
 
-For this capability, distributed databases rely on consensus protocols such as Paxos and [Raft](https://raft.github.io/) (Replication And Fault Tolerance) which achieve consensus across distributed nodes. The consensus is made by quorum-based mechanisms, ensuring that a majority of nodes agree on a transaction before it is committed. So, nodes must agree on the state of the data or the order of transaction, and a transaction is considered successful only if a quorum of nodes approves it. Thus, the system ensures data integrity and consistency even in the presence of node failures. These protocols balance consistency and availability in a partitioned system (CAP theorem).
+For this capability, distributed databases rely on consensus protocols such as Paxos and [Raft](https://www.cockroachlabs.com/docs/stable/architecture/replication-layer#technical-details-and-components) (Replication And Fault Tolerance) which achieve consensus across distributed nodes. The consensus is made by quorum-based mechanisms, ensuring that a majority of nodes agree on a transaction before it is committed. So, nodes must agree on the state of the data or the order of transaction, and a transaction is considered successful only if a quorum of nodes approves it. Thus, the system ensures data integrity and consistency even in the presence of node failures. These protocols balance consistency and availability in a partitioned system ([CAP theorem](https://www.cockroachlabs.com/docs/stable/frequently-asked-questions.html#how-is-cockroachdb-both-highly-available-and-strongly-consistent)).
 
 ### Decentralized Management
 
@@ -100,13 +100,13 @@ Finally, decentralized management allows every node in the cluster to adapt quic
 
 ## Challenges of Distributed Databases
 
-Distributed databases offer several advantages, such as scalability and resilience. CockroachDB, for example, provides features like treating the database as a single-instance deployment and offering CDC (change data capture) change feeds for event-driven applications, simplifying developer workflows. However, distributed databases also come with potential downsides:
+Distributed databases offer several advantages, such as scalability and resilience. CockroachDB, for example, provides features like treating the database as a single-instance deployment and offering CDC ([change data capture](https://www.cockroachlabs.com/blog/change-data-capture/)) change feeds for event-driven applications, simplifying developer workflows. However, distributed databases also come with potential downsides:
 
 1. **Increased Operational Complexity**: Managing a distributed database can be more complex than a single-instance DB, though managed DBaaS (database as a service) options can alleviate this.
 
 2. **Learning Curve**: Teams might need time to adapt to new best practices, especially with NoSQL databases that may use proprietary query languages.
 
-Additional factors include cost, which can vary based on the chosen database, deployment method, workload requirements, and configuration. While distributed databases might seem more expensive due to multiple instances, they can prove to be cost-effective by preventing the high financial costs of downtime. Managed DBaaS can also reduce operational burdens, potentially making them more economical in the long run.
+Additional factors include cost, which can vary based on the chosen database, deployment method, workload requirements, and configuration. While distributed databases might seem more expensive due to multiple instances, they can prove to be cost-effective by preventing [the high financial costs of downtime](https://www.cockroachlabs.com/guides/the-state-of-resilience-2025/). Managed DBaaS can also reduce operational burdens, potentially making them more economical in the long run.
 
 Organizations typically invest significant resources in testing and evaluating database options to determine which is best for their budget and requirements.
 
@@ -141,7 +141,7 @@ From your application's perspective, a distributed database functions like a sin
 
 To illustrate this process, let's focus on a single chunk of data (called range in CockroachDB) being written to the database in a three-node, single-region cluster. Though databases like CockroachDB support multi-region deployments and a large number of nodes, this example simplifies the explanation.
 
-When data in a range is sent to the database, it is written into three replicas —one on each node. One of these nodes is designated as the "leaseholder" for this range, coordinating read and write requests for the data. However, any node can receive requests, distinguishing CockroachDB from active-passive systems where all requests must go through a central "Active" node.
+When data in a range is sent to the database, it is written into three replicas —one on each node. One of these nodes is designated as the "[leaseholder](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction#leaseholder-node)" for this range, coordinating read and write requests for the data. However, any node can receive requests, distinguishing CockroachDB from active-passive systems where all requests must go through a central "Active" node.
 
 <img src="/assets/img/mainframe-p3-dogs.gif" alt="Data replication across cluster nodes" style="width:100%">
 
@@ -251,11 +251,11 @@ To begin the transaction, a SQL client (e.g., an app) performs some kind of busi
 
 As we explained earlier, all CockroachDB nodes have perfectly symmetrical access to data (Multi-Active). This means your load balancer can connect your client to any node in the cluster and access any data while still guaranteeing strong consistency.
 
-The gateway node first parses the client's SQL statement to ensure it's valid according to the CockroachDB dialect of SQL, and uses that information to generate a logical SQL plan. Given that CockroachDB is a distributed database, though, it's also important to take a cluster's topology into account, so the logical plan is then converted into a physical plan—this means sometimes pushing operations onto the physical machines that contain the data.
+The gateway node first [parses](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#sql-parser-planner-executor) the client's SQL statement to ensure it's valid according to the CockroachDB dialect of SQL, and uses that information to [generate a logical SQL plan](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#logical-planning). Given that CockroachDB is a distributed database, though, it's also important to take a cluster's topology into account, so the logical plan is then converted into a physical plan—this means sometimes pushing operations onto the physical machines that contain the data.
 
-While CockroachDB presents a SQL interface to clients, the actual database is built on top of a key-value store. To mediate this, the physical plan generated at the end of SQL parsing is passed to the SQL executor, which executes the plan by performing key-value operations through _TxnCoordSender_. For example, the SQL executor converts _INSERT_ statements into _Put()_ operations.
+While CockroachDB presents a SQL interface to clients, the actual database is built on top of a [key-value store](https://www.cockroachlabs.com/docs/stable/architecture/overview.html#overview). To mediate this, the physical plan generated at the end of SQL parsing is passed to the SQL executor, which executes the plan by performing key-value operations through _TxnCoordSender_. For example, the SQL executor converts _INSERT_ statements into _Put()_ operations.
 
-The gateway node receives _BatchRequests_ from the _TxnCoordSender_. It dismantles the initial _BatchRequest_ by taking each operation and finding which physical machine should receive the request for the range — known as the range's leaseholder. The address of the range's current leaseholder is readily available in both local caches, as well as in the cluster's meta ranges.
+The gateway node receives _BatchRequests_ from the _TxnCoordSender_. It dismantles the initial _BatchRequest_ by taking each operation and finding which physical machine should receive the request for the range — known as the range's leaseholder. The address of the range's current leaseholder is readily available in both local caches, as well as in the [cluster's meta ranges](https://www.cockroachlabs.com/docs/v24.1/architecture/distribution-layer#meta-range-kv-structure).
 
 All write operations also propagate the leaseholder's address back to the _TxnCoordSender_, so it can track and clean up write operations as necessary.
 
@@ -265,9 +265,9 @@ The gateway node then waits (PENDING status) to receive acknowledgments for all 
 
 In terms of executing transactions, the Raft leader receives proposed Raft commands from the leaseholder. Each Raft command is a write that is used to represent an atomic state change of the underlying key-value pairs stored in the storage engine.
 
-All operations (including writes) begin by reading from the local instance of the storage engine to check for write intents for the operation's key.
+All operations (including writes) begin by reading from the local instance of the [storage engine](https://www.cockroachlabs.com/docs/v24.1/architecture/storage-layer) to check for write intents for the operation's key.
 
-For write operations, and after guaranteeing that there are no existing write intents for the keys, _BatchRequest_ operations (KV operations) are converted to Raft operations and have their values converted into write intents.
+For write operations, and after guaranteeing that there are no existing write intents for the keys, _BatchRequest_ operations (KV operations) are converted to [Raft operations](https://www.cockroachlabs.com/docs/v24.1/architecture/replication-layer#raft) and have their values converted into write intents.
 
 If an operation encounters a write intent for a key, it attempts to resolve the write intent by checking the state of the write intent's transaction (COMMITTED, ABORTED, PENDING, MISSING).
 
@@ -293,5 +293,5 @@ The principles underlying distributed databases, such as data distribution, tran
 
 1. D. Ongaro and J. Ousterhout, [In Search of an Understandable Consensus Algorithm](https://web.stanford.edu/~ouster/cgi-bin/papers/raft-atc14.pdf), Stanford University.
 2. [RAFT Visualization](https://raft.github.io/).
-3. C. Custer, What are distributed databases, and how do they work, Cockroach Labs Blog.
-4. Life of a distributed transaction, Cockroach Labs Docs.
+3. C. Custer, [What are distributed databases, and how do they work](https://www.cockroachlabs.com/blog/what-is-a-distributed-database/), Cockroach Labs Blog.
+4. [Life of a distributed transaction](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction), Cockroach Labs Docs.
