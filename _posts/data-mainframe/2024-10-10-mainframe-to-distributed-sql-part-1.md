@@ -4,8 +4,8 @@ title: "Mainframe to Distributed SQL, Part 1"
 subtitle: "Understanding Mainframe Database Architecture"
 cover-img: /assets/img/cover-mainframe-p1.webp
 thumbnail-img: /assets/img/cover-mainframe-p1.webp
-share-img: /assets/img/mainframe-p1-dasd.png
-tags: [mainframe, distributed SQL, CockroachDB, database, DASD, VSAM, IMS, CICS, Db2, IDMS, ADABAS]
+share-img: /assets/img/cover-mainframe-p1.webp
+tags: [mainframe, distributed SQL, CockroachDB, database, VSAM, IMS, CICS, Db2, IDMS]
 comments: true
 ---
 
