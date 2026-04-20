@@ -21,6 +21,8 @@ This article delves into the intricate world of mainframe data storage, explorin
 
 "Storage means different things to different users. When we talk about storage, some people think about how data is stored physically; some focus on the raw material that holds the storage systems, while others think about the relevant storage system or technology for their use case. All these levels are important attributes of storage, but they focus on different abstraction levels."
 
+<img src="/assets/img/mainframe-p1-storage-abstraction.png" alt="Mainframe storage abstraction levels diagram" style="width:100%">
+
 Storage is ubiquitous, which makes it easy to overlook its significance. For example, many software and data engineers use storage daily, yet may lack knowledge of how it operates and the tradeoffs involved with different storage media.
 
 For instance, mainframe systems support many different devices for data storage. Disks or tape are most frequently used for long-term data storage. What is a hard disk drive? A disk drive comprises a stack of circular disks coated with magnetic material for data storage. Each disk has a central hole for mounting on a spindle, allowing it to spin rapidly. The surface of each disk is divided into **tracks**, and each track is further divided into **cylinders**. A disk drive uses an actuator to move a read/write head to a specific sector to access data. This process is guided by the memory address of each **sector**, ensuring precise data retrieval.
