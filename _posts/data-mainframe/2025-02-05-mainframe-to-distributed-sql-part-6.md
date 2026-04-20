@@ -18,12 +18,12 @@ This article, the seventh and final in Cockroach Labs' "Mainframe to Distributed
 Whether you're in the early stages of migration planning or in the thick of navigating your transition, this article offers actionable insights to help you manage change and mitigate risks effectively.
 
 Previous articles in this series:
-1. [An Introduction: What is a Mainframe?](https://www.cockroachlabs.com/blog/mainframe-to-distributed-sql-an-introduction/)
-2. [Understanding Mainframe Database Architecture](https://www.cockroachlabs.com/blog/mainframe-to-distributed-sql-part-1/)
-3. [The Imperative for Change](https://www.cockroachlabs.com/blog/mainframe-to-distributed-sql-part-2/)
-4. [Distributed Database Architecture](https://www.cockroachlabs.com/blog/distributed-database-architecture/)
-5. [Planning Your Data Modernization Strategy](https://www.cockroachlabs.com/blog/planning-data-modernization/)
-6. [Mainframe to Distributed SQL, Part 5: Transitioning to a Distributed Architecture](https://www.cockroachlabs.com/blog/transitioning-to-distributed-architecture/)
+1. [An Introduction: What is a Mainframe?](/2024-09-17-mainframe-to-distributed-sql-intro/)
+2. [Understanding Mainframe Database Architecture](/2024-10-10-mainframe-to-distributed-sql-part-1/)
+3. [The Imperative for Change](/2024-10-24-mainframe-to-distributed-sql-part-2/)
+4. [Distributed Database Architecture](/2024-11-14-mainframe-to-distributed-sql-part-3/)
+5. [Planning Your Data Modernization Strategy](/2024-12-09-mainframe-to-distributed-sql-part-4/)
+6. [Mainframe to Distributed SQL, Part 5: Transitioning to a Distributed Architecture](/2025-01-23-mainframe-to-distributed-sql-part-5/)
 
 ---
 
@@ -43,7 +43,7 @@ Identifying key stakeholders, such as executives, team leads, and technical spec
 
 **3. Provide Comprehensive Training and Upskilling:** Transitioning to distributed architectures often requires employees to adopt new tools, processes, and skillsets, making training and development critical to success.
 
-Offering [tailored training programs](https://www.cockroachlabs.com/blog/cockroach-labs-instructor-led-training/) for specific roles, such as database administrators, developers, and operations teams, ensures that employees are equipped with the knowledge they need. Hands-on workshops, e-learning platforms, and certification programs can help to effectively build technical proficiency. By highlighting how these new skills align with career growth opportunities, organizations can boost their employees' motivation and engagement, which fosters a more committed and skilled workforce.
+Offering tailored training programs for specific roles, such as database administrators, developers, and operations teams, ensures that employees are equipped with the knowledge they need. Hands-on workshops, e-learning platforms, and certification programs can help to effectively build technical proficiency. By highlighting how these new skills align with career growth opportunities, organizations can boost their employees' motivation and engagement, which fosters a more committed and skilled workforce.
 
 **4. Redesign Workflows and Processes:** Distributed database architectures introduce new processes for data management, system monitoring, and troubleshooting, making it essential to adapt workflows accordingly.
 
