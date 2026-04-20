@@ -112,9 +112,23 @@ CockroachDB stores **source documents, metadata, vector embeddings, LLM caches, 
 
 CockroachDB's distributed SQL architecture provides automatic self-healing from node failures, horizontal scale-out, and continuous availability — purpose-built for business-critical workloads at scale.
 
-### PostgreSQL Wire Compatibility
+### Native Vector Store — No Extra Infrastructure
 
-CockroachDB is wire-compatible with PostgreSQL and ships a **pgvector-compatible vector implementation**. Any LangChain integration written for `PGVector` works out of the box.
+CockroachDB ships a native `VECTOR` type backed by the **C-SPANN distributed index** — purpose-built for distributed systems, not just a pgvector wrapper. Key capabilities that matter for RAG workloads:
+
+- **C-SPANN indexes** — a hierarchical K-means tree stored in CockroachDB's key-value layer; no single-node bottleneck, no warm-up cost, auto-splits as data grows (see [Real-Time Indexing for Billions of Vectors](/2025-11-23-cockroachdb-ai-spann/)).
+- **Advanced metadata filtering** — filter by any column alongside vector similarity in a single SQL query.
+- **Multi-tenancy with prefix columns** — each user or tenant gets its own index partition; performance is proportional to that tenant's data, not the total corpus.
+
+### Dedicated LangChain Integration
+
+The `langchain-cockroachdb` package provides a first-class async integration with `AsyncCockroachDBVectorStore` — supporting document ingestion, similarity search, and metadata filtering, fully compatible with any LangChain chain or agent. Install it with:
+
+```bash
+pip install langchain-cockroachdb
+```
+
+As soon as an application needs to retrieve data, maintain conversational context, or reason across multiple steps, the amount of custom glue code grows fast. LangChain provides a structured way to orchestrate these workflows — and `langchain-cockroachdb` makes CockroachDB a drop-in vector source for any LangChain pipeline.
 
 ### Security and Data Governance
 
@@ -151,9 +165,8 @@ The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI*
 ### Install Dependencies
 
 ```bash
-pip install langchain langchain-community pypdf sentence_transformers tenacity \
-    psycopg2-binary sqlalchemy pgvector-sqlalchemy \
-    gradio "google-cloud-aiplatform==1.25.0" --upgrade
+pip install langchain langchain-community langchain-cockroachdb pypdf tenacity \
+    psycopg2-binary sqlalchemy gradio "google-cloud-aiplatform==1.25.0" --upgrade
 ```
 
 ### Imports
@@ -162,7 +175,7 @@ pip install langchain langchain-community pypdf sentence_transformers tenacity \
 from glob import glob
 from langchain.document_loaders import PyPDFLoader, DataFrameLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores.pgvector import PGVector
+from langchain_cockroachdb import AsyncCockroachDBVectorStore, CockroachDBEngine
 from langchain.embeddings import VertexAIEmbeddings
 from vertexai.preview.language_models import TextGenerationModel
 from sqlalchemy import create_engine, text
@@ -179,8 +192,10 @@ REGION     = input("GCP Region (e.g. us-central1): ")
 vertexai.init(project=PROJECT_ID, location=REGION)
 
 # Connection string from the CockroachDB Cloud Console
+# Format: cockroachdb://user:pass@host:26257/db?sslmode=verify-full
 COCKROACHDB_URL = getpass("CockroachDB connection string: ")
-engine = create_engine(COCKROACHDB_URL)
+engine     = CockroachDBEngine.from_connection_string(COCKROACHDB_URL)
+sql_engine = create_engine(COCKROACHDB_URL.replace("cockroachdb://", "postgresql://"))
 ```
 
 ### Load and Chunk Documents
@@ -206,19 +221,25 @@ print(f"{len(docs)} chunks ready for indexing")
 
 ### Create the CockroachDB Vector Store
 
-`PGVector` handles table creation, embedding storage, and index management automatically.
+`AsyncCockroachDBVectorStore` handles table initialisation, embedding storage, and C-SPANN index management automatically via the `langchain-cockroachdb` integration.
 
 <img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
 
 ```python
 embeddings = VertexAIEmbeddings(model="textembedding-gecko@001")
 
-vector_store = PGVector.from_documents(
-    documents=docs,
-    embedding=embeddings,
-    collection_name="knowledge_base",
-    connection_string=COCKROACHDB_URL,
+# textembedding-gecko@001 produces 768-dimensional vectors
+await engine.ainit_vectorstore_table(
+    table_name="knowledge_base",
+    vector_dimension=768,
 )
+vector_store = AsyncCockroachDBVectorStore(
+    engine=engine,
+    embeddings=embeddings,
+    collection_name="knowledge_base",
+)
+await vector_store.aadd_documents(docs)
+print(f"{len(docs)} chunks indexed in CockroachDB")
 ```
 
 ### RAG Generation Pipeline
@@ -238,8 +259,8 @@ QUESTION: {query}
 
 ANSWER:"""
 
-def rag(query: str, verbose: bool = True) -> str:
-    relevant = vector_store.similarity_search_with_score(query, k=3)
+async def rag(query: str) -> str:
+    relevant = await vector_store.asimilarity_search_with_score(query, k=3)
     sources  = "\n---\n".join(doc.page_content for doc, _ in relevant)
     return generation_model.predict(
         prompt=PROMPT.format(sources=sources, query=query)
@@ -251,7 +272,7 @@ def rag(query: str, verbose: bool = True) -> str:
 Exact-match cache: if the same query was asked before, return the stored answer without calling the LLM.
 
 ```python
-with engine.begin() as conn:
+with sql_engine.begin() as conn:
     conn.execute(text("""
         CREATE TABLE IF NOT EXISTS llm_cache (
             prompt_hash  STRING PRIMARY KEY,
@@ -264,7 +285,7 @@ with engine.begin() as conn:
 def _hash(s): return hashlib.sha256(s.encode()).hexdigest()
 
 def cache_get(q):
-    with engine.connect() as conn:
+    with sql_engine.connect() as conn:
         row = conn.execute(
             text("SELECT response FROM llm_cache WHERE prompt_hash = :h"),
             {"h": _hash(q)}
@@ -272,25 +293,25 @@ def cache_get(q):
     return row[0] if row else None
 
 def cache_put(q, r):
-    with engine.begin() as conn:
+    with sql_engine.begin() as conn:
         conn.execute(
             text("UPSERT INTO llm_cache (prompt_hash, prompt, response) VALUES (:h,:p,:r)"),
             {"h": _hash(q), "p": q, "r": r}
         )
 
 def standard_llmcache(fn):
-    def wrapper(query):
+    async def wrapper(query):
         cached = cache_get(query)
         if cached:
             print("Cache hit — exact match")
             return cached
-        result = fn(query)
+        result = await fn(query)
         cache_put(query, result)
         return result
     return wrapper
 
 @standard_llmcache
-def ask_vertex(query): return rag(query, verbose=False)
+async def ask_vertex(query): return await rag(query)
 ```
 
 ### Semantic LLM Cache (CockroachDB)
@@ -298,15 +319,19 @@ def ask_vertex(query): return rag(query, verbose=False)
 Rephrased versions of a previous question also return the cached answer, using vector similarity to detect near-duplicate queries.
 
 ```python
-semantic_cache = PGVector(
+await engine.ainit_vectorstore_table(
+    table_name="llm_semantic_cache",
+    vector_dimension=768,
+)
+semantic_cache = AsyncCockroachDBVectorStore(
+    engine=engine,
+    embeddings=embeddings,
     collection_name="llm_semantic_cache",
-    connection_string=COCKROACHDB_URL,
-    embedding_function=embeddings,
 )
 THRESHOLD = 0.85
 
-def sem_get(q):
-    res = semantic_cache.similarity_search_with_score(q, k=1)
+async def sem_get(q):
+    res = await semantic_cache.asimilarity_search_with_score(q, k=1)
     if res:
         doc, score = res[0]
         if (1 - score) >= THRESHOLD:
@@ -314,34 +339,34 @@ def sem_get(q):
             return doc.metadata.get("response")
     return None
 
-def sem_put(q, r):
+async def sem_put(q, r):
     from langchain.schema import Document
-    semantic_cache.add_documents(
+    await semantic_cache.aadd_documents(
         [Document(page_content=q, metadata={"response": r})]
     )
 
 def semantic_llmcache(fn):
-    def wrapper(query):
-        cached = sem_get(query)
+    async def wrapper(query):
+        cached = await sem_get(query)
         if cached: return cached
-        result = fn(query)
-        sem_put(query, result)
+        result = await fn(query)
+        await sem_put(query, result)
         return result
     return wrapper
 
 @semantic_llmcache
-def ask_vertex_semantic(query): return rag(query, verbose=False)
+async def ask_vertex_semantic(query): return await rag(query)
 ```
 
 ```python
-ask_vertex_semantic("What is data mesh?")
-ask_vertex_semantic("Could you explain data products?")  # semantic match → cache hit
+await ask_vertex_semantic("What is data mesh?")
+await ask_vertex_semantic("Could you explain data products?")  # semantic match → cache hit
 ```
 
 ### Conversation History (CockroachDB)
 
 ```python
-with engine.begin() as conn:
+with sql_engine.begin() as conn:
     conn.execute(text("""
         CREATE TABLE IF NOT EXISTS chat_history (
             id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -352,14 +377,14 @@ with engine.begin() as conn:
     """))
 
 def add_message(p, r):
-    with engine.begin() as conn:
+    with sql_engine.begin() as conn:
         conn.execute(
             text("INSERT INTO chat_history (prompt, response) VALUES (:p,:r)"),
             {"p": p, "r": r}
         )
 
 def get_messages(k=5):
-    with engine.connect() as conn:
+    with sql_engine.connect() as conn:
         rows = conn.execute(
             text("SELECT prompt, response FROM chat_history ORDER BY created_at DESC LIMIT :k"),
             {"k": k}
@@ -370,8 +395,8 @@ def get_messages(k=5):
 ### Gradio Chat UI
 
 ```python
-def respond(request, history):
-    result = ask_vertex_semantic(request)
+async def respond(request, history):
+    result = await ask_vertex_semantic(request)
     add_message(request, result)
     history.append((request, result))
     return "", history
@@ -398,9 +423,8 @@ demo.launch()
 ### Install Dependencies
 
 ```bash
-pip install langchain langchain-community pypdf sentence_transformers tenacity \
-    psycopg2-binary sqlalchemy pgvector-sqlalchemy \
-    boto3 botocore gradio --upgrade
+pip install langchain langchain-community langchain-cockroachdb pypdf tenacity \
+    psycopg2-binary sqlalchemy boto3 botocore gradio --upgrade
 ```
 
 ### Imports
@@ -408,7 +432,7 @@ pip install langchain langchain-community pypdf sentence_transformers tenacity \
 ```python
 from langchain.document_loaders import PyPDFLoader, DataFrameLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores.pgvector import PGVector
+from langchain_cockroachdb import AsyncCockroachDBVectorStore, CockroachDBEngine
 from langchain.embeddings import BedrockEmbeddings
 from langchain.llms import Bedrock
 from langchain.chains import ConversationChain
@@ -433,8 +457,10 @@ bedrock_runtime = boto3.client(
     aws_secret_access_key=ACCESS_KEY
 )
 
+# Format: cockroachdb://user:pass@host:26257/db?sslmode=verify-full
 COCKROACHDB_URL = getpass("CockroachDB connection string: ")
-engine = create_engine(COCKROACHDB_URL)
+engine     = CockroachDBEngine.from_connection_string(COCKROACHDB_URL)
+sql_engine = create_engine(COCKROACHDB_URL.replace("cockroachdb://", "postgresql://"))
 ```
 
 ### Create the CockroachDB Vector Store
@@ -445,12 +471,17 @@ bedrock_embeddings = BedrockEmbeddings(
     client=bedrock_runtime
 )
 
-vector_store = PGVector.from_documents(
-    documents=docs,          # same chunked docs as Part 1
-    embedding=bedrock_embeddings,
-    collection_name="knowledge_base",
-    connection_string=COCKROACHDB_URL,
+# amazon.titan-embed-text-v1 produces 1536-dimensional vectors
+await engine.ainit_vectorstore_table(
+    table_name="knowledge_base",
+    vector_dimension=1536,
 )
+vector_store = AsyncCockroachDBVectorStore(
+    engine=engine,
+    embeddings=bedrock_embeddings,
+    collection_name="knowledge_base",
+)
+await vector_store.aadd_documents(docs)
 ```
 
 ### RAG Generation Pipeline
@@ -466,8 +497,8 @@ QUESTION: {query}
 
 Answer:"""
 
-def rag(query: str, verbose: bool = True) -> str:
-    relevant = vector_store.similarity_search_with_score(query, k=3)
+async def rag(query: str) -> str:
+    relevant = await vector_store.asimilarity_search_with_score(query, k=3)
     sources  = "\n---\n".join(doc.page_content for doc, _ in relevant)
     llm      = Bedrock(model_id="anthropic.claude-v2", client=bedrock_runtime)
     chain    = ConversationChain(llm=llm, verbose=False, memory=ConversationBufferMemory())
@@ -476,27 +507,31 @@ def rag(query: str, verbose: bool = True) -> str:
 
 ### Caching and History
 
-The cache and history implementations are **identical to Part 1** — only the embedding client changes. Replace `embeddings` with `bedrock_embeddings` in the semantic cache initialisation:
+The standard cache and history implementations are **identical to Part 1** (using `sql_engine`). Only the vector store embedding client changes — use `bedrock_embeddings` (1536 dims) instead of the Vertex AI embeddings:
 
 ```python
-semantic_cache = PGVector(
+await engine.ainit_vectorstore_table(
+    table_name="llm_semantic_cache",
+    vector_dimension=1536,
+)
+semantic_cache = AsyncCockroachDBVectorStore(
+    engine=engine,
+    embeddings=bedrock_embeddings,   # Titan instead of Gecko
     collection_name="llm_semantic_cache",
-    connection_string=COCKROACHDB_URL,
-    embedding_function=bedrock_embeddings,   # Titan instead of Gecko
 )
 
 @standard_llmcache
-def ask_claude(query): return rag(query, verbose=False)
+async def ask_claude(query): return await rag(query)
 
 @semantic_llmcache
-def ask_claude_semantic(query): return rag(query, verbose=False)
+async def ask_claude_semantic(query): return await rag(query)
 ```
 
 ### Gradio Chat UI
 
 ```python
-def respond(request, history):
-    result = ask_claude_semantic(request)
+async def respond(request, history):
+    result = await ask_claude_semantic(request)
     add_message(request, result)
     history.append((request, result))
     return "", history
@@ -543,7 +578,8 @@ Both are equally well-suited to any of the three RAG paradigms described above �
 
 - [CockroachDB vector search documentation](https://www.cockroachlabs.com/docs/stable/vector-search.html)
 - [Tutorial: Augment your AI use case with RAG on CockroachDB](https://www.cockroachlabs.com/blog/tutorial-rag-with-cockroachdb/)
-- [LangChain PGVector integration](https://python.langchain.com/docs/integrations/vectorstores/pgvector)
+- [langchain-cockroachdb — LangChain integration for CockroachDB](https://pypi.org/project/langchain-cockroachdb/)
+- [Agent Development with CockroachDB using LangChain](https://www.cockroachlabs.com/blog/agent-development-cockroachdb-langchain/)
 - [From Local to Global: Microsoft GraphRAG paper (arXiv 2404.16130)](https://arxiv.org/abs/2404.16130)
 - [Agentic RAG survey (arXiv 2501.09136)](https://arxiv.org/abs/2501.09136)
 - [Amazon Bedrock model catalogue](https://aws.amazon.com/bedrock/)
