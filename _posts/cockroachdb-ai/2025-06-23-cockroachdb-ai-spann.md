@@ -81,6 +81,12 @@ Because the tree fanout is typically around 100, the structure remains wide and 
 
 C-SPANN also avoids central coordination. Any node can serve queries or handle inserts and updates. The index structure lives in persistent storage, so there's no need for large in-memory vector caches or custom data structures that must be rebuilt at startup. Instead, partition rows are cached automatically by the storage layer's block cache, just like any other table data. This allows searches to avoid repeated disk reads, without requiring extra RAM or specialized vector caching logic.
 
+Check out this demo by technical evangelist, Rob Reid, to see vector indexing in action:
+
+<div class="ratio ratio-16x9">
+  <iframe src="https://www.youtube.com/embed/j2ElRBAH8vM" title="CockroachDB Vector Indexing Demo by Rob Reid" allowfullscreen></iframe>
+</div>
+
 ## Maintaining a Healthy Index
 
 As new vectors are inserted into the index, they naturally scatter across partitions, which are themselves distributed across the cluster. There's no single range or node that absorbs a disproportionate share of the write traffic, which helps to prevent hot spots from forming. But over time, some partitions will grow too large and need to be split.
