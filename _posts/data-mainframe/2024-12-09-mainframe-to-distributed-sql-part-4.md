@@ -137,7 +137,7 @@ While large-scale migration projects often focus on long-term value, it is benef
 <img src="/assets/img/mainframe-p4-prioritization-matrix.png" alt="The data modernization prioritization matrix" style="width:100%">
 
 {: .mx-auto.d-block :}
-*The data modernization prioritization matrix*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**The data modernization prioritization matrix**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
