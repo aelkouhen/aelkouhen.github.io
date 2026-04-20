@@ -26,6 +26,7 @@ navbar-links:
     - Data & Snowflake: "/data-snow"
     - Mainframe to Distributed SQL: "/data-mainframe"
     - Identity and Access Management: "/iam"
+    - CockroachDB & AI: "/cockroachdb-ai"
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
