@@ -5,10 +5,9 @@ subtitle: "What is a Mainframe?"
 cover-img: /assets/img/cover-mainframe.webp
 thumbnail-img: /assets/img/cover-mainframe.webp
 share-img: /assets/img/mainframe-diagram.png
-tags: [mainframe, distributed SQL, CockroachDB, migration, database, enterprise, legacy systems]
+tags: [mainframe, migration, distributed SQL, database, CockroachDB]
 comments: true
 ---
-## Introduction
 
 This post introduces a new blog series about Mainframe Migration, geared towards embracing a modern distributed database architecture.
 
