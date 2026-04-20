@@ -25,7 +25,7 @@ navbar-links:
     - Data & Redis: "/data-redis"
     - Data & Snowflake: "/data-snow"
     - Mainframe to Distributed SQL: "/data-mainframe"
-    - Identity and Access Management: "/iam"
+    - Identity and Access Management with CockroachDB: "/iam"
     - CockroachDB & AI: "/cockroachdb-ai"
     #- Business Analytics: "/analytics-101"
   Resources:
