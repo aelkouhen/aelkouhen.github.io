@@ -1,11 +1,11 @@
 ---
 layout: post
 title: "Building RAG Applications with CockroachDB"
-subtitle: "From Naive RAG to Agentic RAG — a complete tutorial using LangChain, Vertex AI, and Amazon Bedrock"
+subtitle: "From Naive RAG to Agentic RAG — a complete tutorial using LangChain, Memori, GCP Vertex AI, and Amazon Bedrock"
 cover-img: /assets/img/cover-ai-rag.webp
 thumbnail-img: /assets/img/cover-ai-rag.webp
 share-img: /assets/img/cover-ai-rag.webp
-tags: [cockroachdb-ai, CockroachDB, GenAI, RAG, vector search, LLM, pgvector, LangChain, GraphRAG, AgenticRAG]
+tags: [Artificial Intelligence, CockroachDB, GenAI, RAG, Memori, LangChain]
 comments: true
 ---
 
@@ -35,13 +35,15 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It implements a s
 2. **Retrieve** — cosine similarity search against a vector store returns the top-k most semantically similar document chunks.
 3. **Generate** — retrieved chunks are concatenated into the prompt and the LLM produces an answer.
 
-**Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
+<img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
 
-**Weaknesses:** struggles with multi-hop reasoning, cannot synthesize across many documents, susceptible to hallucination from noisy or contradictory context chunks, no awareness of relationships between entities.
+* **Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
 
-**Use it when:** you are building a prototype, queries are simple (single-concept lookups), cost and latency are primary constraints, or the document corpus is small and well-structured.
+* **Weaknesses:** struggles with multi-hop reasoning, cannot synthesize across many documents, susceptible to hallucination from noisy or contradictory context chunks, no awareness of relationships between entities.
 
-**Avoid it when:** queries require connecting information across multiple sources, multi-step reasoning is needed, or the accuracy bar is high for complex, open-ended questions.
+- **Use it when:** you are building a prototype, queries are simple (single-concept lookups), cost and latency are primary constraints, or the document corpus is small and well-structured.
+
+- **Avoid it when:** queries require connecting information across multiple sources, multi-step reasoning is needed, or the accuracy bar is high for complex, open-ended questions.
 
 ---
 
@@ -55,13 +57,15 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 2. **Community detection** — closely related entities are clustered into communities; the LLM pre-generates a summary for each community.
 3. **Query time** — instead of searching raw chunks, the query is matched against community summaries. Partial answers are generated per community then synthesised into a final comprehensive response.
 
-**Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
+<img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
 
-**Weaknesses:** high latency (20–24 s average), high indexing cost ($20–500 per corpus), computationally expensive to rebuild when source data changes frequently.
+* **Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
 
-**Use it when:** comprehensiveness matters more than speed, the corpus has rich interconnected relationships (legal, medical, research literature), or enterprise knowledge discovery across many documents is the goal.
+* **Weaknesses:** high latency (20–24 s average), high indexing cost ($20–500 per corpus), computationally expensive to rebuild when source data changes frequently.
 
-**Avoid it when:** real-time responses are required, the budget is tight, the corpus is small, or source data changes frequently.
+- **Use it when:** comprehensiveness matters more than speed, the corpus has rich interconnected relationships (legal, medical, research literature), or enterprise knowledge discovery across many documents is the goal.
+
+- **Avoid it when:** real-time responses are required, the budget is tight, the corpus is small, or source data changes frequently.
 
 ---
 
@@ -76,13 +80,15 @@ Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an in
 3. **Tool use and validation** — specialised tools are invoked; the agent critiques its own outputs and self-corrects.
 4. **Synthesis** — final answer assembled from all reasoning steps and retrieved evidence.
 
-**Strengths:** handles complex multi-step reasoning, integrates real-time data via web search and APIs, self-correcting, ideal for exploratory and discovery tasks. Accuracy of 75–90%+ on complex queries.
+<img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
 
-**Weaknesses:** high latency (10–30+ s), high cost (multiple LLM calls per query), difficult to debug, non-deterministic behaviour, overkill for simple tasks.
+* **Strengths:** handles complex multi-step reasoning, integrates real-time data via web search and APIs, self-correcting, ideal for exploratory and discovery tasks. Accuracy of 75–90%+ on complex queries.
 
-**Use it when:** multi-step reasoning is essential, real-time data access is required, the task is exploratory, or human-in-the-loop validation is acceptable.
+* **Weaknesses:** high latency (10–30+ s), high cost (multiple LLM calls per query), difficult to debug, non-deterministic behaviour, overkill for simple tasks.
 
-**Avoid it when:** response time < 2 s, query volume is high with a tight budget, behaviour must be deterministic, or queries are simple lookups.
+- **Use it when:** multi-step reasoning is essential, real-time data access is required, the task is exploratory, or human-in-the-loop validation is acceptable.
+
+- **Avoid it when:** response time < 2 s, query volume is high with a tight budget, behaviour must be deterministic, or queries are simple lookups.
 
 ---
 
@@ -136,15 +142,9 @@ RBAC, Row-Level Security, and native geo-data placement enforce fine-grained per
 
 ---
 
-## Application Architecture
+## Tutorial: Building the RAG Pipeline
 
-<img src="/assets/img/ai-rag-crdb-architecture.png" alt="RAG application architecture — chatbot UI, FastAPI service, CockroachDB vector store" style="width:100%">
-
-The application consists of three layers:
-
-- **Presentation layer** — a Gradio chatbot UI for user interaction.
-- **Application layer** — a FastAPI service handling query embedding, retrieval orchestration, caching, and history management.
-- **Data layer** — CockroachDB storing vectors, source documents, metadata, LLM cache, and conversation history.
+The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (PaLM embeddings + text-bison generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embeddings + Claude v2). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
 <img src="/assets/img/ai-rag-crdb-dataflow.png" alt="RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response" style="width:100%">
 
@@ -152,27 +152,20 @@ The data flow: user submits a question → it is vectorised → CockroachDB perf
 
 ---
 
-## Tutorial: Building the RAG Pipeline
-
-<img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
-
-The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (PaLM embeddings + text-bison generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embeddings + Claude v2). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
-
----
-
-## Part 1: GCP + Vertex AI + CockroachDB
+## Part 1: CockroachDB + GCP Vertex AI + Memori
 
 ### Install Dependencies
 
 ```bash
 pip install langchain langchain-community langchain-cockroachdb pypdf tenacity \
-    psycopg2-binary sqlalchemy gradio "google-cloud-aiplatform==1.25.0" --upgrade
+    psycopg2-binary sqlalchemy memori gradio "google-cloud-aiplatform==1.25.0" --upgrade
 ```
 
 ### Imports
 
 ```python
 from glob import glob
+from memori import Memori
 from langchain.document_loaders import PyPDFLoader, DataFrameLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_cockroachdb import AsyncCockroachDBVectorStore, CockroachDBEngine
@@ -182,7 +175,7 @@ from sqlalchemy import create_engine, text
 import vertexai, hashlib, pandas as pd, gradio as gr
 ```
 
-### Configure GCP and CockroachDB
+### Configure GCP Vertex AI, Memori and CockroachDB
 
 ```python
 from getpass import getpass
@@ -196,6 +189,10 @@ vertexai.init(project=PROJECT_ID, location=REGION)
 COCKROACHDB_URL = getpass("CockroachDB connection string: ")
 engine     = CockroachDBEngine.from_connection_string(COCKROACHDB_URL)
 sql_engine = create_engine(COCKROACHDB_URL.replace("cockroachdb://", "postgresql://"))
+with sql_engine.raw_connection() as conn:
+    cursor = conn.cursor()
+    mem = Memori(conn=conn).llm.register(vertexai)
+    mem.config.storage.build()
 ```
 
 ### Load and Chunk Documents
@@ -223,8 +220,6 @@ print(f"{len(docs)} chunks ready for indexing")
 
 `AsyncCockroachDBVectorStore` handles table initialisation, embedding storage, and C-SPANN index management automatically via the `langchain-cockroachdb` integration.
 
-<img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
-
 ```python
 embeddings = VertexAIEmbeddings(model="textembedding-gecko@001")
 
@@ -243,8 +238,6 @@ print(f"{len(docs)} chunks indexed in CockroachDB")
 ```
 
 ### RAG Generation Pipeline
-
-<img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
 
 ```python
 generation_model = TextGenerationModel.from_pretrained("text-bison@001")
@@ -267,156 +260,50 @@ async def rag(query: str) -> str:
     ).text
 ```
 
-### Standard LLM Cache (CockroachDB)
+### Standard LLM Cache (SQLAlchemyCache)
 
-Exact-match cache: if the same query was asked before, return the stored answer without calling the LLM.
-
+The cleanest approach to use an LLM cache on top of CockroachDB is LangChain's built-in SQLAlchemyCache, which integrates transparently with all LLM calls — no manual hash/UPSERT code needed. Use the sql_engine you already have:                                                                                                                                                                                                
 ```python
-with sql_engine.begin() as conn:
-    conn.execute(text("""
-        CREATE TABLE IF NOT EXISTS llm_cache (
-            prompt_hash  STRING PRIMARY KEY,
-            prompt       STRING NOT NULL,
-            response     STRING NOT NULL,
-            created_at   TIMESTAMP DEFAULT current_timestamp()
-        )
-    """))
+from langchain.globals import set_llm_cache                                                                                                           from langchain.cache import SQLAlchemyCache                                
 
-def _hash(s): return hashlib.sha256(s.encode()).hexdigest()
-
-def cache_get(q):
-    with sql_engine.connect() as conn:
-        row = conn.execute(
-            text("SELECT response FROM llm_cache WHERE prompt_hash = :h"),
-            {"h": _hash(q)}
-        ).fetchone()
-    return row[0] if row else None
-
-def cache_put(q, r):
-    with sql_engine.begin() as conn:
-        conn.execute(
-            text("UPSERT INTO llm_cache (prompt_hash, prompt, response) VALUES (:h,:p,:r)"),
-            {"h": _hash(q), "p": q, "r": r}
-        )
-
-def standard_llmcache(fn):
-    async def wrapper(query):
-        cached = cache_get(query)
-        if cached:
-            print("Cache hit — exact match")
-            return cached
-        result = await fn(query)
-        cache_put(query, result)
-        return result
-    return wrapper
-
-@standard_llmcache
-async def ask_vertex(query): return await rag(query)
+set_llm_cache(SQLAlchemyCache(sql_engine))
 ```
 
-### Semantic LLM Cache (CockroachDB)
+That's it! LangChain intercepts every LLM call, checks the cache table (llm_cache) in CockroachDB automatically, and returns the stored response on a hit.                                                                                                                                                                                                                             
+Exact-match cache: if the same query was asked before, internally *SQLAlchemyCache* returns the stored answer without calling the LLM. 
+This replaces the entire manual cache block (`cache_get`, `cache_put`, `@standard_llmcache` decorator, etc.). Once `set_llm_cache` is called, it applies globally to all subsequent LLM calls including inside chains and agents.                                                                      
 
-Rephrased versions of a previous question also return the cached answer, using vector similarity to detect near-duplicate queries.
+### Semantic LLM Cache (Memori)
 
-```python
-await engine.ainit_vectorstore_table(
-    table_name="llm_semantic_cache",
-    vector_dimension=768,
-)
-semantic_cache = AsyncCockroachDBVectorStore(
-    engine=engine,
-    embeddings=embeddings,
-    collection_name="llm_semantic_cache",
-)
-THRESHOLD = 0.85
+Once `mem.llm.register(client)` is called, Memori intercepts all LLM calls automatically without any decorator, nor manual cache lookup. It captures facts, preferences, and summaries into CockroachDB and injects relevant context on each subsequent call.
 
-async def sem_get(q):
-    res = await semantic_cache.asimilarity_search_with_score(q, k=1)
-    if res:
-        doc, score = res[0]
-        if (1 - score) >= THRESHOLD:
-            print(f"Semantic cache hit (similarity={1-score:.3f})")
-            return doc.metadata.get("response")
-    return None
+This replaces both the standard cache and the conversation history blocks in the tutorial. Memori handles structured memory, recall, and caching in one layer.
 
-async def sem_put(q, r):
-    from langchain.schema import Document
-    await semantic_cache.aadd_documents(
-        [Document(page_content=q, metadata={"response": r})]
-    )
+Memori's semantic cache is built-in — it's not a separate component to configure. It operates at two levels:                                                                                                                         
+1. Tokenless recall (replaces your semantic cache): When a query is semantically similar to a previous one, Memori retrieves only the relevant cached context snippets from CockroachDB — no LLM call, no token spend. This is the "98% cost reduction" claim. It happens automatically once mem.llm.register(client) is called.
+2. Advanced Augmentation (runs in background): It converts conversations into structured semantic triples (facts, preferences, rules, relationships) stored in CockroachDB. Future queries are matched against this structured store semantically — more precise than raw embedding similarity.
 
-def semantic_llmcache(fn):
-    async def wrapper(query):
-        cached = await sem_get(query)
-        if cached: return cached
-        result = await fn(query)
-        await sem_put(query, result)
-        return result
-    return wrapper
+So compared to the manual approach in the tutorial:
 
-@semantic_llmcache
-async def ask_vertex_semantic(query): return await rag(query)
+| | **Manual Config** | **Memori** |
+|---|---|---|
+| **Exact cache** | SHA-256 hash → SQL UPSERT | Built-in |
+| **Semantic cache** | `asimilarity_search_with_score`+ `Similarity Threshold` | Built-in tokenless recall |
+| **Conversation history** | `chat_history` table + manual inject | Built-in session memory |
+| **Config required** | `Similarity Threshold`, decorator, wrapper | None - intercepted automatically |
+
+The entire manual cache + history block in the tutorial collapses to:
+
+```python                                                          
+mem = Memori(conn=get_conn).llm.register(client)
+mem.attribution(entity_id="user-123", process_id="my-app")
+mem.config.storage.build()
 ```
 
-```python
-await ask_vertex_semantic("What is data mesh?")
-await ask_vertex_semantic("Could you explain data products?")  # semantic match → cache hit
-```
-
-### Conversation History (CockroachDB)
-
-```python
-with sql_engine.begin() as conn:
-    conn.execute(text("""
-        CREATE TABLE IF NOT EXISTS chat_history (
-            id         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-            prompt     STRING NOT NULL,
-            response   STRING NOT NULL,
-            created_at TIMESTAMP DEFAULT current_timestamp()
-        )
-    """))
-
-def add_message(p, r):
-    with sql_engine.begin() as conn:
-        conn.execute(
-            text("INSERT INTO chat_history (prompt, response) VALUES (:p,:r)"),
-            {"p": p, "r": r}
-        )
-
-def get_messages(k=5):
-    with sql_engine.connect() as conn:
-        rows = conn.execute(
-            text("SELECT prompt, response FROM chat_history ORDER BY created_at DESC LIMIT :k"),
-            {"k": k}
-        ).fetchall()
-    return [{"prompt": r[0], "response": r[1]} for r in rows]
-```
-
-### Gradio Chat UI
-
-```python
-async def respond(request, history):
-    result = await ask_vertex_semantic(request)
-    add_message(request, result)
-    history.append((request, result))
-    return "", history
-
-with gr.Blocks() as demo:
-    gr.Markdown("## RAG Chatbot — CockroachDB + Vertex AI")
-    chatbot = gr.Chatbot(height=400)
-    msg     = gr.Textbox(label="Ask a question")
-    btn     = gr.Button("Submit")
-    gr.ClearButton(components=[msg, chatbot], value="Clear")
-    btn.click(respond, [msg, chatbot], [msg, chatbot])
-    msg.submit(respond, [msg, chatbot], [msg, chatbot])
-
-gr.close_all()
-demo.launch()
-```
-
+| Note: You cannot tune the similarity threshold directly, that's abstracted inside Memori's recall engine.                                                  
 ---
 
-## Part 2: AWS + Amazon Bedrock + CockroachDB
+## Part 2: CockroachDB + Amazon Bedrock
 
 <img src="/assets/img/ai-rag-04.png" alt="E-commerce RAG chatbot — product catalogue embeddings, CockroachDB vector store, LangChain application backend" style="width:100%">
 
@@ -526,29 +413,6 @@ async def ask_claude(query): return await rag(query)
 @semantic_llmcache
 async def ask_claude_semantic(query): return await rag(query)
 ```
-
-### Gradio Chat UI
-
-```python
-async def respond(request, history):
-    result = await ask_claude_semantic(request)
-    add_message(request, result)
-    history.append((request, result))
-    return "", history
-
-with gr.Blocks() as demo:
-    gr.Markdown("## RAG Chatbot — CockroachDB + Amazon Bedrock")
-    chatbot = gr.Chatbot(height=400)
-    msg     = gr.Textbox(label="Ask a question")
-    btn     = gr.Button("Submit")
-    gr.ClearButton(components=[msg, chatbot], value="Clear")
-    btn.click(respond, [msg, chatbot], [msg, chatbot])
-    msg.submit(respond, [msg, chatbot], [msg, chatbot])
-
-gr.close_all()
-demo.launch()
-```
-
 ---
 
 ## GCP Vertex AI vs AWS Bedrock: Choosing Your Cloud AI Stack
@@ -586,3 +450,5 @@ Both are equally well-suited to any of the three RAG paradigms described above �
 - [Google Vertex AI — Generative AI](https://cloud.google.com/vertex-ai/generative-ai/docs)
 - [Original RAG notebook — GCP](https://github.com/aelkouhen/redis-vss/blob/main/4-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20GCP.ipynb)
 - [Original RAG notebook — AWS](https://github.com/aelkouhen/redis-vss/blob/main/4bis-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20AWS.ipynb)
+- [MemoriLabs](https://memorilabs.ai/)                                  
+- [MemoriLabs Github Repository](https://github.com/MemoriLabs/Memori)
