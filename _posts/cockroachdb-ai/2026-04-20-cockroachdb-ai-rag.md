@@ -305,8 +305,6 @@ mem.config.storage.build()
 
 ## Part 2: CockroachDB + Amazon Bedrock
 
-<img src="/assets/img/ai-rag-04.png" alt="E-commerce RAG chatbot — product catalogue embeddings, CockroachDB vector store, LangChain application backend" style="width:100%">
-
 ### Install Dependencies
 
 ```bash
