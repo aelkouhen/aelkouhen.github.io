@@ -13,7 +13,7 @@ Today's SaaS products face twin demands: the digital identity layer must be seam
 
 Balancing both of these requirements is notoriously hard. Identity systems are complex to manage and secure; multi-tenant databases can easily become bottlenecks or compliance risks if designed incorrectly.
 
-That's why the collaboration between Phase Two and CockroachDB is so compelling. Phase Two provides a managed Keycloak platform that handles authentication, authorization, and user federation. CockroachDB provides a globally distributed SQL database that ensures transactional consistency and tenant isolation at scale. Combined, they deliver a powerful foundation for multi-tenant SaaS platforms that are secure, resilient, and scalable.
+That's why the collaboration between [Phase Two](https://phasetwo.io/) and [CockroachDB](https://www.cockroachlabs.com/product/overview/) is so compelling. Phase Two provides a managed [Keycloak](https://www.keycloak.org/) platform that handles authentication, authorization, and user federation. CockroachDB provides a globally distributed SQL database that ensures transactional consistency and tenant isolation at scale. Combined, they deliver a powerful foundation for multi-tenant SaaS platforms that are secure, resilient, and scalable.
 
 ## Introducing Phase Two
 
@@ -63,7 +63,7 @@ In short: Phase Two handles "who is accessing what and when," while CockroachDB 
 
 When you design a high-volume identity platform that needs global availability, strong consistency and seamless scaling, the architecture centers on the application layer and the identity layer. In this scenario, the identity layer is provided by Phase Two, backed by CockroachDB as a storage backend.
 
-Phase Two provides a centralized management platform for teams to configure and monitor identity clusters. From the management console, accessible at dash.phasetwo.io, administrators handle everything related to infrastructure and identity management:
+Phase Two provides a centralized management platform for teams to configure and monitor identity clusters. From the management console, accessible at [dash.phasetwo.io](http://dash.phasetwo.io), administrators handle everything related to infrastructure and identity management:
 
 - Team Management, Billing, and Monitoring let admins oversee usage, costs, and operational health.
 - APIs/.tf indicates Terraform and API access, allowing programmatic provisioning of clusters and resources.
@@ -82,7 +82,7 @@ Below is a streamlined starting tutorial to get the joint Phase Two + CockroachD
 
 ### Step 1a. Configure and start a self-hosted Keycloak
 
-You can also deploy the Phase Two enhanced Keycloak distribution (which has built-in support for CockroachDB and Saas-focused extensions). You can pull the Docker image as described in Phase Two's GitHub repository:
+You can also deploy the Phase Two enhanced Keycloak distribution (which has built-in support for CockroachDB and Saas-focused extensions). You can pull the Docker image as described in [Phase Two's GitHub repository](https://github.com/p2-inc):
 
 ```bash
 docker pull quay.io/phasetwo/keycloak-crdb:latest
@@ -115,7 +115,7 @@ quay.io/phasetwo/keycloak-crdb:latest \
 start-dev
 ```
 
-This command starts Keycloak exposed on the local port 8080 and creates an initial admin user with the username admin and password admin.
+This command starts Keycloak exposed on the local port `8080` and creates an initial admin user with the username `admin` and password `admin`.
 
 <img src="/assets/img/iam-p5-04.png" alt="Keycloak started with CockroachDB" style="width:100%">
 
@@ -123,7 +123,7 @@ Once the container is up, you can configure your realm, clients, identity provid
 
 ### Step 1b. Configure and start a managed Keycloak using Phase Two
 
-If you want to get rid of any infrastructure provisioning struggle, you can opt to deploy your Keycloak clusters using Phase Two. First, sign up in the Phase Two dashboard and create a new account. You will be redirected to the dashboard main page.
+If you want to get rid of any infrastructure provisioning struggle, you can opt to deploy your Keycloak clusters using Phase Two. First, sign up in the [Phase Two dashboard](https://dash.phasetwo.io/) and create a new account. You will be redirected to the dashboard main page.
 
 <img src="/assets/img/iam-p5-05.png" alt="Phase Two dashboard" style="width:100%">
 
@@ -131,16 +131,16 @@ Here you can deploy clusters, create teams and create realms as you could do wit
 
 ### Step 2a. Create a realm in a self-hosted Keycloak
 
-A realm in Keycloak is equivalent to a tenant. Each realm allows an administrator to create isolated groups of applications and users. Initially, Keycloak includes a single realm, called master. Use this realm only for managing Keycloak and not for managing any applications.
+A realm in Keycloak is equivalent to a tenant. Each realm allows an administrator to create isolated groups of applications and users. Initially, Keycloak includes a single realm, called `master`. Use this realm only for managing Keycloak and not for managing any applications.
 
 Follow these steps to create your own realm:
 
-- Open the Keycloak Admin Console in your browser.
+- Open the [Keycloak Admin Console](http://localhost:8080/admin) in your browser.
 - In the top-left menu, locate Current realm and click Create Realm next to it.
 
 <img src="/assets/img/iam-p5-06.png" alt="Create realm in Keycloak admin console" style="width:100%">
 
-- In the Realm name field, enter crdb-realm.
+- In the Realm name field, enter `crdb-realm`.
 - Click Create to finalize.
 
 <img src="/assets/img/iam-p5-07.png" alt="Realm name configuration" style="width:100%">
@@ -159,11 +159,11 @@ For the remaining steps of this guide, you will perform the following actions in
 
 ### Step 3. Create a user
 
-When you first create a realm, it contains no users. To add one, ensure you are still inside the crdb-realm realm (check next to Current realm).
+When you first create a realm, it contains no users. To add one, ensure you are still inside the `crdb-realm` realm (check next to Current realm).
 
 From the left-hand menu, click Users, click Create new user and fill out the form as follows:
 
-- Username: crdb-user
+- Username: `crdb-user`
 - First name: any name you prefer
 - Last name: any name you prefer
 
@@ -171,11 +171,11 @@ Then, click Create to add the new user.
 
 <img src="/assets/img/iam-p5-10.png" alt="Create new user in Keycloak" style="width:100%">
 
-This user needs a password to log in. To set the initial password, click Credentials at the top of the page, fill in the Set password form with a password and toggle Temporary to Off so that the user does not need to update this password at the first login.
+This user needs a password to log in. To set the initial password, click Credentials at the top of the page, fill in the Set password form with a password and toggle Temporary to `Off` so that the user does not need to update this password at the first login.
 
-For self-hosted Keycloak, you can now log in to the local account Console to verify this user is configured correctly. For this, open the Keycloak Account Console (on port 8080), then log in with crdb-user and the password you created earlier.
+For self-hosted Keycloak, you can now log in to the [local account Console](http://localhost:8080/realms/crdb-realm/account/) to verify this user is configured correctly. For this, open the [Keycloak Account Console](http://localhost:8080/realms/myrealm/account) (on port `8080`), then log in with `crdb-user` and the password you created earlier.
 
-If you choose a managed Keycloak, you can simply log to the remote account console then log in with crdb-user credentials.
+If you choose a managed Keycloak, you can simply log to the [remote account console](https://euc1.auth.ac/auth/realms/crdb-realm/account/) then log in with `crdb-user` credentials.
 
 As a user in the Account Console, you can manage your account including modifying your profile, adding two-factor authentication, and including identity provider accounts.
 
@@ -183,27 +183,27 @@ As a user in the Account Console, you can manage your account including modifyin
 
 ### Step 4. Create and secure your first application.
 
-To secure the first application, you start by registering the application with your Keycloak instance. For this, open the Keycloak local admin Console or the remote admin console, depending on the deployment mode of Keycloak, click crdb-realm next to Current realm, then on the Clients tab and click Create client. Finally, fill in the form with the following values:
+To secure the first application, you start by registering the application with your Keycloak instance. For this, open the Keycloak [local admin Console](http://localhost:8080) or the [remote admin console](https://euc1.auth.ac/auth/admin/crdb-realm/console), depending on the deployment mode of Keycloak, click `crdb-realm` next to Current realm, then on the Clients tab and click Create client. Finally, fill in the form with the following values:
 
-- Client type: OpenID Connect
-- Client ID: my-app
+- Client type: `OpenID Connect`
+- Client ID: `my-app`
 
 Confirm that Standard flow is enabled and make these changes under Login settings:
 
-- Set Valid redirect URLs to https://www.keycloak.org/app/*
-- Set Web origins to https://www.keycloak.org
+- Set Valid redirect URLs to `https://www.keycloak.org/app/*`
+- Set Web origins to `https://www.keycloak.org`
 
-Note that we set these URLs, because we will use the SPA testing application on Keycloak's website (www.keycloak.org). For specific usage, you have to change these values accordingly.
+Note that we set these URLs, because we will use the SPA testing application on Keycloak's website ([www.keycloak.org](http://www.keycloak.org)). For specific usage, you have to change these values accordingly.
 
 <img src="/assets/img/iam-p5-12.png" alt="Create and configure a Keycloak client" style="width:100%">
 
 ### Step 5. Testing the standard flow
 
-To confirm the client was created successfully, you can use the SPA testing application on the Keycloak website. Set the configuration according to the values you already set (aka Keycloak Server URL, Realm and Client ID) and save.
+To confirm the client was created successfully, you can use the SPA testing application on the [Keycloak website](https://www.keycloak.org/app/). Set the configuration according to the values you already set (aka Keycloak Server URL, Realm and Client ID) and save.
 
 <img src="/assets/img/iam-p5-13.png" alt="SPA testing application configuration" style="width:100%">
 
-Then, click on "Sign In" to authenticate to this application using the user crdb-user you created earlier. Once you are logged in successfully, you should have the following greeting screen:
+Then, click on "Sign In" to authenticate to this application using the user `crdb-user` you created earlier. Once you are logged in successfully, you should have the following greeting screen:
 
 <img src="/assets/img/iam-p5-14.png" alt="Successful login greeting screen" style="width:100%">
 
