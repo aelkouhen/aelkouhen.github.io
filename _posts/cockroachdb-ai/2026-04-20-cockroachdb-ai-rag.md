@@ -110,8 +110,6 @@ Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an in
 
 ## Why Build RAG on CockroachDB?
 
-<img src="/assets/img/ai-rag-crdb-usecase.png" alt="RAG use cases on CockroachDB — knowledge base chatbot, customer support, content generation" style="width:100%">
-
 ### Unified Storage
 
 CockroachDB stores **source documents, metadata, vector embeddings, LLM caches, and conversation history in a single database**. There is no synchronisation delay between a separate vector store and your operational data.
@@ -147,10 +145,6 @@ The data flow: user submits a question → it is vectorised → CockroachDB perf
 ---
 
 ## Tutorial: Building the RAG Pipeline
-
-<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
-  <iframe src="https://www.youtube.com/embed/ehGW4pwlTX8" title="A knowledge base chatbot using RAG on CockroachDB" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-</div>
 
 The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (PaLM embeddings + text-bison generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embeddings + Claude v2). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
