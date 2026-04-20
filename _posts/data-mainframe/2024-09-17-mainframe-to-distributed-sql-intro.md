@@ -2,9 +2,9 @@
 layout: post
 title: "Mainframe to Distributed SQL, An Introduction"
 subtitle: "What is a Mainframe?"
-cover-img: assets/img/mainframe-intro-cover.png
-thumbnail-img: assets/img/mainframe-distributed-sql-diagram.png
-share-img: assets/img/mainframe-intro-cover.png
+cover-img: /assets/img/mainframe-intro-cover.png
+thumbnail-img: /assets/img/mainframe-diagram.png
+share-img: /assets/img/mainframe-intro-cover.png
 tags: [mainframe, distributed SQL, CockroachDB, migration, database, enterprise, legacy systems]
 comments: true
 ---
@@ -20,6 +20,8 @@ What is a mainframe? The term "mainframe" emerged later in 1964, although its or
 In 1991, the American newspaper columnist and political analyst Stewart Alsop predicted that the last mainframe would be unplugged in 1996. At the time, this prediction was not necessarily controversial. IBM, the largest mainframe vendor, fought fiercely against the rising tide of competitors such as Dell, Compaq, and Sun Microsystems. Speculation swirled about the company's potential demise.
 
 In fact, the death of the mainframe was greatly exaggerated.
+
+<img src="/assets/img/mainframe-diagram.png" alt="Mainframe to Distributed SQL" style="width:100%">
 
 While there are challenges surrounding the mainframe, such as the increasing churn of seasoned mainframe staff, the "uncool" factor of the underlying technology, or the hefty costs associated with single-line items compared to the more diversified expenditure in distributed systems — nonetheless, for numerous specific use cases and industries, it remains the optimal choice in terms of value for IT investment. Many companies saw this technology as a must-have for being competitive. They would even showcase their mainframes by placing them in glass rooms at the headquarters.
 
@@ -43,13 +45,13 @@ Indeed, mainframes are costly. However, despite the initial investment, they hav
 
 Energy costs are the second most considerable expense for an IT department after headcounts. Mainframes can also offer lower energy costs because the processing is centralized. The average watt per million instructions per second (MIPS) is about 0.91, and this is declining every year.
 
+<img src="/assets/img/mainframe-why-lasted.png" alt="Mainframe to Distributed SQL - Why has the mainframe lasted so long?" style="width:100%">
+
 ---
 
 ## Exploring the challenges and limitations of traditional mainframe database architectures in today's digital landscape
 
 In today's rapidly evolving digital landscape, traditional mainframe database architectures face several challenges and limitations that can hinder their effectiveness and adaptability.
-
-![Mainframe to Distributed SQL diagram](../assets/img/mainframe-distributed-sql-diagram.png)
 
 ### Scale
 
