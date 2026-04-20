@@ -532,6 +532,48 @@ Both are equally well-suited to any of the three RAG paradigms described above �
 
 ---
 
+## What RAG Unlocks: Real-World Use Cases
+
+The RAG patterns and infrastructure described above are not academic exercises — they directly enable a class of applications that would be impossible or unreliable without grounded retrieval. Below are two concrete examples that illustrate the breadth of what becomes possible once you have a working RAG pipeline on CockroachDB.
+
+### Domain-Specific Conversational Assistants
+
+<img src="/assets/img/ai-rag-00.png" alt="RAG pipeline for domain-specific conversational assistant — knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions" style="width:100%">
+
+The most direct application is a conversational assistant grounded in a private knowledge base. The knowledge base can be anything: internal documentation, support FAQs, regulatory filings, research papers, or a combination of web content, raw documents, and structured database records. Users ask questions in natural language — *"How do I configure two-factor authentication?"*, *"What does clause 4.3 of our SLA say?"*, *"Summarise the three most recent incident reports"* — and the RAG pipeline retrieves only the relevant context before asking the LLM to compose an answer.
+
+The critical advantage over a fine-tuned model is **freshness**: the knowledge base updates in real time as documents are added or revised, without retraining. With CockroachDB as the vector store, a single upsert indexes the new content immediately, and the next query will already benefit from it. Pair this with Memori's session memory and the assistant also remembers user context across conversations — making it genuinely adaptive rather than stateless.
+
+Common deployments in this pattern include:
+- **Customer support bots** that answer product or policy questions from a live documentation corpus
+- **Legal and compliance assistants** that surface relevant contract clauses or regulatory requirements
+- **Internal knowledge bases** where employees query HR policies, engineering runbooks, or onboarding guides
+- **Research assistants** that synthesise findings from hundreds of papers without requiring manual review
+
+### Personalised E-Commerce Recommendations
+
+<img src="/assets/img/ai-rag-03.png" alt="RAG for e-commerce chatbot — product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog" style="width:100%">
+
+E-commerce is a natural fit for RAG because product catalogues are large, change frequently, and carry rich semantic content — descriptions, reviews, attributes — that keyword search handles poorly. Rather than relying on brittle filter menus or pre-computed recommendation engines, a RAG-powered shopping assistant lets users describe what they need in natural language and returns products that genuinely match the intent.
+
+In the architecture above, product descriptions, reviews, and attributes are embedded and indexed in the CockroachDB vector store. A user's query — *"I want a new shirt to make me look in shape at my brother's wedding"* — is embedded at query time, matched against the product catalogue via semantic similarity search, and the top candidates are passed to the LLM along with the user's chat history. The result is a personalised recommendation with an explanation: *"I would suggest this shirt — we have it in different colours that could work well."*
+
+What makes this viable at scale is exactly CockroachDB's multi-tenancy model: each customer's preference history, past interactions, and personalised embeddings live in their own index partition, so performance is proportional to that user's data rather than the size of the full catalogue. As the catalogue grows, the C-SPANN index auto-splits and rebalances without any operational intervention.
+
+Beyond fashion retail, this same architecture powers:
+- **B2B product search** across large technical catalogues where part numbers and specs need semantic matching
+- **Media and content discovery** that surfaces articles, videos, or podcasts based on nuanced user interests
+- **Real-estate search** where natural language queries like *"quiet neighbourhood, good schools, walkable"* map to structured listings
+- **Travel and hospitality** recommendation engines that personalise offers from a live inventory
+
+### The Common Thread
+
+Both use cases share the same infrastructure: CockroachDB stores the knowledge or product corpus, serves as the vector index, caches LLM responses to reduce cost, and persists session memory via Memori. LangChain provides the orchestration layer that wires embeddings, retrieval, and generation into a coherent pipeline. The cloud AI stack — Vertex AI or Bedrock — provides the embedding and generation models.
+
+What changes between a support bot and a shopping assistant is only the domain data and the prompt. The architecture, the scaling properties, and the operational guarantees remain the same — which is precisely the value of building on a general-purpose distributed database rather than a purpose-built vector store.
+
+---
+
 ## Resources
 
 - [CockroachDB vector search documentation](https://www.cockroachlabs.com/docs/stable/vector-search.html)
