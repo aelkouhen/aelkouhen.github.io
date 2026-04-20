@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Data & Redis series - part 6
+title: "Data & Redis, Part 6"
 subtitle:  Fraud Detection with Redis & AWS
 thumbnail-img: assets/img/redis-fraud.png
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq94kMwVFG38im1WnDmDIKr0z28a0ngHUNKc9NF4oL1c_Zl6Jouq5WVE1zmlncjLXXXdhCsZuFBP2tD4o82AEERe7J-9WF94T9ZyXpOCjdo-6vqsCsd0zr-NoLVw7qywri1WufpyoGkrOWe28iHGE0V6Eo2Voq8EXqoJ5aWBarHT7g7LUSR3yBPLfP
