@@ -323,5 +323,3 @@ The challenges of distributed systems have always revolved around keeping data i
 Ensuring policy correctness alongside data correctness isn't just a security concern; it's a consistency challenge. Systems that don't evolve both attributes together risk inconsistent user experiences, compliance issues, and operational fragility.
 
 Enterprises that pair CockroachDB's globally consistent, fault-tolerant data layer with AuthZed's distributed authorization model gain a distinct business advantage: They can design systems where policy and data evolve reliably, predictably, and at planetary scale.
-
-Curious how CockroachDB and AuthZed can simplify your authorization model? [Let's talk about what reliable permissions look like at scale.](https://www.cockroachlabs.com/contact/)
