@@ -5,7 +5,7 @@ subtitle: "Managing Change"
 cover-img: /assets/img/cover-mainframe-p6.webp
 thumbnail-img: /assets/img/cover-mainframe-p6.webp
 share-img: /assets/img/cover-mainframe-p6.webp
-tags: [mainframe, distributed SQL, CockroachDB, migration, modernization, database, change management]
+tags: [mainframe, distributed SQL, CockroachDB, migration, modernization, change management]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
