@@ -12,7 +12,7 @@
 
 #reading-progress {
   position: fixed;
-  top: 54px; /* overridden by JS to match actual navbar height */
+  top: 3.125rem;
   left: 0;
   width: 0%;
   height: 3px;
