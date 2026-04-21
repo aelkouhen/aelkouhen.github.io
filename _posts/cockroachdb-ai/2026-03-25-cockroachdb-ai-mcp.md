@@ -390,11 +390,11 @@ Several open-source CockroachDB MCP servers exist in the ecosystem. Understandin
 | Implementation | Language | Tool Count | Cluster Monitoring | Schema Mgmt | Bulk Import | Transactions | Access |
 |---|---|---|---|---|---|---|---|
 | [**amineelkouhen/mcp-cockroachdb**](https://github.com/amineelkouhen/mcp-cockroachdb) | Python | **29** | ✅ Full | ✅ Full | ✅ S3/GCS/Azure | ✅ Atomic | Read + Write |
-| [**Swayingleaves/cockroachdb-mcp-server**](https://github.com/Swayingleaves/cockroachdb-mcp-server) | Python (psycopg2) | Limited | ❌ | Partial | ❌ | ❌ | Read + Write |
-| [**dhartunian/cockroachdb**](https://github.com/dhartunian/cockroachdb) | Node.js / TypeScript | Limited | Partial (auth token) | Schema as resources | ❌ | ❌ | Read + Write (limited) |
-| [**CData cockroachdb-mcp-server**](https://github.com/CDataSoftware/cockroachdb-mcp-server) | Java / JDBC | Limited | ❌ | ❌ | ❌ | ❌ | Read-only |
+| [**Swayingleaves/cockroachdb-mcp-server**](https://github.com/Swayingleaves/cockroachdb-mcp-server) | Python (psycopg2) | **6** (`connect`, `disconnect`, `initialize`, `get_tables`, `get_table_schema`, `execute_query`) | ❌ | Partial | ❌ | ❌ | Read + Write |
+| [**dhartunian/cockroachdb-mcp-server**](https://playbooks.com/mcp/dhartunian-cockroachdb) | Node.js / TypeScript | **1** (`query`) | ❌ | ❌ | ❌ | ❌ | Read + Write (limited) |
+| [**CData cockroachdb-mcp-server-by-cdata**](https://github.com/CDataSoftware/cockroachdb-mcp-server-by-cdata) | Java / JDBC | **3** (`get_tables`, `get_columns`, `run_query`) | ❌ | ❌ | ❌ | ❌ | Read-only |
 
-The gaps are significant. [Swayingleaves](https://github.com/Swayingleaves/cockroachdb-mcp-server) focuses narrowly on connection stability — keep-alive and auto-reconnect — but lacks monitoring and schema management. [Hartunian's TypeScript server](https://github.com/dhartunian/cockroachdb) is intentionally lean: it exposes schema as MCP resources and executes SQL, but has no administrative surface beyond a cluster metadata endpoint that requires a separate auth token. [CData's Java implementation](https://github.com/CDataSoftware/cockroachdb-mcp-server) is read-only by design, suited for business users querying live data without SQL, but unusable for anything operational.
+The gaps are significant. [Swayingleaves](https://github.com/Swayingleaves/cockroachdb-mcp-server) focuses narrowly on connection stability — keep-alive and auto-reconnect — but lacks monitoring and schema management. [Hartunian's TypeScript server](https://playbooks.com/mcp/dhartunian-cockroachdb) is stripped to the absolute minimum: a single `query` tool that executes SQL — no schema introspection, no monitoring, no administrative surface. [CData's Java implementation](https://github.com/CDataSoftware/cockroachdb-mcp-server-by-cdata) is read-only by design, exposing only 3 tools (`get_tables`, `get_columns`, `run_query`),, suited for business users querying live data without SQL, but unusable for anything operational.
 
 `amineelkouhen/mcp-cockroachdb` is the only community implementation that covers the full developer-to-ops spectrum: cluster health and replication monitoring, complete DDL (create, alter, drop), index management, bulk data ingestion from cloud storage, atomic multi-statement transactions, and query plan analysis — all in a single server. It is also the only implementation with an official Docker image hosted under the `mcp/` namespace on Docker Hub, a marker of maturity and community trust that the others lack.
 
@@ -569,7 +569,7 @@ The age of the AI agent is here, and CockroachDB is built for it.
 - [Unlocking CockroachDB with AI: A Deep Dive into the MCP Server — Skywork](https://skywork.ai/skypage/en/cockroachdb-ai-deep-dive/1980467967756115968)
 - [Swayingleaves/cockroachdb-mcp-server](https://github.com/Swayingleaves/cockroachdb-mcp-server)
 - [dhartunian/cockroachdb MCP server](https://github.com/dhartunian/cockroachdb)
-- [CData cockroachdb-mcp-server](https://github.com/CDataSoftware/cockroachdb-mcp-server)
+- [CData cockroachdb-mcp-server-by-cdata](https://github.com/CDataSoftware/cockroachdb-mcp-server-by-cdata)
 - [cockroachlabs/cockroachdb-skills](https://github.com/cockroachlabs/cockroachdb-skills)
 - [Getting Started with GenAI Using CockroachDB](/2025-10-05-cockroachdb-ai-intro/)
 - [Real-Time Indexing for Billions of Vectors with C-SPANN](/2025-11-23-cockroachdb-ai-spann/)
