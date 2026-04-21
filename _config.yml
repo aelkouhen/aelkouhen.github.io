@@ -265,7 +265,7 @@ timezone: "Europe/Paris"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
-paginate: 5
+paginate: 7
 
 kramdown:
   input: GFM
