@@ -162,6 +162,8 @@ For example, if you store items with associated store locations and product imag
 As a highly resilient distributed database, CockroachDB offers the technical foundations to store, index, and query vector embeddings. It allows developers to store vectors as easily as structured relational data. Then, the Vector Search capabilities provide advanced indexing and search capabilities required to perform low-latency search at scale, typically ranging from tens of thousands to hundreds of millions of vectors distributed across a cluster of machines.
 
 <img src="/assets/img/ai-intro-07.png" alt="CockroachDB as a Vector Database" style="width:100%">
+{: .mx-auto.d-block :}
+**CockroachDB as a Vector Database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### How does Semantic Similarity Search work?
 
@@ -266,6 +268,8 @@ In this query, we ask the CockroachDB vector search engine to calculate the cosi
 The sentence `That is a happy boy` is the most similar sentence to `That is a happy girl` (76% of similarity) and `That is a very happy person` (70% of similarity), but very far from `I love dogs` (only 24%).
 
 <img src="/assets/img/ai-intro-10.png" alt="Cosine similarity results" style="width:100%">
+{: .mx-auto.d-block :}
+**Cosine similarity results**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Running this calculation between our query vector and the other three vectors in the plot above, we can determine how the sentences are semantically similar to each other.
 

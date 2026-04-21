@@ -44,6 +44,8 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two di
 7. **Generate** — the LLM receives context + query as a prompt and produces a grounded answer.
 
 <img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
+{: .mx-auto.d-block :}
+**Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
 
@@ -71,6 +73,8 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 10. **Answer** — the final response is grounded in both community-level and entity-level evidence from across the entire corpus.
 
 <img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
+{: .mx-auto.d-block :}
+**Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
 
@@ -97,6 +101,8 @@ Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an in
 9. If YES, the **Final Answer** is returned to the user.
 
 <img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
+{: .mx-auto.d-block :}
+**Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Strengths:** handles complex multi-step reasoning, integrates real-time data via web search and APIs, self-correcting, ideal for exploratory and discovery tasks. Accuracy of 75–90%+ on complex queries.
 
@@ -228,6 +234,8 @@ For enterprise deployments, Memori is PCI and SOC 2 compliant, supports RBAC wit
 The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini Embeddings + Gemini 2.5 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude Sonnet 4.6). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
 
 <img src="/assets/img/ai-rag-crdb-dataflow.png" alt="RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response" style="width:100%">
+{: .mx-auto.d-block :}
+**RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The data flow: user submits a question → it is vectorised → CockroachDB performs similarity search → top-k relevant documents are retrieved → context is injected into the prompt → the LLM generates a grounded answer.
 
@@ -521,6 +529,8 @@ The RAG patterns and infrastructure described above are not academic exercises �
 ### Domain-Specific Conversational Assistants
 
 <img src="/assets/img/ai-rag-00.png" alt="RAG pipeline for domain-specific conversational assistant — knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions" style="width:100%">
+{: .mx-auto.d-block :}
+**RAG pipeline for domain-specific conversational assistant — knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The most direct application is a conversational assistant grounded in a private knowledge base. The knowledge base can be anything: internal documentation, support FAQs, regulatory filings, research papers, or a combination of web content, raw documents, and structured database records. Users ask questions in natural language — *"How do I configure two-factor authentication?"*, *"What does clause 4.3 of our SLA say?"*, *"Summarise the three most recent incident reports"* — and the RAG pipeline retrieves only the relevant context before asking the LLM to compose an answer.
 
@@ -535,6 +545,8 @@ Common deployments in this pattern include:
 ### Personalised E-Commerce Recommendations
 
 <img src="/assets/img/ai-rag-03.png" alt="RAG for e-commerce chatbot — product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog" style="width:100%">
+{: .mx-auto.d-block :}
+**RAG for e-commerce chatbot — product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 E-commerce is a natural fit for RAG because product catalogues are large, change frequently, and carry rich semantic content — descriptions, reviews, attributes — that keyword search handles poorly. Rather than relying on brittle filter menus or pre-computed recommendation engines, a RAG-powered shopping assistant lets users describe what they need in natural language and returns products that genuinely match the intent.
 

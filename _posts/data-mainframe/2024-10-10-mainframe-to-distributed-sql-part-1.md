@@ -22,6 +22,8 @@ This article delves into the intricate world of mainframe data storage, explorin
 "[Storage](https://youtu.be/ghN3y42rHts?si=Fed7OHgrG-uG8mqP) means different things to different users. When we talk about storage, some people think about how data is stored physically; some focus on the raw material that holds the storage systems, while others think about the relevant storage system or technology for their use case. All these levels are important attributes of storage, but they focus on different abstraction levels."
 
 <img src="/assets/img/mainframe-p1-storage-abstraction.png" alt="Mainframe storage abstraction levels diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Mainframe storage abstraction levels diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Storage is ubiquitous, which makes it easy to overlook its significance. For example, many software and data engineers use storage daily, yet may lack knowledge of how it operates and the tradeoffs involved with different storage media.
 
@@ -32,6 +34,8 @@ In the mainframe universe, disk drives are called **Direct Access Storage Device
 But a mainframe has a different approach. The mainframe OS manages data using **datasets**. What are datasets? The term dataset refers to a file that contains one or more **records**. A record is the basic unit of information used by a program running on mainframes.
 
 <img src="/assets/img/mainframe-p1-dasd.png" alt="Direct Access Storage Device diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Direct Access Storage Device diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 A record is a fixed number of bytes containing data. Often, a record collects related information treated as a unit, such as one item in a database or personnel data. The term **field** refers to a specific portion of a record used for a particular data category, such as an employee's name or department.
 
@@ -44,6 +48,8 @@ A dataset can be organized in the mainframe in many different ways. Among the mo
 * **Partitioned Data Sets** (PDS) consist of a directory and members. The directory holds the address of each member and thus makes it possible for programs or the operating system to access each member directly. Each member, however, consists of sequentially stored records. Partitioned datasets are often called libraries. Programs are stored as members of partitioned datasets. Generally, the operating system loads the members of a PDS into storage sequentially, but it can access members directly when selecting a program for execution.
 
 <img src="/assets/img/mainframe-p1-sds-pds.png" alt="Sequential data set and partitioned data set" style="width:100%">
+{: .mx-auto.d-block :}
+**Sequential data set and partitioned data set**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In IBM z/OS®, you can manage successive updates of related data through generation data groups (GDGs). Each dataset in a GDG is a generation dataset (GDS), and these sets are organized chronologically. GDGs can consist of datasets with similar or different data center bridging, attributes, and organizations. If identical, they can be retrieved together. GDGs offer advantages such as:
 
@@ -58,6 +64,8 @@ Although some datasets might be stored sequentially, DASDs can handle direct acc
 To locate a specific dataset quickly, the mainframe uses a **catalog** system and **VTOC** (volume table of contents) that tracks its locations. In practice, almost all disk datasets are cataloged. One side effect is that all (cataloged) datasets must have unique names.
 
 <img src="/assets/img/mainframe-p1-vtoc.png" alt="Volume table of contents (VTOC) diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Volume table of contents (VTOC) diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 An access method defines the technique used to store and retrieve data. Access methods have their own dataset structures to organize data, system-provided programs (or macros) to describe datasets, and utility programs to process datasets.
 
@@ -78,6 +86,8 @@ Access methods are identified primarily by the dataset organization. For instanc
 However, an access method identified with one dataset structure can be used to process another dataset structured differently. For example, a sequential dataset created using BSAM can be processed using BDAM and vice versa. Another example is UNIX files, which you can process using BSAM, QSAM, BPAM, or VSAM.
 
 <img src="/assets/img/mainframe-p1-vsam.png" alt="VSAM explainer diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**VSAM explainer diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 You can use VSAM to organize records into four types of datasets: key-sequenced, entry-sequenced, linear, or relative record. The primary difference among these dataset types is how their records are stored and accessed. VSAM datasets are briefly described as follows:
 
@@ -110,6 +120,8 @@ In the early days of mainframes, batch processing emerged as the predominant dat
 Batch processing, renowned for its cost-effectiveness in managing large data volumes, remains a prevalent practice in mainframe environments. However, certain activities like credit card payments or retail stock management must be processed in real time. This kind of processing gave birth to what we know as online transaction processing (OLTP).
 
 <img src="/assets/img/mainframe-p1-transaction.png" alt="Transaction characteristics" style="width:100%">
+{: .mx-auto.d-block :}
+**Transaction characteristics**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 What is OLTP? This is a class of software applications which are capable of supporting transaction-oriented programs. OLTP is used by organizations that require efficient means to store and manage vast amounts of data in near real-time, while also supporting many concurrent users and transaction types.
 
@@ -131,6 +143,8 @@ In the early days, CICS, sometimes pronounced as "KICKS", was bundled with IBM h
 CICS applications are traditionally run by submitting a transaction request. Execution of the transaction consists of running one or more application programs that implement the required function. In CICS documentation, you may find CICS application programs sometimes simply called "programs," and sometimes the term "transaction" is used to imply the processing done by the application programs.
 
 <img src="/assets/img/mainframe-p1-cics.png" alt="Customer Information Control System (CICS) diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Customer Information Control System (CICS) diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In the z/OS environment, a CICS mainframe installation comprises one or more "regions" spread across one or more z/OS system images. Although it processes interactive transactions, each CICS region is usually started as a batch job. Each CICS region comprises one major task on which every transaction runs, although certain services, such as access to IBM Db2 data, use other tasks.
 
@@ -153,6 +167,8 @@ IBM's Information Management System (IMS) was developed in the mid-1960s to meet
 The IMS database management system (DBMS) introduced the idea that application code should be separate from the data. Before IMS, a mainframe application would meld the coding and data into one. But this proved to be unwieldy, such as with duplicate data and the need for reusability. A key innovation for IMS was to separate both of these parts. IMS controls the access and recovery of the data. Application programs can still access and navigate the data using the DL/I standard callable interface.
 
 <img src="/assets/img/mainframe-p1-ims.png" alt="The main components of IMS" style="width:100%">
+{: .mx-auto.d-block :}
+**The main components of IMS**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 This separation established a new paradigm for application programming. The application code could now focus on manipulating data without the complications and overhead associated with accessing and recovering it. This paradigm virtually eliminated the need for redundant copies of the data. Multiple applications could access and update a single data instance, thus providing current data for each application. Online access to data also became more straightforward because the application code was separated from data control.
 
@@ -163,6 +179,8 @@ The IMS Database Manager is a hierarchical database system that organizes data i
 For instance, the structure would look like the figure below if you want to design a hierarchical database for a company's departments:
 
 <img src="/assets/img/mainframe-p1-ims-model.png" alt="An IMS model" style="width:100%">
+{: .mx-auto.d-block :}
+**An IMS model**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 You may be wondering why you should use a hierarchical database. IMS is one of the rare databases capable of running over 117,000 database update transactions per second. This exceptional speed is mainly due to the inherent nature of hierarchical databases, where relationships are predefined within the hierarchy, eliminating the need for extra processing to establish these connections.
 
@@ -179,6 +197,8 @@ One of the advanced features of IDMS was its built-in Integrated Data Dictionary
 Unlike relational databases that use tables, IDMS uses the [CODASYL](https://en.wikipedia.org/wiki/CODASYL) network model structure. The main structuring concepts in this model are records and sets. **Records** essentially follow the COBOL pattern, consisting of fields of different types, which allows complex internal structures such as repeating items and repeating groups.
 
 <img src="/assets/img/mainframe-p1-idms.png" alt="An IDMS model" style="width:100%">
+{: .mx-auto.d-block :}
+**An IDMS model**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The most distinctive structuring concept in the Codasyl model is the **set**. Sets represent the one-to-many relationships between records: one owner and many members. This allows complex data relationships to be efficiently managed through sets and record types, providing fast data retrieval and update capabilities.
 
@@ -199,6 +219,8 @@ ADABAS differs from relational databases in many aspects. For example, ADABAS st
 ADABAS uses an inverted list architecture rather than a traditional relational database model. This structure allows for efficient data storage and retrieval, particularly in applications with complex queries and large datasets. ADABAS is thus optimized for fast data retrieval and high transaction throughput, making it suitable for applications that require quick response times and can handle millions of transactions per second. It can manage large databases with extensive data volumes and support many concurrent users, making it scalable for enterprise-level applications.
 
 <img src="/assets/img/mainframe-p1-adabas.png" alt="Adaptable Database System (ADABAS) diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Adaptable Database System (ADABAS) diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ADABAS's observed high performance is due to its underlying storage architecture. In ADABAS, data is divided into blocks, each identified by a 3- or 4-byte relative ADABAS block number or RABN, that identifies the block's physical location relative to the beginning of the component. Data Storage blocks contain one or more physical records and a padding area to absorb the expansion of records in the block.
 
@@ -233,10 +255,14 @@ Before this, databases primarily consisted of flat files or used models like hie
 Db2 stores data in various tables that are linked to form relationships. Each table is two-dimensional, consisting of columns and rows. The intersection of a column and a row is referred to as a "value" or "field", which can be alphanumeric, numeric, or null.
 
 <img src="/assets/img/mainframe-p1-db2.png" alt="Db2 diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Db2 diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each row has a unique identifier, the primary key, which facilitates searching, updating, and deleting information. The primary key is automatically indexed in a relational database, but additional indexes can be created on other columns to enhance operation speed.
 
 <img src="/assets/img/mainframe-p1-pk-fk.png" alt="Primary key and foreign key diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Primary key and foreign key diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Primary keys enable the creation of relationships with other tables. A connection between tables is established using a value called the foreign key. This connection occurs when a column (the foreign key) in one table points to the primary key in another table.
 
@@ -293,6 +319,8 @@ These transactional systems are still used in air transportation to manage fligh
 Moreover, manufacturing companies use mainframe OLTP systems to process end-to-end production data. This includes handling large volumes of data from production lines to monitor quality and identify defects in real-time, as well as production schedules, inventory levels, and supply chain logistics.
 
 <img src="/assets/img/mainframe-p1-use-cases.png" alt="Mainframe use cases" style="width:100%">
+{: .mx-auto.d-block :}
+**Mainframe use cases**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 These are just a few examples highlighting mainframe databases' versatility and critical importance across various sectors. Their ability to handle large volumes of transactions, ensure data integrity, and provide high availability makes them indispensable in supporting the core operations of many industries.
 

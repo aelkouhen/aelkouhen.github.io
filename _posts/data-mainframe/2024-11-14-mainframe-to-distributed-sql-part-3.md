@@ -24,6 +24,8 @@ SQL databases, invented by Edgar F. Codd, use tables and schemas to store and re
 NoSQL databases, however, sacrifice strict schema enforcement and ACID guarantees, which can compromise data consistency and correctness in transactional workloads.
 
 <img src="/assets/img/mainframe-p3-db-types.png" alt="Types of distributed databases" style="width:100%">
+{: .mx-auto.d-block :}
+**Types of distributed databases**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In recent years, distributed SQL databases, also known as "new SQL," have emerged to combine the advantages of NoSQL (cloud-native scalability and resilience) with the strict schema and ACID guarantees of traditional relational databases. These databases do not require manual sharding and offer ACID guarantees, making them ideal for transactional workloads and applications requiring high data consistency.
 
@@ -61,6 +63,8 @@ Trying to keep up with this growth when using a single-instance database is diff
 Distributed databases, in contrast, can scale horizontally simply by adding additional instances or nodes. So, if your workload is facing a demand peak, predictable or not, you can add nodes to your cluster, and your database should transparently handle the increased load (linear scalability).
 
 <img src="/assets/img/mainframe-p3-vertical-scaling.png" alt="Vertical vs horizontal scaling diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Vertical vs horizontal scaling diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Moreover, in serverless distributed databases, nodes can be dynamically added or removed based on demand. Resources are provisioned only when needed, reducing waste and optimizing costs. The system can handle [sudden spikes in traffic](https://www.cockroachlabs.com/big-ideas-podcast/dom-scandinaro-cameo/) without compromising performance or availability. So, your database is neither under-provisioned nor over-provisioned, which optimizes the TCO of your infrastructure.
 
@@ -73,6 +77,8 @@ In distributed databases like CockroachDB, the system hides the complexities of 
 Moreover, the system remains available during failure, and recovers afterward. For instance, if a node goes offline (due to a power outage, machine failure, or anything else), the cluster continues uninterrupted. The cluster will even try to repair itself by re-replicating missing data to other nodes. So, end-users always operate uninterrupted at any condition (failure transparency).
 
 <img src="/assets/img/mainframe-p3-single-logical-db.png" alt="Single logical database across distributed nodes" style="width:100%">
+{: .mx-auto.d-block :}
+**Single logical database across distributed nodes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Reliability and Availability
 
@@ -85,6 +91,8 @@ Distributed databases employ redundancy and automated failover to maintain servi
 In this way, distributed databases can detect and recover from failures automatically. The system continuously monitors node health and performance. Thus, it can automatically isolate and repair failed nodes, restoring normal operations.
 
 <img src="/assets/img/mainframe-p3-table-data.gif" alt="Table data replication across nodes" style="width:100%">
+{: .mx-auto.d-block :}
+**Table data replication across nodes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 For this capability, distributed databases rely on consensus protocols such as Paxos and [Raft](https://www.cockroachlabs.com/docs/stable/architecture/replication-layer#technical-details-and-components) (Replication And Fault Tolerance) which achieve consensus across distributed nodes. The consensus is made by quorum-based mechanisms, ensuring that a majority of nodes agree on a transaction before it is committed. So, nodes must agree on the state of the data or the order of transaction, and a transaction is considered successful only if a quorum of nodes approves it. Thus, the system ensures data integrity and consistency even in the presence of node failures. These protocols balance consistency and availability in a partitioned system ([CAP theorem](https://www.cockroachlabs.com/docs/stable/frequently-asked-questions.html#how-is-cockroachdb-both-highly-available-and-strongly-consistent)).
 
@@ -144,6 +152,8 @@ To illustrate this process, let's focus on a single chunk of data (called range 
 When data in a range is sent to the database, it is written into three replicas —one on each node. One of these nodes is designated as the "[leaseholder](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction#leaseholder-node)" for this range, coordinating read and write requests for the data. However, any node can receive requests, distinguishing CockroachDB from active-passive systems where all requests must go through a central "Active" node.
 
 <img src="/assets/img/mainframe-p3-dogs.gif" alt="Data replication across cluster nodes" style="width:100%">
+{: .mx-auto.d-block :}
+**Data replication across cluster nodes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Consistency between the replicas is maintained using the Raft consensus algorithm, ensuring that a majority of replicas agree on the data's correctness before committing a write.
 
@@ -196,30 +206,42 @@ For our explanation, we'll use a five-node cluster. All the nodes start with a r
 As mentioned earlier, a node can be in different states depending on the cluster situation. To understand the state transition, let's look at the following diagram:
 
 <img src="/assets/img/mainframe-p3-raft-start.png" alt="Raft node state transitions" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft node state transitions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each node starts from the **_Follower_** state. Once the election timeout is over, it enters the **_Candidate_** state—this means the node is now eligible to become a **_Leader_**. Once a candidate gets a clear majority of votes, it enters the Leader state.
 
 If there is no clear winner during the election process, the candidate times out again, remains in the Candidate state, and a new election begins. To understand how a candidate can be elected as a cluster leader, let's look at the following sequences:
 
 <img src="/assets/img/mainframe-p3-cluster-leader-1.png" alt="Raft cluster leader election step 1" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft cluster leader election step 1**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The thick black perimeter around the nodes represents time-out. Note that the perimeter lengths represent different timeout values for each node. Here, each node is initialized with the term = 1. S4 times out first, starts a new election process, and increments the local term's value by 1. S4 votes for itself and sends a RequestVote (RV) message to all other nodes in the cluster.
 
 <img src="/assets/img/mainframe-p3-cluster-leader-2.gif" alt="Raft cluster leader election step 2" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft cluster leader election step 2**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 All other nodes receive the request. They first reset their local term to 2 since their current term is lesser, then grant a vote for the request. S4 gets a clear majority and becomes the leader. The thick black perimeter around S4 in the following figure indicates it has become the cluster leader:
 
 <img src="/assets/img/mainframe-p3-cluster-leader-3.gif" alt="Raft cluster leader election step 3" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft cluster leader election step 3**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Now, S4 sends AppendEntries (AE) messages to all other nodes. Followers acknowledge each AppendEntries message. There is also something called "Heartbeat Timeout," which should be configurable in the system. The leader keeps sending empty AppendEntries messages at intervals specified by the heartbeat interval, indicating that it's still alive so that the cluster does not unnecessarily initiate another leader election process.
 
 <img src="/assets/img/mainframe-p3-cluster-leader-4.gif" alt="Raft cluster leader heartbeat" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft cluster leader heartbeat**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 If a candidate gets a message from a newly elected leader, it steps down and becomes a Follower. If there is a network partition, the current leader might get disconnected from the majority of the cluster, and the majority now selects a new leader.
 
 When the old leader comes back, it discovers that a new leader is already elected with a higher term, so the old leader steps down and becomes a Follower.
 
 <img src="/assets/img/mainframe-p3-cluster-leader-5.gif" alt="Raft leader failover and recovery" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft leader failover and recovery**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 As you can see, the Raft consensus algorithm, developed to ensure reliability in distributed systems, enables nodes to agree on a single state, even in failure scenarios. Raft operates by electing a leader from among nodes, who then coordinates transaction logs to maintain system consistency. This consensus process involves nodes transitioning between three states—Follower, Candidate, and Leader—to ensure only one leader is active at a time.
 
@@ -232,12 +254,16 @@ In CockroachDB, the data is divided into ranges, each with its own consensus gro
 With a single range, one node (out of three or five) is elected leader, and it periodically sends heartbeat messages to the followers. As the system grows to include more ranges, so does the amount of traffic required to handle heartbeats.
 
 <img src="/assets/img/mainframe-p3-heartbeats-1.png" alt="Raft heartbeats per range" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft heartbeats per range**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The number of ranges in a distributed database is significantly greater than the number of nodes – this helps improve recovery times when a node fails by keeping ranges small. However, this also results in many ranges having overlapping memberships.
 
 To manage this situation efficiently, MultiRaft is used. Instead of running Raft independently for each range, MultiRaft manages all of a node's ranges as a group. This means that each pair of nodes only needs to exchange heartbeats once per tick, regardless of how many ranges they share.
 
 <img src="/assets/img/mainframe-p3-heartbeats-2.png" alt="MultiRaft consolidated heartbeats" style="width:100%">
+{: .mx-auto.d-block :}
+**MultiRaft consolidated heartbeats**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### The Life of a Distributed Transaction
 
@@ -246,6 +272,8 @@ CockroachDB manages distributed transactions by coordinating data across multipl
 Each transaction interacts with the distributed system in a way that ensures atomicity, consistency, isolation, and durability (ACID). This approach allows CockroachDB to handle complex operations efficiently, even in a distributed environment, ensuring data integrity and fault tolerance.
 
 <img src="/assets/img/mainframe-p3-fault-tolerance.png" alt="Distributed transaction fault tolerance" style="width:100%">
+{: .mx-auto.d-block :}
+**Distributed transaction fault tolerance**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 To begin the transaction, a SQL client (e.g., an app) performs some kind of business logic against your CockroachDB cluster, such as inserting a new customer record. This request is sent over a connection to your CockroachDB cluster that's established using a PostgreSQL driver. The gateway node handles the connection with the client, both receiving and responding to the request.
 
@@ -278,6 +306,8 @@ Once the command achieves consensus (i.e., a majority of nodes – including its
 Once the leader commits the Raft log entry, it's considered committed. The SQL interface then responds to the client, and is now prepared to continue accepting new connections. At this point the value is considered written, and if another operation comes in and performs a read from the storage engine for this key, they'll encounter this value.
 
 <img src="/assets/img/mainframe-p3-raft-committed.gif" alt="Raft log committed and applied" style="width:100%">
+{: .mx-auto.d-block :}
+**Raft log committed and applied**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
