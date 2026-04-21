@@ -1,12 +1,6 @@
 <div class="lang-switcher">
   {% for lang in site.languages %}
-    {% if lang == page.lang or (page.lang == nil and lang == site.default_lang) %}
-      <span class="lang-switcher__item lang-switcher__item--active">{{ lang | upcase }}</span>
-    {% elsif lang == site.default_lang %}
-      <a class="lang-switcher__item lang-switcher__link" href="/" data-lang="{{ lang }}">{{ lang | upcase }}</a>
-    {% else %}
-      <a class="lang-switcher__item lang-switcher__link" href="/{{ lang }}/" data-lang="{{ lang }}">{{ lang | upcase }}</a>
-    {% endif %}
+    <a class="lang-switcher__item lang-switcher__link" href="{% if lang == site.default_lang %}/{% else %}/{{ lang }}/{% endif %}" data-lang="{{ lang }}">{{ lang | upcase }}</a>
     {% unless forloop.last %}<span class="lang-switcher__sep">|</span>{% endunless %}
   {% endfor %}
 </div>
@@ -24,8 +18,7 @@
 
   var path = window.location.pathname;
 
-  // Detect which language prefix (if any) is active in the current URL
-  var currentLang = null;
+  var currentLang = defaultLang;
   for (var i = 0; i < langCodes.length; i++) {
     var prefix = '/' + langCodes[i];
     if (path === prefix || path.indexOf(prefix + '/') === 0) {
@@ -34,12 +27,20 @@
     }
   }
 
-  // Strip the current language prefix to get the base path
-  var basePath = currentLang ? (path.slice(('/' + currentLang).length) || '/') : path;
+  var basePath = currentLang !== defaultLang
+    ? (path.slice(('/' + currentLang).length) || '/')
+    : path;
 
   document.querySelectorAll('.lang-switcher__link').forEach(function (link) {
     var targetLang = link.getAttribute('data-lang');
-    link.href = targetLang === defaultLang ? basePath : '/' + targetLang + basePath;
+    if (targetLang === currentLang) {
+      link.classList.add('lang-switcher__item--active');
+      link.removeAttribute('href');
+    } else if (targetLang === defaultLang) {
+      link.href = basePath;
+    } else {
+      link.href = '/' + targetLang + basePath;
+    }
   });
 })();
 </script>
