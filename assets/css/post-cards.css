@@ -7,6 +7,22 @@
 }
 
 /* =====================================================
+   Reading progress bar
+   ===================================================== */
+
+#reading-progress {
+  position: fixed;
+  top: 54px;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: #008AFF;
+  z-index: 1029;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* =====================================================
    Table of Contents sidebar
    ===================================================== */
 

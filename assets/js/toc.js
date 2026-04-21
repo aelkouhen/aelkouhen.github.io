@@ -67,7 +67,7 @@
     var ticking = false;
     window.addEventListener('scroll', function () {
       if (!ticking) {
-        requestAnimationFrame(function () { updateActive(); ticking = false; });
+        requestAnimationFrame(function () { updateActive(); updateProgress(); ticking = false; });
         ticking = true;
       }
     }, { passive: true });
@@ -75,9 +75,25 @@
     updateActive();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', buildToc);
-  } else {
+  function updateProgress() {
+    var bar     = document.getElementById('reading-progress');
+    var article = document.querySelector('.blog-post');
+    if (!bar || !article) return;
+    var articleTop    = article.getBoundingClientRect().top + window.scrollY;
+    var articleHeight = article.offsetHeight;
+    var scrolled      = window.scrollY - articleTop;
+    var pct           = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100));
+    bar.style.width   = pct + '%';
+  }
+
+  function init() {
     buildToc();
+    updateProgress();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
