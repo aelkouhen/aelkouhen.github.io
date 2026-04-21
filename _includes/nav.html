@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom {% if page.nav-short %}top-nav-short-permanent{% else %}top-nav-regular{% endif %}">
 
+  {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
   {% assign home_url = '/' %}
-  {% if page.lang == 'fr' %}{% assign home_url = '/fr/' %}{% endif %}
+  {% if active_lang != site.default_lang %}{% assign home_url = '/' | append: active_lang | append: '/' %}{% endif %}
   {%- if site.title-img -%}
     <a class="navbar-brand navbar-brand-logo" href="{{ home_url }}"><img alt="{{ site.title }} Logo" src="{{ site.title-img | relative_url}}"/></a>
   {%- elsif site.title -%}
@@ -12,7 +13,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  {% assign nav_t = site.data.translations[page.lang] %}
+  {% assign nav_t = site.data.translations[active_lang] %}
 
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
