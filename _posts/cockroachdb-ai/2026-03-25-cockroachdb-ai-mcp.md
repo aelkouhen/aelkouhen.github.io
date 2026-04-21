@@ -336,6 +336,18 @@ End-to-end traces flow into the observability pipeline, with spans covering midd
 
 [CockroachDB Agent Skills](https://www.cockroachlabs.com/blog/cockroachdb-ai-agents-database-lifecycle-automation/) are structured capabilities that define how an AI system interacts with CockroachDB. They follow open standard interfaces, making them portable across different models and tools without rewriting integrations. Teams can use agent skills across onboarding, development, operations, and scaling decisions — throughout the full database lifecycle.
 
+To understand where skills fit in an agentic system, it helps to think in three layers:
+
+- **Agents are the orchestrators** — they decide *when* to do the work. An agent receives a goal (e.g., "investigate this CPU spike") and plans a sequence of actions to accomplish it. It chooses which tools to call and in what order, retries on failure, and synthesizes results into a response.
+
+- **Skills are the expertise** — they teach the agent *how* to do the work correctly. A skill encodes domain knowledge: the right CockroachDB SQL patterns to use, which indexes are appropriate for a given workload, how to interpret a query plan, or when to recommend a hash-sharded primary key versus a composite one. Without skills, an agent might produce syntactically valid but semantically wrong SQL.
+
+- **MCP tools are the connectors** — they provide the *what*: the actual interface to the database. Tools are the concrete actions an agent can take (`execute_query`, `explain_query`, `get_cluster_status`). They carry no judgment about when or how to use them — that is the agent's and skill's responsibility.
+
+<img src="/assets/img/ai-mcp-skills.png" alt="Agents, Skills, and MCP Tools: The Three Layers of Agentic Database Interaction" style="width:100%">
+{: .mx-auto.d-block :}
+**Agents, Skills, and MCP Tools: The Three Layers of Agentic Database Interaction**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 <img src="/assets/img/ai-mcp-04.png" alt="CockroachDB Agent Skills — Database Lifecycle Overview" style="width:100%">
 {: .mx-auto.d-block :}
 **CockroachDB Agent Skills — Database Lifecycle Overview**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
