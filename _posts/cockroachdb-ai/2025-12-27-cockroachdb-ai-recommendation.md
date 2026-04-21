@@ -185,7 +185,9 @@ For example, if you search a product with associated store locations and product
 
 This means that instead of scanning the entire dataset, the system first narrows down the search to relevant locations — such as "_Casablanca_" — and then applies vector similarity search only within that subset. Such a hybrid search approach significantly improves query performance and resource efficiency, making it easier to build intelligent, high-performance AI applications at scale using familiar SQL syntax.
 
-Below is an example of creating a query that returns the three most similar products (by image) to [this one](https://raw.githubusercontent.com/aelkouhen/redis-vss/main/ColabDrive/products/input/2eca615a43d0098f4bb5fc90004c3678.jpg), sorted by relevance score (Euclidean Distance set in the indexes created earlier).
+Below is an example of creating a query that returns the three most similar products (by image) to the one shown below, sorted by relevance score (Euclidean Distance set in the indexes created earlier).
+
+<img src="/assets/img/ai-recom-query.jpg" alt="Example query product" style="width:100%">
 
 Even if the index contains billions of products, this query will search only the subset associated with a specific product category. Insert and search performance scales with the number of vectors tagged in that category — not the total volume of vectors in the system. This isolation reduces contention across products, as queries operate on separate index partitions and rows.
 
@@ -205,7 +207,6 @@ With the vector capabilities, CockroachDB unlocked several impactful AI applicat
 
 If you want to provide interactive, content-based recommendations, you might want to take advantage of CockroachDB as a vector database and a similarity search engine. Regardless of how complex you want your recommendation engine to be: collaborative, content-based, contextual, or even hybrid, CockroachDB helps you deliver the best recommendations for a successful user experience.
 
-_Learn more about how distributed SQL is evolving to power the next generation of AI applications:_ [_Get your guide_](https://www.cockroachlabs.com/guides/vector-search-meets-distributed-sql/)_._
 
 ---
 
