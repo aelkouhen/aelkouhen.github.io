@@ -1,4 +1,7 @@
 en:
+  pagination:
+    newer: "&larr; Newer Posts"
+    older: "Older Posts &rarr;"
   navbar:
     Categories: "Categories"
     Resources: "Resources"
@@ -11,6 +14,9 @@ en:
     "Identity and Access Management with CockroachDB": "Identity and Access Management with CockroachDB"
     "CockroachDB & AI": "CockroachDB & AI"
 fr:
+  pagination:
+    newer: "&larr; Articles récents"
+    older: "Articles plus anciens &rarr;"
   navbar:
     Categories: "Catégories"
     Resources: "Ressources"
