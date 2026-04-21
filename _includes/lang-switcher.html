@@ -1,7 +1,7 @@
 <div class="lang-switcher">
   {% for lang in site.languages %}
     <a class="lang-switcher__item lang-switcher__link" href="{% if lang == site.default_lang %}/{% else %}/{{ lang }}/{% endif %}" data-lang="{{ lang }}">{{ lang | upcase }}</a>
-    {% unless forloop.last %}<span class="lang-switcher__sep">|</span>{% endunless %}
+    {% unless forloop.last %}<span class="lang-switcher__sep"></span>{% endunless %}
   {% endfor %}
 </div>
 <script>
@@ -35,7 +35,6 @@
     var targetLang = link.getAttribute('data-lang');
     if (targetLang === currentLang) {
       link.classList.add('lang-switcher__item--active');
-      link.removeAttribute('href');
     } else if (targetLang === defaultLang) {
       link.href = basePath;
     } else {

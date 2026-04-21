@@ -3,6 +3,7 @@ layout: page
 title: About
 subtitle: Welcome to The Data Crafters Lab
 wide: true
+lang: en
 ---
 ## About Data Crafters Lab
 

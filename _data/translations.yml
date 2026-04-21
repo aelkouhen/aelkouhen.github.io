@@ -1,0 +1,24 @@
+en:
+  navbar:
+    Categories: "Categories"
+    Resources: "Resources"
+    About: "About"
+    LinkedIn: "LinkedIn"
+    "Data Demystified": "Data Demystified"
+    "Data & Redis": "Data & Redis"
+    "Data & Snowflake": "Data & Snowflake"
+    "Mainframe to Distributed SQL": "Mainframe to Distributed SQL"
+    "Identity and Access Management with CockroachDB": "Identity and Access Management with CockroachDB"
+    "CockroachDB & AI": "CockroachDB & AI"
+fr:
+  navbar:
+    Categories: "Catégories"
+    Resources: "Ressources"
+    About: "À propos"
+    LinkedIn: "LinkedIn"
+    "Data Demystified": "Données démystifiées"
+    "Data & Redis": "Données & Redis"
+    "Data & Snowflake": "Données & Snowflake"
+    "Mainframe to Distributed SQL": "Mainframe vers SQL distribué"
+    "Identity and Access Management with CockroachDB": "Identités et accès avec CockroachDB"
+    "CockroachDB & AI": "CockroachDB & IA"
