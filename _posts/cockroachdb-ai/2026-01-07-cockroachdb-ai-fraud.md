@@ -159,24 +159,16 @@ The XGBoost algorithm is highly effective in machine learning competitions due t
 
 The Lambda function calls the AWS SageMaker models endpoints to assign anomaly scores and classification scores to historical transactions.
 
-```sql
-CREATE TABLE FRAUD_DB.transactions (
-  transaction_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  account_id UUID NOT NULL,
-  merchant_id UUID,
-  transaction_type TEXT NOT NULL CHECK (transaction_type IN ('debit', 'credit', 'refund', 'chargeback')),
-  amount BIGINT NOT NULL CHECK (amount_cents >= 0),
-  currency_code CHAR(3) NOT NULL,
-  status TEXT NOT NULL CHECK (status IN ('pending', 'completed', 'failed', 'reversed')),
-  transaction_time TIMESTAMPTZ NOT NULL DEFAULT now(),
-  location_ip INET,
-  location POINT,
-  metadata JSONB,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now(),
-  transaction_vector VECTOR(24)
-);
+```python
+def makeInferences(data_payload):
+   print("** makeInferences - START")
+   output = {}
+   output["anomaly_detector"] = get_anomaly_prediction(data_payload)
+   output["fraud_classifier"] = get_fraud_prediction(data_payload)
+   print("** makeInferences - END")
+   return output
 ```
+
 - Anomalies detection:
 
 ```python
