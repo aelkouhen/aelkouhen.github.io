@@ -319,6 +319,46 @@
 }
 
 /* =====================================================
+   Keep Reading section
+   ===================================================== */
+
+.keep-reading {
+  border-top: 2px solid #eee;
+  padding: 2.5rem 0 1rem;
+  margin-top: 2rem;
+}
+
+.keep-reading__title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin: 0 0 1.5rem;
+}
+
+.card-grid--related {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 1024px) {
+  .card-grid--related {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* suppress featured layout inside related grid */
+.card-grid--related .card--featured,
+.card-grid--related .card {
+  flex-direction: column;
+}
+
+.card-grid--related .card .card__image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* =====================================================
    Featured card — first post, full-width hero
    ===================================================== */
 

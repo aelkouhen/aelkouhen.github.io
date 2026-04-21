@@ -1,0 +1,86 @@
+{% assign max_related = 4 %}
+{% assign related = "" | split: "" %}
+
+{% for post in site.posts %}
+  {% unless post.url == page.url %}
+    {% assign common = 0 %}
+    {% for tag in post.tags %}
+      {% if page.tags contains tag %}
+        {% assign common = common | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if common > 0 %}
+      {% assign related = related | push: post %}
+    {% endif %}
+  {% endunless %}
+{% endfor %}
+
+{% assign related = related | slice: 0, max_related %}
+
+{% assign related_urls = "" | split: "" %}
+{% for post in related %}{% assign related_urls = related_urls | push: post.url %}{% endfor %}
+
+{% if related.size < max_related %}
+  {% for post in site.posts %}
+    {% unless post.url == page.url or related_urls contains post.url %}
+      {% assign related = related | push: post %}
+      {% assign related_urls = related_urls | push: post.url %}
+    {% endunless %}
+    {% if related.size >= max_related %}{% break %}{% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if related.size > 0 %}
+<section class="keep-reading">
+  <h2 class="keep-reading__title">Keep Reading</h2>
+  <div class="card-grid card-grid--related">
+    {% for post in related %}
+      {%- capture thumbnail -%}
+        {%- if post.thumbnail-img -%}{{ post.thumbnail-img }}
+        {%- elsif post.cover-img -%}
+          {%- if post.cover-img.first -%}{{ post.cover-img[0].first.first }}
+          {%- else -%}{{ post.cover-img }}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- assign thumbnail = thumbnail | strip -%}
+      <article class="card">
+        {%- if thumbnail != "" -%}
+        <a href="{{ post.url | absolute_url }}" class="card__image-wrap" aria-label="{{ post.title | strip_html }}">
+          <img src="{{ thumbnail | absolute_url }}" alt="{{ post.title | strip_html }}">
+        </a>
+        {%- endif -%}
+        <div class="card__body">
+          {%- if post.tags.size > 0 -%}
+          <div class="card__tags">
+            {%- for tag in post.tags -%}
+            <span class="card__tag">{{ tag }}</span>
+            {%- endfor -%}
+          </div>
+          {%- endif -%}
+          <a href="{{ post.url | absolute_url }}" class="card__title-link">
+            <h2 class="card__title">{{ post.title | strip_html }}</h2>
+          </a>
+          <p class="card__excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          <div class="card__meta">
+            {%- assign date_format = site.date_format | default: "%B %-d, %Y" -%}
+            {% if post.author-avatar or post.author %}
+            <div class="card__author">
+              {% if post.author-avatar %}
+              <img class="card__author-avatar" src="{{ post.author-avatar | absolute_url }}" alt="{{ post.author }}">
+              {% endif %}
+              <div class="card__author-info">
+                {% if post.author %}<span class="card__author-name">{{ post.author }}</span>{% endif %}
+                <span class="card__author-date">{{ post.date | date: date_format }}</span>
+              </div>
+            </div>
+            {% else %}
+            {{ post.date | date: date_format }}
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
