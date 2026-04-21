@@ -86,8 +86,7 @@
   padding-bottom: 0.28rem;
   text-decoration: none;
   line-height: 1.4;
-  border-left: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .toc-link:hover {
@@ -97,7 +96,7 @@
 
 .toc-link--active {
   color: #008AFF !important;
-  border-left-color: #008AFF;
+  box-shadow: inset 2px 0 0 #008AFF;
   font-weight: 700;
 }
 
