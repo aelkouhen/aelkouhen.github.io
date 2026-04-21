@@ -77,7 +77,7 @@ While native vector databases provide efficient similarity search through advanc
 
 CockroachDB addresses this fundamental performance problem with release 25.2, which includes a [high-performance indexing support for multi-dimensional vectors](/2025-11-23-cockroachdb-ai-spann/). The optimizer incorporates secondary vector indexes into query plans, and the execution engine implements this new type of index. Users are able to write queries that efficiently search across both relational and vector data, even in the same query.
 
-By [using CockroachDB as a distributed vector database](https://www.cockroachlabs.com/blog/genai-using-cockroachdb/), fraud detection systems can quickly access and reuse historical data (vectors) for different models without re-engineering or reprocessing them. As new data is collected, the database can update the embeddings used by the machine learning models, resulting in more accurate fraud predictions. This improves efficiency and reduces latency when detecting fraud.
+By [using CockroachDB as a distributed vector database](/2025-10-05-cockroachdb-ai-intro/), fraud detection systems can quickly access and reuse historical data (vectors) for different models without re-engineering or reprocessing them. As new data is collected, the database can update the embeddings used by the machine learning models, resulting in more accurate fraud predictions. This improves efficiency and reduces latency when detecting fraud.
 
 <img src="/assets/img/ai-fraud-02.jpg" alt="GenAI-based Fraud Detection System" style="width:100%">
 {: .mx-auto.d-block :}
