@@ -115,7 +115,7 @@ However, even with a good storage backend, plugging the anomaly detection system
 
 - Lastly, it must support incremental updates — handling inserts and deletes in real time without blocking queries or requiring full rebuilds. These requirements ruled out many conventional indexing strategies, prompting the design of a new approach tailored to CockroachDB's distributed architecture.
 
-https://www.youtube.com/watch?v=j2ElRBAH8vM
+<iframe src="https://www.youtube.com/watch?v=j2ElRBAH8vM" title="CockroachDB For AI/ML: Vector Indexing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
 
 This vector indexing algorithm (called C-SPANN) is designed to organize vectors into partitions based on similarity, with each partition typically containing dozens to hundreds of vectors.
 
