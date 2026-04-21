@@ -19,4 +19,19 @@ En exploitant la puissance de l'analytique avancée, nous découvrons des tendan
 
 La collaboration est au cœur de notre approche. Nous travaillons en étroite collaboration avec nos clients pour comprendre leurs exigences, défis et objectifs uniques, en veillant à ce que nos solutions de données s'alignent parfaitement sur leurs objectifs métier. Que vous soyez une startup cherchant à établir des bases solides en matière de données, ou une entreprise établie souhaitant optimiser votre infrastructure de données existante, le Data Crafters Lab est là pour vous fournir l'expertise et les conseils nécessaires pour libérer la véritable valeur de vos données.
 
-Faites équipe avec le Data Crafters Lab, et embarquez pour un voyage de transformation des données qui vous permettra de prendre des décisions plus intelligentes, de stimuler l'innovation et de favoriser la croissance de votre entreprise. [Contactez-nous](mailto:amine@datacrafterslab.com) dès aujourd'hui pour découvrir comment nous pouvons vous aider à exploiter la puissance de vos données et à en libérer tout le potentiel.
+Faites équipe avec le Data Crafters Lab, et embarquez pour un voyage de transformation des données qui vous permettra de prendre des décisions plus intelligentes, de stimuler l'innovation et de favoriser la croissance de votre entreprise. Contactez-nous dès aujourd'hui pour découvrir comment nous pouvons vous aider à exploiter la puissance de vos données et à en libérer tout le potentiel.
+
+## Nos Data Crafters
+<div class="row">
+  <div class="column left">
+    <a href="https://www.linkedin.com/in/amine-elkouhen/" target="_blank">
+      <img src="/assets/img/amine_elkouhen.jpg" alt="" class="mx-auto d-block"> 
+      <em style="display:block; margin-left:auto; margin-right:auto; text-align: center">Amine El Kouhen</em>    
+    </a>
+  </div>
+  <div class="column right">
+Fort de plus de 15 ans d'expérience dans la conception et la promotion de plateformes de données, d'analytique et d'apprentissage automatique, Amine a conçu et mis en œuvre des milliers de pipelines de données et d'artefacts analytiques pour des entreprises européennes de premier plan.
+
+Amine est titulaire d'un doctorat en informatique de l'Université de Lille (Nord de la France) et a poursuivi ses recherches post-doctorales au Canada en tant qu'associé de recherche dans plusieurs grandes institutions académiques (ÉTS - Université du Québec, Université Concordia...). Il possède un solide dossier de recherche (auteur de nombreuses publications Springer, ACL et IEEE) en ingénierie dirigée par les modèles, ingénierie des systèmes critiques, ingénierie des langages, modélisation des données et artisanat logiciel.
+  </div>
+</div>
