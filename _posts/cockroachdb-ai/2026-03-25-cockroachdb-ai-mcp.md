@@ -385,16 +385,20 @@ The managed server is **not customizable** in the traditional sense — you cons
 
 ### The Community Server Among CockroachDB MCP Implementations
 
-The community server is not the only open-source CockroachDB MCP implementation. Here is how it compares to other projects in the ecosystem:
+Several open-source CockroachDB MCP servers exist in the ecosystem. Understanding where `amineelkouhen/mcp-cockroachdb` sits relative to them is important — because it is precisely its completeness that makes it the right peer to compare against the official managed offering.
 
-| Implementation | Language | Focus | Access |
-|---|---|---|---|
-| **amineelkouhen/mcp-cockroachdb** | Python | Full-stack: admin, monitoring, schema, query | Read + Write |
-| **Swayingleaves/cockroachdb-mcp-server** | Python (psycopg2) | Connection stability, keep-alive, auto-reconnect | Read + Write |
-| **dhartunian/cockroachdb** | Node.js / TypeScript | Lightweight, schema-as-resources, cluster metadata via auth token | Read + Write (limited admin) |
-| **CData cockroachdb-mcp-server** | Java / JDBC | Live data querying without SQL knowledge | Read-only |
+| Implementation | Language | Tool Count | Cluster Monitoring | Schema Mgmt | Bulk Import | Transactions | Access |
+|---|---|---|---|---|---|---|---|
+| **amineelkouhen/mcp-cockroachdb** | Python | **29** | ✅ Full | ✅ Full | ✅ S3/GCS/Azure | ✅ Atomic | Read + Write |
+| **Swayingleaves/cockroachdb-mcp-server** | Python (psycopg2) | Limited | ❌ | Partial | ❌ | ❌ | Read + Write |
+| **dhartunian/cockroachdb** | Node.js / TypeScript | Limited | Partial (auth token) | Schema as resources | ❌ | ❌ | Read + Write (limited) |
+| **CData cockroachdb-mcp-server** | Java / JDBC | Limited | ❌ | ❌ | ❌ | ❌ | Read-only |
 
-The community server covered in this article stands apart through comprehensiveness — 29 tools versus significantly fewer in competing implementations — and the inclusion of cluster management and monitoring capabilities. It is the only implementation with an official Docker image hosted under the `mcp/` namespace, signaling its maturity relative to the ecosystem.
+The gaps are significant. Swayingleaves focuses narrowly on connection stability — keep-alive and auto-reconnect — but lacks monitoring and schema management. Hartunian's TypeScript server is intentionally lean: it exposes schema as MCP resources and executes SQL, but has no administrative surface beyond a cluster metadata endpoint that requires a separate auth token. CData's Java implementation is read-only by design, suited for business users querying live data without SQL, but unusable for anything operational.
+
+`amineelkouhen/mcp-cockroachdb` is the only community implementation that covers the full developer-to-ops spectrum: cluster health and replication monitoring, complete DDL (create, alter, drop), index management, bulk data ingestion from cloud storage, atomic multi-statement transactions, and query plan analysis — all in a single server. It is also the only implementation with an official Docker image hosted under the `mcp/` namespace on Docker Hub, a marker of maturity and community trust that the others lack.
+
+This completeness is exactly what justifies placing it alongside the managed server for comparison. The other community implementations compete in a different weight class — they are lightweight query tools. `amineelkouhen/mcp-cockroachdb` is a full database management interface exposed to AI agents, which is the same ambition as the managed server, just delivered through a different operational model.
 
 ### CockroachDB in the Broader Database MCP Ecosystem
 
