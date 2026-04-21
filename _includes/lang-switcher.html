@@ -31,14 +31,18 @@
     ? (path.slice(('/' + currentLang).length) || '/')
     : path;
 
+  // Pagination pages (/page2/, /page3/, …) are language-specific — send to the other language's homepage
+  var isPagination = /^\/page\d+\/?$/.test(basePath);
+  var switchPath = isPagination ? '/' : basePath;
+
   document.querySelectorAll('.lang-switcher__link').forEach(function (link) {
     var targetLang = link.getAttribute('data-lang');
     if (targetLang === currentLang) {
       link.classList.add('lang-switcher__item--active');
     } else if (targetLang === defaultLang) {
-      link.href = basePath;
+      link.href = switchPath;
     } else {
-      link.href = '/' + targetLang + basePath;
+      link.href = '/' + targetLang + switchPath;
     }
   });
 })();
