@@ -4,7 +4,7 @@ title: "Data & Redis, Part 1"
 subtitle:  Data Ingestion with Redis (Hands-on)
 thumbnail-img: /assets/img/redis-ingest.svg
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5mMorLNrsY5baLqpVyX92P33jErp9nRFA_iRVJO0ELg_pu-OBcPkAjX0EyTbOIvUaZwIuuE1igbmdzmLEkQG9Vp9SShTi-eeT4Nsgnk3EQYYVLS7dQVL6Rb54jcOhODf8r7Y9PRaY30RKQOBWHKmh-m5MP3Rf-M5Lpo1lT-l_UPTQQASXnID9hHlZ
-tags: [CDC,Debezium,Hands-On,RDI,batch ingestion,data ingestion,RIOT,stream ingestion,Redis]
+tags: [CDC,Debezium,Hands-On,RDI,data ingestion,RIOT,Redis]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
