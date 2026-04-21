@@ -14,7 +14,7 @@ layout: base
       </aside>
     </div>
     {% endif %}
-    <div class="{% if page.full-width %} col {% elsif page.wide %} col-xl-8 col-lg-10 offset-lg-1 {% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
+    <div class="{% if page.full-width %} col {% elsif page.wide %} col-xl-8 offset-xl-0 col-lg-10 offset-lg-1 {% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
 
       {% if page.gh-repo %}
         {% assign gh_split =  page.gh-repo | split:'/'  %}
