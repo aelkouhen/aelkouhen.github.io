@@ -13,19 +13,25 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  {% assign nav_t = site.nav_translations[active_lang] %}
+  {% comment %}Iterate nav_translations to find matching lang — avoids variable bracket-access on ConfigurationDrop{% endcomment %}
+  {% assign nav_t = nil %}
+  {% for lang_entry in site.nav_translations %}
+    {% if lang_entry[0] == active_lang %}{% assign nav_t = lang_entry[1] %}{% endif %}
+  {% endfor %}
 
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
       {%- for link in site.navbar-links -%}
-        {%- assign label = nav_t[link[0]] | default: link[0] -%}
+        {%- assign label = link[0] -%}
+        {%- for nav_item in nav_t -%}{%- if nav_item[0] == link[0] -%}{%- assign label = nav_item[1] -%}{%- endif -%}{%- endfor -%}
         {%- if link[1].first %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ label }}</a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               {%- for childlink in link[1] -%}
                 {%- for linkparts in childlink %}
-                  {%- assign child_label = nav_t[linkparts[0]] | default: linkparts[0] -%}
+                  {%- assign child_label = linkparts[0] -%}
+                  {%- for nav_item in nav_t -%}{%- if nav_item[0] == linkparts[0] -%}{%- assign child_label = nav_item[1] -%}{%- endif -%}{%- endfor -%}
                   <a class="dropdown-item" href="{{ linkparts[1] | relative_url }}">{{ child_label }}</a>
                 {%- endfor -%}
               {%- endfor %}
