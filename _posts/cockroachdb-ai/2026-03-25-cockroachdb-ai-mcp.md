@@ -348,51 +348,49 @@ To understand where skills fit in an agentic system, it helps to think in three 
 {: .mx-auto.d-block :}
 **Agents, Skills, and MCP Tools: The Three Layers of Agentic Database Interaction**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-<img src="/assets/img/ai-mcp-04.png" alt="CockroachDB Agent Skills — Database Lifecycle Overview" style="width:100%">
-{: .mx-auto.d-block :}
-**CockroachDB Agent Skills — Database Lifecycle Overview**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+The [cockroachlabs/cockroachdb-skills](https://github.com/cockroachlabs/cockroachdb-skills) repository is the official source for these skills. You can install the full collection into any Agent Skills-compatible tool with a single command:
 
-### Six Skill Domains
+```bash
+npx skills add cockroachlabs/cockroachdb-skills
+```
+
+### Nine Skill Domains
 
 **1. Onboarding and Migrations**
 
-Skills that guide data movement using [MOLT](https://www.cockroachlabs.com/docs/stable/migration-overview) — CockroachDB's migration toolchain — covering schema translation, data verification, and cutover strategies.
+Skills that guide teams through getting started with CockroachDB and moving existing workloads into the system. This includes schema translation from PostgreSQL, using [MOLT](https://www.cockroachlabs.com/docs/stable/migration-overview) for data movement, shadow traffic validation, and safe cutover strategies that minimize downtime.
 
-<img src="/assets/img/ai-mcp-05.png" alt="CockroachDB Agent Skills — Onboarding and Migrations" style="width:100%">
-{: .mx-auto.d-block :}
-**CockroachDB Agent Skills — Onboarding and Migrations**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**2. Application Development**
 
-**2. Query and Schema Design**
+Skills that help developers build applications using CockroachDB effectively — covering connection pooling best practices, transaction retry logic, ORM compatibility patterns, and distributed SQL idioms that differ from traditional single-node databases.
 
-Skills that translate natural language requirements into SQL, enforce distributed SQL best practices (e.g., avoiding full table scans, choosing hash-sharded indexes), and review schema proposals.
+**3. Performance and Scaling**
 
-**3. Operations and Lifecycle**
+Skills that diagnose and resolve query performance issues: analyzing execution plans, identifying missing indexes, recommending hash-sharded primary keys for high-write workloads, interpreting range distribution, and guiding horizontal scale-out decisions under load.
 
-Skills covering cluster management and maintenance tasks: version upgrades, node replacement, backup scheduling, and recovery procedures.
+**4. Operations and Lifecycle**
 
-<img src="/assets/img/ai-mcp-06.png" alt="CockroachDB Agent Skills — Operations and Lifecycle" style="width:100%">
-{: .mx-auto.d-block :}
-**CockroachDB Agent Skills — Operations and Lifecycle**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+Skills for day-to-day cluster operations and version management — including rolling upgrades, node decommissioning, backup and restore scheduling, and cluster finalization procedures after major version upgrades.
 
-**4. Performance and Scaling**
+**5. Resilience and Disaster Recovery**
 
-Skills that identify query bottlenecks, analyze range distribution, recommend index changes, and guide horizontal scale-out decisions.
-
-**5. Security and Governance**
-
-Skills that harden deployments across authentication, encryption, RBAC, and audit logging — aligned with enterprise compliance requirements.
-
-<img src="/assets/img/ai-mcp-07.png" alt="CockroachDB Agent Skills — Performance, Security, and Governance" style="width:100%">
-{: .mx-auto.d-block :}
-**CockroachDB Agent Skills — Performance, Security, and Governance**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+Skills that ensure high availability and prepare teams for failure scenarios: configuring replication zones, validating multi-region survival goals, designing for zone and region failure, and testing recovery runbooks before incidents occur.
 
 **6. Observability and Diagnostics**
 
-Skills that profile SQL statements, monitor background jobs, and surface contention events and range distribution anomalies.
+Skills that monitor, alert, and diagnose issues across the cluster — profiling SQL statements, interpreting contention events, diagnosing hot ranges, monitoring background jobs, and correlating application errors with database metrics.
 
-<img src="/assets/img/ai-mcp-08.png" alt="CockroachDB Agent Skills — Observability and Diagnostics" style="width:100%">
-{: .mx-auto.d-block :}
-**CockroachDB Agent Skills — Observability and Diagnostics**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**7. Security and Governance**
+
+Skills that harden CockroachDB deployments: configuring RBAC and row-level security, enforcing TLS and certificate rotation, auditing access patterns, and aligning configurations with compliance frameworks such as SOC 2 and PCI-DSS.
+
+**8. Integrations and Ecosystem**
+
+Skills for connecting CockroachDB to external tools and platforms — including CDC (Change Data Capture) to Kafka and cloud pub/sub systems, Kafka Connect sink configurations, and integration patterns with data warehouses and analytics platforms.
+
+**9. Cost and Usage Management**
+
+Skills that help teams understand and optimize resource consumption: right-sizing clusters, interpreting storage amplification, analyzing statement statistics for cost attribution, and identifying workloads that are disproportionately consuming cluster resources.
 
 ### Real-World Scenario: CPU Spike Response
 
