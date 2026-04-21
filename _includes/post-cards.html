@@ -26,7 +26,11 @@
 
       <div class="card__body">
         {%- if post.tags.size > 0 -%}
-        <span class="card__tag">{{ post.tags | first }}</span>
+        <div class="card__tags">
+          {%- for tag in post.tags -%}
+          <span class="card__tag">{{ tag }}</span>
+          {%- endfor -%}
+        </div>
         {%- endif -%}
 
         <a href="{{ post.url | absolute_url }}" class="card__title-link">
