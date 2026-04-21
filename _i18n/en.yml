@@ -1,0 +1,11 @@
+global:
+  keep_reading: "Keep Reading"
+  on_this_page: "On this page"
+  tags: "Tags"
+  min_read: "min read"
+  prev_post: "Previous Post"
+  next_post: "Next Post"
+  newer_posts: "Newer Posts"
+  older_posts: "Older Posts"
+  search: "Search"
+  updated: "Updated"
