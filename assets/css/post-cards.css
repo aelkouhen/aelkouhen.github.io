@@ -167,15 +167,13 @@
 .post-author-meta {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  margin: 1.25rem 0 2rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid #eee;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
 }
 
 .post-author-avatar {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center top;
@@ -190,13 +188,12 @@
 
 .post-author-name {
   font-weight: 600;
-  font-size: 0.9rem;
-  color: #222;
+  font-size: 0.88rem;
 }
 
 .post-author-date {
   font-size: 0.78rem;
-  color: #888;
+  opacity: 0.75;
 }
 
 /* =====================================================
