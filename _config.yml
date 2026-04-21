@@ -282,6 +282,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+      lang: en
       wide: true
       author: "Amine El Kouhen"
       author-avatar: "/assets/img/amine_elkouhen.jpg"
@@ -295,6 +296,7 @@ defaults:
       path: "_posts/fr"
       type: "posts"
     values:
+      lang: fr
       permalink: /:year-:month-:day-:title/
   -
     scope:
