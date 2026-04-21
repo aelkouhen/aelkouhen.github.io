@@ -6,7 +6,7 @@ thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/
 share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/b80c58c5-749e-4661-930f-fa5133a63a86
 tags: [auto-ingest,copy,data ingestion,dynamic tables,insert,Kafka,Snowflake,Snowpipe,Snowpipe Streaming]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

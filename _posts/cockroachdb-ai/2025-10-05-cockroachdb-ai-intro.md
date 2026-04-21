@@ -6,7 +6,7 @@ thumbnail-img: /assets/img/cover-ai-intro.webp
 share-img: /assets/img/cover-ai-intro.webp
 tags: [Artificial Intelligence, CockroachDB, GenAI, vector embeddings, vector search, LLM, pgvector, RAG]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

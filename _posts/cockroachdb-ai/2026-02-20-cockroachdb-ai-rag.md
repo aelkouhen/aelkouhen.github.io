@@ -7,7 +7,7 @@ thumbnail-img: /assets/img/cover-ai-rag.webp
 share-img: /assets/img/cover-ai-rag.webp
 tags: [Artificial Intelligence, CockroachDB, GenAI, RAG, Memori, LangChain]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

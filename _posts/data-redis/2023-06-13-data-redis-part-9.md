@@ -6,7 +6,7 @@ thumbnail-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjju7Se
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9ohtLHugZggP2FrYkiWRV9PhTrvIsblAUEwDs6mbWrA6z1tpz9PvG64hL9fcmNxPiQ1328_cahS52fdYVx5ZtZafRjsC1q152qSuoKcNUVtaK_SO1dCv8zaY0A5yWQgRk35ricT8EcOvPZ_2LRafQk0LIJYDzFlKvPWmtxCxZXt4oUijjxGOqdYmlwvM
 tags: [hybrid search,recommendation systems,Redis,RediSearch,similarity search,vector database]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

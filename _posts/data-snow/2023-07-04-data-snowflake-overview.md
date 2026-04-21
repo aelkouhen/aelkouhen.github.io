@@ -6,7 +6,7 @@ thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/
 share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/6a275ea8-de10-4356-9a47-7b6d4522a49a
 tags: [data ingestion,data processing,data storage,data serving,kappa,lambda,Snowpipe,Snowpark,Snowsight,Snowflake]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

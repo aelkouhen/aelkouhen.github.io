@@ -7,7 +7,7 @@ thumbnail-img: /assets/img/cover-mainframe-p1.webp
 share-img: /assets/img/cover-mainframe-p1.webp
 tags: [mainframe, distributed SQL, CockroachDB, database, VSAM, IMS, CICS, Db2, IDMS]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

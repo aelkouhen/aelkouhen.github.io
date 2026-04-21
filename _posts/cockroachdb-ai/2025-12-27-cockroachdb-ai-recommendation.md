@@ -7,7 +7,7 @@ thumbnail-img: /assets/img/cover-ai-recom.webp
 share-img: /assets/img/cover-ai-recom.webp
 tags: [Artificial Intelligence, CockroachDB, GenAI, vector search, recommendation engine, embeddings]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
