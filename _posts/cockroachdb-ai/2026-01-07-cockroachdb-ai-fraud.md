@@ -19,7 +19,7 @@ Meanwhile, fraudsters are evolving fast and moving in tandem with digital bankin
 
 Fraud detection systems must ingest massive volumes of transactional data, evaluate it against dynamic rulesets, and make decisions in real time — all while operating across global infrastructure. Traditional databases often buckle under this pressure and deliver poor fraud prevention performance, due to inefficient data access strategies.
 
-Enter CockroachDB, a distributed SQL database built for scale, resilience, and performance. When it comes to the latest generation of AI-powered fraud detection systems, the heart of CockroachDB's advantage lies its advanced vector indexing capabilities. In addition to the existing geo-partitioned and inverted indexes, CockroachDB empowers developers to build online fraud detection systems that are both fast and intelligent.
+Enter [CockroachDB](https://www.cockroachlabs.com/product/overview/), a distributed SQL database built for scale, resilience, and performance. When it comes to the latest generation of AI-powered fraud detection systems, the heart of CockroachDB's advantage lies its [advanced vector indexing capabilities](https://www.cockroachlabs.com/blog/cspann-real-time-indexing-billions-vectors/). In addition to the existing geo-partitioned and inverted indexes, CockroachDB empowers developers to build online fraud detection systems that are both fast and intelligent.
 
 This article explores how these new vector indexing features enable low-latency anomaly detection, real-time alerting, and region-aware decision making — without compromising on correctness or scale.
 
@@ -57,9 +57,9 @@ The multi-layer approach is a technique used in fraud detection systems to impro
 
 The rules can be implemented so that it can start from a "low cost" to "high cost." If a user makes a purchase within already-known categories and within min/max transaction amounts, the application can tag the transaction as non-fraudulent and skip further detection steps.
 
-- ***Anomaly Detection Layer***: The second layer is an anomaly detection system that identifies unusual activity based on statistical analyses of transactional data. This layer uses machine learning (ML) algorithms such as Random Cut Forest to identify patterns that are not typically seen in legitimate transactions. This layer involves first converting data into a high-dimensional vector space using embedding techniques — here the embeddings represent the different fraud attributes/rules like location, transaction amount, user profile, IP addresses… then training a random forest model on these embeddings to identify anomalies as data points that deviate significantly from the norm.
+- ***Anomaly Detection Layer***: The second layer is an anomaly detection system that identifies unusual activity based on statistical analyses of transactional data. This layer uses machine learning (ML) algorithms such as [Random Cut Forest](https://docs.aws.amazon.com/sagemaker/latest/dg/randomcutforest.html) to identify patterns that are not typically seen in legitimate transactions. This layer involves first converting data into a high-dimensional vector space using embedding techniques — here the embeddings represent the different fraud attributes/rules like location, transaction amount, user profile, IP addresses… then training a random forest model on these embeddings to identify anomalies as data points that deviate significantly from the norm.
 
-- ***Predictive Modeling Layer***: The third layer is a predictive modeling system that uses advanced machine learning algorithms, such as XGBoost, to predict the likelihood of fraud. This layer uses historical data to train the models and can detect new fraud patterns that are not detected by the previous layers. This layer can also be effectively used to predict anomalies when combined with vector embeddings.
+- ***Predictive Modeling Layer***: The third layer is a predictive modeling system that uses advanced machine learning algorithms, such as [XGBoost](https://www.nvidia.com/en-us/glossary/xgboost/), to predict the likelihood of fraud. This layer uses historical data to train the models and can detect new fraud patterns that are not detected by the previous layers. This layer can also be effectively used to predict anomalies when combined with vector embeddings.
 
 By using a multi-layer approach, fraud detection systems can minimize false positives and false negatives, improving fraud detection accuracy. The multi-layer approach also helps to detect fraud with accuracy, preventing customer dissatisfaction when they are falsely flagged as a fraudster.
 
@@ -77,9 +77,9 @@ Embeddings are the attributes used by machine learning models to make prediction
 
 While native vector databases provide efficient similarity search through advanced indexing structures like HNSW or IVF, traditional relational databases with vector support often lack sophisticated vector indexing. These databases typically resort to brute-force searching for vector similarity operations. Therefore, when the number of transactions to be assessed grows to millions or even billions, vector searches become prohibitively slow, and the fraud detection system loses its real-time capability.
 
-CockroachDB addresses this fundamental performance problem with release 25.2, which includes a high-performance indexing support for multi-dimensional vectors. The optimizer incorporates secondary vector indexes into query plans, and the execution engine implements this new type of index. Users are able to write queries that efficiently search across both relational and vector data, even in the same query.
+CockroachDB addresses this fundamental performance problem with release 25.2, which includes a [high-performance indexing support for multi-dimensional vectors](https://www.cockroachlabs.com/blog/distributed-vector-indexing-cockroachdb/). The optimizer incorporates secondary vector indexes into query plans, and the execution engine implements this new type of index. Users are able to write queries that efficiently search across both relational and vector data, even in the same query.
 
-By using CockroachDB as a distributed vector database, fraud detection systems can quickly access and reuse historical data (vectors) for different models without re-engineering or reprocessing them. As new data is collected, the database can update the embeddings used by the machine learning models, resulting in more accurate fraud predictions. This improves efficiency and reduces latency when detecting fraud.
+By [using CockroachDB as a distributed vector database](https://www.cockroachlabs.com/blog/genai-using-cockroachdb/), fraud detection systems can quickly access and reuse historical data (vectors) for different models without re-engineering or reprocessing them. As new data is collected, the database can update the embeddings used by the machine learning models, resulting in more accurate fraud predictions. This improves efficiency and reduces latency when detecting fraud.
 
 <img src="/assets/img/ai-fraud-02.jpg" alt="GenAI-based Fraud Detection System" style="width:100%">
 {: .mx-auto.d-block :}
@@ -133,7 +133,7 @@ Splitting a partition improves search efficiency by maintaining tight clustering
 
 When nodes are added to the system, ranges containing index partitions are automatically distributed across the new nodes. This allows the total workload to scale out with the cluster at near-linear rates.
 
-The diagram below illustrates the fraud detection solution architecture implemented with CockroachDB and AWS:
+The diagram below illustrates the fraud detection solution architecture implemented with [CockroachDB and AWS](https://www.cockroachlabs.com/partners/amazon-web-services-aws/):
 
 <img src="/assets/img/ai-fraud-04.jpg" alt="Reference Architecture of Fraud Detection with CockroachDB and AWS" style="width:100%">
 {: .mx-auto.d-block :}
@@ -151,7 +151,7 @@ RCF assigns an anomaly score to each data point. Low scores indicate that the da
 {: .mx-auto.d-block :}
 **Anomaly score**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-- xGBoost, short for eXtreme Gradient Boosting, is a widely used open-source implementation of the gradient-boosted trees algorithm. Gradient boosting is a supervised learning method that aims to predict a target variable by combining estimates from an ensemble of simpler and weaker models.
+- [xGBoost](https://www.nvidia.com/en-us/glossary/xgboost/), short for eXtreme Gradient Boosting, is a widely used open-source implementation of the gradient-boosted trees algorithm. Gradient boosting is a supervised learning method that aims to predict a target variable by combining estimates from an ensemble of simpler and weaker models.
 
 The XGBoost algorithm is highly effective in machine learning competitions due to its ability to handle various data types, distributions, and relationships, plus the wide range of hyper-parameters that can be fine-tuned.
 
@@ -161,7 +161,7 @@ The Lambda function calls the AWS SageMaker models endpoints to assign anomaly s
 
 **1.** The data flow starts with end users (mobile and web clients) invoking Amazon API Gateway REST API.
 
-**2.** What are Amazon Kinesis Data Streams? These are used to capture real-time event data. Amazon Kinesis is a fully managed service for stream data processing at any scale. It provides a serverless platform that easily collects, processes, and analyzes data in real time so you can get timely insights and react quickly to new information. Kinesis can handle any amount of streaming data and process data from hundreds of thousands of sources with low latencies.
+**2.** What are Amazon Kinesis Data Streams? These are used to capture real-time event data. [Amazon Kinesis](https://aws.amazon.com/kinesis/) is a fully managed service for stream data processing at any scale. It provides a serverless platform that easily collects, processes, and analyzes data in real time so you can get timely insights and react quickly to new information. Kinesis can handle any amount of streaming data and process data from hundreds of thousands of sources with low latencies.
 
 **3.** What is AWS Lambda? This is a serverless, event-driven compute service that lets you run code for virtually any type of application or backend service without provisioning or managing servers. In our solution, the Lambda function is triggered by kinesis to read the stream and perform the following actions:
 
@@ -251,7 +251,7 @@ Note that search accuracy is highly dependent on workload factors such as:
 - how well the embeddings reflect semantic similarity
 - how vectors are distributed in the dataset.
 
-**5.** Optionally, the similarity search results, along with transactional details, can also be stored in a time-series database for further data visualizations using the observability platform Grafana.
+**5.** Optionally, the similarity search results, along with transactional details, can also be stored in a time-series database for further data visualizations using the observability platform [Grafana](https://grafana.com/).
 
 Below is the Grafana dashboard that shows real-time fraud scores for incoming transactions. On a scale of 0 to 1 and for any given transaction, if the fraud score exceeds 0.8, it is considered fraudulent and shown in red. In addition, other charts are used to visualize fraud activity over time or to compare fraudulent vs. non-fraudulent (bottom side).
 
