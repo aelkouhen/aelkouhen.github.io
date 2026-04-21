@@ -267,9 +267,9 @@ date_format: "%B %-d, %Y"
 timezone: "Europe/Paris"
 markdown: kramdown
 highlighter: rouge
-permalink: /en/:year-:month-:day-:title/
+permalink: /:year-:month-:day-:title/
 paginate: 7
-paginate_path: /en/page:num/
+paginate_path: /page:num/
 
 kramdown:
   input: GFM

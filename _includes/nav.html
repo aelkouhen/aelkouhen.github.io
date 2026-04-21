@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom {% if page.nav-short %}top-nav-short-permanent{% else %}top-nav-regular{% endif %}">
 
-  {% assign home_url = '/en/' %}
+  {% assign home_url = '/' %}
   {% if page.lang == 'fr' %}{% assign home_url = '/fr/' %}{% endif %}
   {%- if site.title-img -%}
     <a class="navbar-brand navbar-brand-logo" href="{{ home_url }}"><img alt="{{ site.title }} Logo" src="{{ site.title-img | relative_url}}"/></a>
