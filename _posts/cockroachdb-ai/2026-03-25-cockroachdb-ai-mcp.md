@@ -385,14 +385,14 @@ The managed server is **not customizable** in the traditional sense — you cons
 
 ### The Community Server Among CockroachDB MCP Implementations
 
-Several open-source CockroachDB MCP servers exist in the ecosystem. Understanding where `amineelkouhen/mcp-cockroachdb` sits relative to them is important — because it is precisely its completeness that makes it the right peer to compare against the official managed offering.
+Several open-source CockroachDB MCP servers exist in the ecosystem. Understanding where [`amineelkouhen/mcp-cockroachdb`](https://github.com/amineelkouhen/mcp-cockroachdb) sits relative to them is important — because it is precisely its completeness that makes it the right peer to compare against the official managed offering. This assessment is supported by independent analyses from [Skywork's engineer's guide](https://skywork.ai/skypage/en/cockroachdb-mcp-server-ai-engineers-guide/1981603697623363584) and [deep-dive review](https://skywork.ai/skypage/en/cockroachdb-ai-deep-dive/1980467967756115968).
 
 | Implementation | Language | Tool Count | Cluster Monitoring | Schema Mgmt | Bulk Import | Transactions | Access |
 |---|---|---|---|---|---|---|---|
-| **amineelkouhen/mcp-cockroachdb** | Python | **29** | ✅ Full | ✅ Full | ✅ S3/GCS/Azure | ✅ Atomic | Read + Write |
-| **Swayingleaves/cockroachdb-mcp-server** | Python (psycopg2) | Limited | ❌ | Partial | ❌ | ❌ | Read + Write |
-| **dhartunian/cockroachdb** | Node.js / TypeScript | Limited | Partial (auth token) | Schema as resources | ❌ | ❌ | Read + Write (limited) |
-| **CData cockroachdb-mcp-server** | Java / JDBC | Limited | ❌ | ❌ | ❌ | ❌ | Read-only |
+| [**amineelkouhen/mcp-cockroachdb**](https://github.com/amineelkouhen/mcp-cockroachdb) | Python | **29** | ✅ Full | ✅ Full | ✅ S3/GCS/Azure | ✅ Atomic | Read + Write |
+| [**Swayingleaves/cockroachdb-mcp-server**](https://github.com/Swayingleaves/cockroachdb-mcp-server) | Python (psycopg2) | Limited | ❌ | Partial | ❌ | ❌ | Read + Write |
+| [**dhartunian/cockroachdb**](https://github.com/dhartunian/cockroachdb) | Node.js / TypeScript | Limited | Partial (auth token) | Schema as resources | ❌ | ❌ | Read + Write (limited) |
+| [**CData cockroachdb-mcp-server**](https://github.com/CDataSoftware/cockroachdb-mcp-server) | Java / JDBC | Limited | ❌ | ❌ | ❌ | ❌ | Read-only |
 
 The gaps are significant. Swayingleaves focuses narrowly on connection stability — keep-alive and auto-reconnect — but lacks monitoring and schema management. Hartunian's TypeScript server is intentionally lean: it exposes schema as MCP resources and executes SQL, but has no administrative surface beyond a cluster metadata endpoint that requires a separate auth token. CData's Java implementation is read-only by design, suited for business users querying live data without SQL, but unusable for anything operational.
 
@@ -565,5 +565,11 @@ The age of the AI agent is here, and CockroachDB is built for it.
 - [CockroachDB's Managed MCP Server: Production-Ready AI Agent Access](https://www.cockroachlabs.com/blog/cockroachdb-ai-agents-managed-mcp-server/)
 - [AI Agent Skills for CockroachDB: Database Lifecycle Automation](https://www.cockroachlabs.com/blog/cockroachdb-ai-agents-database-lifecycle-automation/)
 - [Introducing the Model Context Protocol — Anthropic](https://www.anthropic.com/news/model-context-protocol)
+- [CockroachDB MCP Server: The Ultimate Guide for AI Engineers — Skywork](https://skywork.ai/skypage/en/cockroachdb-mcp-server-ai-engineers-guide/1981603697623363584)
+- [Unlocking CockroachDB with AI: A Deep Dive into the MCP Server — Skywork](https://skywork.ai/skypage/en/cockroachdb-ai-deep-dive/1980467967756115968)
+- [Swayingleaves/cockroachdb-mcp-server](https://github.com/Swayingleaves/cockroachdb-mcp-server)
+- [dhartunian/cockroachdb MCP server](https://github.com/dhartunian/cockroachdb)
+- [CData cockroachdb-mcp-server](https://github.com/CDataSoftware/cockroachdb-mcp-server)
+- [cockroachlabs/cockroachdb-skills](https://github.com/cockroachlabs/cockroachdb-skills)
 - [Getting Started with GenAI Using CockroachDB](/2025-10-05-cockroachdb-ai-intro/)
 - [Real-Time Indexing for Billions of Vectors with C-SPANN](/2025-11-23-cockroachdb-ai-spann/)
