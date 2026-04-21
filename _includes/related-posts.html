@@ -8,8 +8,18 @@
   "posts": [
     {% assign lang_posts = site.posts | where: "lang", active_lang %}
     {% for post in lang_posts %}
+    {% if post.lang != site.default_lang %}
+      {% assign expected_prefix = '/' | append: post.lang | append: '/' %}
+      {% if post.url contains expected_prefix %}
+        {% assign post_url = post.url %}
+      {% else %}
+        {% assign post_url = post.url | prepend: post.lang | prepend: '/' %}
+      {% endif %}
+    {% else %}
+      {% assign post_url = post.url %}
+    {% endif %}
     {
-      "url": {{ post.url | absolute_url | jsonify }},
+      "url": {{ post_url | absolute_url | jsonify }},
       "title": {{ post.title | strip_html | jsonify }},
       "excerpt": {{ post.excerpt | strip_html | truncatewords: 30 | jsonify }},
       "thumbnail": {% if post.thumbnail-img %}{{ post.thumbnail-img | absolute_url | jsonify }}{% elsif post.cover-img %}{% if post.cover-img.first %}{{ post.cover-img[0].first.first | absolute_url | jsonify }}{% else %}{{ post.cover-img | absolute_url | jsonify }}{% endif %}{% else %}""{% endif %},
