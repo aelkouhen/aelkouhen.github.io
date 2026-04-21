@@ -7,6 +7,65 @@
 }
 
 /* =====================================================
+   Table of Contents sidebar
+   ===================================================== */
+
+.toc-sidebar {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 1rem 0 1rem 1.25rem;
+  border-left: 1px solid #e8e8e8;
+}
+
+.toc-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 0.75rem;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  margin: 0;
+}
+
+.toc-item--sub {
+  padding-left: 0.75rem;
+}
+
+.toc-link {
+  display: block;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.82rem;
+  color: #666;
+  text-decoration: none;
+  line-height: 1.45;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.toc-link:hover {
+  color: #008AFF;
+  text-decoration: none;
+}
+
+.toc-link--active {
+  color: #008AFF;
+  border-left-color: #008AFF;
+  font-weight: 600;
+}
+
+/* =====================================================
    Post Card Grid — CockroachDB blog-style layout
    ===================================================== */
 
