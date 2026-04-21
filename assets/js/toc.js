@@ -7,11 +7,10 @@
     var article = document.querySelector('.blog-post');
     if (!bar || !article) return;
 
-    var navbar    = document.querySelector('.navbar-custom');
-    var navBottom = navbar ? navbar.getBoundingClientRect().bottom : 54;
-    bar.style.top = navBottom + 'px';
+    var navbar = document.querySelector('.navbar-custom');
 
     function update() {
+      if (navbar) bar.style.top = navbar.getBoundingClientRect().bottom + 'px';
       var articleTop    = article.getBoundingClientRect().top + window.scrollY;
       var articleHeight = article.offsetHeight;
       var scrolled      = window.scrollY - articleTop;
