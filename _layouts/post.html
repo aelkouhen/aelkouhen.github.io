@@ -1,6 +1,8 @@
 ---
 layout: base
 ---
+{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+{% assign ui_t = site.data.translations[active_lang].ui %}
 
 {% include header.html type="post" %}
 <div id="reading-progress"></div>
@@ -10,7 +12,7 @@ layout: base
     {% if page.wide %}
     <div class="col-xl-3 d-none d-xl-block toc-col">
       <aside class="toc-sidebar" id="toc-sidebar">
-        <p class="toc-title">On this page</p>
+        <p class="toc-title">{{ ui_t.on_this_page | default: "On this page" }}</p>
         <nav id="toc-nav"></nav>
       </aside>
     </div>

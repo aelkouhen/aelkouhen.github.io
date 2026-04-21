@@ -1,4 +1,7 @@
 en:
+  ui:
+    keep_reading: "Keep Reading"
+    on_this_page: "On this page"
   pagination:
     newer: "&larr; Newer Posts"
     older: "Older Posts &rarr;"
@@ -14,6 +17,9 @@ en:
     "Identity and Access Management with CockroachDB": "Identity and Access Management with CockroachDB"
     "CockroachDB & AI": "CockroachDB & AI"
 fr:
+  ui:
+    keep_reading: "Continuer à lire"
+    on_this_page: "Sur cette page"
   pagination:
     newer: "&larr; Articles récents"
     older: "Articles plus anciens &rarr;"

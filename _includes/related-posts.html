@@ -1,10 +1,13 @@
-{% comment %} Embed all posts as JSON; JS handles filtering, shuffling, and rendering {% endcomment %}
+{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+{% assign ui_t = site.data.translations[active_lang].ui %}
+{% comment %} Embed language-filtered posts as JSON; JS handles filtering, shuffling, and rendering {% endcomment %}
 <script id="related-posts-data" type="application/json">
 {
   "currentUrl": "{{ page.url | absolute_url }}",
   "currentTags": {{ page.tags | jsonify }},
   "posts": [
-    {% for post in site.posts %}
+    {% assign lang_posts = site.posts | where: "lang", active_lang %}
+    {% for post in lang_posts %}
     {
       "url": {{ post.url | absolute_url | jsonify }},
       "title": {{ post.title | strip_html | jsonify }},
@@ -21,7 +24,7 @@
 </script>
 
 <section class="keep-reading" id="keep-reading-section" style="display:none">
-  <h2 class="keep-reading__title">Keep Reading</h2>
+  <h2 class="keep-reading__title">{{ ui_t.keep_reading | default: "Keep Reading" }}</h2>
   <div class="card-grid card-grid--related" id="keep-reading-grid"></div>
 </section>
 
