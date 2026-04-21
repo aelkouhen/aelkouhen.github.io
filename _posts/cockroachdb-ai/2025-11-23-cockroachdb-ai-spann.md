@@ -5,7 +5,7 @@ subtitle: "How we built fast, fresh vector indexing at scale in CockroachDB"
 cover-img: /assets/img/cover-ai-spann.webp
 thumbnail-img: /assets/img/cover-ai-spann.webp
 share-img: /assets/img/cover-ai-spann.webp
-tags: [Artificial Intelligence, CockroachDB, GenAI, vector search, vector indexing, pgvector, C-SPANN]
+tags: [Artificial Intelligence, CockroachDB, GenAI, vector search, vector indexing, C-SPANN]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true

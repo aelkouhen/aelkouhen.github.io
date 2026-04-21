@@ -5,7 +5,7 @@ subtitle: "The Imperative for Change"
 cover-img: /assets/img/cover-mainframe-p2-final.webp
 thumbnail-img: /assets/img/cover-mainframe-p2-final.webp
 share-img: /assets/img/cover-mainframe-p2-final.webp
-tags: [mainframe, distributed SQL, CockroachDB, migration, modernization, cloud, database]
+tags: [mainframe, CockroachDB, migration, modernization, cloud]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
