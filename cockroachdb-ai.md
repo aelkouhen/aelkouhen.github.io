@@ -2,7 +2,7 @@
 layout: page
 title: CockroachDB & AI
 subtitle: "Building AI-Ready Systems with Distributed SQL"
-full-width: true
+wide: true
 ---
 
 {% assign ai_posts = site.tags['Artificial Intelligence'] %}

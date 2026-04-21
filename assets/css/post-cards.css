@@ -7,9 +7,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  max-width: 1280px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
+  margin: 2rem 0;
+  padding: 0 0.5rem;
 }
 
 @media (min-width: 640px) {
