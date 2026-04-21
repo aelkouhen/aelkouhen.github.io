@@ -406,10 +406,10 @@ Zooming out further, CockroachDB MCP servers occupy a distinct niche relative to
 
 | Server | Best For | Access Model |
 |---|---|---|
-| **CockroachDB (this article)** | Distributed operational database — developer workflow + ops | Full admin |
-| **PostgreSQL (Anton O.)** | Single-node developer workflow, simplicity, direct access | Read + Write |
-| **MongoDB (Official)** | Data exploration and secure schema inspection | Read-only |
-| **DuckDB (MotherDuck)** | Local and cloud analytics, hybrid SQL execution | Analytics |
+| [**CockroachDB (this article)**](https://github.com/amineelkouhen/mcp-cockroachdb) | Distributed operational database — developer workflow + ops | Full admin |
+| [**PostgreSQL (Anton O.)**](https://github.com/antonorlov/mcp-postgres-server) | Single-node developer workflow, simplicity, direct access | Read + Write |
+| [**MongoDB (Official)**](https://github.com/mongodb-js/mongodb-mcp-server) | Data exploration and secure schema inspection | Read-only |
+| [**DuckDB (MotherDuck)**](https://github.com/motherduckdb/mcp-server-motherduck) | Local and cloud analytics, hybrid SQL execution | Analytics |
 
 The CockroachDB community server occupies a unique position: it targets the full developer-to-ops workflow for a distributed, operationally complex database. This contrasts with PostgreSQL servers that emphasize simplicity, the official MongoDB server that prioritizes secure read-only exploration, and DuckDB servers focused purely on analytics. No other database MCP server in the ecosystem combines cluster health monitoring, DDL management, bulk cloud import, and transactional query execution in a single interface.
 
