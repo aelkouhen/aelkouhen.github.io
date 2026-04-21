@@ -38,6 +38,9 @@
           {% endif %}
 
           {% if include.type == "post" %}
+            {% assign read_words = page.content | strip_html | number_of_words %}
+            {% assign read_mins = read_words | divided_by: 200 | round %}
+            {% if read_mins < 1 %}{% assign read_mins = 1 %}{% endif %}
             <div class="post-author-meta">
               {% if page.author-avatar %}
               <img class="post-author-avatar" src="{{ page.author-avatar | absolute_url }}" alt="{{ page.author }}">
@@ -47,9 +50,11 @@
                 <span class="post-author-date">
                   {{ page.date | date: date_format }}
                   {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
-                  {% if page.readtime %}{% include readtime.html %}{% endif %}
                 </span>
               </div>
+              <span class="post-read-time">
+                <i class="far fa-clock"></i> {{ read_mins }} min read
+              </span>
             </div>
           {% endif %}
         </div>
@@ -75,6 +80,9 @@
           {% endif %}
 
           {% if include.type == "post" %}
+            {% assign read_words = page.content | strip_html | number_of_words %}
+            {% assign read_mins = read_words | divided_by: 200 | round %}
+            {% if read_mins < 1 %}{% assign read_mins = 1 %}{% endif %}
             <div class="post-author-meta">
               {% if page.author-avatar %}
               <img class="post-author-avatar" src="{{ page.author-avatar | absolute_url }}" alt="{{ page.author }}">
@@ -84,9 +92,11 @@
                 <span class="post-author-date">
                   {{ page.date | date: date_format }}
                   {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
-                  {% if page.readtime %}{% include readtime.html %}{% endif %}
                 </span>
               </div>
+              <span class="post-read-time">
+                <i class="far fa-clock"></i> {{ read_mins }} min read
+              </span>
             </div>
           {% endif %}
         </div>
