@@ -6,6 +6,8 @@ cover-img: /assets/img/cover-iam-p4.webp
 thumbnail-img: /assets/img/cover-iam-p4.webp
 share-img: /assets/img/cover-iam-p4.webp
 tags: [iam, security, CockroachDB, AuthZed, SpiceDB, authorization, distributed SQL, permissions]
+author: "Amine El Kouhen"
+author-avatar: "/assets/img/author.jpg"
 comments: true
 ---
 

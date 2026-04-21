@@ -6,6 +6,8 @@ cover-img: /assets/img/cover-ai-fraud.webp
 thumbnail-img: /assets/img/cover-ai-fraud.webp
 share-img: /assets/img/cover-ai-fraud.webp
 tags: [Artificial Intelligence, CockroachDB, GenAI, vector search, fraud detection, AWS]
+author: "Amine El Kouhen"
+author-avatar: "/assets/img/author.jpg"
 comments: true
 ---
 
