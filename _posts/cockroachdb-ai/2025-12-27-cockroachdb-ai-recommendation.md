@@ -131,6 +131,111 @@ Next, let's store these products and their respective embeddings in CockroachDB.
 
 For text embeddings, the `generate_text_vectors` function uses a BERT-based model ([all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)) to create semantic vector embeddings from product descriptions. The generate\_image\_vectors function downloads product images, resizes them, and uses a [ResNet-18](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html) model to create image embeddings. The `vectorize_products` function calls the previous functions, and combines text and image vectors for each product into a dictionary. Then, the `store_product_vectors` function stores the product vectors in the products table in CockroachDB.
 
+```python
+import os
+import psycopg2
+# data prep
+import pandas as pd
+import numpy as np
+# for creating image vector embeddings
+import urllib.request
+from PIL import Image
+from img2vec_pytorch import Img2Vec
+# for creating semantic (text-based) vector embeddings
+from sentence_transformers import SentenceTransformer
+def generate_text_vectors(products):
+  text_vectors = {}
+
+  # Bert variant to create text embeddings
+  text_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+  # generate text vector
+  for index, row in products.iterrows():
+     text_vector = text_model.encode(row["description"])
+     text_vectors[index] = text_vector.astype(np.float32)
+  return text_vectors
+def generate_image_vectors(products):
+  img_vectors={}
+  images=[]  
+  converted=[]
+  # Resnet-18 to create image embeddings
+  image_model = Img2Vec()
+  # generate image vector
+  for index, row in products.iterrows():
+     tmp_file = str(index) + ".jpg"
+     urllib.request.urlretrieve(row["image_url"], tmp_file)
+     img = Image.open(tmp_file).convert('RGB')
+     img = img.resize((224, 224))
+     images.append(img)
+     converted.append(index)
+  vec_list = image_model.get_vec(images)
+  img_vectors = dict(zip(converted, vec_list))
+  return img_vectors
+
+def load_product_catalog():
+  # initialize product
+  dataset = {
+          'id': [1253, 9976, 3626, 2746, 5735, 9982, 4322, 1978, 1736],
+          'description': ['Herringbone Brown Classic', 'Herringbone Wool Suit Navy Blue', 'Peaky Blinders Tweed Outfit', 'Cable Knitted Scarf and Bobble Hat', 'ADIDAS Men White Pluto Sports Shoes', 'ADIDAS Unisex White Shoes', 'Nike STAR RUNNER 4', 'Adidas SL 72 Unisex Shoes', 'Adidas Adizero F50 2 M Mens Running Jogging Shoes'],
+          'category': ['Suits', 'Suits', 'Suits', 'Hats', 'Shoes', 'Shoes', 'Shoes', 'Shoes', 'Shoes'],
+          'image_url': [
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/393e9315126350d97000721f330aa964.jpg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/6d62ba4de5c73b36d44f6bff05d2457e.jpg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/7185ef5d96833937481c19a47edac96a.jpg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/8cf52572340c3592e5f0ede116a0206f.jpg',
+                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/b3d19377041615d8a7cf46b96ef67c4c.jpg'
+                ]
+          }
+
+  # Create DataFrame
+  products = pd.DataFrame(dataset).set_index('id')
+  return products
+def vectorize_products(catalog):  
+  products = []
+  img_vectors = generate_image_vectors(catalog)
+  text_vectors = generate_text_vectors(catalog)
+  for index, row in catalog.iterrows():
+     _id = index
+     text_vector = text_vectors[_id].tolist()
+     img_vector = img_vectors[_id].tolist()
+     vector_dict = {
+         "description_vector": text_vector,
+         "image_vector": img_vector,
+         "product_id": _id,
+         "category": row.category,
+         "product_description": row.description
+     }
+     products.append(vector_dict)
+  return products
+def store_product_vectors(crdb_url, products):
+   with psycopg2.connect(crdb_url) as conn:
+       # Open a cursor to perform database operations
+       with conn.cursor() as cursor:
+           for product in products:
+               query = f'''INSERT INTO products (product_id, product_description, category, description_vector, image_vector) VALUES ({product["product_id"]}, '{product["product_description"]}', '{product["category"]}','{product["description_vector"]}', '{product["image_vector"]}')''' 
+               cursor.execute(query)
+               print(f'''Inserted product: {product["product_id"]}, {product["product_description"]}''')
+
+def create_crdb_url():
+  host = os.environ.get("CRDB_HOST", "localhost")
+  port = os.environ.get("CRDB_PORT", 26257)
+  db = os.environ.get("CRDB_DATABASE", "defaultdb")
+  username = os.environ.get("CRDB_USERNAME", "root")
+  url = f'''postgresql://{username}@{host}:{port}/{db}'''
+  return url
+# Create a CockroachDB connection string
+crdb_url = create_crdb_url()
+# Load a few products
+catalog = load_product_catalog()
+# Create vector embeddings for products
+products = vectorize_products(catalog)
+# Store vectors in CockroachDB
+store_product_vectors(crdb_url, products)
+```
+
 The choice of embedding technique depends on the specific data type, task, and available resources. The [Huggingface Model Hub](https://huggingface.co/models) contains many models that can create embeddings for different kinds of data.
 
 ### 2 - Vector Indexing
@@ -188,6 +293,37 @@ This means that instead of scanning the entire dataset, the system first narrows
 Below is an example of creating a query that returns the three most similar products (by image) to the one shown below, sorted by relevance score (Euclidean Distance set in the indexes created earlier).
 
 <img src="/assets/img/ai-recom-query.jpg" alt="Example query product" style="width:100%">
+
+```python
+def create_query_vector():
+  query_image_url = "https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/2eca615a43d0098f4bb5fc90004c3678.jpg"
+  # Resnet-18 to create image embeddings
+  image_model = Img2Vec()
+  # generate image vector
+  tmp_file = "query_image.jpg"
+  urllib.request.urlretrieve(query_image_url, tmp_file)
+  img = Image.open(tmp_file).convert('RGB')
+  img = img.resize((224, 224))
+  vector = image_model.get_vec(img)
+  query_vector = np.array(vector, dtype=np.float32).tolist()
+  return query_vector
+def fetch_similar_products(crdb_url, category, query_vector, limit=5):
+   with psycopg2.connect(crdb_url) as conn:
+       # Open a cursor to perform database operations
+       with conn.cursor() as cursor:
+           query = f'''SELECT product_id, product_description
+                       FROM products
+                       WHERE category = '{category}'
+                       ORDER BY image_vector <-> '{query_vector}'
+                       LIMIT {limit}'''
+           cursor.execute(query)
+           results = cursor.fetchall()
+           print("The most similar product are: ")
+           for row in results:
+               print(f"The Product ID: {row[0]}, Description: {row[1]}")
+query_vector = create_query_vector()
+fetch_similar_products(crdb_url, "Shoes", query_vector, limit=3)
+```
 
 Even if the index contains billions of products, this query will search only the subset associated with a specific product category. Insert and search performance scales with the number of vectors tagged in that category — not the total volume of vectors in the system. This isolation reduces contention across products, as queries operate on separate index partitions and rows.
 
