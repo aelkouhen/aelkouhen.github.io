@@ -303,8 +303,6 @@ This means that instead of scanning the entire dataset, the system first narrows
 
 Below is an example of creating a query that returns the three most similar products (by image) to the one shown below, sorted by relevance score (Euclidean Distance set in the indexes created earlier).
 
-<img src="/assets/img/ai-recom-query.jpg" alt="Example query product" style="width:100%">
-
 ```python
 def create_query_vector():
   query_image_url = "https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/2eca615a43d0098f4bb5fc90004c3678.jpg"
