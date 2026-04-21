@@ -22,7 +22,7 @@ Partner with The Data Crafters Lab, and embark on a transformative data journey 
 <div class="row">
   <div class="column left">
     <a href="https://www.linkedin.com/in/amine-elkouhen/" target="_blank">
-      <img src="/assets/img/amine.jpg" alt="" class="mx-auto d-block"> 
+      <img src="/assets/img/amine_elkouhen.jpg" alt="" class="mx-auto d-block"> 
       <em style="display:block; margin-left:auto; margin-right:auto; text-align: center">Amine El Kouhen</em>    
     </a>
   </div>
