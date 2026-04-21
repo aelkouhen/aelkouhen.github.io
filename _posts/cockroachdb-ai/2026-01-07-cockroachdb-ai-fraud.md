@@ -79,10 +79,6 @@ CockroachDB addresses this fundamental performance problem with release 25.2, wh
 
 By [using CockroachDB as a distributed vector database](/2025-10-05-cockroachdb-ai-intro/), fraud detection systems can quickly access and reuse historical data (vectors) for different models without re-engineering or reprocessing them. As new data is collected, the database can update the embeddings used by the machine learning models, resulting in more accurate fraud predictions. This improves efficiency and reduces latency when detecting fraud.
 
-<img src="/assets/img/ai-fraud-02.jpg" alt="GenAI-based Fraud Detection System" style="width:100%">
-{: .mx-auto.d-block :}
-**GenAI-based Fraud Detection System**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-
 ---
 
 ## Fraud Detection System with CockroachDB & AWS AI
@@ -105,6 +101,10 @@ First, it applies predefined rules to identify potential fraudulent activity (ru
 
 Second, to provide a low-latency fraud detection system, the engine needs to quickly read the last inserted vector in CockroachDB, search among billions of historical vectors labeled as fraudulent, and calculate distance between this new transaction and the fraudulent ones. Then, based on this distance, the ML model will classify the transaction.
 
+<img src="/assets/img/ai-fraud-02.jpg" alt="GenAI-based Fraud Detection System" style="width:100%">
+{: .mx-auto.d-block :}
+**GenAI-based Fraud Detection System**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 However, even with a good storage backend, plugging the anomaly detection system into a distributed SQL database like CockroachDB isn't straightforward. To support elastic scalability, fault tolerance, and multi-region availability, CockroachDB designed vector indexing with a novel approach:
 
 - First, it should operate without a central coordinator — every node in the cluster must be able to handle reads and writes independently, avoiding bottlenecks or single points of failure.
@@ -114,6 +114,8 @@ However, even with a good storage backend, plugging the anomaly detection system
 - The index must avoid hot spots by distributing workload evenly across the cluster, even under high-volume inserts or queries.
 
 - Lastly, it must support incremental updates — handling inserts and deletes in real time without blocking queries or requiring full rebuilds. These requirements ruled out many conventional indexing strategies, prompting the design of a new approach tailored to CockroachDB's distributed architecture.
+
+https://www.youtube.com/watch?v=j2ElRBAH8vM
 
 This vector indexing algorithm (called C-SPANN) is designed to organize vectors into partitions based on similarity, with each partition typically containing dozens to hundreds of vectors.
 
@@ -155,16 +157,6 @@ The XGBoost algorithm is highly effective in machine learning competitions due t
 
 The Lambda function calls the AWS SageMaker models endpoints to assign anomaly scores and classification scores to historical transactions.
 
-**C.** A notebook instance calls a custom embedding model from AWS Bedrock to vectorize the historical datasets trained and scored by AWS Sagemaker. Then store the fraudulent transactions as vectors in CockroachDB (Step 0 in the diagram).
-
-**1.** The data flow starts with end users (mobile and web clients) invoking Amazon API Gateway REST API.
-
-**2.** What are Amazon Kinesis Data Streams? These are used to capture real-time event data. [Amazon Kinesis](https://aws.amazon.com/kinesis/) is a fully managed service for stream data processing at any scale. It provides a serverless platform that easily collects, processes, and analyzes data in real time so you can get timely insights and react quickly to new information. Kinesis can handle any amount of streaming data and process data from hundreds of thousands of sources with low latencies.
-
-**3.** What is AWS Lambda? This is a serverless, event-driven compute service that lets you run code for virtually any type of application or backend service without provisioning or managing servers. In our solution, the Lambda function is triggered by kinesis to read the stream and perform the following actions:
-
-**3a.** Persist transactional data into CockroachDB to enable low-latency indexing and querying of transactions. For this the following schema was created in the `FRAUD_DB` database:
-
 ```sql
 CREATE TABLE FRAUD_DB.transactions (
   transaction_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -181,6 +173,63 @@ CREATE TABLE FRAUD_DB.transactions (
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now(),
   transaction_vector VECTOR(24)
+);
+```
+- Anomalies detection:
+
+```python
+def get_anomaly_prediction(data):
+   sagemaker_endpoint_name = 'random-cut-forest-endpoint'
+   sagemaker_runtime = boto3.client('sagemaker-runtime')
+  response=sagemaker_runtime.invoke_endpoint(EndpointName=sagemaker_endpoint_name, ContentType='text/csv', Body=data)
+   print("response from get_anomaly_prediction=")
+   # Extract anomaly score from the endpoint response
+   anomaly_score=json.loads(response['Body'].read().decode())["scores"][0]["score"]
+   print("anomaly score: {}".format(anomaly_score))
+   return {"score": anomaly_score}
+```
+
+- Fraud prediction:
+
+```python
+def get_fraud_prediction(data, threshold=0.5):
+   sagemaker_endpoint_name = 'fraud-detection-endpoint'
+   sagemaker_runtime = boto3.client('sagemaker-runtime')
+   response=sagemaker_runtime.invoke_endpoint(EndpointName=sagemaker_endpoint_name, ContentType='text/csv', Body=data)
+   print("response from get_fraud_prediction=")
+   pred_proba = json.loads(response['Body'].read().decode())
+   prediction = 0 if pred_proba < threshold else 1
+   # Note: XGBoost returns a float as a prediction, a linear learner would require different handling.
+   print("classification pred_proba: {}, prediction: {}".format(pred_proba, prediction))
+   return {"pred_proba": pred_proba, "prediction": prediction}
+```
+
+**C.** A notebook instance calls a custom embedding model from AWS Bedrock to vectorize the historical datasets trained and scored by AWS Sagemaker. Then store the fraudulent transactions as vectors in CockroachDB (Step 0 in the diagram).
+
+**1.** The data flow starts with end users (mobile and web clients) invoking Amazon API Gateway REST API.
+
+**2.** What are Amazon Kinesis Data Streams? These are used to capture real-time event data. [Amazon Kinesis](https://aws.amazon.com/kinesis/) is a fully managed service for stream data processing at any scale. It provides a serverless platform that easily collects, processes, and analyzes data in real time so you can get timely insights and react quickly to new information. Kinesis can handle any amount of streaming data and process data from hundreds of thousands of sources with low latencies.
+
+**3.** What is AWS Lambda? This is a serverless, event-driven compute service that lets you run code for virtually any type of application or backend service without provisioning or managing servers. In our solution, the Lambda function is triggered by kinesis to read the stream and perform the following actions:
+
+**3a.** Persist transactional data into CockroachDB to enable low-latency indexing and querying of transactions. For this the following schema was created in the `FRAUD_DB` database:
+
+```sql
+CREATE TABLE FRAUD_DB.transactions (
+    transaction_id     UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    account_id         UUID NOT NULL,
+    merchant_id        UUID,
+    transaction_type   TEXT NOT NULL CHECK (transaction_type IN ('debit', 'credit', 'refund', 'chargeback')),
+    amount             BIGINT NOT NULL CHECK (amount_cents >= 0),
+    currency_code      CHAR(3) NOT NULL,
+    status             TEXT NOT NULL CHECK (status IN ('pending', 'completed', 'failed', 'reversed')),
+    transaction_time   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    location_ip        INET,
+    location           POINT,
+    metadata           JSONB,
+    created_at         TIMESTAMPTZ DEFAULT now(),
+    updated_at         TIMESTAMPTZ DEFAULT now(),
+    transaction_vector VECTOR(24)
 );
 ```
 
