@@ -2,12 +2,12 @@
   {% for lang in site.languages %}
     {% if lang == page.lang or (page.lang == nil and lang == site.default_lang) %}
       <span class="lang-switcher__item lang-switcher__item--active">{{ lang | upcase }}</span>
+    {% elsif lang == site.default_lang %}
+      {% assign en_url = page.url | replace: '/fr', '' %}
+      {% if en_url == '' %}{% assign en_url = '/' %}{% endif %}
+      <a class="lang-switcher__item" href="{{ en_url }}">{{ lang | upcase }}</a>
     {% else %}
-      {% if lang == site.default_lang %}
-        <a class="lang-switcher__item" href="{{ page.url }}">{{ lang | upcase }}</a>
-      {% else %}
-        <a class="lang-switcher__item" href="/{{ lang }}{{ page.url }}">{{ lang | upcase }}</a>
-      {% endif %}
+      <a class="lang-switcher__item" href="/{{ lang }}{{ page.url }}">{{ lang | upcase }}</a>
     {% endif %}
     {% unless forloop.last %}<span class="lang-switcher__sep">|</span>{% endunless %}
   {% endfor %}
