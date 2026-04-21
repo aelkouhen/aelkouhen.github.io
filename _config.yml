@@ -278,6 +278,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+      wide: true
       comments: true
       social-share: true
       show-share: true
