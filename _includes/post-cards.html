@@ -37,7 +37,19 @@
 
         <div class="card__meta">
           {%- assign date_format = site.date_format | default: "%B %-d, %Y" -%}
+          {% if post.author-avatar or post.author %}
+          <div class="card__author">
+            {% if post.author-avatar %}
+            <img class="card__author-avatar" src="{{ post.author-avatar | absolute_url }}" alt="{{ post.author }}">
+            {% endif %}
+            <div class="card__author-info">
+              {% if post.author %}<span class="card__author-name">{{ post.author }}</span>{% endif %}
+              <span class="card__author-date">{{ post.date | date: date_format }}</span>
+            </div>
+          </div>
+          {% else %}
           {{ post.date | date: date_format }}
+          {% endif %}
         </div>
       </div>
 
