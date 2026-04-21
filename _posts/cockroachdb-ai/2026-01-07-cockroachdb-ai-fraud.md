@@ -59,11 +59,11 @@ The rules can be implemented so that it can start from a "low cost" to "high cos
 
 - ***Predictive Modeling Layer***: The third layer is a predictive modeling system that uses advanced machine learning algorithms, such as [XGBoost](https://www.nvidia.com/en-us/glossary/xgboost/), to predict the likelihood of fraud. This layer uses historical data to train the models and can detect new fraud patterns that are not detected by the previous layers. This layer can also be effectively used to predict anomalies when combined with vector embeddings.
 
-By using a multi-layer approach, fraud detection systems can minimize false positives and false negatives, improving fraud detection accuracy. The multi-layer approach also helps to detect fraud with accuracy, preventing customer dissatisfaction when they are falsely flagged as a fraudster.
-
 <img src="/assets/img/ai-fraud-01.jpg" alt="Multi-Layered Fraud Detection" style="width:100%">
 {: .mx-auto.d-block :}
 **Multi-Layered Fraud Detection**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+By using a multi-layer approach, fraud detection systems can minimize false positives and false negatives, improving fraud detection accuracy. The multi-layer approach also helps to detect fraud with accuracy, preventing customer dissatisfaction when they are falsely flagged as a fraudster.
 
 ### 2 - Latency
 
