@@ -5,4 +5,5 @@ subtitle: "Building AI-Ready Systems with Distributed SQL"
 full-width: true
 ---
 
-{% include post-cards.html posts=site.tags['Artificial Intelligence'] %}
+{% assign ai_posts = site.tags['Artificial Intelligence'] %}
+{% include post-cards.html posts=ai_posts %}
