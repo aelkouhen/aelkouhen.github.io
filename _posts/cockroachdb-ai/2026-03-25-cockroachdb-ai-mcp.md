@@ -332,6 +332,60 @@ End-to-end traces flow into the observability pipeline, with spans covering midd
 
 ---
 
+## Community MCP Server vs. Managed MCP Server: An Objective Comparison
+
+Both options connect AI agents to CockroachDB via the Model Context Protocol, but they serve fundamentally different audiences, environments, and risk tolerances. Here is an objective side-by-side analysis based on the architecture of each.
+
+### Deployment and Operations
+
+The community server is **self-hosted**: you run it on your own infrastructure via `uvx`, Docker, or from source. You control the binary, the configuration, and the upgrade cycle. This is ideal for developers who want full transparency into what the server does — every line of Python is readable and forkable on GitHub.
+
+The managed server is **zero-ops**: Cockroach Labs hosts it at `https://cockroachlabs.cloud/mcp`. There is nothing to deploy, upgrade, or monitor on your end. Customers automatically receive protocol enhancements as MCP evolves, without tracking specification changes or redeploying services. For teams that want to evaluate or ship fast, this eliminates all infrastructure friction.
+
+### Tool Coverage and Capabilities
+
+The community server exposes **29 tools** spanning the full operational spectrum — from `get_cluster_status` and `show_running_queries` to `create_database`, `drop_table`, `create_index`, `bulk_import`, and `execute_transaction`. It is deliberately comprehensive, giving AI agents access to administrative and monitoring operations that go well beyond simple querying. It is, as independent analysis describes it, "the clear choice for developers who need a full-stack tool" — uniquely powerful for end-to-end development and light operational tasks.
+
+The managed server provides a **curated, safety-scoped toolset**. In read-only mode it permits introspective tools (`list_databases`, `select_query`, `get_table_schema`). Write consent unlocks additive operations (`create_database`, `create_table`, `insert_rows`). Destructive SQL (`DROP`, `TRUNCATE`) is permanently unsupported. This deliberate constraint is a feature, not a limitation: it makes the managed server suitable for production environments where an agent error must never result in data loss.
+
+### Security Model
+
+| Dimension | Community Server | Managed Server |
+|---|---|---|
+| **Authentication** | DB username/password + SSL certificates | OAuth 2.1 (PKCE) or service account API keys |
+| **Authorization** | DB user privileges | Cloud RBAC checked per tool invocation |
+| **Scope control** | Set at DB user level | `mcp:read` / `mcp:write` consent tokens |
+| **Audit logging** | Local process logs | Structured telemetry in Cloud observability pipeline |
+| **Destructive ops** | Allowed (controlled by DB user) | Blocked at the MCP layer |
+
+The community server's security posture depends entirely on how you configure the database user it connects with. Best practice is to create a dedicated SQL user with minimal required privileges — but this is the operator's responsibility. The managed server enforces least-privilege by design: every tool invocation is independently authorized against Cloud RBAC, and requests exceeding scope are rejected before reaching the database.
+
+### Observability
+
+Community server logs are local to the process and must be integrated into your own monitoring stack. The managed server emits structured logs tagged with `mcp` for every request — including tool name, cluster context, redacted SQL shape, latency, and MCP-specific error codes — feeding directly into Cockroach Labs' observability and analytics pipelines.
+
+### Customization and Extensibility
+
+The community server is **fully extensible**: fork the repository, add new tools, modify behavior, and submit pull requests. It supports both `stdio` and `http` transports, with streamable HTTP on the roadmap. The project is MIT-licensed and openly welcomes contributions.
+
+The managed server is **not customizable** in the traditional sense — you consume what Cockroach Labs ships. However, because it is continuously improved without operator intervention, you benefit from every MCP specification update and CockroachDB Cloud API enhancement automatically.
+
+### When to Use Which
+
+| Scenario | Recommended |
+|---|---|
+| Local development, schema exploration, prototyping | **Community server** |
+| Full cluster administration via AI (index management, bulk import) | **Community server** |
+| Production agent access with enterprise security requirements | **Managed server** |
+| Multi-tenant or shared agent environments | **Managed server** |
+| Regulated industries requiring audit trails | **Managed server** |
+| Teams without infrastructure capacity to self-host | **Managed server** |
+| Open-source contributors and tool builders | **Community server** |
+
+In practice, the two are complementary rather than competitive. Many teams use the community server during development — where they need full administrative access and want to inspect the server's behavior — and graduate to the managed server for production workloads where safety, observability, and zero-ops maintenance matter more than raw tool coverage.
+
+---
+
 ## AI Agent Skills for Database Lifecycle Automation
 
 [CockroachDB Agent Skills](https://www.cockroachlabs.com/blog/cockroachdb-ai-agents-database-lifecycle-automation/) are structured capabilities that define how an AI system interacts with CockroachDB. They follow open standard interfaces, making them portable across different models and tools without rewriting integrations. Teams can use agent skills across onboarding, development, operations, and scaling decisions — throughout the full database lifecycle.
@@ -437,60 +491,6 @@ The Operations and Lifecycle skill ensures the agent does not apply changes dire
 **Step 5: Agent generates migration scripts for human review**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 This workflow is conversational, structured, auditable, and human-approved at every decision point — exactly the pattern that CockroachDB Agent Skills are designed to enforce.
-
----
-
-## Community MCP Server vs. Managed MCP Server: An Objective Comparison
-
-Both options connect AI agents to CockroachDB via the Model Context Protocol, but they serve fundamentally different audiences, environments, and risk tolerances. Here is an objective side-by-side analysis based on the architecture of each.
-
-### Deployment and Operations
-
-The community server is **self-hosted**: you run it on your own infrastructure via `uvx`, Docker, or from source. You control the binary, the configuration, and the upgrade cycle. This is ideal for developers who want full transparency into what the server does — every line of Python is readable and forkable on GitHub.
-
-The managed server is **zero-ops**: Cockroach Labs hosts it at `https://cockroachlabs.cloud/mcp`. There is nothing to deploy, upgrade, or monitor on your end. Customers automatically receive protocol enhancements as MCP evolves, without tracking specification changes or redeploying services. For teams that want to evaluate or ship fast, this eliminates all infrastructure friction.
-
-### Tool Coverage and Capabilities
-
-The community server exposes **29 tools** spanning the full operational spectrum — from `get_cluster_status` and `show_running_queries` to `create_database`, `drop_table`, `create_index`, `bulk_import`, and `execute_transaction`. It is deliberately comprehensive, giving AI agents access to administrative and monitoring operations that go well beyond simple querying. It is, as independent analysis describes it, "the clear choice for developers who need a full-stack tool" — uniquely powerful for end-to-end development and light operational tasks.
-
-The managed server provides a **curated, safety-scoped toolset**. In read-only mode it permits introspective tools (`list_databases`, `select_query`, `get_table_schema`). Write consent unlocks additive operations (`create_database`, `create_table`, `insert_rows`). Destructive SQL (`DROP`, `TRUNCATE`) is permanently unsupported. This deliberate constraint is a feature, not a limitation: it makes the managed server suitable for production environments where an agent error must never result in data loss.
-
-### Security Model
-
-| Dimension | Community Server | Managed Server |
-|---|---|---|
-| **Authentication** | DB username/password + SSL certificates | OAuth 2.1 (PKCE) or service account API keys |
-| **Authorization** | DB user privileges | Cloud RBAC checked per tool invocation |
-| **Scope control** | Set at DB user level | `mcp:read` / `mcp:write` consent tokens |
-| **Audit logging** | Local process logs | Structured telemetry in Cloud observability pipeline |
-| **Destructive ops** | Allowed (controlled by DB user) | Blocked at the MCP layer |
-
-The community server's security posture depends entirely on how you configure the database user it connects with. Best practice is to create a dedicated SQL user with minimal required privileges — but this is the operator's responsibility. The managed server enforces least-privilege by design: every tool invocation is independently authorized against Cloud RBAC, and requests exceeding scope are rejected before reaching the database.
-
-### Observability
-
-Community server logs are local to the process and must be integrated into your own monitoring stack. The managed server emits structured logs tagged with `mcp` for every request — including tool name, cluster context, redacted SQL shape, latency, and MCP-specific error codes — feeding directly into Cockroach Labs' observability and analytics pipelines.
-
-### Customization and Extensibility
-
-The community server is **fully extensible**: fork the repository, add new tools, modify behavior, and submit pull requests. It supports both `stdio` and `http` transports, with streamable HTTP on the roadmap. The project is MIT-licensed and openly welcomes contributions.
-
-The managed server is **not customizable** in the traditional sense — you consume what Cockroach Labs ships. However, because it is continuously improved without operator intervention, you benefit from every MCP specification update and CockroachDB Cloud API enhancement automatically.
-
-### When to Use Which
-
-| Scenario | Recommended |
-|---|---|
-| Local development, schema exploration, prototyping | **Community server** |
-| Full cluster administration via AI (index management, bulk import) | **Community server** |
-| Production agent access with enterprise security requirements | **Managed server** |
-| Multi-tenant or shared agent environments | **Managed server** |
-| Regulated industries requiring audit trails | **Managed server** |
-| Teams without infrastructure capacity to self-host | **Managed server** |
-| Open-source contributors and tool builders | **Community server** |
-
-In practice, the two are complementary rather than competitive. Many teams use the community server during development — where they need full administrative access and want to inspect the server's behavior — and graduate to the managed server for production workloads where safety, observability, and zero-ops maintenance matter more than raw tool coverage.
 
 ---
 
