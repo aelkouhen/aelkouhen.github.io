@@ -86,8 +86,8 @@
   padding-bottom: 0.28rem;
   text-decoration: none;
   line-height: 1.4;
-  border-right: 2px solid transparent;
-  margin-right: -2px;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -98,7 +98,7 @@
 
 .toc-link--active {
   color: #008AFF !important;
-  border-right-color: #008AFF;
+  border-left-color: #008AFF;
   font-weight: 700;
 }
 
