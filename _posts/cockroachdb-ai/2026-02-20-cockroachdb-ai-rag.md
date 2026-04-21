@@ -33,16 +33,11 @@ Choosing between them is not a matter of "newer is better" — it is a question 
 
 ### Naive RAG
 
-Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two distinct phases — an offline ingestion pipeline and an online retrieval-and-generation pipeline — connected through a shared vector store.
-
-**Ingestion (offline)**
+Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two distinct phases — an **offline ingestion pipeline** (steps 1–3) and an **online retrieval-and-generation pipeline** (steps 4–7) — connected through a shared vector store.
 
 1. **Chunk** — raw documents (PDFs, CSVs, HTML) are split into fixed-size overlapping text segments by a chunker.
 2. **Encode** — each chunk is converted into a high-dimensional vector by an embedding model that captures its semantic meaning.
 3. **Index** — the resulting vectors are stored and indexed in the CockroachDB Vector Store, ready for similarity search.
-
-**Retrieval & Generation (online — per query)**
-
 4. **Encode query** — the user's question is passed through the same embedding model to produce a query vector.
 5. **Similarity search** — CockroachDB compares the query vector against all indexed chunk vectors using cosine distance and returns the top-k closest matches.
 6. **Assemble context** — the retrieved chunks are combined with the original query into a single context block.
@@ -62,18 +57,13 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two di
 
 ### Graph RAG
 
-Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Local to Global: A Graph RAG Approach to Query-Focused Summarization"*, replaces flat vector chunks with a structured knowledge graph and hierarchical community summaries.
-
-**Indexing phase (offline)**
+Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Local to Global: A Graph RAG Approach to Query-Focused Summarization"*, replaces flat vector chunks with a structured knowledge graph and hierarchical community summaries. The pipeline runs in two phases — **offline indexing** (steps 1–5) and **online retrieval & generation** (steps 6–10).
 
 1. **Chunk** — source documents are split into text segments, just as in Naive RAG.
 2. **Entity extraction** — an LLM reads each chunk and identifies named entities (people, places, concepts) and the relationships between them.
 3. **Knowledge Graph** — extracted entities and relationships are assembled into a graph stored in a dedicated Graph DB.
 4. **Community clustering** — a community detection algorithm groups closely related entities into clusters.
 5. **Community summaries** — the LLM pre-generates a natural-language summary for each cluster; summaries are stored in both the Graph DB and a Vector DB for fast lookup.
-
-**Retrieval & Generation phase (online — per query)**
-
 6. **Embed query** — the user query is converted into a vector.
 7. **Vector search** — the Vector DB is searched to find the most semantically relevant community summaries.
 8. **Graph hop** — for each matched community, the Graph DB is traversed to retrieve supporting entity relationships and fine-grained evidence.
@@ -94,21 +84,13 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 
 ### Agentic RAG
 
-Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results. The pipeline runs across three concurrent lanes.
-
-**Planning**
+Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results. The pipeline runs across three lanes — **Planning** (steps 1–3), **Multi-source Retrieval** (steps 4–5), and **Iterative Reasoning & Self-Correction** (steps 6–9).
 
 1. The **User Query** arrives at the **Agent Planner**, which analyses intent and scope.
 2. The planner decomposes the query into **Sub-Questions**, each addressable by a specific retrieval source or tool.
 3. The **Tool Selector** routes each sub-question to the appropriate backend.
-
-**Multi-source Retrieval**
-
 4. Retrieval executes in parallel across four sources: **Vector DB** (CockroachDB for semantic search), **Web Search** (real-time), **APIs & Tools** (structured data), and **Code Executor** (programmatic computations).
 5. All results are aggregated into a **Retrieved Context** package passed to the reasoning lane.
-
-**Iterative Reasoning & Self-Correction**
-
 6. The **LLM Reasoner** processes the context and produces a **Draft Answer**.
 7. A decision gate asks: **"Need more info?"** — if YES, the agent loops back to step 3 with a refined sub-question and reruns retrieval.
 8. If NO, the **Evaluator Agent** assesses quality: **"Relevant & Complete?"** — if NO, the answer is refined and re-evaluated.
