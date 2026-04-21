@@ -87,11 +87,11 @@ CockroachDB plays two roles in the fraud detection system:
 
 1. As a global online transaction processing (OLTP) database that stores and indexes the financial transactions.
 
-2. As a vector database operated by the AWS AI services Bedrock and Sagemaker. Both roles are interdependent and can coexist on a single cluster.
+2. As a vector database operated by the AWS AI services [Bedrock](https://aws.amazon.com/bedrock/) and [Sagemaker](https://aws.amazon.com/sagemaker/). Both roles are interdependent and can coexist on a single cluster.
 
 As a prerequisite, historical transactions (training data) are given to AWS Sagemaker to train its ML models. Once the transactions are flagged as fraudulent, they are stored in CockroachDB as vector embeddings.
 
-The fraud detection system is booted when an AWS Lambda function consumes the real-time transaction stream from Kinesis, applies the rules, creates the vector embeddings using AWS Bedrock foundational models, and sinks both transactional and vectorial data into CockroachDB.
+The fraud detection system is booted when an [AWS Lambda](https://aws.amazon.com/lambda/) function consumes the real-time transaction stream from [Kinesis](https://aws.amazon.com/kinesis/), applies the rules, creates the vector embeddings using AWS Bedrock foundational models, and sinks both transactional and vectorial data into CockroachDB.
 
 CockroachDB also loads historical data directly from an S3 bucket using the `IMPORT INTO` statement. Now data can enter the fraud detection pipeline, using it as input to train and improve the models running on AWS SageMaker.
 
