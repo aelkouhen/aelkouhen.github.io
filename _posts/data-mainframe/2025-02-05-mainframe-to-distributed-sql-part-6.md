@@ -132,6 +132,8 @@ You can use different tools like [Prometheus](https://prometheus.io/), or [Datad
 **[Cluster API](https://www.cockroachlabs.com/docs/v24.3/cluster-api):** The Cluster API is a REST API that runs in the cluster and provides much of the same information about your cluster and nodes as is available from the [DB Console](https://www.cockroachlabs.com/docs/stable/monitoring-and-alerting#db-console) or the [Prometheus endpoint](https://www.cockroachlabs.com/docs/stable/monitoring-and-alerting#prometheus-endpoint), and is accessible from each node at the same address and port as the DB Console.
 
 <img src="/assets/img/mainframe-p6-db-console.png" alt="CockroachDB DB Console metrics dashboard" style="width:100%">
+{: .mx-auto.d-block :}
+**CockroachDB DB Console metrics dashboard**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Proactive alerts play a critical role in ensuring a rapid response to potential problems, helping to prevent cascading failures and extended downtime. Setting up thresholds for critical metrics, such as latency, disk space usage, and error rates, allows for real-time detection of anomalies. Automated alerts delivered through email, SMS, or monitoring dashboards notify relevant teams immediately, enabling swift corrective action. Meanwhile, advanced systems can leverage machine learning-powered anomaly detection to identify unusual patterns, providing early warnings for issues that might otherwise go unnoticed.
 

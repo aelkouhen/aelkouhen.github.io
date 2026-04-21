@@ -58,6 +58,8 @@ In their groundbreaking article ["Disruptive Technologies: Catching the Wave"](h
 The authors called this ["the innovator's dilemma"](https://www.hbs.edu/faculty/Pages/item.aspx?num=46). In this scenario, an established company (called an incumbent) typically invests in sustainable innovations for its existing products to sustain revenue and profit growth. However, a startup, unburdened by existing products, has the freedom to take significant risks and pursue revolutionary innovations. If these innovations resonate with customers, the impacts can be devastating for incumbents.
 
 <img src="/assets/img/mainframe-p2-innovators-dilemma.png" alt="The Innovator's Dilemma curve" style="width:100%">
+{: .mx-auto.d-block :}
+**The Innovator's Dilemma curve**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Today, the innovator's dilemma is a tangible concern for numerous large companies, many of which rely on mainframe systems. There's a prevailing belief that failure to embrace more innovative technologies could lead to the eventual triumph of upstart competitors. This fear of disruption is a significant driver for change within the mainframe industry and underscores the enduring demand for legacy modernization through mainframe migration.
 
@@ -106,6 +108,8 @@ Migration to the cloud also provides opportunities to modernize legacy mainframe
 For data storage, there are many "cloud" databases available, but very few of them really deliver the agility and scale required by these modern applications. Some migration initiatives try to use a legacy relational database in the cloud by running it as is, but they can only scale as far as the hardware instance they run on. They were only designed to scale vertically.
 
 <img src="/assets/img/mainframe-p2-cloud-native-scale.png" alt="Cloud-Native Distributed SQL vs legacy databases" style="width:100%">
+{: .mx-auto.d-block :}
+**Cloud-Native Distributed SQL vs legacy databases**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Other initiatives try to use NoSQL databases but struggle with ACID transactions at scale. They tried to push NoSQL everywhere, even if the workload didn't fit this technology. Most mainframe workloads are designed to perform online transactional processing (OLTP), so migrating from mainframe traditional databases to NoSQL is neither relevant nor accurate.
 
@@ -114,6 +118,8 @@ Some cloud "augmented" legacy databases have also been created, where only one d
 None of these initiatives were architected for the cloud. That is why, in 2015, three ex-Googlers, Spencer Kimball, Peter Mattis, and Ben Darnell, co-founded Cockroach Labs. The database that their new company created, CockroachDB, was inspired by frustration with the available open-source databases and cloud DBaaS offerings and the lack of capabilities that meet the requirements of today's applications. In addition to enterprise-grade capabilities, CockroachDB emerged to combine the elasticity of the cloud, the consistency of relational databases, and the scaling and resiliency of NoSQL databases.
 
 <img src="/assets/img/mainframe-p2-cockroachdb-venn.png" alt="CockroachDB: Relational, NoSQL, Cloud Native, and Enterprise Ready" style="width:100%">
+{: .mx-auto.d-block :}
+**CockroachDB: Relational, NoSQL, Cloud Native, and Enterprise Ready**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
@@ -132,6 +138,8 @@ Operational costs associated with legacy mainframes can be substantial due to th
 While financial costs are critical, the opportunity cost of maintaining legacy systems can be even more significant. Legacy mainframes often limit an organization's ability to innovate and adapt quickly to changing market demands. This lack of agility can result in missed business opportunities and a slower response to competitive pressures. By contrast, modern distributed databases like CockroachDB support rapid development cycles and seamless integration with cloud-native applications, enabling organizations to innovate more freely and maintain a competitive edge.
 
 <img src="/assets/img/mainframe-p2-real-cost.png" alt="The real cost of mainframe: operating cost plus opportunity cost" style="width:100%">
+{: .mx-auto.d-block :}
+**The real cost of mainframe: operating cost plus opportunity cost**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Cost of Transition and Integration
 

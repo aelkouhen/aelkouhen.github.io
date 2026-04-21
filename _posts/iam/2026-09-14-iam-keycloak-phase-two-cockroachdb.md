@@ -118,6 +118,8 @@ start-dev
 This command starts Keycloak exposed on the local port `8080` and creates an initial admin user with the username `admin` and password `admin`.
 
 <img src="/assets/img/iam-p5-04.png" alt="Keycloak started with CockroachDB" style="width:100%">
+{: .mx-auto.d-block :}
+**Keycloak started with CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Once the container is up, you can configure your realm, clients, identity providers, roles, and user federation as usual.
 
@@ -126,6 +128,8 @@ Once the container is up, you can configure your realm, clients, identity provid
 If you want to get rid of any infrastructure provisioning struggle, you can opt to deploy your Keycloak clusters using Phase Two. First, sign up in the [Phase Two dashboard](https://dash.phasetwo.io/) and create a new account. You will be redirected to the dashboard main page.
 
 <img src="/assets/img/iam-p5-05.png" alt="Phase Two dashboard" style="width:100%">
+{: .mx-auto.d-block :}
+**Phase Two dashboard**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Here you can deploy clusters, create teams and create realms as you could do with the open-source Keycloak.
 
@@ -139,21 +143,29 @@ Follow these steps to create your own realm:
 - In the top-left menu, locate Current realm and click Create Realm next to it.
 
 <img src="/assets/img/iam-p5-06.png" alt="Create realm in Keycloak admin console" style="width:100%">
+{: .mx-auto.d-block :}
+**Create realm in Keycloak admin console**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - In the Realm name field, enter `crdb-realm`.
 - Click Create to finalize.
 
 <img src="/assets/img/iam-p5-07.png" alt="Realm name configuration" style="width:100%">
+{: .mx-auto.d-block :}
+**Realm name configuration**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Step 2b. Create a realm in Phase Two
 
 Creating a realm in PhaseTwo provides a quick way to get started with Keycloak. In the Create Realm menu, you need to set the realm name, the region where the realm should be located and the organization in which your realm will be provisioned.
 
 <img src="/assets/img/iam-p5-08.png" alt="Create realm in Phase Two" style="width:100%">
+{: .mx-auto.d-block :}
+**Create realm in Phase Two**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Once the realm is created and active, you can click on the Console menu in the upper right corner of the dashboard to open the Keycloak console.
 
 <img src="/assets/img/iam-p5-09.png" alt="Keycloak console in Phase Two" style="width:100%">
+{: .mx-auto.d-block :}
+**Keycloak console in Phase Two**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 For the remaining steps of this guide, you will perform the following actions in the Keycloak console similarly to the self-hosted deployment.
 
@@ -170,6 +182,8 @@ From the left-hand menu, click Users, click Create new user and fill out the for
 Then, click Create to add the new user.
 
 <img src="/assets/img/iam-p5-10.png" alt="Create new user in Keycloak" style="width:100%">
+{: .mx-auto.d-block :}
+**Create new user in Keycloak**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 This user needs a password to log in. To set the initial password, click Credentials at the top of the page, fill in the Set password form with a password and toggle Temporary to `Off` so that the user does not need to update this password at the first login.
 
@@ -180,6 +194,8 @@ If you choose a managed Keycloak, you can simply log to the [remote account cons
 As a user in the Account Console, you can manage your account including modifying your profile, adding two-factor authentication, and including identity provider accounts.
 
 <img src="/assets/img/iam-p5-11.png" alt="Keycloak Account Console" style="width:100%">
+{: .mx-auto.d-block :}
+**Keycloak Account Console**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Step 4. Create and secure your first application.
 
@@ -196,16 +212,22 @@ Confirm that Standard flow is enabled and make these changes under Login setting
 Note that we set these URLs, because we will use the SPA testing application on Keycloak's website ([www.keycloak.org](http://www.keycloak.org)). For specific usage, you have to change these values accordingly.
 
 <img src="/assets/img/iam-p5-12.png" alt="Create and configure a Keycloak client" style="width:100%">
+{: .mx-auto.d-block :}
+**Create and configure a Keycloak client**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Step 5. Testing the standard flow
 
 To confirm the client was created successfully, you can use the SPA testing application on the [Keycloak website](https://www.keycloak.org/app/). Set the configuration according to the values you already set (aka Keycloak Server URL, Realm and Client ID) and save.
 
 <img src="/assets/img/iam-p5-13.png" alt="SPA testing application configuration" style="width:100%">
+{: .mx-auto.d-block :}
+**SPA testing application configuration**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Then, click on "Sign In" to authenticate to this application using the user `crdb-user` you created earlier. Once you are logged in successfully, you should have the following greeting screen:
 
 <img src="/assets/img/iam-p5-14.png" alt="Successful login greeting screen" style="width:100%">
+{: .mx-auto.d-block :}
+**Successful login greeting screen**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Since we selected the Standard Flow when creating the client, the following steps take place when the user tries to log in:
 
@@ -218,6 +240,8 @@ Since we selected the Standard Flow when creating the client, the following step
 The below diagram shows the steps that happen in sequence and which components are involved.
 
 <img src="/assets/img/iam-p5-15.png" alt="Standard flow authorization sequence diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Standard flow authorization sequence diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The flow is targeted towards web applications, but is also recommended for native applications, including mobile applications, where it is possible to embed a user agent.
 

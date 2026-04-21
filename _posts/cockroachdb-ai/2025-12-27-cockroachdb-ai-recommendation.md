@@ -265,6 +265,8 @@ Additionally, CockroachDB's new vector indexing system **C-SPANN**, incorporates
 Unlike traditional solutions that rely on in-memory datasets or batched writes, C-SPANN is built to function across regions with strong consistency, low latency, and linear scalability. It supports immediate searchability of new data, avoids central coordination, and fits naturally into CockroachDB's distributed key-value storage model.
 
 <img src="/assets/img/ai-recom-10.png" alt="C-SPANN" style="width:100%">
+{: .mx-auto.d-block :}
+**C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 To keep storage and compute costs low, C-SPANN integrates **RaBitQ**, a quantization technique that reduces vector size by approximately 94%. Quantized vectors are scanned rapidly using [SIMD](https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data)-optimized instructions, and a reranking step ensures high accuracy by rechecking the top candidates against the original full-precision vectors. The system also supports per-user and multi-region indexing via prefix columns, enabling fine-grained isolation and data locality. This ensures scalable, secure, and low-latency search experiences regardless of the number of users or regions involved.
 
@@ -350,6 +352,8 @@ Even if the index contains billions of products, this query will search only the
 Under the hood, the index maintains an independent K-means tree for each category. From the system's standpoint, there's little difference between managing one billion vectors in a single tree or distributing them across a million smaller trees. In both cases, vectors are assigned to partitions and stored within ranges in CockroachDB's key-value layer. These ranges are automatically split, merged, and distributed across nodes, enabling near-linear scalability as usage grows.
 
 <img src="/assets/img/ai-recom-13.png" alt="Partitioned vector indexing" style="width:100%">
+{: .mx-auto.d-block :}
+**Partitioned vector indexing**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The instructions above are a brief overview to demonstrate the building blocks for an online recommendation engine using CockroachDB. You can try this out with the notebook referenced [here](https://colab.research.google.com/drive/15ibk5BoLmldi06UJ6a4gewEc5zxxCTZ9?usp=sharing) (install [Google Colab](https://colab.research.google.com/) to open).
 

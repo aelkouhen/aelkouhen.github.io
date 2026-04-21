@@ -16,6 +16,8 @@ Our photo-sharing startup never reached millions of users, but I suspect that ma
 Even with just a few hundred items, users expect fast, accurate search. If they upload something, they want to find it immediately. If they search, they want results in the blink of an eye. Increasingly, basic keyword search isn't enough. In the age of ChatGPT, users expect semantic search, with results based on the meaning of the content, not just filenames, metadata, keywords, or tags.
 
 <img src="/assets/img/ai-spann-01.png" alt="CockroachDB Vector Search AI workflow" style="width:100%">
+{: .mx-auto.d-block :}
+**CockroachDB Vector Search AI workflow**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Some solutions to this problem assume that the entire dataset fits into memory on a single machine. Or, at most, they rely on a fast local SSD. Many of them don't expect your data to be distributed across regions, or to be constantly changing, or to be part of a transactional system where consistency and freshness actually matter. They often come with significant limitations, like requiring writes to be batched, returning stale results, or needing specialized hardware to perform well.
 
@@ -28,6 +30,8 @@ Read on to learn how we combined recent academic research with practical enginee
 To start, it's important to understand how systems can make sense of photos or search documents by meaning. Companies like [OpenAI](https://www.cockroachlabs.com/blog/openai-iam-architecture-ory-cockroachdb/) offer embedding models that convert an image, document, or other media into a long list of floating-point numbers — a vector — that captures its meaning. If two photos or documents are similar, say two beach photos, they'll be mapped to vectors that are near each other in high-dimensional space.
 
 <img src="/assets/img/ai-spann-02.png" alt="Example vector space" style="width:100%">
+{: .mx-auto.d-block :}
+**Example vector space**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Embedding meaning into vectors reduces complex problems like image recognition and semantic search into a simpler one: finding nearby vectors. These models are built on the same deep learning techniques that power systems like [ChatGPT](https://www.cockroachlabs.com/blog/openai-modern-iam-cockroachdb-ory/) — large neural networks trained to capture meaning and context across many kinds of data.
 
@@ -36,6 +40,8 @@ This even works across media types. Multimodal models embed text and images into
 ## How Meaning is Indexed
 
 <img src="/assets/img/ai-spann-03.png" alt="Illustration of the output of embedding models" style="width:100%">
+{: .mx-auto.d-block :}
+**Illustration of the output of embedding models**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Embedding vectors often have hundreds or thousands of dimensions that allow them to represent complex meaning. But that also makes them hard to search. Think about it: should beach photos come before or after food photos? What about photos of food at the beach? There's no natural ordering for multi-dimensional vectors, the way there is for numbers or strings. That means traditional indexes don't apply.
 
@@ -64,14 +70,20 @@ These constraints ruled out many common approaches. We needed something that fit
 ## Introducing C-SPANN
 
 <img src="/assets/img/ai-spann-04.png" alt="Research before CockroachDB C-SPANN" style="width:100%">
+{: .mx-auto.d-block :}
+**Research before CockroachDB C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 C-SPANN, short for CockroachDB SPANN, is a vector indexing algorithm that incorporates ideas from Microsoft's [SPANN](https://www.microsoft.com/en-us/research/wp-content/uploads/2021/11/SPANN_finalversion1.pdf) and [SPFresh](https://www.microsoft.com/en-us/research/publication/spfresh-incremental-in-place-update-for-billion-scale-vector-search/) papers, as well as Google's ScaNN project.
 
 <img src="/assets/img/ai-spann-05.png" alt="K-means tree powering C-SPANN CockroachDB vector indexing" style="width:100%">
+{: .mx-auto.d-block :}
+**K-means tree powering C-SPANN CockroachDB vector indexing**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 At the core of C-SPANN is a hierarchical K-means tree. Vectors are grouped into partitions based on similarity, with each partition containing anywhere from dozens to hundreds of vectors. Each partition has a centroid, which is the average of the vectors it contains, representing their "center of mass". Those centroids are recursively clustered into higher-level partitions, forming a tree that efficiently narrows the search space.
 
 <img src="/assets/img/ai-spann-06.png" alt="Partitions mapped to CockroachDB nodes" style="width:100%">
+{: .mx-auto.d-block :}
+**Partitions mapped to CockroachDB nodes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each partition is stored as a self-contained unit in CockroachDB's key-value layer, making the index naturally sharding-compatible. Partition data is laid out as a contiguous set of key-value rows within a CockroachDB range. As partitions are added, removed, or grow in size, the underlying ranges can be automatically split, merged, and rebalanced by the database, just like any other table data.
 
@@ -94,12 +106,16 @@ As new vectors are inserted into the index, they naturally scatter across partit
 Splits happen automatically in the background to reduce impact on foreground transactions. When a split is triggered, the vectors in the original partition are divided into two roughly equal groups using a balanced variant of the K-means algorithm. Each group becomes a new, more tightly clustered partition with its own centroid. The tree is updated to reflect this change, and future inserts are routed to the new partitions based on proximity to these new centroids. Here's an example where partition 4 is replaced by partitions 5 and 6 at the leaf level of the tree:
 
 <img src="/assets/img/ai-spann-07.png" alt="Example partition replacement in C-SPANN" style="width:100%">
+{: .mx-auto.d-block :}
+**Example partition replacement in C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 It's also worth noting that partition splits are distinct from CockroachDB's range splits, though the two work together to ensure scalability and consistent performance. A partition is a logical unit within the index that groups similar vectors. A range is a physical unit of storage in the key-value layer. Splitting a partition improves search efficiency by maintaining tight clustering of vectors. Splitting a range helps balance data storage and access across the cluster. Together, these mechanisms reduce hot spots and help spread both query and insert load more evenly. When nodes are added to the system, ranges containing index partitions are automatically distributed across the new nodes, allowing the total workload to scale out with the cluster at near-linear rates.
 
 There's one wrinkle worth noting: some vectors may no longer be in the "right" partition after a split. A vector in the splitting partition might be closer to a nearby partition's centroid than to either of the new centroids. Likewise, a vector in a nearby partition might now be closer to one of the new centroids. In both cases, vectors need to be relocated to the partition with the closest centroid. To see how this can happen, consider these red and blue clusters (centroids are marked with X):
 
 <img src="/assets/img/ai-spann-08.png" alt="Partition split and vector relocation" style="width:100%">
+{: .mx-auto.d-block :}
+**Partition split and vector relocation**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 After the blue cluster is split, one of its vectors is reassigned to the red cluster because it's now closer to the red centroid than to either of the new blue centroids. Similarly, one of the red vectors is reassigned to the righthand blue cluster for the same reason. Relocating vectors based on updated proximity is introduced in the SPFresh paper (as part of ensuring "nearest partition assignment") and plays a key role in maintaining high clustering accuracy after splits.
 
@@ -120,6 +136,8 @@ This approach integrates naturally with the K-means tree: each vector is quantiz
 While I won't dive into every detail, I want to show you how beautiful and simple the core RaBitQ algorithm is. Each data vector is first "mixed" with a random orthogonal transform, which spreads any data skew more evenly across dimensions while still preserving angles and distances. It's then mean-centered with respect to the partition centroid and normalized to unit length. Finally, each dimension is converted to a bit: zero if the value is less than zero, one otherwise.
 
 <img src="/assets/img/ai-spann-09.png" alt="RaBitQ quantization in C-SPANN" style="width:100%">
+{: .mx-auto.d-block :}
+**RaBitQ quantization in C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The result is a string of bits that captures the essence of the original vector in highly compressed form. These bits are stored alongside the dot product between the quantized and original vectors, as well as the exact distance of the original vector from the centroid. Remarkably, that's enough to estimate distances with reasonable accuracy. To make distance comparisons fast as well as compact, RaBitQ uses a different quantization method for the query vector that assigns 4 bits per dimension and is optimized for SIMD instructions.
 

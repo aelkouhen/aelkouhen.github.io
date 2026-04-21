@@ -38,6 +38,8 @@ For instance, this approach often focuses on replicating the on-premises environ
 The approach emphasizes infrastructure replication, where virtual machines, servers, and configurations are mirrored in the cloud, allowing for a seamless transition while preserving the application's existing functionality.
 
 <img src="/assets/img/mainframe-p5-rehosting.gif" alt="Rehosting migration diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Rehosting migration diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Despite its benefits, rehosting also has several disadvantages that organizations should consider. One major drawback is that applications designed for on-premises environments may not fully utilize cloud-native features, such as auto-scaling, serverless capabilities, or managed services, leading to suboptimal cloud utilization. This can result in higher operating costs, as resource usage may not be optimized for the cloud environment.
 
@@ -60,6 +62,8 @@ With a moderate cost and complexity, replatforming strikes a balance between mod
 Common changes made during application replatforming include exposing service methods as microservices or macrosystems, identifying and addressing code blockers that are incompatible with cloud environments by replacing them with optimized, cloud-compatible alternatives, and migrating on-premise databases to distributed databases when necessary.
 
 <img src="/assets/img/mainframe-p5-replatforming.png" alt="Replatforming migration diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Replatforming migration diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 These adjustments enable the use of essential cloud features, such as auto-dynamic scaling and auto-scaling, which enhance performance and resource efficiency. This approach strikes a balance by overcoming the time-intensive nature of rewriting and the feature limitations associated with rehosting, allowing organizations to leverage the full potential of cloud environments efficiently.
 
@@ -74,6 +78,8 @@ What is refactoring? Refactoring refers to the process of improving the internal
 For the scope of this article, when we talk about refactoring mainframe applications, we mean redesigning the applications to fully leverage the capabilities of a distributed system. This approach often requires a fundamental shift from legacy database models to modern distributed database architectures like [CockroachDB](https://www.cockroachlabs.com/product/overview/) and involves breaking down a legacy, monolithic application into a series of smaller and independent components, and transitioning to a microservice architecture. It can also involve migrating the application to a serverless architecture.
 
 <img src="/assets/img/mainframe-p5-refactoring.png" alt="Refactoring migration diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Refactoring migration diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Adopting distributed databases using this approach unlocks their full potential, offering powerful capabilities such as horizontal scaling, fault tolerance, and geo-distribution. These features enable organizations to build highly resilient and scalable systems that can seamlessly handle growing workloads and distributed operations. Furthermore, distributed databases facilitate integration with modern applications and emerging technologies, including artificial intelligence and machine learning, positioning organizations to innovate and thrive in a rapidly evolving technological landscape.
 
@@ -106,6 +112,8 @@ Ultimately, rewriting your legacy system is a perfect opportunity to revise the 
 However, rewriting comes with certain disadvantages that organizations must consider. It is a time-consuming and costly process, requiring significant investment in both resources and expertise. Rebuilding a legacy system also demands a deep understanding of the existing workflows, which can be particularly challenging if the application was developed many years ago using outdated frameworks.
 
 <img src="/assets/img/mainframe-p5-rewriting.png" alt="Rewriting migration diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Rewriting migration diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The complexity increases when the rewritten application depends on other legacy systems, as these interdependencies must be thoroughly analyzed and addressed. Additionally, teams involved in the rewrite often must upgrade their skills to work with the latest technologies, adding to the overall effort and learning curve.
 
@@ -124,6 +132,8 @@ Let's look at it another way – the visual representation below represents the 
 The vertical axis represents the financial impact: Negative values indicate budget spending, while positive values represent realized savings. The horizontal axis measures time in months, showing the long-term nature of migration projects, which typically span multiple years.
 
 <img src="/assets/img/mainframe-p5-cost-savings.png" alt="Cost and savings dynamics of migration approaches over time" style="width:100%">
+{: .mx-auto.d-block :}
+**Cost and savings dynamics of migration approaches over time**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The graph illustrates how different migration approaches impact budget spending and savings over specific durations:
 
@@ -155,6 +165,8 @@ Selecting the right migration strategy depends on various factors, including the
 When deciding how to modernize your legacy system, it's crucial to understand the crossroads with all possible paths, their specific use cases, and their respective advantages. Should you rewrite your system? Should you consider refactoring your system? Or should you simply change the way your application is hosted or deployed?
 
 <img src="/assets/img/mainframe-p5-decision-tree.png" alt="Database transitioning decision tree" style="width:100%">
+{: .mx-auto.d-block :}
+**Database transitioning decision tree**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 However, simply knowing the principles of software modernization is not sufficient; without prior experience in the field, making the right decision can be exceptionally challenging. Don't hesitate to reach out to our solution architects at [Cockroach Labs](http://www.cockroachlabs.com) to help move you in the right direction. We can conduct in-depth analyses of the project's technical base, performance, and business processes to help you analyze the software's current state, file a detailed report, make a list of needed improvements and prioritize the modernization approach. Every case is unique and requires an individual strategy.
 
@@ -175,6 +187,8 @@ For instance, tools like [mLogica's](https://www.cockroachlabs.com/blog/cockroac
 - **Bridge Program Generators**: These tools create temporary interfaces between legacy systems and new platforms, ensuring uninterrupted operations during migration.
 
 <img src="/assets/img/mainframe-p5-mlogica.png" alt="mLogica LIBER*M mainframe modernization suite" style="width:100%">
+{: .mx-auto.d-block :}
+**mLogica LIBER*M mainframe modernization suite**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 mLogica's solutions emphasize minimal downtime, which is crucial for mission-critical systems. By leveraging these tools, organizations can transform complex on-premises mainframes into agile, distributed cloud architectures.
 
@@ -187,6 +201,8 @@ Other tools like BluAge - now integrated as part of the AWS Mainframe Migration 
 BluAge's approach has been implemented in over 100 large-scale projects, demonstrating its reliability and efficiency in reducing risks and project timelines.
 
 <img src="/assets/img/mainframe-p5-bluage.png" alt="BluAge technology suite" style="width:100%">
+{: .mx-auto.d-block :}
+**BluAge technology suite**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Mainframe modernization suites are equipped with features designed to streamline and enhance the transition process. They provide comprehensive assessments to analyze the architecture, dependencies, and data flow of legacy systems, enabling the creation of detailed migration plans. Automated code and data conversion tools rewrite applications and data models into formats compatible with distributed systems.
 
@@ -207,6 +223,8 @@ Other cloud-native tools can also be used for different tasks in the modernizati
 What is Change Data Capture? CDC is a technique used to identify and track changes in a database in real-time or near-real-time. It captures insert, update, and delete events as they occur, recording these changes in a separate system or pipeline. This allows other applications to process the data without impacting the source database. CDC is essential for tasks like database migration because it enables timely data synchronization across systems, supports incremental data movement, and helps maintain data consistency in distributed environments.
 
 <img src="/assets/img/mainframe-p5-cdc.png" alt="Change Data Capture diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Change Data Capture diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Other cloud-agnostic tools like Qlik Replicate or Debezium offer fast bulk data migration and change data capture (CDC) capabilities, making it suitable for distributed architectures. They stream database changes to platforms like Kafka, enabling real-time updates. Key features of these tools include real-time data synchronization, support for diverse database types, and options for both incremental and full data migrations, ensuring a smooth transition to modern systems.
 
@@ -219,6 +237,8 @@ A key feature of these tools is automated schema analysis and conversion, which 
 Several popular schema conversion tools are widely used in the industry. AWS Schema Conversion Tool (AWS SCT) automates schema conversion for migrating databases to AWS cloud services like Amazon RDS or Aurora. It identifies potential incompatibilities and provides recommendations for seamless integration.
 
 <img src="/assets/img/mainframe-p5-schema-conversion.png" alt="Schema conversion diagram" style="width:100%">
+{: .mx-auto.d-block :}
+**Schema conversion diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 [Liquibase](https://www.liquibase.com/), an open-source tool, allows teams to track, version, and deploy schema updates while offering rollback functionality to fix errors during the migration. [Flyway](https://www.red-gate.com/products/flyway/community/), a lightweight framework, supports version-controlled schema migrations and integrates well with CI/CD pipelines, making it an excellent choice for modern workflows. Cockroach Labs' MOLT (Migrate Off Legacy Technology) SCT specializes in automating the migration of schemas and queries to distributed architectures, validating the converted schemas to ensure optimal functionality.
 
@@ -231,6 +251,8 @@ Orchestration and deployment tools are essential for managing the complexity of 
 These powerful tools streamline operations, enabling scalable, fault-tolerant, and consistent infrastructure for distributed architectures. By automating deployment processes, they minimize manual effort, reduce errors, and improve the reliability of distributed systems, especially when migrating from legacy systems.
 
 <img src="/assets/img/mainframe-p5-orchestration.png" alt="Orchestration and deployment tools" style="width:100%">
+{: .mx-auto.d-block :}
+**Orchestration and deployment tools**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Orchestration and deployment tools like Kubernetes, Terraform, and Helm are vital for managing the complexity of distributed systems. They enable scalable, fault-tolerant, and consistent deployments across diverse environments, reducing operational overhead and improving reliability. As distributed architectures continue to grow in prominence, leveraging these tools has become a necessity for organizations aiming to maintain competitive, modern infrastructures.
 
@@ -239,6 +261,8 @@ Orchestration and deployment tools like Kubernetes, Terraform, and Helm are vita
 Monitoring and observability tools are essential for maintaining the health, performance, and seamless operation of distributed systems post-migration. These solutions provide deep visibility into system behavior, helping teams identify and resolve issues quickly. By collecting and analyzing metrics, logs, and traces, they enable proactive management and optimization of distributed architectures.
 
 <img src="/assets/img/mainframe-p5-monitoring.png" alt="Database monitoring and observability tools" style="width:100%">
+{: .mx-auto.d-block :}
+**Database monitoring and observability tools**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 By leveraging tools like [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/), and [Datadog](https://www.datadoghq.com/), organizations can effectively manage the complexities of distributed architectures and ensure their systems deliver consistent value. These tools are designed for collecting and analyzing metrics, offering robust querying capabilities that make it easier to detect and diagnose system anomalies. They also provide dynamic dashboards that allow teams to monitor system performance and identify bottlenecks visually.
 
@@ -253,6 +277,8 @@ Selecting the right methodology or framework for migrating legacy databases depe
 By leveraging advanced tools and frameworks tailored to specific use cases, organizations can ensure a smooth transition to modern database environments while minimizing risks and maximizing efficiency. Below are some commonly used approaches, their benefits, and implementation strategies.
 
 <img src="/assets/img/mainframe-p5-methodologies.png" alt="Database migration methodologies" style="width:100%">
+{: .mx-auto.d-block :}
+**Database migration methodologies**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 #### 1. Big Bang Migration
 
@@ -265,6 +291,8 @@ The lift-and-shift approach is a technical implementation for the Big Bang migra
 Finally, the **Import and Export** techniques are commonly used for cross-platform migrations where data needs to move between different DBMSs or environments with differing formats. This approach allows granular control, enabling partial data migrations or data transformations during the process. It supports a wide range of formats such as CSV, JSON, or SQL dump files, making it highly flexible. However, Import and Export can be time-intensive for large datasets and requires careful handling of relational dependencies and potential data loss risks.
 
 <img src="/assets/img/mainframe-p5-import-export.png" alt="Database import and export migration" style="width:100%">
+{: .mx-auto.d-block :}
+**Database import and export migration**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 #### 2. Online Migration (aka. Parallel Migration)
 
@@ -279,6 +307,8 @@ The **Blue-Green** migration strategy is an online migration approach that minim
 There is also the **Red-Black** migration which is a derivation for the Blue-Green migration strategy. In this approach, two environments are maintained: the "Red" (active) environment and the "Black" (standby) environment. The target database is deployed to the Black environment while the Red environment remains live. Once the Black environment is tested and verified, traffic is switched from the Red environment to the Black environment. The only difference between this strategy and the Blue-Green, is that you don't need to maintain both databases serving users at the same time.
 
 <img src="/assets/img/mainframe-p5-red-black.gif" alt="Red-Black database migration strategy" style="width:100%">
+{: .mx-auto.d-block :}
+**Red-Black database migration strategy**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Ultimately, CDC is an online migration method that captures changes in the source database and synchronizes them with the target system. Tools like [Debezium](https://debezium.io/), [Oracle GoldenGate](https://www.oracle.com/integration/goldengate/), and [Striim](https://www.striim.com/) facilitate this process, ensuring data consistency across environments.
 
@@ -291,6 +321,8 @@ This approach is inspired by the way a [strangler fig plant](https://www.britann
 The Strangler Fig approach is particularly well-suited for large or complex databases where migrating everything at once would pose significant risks or cause major disruptions. By breaking the migration into smaller, manageable parts, this method makes it easier to handle complex systems incrementally.
 
 <img src="/assets/img/mainframe-p5-strangler-fig.png" alt="Strangler Fig data migration method" style="width:100%">
+{: .mx-auto.d-block :}
+**Strangler Fig data migration method**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 It's also highly effective for legacy system modernization, enabling organizations to gradually transition from outdated systems to modern platforms without the need for downtime. This approach is ideal for mission-critical systems, where maintaining continuous operation is essential, as it allows for the migration to occur in stages while keeping the existing system fully functional, thus minimizing business impact.
 
