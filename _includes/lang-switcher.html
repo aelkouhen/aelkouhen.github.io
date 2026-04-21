@@ -1,7 +1,7 @@
 <div class="lang-switcher">
   {% for lang in site.languages %}
     {% if lang == page.lang or (page.lang == nil and lang == site.default_lang) %}
-      <span class="lang-switcher__item lang-switcher__item--active" data-lang="{{ lang }}">{{ lang | upcase }}</span>
+      <span class="lang-switcher__item lang-switcher__item--active">{{ lang | upcase }}</span>
     {% elsif lang == site.default_lang %}
       <a class="lang-switcher__item lang-switcher__link" href="/" data-lang="{{ lang }}">{{ lang | upcase }}</a>
     {% else %}
@@ -12,15 +12,34 @@
 </div>
 <script>
 (function () {
+  var defaultLang = "{{ site.default_lang }}";
+  {% assign non_default_langs = "" %}
+  {% for lang in site.languages %}
+    {% unless lang == site.default_lang %}
+      {% if non_default_langs != "" %}{% assign non_default_langs = non_default_langs | append: "," %}{% endif %}
+      {% assign non_default_langs = non_default_langs | append: '"' | append: lang | append: '"' %}
+    {% endunless %}
+  {% endfor %}
+  var langCodes = [{{ non_default_langs }}];
+
   var path = window.location.pathname;
-  document.querySelectorAll('.lang-switcher__link').forEach(function (link) {
-    var lang = link.getAttribute('data-lang');
-    if (lang === 'en') {
-      link.href = path.replace(/^\/fr/, '') || '/';
-    } else {
-      var base = path.replace(/^\/fr/, '') || '/';
-      link.href = '/fr' + (base === '/' ? '/' : base);
+
+  // Detect which language prefix (if any) is active in the current URL
+  var currentLang = null;
+  for (var i = 0; i < langCodes.length; i++) {
+    var prefix = '/' + langCodes[i];
+    if (path === prefix || path.indexOf(prefix + '/') === 0) {
+      currentLang = langCodes[i];
+      break;
     }
+  }
+
+  // Strip the current language prefix to get the base path
+  var basePath = currentLang ? (path.slice(('/' + currentLang).length) || '/') : path;
+
+  document.querySelectorAll('.lang-switcher__link').forEach(function (link) {
+    var targetLang = link.getAttribute('data-lang');
+    link.href = targetLang === defaultLang ? basePath : '/' + targetLang + basePath;
   });
 })();
 </script>
