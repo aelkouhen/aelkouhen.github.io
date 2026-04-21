@@ -544,10 +544,10 @@ The three components serve different scenarios and audiences:
 
 | Interface | Best For |
 |---|---|
-| **Open-source MCP Server** | Developers, local clusters, full administrative control |
-| **Managed MCP Server** | Enterprise teams, shared agent systems, production safety |
-| **Agent Skills** | Cross-framework portability, structured reasoning, lifecycle automation |
-| **`ccloud` CLI** | Developer agents operating through shell commands, CI/CD pipelines |
+| [**Open-source MCP Server**](https://github.com/amineelkouhen/mcp-cockroachdb) | Developers, local clusters, full administrative control |
+| [**Managed MCP Server**](https://www.cockroachlabs.com/docs/cockroachcloud/connect-to-the-cockroachdb-cloud-mcp-server) | Enterprise teams, shared agent systems, production safety |
+| [**Agent Skills**](https://github.com/cockroachlabs/cockroachdb-skills) | Cross-framework portability, structured reasoning, lifecycle automation |
+| [**`ccloud` CLI**](https://www.cockroachlabs.com/docs/cockroachcloud/ccloud-get-started) | Developer agents operating through shell commands, CI/CD pipelines |
 
 Together, they reflect a deliberate architectural philosophy: CockroachDB exposes internal state — statement statistics, execution plans, contention events, range distribution, replication status — through structured interfaces that agents can reliably interpret and act upon.
 
