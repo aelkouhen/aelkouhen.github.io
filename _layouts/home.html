@@ -7,21 +7,6 @@ layout: page
 {% if paginator %}
   {% assign posts = paginator.posts %}
   {% include post-cards.html posts=posts %}
-  {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-  {% if paginator.total_pages > 1 %}
-  <ul class="pagination main-pager">
-    {% if paginator.previous_page %}
-    <li class="page-item previous">
-      <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">{% if active_lang == 'fr' %}&larr; Articles r&eacute;cents{% else %}&larr; Newer Posts{% endif %}</a>
-    </li>
-    {% endif %}
-    {% if paginator.next_page %}
-    <li class="page-item next">
-      <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">{% if active_lang == 'fr' %}Articles plus anciens &rarr;{% else %}Older Posts &rarr;{% endif %}</a>
-    </li>
-    {% endif %}
-  </ul>
-  {% endif %}
 {% else %}
   {% assign posts = site.posts %}
   {% assign page_size = site.pagination.per_page | default: 7 %}

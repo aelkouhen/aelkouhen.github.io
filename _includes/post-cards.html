@@ -63,15 +63,16 @@
 </div>
 
 {% if paginator.total_pages > 1 %}
+{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
 <ul class="pagination main-pager">
   {% if paginator.previous_page %}
   <li class="page-item previous">
-    <a class="page-link" href="{{ paginator.previous_page_path | absolute_url }}">&larr; Newer Posts</a>
+    <a class="page-link" href="{{ paginator.previous_page_path | absolute_url }}">{% if active_lang == 'fr' %}&larr; Articles r&eacute;cents{% else %}&larr; Newer Posts{% endif %}</a>
   </li>
   {% endif %}
   {% if paginator.next_page %}
   <li class="page-item next">
-    <a class="page-link" href="{{ paginator.next_page_path | absolute_url }}">Older Posts &rarr;</a>
+    <a class="page-link" href="{{ paginator.next_page_path | absolute_url }}">{% if active_lang == 'fr' %}Articles plus anciens &rarr;{% else %}Older Posts &rarr;{% endif %}</a>
   </li>
   {% endif %}
 </ul>
