@@ -5,7 +5,7 @@ subtitle: "A Complete Guide"
 cover-img: /assets/img/cover-iam-p5.webp
 thumbnail-img: /assets/img/cover-iam-p5.webp
 share-img: /assets/img/cover-iam-p5.webp
-tags: [iam, security, CockroachDB, Keycloak, Phase Two, authorization, identity, multi-tenant]
+tags: [iam, security, CockroachDB, Keycloak, Phase Two, authorization, identity]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true

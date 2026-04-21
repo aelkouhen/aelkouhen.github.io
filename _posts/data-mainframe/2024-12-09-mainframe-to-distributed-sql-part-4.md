@@ -5,7 +5,7 @@ subtitle: "Planning Your Data Modernization Strategy"
 cover-img: /assets/img/cover-mainframe-p4.webp
 thumbnail-img: /assets/img/cover-mainframe-p4.webp
 share-img: /assets/img/cover-mainframe-p4.webp
-tags: [mainframe, distributed SQL, CockroachDB, migration, modernization, database, strategy]
+tags: [mainframe, CockroachDB, migration, modernization, strategy]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
