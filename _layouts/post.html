@@ -39,6 +39,22 @@ layout: base
         </div>
       {% endif %}
 
+      {% if page.author or page.author-avatar %}
+      <div class="post-author-meta">
+        {% if page.author-avatar %}
+        <img class="post-author-avatar" src="{{ page.author-avatar | absolute_url }}" alt="{{ page.author }}">
+        {% endif %}
+        <div class="post-author-info">
+          {% if page.author %}<span class="post-author-name">{{ page.author }}</span>{% endif %}
+          <span class="post-author-date">
+            {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+            {{ page.date | date: date_format }}
+            {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
+          </span>
+        </div>
+      </div>
+      {% endif %}
+
       <article role="main" class="blog-post">
         {{ content }}
       </article>

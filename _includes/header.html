@@ -38,19 +38,16 @@
           {% endif %}
 
           {% if include.type == "post" %}
-            <div class="post-author-meta">
-              {% if page.author-avatar %}
-              <img class="post-author-avatar" src="{{ page.author-avatar | absolute_url }}" alt="{{ page.author }}">
-              {% endif %}
-              <div class="post-author-info">
-                {% if page.author %}<span class="post-author-name">{{ page.author }}</span>{% endif %}
-                <span class="post-author-date">
-                  {{ page.date | date: date_format }}
-                  {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
-                  {% if page.readtime %}{% include readtime.html %}{% endif %}
-                </span>
-              </div>
-            </div>
+            <span class="post-meta">Posted on {{ page.date | date: date_format }}</span>
+            {% if page.last-updated %}
+              <span class="post-meta">
+                <span class="d-none d-md-inline middot">&middot;</span>
+                Last updated {{ page.last-updated | date: date_format }}
+              </span>
+            {% endif %}
+            {% if page.readtime %}
+              {% include readtime.html %}
+            {% endif %}
           {% endif %}
         </div>
       </div>
@@ -75,19 +72,16 @@
           {% endif %}
 
           {% if include.type == "post" %}
-            <div class="post-author-meta">
-              {% if page.author-avatar %}
-              <img class="post-author-avatar" src="{{ page.author-avatar | absolute_url }}" alt="{{ page.author }}">
-              {% endif %}
-              <div class="post-author-info">
-                {% if page.author %}<span class="post-author-name">{{ page.author }}</span>{% endif %}
-                <span class="post-author-date">
-                  {{ page.date | date: date_format }}
-                  {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
-                  {% if page.readtime %}{% include readtime.html %}{% endif %}
-                </span>
-              </div>
-            </div>
+            <span class="post-meta">Posted on {{ page.date | date: date_format }}</span>
+            {% if page.last-updated %}
+              <span class="post-meta">
+                <span class="d-none d-md-inline middot">&middot;</span>
+                Last updated {{ page.last-updated | date: date_format }}
+              </span>
+            {% endif %}
+            {% if page.readtime %}
+              {% include readtime.html %}
+            {% endif %}
           {% endif %}
         </div>
       </div>
