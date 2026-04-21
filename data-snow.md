@@ -2,7 +2,7 @@
 layout: page
 title: Data and Snowflake
 subtitle: "The Data Cloud Platform Unveiled"
-full-width: true
+wide: true
 ---
 
 {% include post-cards.html posts=site.tags.Snowflake %}

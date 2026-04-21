@@ -2,7 +2,7 @@
 layout: page
 title: Data and Redis
 subtitle: "Unleashing Real-Time Decision-Making"
-full-width: true
+wide: true
 ---
 
 {% include post-cards.html posts=site.tags.Redis %}
