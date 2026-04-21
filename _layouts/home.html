@@ -14,19 +14,22 @@ layout: page
     {% include post-cards.html posts=posts %}
   </div>
   {% if posts.size > page_size %}
+  <div id="js-pagination"></div>
   <script>
   (function () {
     var pageSize = {{ page_size }};
-    var cards = document.querySelectorAll('#js-post-list .post-preview');
+    var grid = document.querySelector('#js-post-list .card-grid');
+    var cards = grid ? Array.from(grid.children) : [];
     var total = cards.length;
     var currentPage = 1;
     var totalPages = Math.ceil(total / pageSize);
+    var newerLabel = "{% if page.lang == 'fr' %}&larr; Articles r&eacute;cents{% else %}&larr; Newer Posts{% endif %}";
+    var olderLabel = "{% if page.lang == 'fr' %}Articles plus anciens &rarr;{% else %}Older Posts &rarr;{% endif %}";
 
     function showPage(p) {
       var start = (p - 1) * pageSize;
-      var end = start + pageSize;
       cards.forEach(function (c, i) {
-        c.style.display = (i >= start && i < end) ? '' : 'none';
+        c.style.display = (i >= start && i < start + pageSize) ? '' : 'none';
       });
       currentPage = p;
       renderNav();
@@ -36,14 +39,14 @@ layout: page
       var nav = document.getElementById('js-pagination');
       var html = '<ul class="pagination main-pager">';
       if (currentPage > 1) {
-        html += '<li class="page-item previous"><a class="page-link" href="#" data-page="' + (currentPage - 1) + '">&larr; {{ site.data.translations[page.lang].navbar["newer_posts"] | default: "Newer Posts" }}</a></li>';
+        html += '<li class="page-item previous"><a class="page-link js-page-btn" href="#" data-page="' + (currentPage - 1) + '">' + newerLabel + '</a></li>';
       }
       if (currentPage < totalPages) {
-        html += '<li class="page-item next"><a class="page-link" href="#" data-page="' + (currentPage + 1) + '">{{ site.data.translations[page.lang].navbar["older_posts"] | default: "Older Posts" }} &rarr;</a></li>';
+        html += '<li class="page-item next"><a class="page-link js-page-btn" href="#" data-page="' + (currentPage + 1) + '">' + olderLabel + '</a></li>';
       }
       html += '</ul>';
       nav.innerHTML = html;
-      nav.querySelectorAll('[data-page]').forEach(function (a) {
+      nav.querySelectorAll('.js-page-btn').forEach(function (a) {
         a.addEventListener('click', function (e) {
           e.preventDefault();
           showPage(parseInt(this.getAttribute('data-page')));
@@ -52,9 +55,6 @@ layout: page
       });
     }
 
-    var nav = document.createElement('div');
-    nav.id = 'js-pagination';
-    document.getElementById('js-post-list').after(nav);
     showPage(1);
   })();
   </script>
