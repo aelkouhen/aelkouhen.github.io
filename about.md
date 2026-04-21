@@ -2,6 +2,7 @@
 layout: page
 title: About
 subtitle: Welcome to The Data Crafters Lab
+wide: true
 ---
 ## About Data Crafters Lab
 
