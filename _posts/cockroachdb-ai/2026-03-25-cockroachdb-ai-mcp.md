@@ -394,14 +394,49 @@ Skills that help teams understand and optimize resource consumption: right-sizin
 
 ### Real-World Scenario: CPU Spike Response
 
-Consider a practical example where an agent receives a "High CPU utilization" alert on a staging cluster:
+Consider a practical example where an agent receives a "High CPU utilization" alert on a staging cluster. The sequence below shows how CockroachDB Agent Skills guide Claude Code through the investigation and resolution — step by step.
 
-1. The agent connects to CockroachDB via the managed MCP server
-2. It monitors background jobs and profiles SQL statements
-3. It identifies root causes: expensive queries on the `user_events` table, backup job scheduling overlap, and suboptimal UUID primary key patterns
-4. It proposes fixes: hash-sharded UUID primary keys, supporting indexes, and a rescheduled backup window
+**Step 1 — Receive the alert and connect**
 
-Critically, the agent **does not apply these changes automatically**. It generates migration scripts for human review. This creates workflows that are conversational, structured, auditable, and still human-approved.
+The agent is prompted with the alert context and connects to the cluster via the managed MCP server. The Observability and Diagnostics skill immediately directs it to check background jobs and active statement statistics.
+
+<img src="/assets/img/ai-mcp-04.png" alt="Step 1: Agent receives CPU alert and connects to the cluster" style="width:100%">
+{: .mx-auto.d-block :}
+**Step 1: Agent receives CPU alert and connects to the cluster**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+**Step 2 — Monitor background jobs and profile SQL statements**
+
+Using the Observability and Diagnostics skill, the agent calls `show_running_queries` and `analyze_performance` to surface long-running queries and identify which statements are consuming the most CPU.
+
+<img src="/assets/img/ai-mcp-05.png" alt="Step 2: Agent monitors background jobs and profiles SQL statements" style="width:100%">
+{: .mx-auto.d-block :}
+**Step 2: Agent monitors background jobs and profiles SQL statements**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+**Step 3 — Identify root causes**
+
+The Performance and Scaling skill guides the agent to run `explain_query` on the top offending queries. It identifies expensive full-table scans on the `user_events` table and a backup job overlapping with peak traffic.
+
+<img src="/assets/img/ai-mcp-06.png" alt="Step 3: Agent identifies root causes — full scans and backup overlap" style="width:100%">
+{: .mx-auto.d-block :}
+**Step 3: Agent identifies root causes — full scans and backup overlap**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+**Step 4 — Diagnose schema issues**
+
+The Performance and Scaling skill further flags a suboptimal UUID primary key pattern causing write hotspots. The agent proposes replacing it with a hash-sharded primary key and adding supporting indexes to eliminate the scans.
+
+<img src="/assets/img/ai-mcp-07.png" alt="Step 4: Agent diagnoses UUID hotspot and proposes hash-sharded primary key" style="width:100%">
+{: .mx-auto.d-block :}
+**Step 4: Agent diagnoses UUID hotspot and proposes hash-sharded primary key**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+**Step 5 — Generate migration scripts for human review**
+
+The Operations and Lifecycle skill ensures the agent does not apply changes directly. Instead, it generates migration scripts — DDL for the schema change, a revised backup schedule, and a rollback plan — for an engineer to review and approve before execution.
+
+<img src="/assets/img/ai-mcp-08.png" alt="Step 5: Agent generates migration scripts for human review" style="width:100%">
+{: .mx-auto.d-block :}
+**Step 5: Agent generates migration scripts for human review**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+This workflow is conversational, structured, auditable, and human-approved at every decision point — exactly the pattern that CockroachDB Agent Skills are designed to enforce.
 
 ---
 
