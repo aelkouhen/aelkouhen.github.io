@@ -45,7 +45,7 @@ There are several types of recommendation systems commonly in use:
 
 **Content-Based Filtering**: This approach recommends items to users based on their preferences and characteristics. It analyzes the content and attributes of items that users have interacted with or rated positively and suggests similar items. For example, if a user enjoys action films in a movie recommendation system, the system would recommend other action movies.
 
-<img src="https://images.ctfassets.net/00voh0j35590/1CyLQAZvNzMnYBEwYLT8ny/340767ba6d4313fca83a5ee27f968b11/Online_recommendation_engines_CockroachDB_ONE.png" alt="Content-Based Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-01.png" alt="Content-Based Filtering" style="width:100%">
 
 **Collaborative Filtering**: This method recommends items based on the similarities and patterns found in the behavior and preferences of multiple users. It identifies users with similar tastes and recommends items that those users have liked or rated highly. Collaborative filtering can be further divided into two subtypes:
 
@@ -53,11 +53,11 @@ There are several types of recommendation systems commonly in use:
 
 - **Item-Based Collaborative Filtering**: It identifies items that are similar based on user behavior and recommends items that are similar to those previously interacted with by the user (Scenario C).
 
-<img src="https://images.ctfassets.net/00voh0j35590/2ibUdMiTFn3q2jEOrJjtCw/0ef8fc3d0e6d01e014bff8dd9665f17d/Online_recommendation_engines_CockroachDB_TWO.png" alt="Collaborative Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-02.png" alt="Collaborative Filtering" style="width:100%">
 
 **Context-Aware Systems**: These systems consider contextual information, such as time, location, and user context, to provide more relevant recommendations. For instance, a music streaming service might recommend energetic workout playlists in the morning and relaxing music in the evening. Likewise, an e-commerce website will suggest specific items when it's Black Friday or Christmas, different from what it could recommend in other periods of the year.
 
-<img src="https://images.ctfassets.net/00voh0j35590/mOmJv4gmtYbfJTZtii6Az/7412c359966e7ac0164ef7c3dc0908e4/Online_recommendation_engines_CockroachDB_THREE.png" alt="Context-Aware Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-03.png" alt="Context-Aware Filtering" style="width:100%">
 
 **Hybrid Recommendation Systems**: These systems combine multiple recommendation techniques to provide more accurate and diverse recommendations. They leverage the strengths of different approaches, such as content-based filtering and collaborative filtering, to overcome their limitations and offer more effective suggestions.
 
@@ -67,11 +67,11 @@ There are several types of recommendation systems commonly in use:
 
 Unlike offline recommendation engines that generate personalized recommendations based on historical data, an ideal recommendation engine should prioritize resource efficiency, deliver high-performance real-time updates (online), and provide accurate and relevant choices to users. For example, it can be ineffective to suggest to a customer an item they have already bought only because your recommendation system wasn't aware of the customer's last actions.
 
-<img src="https://images.ctfassets.net/00voh0j35590/3p6jSMnzzgSlpZeC68L38l/4072ee4f40f88099e92cdbd36490e60e/Online_recommendation_engines_CockroachDB_FOUR.png" alt="Offline Recommendation Systems" style="width:100%">
+<img src="/assets/img/ai-recom-04.png" alt="Offline Recommendation Systems" style="width:100%">
 
 Online engines should react to customers' actions while they are still browsing your site, and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
-<img src="https://images.ctfassets.net/00voh0j35590/548lFRbfVtdSvO9tVno5KT/bd231285ef8774bc690b52dc1ce6fa5b/Online_recommendation_engines_CockroachDB_FIVE.png" alt="Online Recommendation Systems" style="width:100%">
+<img src="/assets/img/ai-recom-05.png" alt="Online Recommendation Systems" style="width:100%">
 
 For this, you clearly need a low-latency consistent backend to implement such a system, with two important capabilities.
 
@@ -83,7 +83,7 @@ Implementing such systems using the distributed SQL database [CockroachDB](https
 
 A [vector embedding](https://www.cockroachlabs.com/blog/genai-using-cockroachdb/#Vector-Embeddings) is a mathematical representation of something (like text or images) as a list of numbers, where closeness in numbers means closeness in meaning. These embeddings are mapped in multi-dimensional space to perform proximity calculations to understand the relationship between the meaning of items.
 
-<img src="https://images.ctfassets.net/00voh0j35590/4TKtMmLSQ2WfJ7E2uYcEPy/e4145bcaf6499956ac8d0c67bca55ae1/Online_recommendation_engines_CockroachDB_SIX.png" alt="Product descriptions presented as vectors" style="width:100%">
+<img src="/assets/img/ai-recom-06.png" alt="Product descriptions presented as vectors" style="width:100%">
 
 Vector representations of data enable machine learning algorithms to process and analyze the information efficiently. These algorithms often rely on mathematical operations performed on vectors, such as dot products, vector addition, and normalization, to compute similarities, distances, and transformations.
 
@@ -93,7 +93,7 @@ But most importantly, Vector representations facilitate the comparison and clust
 
 - suggest similar products based on their images and textual descriptions (Content-Based Filtering).
 
-<img src="https://images.ctfassets.net/00voh0j35590/5gJWav9LBoDPrsLkmd03UN/96a42782cbe23d8e6ab45e0649b3dd6b/Online_recommendation_engines_CockroachDB_SEVEN.png" alt="Online Recommendation Engine using CockroachDB" style="width:100%">
+<img src="/assets/img/ai-recom-07.png" alt="Online Recommendation Engine using CockroachDB" style="width:100%">
 
 In the next section, you'll learn how to generate and store image and text embeddings, implement real-time similarity search, and build scalable, low-latency recommendation queries using CockroachDB's distributed SQL architecture.
 
@@ -105,7 +105,7 @@ It is essential to convert unstructured data into numerical representations to m
 
 Deep Learning has introduced a paradigm shift in this process. Rather than relying on manual engineering, Deep Learning models – called transformers – autonomously learn intricate feature interactions in complex data. As data flows through a transformer, it generates novel representations of the input data, each with varying shapes and sizes. Each layer of the transformer focuses on different aspects of the input. This ability of Deep Learning to automatically generate feature representations from inputs forms the foundation for creating vector embeddings.
 
-<img src="https://images.ctfassets.net/00voh0j35590/4eBfdMiwZ5AatrQQjtN9km/12a3166008d0add0722f178914c5daaf/Online_recommendation_engines_CockroachDB_EIGHT.gif" alt="Two-tower neural network model - Source: Google Search" style="width:100%">
+<img src="/assets/img/ai-recom-08.gif" alt="Two-tower neural network model - Source: Google Search" style="width:100%">
 
 Vector Embeddings are created through an embedding process that maps discrete or categorical data into continuous vector representations. The process of creating embeddings depends on the specific context and data type. Here are a few common techniques:
 
@@ -119,7 +119,7 @@ Vector Embeddings are created through an embedding process that maps discrete or
 
 The two towers in the network typically receive different types of information related to user-item interactions. For example, one tower might process user-specific data, such as demographic information or past preferences, while the other tower processes item-specific data, such as product descriptions or attributes. Each tower independently learns representations or features from its respective input data using multiple layers of interconnected artificial neurons. The output of each tower's final layer is then combined or fused to generate a joint representation that captures the relationship between users and items. For simplicity's sake, I will omit this user-item relationship throughout the rest of the article and focus only on image and text embeddings.
 
-<img src="https://images.ctfassets.net/00voh0j35590/5ps7wStaacX2RAzsIOC1IS/514e034522ebd7a5236ef1829d1fb052/Online_recommendation_engines_CockroachDB_NINE.png" alt="Example of the Two-tower Architecture" style="width:100%">
+<img src="/assets/img/ai-recom-09.png" alt="Example of the Two-tower Architecture" style="width:100%">
 
 In our implementation, we will use a variant of BERT called [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) to create sequential data embeddings for product descriptions. To generate product image embeddings, we use the [Img2Vec](https://github.com/christiansafka/img2vec) model (an implementation of Resnet-18). Both models are hosted and runnable online, with no expertise or installation required. But first, we need to create the table schema before inserting data on it:
 
@@ -141,13 +141,13 @@ Additionally, CockroachDB's new vector indexing system **C-SPANN**, incorporates
 
 Unlike traditional solutions that rely on in-memory datasets or batched writes, C-SPANN is built to function across regions with strong consistency, low latency, and linear scalability. It supports immediate searchability of new data, avoids central coordination, and fits naturally into CockroachDB's distributed key-value storage model.
 
-<img src="https://images.ctfassets.net/00voh0j35590/2nQqVWDlx29nIDmQlyY1Mf/0c00a2cff06480cc17ef2038f44f1ff3/Online_recommendation_engines_CockroachDB_TEN.png" alt="C-SPANN" style="width:100%">
+<img src="/assets/img/ai-recom-10.png" alt="C-SPANN" style="width:100%">
 
 To keep storage and compute costs low, C-SPANN integrates **RaBitQ**, a quantization technique that reduces vector size by approximately 94%. Quantized vectors are scanned rapidly using [SIMD](https://www.sciencedirect.com/topics/computer-science/single-instruction-multiple-data)-optimized instructions, and a reranking step ensures high accuracy by rechecking the top candidates against the original full-precision vectors. The system also supports per-user and multi-region indexing via prefix columns, enabling fine-grained isolation and data locality. This ensures scalable, secure, and low-latency search experiences regardless of the number of users or regions involved.
 
 CockroachDB uses a distance metric to measure the similarity between two vectors (a.k.a, how "close" or "far apart" two vectors are). Currently, only the operators **<->** [Euclidean Distance](https://en.wikipedia.org/wiki/Euclidean_distance) (L2), **<#>** [Inner Product](https://en.wikipedia.org/wiki/Inner_product_space) (IP), and **<=>** [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) are available in CockroachDB.
 
-<img src="https://images.ctfassets.net/00voh0j35590/1lAnSYqAXMxVoIQhM7Bpb4/06a42860fddb74083293abef3c856a6b/Online_recommendation_engines_CockroachDB_ELEVEN.png" alt="Distance Metrics" style="width:100%">
+<img src="/assets/img/ai-recom-11.png" alt="Distance Metrics" style="width:100%">
 
 We have described how C-SPANN can efficiently cluster large volumes of vectors while keeping the index up to date through real-time, incremental updates. However, there's an important nuance in practical applications: Vectors typically belong to distinct entities — such as users, customers, or product category — and most queries are intended to operate within the scope of a single entity. Including vectors from unrelated owners will dilute relevance in vector search.
 
@@ -173,7 +173,7 @@ This indexing system unlocks advanced search capabilities like finding the "top 
 
 Consequently, CockroachDB exposes the usual search functionality, combining full text, numerical, and geographical pre-filters with K-Nearest Neighbors (KNN) vector search: With CockroachDB, you can query products stored as vectors while pre-filtering by location, price and description, and choose the relevant vector distance metrics to calculate how "similar" or "dissimilar" two products are.
 
-<img src="https://images.ctfassets.net/00voh0j35590/XU2FnvLPym1BoCSzOc9UF/03335ebe3695f29dbcb45f9d959e688d/Online_recommendation_engines_CockroachDB_TWELVE.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:100%">
+<img src="/assets/img/ai-recom-12.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:100%">
 
 The query below returns the 10 similar products – for which the vectors are stored in the `image_vector` field – to a query image vector. You can also set a pre-filter regarding its category, price range or sales location.
 
@@ -191,7 +191,7 @@ Even if the index contains billions of products, this query will search only the
 
 Under the hood, the index maintains an independent K-means tree for each category. From the system's standpoint, there's little difference between managing one billion vectors in a single tree or distributing them across a million smaller trees. In both cases, vectors are assigned to partitions and stored within ranges in CockroachDB's key-value layer. These ranges are automatically split, merged, and distributed across nodes, enabling near-linear scalability as usage grows.
 
-<img src="https://images.ctfassets.net/00voh0j35590/22Y3LgqmvlYBo0Dr5kDw3q/d906a44d723c935b2b8cc1be7486856c/Online_recommendation_engines_CockroachDB_THIRTEEN.png" alt="Partitioned vector indexing" style="width:100%">
+<img src="/assets/img/ai-recom-13.png" alt="Partitioned vector indexing" style="width:100%">
 
 The instructions above are a brief overview to demonstrate the building blocks for an online recommendation engine using CockroachDB. You can try this out with the notebook referenced [here](https://colab.research.google.com/drive/15ibk5BoLmldi06UJ6a4gewEc5zxxCTZ9?usp=sharing) (install [Google Colab](https://colab.research.google.com/) to open).
 
