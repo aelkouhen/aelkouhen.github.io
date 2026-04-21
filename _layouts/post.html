@@ -6,7 +6,15 @@ layout: base
 
 <div class="{% if page.full-width %} container-fluid {% elsif page.wide %} container-xl {% else %} container-md {% endif %}">
   <div class="row">
-    <div class="{% if page.full-width %} col {% elsif page.wide %} col-xl-8 offset-xl-1 col-lg-10 offset-lg-1 {% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
+    {% if page.wide %}
+    <div class="col-xl-3 offset-xl-1 d-none d-xl-block toc-col">
+      <aside class="toc-sidebar" id="toc-sidebar">
+        <p class="toc-title">On this page</p>
+        <nav id="toc-nav"></nav>
+      </aside>
+    </div>
+    {% endif %}
+    <div class="{% if page.full-width %} col {% elsif page.wide %} col-xl-8 col-lg-10 offset-lg-1 {% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
 
       {% if page.gh-repo %}
         {% assign gh_split =  page.gh-repo | split:'/'  %}
@@ -79,14 +87,6 @@ layout: base
       {% include comments.html %}
     </div>
 
-    {% if page.wide %}
-    <div class="col-xl-3 d-none d-xl-block toc-col">
-      <aside class="toc-sidebar" id="toc-sidebar">
-        <p class="toc-title">On this page</p>
-        <nav id="toc-nav"></nav>
-      </aside>
-    </div>
-    {% endif %}
 
   </div>
 </div>
