@@ -17,7 +17,7 @@ Meanwhile, fraudsters are evolving fast and moving in tandem with digital bankin
 
 Fraud detection systems must ingest massive volumes of transactional data, evaluate it against dynamic rulesets, and make decisions in real time — all while operating across global infrastructure. Traditional databases often buckle under this pressure and deliver poor fraud prevention performance, due to inefficient data access strategies.
 
-Enter [CockroachDB](https://www.cockroachlabs.com/product/overview/), a distributed SQL database built for scale, resilience, and performance. When it comes to the latest generation of AI-powered fraud detection systems, the heart of CockroachDB's advantage lies its [advanced vector indexing capabilities](https://www.cockroachlabs.com/blog/cspann-real-time-indexing-billions-vectors/). In addition to the existing geo-partitioned and inverted indexes, CockroachDB empowers developers to build online fraud detection systems that are both fast and intelligent.
+Enter [CockroachDB](https://www.cockroachlabs.com/product/overview/), a distributed SQL database built for scale, resilience, and performance. When it comes to the latest generation of AI-powered fraud detection systems, the heart of CockroachDB's advantage lies its [advanced vector indexing capabilities](/2025-11-23-cockroachdb-ai-spann/). In addition to the existing geo-partitioned and inverted indexes, CockroachDB empowers developers to build online fraud detection systems that are both fast and intelligent.
 
 This article explores how these new vector indexing features enable low-latency anomaly detection, real-time alerting, and region-aware decision making — without compromising on correctness or scale.
 
