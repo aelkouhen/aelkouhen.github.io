@@ -9,9 +9,7 @@ tags: [Artificial Intelligence, CockroachDB, GenAI, vector search, fraud detecti
 comments: true
 ---
 
-In the arms race against financial fraud, milliseconds matter.
-
-For any given transaction, fraud detection systems must decide whether or not it's fraudulent and immediately act accordingly. Failing to definitively address fraud leads to significant losses, harms organizations' brand image, tarnishes their reputation, and inevitably repels customers.
+In the arms race against financial fraud, milliseconds matter. For any given transaction, fraud detection systems must decide whether or not it's fraudulent and immediately act accordingly. Failing to definitively address fraud leads to significant losses, harms organizations' brand image, tarnishes their reputation, and inevitably repels customers.
 
 The incidence of fraud has reached record levels. [Estimates](https://www.cyberdefensemagazine.com/the-true-cost-of-cybercrime-why-global-damages-could-reach-1-2-1-5-trillion-by-end-of-year-2025/) for the worldwide cost of fraud — including cybercrime, financial fraud, and related losses — range from $1.2 trillion to over $1.5 trillion annually by the end of 2025.
 
