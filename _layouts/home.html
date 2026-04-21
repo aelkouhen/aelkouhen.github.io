@@ -23,8 +23,10 @@ layout: page
     var total = cards.length;
     var currentPage = 1;
     var totalPages = Math.ceil(total / pageSize);
-    var newerLabel = "{% if page.lang == 'fr' %}&larr; Articles r&eacute;cents{% else %}&larr; Newer Posts{% endif %}";
-    var olderLabel = "{% if page.lang == 'fr' %}Articles plus anciens &rarr;{% else %}Older Posts &rarr;{% endif %}";
+    {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+    {% assign pag_t = site.data.translations[active_lang].pagination %}
+    var newerLabel = "{{ pag_t.newer | default: '&larr; Newer Posts' }}";
+    var olderLabel = "{{ pag_t.older | default: 'Older Posts &rarr;' }}";
 
     function showPage(p) {
       var start = (p - 1) * pageSize;
