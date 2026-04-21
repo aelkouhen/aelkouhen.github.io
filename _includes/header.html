@@ -25,7 +25,7 @@
 <div class="big-img intro-header">
   <div class="{% if page.full-width %}container-fluid{% elsif page.wide %}container-xl{% else %}container-md{% endif %}">
     <div class="row">
-      <div class="{% if page.full-width %}col{% elsif page.wide %}col-xl-9 offset-xl-1 col-lg-10 offset-lg-1{% else %}col-xl-8 offset-xl-2 col-lg-10 offset-lg-1{% endif %}">
+      <div class="{% if page.full-width %}col{% elsif page.wide %}col-xl-11 col-lg-10 offset-lg-1{% else %}col-xl-8 offset-xl-2 col-lg-10 offset-lg-1{% endif %}">
         <div class="{{ include.type }}-heading">
           <h1>{% if page.title %}{{ page.title | strip_html }}{% else %}<br/>{% endif %}</h1>
           {% if page.subtitle %}
@@ -67,7 +67,7 @@
 <div class="intro-header no-img">
   <div class="{% if page.full-width %}container-fluid{% elsif page.wide %}container-xl{% else %}container-md{% endif %}">
     <div class="row">
-      <div class="{% if page.full-width %}col{% elsif page.wide %}col-xl-9 offset-xl-1 col-lg-10 offset-lg-1{% else %}col-xl-8 offset-xl-2 col-lg-10 offset-lg-1{% endif %}">
+      <div class="{% if page.full-width %}col{% elsif page.wide %}col-xl-11 col-lg-10 offset-lg-1{% else %}col-xl-8 offset-xl-2 col-lg-10 offset-lg-1{% endif %}">
         <div class="{{ include.type }}-heading">
           <h1>{% if page.title %}{{ page.title | strip_html }}{% else %}<br/>{% endif %}</h1>
           {% if page.subtitle %}
