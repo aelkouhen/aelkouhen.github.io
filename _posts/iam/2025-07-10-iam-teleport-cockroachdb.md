@@ -5,7 +5,7 @@ subtitle: "How a global payments leader achieved 99.999% availability for infras
 cover-img: /assets/img/cover-iam-p3.webp
 thumbnail-img: /assets/img/cover-iam-p3.webp
 share-img: /assets/img/cover-iam-p3.webp
-tags: [iam, security, CockroachDB, Teleport, access management, multi-region, distributed SQL]
+tags: [iam, security, CockroachDB, Teleport, multi-region, infrastructure]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
