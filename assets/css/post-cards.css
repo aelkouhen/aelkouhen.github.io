@@ -1,10 +1,12 @@
 /* =====================================================
-   Navbar — links left, title right
+   Navbar — centered links
    ===================================================== */
 
 @media (min-width: 1200px) {
-  .navbar-custom .navbar-brand.ml-auto {
-    font-weight: 700;
+  .navbar-custom .navbar-collapse {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
