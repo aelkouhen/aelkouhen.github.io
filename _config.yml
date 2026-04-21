@@ -267,8 +267,9 @@ date_format: "%B %-d, %Y"
 timezone: "Europe/Paris"
 markdown: kramdown
 highlighter: rouge
-permalink: /:year-:month-:day-:title/
+permalink: /en/:year-:month-:day-:title/
 paginate: 7
+paginate_path: /en/page:num/
 
 kramdown:
   input: GFM
@@ -289,6 +290,12 @@ defaults:
       show-share: true
       show-subscribe: true
       support_promo_box: true
+  -
+    scope:
+      path: "_posts/fr"
+      type: "posts"
+    values:
+      permalink: /:year-:month-:day-:title/
   -
     scope:
       path: ""
