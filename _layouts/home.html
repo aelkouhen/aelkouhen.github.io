@@ -4,5 +4,59 @@ layout: page
 
 {{ content }}
 
-{% assign posts = paginator.posts | default: site.posts %}
-{% include post-cards.html posts=posts %}
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+  {% include post-cards.html posts=posts %}
+{% else %}
+  {% assign posts = site.posts %}
+  {% assign page_size = site.paginate | default: 7 %}
+  <div id="js-post-list">
+    {% include post-cards.html posts=posts %}
+  </div>
+  {% if posts.size > page_size %}
+  <script>
+  (function () {
+    var pageSize = {{ page_size }};
+    var cards = document.querySelectorAll('#js-post-list .post-preview');
+    var total = cards.length;
+    var currentPage = 1;
+    var totalPages = Math.ceil(total / pageSize);
+
+    function showPage(p) {
+      var start = (p - 1) * pageSize;
+      var end = start + pageSize;
+      cards.forEach(function (c, i) {
+        c.style.display = (i >= start && i < end) ? '' : 'none';
+      });
+      currentPage = p;
+      renderNav();
+    }
+
+    function renderNav() {
+      var nav = document.getElementById('js-pagination');
+      var html = '<ul class="pagination main-pager">';
+      if (currentPage > 1) {
+        html += '<li class="page-item previous"><a class="page-link" href="#" data-page="' + (currentPage - 1) + '">&larr; {{ site.data.translations[page.lang].navbar["newer_posts"] | default: "Newer Posts" }}</a></li>';
+      }
+      if (currentPage < totalPages) {
+        html += '<li class="page-item next"><a class="page-link" href="#" data-page="' + (currentPage + 1) + '">{{ site.data.translations[page.lang].navbar["older_posts"] | default: "Older Posts" }} &rarr;</a></li>';
+      }
+      html += '</ul>';
+      nav.innerHTML = html;
+      nav.querySelectorAll('[data-page]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          showPage(parseInt(this.getAttribute('data-page')));
+          window.scrollTo(0, 0);
+        });
+      });
+    }
+
+    var nav = document.createElement('div');
+    nav.id = 'js-pagination';
+    document.getElementById('js-post-list').after(nav);
+    showPage(1);
+  })();
+  </script>
+  {% endif %}
+{% endif %}
