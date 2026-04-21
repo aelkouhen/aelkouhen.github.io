@@ -61,32 +61,26 @@
 
 /* Level 1 — H2 */
 .toc-item--h2 .toc-link {
-  padding-left: 0.6rem;
+  padding-left: 0.85rem;
   font-size: 0.82rem;
   color: #555;
 }
 
 /* Level 2 — H3 */
 .toc-item--h3 .toc-link {
-  padding-left: 1.4rem;
+  padding-left: 1.65rem;
   font-size: 0.78rem;
   color: #777;
 }
 
-/* Level 3 — H4 */
-.toc-item--h4 .toc-link {
-  padding-left: 2.2rem;
-  font-size: 0.74rem;
-  color: #999;
-}
-
 .toc-link {
+  position: relative;
   display: block;
   padding-top: 0.28rem;
   padding-bottom: 0.28rem;
   text-decoration: none;
   line-height: 1.4;
-  transition: color 0.15s ease, box-shadow 0.15s ease;
+  transition: color 0.15s ease;
 }
 
 .toc-link:hover {
@@ -96,8 +90,18 @@
 
 .toc-link--active {
   color: #008AFF !important;
-  box-shadow: inset 2px 0 0 #008AFF;
   font-weight: 700;
+}
+
+.toc-link--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #008AFF;
+  border-radius: 1px;
 }
 
 /* =====================================================
