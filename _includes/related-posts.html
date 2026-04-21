@@ -1,6 +1,6 @@
 {% assign max_related = 3 %}
-{% assign related = "" | split: "" %}
 
+{% assign pool = "" | split: "" %}
 {% for post in site.posts %}
   {% unless post.url == page.url %}
     {% assign common = 0 %}
@@ -10,23 +10,27 @@
       {% endif %}
     {% endfor %}
     {% if common > 0 %}
-      {% assign related = related | push: post %}
+      {% assign pool = pool | push: post %}
     {% endif %}
   {% endunless %}
 {% endfor %}
 
-{% assign related = related | slice: 0, max_related %}
+{% assign related = pool | sample: max_related %}
 
-{% assign related_urls = "" | split: "" %}
-{% for post in related %}{% assign related_urls = related_urls | push: post.url %}{% endfor %}
-
+{% comment %} Fill remaining slots with random recent posts if not enough tag matches {% endcomment %}
 {% if related.size < max_related %}
+  {% assign related_urls = "" | split: "" %}
+  {% for post in related %}{% assign related_urls = related_urls | push: post.url %}{% endfor %}
+  {% assign fallback_pool = "" | split: "" %}
   {% for post in site.posts %}
     {% unless post.url == page.url or related_urls contains post.url %}
-      {% assign related = related | push: post %}
-      {% assign related_urls = related_urls | push: post.url %}
+      {% assign fallback_pool = fallback_pool | push: post %}
     {% endunless %}
-    {% if related.size >= max_related %}{% break %}{% endif %}
+  {% endfor %}
+  {% assign needed = max_related | minus: related.size %}
+  {% assign fallback = fallback_pool | sample: needed %}
+  {% for post in fallback %}
+    {% assign related = related | push: post %}
   {% endfor %}
 {% endif %}
 
