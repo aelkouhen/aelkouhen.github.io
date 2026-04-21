@@ -1,4 +1,12 @@
 /* =====================================================
+   Post header — centered title, subtitle, author row
+   ===================================================== */
+
+.intro-header .post-heading {
+  text-align: center;
+}
+
+/* =====================================================
    Post Card Grid — CockroachDB blog-style layout
    ===================================================== */
 
@@ -174,6 +182,7 @@
 .post-author-meta {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
   margin-top: 0.85rem;
   width: 100%;
@@ -205,7 +214,6 @@
 }
 
 .post-read-time {
-  margin-left: auto;
   font-size: 0.85rem;
   opacity: 0.75;
   white-space: nowrap;
