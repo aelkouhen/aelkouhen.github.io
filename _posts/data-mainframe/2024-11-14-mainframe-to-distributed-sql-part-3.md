@@ -5,7 +5,7 @@ subtitle: "Distributed Database Architecture"
 cover-img: /assets/img/cover-mainframe-p3.webp
 thumbnail-img: /assets/img/cover-mainframe-p3.webp
 share-img: /assets/img/cover-mainframe-p3.webp
-tags: [mainframe, distributed SQL, CockroachDB, database, distributed systems, Raft, consensus, scalability]
+tags: [mainframe, CockroachDB, distributed systems, Raft, consensus, scalability]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
