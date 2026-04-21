@@ -7,6 +7,41 @@
 }
 
 /* =====================================================
+   Language switcher
+   ===================================================== */
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.lang-switcher__item {
+  color: #555;
+  text-decoration: none;
+  padding: 0.1rem 0.25rem;
+  border-radius: 3px;
+  transition: color 0.15s ease;
+}
+
+.lang-switcher__item:hover {
+  color: #008AFF;
+  text-decoration: none;
+}
+
+.lang-switcher__item--active {
+  color: #008AFF;
+}
+
+.lang-switcher__sep {
+  color: #ccc;
+}
+
+/* =====================================================
    Reading progress bar
    ===================================================== */
 
