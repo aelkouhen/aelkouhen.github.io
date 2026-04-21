@@ -391,7 +391,7 @@ mem = Memori(conn=get_conn).llm.register(client)
 mem.attribution(entity_id="user-123", process_id="my-app")
 mem.config.storage.build()
 ```
-> **_NOTE:_** : You cannot tune the similarity threshold directly, that's abstracted inside Memori's recall engine.
+> **_NOTE:_** You cannot tune the similarity threshold directly, that's abstracted inside Memori's recall engine.
 
 ---
 ## Part 2: CockroachDB + Amazon Bedrock
