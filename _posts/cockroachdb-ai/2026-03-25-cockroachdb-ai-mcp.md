@@ -7,7 +7,7 @@ thumbnail-img: /assets/img/cover-ai-mcp.webp
 share-img: /assets/img/cover-ai-mcp.webp
 tags: [Artificial Intelligence, CockroachDB, GenAI, MCP, AI Agents]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

@@ -280,7 +280,7 @@ defaults:
       layout: "post"
       wide: true
       author: "Amine El Kouhen"
-      author-avatar: "/assets/img/author.jpg"
+      author-avatar: "/assets/img/amine_elkouhen.jpg"
       comments: true
       social-share: true
       show-share: true

@@ -7,7 +7,7 @@ thumbnail-img: /assets/img/cover-iam-p3.webp
 share-img: /assets/img/cover-iam-p3.webp
 tags: [iam, security, CockroachDB, Teleport, access management, multi-region, distributed SQL]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 

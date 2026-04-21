@@ -7,7 +7,7 @@ thumbnail-img: /assets/img/cover-mainframe-p5.webp
 share-img: /assets/img/cover-mainframe-p5.webp
 tags: [mainframe, distributed SQL, CockroachDB, migration, modernization, database, architecture, rehosting, replatforming, refactoring]
 author: "Amine El Kouhen"
-author-avatar: "/assets/img/author.jpg"
+author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
