@@ -46,7 +46,8 @@ There are several types of recommendation systems commonly in use:
 **Content-Based Filtering**: This approach recommends items to users based on their preferences and characteristics. It analyzes the content and attributes of items that users have interacted with or rated positively and suggests similar items. For example, if a user enjoys action films in a movie recommendation system, the system would recommend other action movies.
 
 <img src="/assets/img/ai-recom-01.png" alt="Content-Based Filtering" style="width:100%">
-<p><sub><i>Content-Based Filtering</i></sub></p>
+{: .mx-auto.d-block :}
+**Content-Based Filtering**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **Collaborative Filtering**: This method recommends items based on the similarities and patterns found in the behavior and preferences of multiple users. It identifies users with similar tastes and recommends items that those users have liked or rated highly. Collaborative filtering can be further divided into two subtypes:
 
@@ -55,12 +56,14 @@ There are several types of recommendation systems commonly in use:
 - **Item-Based Collaborative Filtering**: It identifies items that are similar based on user behavior and recommends items that are similar to those previously interacted with by the user (Scenario C).
 
 <img src="/assets/img/ai-recom-02.png" alt="Collaborative Filtering" style="width:100%">
-<p><sub><i>Collaborative Filtering</i></sub></p>
+{: .mx-auto.d-block :}
+**Collaborative Filtering**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **Context-Aware Systems**: These systems consider contextual information, such as time, location, and user context, to provide more relevant recommendations. For instance, a music streaming service might recommend energetic workout playlists in the morning and relaxing music in the evening. Likewise, an e-commerce website will suggest specific items when it's Black Friday or Christmas, different from what it could recommend in other periods of the year.
 
 <img src="/assets/img/ai-recom-03.png" alt="Context-Aware Filtering" style="width:100%">
-<p><sub><i>Context-Aware Filtering</i></sub></p>
+{: .mx-auto.d-block :}
+**Context-Aware Filtering**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **Hybrid Recommendation Systems**: These systems combine multiple recommendation techniques to provide more accurate and diverse recommendations. They leverage the strengths of different approaches, such as content-based filtering and collaborative filtering, to overcome their limitations and offer more effective suggestions.
 
@@ -71,12 +74,14 @@ There are several types of recommendation systems commonly in use:
 Unlike offline recommendation engines that generate personalized recommendations based on historical data, an ideal recommendation engine should prioritize resource efficiency, deliver high-performance real-time updates (online), and provide accurate and relevant choices to users. For example, it can be ineffective to suggest to a customer an item they have already bought only because your recommendation system wasn't aware of the customer's last actions.
 
 <img src="/assets/img/ai-recom-04.png" alt="Offline Recommendation Systems" style="width:100%">
-<p><sub><i>Offline Recommendation Systems</i></sub></p>
+{: .mx-auto.d-block :}
+**Offline Recommendation Systems**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Online engines should react to customers' actions while they are still browsing your site, and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
 <img src="/assets/img/ai-recom-05.png" alt="Online Recommendation Systems" style="width:100%">
-<p><sub><i>Online Recommendation Systems</i></sub></p>
+{: .mx-auto.d-block :}
+**Online Recommendation Systems**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 For this, you clearly need a low-latency consistent backend to implement such a system, with two important capabilities.
 
@@ -89,7 +94,8 @@ Implementing such systems using the distributed SQL database [CockroachDB](https
 A [vector embedding](https://www.cockroachlabs.com/blog/genai-using-cockroachdb/#Vector-Embeddings) is a mathematical representation of something (like text or images) as a list of numbers, where closeness in numbers means closeness in meaning. These embeddings are mapped in multi-dimensional space to perform proximity calculations to understand the relationship between the meaning of items.
 
 <img src="/assets/img/ai-recom-06.png" alt="Product descriptions presented as vectors" style="width:100%">
-<p><sub><i>Product descriptions presented as vectors</i></sub></p>
+{: .mx-auto.d-block :}
+**Product descriptions presented as vectors**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Vector representations of data enable machine learning algorithms to process and analyze the information efficiently. These algorithms often rely on mathematical operations performed on vectors, such as dot products, vector addition, and normalization, to compute similarities, distances, and transformations.
 
@@ -100,7 +106,8 @@ But most importantly, Vector representations facilitate the comparison and clust
 - suggest similar products based on their images and textual descriptions (Content-Based Filtering).
 
 <img src="/assets/img/ai-recom-07.png" alt="Online Recommendation Engine using CockroachDB" style="width:100%">
-<p><sub><i>Online Recommendation Engine using CockroachDB</i></sub></p>
+{: .mx-auto.d-block :}
+**Online Recommendation Engine using CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In the next section, you'll learn how to generate and store image and text embeddings, implement real-time similarity search, and build scalable, low-latency recommendation queries using CockroachDB's distributed SQL architecture.
 
@@ -113,7 +120,8 @@ It is essential to convert unstructured data into numerical representations to m
 Deep Learning has introduced a paradigm shift in this process. Rather than relying on manual engineering, Deep Learning models – called transformers – autonomously learn intricate feature interactions in complex data. As data flows through a transformer, it generates novel representations of the input data, each with varying shapes and sizes. Each layer of the transformer focuses on different aspects of the input. This ability of Deep Learning to automatically generate feature representations from inputs forms the foundation for creating vector embeddings.
 
 <img src="/assets/img/ai-recom-08.gif" alt="Two-tower neural network model - Source: Google Search" style="width:100%">
-<p><sub><i>Two-tower neural network model - Source: Google Search</i></sub></p>
+{: .mx-auto.d-block :}
+**Two-tower neural network model - Source: Google Search**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Vector Embeddings are created through an embedding process that maps discrete or categorical data into continuous vector representations. The process of creating embeddings depends on the specific context and data type. Here are a few common techniques:
 
@@ -128,7 +136,8 @@ Vector Embeddings are created through an embedding process that maps discrete or
 The two towers in the network typically receive different types of information related to user-item interactions. For example, one tower might process user-specific data, such as demographic information or past preferences, while the other tower processes item-specific data, such as product descriptions or attributes. Each tower independently learns representations or features from its respective input data using multiple layers of interconnected artificial neurons. The output of each tower's final layer is then combined or fused to generate a joint representation that captures the relationship between users and items. For simplicity's sake, I will omit this user-item relationship throughout the rest of the article and focus only on image and text embeddings.
 
 <img src="/assets/img/ai-recom-09.png" alt="Example of the Two-tower Architecture" style="width:100%">
-<p><sub><i>Example of the Two-tower Architecture</i></sub></p>
+{: .mx-auto.d-block :}
+**Example of the Two-tower Architecture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In our implementation, we will use a variant of BERT called [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) to create sequential data embeddings for product descriptions. To generate product image embeddings, we use the [Img2Vec](https://github.com/christiansafka/img2vec) model (an implementation of Resnet-18). Both models are hosted and runnable online, with no expertise or installation required. But first, we need to create the table schema before inserting data on it:
 
@@ -262,7 +271,8 @@ To keep storage and compute costs low, C-SPANN integrates **RaBitQ**, a quantiza
 CockroachDB uses a distance metric to measure the similarity between two vectors (a.k.a, how "close" or "far apart" two vectors are). Currently, only the operators **<->** [Euclidean Distance](https://en.wikipedia.org/wiki/Euclidean_distance) (L2), **<#>** [Inner Product](https://en.wikipedia.org/wiki/Inner_product_space) (IP), and **<=>** [Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) are available in CockroachDB.
 
 <img src="/assets/img/ai-recom-11.png" alt="Distance Metrics" style="width:100%">
-<p><sub><i>Distance Metrics</i></sub></p>
+{: .mx-auto.d-block :}
+**Distance Metrics**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 We have described how C-SPANN can efficiently cluster large volumes of vectors while keeping the index up to date through real-time, incremental updates. However, there's an important nuance in practical applications: Vectors typically belong to distinct entities — such as users, customers, or product category — and most queries are intended to operate within the scope of a single entity. Including vectors from unrelated owners will dilute relevance in vector search.
 
@@ -289,7 +299,8 @@ This indexing system unlocks advanced search capabilities like finding the "top 
 Consequently, CockroachDB exposes the usual search functionality, combining full text, numerical, and geographical pre-filters with K-Nearest Neighbors (KNN) vector search: With CockroachDB, you can query products stored as vectors while pre-filtering by location, price and description, and choose the relevant vector distance metrics to calculate how "similar" or "dissimilar" two products are.
 
 <img src="/assets/img/ai-recom-12.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:100%">
-<p><sub><i>Calculating Cosine Similarity between Product Descriptions</i></sub></p>
+{: .mx-auto.d-block :}
+**Calculating Cosine Similarity between Product Descriptions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The query below returns the 10 similar products – for which the vectors are stored in the `image_vector` field – to a query image vector. You can also set a pre-filter regarding its category, price range or sales location.
 
