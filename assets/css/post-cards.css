@@ -1,16 +1,4 @@
 /* =====================================================
-   Navbar — centered links
-   ===================================================== */
-
-@media (min-width: 1200px) {
-  .navbar-custom .navbar-collapse {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
-/* =====================================================
    Post Card Grid — CockroachDB blog-style layout
    ===================================================== */
 
