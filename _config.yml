@@ -268,8 +268,13 @@ timezone: "Europe/Paris"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
-paginate: 7
-paginate_path: /page:num/
+
+pagination:
+  enabled: true
+  per_page: 7
+  permalink: '/page:num/'
+  sort_field: 'date'
+  sort_reverse: true
 
 kramdown:
   input: GFM
@@ -316,7 +321,7 @@ exclude:
   - docs/
 
 plugins:
-  - jekyll-paginate
+  - jekyll-paginate-v2
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-polyglot
