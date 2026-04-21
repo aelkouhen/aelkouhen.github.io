@@ -8,8 +8,8 @@
     if (!bar || !article) return;
 
     var navbar    = document.querySelector('.navbar-custom');
-    var navHeight = navbar ? navbar.offsetHeight : 54;
-    bar.style.top = navHeight + 'px';
+    var navBottom = navbar ? navbar.getBoundingClientRect().bottom : 54;
+    bar.style.top = navBottom + 'px';
 
     function update() {
       var articleTop    = article.getBoundingClientRect().top + window.scrollY;
