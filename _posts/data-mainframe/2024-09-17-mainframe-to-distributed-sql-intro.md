@@ -6,6 +6,8 @@ cover-img: /assets/img/cover-mainframe.webp
 thumbnail-img: /assets/img/cover-mainframe.webp
 share-img: /assets/img/mainframe-diagram.png
 tags: [mainframe, migration, distributed SQL, database, CockroachDB]
+author: "Amine El Kouhen"
+author-avatar: "/assets/img/author.jpg"
 comments: true
 ---
 

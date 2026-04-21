@@ -6,6 +6,8 @@ cover-img: /assets/img/cover-iam-p2.png
 thumbnail-img: /assets/img/cover-iam-p2.png
 share-img: /assets/img/cover-iam-p2.png
 tags: [iam, security, authentication, authorization, CockroachDB, OpenAI, Ory]
+author: "Amine El Kouhen"
+author-avatar: "/assets/img/author.jpg"
 comments: true
 ---
 

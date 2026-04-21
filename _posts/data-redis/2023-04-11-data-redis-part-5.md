@@ -5,6 +5,8 @@ subtitle:  Data Serving with Redis (Hands-on)
 thumbnail-img: assets/img/redis-smartcache.png
 share-img: assets/img/redis-serving.gif
 tags: [Business Analytics,data serving,data virtualization,data visualization,feature store,Hands-On,JDBC,ODBC,Power BI,RDI,RIOT,Redis,Smart Cache,Redis SQL,reverse ETL,Tableau,Trino,SQL,vector database]
+author: "Amine El Kouhen"
+author-avatar: "/assets/img/author.jpg"
 comments: true
 ---
 
