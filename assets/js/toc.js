@@ -1,6 +1,29 @@
 (function () {
   'use strict';
 
+  // ── Reading progress bar ─────────────────────────────────────────────────
+  function initProgress() {
+    var bar     = document.getElementById('reading-progress');
+    var article = document.querySelector('.blog-post');
+    if (!bar || !article) return;
+
+    var navbar    = document.querySelector('.navbar-custom');
+    var navHeight = navbar ? navbar.offsetHeight : 54;
+    bar.style.top = navHeight + 'px';
+
+    function update() {
+      var articleTop    = article.getBoundingClientRect().top + window.scrollY;
+      var articleHeight = article.offsetHeight;
+      var scrolled      = window.scrollY - articleTop;
+      var pct           = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100));
+      bar.style.width   = pct + '%';
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  // ── Table of Contents ────────────────────────────────────────────────────
   function buildToc() {
     var article    = document.querySelector('.blog-post');
     var tocNav     = document.getElementById('toc-nav');
@@ -43,7 +66,6 @@
       activeLink = link;
       if (!activeLink) return;
       activeLink.classList.add('toc-link--active');
-      // Keep active item visible inside TOC scroll area
       var top    = activeLink.offsetTop;
       var bottom = top + activeLink.offsetHeight;
       var sTop   = tocSidebar.scrollTop;
@@ -67,7 +89,7 @@
     var ticking = false;
     window.addEventListener('scroll', function () {
       if (!ticking) {
-        requestAnimationFrame(function () { updateActive(); updateProgress(); ticking = false; });
+        requestAnimationFrame(function () { updateActive(); ticking = false; });
         ticking = true;
       }
     }, { passive: true });
@@ -75,20 +97,9 @@
     updateActive();
   }
 
-  function updateProgress() {
-    var bar     = document.getElementById('reading-progress');
-    var article = document.querySelector('.blog-post');
-    if (!bar || !article) return;
-    var articleTop    = article.getBoundingClientRect().top + window.scrollY;
-    var articleHeight = article.offsetHeight;
-    var scrolled      = window.scrollY - articleTop;
-    var pct           = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100));
-    bar.style.width   = pct + '%';
-  }
-
   function init() {
+    initProgress();
     buildToc();
-    updateProgress();
   }
 
   if (document.readyState === 'loading') {
