@@ -1,28 +1,41 @@
 {% if site.post_search %}
+{% include get-translation-data.html %}
+{% assign _s_posts = site.posts | where: "lang", active_lang %}
 
 <div id="beautifuljekyll-search-overlay">
 
   <div id="nav-search-exit" title="Exit search">✕</div>
   <input type="text" id="nav-search-input" placeholder="Search">
   <ul id="search-results-container"></ul>
-  
+
   <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
   <script>
     var searchjson = '[ \
-      {% for post in site.posts %} \
+      {% for post in _s_posts %} \
+        {% if post.lang != site.default_lang %} \
+          {% assign _s_prefix = "/" | append: post.lang | append: "/" %} \
+          {% if post.url contains _s_prefix %} \
+            {% assign _s_url = post.url %} \
+          {% else %} \
+            {% assign _s_url = post.url | prepend: post.lang | prepend: "/" %} \
+          {% endif %} \
+        {% else %} \
+          {% assign _s_url = post.url %} \
+        {% endif %} \
         { \
           "title"    : "{% if post.title != "" %}{{ post.title | strip_html | escape }}{% else %}{{ post.excerpt | strip_html | escape | strip }}{%endif%}", \
           "category" : "{{ post.tags | join: \', \' }}", \
-          "url"      : "{{ site.baseurl }}{{ post.url }}", \
+          "url"      : "{{ site.baseurl }}{{ _s_url }}", \
           "date"     : "{{ post.date | date: "%B %e, %Y" | default: "January 1, 1970" }}" \
         }, \
       {% endfor %} \
-      {% for page in site.html_pages %}{% if page.title != "{title}" and page.title != "404 - Page not found" %} \
+      {% assign _s_pages = site.html_pages | where: "lang", active_lang %} \
+      {% for p in _s_pages %}{% if p.title != "{title}" and p.title != "404 - Page not found" %} \
         { \
-          "title"    : "{% if page.title != "" %}{{ page.title | strip_html | escape }}{% else %}{{ page.excerpt | strip_html | escape | strip }}{% endif %}", \
-          "category" : "{% if page.tags %}{{ page.tags | join: \', \' }}{% else %}page{% endif %}", \
-          "url"      : "{{ site.baseurl }}{{ page.url }}", \
-          "date"     : "{{ page.date | date: '%B %e, %Y' | default: "January 1, 1970" }}" \
+          "title"    : "{% if p.title != "" %}{{ p.title | strip_html | escape }}{% else %}{{ p.excerpt | strip_html | escape | strip }}{% endif %}", \
+          "category" : "{% if p.tags %}{{ p.tags | join: \', \' }}{% else %}page{% endif %}", \
+          "url"      : "{{ site.baseurl }}{{ p.url }}", \
+          "date"     : "{{ p.date | date: \'%B %e, %Y\' | default: "January 1, 1970" }}" \
         }{% unless forloop.last %},{% endunless %} \
       {% endif %}{% endfor %} \
     ]';
