@@ -2,7 +2,7 @@
    Navbar & dropdown polish
    ===================================================== */
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .navbar-custom .nav-item.dropdown .dropdown-menu {
     min-width: max-content;
     width: auto;
@@ -21,6 +21,10 @@
 
   .navbar-custom .nav-item.dropdown .dropdown-menu .dropdown-item:first-child {
     border-top-width: 0;
+  }
+
+  .navbar-custom .nav-item.dropdown:hover {
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 
