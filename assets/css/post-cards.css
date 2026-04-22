@@ -277,7 +277,7 @@
   line-height: 1.6;
   margin: 0;
   flex: 1;
-  text-align: left;
+  text-align: justify;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
