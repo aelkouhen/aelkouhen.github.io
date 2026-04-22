@@ -47,6 +47,17 @@
   {% assign _topics_count  = _unique_tags | size %}
   {% assign _avg_words     = _total_words | divided_by: _cat_posts.size %}
   {% assign _avg_read      = _avg_words | divided_by: 200 | ceil %}
+{% elsif page.layout == 'home' %}
+  {% assign _home_posts = site.posts | where: "lang", page.lang %}
+  {% assign _home_posts_count = _home_posts | size %}
+  {% assign _all_home_tags = "" %}
+  {% for post in _home_posts %}
+    {% for tag in post.tags %}
+      {% assign _all_home_tags = _all_home_tags | append: tag | append: "|" %}
+    {% endfor %}
+  {% endfor %}
+  {% assign _home_unique_tags = _all_home_tags | split: "|" | uniq | compact %}
+  {% assign _home_topics_count = _home_unique_tags | size %}
 {% endif %}
 
 <header class="category-header-wrap">
@@ -56,7 +67,7 @@
       <div class="category-header-left">
         <div class="category-header-breadcrumb" style="color:{{ page.accent-color }}">
           <span class="category-header-line" style="background:{{ page.accent-color }}"></span>
-          Category
+          {% if page.layout == 'home' %}Blog{% else %}Category{% endif %}
         </div>
         <h1 class="category-header-title">{{ page.title | strip_html }}</h1>
         {% if page.subtitle %}
@@ -78,6 +89,19 @@
           <div class="category-stat">
             <span class="category-stat-value" style="color:{{ page.accent-color }}">~{{ _avg_read }}</span>
             <span class="category-stat-label">Min avg. read</span>
+          </div>
+          {% endif %}
+        </div>
+        {% elsif page.layout == 'home' and _home_posts_count > 0 %}
+        <div class="category-header-stats">
+          <div class="category-stat">
+            <span class="category-stat-value" style="color:{{ page.accent-color }}">{{ _home_posts_count }}</span>
+            <span class="category-stat-label">Article{% if _home_posts_count != 1 %}s{% endif %}</span>
+          </div>
+          {% if _home_topics_count > 0 %}
+          <div class="category-stat">
+            <span class="category-stat-value" style="color:{{ page.accent-color }}">{{ _home_topics_count }}</span>
+            <span class="category-stat-label">Topics</span>
           </div>
           {% endif %}
         </div>
