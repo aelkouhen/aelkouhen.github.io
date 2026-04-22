@@ -1,4 +1,120 @@
 /* =====================================================
+   Search overlay — polished results panel
+   ===================================================== */
+
+#nav-search-input {
+  text-align: left !important;
+  padding-left: 1.25rem !important;
+  border-radius: 10px !important;
+}
+
+#search-results-count {
+  width: 50%;
+  margin: 0.5rem auto 0;
+  font-size: 0.78rem;
+  color: #aaa;
+  text-align: left;
+  padding: 0 0.25rem;
+  min-height: 1.1em;
+}
+
+#search-results-container {
+  width: 50%;
+  margin: 0.35rem auto 0 !important;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.search-result-item {
+  list-style: none;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.75rem 1.25rem !important;
+  text-decoration: none !important;
+  color: #111 !important;
+  transition: background 0.12s;
+  gap: 1rem;
+}
+
+.search-result-item a:hover {
+  background: #f5f9ff !important;
+  text-decoration: none !important;
+  color: #111 !important;
+}
+
+.search-result-title {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-result-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.search-result-date {
+  font-size: 0.75rem;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.search-result-category {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #eef3ff;
+  color: #4a7fff;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-no-results {
+  list-style: none;
+  padding: 1rem 1.25rem;
+  color: #999;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+@media (max-width: 1199px) {
+  #search-results-container,
+  #search-results-count {
+    width: 75%;
+  }
+}
+
+@media (max-width: 767px) {
+  #search-results-container,
+  #search-results-count {
+    width: 100%;
+  }
+}
+
+/* =====================================================
    Navbar brand: logo + title side by side
    ===================================================== */
 
