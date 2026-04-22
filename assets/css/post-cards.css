@@ -229,11 +229,11 @@
 .card__tag {
   display: inline-block;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #008AFF;
-  background: #e8f3ff;
+  color: #5a7a9f;
+  background: #f0f4f9;
   border-radius: 20px;
   padding: 0.2rem 0.65rem;
   align-self: flex-start;
@@ -415,7 +415,7 @@
   }
 
   .card--featured .card__image-wrap {
-    width: 55%;
+    width: 48%;
     aspect-ratio: unset;
     min-height: 260px;
     flex-shrink: 0;
