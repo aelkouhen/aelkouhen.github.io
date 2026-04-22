@@ -239,9 +239,10 @@
   align-self: flex-start;
 }
 
-/* Hide tags beyond the 3rd on regular cards */
-.card:not(.card--featured) .card__tag:nth-child(n+4) {
-  display: none;
+/* Clip tags to 2 lines on regular cards */
+.card:not(.card--featured) .card__tags {
+  max-height: 3rem;
+  overflow: hidden;
 }
 
 /* Title */
