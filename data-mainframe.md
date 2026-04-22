@@ -1,9 +1,11 @@
 ---
 layout: page
-title: Mainframe to Distributed SQL
-subtitle: "Modernizing Legacy Data Architectures"
+title: Mainframe & Distributed SQL
+subtitle: "Modernizing legacy data architectures and migrating workloads to distributed SQL."
 wide: true
 lang: en
+accent-color: "#2C7A7B"
+category-tag: mainframe
 ---
 
 {% include post-cards.html posts=site.tags.mainframe %}
