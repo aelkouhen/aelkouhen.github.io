@@ -43,8 +43,10 @@
   {% endfor %}
   {% assign _unique_tags   = _all_tag_list | split: "|" | uniq | compact %}
   {% assign _topics_count  = _unique_tags | size %}
-  {% assign _avg_words     = _total_words | divided_by: _cat_posts.size %}
-  {% assign _avg_read      = _avg_words | divided_by: 200 | ceil %}
+  {% if _cat_posts.size > 0 %}
+    {% assign _avg_words   = _total_words | divided_by: _cat_posts.size %}
+    {% assign _avg_read    = _avg_words | divided_by: 200 | ceil %}
+  {% endif %}
 {% elsif page.layout == 'home' %}
   {% assign _home_posts = site.posts | where: "lang", page.lang %}
   {% assign _home_posts_count = _home_posts | size %}
