@@ -25,7 +25,7 @@ AuthZed est une plateforme d'infrastructure d'autorisation moderne qui permet au
 
 Au cœur du système, **SpiceDB** est le moteur derrière le modèle d'autorisation de tous les produits AuthZed. Il est conçu pour être totalement agnostique aux solutions d'authentification et aux fournisseurs d'identité. SpiceDB implémente un modèle de permissions basé sur les relations qui prend en charge la cohérence forte, la réplication mondiale et une échelle extrêmement élevée, traitant des millions de requêtes d'autorisation par seconde pour les applications modernes et distribuées. SpiceDB est un moteur de graphe qui stocke de manière centralisée les données d'autorisation (relations et permissions). Les requêtes d'autorisation (ex. `checkPermission`, `lookupResources`) sont résolues via un dispatcher qui parcourt le graphe de permissions.
 
-<img src="/assets/img/authzed-spicedb-engine.png" alt="Moteur de graphe de permissions SpiceDB" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/authzed-spicedb-engine.png" alt="Moteur de graphe de permissions SpiceDB" style="width:60%;display:block;margin:1.5rem auto;">
 
 La mission d'AuthZed est de :
 
@@ -184,7 +184,7 @@ Une fois CockroachDB et AuthZed provisionnés, configurés et accessibles sur le
 
 La rédaction d'une ou plusieurs définitions de types d'objets est la première étape du développement d'un schéma de relations d'autorisation.
 
-<img src="/assets/img/authzed-schema-diagram.png" alt="Diagramme de définition de schéma SpiceDB" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/authzed-schema-diagram.png" alt="Diagramme de définition de schéma SpiceDB" style="width:60%;display:block;margin:1.5rem auto;">
 
 Dans l'exemple ci-dessus, nous définissons les concepts `user` et `document`. L'utilisateur peut être `viewer`, `editor` ou `admin`. La définition donne la permission `remove` uniquement au rôle `admin`. Pour `edit` un fichier, l'utilisateur doit être soit `editor` soit `admin`. La permission de `view` un document est accordée aux rôles viewer, editor et admin.
 

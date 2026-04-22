@@ -25,7 +25,7 @@ AuthZed is a modern authorization infrastructure platform that enables engineeri
 
 At its core, **SpiceDB** is behind the authorization model provided by all of AuthZed's products. It is designed to be entirely agnostic to authentication solutions and identity providers. SpiceDB implements a relationship-based permissions model that supports strong consistency, global replication, and extremely high scale, processing millions of authorization requests per second for modern, distributed apps. SpiceDB is a graph engine that centrally stores authorization data (relationships and permissions). Authorization requests (e.g., `checkPermission`, `lookupResources`) are resolved via a dispatcher that traverses the permission graph.
 
-<img src="/assets/img/authzed-spicedb-engine.png" alt="SpiceDB permission graph engine" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/authzed-spicedb-engine.png" alt="SpiceDB permission graph engine" style="width:60%;display:block;margin:1.5rem auto;">
 
 AuthZed's mission is to:
 
@@ -184,7 +184,7 @@ Once both CockroachDB and AuthZed are provisioned, configured, and network-acces
 
 Writing one or more object type definitions is the first step in developing an authorization relationship schema.
 
-<img src="/assets/img/authzed-schema-diagram.png" alt="SpiceDB schema definition diagram" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/authzed-schema-diagram.png" alt="SpiceDB schema definition diagram" style="width:60%;display:block;margin:1.5rem auto;">
 
 In the example above, we define the `user` and `document` concepts. The user can be a `viewer`, an `editor`, or an `admin`. The definition gives the `remove` permission to the `admin` role only. To `edit` a file the user must be either an `editor` or `admin`. The permission to `view` a document is set for the viewer, editor, and admin roles.
 
