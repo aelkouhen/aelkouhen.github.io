@@ -31,10 +31,20 @@
       {% endfor %} \
       {% assign _s_pages = site.html_pages | where: "lang", active_lang %} \
       {% for p in _s_pages %}{% if p.title != "{title}" and p.title != "404 - Page not found" %} \
+        {% if p.lang != site.default_lang %} \
+          {% assign _sp_prefix = "/" | append: p.lang | append: "/" %} \
+          {% if p.url contains _sp_prefix %} \
+            {% assign _sp_url = p.url %} \
+          {% else %} \
+            {% assign _sp_url = p.url | prepend: p.lang | prepend: "/" %} \
+          {% endif %} \
+        {% else %} \
+          {% assign _sp_url = p.url %} \
+        {% endif %} \
         { \
           "title"    : "{% if p.title != "" %}{{ p.title | strip_html | escape }}{% else %}{{ p.excerpt | strip_html | escape | strip }}{% endif %}", \
           "category" : "{% if p.tags %}{{ p.tags | join: \', \' }}{% else %}page{% endif %}", \
-          "url"      : "{{ site.baseurl }}{{ p.url }}", \
+          "url"      : "{{ site.baseurl }}{{ _sp_url }}", \
           "date"     : "{{ p.date | date: \'%B %e, %Y\' | default: "January 1, 1970" }}" \
         }{% unless forloop.last %},{% endunless %} \
       {% endif %}{% endfor %} \
