@@ -6,6 +6,7 @@ wide: true
 lang: en
 accent-color: "#D82C20"
 category-tag: Redis
+category-icon: "⚡"
 ---
 
 {% include post-cards.html posts=site.tags.Redis %}

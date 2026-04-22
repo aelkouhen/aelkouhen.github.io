@@ -1,56 +1,106 @@
 /* =====================================================
-   Category page header — Option 1 minimal typographic
+   Category page header — Option 3 split layout
    ===================================================== */
 
 .category-header-wrap {
-  background: #fff;
+  background: #fafafa;
   border-bottom: 1px solid #eee;
-  padding: 3rem 0 2.75rem;
-  margin-top: 3.1875rem; /* clear fixed navbar (50px + 1px border) */
+  margin-top: 3.1875rem;
 }
 
-.category-header__accent {
-  display: block;
-  width: 36px;
-  height: 4px;
+.category-header-inner {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  align-items: center;
+  min-height: 220px;
+  gap: 2rem;
+  padding: 2.75rem 1rem;
+}
+
+.category-header-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .85rem;
+}
+
+.category-header-line {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
   border-radius: 2px;
-  margin-bottom: 1.1rem;
+  flex-shrink: 0;
 }
 
-.category-header__title {
-  font-size: 2.4rem;
+.category-header-title {
+  font-size: 2.2rem;
   font-weight: 700;
   color: #111;
   line-height: 1.2;
   margin-bottom: .65rem;
 }
 
-.category-header__subtitle {
-  font-size: 1.05rem;
-  color: #666;
+.category-header-subtitle {
+  font-size: .98rem;
+  color: #555;
   line-height: 1.65;
-  max-width: 620px;
+  max-width: 500px;
   margin: 0 0 1.25rem;
 }
 
-.category-header__meta {
+.category-header-stats {
   display: flex;
-  align-items: baseline;
-  gap: .4rem;
+  gap: 2rem;
 }
 
-.category-header__count {
+.category-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-stat-value {
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1;
 }
 
-.category-header__count-label {
-  font-size: .75rem;
+.category-stat-label {
+  font-size: .68rem;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: #bbb;
+  margin-top: .2rem;
+}
+
+.category-header-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-icon-box {
+  width: 160px;
+  height: 160px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .category-header-inner {
+    grid-template-columns: 1fr;
+  }
+  .category-header-right { display: none; }
+  .category-header-title { font-size: 1.75rem; }
 }
 
 /* =====================================================

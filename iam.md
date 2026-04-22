@@ -6,6 +6,7 @@ wide: true
 lang: en
 accent-color: "#7B2FBE"
 category-tag: iam
+category-icon: "🔐"
 ---
 
 {% include post-cards.html posts=site.tags.iam %}
