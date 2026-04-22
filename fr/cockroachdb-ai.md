@@ -1,9 +1,10 @@
 ---
 layout: page
-title: CockroachDB & AI
-subtitle: "Building AI-Ready Systems with Distributed SQL"
+title: CockroachDB & IA
+subtitle: "Construire des systèmes prêts pour l'IA avec SQL distribué"
 wide: true
-lang: en
+lang: fr
+permalink: /cockroachdb-ai/
 ---
 
 {% assign ai_posts = site.tags['Artificial Intelligence'] %}
