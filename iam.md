@@ -6,6 +6,7 @@ wide: true
 lang: en
 accent-color: "#7B2FBE"
 category-tag: iam
+category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🔐"
 ---
 

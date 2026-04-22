@@ -7,6 +7,7 @@ lang: fr
 permalink: /iam/
 accent-color: "#7B2FBE"
 category-tag: iam
+category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🔐"
 ---
 
