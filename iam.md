@@ -1,9 +1,11 @@
 ---
 layout: page
-title: Identity and Access Management with CockroachDB
-subtitle: "Securing Digital Identities and Access"
+title: IAM with CockroachDB
+subtitle: "Securing digital identities and access at scale with CockroachDB, Keycloak, and modern IAM patterns."
 wide: true
 lang: en
+accent-color: "#7B2FBE"
+category-tag: iam
 ---
 
 {% include post-cards.html posts=site.tags.iam %}

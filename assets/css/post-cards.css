@@ -1,4 +1,58 @@
 /* =====================================================
+   Category page header — Option 1 minimal typographic
+   ===================================================== */
+
+.category-header-wrap {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 3rem 0 2.75rem;
+}
+
+.category-header__accent {
+  display: block;
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  margin-bottom: 1.1rem;
+}
+
+.category-header__title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.2;
+  margin-bottom: .65rem;
+}
+
+.category-header__subtitle {
+  font-size: 1.05rem;
+  color: #666;
+  line-height: 1.65;
+  max-width: 620px;
+  margin: 0 0 1.25rem;
+}
+
+.category-header__meta {
+  display: flex;
+  align-items: baseline;
+  gap: .4rem;
+}
+
+.category-header__count {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.category-header__count-label {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #bbb;
+}
+
+/* =====================================================
    Navbar & dropdown polish
    ===================================================== */
 

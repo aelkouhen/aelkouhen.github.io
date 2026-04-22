@@ -32,7 +32,32 @@
   {% assign last_updated_str = page.last-updated | date: date_format %}
 {% endif %}
 
-{% if page.cover-img or page.title %}
+{% if page.accent-color and include.type == "page" %}
+
+<header class="category-header-wrap">
+  <div class="container-xl">
+    <div class="row">
+      <div class="col-xl-11 col-lg-10 offset-lg-1">
+        <span class="category-header__accent" style="background:{{ page.accent-color }};"></span>
+        <h1 class="category-header__title">{{ page.title | strip_html }}</h1>
+        {% if page.subtitle %}
+        <p class="category-header__subtitle">{{ page.subtitle | strip_html }}</p>
+        {% endif %}
+        {% if page.category-tag %}
+          {% assign _cat_posts = site.tags[page.category-tag] %}
+          {% if _cat_posts.size > 0 %}
+          <div class="category-header__meta">
+            <span class="category-header__count" style="color:{{ page.accent-color }}">{{ _cat_posts.size }}</span>
+            <span class="category-header__count-label">article{% if _cat_posts.size != 1 %}s{% endif %}</span>
+          </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>
+
+{% elsif page.cover-img or page.title %}
 
 {% if page.cover-img %}
   <div id="header-big-imgs" data-num-img={% if page.cover-img.first %}{{ page.cover-img.size }}{% else %}1{% endif %}

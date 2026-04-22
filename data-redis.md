@@ -1,9 +1,11 @@
 ---
 layout: page
-title: Data and Redis
-subtitle: "Unleashing Real-Time Decision-Making"
+title: Data & Redis
+subtitle: "Real-time data structures, caching patterns, and stream processing with Redis and CockroachDB."
 wide: true
 lang: en
+accent-color: "#D82C20"
+category-tag: Redis
 ---
 
 {% include post-cards.html posts=site.tags.Redis %}
