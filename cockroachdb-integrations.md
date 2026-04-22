@@ -10,5 +10,5 @@ category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🔗"
 ---
 
-{% assign integration_posts = site.tags['cockroachdb-integrations'] %}
+{% assign integration_posts = site.tags['integrations'] %}
 {% include post-cards.html posts=integration_posts %}

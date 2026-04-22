@@ -4,7 +4,7 @@ title: "Integrate CockroachDB with AuthZed"
 subtitle: "How CockroachDB powers AuthZed's SpiceDB as a strongly consistent, globally distributed authorization backend"
 thumbnail-img: /assets/img/authzed-crdb-architecture.png
 share-img: /assets/img/authzed-crdb-architecture.png
-tags: [integrations,iam,CockroachDB, authzed, spicedb, authorization, ReBAC, permissions]
+tags: [integrations, CockroachDB, authzed, spicedb, authorization, ReBAC, permissions]
 lang: en
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
