@@ -27,6 +27,7 @@ navbar-links:
     - Mainframe to Distributed SQL: "/data-mainframe"
     - Identity and Access Management with CockroachDB: "/iam"
     - CockroachDB & AI: "/cockroachdb-ai"
+    - CockroachDB - Integration Guides: "/cockroachdb-integrations"
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
