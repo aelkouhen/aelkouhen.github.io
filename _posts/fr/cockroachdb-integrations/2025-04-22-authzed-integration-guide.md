@@ -3,8 +3,7 @@ layout: post
 lang: fr
 title: "Intégrer CockroachDB avec AuthZed"
 subtitle: "Comment CockroachDB propulse SpiceDB d'AuthZed en tant que backend d'autorisation fortement cohérent et distribué mondialement"
-cover-img: /assets/img/authzed-crdb-architecture.png
-thumbnail-img: /assets/img/cockroachdb.webp
+thumbnail-img: /assets/img/authzed-crdb-architecture.png
 share-img: /assets/img/authzed-crdb-architecture.png
 tags: [cockroachdb-integrations, CockroachDB, authzed, spicedb, authorization, ReBAC, permissions]
 author: "Amine El Kouhen"
@@ -68,62 +67,6 @@ CockroachDB a été construit autour de ce principe : son modèle d'isolation s�
 La réplication multi-régions et la haute disponibilité de CockroachDB garantissent que les décisions d'autorisation sont cohérentes, à faible latence et résilientes entre les géographies. Cette architecture combine le modèle d'autorisation flexible et API-first de SpiceDB avec la plateforme de base de données tolérante aux pannes de CockroachDB pour délivrer un contrôle d'accès sécurisé, à granularité fine et fortement cohérent, scalable aux charges de travail d'entreprise dans le monde entier.
 
 De plus, l'architecture multi-active de CockroachDB permet aux déploiements AuthZed et SpiceDB de scaler les écritures horizontalement. AuthZed a pu scaler des déploiements réels à des dizaines de milliers d'écritures par seconde.
-
----
-
-## Les Offres d'AuthZed
-
-AuthZed propose plusieurs offres commerciales pour répondre à différents scénarios et cas d'usage. En plus de SpiceDB open-source, AuthZed propose une infrastructure d'autorisation gérée via AuthZed Dedicated et AuthZed Cloud, ainsi qu'un niveau SpiceDB Enterprise autohébergé.
-
-<img src="/assets/img/authzed-offerings.png" alt="Comparaison des offres AuthZed" style="width:100%;margin:1.5rem 0;">
-
-### SpiceDB Open-Source
-
-SpiceDB open-source est la version fondamentale et communautaire de SpiceDB. Il fournit le moteur d'autorisation principal et toutes ses fonctionnalités gratuitement, sous licence Apache 2.0.
-
-**Caractéristiques clés :**
-- **Coût :** Gratuit
-- **Déploiement :** Autogéré (les utilisateurs doivent déployer, opérer et maintenir l'infrastructure)
-- **Fonctionnalités :** Fonctionnalité principale de SpiceDB (schéma, relations, API de vérification des permissions, etc.)
-- **Support :** Communautaire (Discord, GitHub issues)
-
-**Pour qui :** Développeurs souhaitant apprendre SpiceDB, l'intégrer dans un binaire, ou équipes à l'aise avec un support uniquement communautaire.
-
-### SpiceDB Enterprise Autohébergé
-
-SpiceDB Enterprise autohébergé est conçu pour les grandes organisations avec des exigences spécifiques en matière de sécurité, de conformité ou d'exploitation. Il s'appuie sur la version open-source mais inclut des fonctionnalités enterprise supplémentaires et un support dédié.
-
-**Caractéristiques clés :**
-- **Coût :** Accords de licence et de support
-- **Déploiement :** Autohébergé dans l'infrastructure propre de l'organisation (on-premises ou cloud)
-- **Fonctionnalités :** Toute la fonctionnalité open-source, plus la journalisation d'audit, l'accès API restreint (tokens API à granularité fine), la cryptographie validée FIPS, les versions signées cryptographiquement, les tests de pénétration annuels et l'accès au programme d'embargo de sécurité
-- **Support :** Support enterprise dédié d'AuthZed avec SLAs de temps de réponse ; disponible 24h/7j/365j
-
-**Pour qui :** Organisations avec des exigences de conformité strictes nécessitant un autohébergement.
-
-### AuthZed Cloud
-
-AuthZed Cloud s'adresse à ceux qui veulent démarrer rapidement avec SpiceDB sans se soucier de la maintenance, sur un service multi-tenant.
-
-**Caractéristiques clés :**
-- **Coût :** Facturé par vCPU et heure de GiB
-- **Déploiement :** SaaS multi-tenant
-- **Fonctionnalités :** Toute la fonctionnalité open-source et enterprise ; infrastructure entièrement gérée
-- **Support :** Support communautaire (Discord) avec option de mise à niveau vers un plan payant avec un Customer Success Engineer dédié
-
-**Pour qui :** Organisations souhaitant démarrer rapidement et à l'aise avec un service multi-tenant.
-
-### AuthZed Dedicated
-
-AuthZed Dedicated est l'offre commerciale phare d'AuthZed — tous les avantages de SpiceDB Enterprise en tant que solution SaaS privée entièrement gérée.
-
-**Caractéristiques clés :**
-- **Coût :** Engagements annuels par vCPU et GiB
-- **Déploiement :** SaaS privé
-- **Fonctionnalités :** Toute la fonctionnalité enterprise, plus des systèmes de permissions déployables sur plusieurs régions cloud dans le monde, et accès à AuthZed Materialize pour des performances améliorées et des APIs de filtrage des permissions
-- **Support :** Support standard inclus ; support enterprise avec temps de réponse 24h/7j/365j disponible
-
-**Pour qui :** Organisations ayant besoin d'un système d'autorisation prêt pour l'entreprise sans la charge opérationnelle.
 
 ---
 
