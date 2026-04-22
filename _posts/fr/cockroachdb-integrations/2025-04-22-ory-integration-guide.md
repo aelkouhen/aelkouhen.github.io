@@ -3,8 +3,7 @@ layout: post
 lang: fr
 title: "Intégrer CockroachDB avec Ory"
 subtitle: "Guide pas-à-pas pour déployer Ory Hydra, Kratos et Keto avec CockroachDB"
-cover-img: /assets/img/integrate-ory-architecture-overview.png
-thumbnail-img: /assets/img/cockroachdb.webp
+thumbnail-img: /assets/img/integrate-ory-architecture-overview.png
 share-img: /assets/img/integrate-ory-architecture-overview.png
 tags: [cockroachdb-integrations, CockroachDB, ory, iam, kubernetes, oauth2, OIDC, identity]
 author: "Amine El Kouhen"
@@ -28,11 +27,15 @@ La plateforme Ory est composée de trois services indépendants et sans état �
 | **Ory Kratos** | Gestion des identités — utilisateurs, credentials, sessions, vérifications |
 | **Ory Keto** | Contrôle d'accès basé sur les relations (ReBAC) via des tuples de relations |
 
+Le diagramme suivant illustre les relations entre Ory Hydra, Kratos et Keto :
+
+<img src="/assets/img/integrate-ory-architecture-overview.png" alt="Services Ory" style="width:100%;margin:1.5rem 0;">
+
 Chaque service étant sans état, toute la persistance réside dans CockroachDB. La mise à l'échelle horizontale, les mises à jour progressives et les déploiements multi-régions deviennent simples — sans sessions collantes ni caches distribués à coordonner.
 
 ---
 
-## Ory Hydra
+### Ory Hydra
 
 Ory Hydra est une implémentation serveur du [framework d'autorisation OAuth 2.0](https://oauth.net/2/) et des spécifications [OpenID Connect Core 1.0](https://openid.net/connect/). Il suit les clients, les demandes de consentement et les tokens avec cohérence forte pour prévenir les attaques par rejeu et les autorisations dupliquées.
 
@@ -40,9 +43,11 @@ Le framework OAuth 2.0 permet aux applications tierces d'obtenir un accès limit
 
 <img src="/assets/img/integrate-ory-oauth2-flow.png" alt="Diagramme du flux OAuth 2.0" style="width:100%;margin:1.5rem 0;">
 
+Ce diagramme de séquence illustre le flux d'autorisation OAuth 2.0 sous forme de requêtes et de réponses, en utilisant Ory Hydra comme serveur d'autorisation :
+
 <img src="/assets/img/integrate-ory-hydra-flow.png" alt="Flux d'autorisation Ory Hydra" style="width:100%;margin:1.5rem 0;">
 
-Ce diagramme de séquence illustre les interactions du flux d'autorisation OAuth 2.0 entre quatre composants :
+Le diagramme représente les interactions entre quatre composants clés :
 
 - **Client** — une application cherchant à accéder à des ressources protégées
 - **Propriétaire de la ressource** — l'utilisateur final
@@ -59,7 +64,7 @@ CockroachDB stocke tous les clients OAuth2, les codes d'autorisation, les tokens
 
 ---
 
-## Ory Kratos
+### Ory Kratos
 
 Ory Kratos stocke les enregistrements d'identité utilisateur, les flux de récupération, les sessions et les tentatives de connexion dans des tables transactionnelles. Chaque identité est associée à un ou plusieurs credentials stockés dans la table `identity_credentials`, définissant les mécanismes d'authentification tels que les mots de passe, la connexion sociale ou d'autres méthodes.
 
@@ -83,7 +88,7 @@ Chaque enregistrement d'identité utilisateur est stocké dans des tables transa
 
 ---
 
-## Ory Keto
+### Ory Keto
 
 Ory Keto fournit un contrôle d'accès basé sur les relations (ReBAC) scalable via des tuples de relations — le même modèle utilisé par [Google Zanzibar](https://research.google/pubs/pub48190/).
 
@@ -131,7 +136,7 @@ Ce diagramme illustre un déploiement sur une seule région cloud répartie sur 
 
 ---
 
-## Prérequis
+### Prérequis
 
 - Compte AWS avec permissions EKS et EC2
 - Profil AWS CLI configuré
@@ -142,7 +147,7 @@ Ce diagramme illustre un déploiement sur une seule région cloud répartie sur 
 
 ---
 
-## Étape 1 : Provisionner un Cluster CockroachDB
+### Étape 1 : Provisionner un Cluster CockroachDB
 
 Choisissez l'une des méthodes de déploiement :
 
@@ -154,7 +159,7 @@ Choisissez l'une des méthodes de déploiement :
 
 ---
 
-## Étape 2 : Créer les Bases de Données pour les Services Ory
+### Étape 2 : Créer les Bases de Données pour les Services Ory
 
 Des bases de données séparées isolent les données entre les composants Ory :
 
@@ -187,7 +192,7 @@ GRANT ALL ON DATABASE keto TO ory;
 
 ---
 
-## Étape 3 : Provisionner un Cluster Kubernetes
+### Étape 3 : Provisionner un Cluster Kubernetes
 
 Créez le cluster EKS :
 
@@ -216,9 +221,9 @@ helm repo update
 
 ---
 
-## Étape 4 : Déployer les Services Ory
+### Étape 4 : Déployer les Services Ory
 
-### Déployer Ory Hydra
+#### Déployer Ory Hydra
 
 Créez `hydra_values.yaml` (remplacez `{crdb-fqdn}`) :
 
@@ -276,7 +281,7 @@ export HYDRA_PUBLIC_URL=http://$hydra_public_hostname:4444
 
 ---
 
-### Déployer Ory Kratos
+#### Déployer Ory Kratos
 
 Créez `kratos_values.yaml` (remplacez `{crdb-fqdn}`) :
 
@@ -339,7 +344,7 @@ export KRATOS_PUBLIC_URL=http://$kratos_public_hostname:4434
 
 ---
 
-### Déployer Ory Keto
+#### Déployer Ory Keto
 
 Créez `keto_values.yaml` (remplacez `{crdb-fqdn}`) :
 
@@ -405,9 +410,9 @@ export KETO_READ_REMOTE=http://$keto_read_hostname:4466
 
 ---
 
-## Étape 5 : Tester l'Intégration
+### Étape 5 : Tester l'Intégration
 
-### Tester Ory Hydra
+#### Tester Ory Hydra
 
 Créez un client OAuth2 :
 
@@ -447,7 +452,7 @@ FROM public.hydra_oauth2_access;
 
 ---
 
-### Tester Ory Kratos
+#### Tester Ory Kratos
 
 Initialisez le flux d'inscription API et créez un utilisateur :
 
@@ -509,7 +514,7 @@ JOIN public.identity_credential_types ict ON ic.identity_credential_type_id = ic
 
 ---
 
-### Tester Ory Keto
+#### Tester Ory Keto
 
 Créez un tuple de relation accordant à Alice l'accès en lecture à un document :
 
