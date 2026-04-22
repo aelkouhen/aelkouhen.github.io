@@ -3,9 +3,10 @@ layout: post
 lang: fr
 title: "Intégrer CockroachDB avec Ory"
 subtitle: "Guide pas-à-pas pour déployer Ory Hydra, Kratos et Keto avec CockroachDB"
+cover-img: /assets/img/integrate-ory-architecture-overview.png
 thumbnail-img: /assets/img/cockroachdb.webp
-share-img: /assets/img/cockroachdb.webp
-tags: [cockroachdb-integrations, CockroachDB, ory, iam, kubernetes, oauth2, helm, identity]
+share-img: /assets/img/integrate-ory-architecture-overview.png
+tags: [cockroachdb-integrations, CockroachDB, ory, iam, kubernetes, oauth2, OIDC, identity]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
@@ -33,16 +34,26 @@ Chaque service étant sans état, toute la persistance réside dans CockroachDB.
 
 ## Ory Hydra
 
-Ory Hydra implémente le [framework d'autorisation OAuth 2.0](https://oauth.net/2/) et les spécifications [OpenID Connect Core 1.0](https://openid.net/connect/). Il gère les clients OAuth2, les sessions de consentement et les tokens avec une cohérence forte pour prévenir les attaques par rejeu et les autorisations dupliquées.
+Ory Hydra est une implémentation serveur du [framework d'autorisation OAuth 2.0](https://oauth.net/2/) et des spécifications [OpenID Connect Core 1.0](https://openid.net/connect/). Il suit les clients, les demandes de consentement et les tokens avec cohérence forte pour prévenir les attaques par rejeu et les autorisations dupliquées.
 
-Le processus d'autorisation implique quatre acteurs :
+Le framework OAuth 2.0 permet aux applications tierces d'obtenir un accès limité aux services HTTP au nom des propriétaires de ressources ou de manière indépendante.
 
-1. **Client** — l'application demandant l'accès
-2. **Propriétaire de la ressource** — l'utilisateur final
-3. **Ory Hydra** — le serveur d'autorisation
-4. **Serveur de ressources** — l'API hébergeant les ressources protégées
+<img src="/assets/img/integrate-ory-oauth2-flow.png" alt="Diagramme du flux OAuth 2.0" style="width:100%;margin:1.5rem 0;">
 
-Le flux : le client redirige l'utilisateur vers l'écran de connexion/consentement d'Hydra. Après approbation, l'utilisateur octroie un code d'autorisation. Le client l'échange contre un token d'accès, puis présente ce token au serveur de ressources pour accéder aux ressources protégées.
+<img src="/assets/img/integrate-ory-hydra-flow.png" alt="Flux d'autorisation Ory Hydra" style="width:100%;margin:1.5rem 0;">
+
+Ce diagramme de séquence illustre les interactions du flux d'autorisation OAuth 2.0 entre quatre composants :
+
+- **Client** — une application cherchant à accéder à des ressources protégées
+- **Propriétaire de la ressource** — l'utilisateur final
+- **Ory Hydra** — le serveur d'autorisation
+- **Serveur de ressources** — l'API ou le service hébergeant les ressources protégées
+
+Le flux commence lorsque le Client demande une autorisation au Propriétaire de la ressource, généralement via une redirection vers un écran de connexion ou de consentement fourni par Ory Hydra. Après approbation, le Propriétaire de la ressource fournit un grant d'autorisation au Client.
+
+Le Client utilise ce grant pour demander un token d'accès à Hydra, en s'authentifiant avec son Client ID et son secret. Hydra valide le grant et les credentials, puis émet un token d'accès.
+
+Avec le token d'accès, le Client demande les ressources protégées au Serveur de ressources, présentant le token comme preuve d'autorisation. Le Serveur de ressources valide le token par introspection ou vérification de signature (dans le cas d'un JWT) et sert la ressource demandée.
 
 CockroachDB stocke tous les clients OAuth2, les codes d'autorisation, les tokens d'accès et les sessions de consentement — durablement et avec cohérence linéarisable.
 
@@ -50,7 +61,18 @@ CockroachDB stocke tous les clients OAuth2, les codes d'autorisation, les tokens
 
 ## Ory Kratos
 
-Ory Kratos gère tout ce qui concerne l'identité utilisateur : inscription, connexion, déconnexion, paramètres, récupération de compte, vérification d'adresse et authentification multi-facteurs.
+Ory Kratos stocke les enregistrements d'identité utilisateur, les flux de récupération, les sessions et les tentatives de connexion dans des tables transactionnelles. Chaque identité est associée à un ou plusieurs credentials stockés dans la table `identity_credentials`, définissant les mécanismes d'authentification tels que les mots de passe, la connexion sociale ou d'autres méthodes.
+
+Kratos permet aux utilisateurs de s'inscrire et de gérer leur profil sans intervention administrative, en implémentant :
+
+- Inscription et Connexion / Déconnexion
+- Paramètres utilisateur
+- Récupération de compte
+- Vérification d'adresse
+- 2FA / MFA
+- Gestion des erreurs côté utilisateur
+
+<img src="/assets/img/integrate-ory-kratos-registration.png" alt="Flux d'inscription Ory Kratos" style="width:100%;margin:1.5rem 0;">
 
 Chaque enregistrement d'identité utilisateur est stocké dans des tables transactionnelles CockroachDB :
 
@@ -59,18 +81,22 @@ Chaque enregistrement d'identité utilisateur est stocké dans des tables transa
 - **`sessions`** — tokens de session actifs et données d'expiration
 - **`verification_tokens`** — flux de vérification email/téléphone
 
-Flux pris en charge : Inscription et Connexion/Déconnexion, Paramètres utilisateur, Récupération de compte, Vérification d'adresse, 2FA/MFA, et Gestion des erreurs.
-
 ---
 
 ## Ory Keto
 
-Ory Keto permet un contrôle d'accès basé sur les relations (ReBAC) scalable via des tuples de relations — le même modèle utilisé par [Google Zanzibar](https://research.google/pubs/pub48190/). Les décisions d'autorisation reposent sur :
+Ory Keto fournit un contrôle d'accès basé sur les relations (ReBAC) scalable via des tuples de relations — le même modèle utilisé par [Google Zanzibar](https://research.google/pubs/pub48190/).
 
-- **Les données dans CockroachDB** — ex. « l'utilisateur Bob est propriétaire du document X »
-- **Les règles de permission** — ex. « les propriétaires de documents peuvent le consulter »
+L'autorisation est vérifiée en évaluant si un tuple de relation existe (directement ou via une expansion récursive) permettant à un sujet d'effectuer une relation sur un objet dans un namespace. Ce modèle de données permet une haute scalabilité et flexibilité pour des schémas d'accès complexes incluant l'appartenance à des groupes, l'héritage de rôles et les droits d'accès hiérarchiques.
 
-Les tuples de relations sont stockés dans la table `keto_relation_tuples` de CockroachDB et interrogés à la demande, offrant un contrôle d'accès granulaire et auditable qui évolue avec vos données.
+Les vérifications de permissions sont répondues sur la base de :
+
+- **Données disponibles dans CockroachDB** — ex. « l'utilisateur Bob est propriétaire du document X »
+- **Règles de permission** — ex. « tous les propriétaires d'un document peuvent le consulter »
+
+À la question « L'utilisateur Bob est-il autorisé à voir le document X ? », le système vérifie la permission de vue de Bob et confirme sa propriété. Le modèle de permission indique à Ory Keto quoi vérifier.
+
+<img src="/assets/img/integrate-ory-permission-graph.png" alt="Graphe de permissions Ory Keto" style="width:100%;margin:1.5rem 0;">
 
 ---
 
@@ -95,7 +121,9 @@ L'intégration combine trois composants Ory, chacun opérant comme un service sa
 | **Ory Kratos** | Identités, credentials, sessions, tokens de vérification |
 | **Ory Keto** | Tuples de relations pour les permissions RBAC/ABAC |
 
-Une seule région cloud contient trois zones de disponibilité (`us-east-1a`, `us-east-1b`, `us-east-1c`). La conception assure :
+<img src="/assets/img/integrate-ory-single-region.svg" alt="Architecture Ory + CockroachDB sur une seule région" style="width:100%;margin:1.5rem 0;">
+
+Ce diagramme illustre un déploiement sur une seule région cloud répartie sur trois zones de disponibilité : `us-east-1a`, `us-east-1b` et `us-east-1c`.
 
 - **VPC Ory** — cluster Amazon EKS avec nœuds workers distribués entre les zones, exécutant les pods Hydra, Kratos et Keto avec routage ingress et service
 - **VPC CRDB** — nœuds CockroachDB sur les zones formant un cluster logique unique utilisant le consensus Raft pour la réplication des données
@@ -128,7 +156,11 @@ Choisissez l'une des méthodes de déploiement :
 
 ## Étape 2 : Créer les Bases de Données pour les Services Ory
 
-Des bases de données séparées isolent les données entre les composants Ory.
+Des bases de données séparées isolent les données entre les composants Ory :
+
+- **Hydra** — gère les clients OAuth2, les sessions de consentement, les tokens d'accès/rafraîchissement
+- **Kratos** — gère les identités, credentials, sessions, tokens de vérification
+- **Keto** — stocke les tuples de relations (données RBAC/ABAC) pour les permissions
 
 Connectez-vous à votre client SQL CockroachDB :
 
@@ -173,7 +205,9 @@ eksctl create cluster \
   --node-ami-family AmazonLinux2023
 ```
 
-Le provisionnement prend 10–15 minutes. Ajoutez le dépôt Helm d'Ory :
+Cette commande crée trois instances EKS (m5.xlarge : 4 vCPU, 16 Go de mémoire) sur plusieurs zones. Le provisionnement prend 10–15 minutes.
+
+Ajoutez le dépôt Helm d'Ory :
 
 ```bash
 helm repo add ory https://k8s.ory.sh/helm/charts
@@ -455,6 +489,15 @@ curl -s -X GET \
   $KRATOS_PUBLIC_URL/sessions/whoami
 ```
 
+Déconnectez-vous :
+
+```bash
+curl -s -X DELETE \
+  -H "Accept: application/json" -H "Content-Type: application/json" \
+  $KRATOS_PUBLIC_URL/self-service/logout/api \
+  -d '{"session_token": "{session_token}"}'
+```
+
 Vérifiez l'identité dans CockroachDB :
 
 ```sql
@@ -471,9 +514,22 @@ JOIN public.identity_credential_types ict ON ic.identity_credential_type_id = ic
 Créez un tuple de relation accordant à Alice l'accès en lecture à un document :
 
 ```bash
+echo '{"namespace":"documents","object":"doc-123","relation":"viewer","subject_id":"user:alice"}' \
+  | keto relation-tuple create /dev/stdin --insecure-disable-transport-security
+```
+
+Ou via REST :
+
+```bash
 curl -i -X PUT "$KETO_WRITE_REMOTE/admin/relation-tuples" \
   -H "Content-Type: application/json" \
   -d '{"namespace":"documents","object":"doc-123","relation":"viewer","subject_id":"user:alice"}'
+```
+
+Développez l'arbre d'accès :
+
+```bash
+keto expand viewer documents photos --insecure-disable-transport-security
 ```
 
 Vérifiez les permissions d'Alice :
