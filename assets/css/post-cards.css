@@ -229,14 +229,19 @@
 .card__tag {
   display: inline-block;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #5a7a9f;
-  background: #f0f4f9;
+  color: #008AFF;
+  background: #e8f3ff;
   border-radius: 20px;
   padding: 0.2rem 0.65rem;
   align-self: flex-start;
+}
+
+/* Hide tags beyond the 3rd on regular cards */
+.card:not(.card--featured) .card__tag:nth-child(n+4) {
+  display: none;
 }
 
 /* Title */
@@ -417,7 +422,7 @@
   .card--featured .card__image-wrap {
     width: 48%;
     aspect-ratio: unset;
-    min-height: 260px;
+    min-height: 320px;
     flex-shrink: 0;
   }
 
