@@ -5,6 +5,9 @@ subtitle: "Construire des systèmes prêts pour l'IA avec SQL distribué"
 wide: true
 lang: fr
 permalink: /cockroachdb-ai/
+accent-color: "#008AFF"
+category-tag: "Artificial Intelligence"
+category-icon: "🤖"
 ---
 
 {% assign ai_posts = site.tags['Artificial Intelligence'] %}

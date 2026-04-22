@@ -5,6 +5,9 @@ subtitle: "Libérer la prise de décision en temps réel"
 wide: true
 lang: fr
 permalink: /data-redis/
+accent-color: "#D82C20"
+category-tag: Redis
+category-icon: "⚡"
 ---
 
 {% include post-cards.html posts=site.tags.Redis %}
