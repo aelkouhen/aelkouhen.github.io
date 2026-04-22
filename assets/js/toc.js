@@ -26,7 +26,7 @@
     var tocSidebar = document.getElementById('toc-sidebar');
     if (!article || !tocNav || !tocSidebar) return;
 
-    var headings = Array.from(article.querySelectorAll('h2, h3'));
+    var headings = Array.from(article.querySelectorAll('h2'));
     if (headings.length < 2) { tocSidebar.style.display = 'none'; return; }
 
     // Ensure stable IDs
