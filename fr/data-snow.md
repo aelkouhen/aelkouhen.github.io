@@ -7,7 +7,7 @@ lang: fr
 permalink: /data-snow/
 accent-color: "#29B5E8"
 category-tag: Snowflake
-category-icon: "❄️"
+category-img: "/assets/img/snowflake.png"
 ---
 
 {% include post-cards.html posts=site.tags.Snowflake %}
