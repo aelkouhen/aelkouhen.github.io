@@ -21,8 +21,7 @@ Teleport is an access plane that consolidates and secures access to all types of
 
 <img src="/assets/img/teleport-identity-platform.png" alt="Teleport Identity Platform" style="width:100%;margin:1.5rem 0;">
 
-{: .mx-auto.d-block :}
-*Teleport provides a unified access control layer capable of managing permissions across heterogeneous systems.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport Identity Platform**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Certificate-Based Authentication
 
@@ -50,14 +49,14 @@ Teleport's architecture is built from the ground up with **Zero Trust Security**
 
 <img src="/assets/img/teleport-architecture.png" alt="Teleport Architecture" style="width:100%;margin:1.5rem 0;">
 
-{: .mx-auto.d-block :}
-*Teleport's modular, distributed architecture adapts to diverse infrastructure topologies while maintaining strong security and observability guarantees.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport Architecture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The key concept of Teleport's architecture is the **cluster**. Users and servers must all join the same cluster before access can be granted. To join a cluster, both users and servers must authenticate. This model prevents honeypot attacks and eliminates the issue of trust on first use. Teleport clusters can be configured to trust each other, allowing users from one organization to access designated servers inside another organization's environment.
 
 A Teleport cluster consists of the following components:
 
 <img src="/assets/img/teleport-cluster-animation.gif" alt="Teleport cluster components" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :} **Teleport cluster components**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Teleport Auth Service
 
@@ -96,9 +95,7 @@ A Teleport Agent runs in the same network as a target resource and speaks its na
 Teleport allows users to access resources running on devices located anywhere in the world, including devices on third-party networks, servers behind NAT, or devices connected via a cellular connection.
 
 <img src="/assets/img/teleport-remote-nodes.png" alt="Teleport remote nodes via reverse tunnel" style="width:100%;margin:1.5rem 0;">
-
-{: .mx-auto.d-block :}
-*From a user's perspective, there is no difference between nodes on the private network and remote nodes reachable via reverse tunnel.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport remote nodes via reverse tunnel**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The underlying technology is reverse tunnels — secure connections established by an edge site into a Teleport cluster via the cluster's proxy. This approach adheres to Zero Trust principles, where networks, including VPNs, are considered inherently untrustworthy. Reverse tunnels enable Teleport users to manage IoT devices via SSH, access Kubernetes clusters on the edge, access web applications on third-party networks, and reach CockroachDB databases in remote environments.
 
@@ -116,16 +113,12 @@ The Teleport Auth Service maintains an audit log of all activity inside the clus
 To provide Tier 0 requirements, Teleport and CockroachDB offer a joint added value for multi-region resilience and consistency. This architecture enables active-active deployments of Teleport, ensuring that access infrastructure can survive network partitions, node failures, and global load — without compromising on security or compliance.
 
 <img src="/assets/img/teleport-crdb-architecture.png" alt="Multi-region Teleport and CockroachDB architecture" style="width:100%;margin:1.5rem 0;">
-
-{: .mx-auto.d-block :}
-*Multi-region Teleport + CockroachDB joint architecture delivers globally consistent, fault-tolerant infrastructure access.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Multi-region Teleport and CockroachDB architecture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each Teleport component relies on CockroachDB to store its state in a consistent and durable way, enabling correct operation even in the presence of partial outages or regional network partitions. The Teleport Auth Service is well-suited to operate with CockroachDB because of its stateless design and API-first philosophy: each service can be deployed as a stateless service with its only persistence requirement being the backing SQL database. This makes it straightforward to horizontally scale services, perform rolling updates, or deploy new regions without orchestrating complex data migrations.
 
 <img src="/assets/img/teleport-crdb-distributed-sql.png" alt="CockroachDB distributed SQL foundation" style="width:100%;margin:1.5rem 0;">
-
-{: .mx-auto.d-block :}
-*CockroachDB provides the always-consistent database layer that ensures user identities, access control rules, and session tokens are always accurate — no matter which region is serving a request.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **CockroachDB distributed SQL foundation**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 CockroachDB is a distributed SQL database designed for global scale and high availability. It replicates data across multiple regions while offering serializable isolation, strong consistency, and automated failover. Teleport officially supports CockroachDB as a storage backend for good reason:
 
@@ -229,9 +222,7 @@ kubectl create secret generic cockroach-certs \
 To run Teleport Enterprise, you need a license file. Navigate to your Teleport account dashboard and generate one:
 
 <img src="/assets/img/teleport-license-generate.png" alt="Teleport license generation" style="width:80%;display:block;margin:1.5rem auto;">
-
-{: .mx-auto.d-block :}
-*Generate a Teleport Enterprise license from your account dashboard and download it as `license.pem`.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport license generation**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Create the license secret:
 
@@ -303,9 +294,7 @@ kubectl -n teleport get pods
 ```
 
 <img src="/assets/img/teleport-k8s-cluster.png" alt="Teleport cluster running on Kubernetes" style="width:100%;margin:1.5rem 0;">
-
-{: .mx-auto.d-block :}
-*The Teleport Auth Service and Proxy Service running as pods in a Kubernetes cluster.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport cluster running on Kubernetes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Step 4. Set Up DNS Records
 
@@ -356,9 +345,7 @@ Teleport creates two tables: `backend_version` (cluster version and creation tim
 Teleport can provide secure access to CockroachDB via the Teleport Database Service, enabling fine-grained access control through Teleport's RBAC system. The Database Service authenticates to CockroachDB using mutual TLS — CockroachDB trusts the Teleport certificate authority for database clients, eliminating the need for long-lived credentials.
 
 <img src="/assets/img/teleport-db-service-agent.png" alt="Teleport Database Service agent architecture" style="width:100%;margin:1.5rem 0;">
-
-{: .mx-auto.d-block :}
-*The Teleport Database Agent proxies client traffic to CockroachDB using mutual TLS, with no long-lived credentials stored.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport Database Service agent architecture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Generate a join token for the Database Agent:
 
@@ -426,16 +413,12 @@ tctl users add danielle --roles=access,requester --db-users="*" --db-names="*"
 You will receive an invitation link to complete user setup:
 
 <img src="/assets/img/teleport-user-setup-form.png" alt="Teleport user setup form" style="width:60%;display:block;margin:1.5rem auto;">
-
-{: .mx-auto.d-block :}
-*Complete user setup by setting a password via the invitation link.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport user setup form**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Then associate an authenticator app by scanning the generated QR code:
 
 <img src="/assets/img/teleport-mfa-setup.png" alt="Teleport MFA QR code setup" style="width:60%;display:block;margin:1.5rem auto;">
-
-{: .mx-auto.d-block :}
-*Scan the QR code with your authenticator app to enable MFA for the new user.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport MFA QR code setup**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Step 7. Set Up Mutual TLS
 
@@ -476,9 +459,7 @@ tsh db connect --db-user=danielle roach
 You can also access your CockroachDB databases through the Teleport Web UI:
 
 <img src="/assets/img/teleport-web-ui.png" alt="Teleport Web UI showing CockroachDB access" style="width:100%;margin:1.5rem 0;">
-
-{: .mx-auto.d-block :}
-*The Teleport Web UI provides browser-based access to registered CockroachDB instances with full audit logging.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :} **Teleport Web UI showing CockroachDB access**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
