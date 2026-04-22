@@ -1,5 +1,6 @@
 {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% if active_lang == 'fr' %}{% assign ui_t = site.data.translations.fr.ui %}{% else %}{% assign ui_t = site.data.translations.en.ui %}{% endif %}
+{% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
+{% assign ui_t = _t_data.ui %}
 {% comment %} Embed language-filtered posts as JSON; JS handles filtering, shuffling, and rendering {% endcomment %}
 <script id="related-posts-data" type="application/json">
 {
@@ -18,6 +19,21 @@
     {% else %}
       {% assign post_url = post.url %}
     {% endif %}
+    {%- assign _date_format = site.date_format | default: "%B %-d, %Y" -%}
+    {%- if ui_t.months -%}
+      {%- assign _rp_mi = post.date | date: "%-m" | minus: 1 -%}
+      {%- assign _rp_mn = ui_t.months | split: "," -%}
+      {%- assign _rp_mn = _rp_mn[_rp_mi] -%}
+      {%- assign _rp_d  = post.date | date: "%-d" -%}
+      {%- assign _rp_y  = post.date | date: "%Y" -%}
+      {%- if ui_t.date_day_first -%}
+        {%- capture _rp_date %}{{ _rp_d }} {{ _rp_mn }} {{ _rp_y }}{% endcapture -%}
+      {%- else -%}
+        {%- capture _rp_date %}{{ _rp_mn }} {{ _rp_d }}, {{ _rp_y }}{% endcapture -%}
+      {%- endif -%}
+    {%- else -%}
+      {%- assign _rp_date = post.date | date: _date_format -%}
+    {%- endif -%}
     {
       "url": {{ post_url | absolute_url | jsonify }},
       "title": {{ post.title | strip_html | jsonify }},
@@ -26,7 +42,7 @@
       "tags": {{ post.tags | jsonify }},
       "author": {{ post.author | default: "" | jsonify }},
       "authorAvatar": {{ post.author-avatar | default: "" | absolute_url | jsonify }},
-      "date": {{ post.date | date: "%B %-d, %Y" | jsonify }}
+      "date": {{ _rp_date | jsonify }}
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
   ]
