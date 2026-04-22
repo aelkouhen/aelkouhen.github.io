@@ -21,16 +21,17 @@
 #search-results-container {
   width: 50%;
   margin: 0.35rem auto 0 !important;
-  background: #fff;
+  background: #1e1e2e;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   overflow: hidden;
   padding: 0 !important;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .search-result-item {
   list-style: none;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
 .search-result-item:last-child {
@@ -43,21 +44,21 @@
   justify-content: space-between !important;
   padding: 0.75rem 1.25rem !important;
   text-decoration: none !important;
-  color: #111 !important;
+  color: #e8e8f0 !important;
   transition: background 0.12s;
   gap: 1rem;
 }
 
 .search-result-item a:hover {
-  background: #f5f9ff !important;
+  background: rgba(255,255,255,0.06) !important;
   text-decoration: none !important;
-  color: #111 !important;
+  color: #fff !important;
 }
 
 .search-result-title {
   font-size: 0.92rem;
   font-weight: 500;
-  color: #1a1a1a;
+  color: #e8e8f0;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -73,7 +74,7 @@
 
 .search-result-date {
   font-size: 0.75rem;
-  color: #aaa;
+  color: #666;
   white-space: nowrap;
 }
 
@@ -82,8 +83,8 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: #eef3ff;
-  color: #4a7fff;
+  background: rgba(74,127,255,0.18);
+  color: #7aabff;
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
   white-space: nowrap;
@@ -95,7 +96,7 @@
 .search-no-results {
   list-style: none;
   padding: 1rem 1.25rem;
-  color: #999;
+  color: #666;
   font-size: 0.9rem;
   text-align: left;
 }
