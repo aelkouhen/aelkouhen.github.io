@@ -6,7 +6,7 @@ wide: true
 lang: fr
 permalink: /cockroachdb-integrations/
 accent-color: "#00B4D8"
-category-tag: cockroachdb-integrations
+category-tag: integrations
 category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🔗"
 ---
