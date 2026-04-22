@@ -30,6 +30,8 @@ La plateforme Ory est composée de trois services indépendants et sans état �
 Le diagramme suivant illustre les relations entre Ory Hydra, Kratos et Keto :
 
 <img src="/assets/img/integrate-ory-architecture-overview.png" alt="Services Ory" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Services Ory**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Chaque service étant sans état, toute la persistance réside dans CockroachDB. La mise à l'échelle horizontale, les mises à jour progressives et les déploiements multi-régions deviennent simples — sans sessions collantes ni caches distribués à coordonner.
 
@@ -42,10 +44,14 @@ Ory Hydra est une implémentation serveur du [framework d'autorisation OAuth 2.0
 Le framework OAuth 2.0 permet aux applications tierces d'obtenir un accès limité aux services HTTP au nom des propriétaires de ressources ou de manière indépendante.
 
 <img src="/assets/img/integrate-ory-oauth2-flow.png" alt="Diagramme du flux OAuth 2.0" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Diagramme du flux OAuth 2.0**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Ce diagramme de séquence illustre le flux d'autorisation OAuth 2.0 sous forme de requêtes et de réponses, en utilisant Ory Hydra comme serveur d'autorisation :
 
 <img src="/assets/img/integrate-ory-hydra-flow.png" alt="Flux d'autorisation Ory Hydra" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Flux d'autorisation Ory Hydra**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Le diagramme représente les interactions entre quatre composants clés :
 
@@ -78,6 +84,8 @@ Kratos permet aux utilisateurs de s'inscrire et de gérer leur profil sans inter
 - Gestion des erreurs côté utilisateur
 
 <img src="/assets/img/integrate-ory-kratos-registration.png" alt="Flux d'inscription Ory Kratos" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Flux d'inscription Ory Kratos**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Chaque enregistrement d'identité utilisateur est stocké dans des tables transactionnelles CockroachDB :
 
@@ -102,6 +110,8 @@ Les vérifications de permissions sont répondues sur la base de :
 À la question « L'utilisateur Bob est-il autorisé à voir le document X ? », le système vérifie la permission de vue de Bob et confirme sa propriété. Le modèle de permission indique à Ory Keto quoi vérifier.
 
 <img src="/assets/img/integrate-ory-permission-graph.png" alt="Graphe de permissions Ory Keto" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Graphe de permissions Ory Keto**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
@@ -127,6 +137,8 @@ L'intégration combine trois composants Ory, chacun opérant comme un service sa
 | **Ory Keto** | Tuples de relations pour les permissions RBAC/ABAC |
 
 <img src="/assets/img/integrate-ory-single-region.svg" alt="Architecture Ory + CockroachDB sur une seule région" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Architecture Ory + CockroachDB sur une seule région**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Ce diagramme illustre un déploiement sur une seule région cloud répartie sur trois zones de disponibilité : `us-east-1a`, `us-east-1b` et `us-east-1c`.
 
