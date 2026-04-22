@@ -22,6 +22,7 @@ en:
     "Mainframe to Distributed SQL": "Mainframe & Dist. SQL"
     "Identity and Access Management with CockroachDB": "IAM with CockroachDB"
     "CockroachDB & AI": "CockroachDB & AI"
+    "CockroachDB - Integration Guides": "CRDB Integrations"
 fr:
   ui:
     keep_reading: "Continuer à lire"
@@ -47,3 +48,4 @@ fr:
     "Mainframe to Distributed SQL": "Mainframe & SQL distribué"
     "Identity and Access Management with CockroachDB": "IAM avec CockroachDB"
     "CockroachDB & AI": "CockroachDB & IA"
+    "CockroachDB - Integration Guides": "Intégrations CRDB"
