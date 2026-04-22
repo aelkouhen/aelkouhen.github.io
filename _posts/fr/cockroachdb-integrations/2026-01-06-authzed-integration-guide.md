@@ -27,6 +27,8 @@ Au cœur du système, **SpiceDB** est le moteur derrière le modèle d'autorisat
 
 <img src="/assets/img/authzed-spicedb-engine.png" alt="Moteur de graphe de permissions SpiceDB" style="width:60%;display:block;margin:1.5rem auto;">
 
+*Le diagramme ci-dessus montre SpiceDB comme un moteur de graphe qui stocke de manière centralisée les données d'autorisation et résout les requêtes en parcourant le graphe de permissions.*
+
 La mission d'AuthZed est de :
 
 - Éliminer la logique d'autorisation fragmentée et spécifique à chaque application
@@ -63,6 +65,8 @@ Dans le domaine de l'autorisation, la disponibilité et la résilience sont esse
 CockroachDB a été construit autour de ce principe : son modèle d'isolation sérialisable offre la garantie de cohérence transactionnelle la plus forte en SQL — pas « éventuelle », pas « read-committed », mais linéarisable sur un cluster mondial. C'est précisément cette propriété que les systèmes d'autorisation émergents recherchent désormais, mais pour les politiques plutôt que pour les données. C'est pourquoi SpiceDB utilise CockroachDB comme datastore sous-jacent : il acquiert ainsi une fondation SQL distribuée mondialement et fortement cohérente.
 
 <img src="/assets/img/authzed-crdb-architecture.png" alt="Architecture AuthZed et CockroachDB" style="width:100%;margin:1.5rem 0;">
+
+*AuthZed et CockroachDB offrent ensemble une fondation d'autorisation distribuée mondialement et fortement cohérente.*
 
 La réplication multi-régions et la haute disponibilité de CockroachDB garantissent que les décisions d'autorisation sont cohérentes, à faible latence et résilientes entre les géographies. Cette architecture combine le modèle d'autorisation flexible et API-first de SpiceDB avec la plateforme de base de données tolérante aux pannes de CockroachDB pour délivrer un contrôle d'accès sécurisé, à granularité fine et fortement cohérent, scalable aux charges de travail d'entreprise dans le monde entier.
 
@@ -185,6 +189,8 @@ Une fois CockroachDB et AuthZed provisionnés, configurés et accessibles sur le
 La rédaction d'une ou plusieurs définitions de types d'objets est la première étape du développement d'un schéma de relations d'autorisation.
 
 <img src="/assets/img/authzed-schema-diagram.png" alt="Diagramme de définition de schéma SpiceDB" style="width:60%;display:block;margin:1.5rem auto;">
+
+*Le schéma ci-dessus définit les types user et document avec les rôles viewer, editor et admin, ainsi que leurs permissions associées.*
 
 Dans l'exemple ci-dessus, nous définissons les concepts `user` et `document`. L'utilisateur peut être `viewer`, `editor` ou `admin`. La définition donne la permission `remove` uniquement au rôle `admin`. Pour `edit` un fichier, l'utilisateur doit être soit `editor` soit `admin`. La permission de `view` un document est accordée aux rôles viewer, editor et admin.
 
