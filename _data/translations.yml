@@ -4,6 +4,9 @@ en:
     on_this_page: "On this page"
     min_read: "min read"
     updated: "Updated"
+    prev_post: "Previous Post"
+    next_post: "Next Post"
+    og_locale: "en_US"
     months: "January,February,March,April,May,June,July,August,September,October,November,December"
   pagination:
     newer: "&larr; Newer Posts"
@@ -25,6 +28,9 @@ fr:
     on_this_page: "Sur cette page"
     min_read: "min de lecture"
     updated: "Mis à jour"
+    prev_post: "Article précédent"
+    next_post: "Article suivant"
+    og_locale: "fr_FR"
     date_day_first: true
     months: "janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre"
   pagination:

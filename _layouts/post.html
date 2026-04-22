@@ -1,8 +1,7 @@
 ---
 layout: base
 ---
-{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
+{% include get-translation-data.html %}
 {% assign ui_t = _t_data.ui %}
 
 {% include header.html type="post" %}
@@ -79,12 +78,12 @@ layout: base
       <ul class="pagination blog-pager">
         {% if page.previous.url %}
         <li class="page-item previous">
-          <a class="page-link" href="{{ page.previous.url | relative_url }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title | strip_html | xml_escape}}">&larr; Previous Post</a>
+          <a class="page-link" href="{{ page.previous.url | relative_url }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title | strip_html | xml_escape}}">&larr; {{ ui_t.prev_post | default: "Previous Post" }}</a>
         </li>
         {% endif %}
         {% if page.next.url %}
         <li class="page-item next">
-          <a class="page-link" href="{{ page.next.url | relative_url }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title | strip_html | xml_escape}}">Next Post &rarr;</a>
+          <a class="page-link" href="{{ page.next.url | relative_url }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title | strip_html | xml_escape}}">{{ ui_t.next_post | default: "Next Post" }} &rarr;</a>
         </li>
         {% endif %}
       </ul>

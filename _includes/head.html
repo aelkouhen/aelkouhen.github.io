@@ -1,4 +1,5 @@
 <head>
+  {% include get-translation-data.html %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -105,6 +106,7 @@
 
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
+  <meta property="og:locale" content="{{ _t_data.ui.og_locale | default: 'en_US' }}">
 
   {% if img != "" %}
   <meta property="og:image" content="{{ img | absolute_url }}">
@@ -120,6 +122,27 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ page.url | absolute_url | strip_index }}">
   <link rel="canonical" href="{{ page.url | absolute_url | strip_index }}">
+  {% endif %}
+
+  {% if site.languages %}
+  {% assign _hreflang_base = page.url %}
+  {% for _lang in site.languages %}
+    {% if _lang != site.default_lang %}
+      {% assign _lang_pfx = '/' | append: _lang | append: '/' %}
+      {% if _hreflang_base contains _lang_pfx %}
+        {% assign _hreflang_base = _hreflang_base | remove_first: _lang_pfx | prepend: '/' %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  {% for _lang in site.languages %}
+    {% if _lang == site.default_lang %}
+      <link rel="alternate" hreflang="{{ _lang }}" href="{{ _hreflang_base | absolute_url }}">
+    {% else %}
+      {% capture _hreflang_url %}/{{ _lang }}{{ _hreflang_base }}{% endcapture %}
+      <link rel="alternate" hreflang="{{ _lang }}" href="{{ _hreflang_url | absolute_url }}">
+    {% endif %}
+  {% endfor %}
+  <link rel="alternate" hreflang="x-default" href="{{ _hreflang_base | absolute_url }}">
   {% endif %}
 
   {% if img != "" and img != site.avatar %}
@@ -139,8 +162,27 @@
 
   {% include matomo.html %}
 
-  {% if page.comments and site.staticman.repository and site.staticman.branch %}
-  <link rel="stylesheet" href="{{ "/assets/css/staticman.css" | relative_url }}">
+  {% if page.id %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ title | jsonify }},
+    "description": {{ description | jsonify }},
+    "url": {{ page.url | absolute_url | jsonify }},
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "dateModified": "{{ page.last-updated | default: page.date | date_to_xmlschema }}",
+    "author": {
+      "@type": "Person",
+      "name": {{ site.author | default: "" | jsonify }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ site.title | default: "" | jsonify }}
+    }{% if img != "" %},
+    "image": {{ img | absolute_url | jsonify }}{% endif %}
+  }
+  </script>
   {% endif %}
 
   {% if page.head-extra %}

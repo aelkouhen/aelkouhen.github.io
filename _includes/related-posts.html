@@ -1,5 +1,4 @@
-{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
+{% include get-translation-data.html %}
 {% assign ui_t = _t_data.ui %}
 {% comment %} Embed language-filtered posts as JSON; JS handles filtering, shuffling, and rendering {% endcomment %}
 <script id="related-posts-data" type="application/json">
@@ -95,7 +94,7 @@
     var html = '';
     if (post.thumbnail) {
       html += '<a href="' + post.url + '" class="card__image-wrap" aria-label="' + esc(post.title) + '">'
-            + '<img src="' + post.thumbnail + '" alt="' + esc(post.title) + '"></a>';
+            + '<img src="' + post.thumbnail + '" alt="' + esc(post.title) + '" loading="lazy"></a>';
     }
     html += '<div class="card__body">';
     if (post.tags.length) {

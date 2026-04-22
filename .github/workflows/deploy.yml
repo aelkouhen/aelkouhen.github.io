@@ -26,9 +26,7 @@ jobs:
           bundler-cache: true
 
       - name: Build Jekyll
-        run: |
-          printf "\nexclude: [vendor]" >> _config.yml
-          bundle exec jekyll build --future
+        run: bundle exec jekyll build --future
         env:
           JEKYLL_ENV: production
 

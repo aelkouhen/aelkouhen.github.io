@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom {% if page.nav-short %}top-nav-short-permanent{% else %}top-nav-regular{% endif %}">
 
-  {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+  {% include get-translation-data.html %}
   {% assign home_url = '/' %}
   {% if active_lang != site.default_lang %}{% assign home_url = '/' | append: active_lang | append: '/' %}{% endif %}
   {%- if site.title-img -%}
@@ -13,7 +13,6 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  {% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
   {% assign nav_t = _t_data.navbar %}
 
   <div class="collapse navbar-collapse" id="main-navbar">
