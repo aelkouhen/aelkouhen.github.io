@@ -22,7 +22,7 @@ Teleport est un plan d'accès qui consolide et sécurise l'accès à tous les ty
 <img src="/assets/img/teleport-identity-platform.png" alt="Plateforme d'identité Teleport" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*Teleport fournit une couche de contrôle d'accès unifiée capable de gérer les permissions sur des systèmes hétérogènes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Plateforme d'identité Teleport.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Authentification par Certificat
 
@@ -51,13 +51,15 @@ L'architecture de Teleport est construite avec la **Sécurité Zero Trust** comm
 <img src="/assets/img/teleport-architecture.png" alt="Architecture Teleport" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*L'architecture modulaire et distribuée de Teleport s'adapte à des topologies d'infrastructure variées tout en maintenant de solides garanties de sécurité et d'observabilité.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Architecture Teleport.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Le concept clé de l'architecture de Teleport est le **cluster**. Les utilisateurs et les serveurs doivent tous rejoindre le même cluster avant qu'un accès puisse être accordé. Pour rejoindre un cluster, les deux parties doivent s'authentifier. Ce modèle empêche les attaques de type honeypot et élimine le problème de confiance au premier usage. Les clusters Teleport peuvent être configurés pour se faire mutuellement confiance, permettant aux utilisateurs d'une organisation d'accéder à des serveurs désignés dans l'environnement d'une autre.
 
 Un cluster Teleport se compose des éléments suivants :
 
 <img src="/assets/img/teleport-cluster-animation.gif" alt="Composants du cluster Teleport" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Composants du cluster Teleport**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Service d'Authentification Teleport (Auth Service)
 
@@ -98,7 +100,7 @@ Teleport permet aux utilisateurs d'accéder à des ressources situées n'importe
 <img src="/assets/img/teleport-remote-nodes.png" alt="Nœuds distants Teleport via tunnel inverse" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*Du point de vue de l'utilisateur, il n'y a aucune différence entre les nœuds sur le réseau privé et les nœuds distants accessibles via un tunnel inverse.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Nœuds distants Teleport via tunnel inverse**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 La technologie sous-jacente est le tunnel inverse — une connexion sécurisée établie par un site edge vers un cluster Teleport via le proxy du cluster. Cette approche adhère aux principes Zero Trust, où les réseaux, y compris les VPN, sont considérés comme intrinsèquement non fiables.
 
@@ -118,14 +120,14 @@ Pour répondre aux exigences de niveau Tier 0, Teleport et CockroachDB offrent u
 <img src="/assets/img/teleport-crdb-architecture.png" alt="Architecture conjointe multi-régions Teleport et CockroachDB" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*L'architecture conjointe multi-régions Teleport + CockroachDB offre un accès à l'infrastructure globalement cohérent et tolérant aux pannes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Architecture conjointe multi-régions Teleport et CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Chaque composant Teleport s'appuie sur CockroachDB pour stocker son état de manière cohérente et durable, permettant un fonctionnement correct même en présence de pannes partielles ou de partitions réseau régionales. Le service d'authentification Teleport est particulièrement bien adapté à CockroachDB en raison de sa conception sans état et de sa philosophie API-first : chaque service peut être déployé de manière stateless, avec pour seul prérequis de persistance la base de données SQL sous-jacente.
 
 <img src="/assets/img/teleport-crdb-distributed-sql.png" alt="Fondation SQL distribuée CockroachDB" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*CockroachDB fournit la couche de base de données toujours cohérente qui garantit que les identités, les règles de contrôle d'accès et les tokens de session sont toujours exacts — quelle que soit la région qui traite la requête.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Fondation SQL distribuée CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 CockroachDB est une base de données SQL distribuée conçue pour l'échelle mondiale et la haute disponibilité. Elle réplique les données sur plusieurs régions tout en offrant l'isolation sérialisable, la cohérence forte et le basculement automatique. Teleport supporte officiellement CockroachDB comme backend de stockage pour de bonnes raisons :
 
@@ -231,7 +233,7 @@ Pour exécuter Teleport Enterprise, vous avez besoin d'un fichier de licence. Re
 <img src="/assets/img/teleport-license-generate.png" alt="Génération de licence Teleport" style="width:80%;display:block;margin:1.5rem auto;">
 
 {: .mx-auto.d-block :}
-*Générez une licence Teleport Enterprise depuis votre tableau de bord et téléchargez-la sous le nom `license.pem`.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Génération de licence Teleport**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Créez le secret de licence :
 
@@ -302,7 +304,7 @@ kubectl -n teleport get pods
 <img src="/assets/img/teleport-k8s-cluster.png" alt="Cluster Teleport fonctionnant sur Kubernetes" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*Le Auth Service et le Proxy Service Teleport fonctionnant comme pods dans un cluster Kubernetes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Cluster Teleport fonctionnant sur Kubernetes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Étape 4. Configurer les Enregistrements DNS
 
@@ -352,7 +354,7 @@ Teleport peut fournir un accès sécurisé à CockroachDB via le Teleport Databa
 <img src="/assets/img/teleport-db-service-agent.png" alt="Architecture de l'agent Database Service Teleport" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*L'agent Database Service Teleport proxifie le trafic client vers CockroachDB via mTLS, sans aucun identifiant à longue durée de vie stocké.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Architecture de l'agent Database Service Teleport**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Générez un token de jonction pour le Database Agent :
 
@@ -411,14 +413,14 @@ Vous recevrez un lien d'invitation pour finaliser la configuration de l'utilisat
 <img src="/assets/img/teleport-user-setup-form.png" alt="Formulaire de configuration utilisateur Teleport" style="width:60%;display:block;margin:1.5rem auto;">
 
 {: .mx-auto.d-block :}
-*Finalisez la configuration en définissant un mot de passe via le lien d'invitation.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Formulaire de configuration utilisateur Teleport**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Associez ensuite une application d'authentification en scannant le QR code généré :
 
 <img src="/assets/img/teleport-mfa-setup.png" alt="Configuration MFA Teleport par QR code" style="width:60%;display:block;margin:1.5rem auto;">
 
 {: .mx-auto.d-block :}
-*Scannez le QR code avec votre application d'authentification pour activer le MFA pour le nouvel utilisateur.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Configuration MFA Teleport par QR code**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Étape 7. Configurer le TLS Mutuel
 
@@ -461,7 +463,7 @@ Vous pouvez également accéder à vos bases de données CockroachDB via l'inter
 <img src="/assets/img/teleport-web-ui.png" alt="Interface Web Teleport donnant accès à CockroachDB" style="width:100%;margin:1.5rem 0;">
 
 {: .mx-auto.d-block :}
-*L'interface Web Teleport fournit un accès via navigateur aux instances CockroachDB enregistrées, avec journalisation d'audit complète.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Interface Web Teleport donnant accès à CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
