@@ -6,6 +6,7 @@
   background: #fff;
   border-bottom: 1px solid #eee;
   padding: 3rem 0 2.75rem;
+  margin-top: 3.1875rem; /* clear fixed navbar (50px + 1px border) */
 }
 
 .category-header__accent {
