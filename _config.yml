@@ -103,11 +103,13 @@ rss-description: Welcome to the Data Crafters Lab
 ###########################
 
 # Select which social network share links to show in posts
+remove-ads: true
+
 share-links-active:
   twitter: true
   facebook: true
   linkedin: true
-  vk: true
+  vk: false
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer

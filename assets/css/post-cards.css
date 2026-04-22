@@ -105,15 +105,15 @@
 
 /* Level 1 — H2 */
 .toc-item--h2 .toc-link {
-  padding-left: 0.85rem;
-  font-size: 0.82rem;
+  padding-left: 0.75rem;
+  font-size: 0.75rem;
   color: #555;
 }
 
 /* Level 2 — H3 */
 .toc-item--h3 .toc-link {
-  padding-left: 1.65rem;
-  font-size: 0.78rem;
+  padding-left: 1.4rem;
+  font-size: 0.72rem;
   color: #777;
 }
 
