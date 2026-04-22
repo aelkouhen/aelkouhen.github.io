@@ -27,7 +27,8 @@ At its core, **SpiceDB** is behind the authorization model provided by all of Au
 
 <img src="/assets/img/authzed-spicedb-engine.png" alt="SpiceDB permission graph engine" style="width:60%;display:block;margin:1.5rem auto;">
 
-*The diagram above shows SpiceDB as a graph engine that centrally stores authorization data and resolves requests by traversing the permission graph.*
+{: .mx-auto.d-block :}
+*The diagram above shows SpiceDB as a graph engine that centrally stores authorization data and resolves requests by traversing the permission graph.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 AuthZed's mission is to:
 
@@ -66,7 +67,8 @@ CockroachDB was built around this principle: its serializable isolation model pr
 
 <img src="/assets/img/authzed-crdb-architecture.png" alt="AuthZed and CockroachDB architecture" style="width:100%;margin:1.5rem 0;">
 
-*AuthZed and CockroachDB together deliver a globally distributed, strongly consistent authorization foundation.*
+{: .mx-auto.d-block :}
+*AuthZed and CockroachDB together deliver a globally distributed, strongly consistent authorization foundation.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 CockroachDB's multi-region replication and high availability ensure that authorization decisions are consistent, low-latency, and resilient across geographies. This architecture combines SpiceDB's flexible, API-first authorization model with CockroachDB's fault-tolerant database platform to deliver secure, fine-grained, and strongly consistent access control that scales to enterprise workloads worldwide.
 
@@ -190,7 +192,8 @@ Writing one or more object type definitions is the first step in developing an a
 
 <img src="/assets/img/authzed-schema-diagram.png" alt="SpiceDB schema definition diagram" style="width:60%;display:block;margin:1.5rem auto;">
 
-*The schema above defines user and document types with viewer, editor, and admin roles and their associated permissions.*
+{: .mx-auto.d-block :}
+*The schema above defines user and document types with viewer, editor, and admin roles and their associated permissions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In the example above, we define the `user` and `document` concepts. The user can be a `viewer`, an `editor`, or an `admin`. The definition gives the `remove` permission to the `admin` role only. To `edit` a file the user must be either an `editor` or `admin`. The permission to `view` a document is set for the viewer, editor, and admin roles.
 
