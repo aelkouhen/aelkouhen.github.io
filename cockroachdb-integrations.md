@@ -5,7 +5,7 @@ subtitle: "Step-by-step guides for integrating CockroachDB with popular framewor
 wide: true
 lang: en
 accent-color: "#00B4D8"
-category-tag: cockroachdb-integrations
+category-tag: integrations
 category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🔗"
 ---
