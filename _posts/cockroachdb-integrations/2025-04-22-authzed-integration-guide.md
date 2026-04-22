@@ -2,8 +2,7 @@
 layout: post
 title: "Integrate CockroachDB with AuthZed"
 subtitle: "How CockroachDB powers AuthZed's SpiceDB as a strongly consistent, globally distributed authorization backend"
-cover-img: /assets/img/authzed-crdb-architecture.png
-thumbnail-img: /assets/img/cockroachdb.webp
+thumbnail-img: /assets/img/authzed-crdb-architecture.png
 share-img: /assets/img/authzed-crdb-architecture.png
 tags: [cockroachdb-integrations, CockroachDB, authzed, spicedb, authorization, ReBAC, permissions]
 lang: en
@@ -68,62 +67,6 @@ CockroachDB was built around this principle: its serializable isolation model pr
 CockroachDB's multi-region replication and high availability ensure that authorization decisions are consistent, low-latency, and resilient across geographies. This architecture combines SpiceDB's flexible, API-first authorization model with CockroachDB's fault-tolerant database platform to deliver secure, fine-grained, and strongly consistent access control that scales to enterprise workloads worldwide.
 
 Additionally, CockroachDB's multi-active architecture allows AuthZed and SpiceDB deployments to scale writes horizontally. AuthZed has been able to scale real-world deployments to tens of thousands of writes per second.
-
----
-
-## AuthZed's Offerings
-
-AuthZed has multiple commercial offerings to address different scenarios and use cases. Besides open-source SpiceDB, AuthZed offers managed authorization infrastructure through AuthZed Dedicated and AuthZed Cloud. They also offer a self-hosted SpiceDB Enterprise tier.
-
-<img src="/assets/img/authzed-offerings.png" alt="AuthZed product offerings comparison" style="width:100%;margin:1.5rem 0;">
-
-### SpiceDB Open-Source
-
-Open source SpiceDB is the foundational, community-driven version of SpiceDB. It provides the core authorization engine and all its capabilities for free, under the Apache 2.0 license.
-
-**Key Characteristics:**
-- **Cost:** Free
-- **Deployment:** Self-managed (requires users to deploy, operate, and maintain the infrastructure)
-- **Features:** Core SpiceDB functionality (schema, relationships, API for checking permissions, etc.)
-- **Support:** Community-driven (Discord, GitHub issues)
-
-**Who Uses It:** Developers who want to learn more about SpiceDB, build SpiceDB into a binary, or teams comfortable running an authorization system with only community support.
-
-### Self-Hosted SpiceDB Enterprise
-
-Self-hosted SpiceDB Enterprise is designed for large organizations with specific security, compliance, or operational requirements. It builds upon the open-source version but includes additional enterprise-grade features and support.
-
-**Key Characteristics:**
-- **Cost:** Licensing and support agreements
-- **Deployment:** Self-hosted within the organization's own infrastructure (on-premises or cloud)
-- **Features:** All SpiceDB open-source functionality, plus audit logging, restricted API access (fine-grained API tokens), FIPS-validated cryptography, cryptographically-signed releases, annual penetration tests, and access to the security embargo program
-- **Support:** Dedicated enterprise-level support from AuthZed with response time SLAs; 24/7/365 support available
-
-**Who Uses It:** Organizations with strict compliance requirements that require self-hosting.
-
-### AuthZed Cloud
-
-AuthZed Cloud is for teams that want to get started quickly with SpiceDB without worrying about maintenance, on a multi-tenant service.
-
-**Key Characteristics:**
-- **Cost:** Priced per vCPU and GiB hour
-- **Deployment:** Multi-tenant SaaS
-- **Features:** All SpiceDB open-source and enterprise functionality; fully managed infrastructure
-- **Support:** Community support (Discord) with option to upgrade to a paid plan with a dedicated Customer Success Engineer
-
-**Who Uses It:** Organizations that want to move quickly with AuthZed/SpiceDB and are comfortable with a multi-tenant service.
-
-### AuthZed Dedicated
-
-AuthZed Dedicated is AuthZed's flagship commercial offering — all the benefits of SpiceDB Enterprise as a fully-managed private SaaS solution.
-
-**Key Characteristics:**
-- **Cost:** Priced as annual commitments per vCPU and GiB
-- **Deployment:** Private SaaS
-- **Features:** All SpiceDB enterprise functionality, plus permissions systems deployable across multiple cloud regions, and access to AuthZed Materialize for improved performance and permission filtering APIs
-- **Support:** Standard support included; enterprise support with 24/7/365 response time available
-
-**Who Uses It:** Organizations that need an enterprise-ready authorization system without the operational burden.
 
 ---
 
