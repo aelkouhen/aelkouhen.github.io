@@ -1,4 +1,6 @@
 {% assign card_posts = include.posts %}
+{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+{% if active_lang == 'fr' %}{% assign _cards_ui_t = site.data.translations.fr.ui %}{% else %}{% assign _cards_ui_t = site.data.translations.en.ui %}{% endif %}
 
 <div class="card-grid">
   {% for post in card_posts %}
@@ -41,6 +43,20 @@
 
         <div class="card__meta">
           {%- assign date_format = site.date_format | default: "%B %-d, %Y" -%}
+          {%- if _cards_ui_t.months -%}
+            {%- assign _pm  = post.date | date: "%-m" | minus: 1 -%}
+            {%- assign _pmn = _cards_ui_t.months | split: "," -%}
+            {%- assign _pmn = _pmn[_pm] -%}
+            {%- assign _pd  = post.date | date: "%-d" -%}
+            {%- assign _py  = post.date | date: "%Y" -%}
+            {%- if _cards_ui_t.date_day_first -%}
+              {%- capture _post_date %}{{ _pd }} {{ _pmn }} {{ _py }}{% endcapture -%}
+            {%- else -%}
+              {%- capture _post_date %}{{ _pmn }} {{ _pd }}, {{ _py }}{% endcapture -%}
+            {%- endif -%}
+          {%- else -%}
+            {%- assign _post_date = post.date | date: date_format -%}
+          {%- endif -%}
           {% if post.author-avatar or post.author %}
           <div class="card__author">
             {% if post.author-avatar %}
@@ -48,11 +64,11 @@
             {% endif %}
             <div class="card__author-info">
               {% if post.author %}<span class="card__author-name">{{ post.author }}</span>{% endif %}
-              <span class="card__author-date">{{ post.date | date: date_format }}</span>
+              <span class="card__author-date">{{ _post_date }}</span>
             </div>
           </div>
           {% else %}
-          {{ post.date | date: date_format }}
+          {{ _post_date }}
           {% endif %}
         </div>
       </div>
@@ -63,8 +79,7 @@
 </div>
 
 {% if paginator.total_pages > 1 %}
-{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% assign pag_t = site.data.translations[active_lang].pagination %}
+{% if active_lang == 'fr' %}{% assign pag_t = site.data.translations.fr.pagination %}{% else %}{% assign pag_t = site.data.translations.en.pagination %}{% endif %}
 <ul class="pagination main-pager">
   {% if paginator.previous_page %}
   <li class="page-item previous">
