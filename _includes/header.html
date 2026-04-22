@@ -48,6 +48,17 @@
     {% assign _avg_words   = _total_words | divided_by: _cat_posts.size %}
     {% assign _avg_read    = _avg_words | divided_by: 200 | ceil %}
   {% endif %}
+  {% assign _tag_scores = "" %}
+  {% for tag in _unique_tags %}
+    {% unless tag == page.category-tag %}
+      {% assign _tag_pattern = tag | append: "|" %}
+      {% assign _tag_parts   = _all_tag_list | split: _tag_pattern %}
+      {% assign _tag_freq    = _tag_parts | size | minus: 1 %}
+      {% assign _padded      = _tag_freq | prepend: "0000" | slice: -4, 4 %}
+      {% assign _tag_scores  = _tag_scores | append: _padded | append: ":" | append: tag | append: "|" %}
+    {% endunless %}
+  {% endfor %}
+  {% assign _top_tags = _tag_scores | split: "|" | sort | reverse | compact %}
 {% elsif page.layout == 'home' %}
   {% assign _home_posts = site.posts | where: "lang", page.lang %}
   {% assign _home_posts_count = _home_posts | size %}
@@ -87,6 +98,18 @@
           </div>
           {% endif %}
         </div>
+        {% if _top_tags.size > 0 %}
+        <div class="category-top-tags">
+          {% assign _shown = 0 %}
+          {% for _score_tag in _top_tags %}
+            {% if _score_tag != "" and _shown < 5 %}
+              {% assign _tag_name = _score_tag | split: ":" | last %}
+              <span class="category-tag-pill" style="border-color:{{ page.accent-color }}40;color:{{ page.accent-color }}">{{ _tag_name }}</span>
+              {% assign _shown = _shown | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
         {% elsif page.layout == 'home' and _home_posts_count > 0 %}
         <div class="category-header-stats">
           <div class="category-stat">
