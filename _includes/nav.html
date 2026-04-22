@@ -13,7 +13,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  {% if active_lang == 'fr' %}{% assign nav_t = site.data.translations.fr.navbar %}{% else %}{% assign nav_t = site.data.translations.en.navbar %}{% endif %}
+  {% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
+  {% assign nav_t = _t_data.navbar %}
 
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">

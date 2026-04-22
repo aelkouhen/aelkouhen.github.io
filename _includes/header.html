@@ -2,7 +2,8 @@
 
 {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
 {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% if active_lang == 'fr' %}{% assign ui_t = site.data.translations.fr.ui %}{% else %}{% assign ui_t = site.data.translations.en.ui %}{% endif %}
+{% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
+{% assign ui_t = _t_data.ui %}
 {% assign ui_min_read = ui_t.min_read | default: "min read" %}
 {% assign ui_updated  = ui_t.updated  | default: "Updated" %}
 {% if ui_t.months %}
