@@ -1,6 +1,5 @@
 {% assign card_posts = include.posts %}
-{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
+{% include get-translation-data.html %}
 {% assign _cards_ui_t = _t_data.ui %}
 
 <div class="card-grid">
@@ -23,7 +22,7 @@
 
       {%- if thumbnail != "" -%}
       <a href="{{ post.url | absolute_url }}" class="card__image-wrap" aria-label="{{ post.title | strip_html }}">
-        <img src="{{ thumbnail | absolute_url }}" alt="{{ post.title | strip_html }}">
+        <img src="{{ thumbnail | absolute_url }}" alt="{{ post.title | strip_html }}" loading="lazy">
       </a>
       {%- endif -%}
 
@@ -61,7 +60,7 @@
           {% if post.author-avatar or post.author %}
           <div class="card__author">
             {% if post.author-avatar %}
-            <img class="card__author-avatar" src="{{ post.author-avatar | absolute_url }}" alt="{{ post.author }}">
+            <img class="card__author-avatar" src="{{ post.author-avatar | absolute_url }}" alt="{{ post.author }}" loading="lazy">
             {% endif %}
             <div class="card__author-info">
               {% if post.author %}<span class="card__author-name">{{ post.author }}</span>{% endif %}

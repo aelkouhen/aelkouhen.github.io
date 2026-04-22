@@ -1,0 +1,2 @@
+{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+{% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}

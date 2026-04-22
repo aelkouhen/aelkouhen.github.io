@@ -1,0 +1,18 @@
+{% assign read_words = page.content | strip_html | number_of_words %}
+{% assign read_mins = read_words | divided_by: 200 | round %}
+{% if read_mins < 1 %}{% assign read_mins = 1 %}{% endif %}
+<div class="post-author-meta">
+  {% if page.author-avatar %}
+  <img class="post-author-avatar" src="{{ page.author-avatar | absolute_url }}" alt="{{ page.author }}" loading="lazy">
+  {% endif %}
+  <div class="post-author-info">
+    {% if page.author %}<span class="post-author-name">{{ page.author }}</span>{% endif %}
+    <span class="post-author-date">
+      {{ page_date_str }}
+      {% if page.last-updated %}&nbsp;&middot;&nbsp;{{ ui_updated }} {{ last_updated_str }}{% endif %}
+    </span>
+  </div>
+  <span class="post-read-time">
+    <i class="far fa-clock"></i> {{ read_mins }} {{ ui_min_read }}
+  </span>
+</div>

@@ -10,6 +10,4 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-      - run: |
-          printf "\nexclude: [vendor]" >> _config.yml
-          bundle exec jekyll build --future
+      - run: bundle exec jekyll build --future

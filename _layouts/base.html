@@ -6,9 +6,9 @@ common-ext-css:
   - href: "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     sri: "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
   - "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-  - "https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
-  - "https://fonts.googleapis.com/css?family=Indie+Flower:400,700,400italic,700italic"
-  - "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+  - "https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&display=swap"
+  - "https://fonts.googleapis.com/css?family=Indie+Flower:400,700,400italic,700italic&display=swap"
+  - "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&display=swap"
 common-ext-js:
   - href: "https://code.jquery.com/jquery-3.5.1.slim.min.js"
     sri: "sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
@@ -21,7 +21,7 @@ common-js:
 ---
 
 <!DOCTYPE html>
-<html lang="{{ page.language | default: site.language | default: 'en' }}">
+<html lang="{{ page.lang | default: site.active_lang | default: site.default_lang | default: 'en' }}">
 <!-- Beautiful Jekyll 5.0.0 | Copyright Dean Attali 2020 -->
 {% include head.html %}
 
