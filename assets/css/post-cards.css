@@ -536,6 +536,12 @@
   text-align: justify;
 }
 
+@media (max-width: 639px) {
+  .card__body {
+    text-align: left;
+  }
+}
+
 /* Tag pills wrapper */
 .card__tags {
   display: flex;
@@ -598,6 +604,12 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+@media (max-width: 639px) {
+  .card__excerpt {
+    text-align: left;
+  }
 }
 
 /* Date / meta */
@@ -710,6 +722,12 @@
 
 .card-grid--related {
   grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 639px) {
+  .card-grid--related {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 1024px) {
