@@ -1009,6 +1009,13 @@ pre {
   max-width: 100%;
 }
 
+.blog-post strong[style*="text-align: center"],
+.blog-post strong[style*="text-align:center"] {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: #808080;
+}
+
 .blog-post .caption {
   text-align: center;
   font-size: 0.875rem;
