@@ -1,4 +1,21 @@
 /* =====================================================
+   Navbar brand: logo + title side by side
+   ===================================================== */
+
+.navbar-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.navbar-brand-title {
+  font-size: .95rem;
+  font-weight: 600;
+  color: inherit;
+  white-space: nowrap;
+}
+
+/* =====================================================
    Category page header — Option 3 split layout
    ===================================================== */
 
