@@ -1,4 +1,30 @@
 /* =====================================================
+   Navbar & dropdown polish
+   ===================================================== */
+
+@media (min-width: 1200px) {
+  .navbar-custom .nav-item.dropdown .dropdown-menu {
+    min-width: max-content;
+    width: auto;
+    word-break: normal;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+    border-radius: 0 0 6px 6px;
+    border: 1px solid #ddd;
+  }
+
+  .navbar-custom .nav-item.dropdown .dropdown-menu .dropdown-item {
+    white-space: nowrap;
+    font-size: 0.875rem;
+    padding: 0.5rem 1.25rem;
+    letter-spacing: 0.01em;
+  }
+
+  .navbar-custom .nav-item.dropdown .dropdown-menu .dropdown-item:first-child {
+    border-top-width: 0;
+  }
+}
+
+/* =====================================================
    Post header — centered title, subtitle, author row
    ===================================================== */
 
