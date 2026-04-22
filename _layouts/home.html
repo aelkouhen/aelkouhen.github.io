@@ -24,8 +24,7 @@ layout: page
     var currentPage = 1;
     var totalPages = Math.ceil(total / pageSize);
     {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-    {% assign _t_data = nil %}{% for _te in site.data.translations %}{% assign _lang_key = _te[0] | append: '' %}{% if _lang_key == active_lang %}{% assign _t_data = _te[1] %}{% endif %}{% endfor %}
-    {% assign pag_t = _t_data.pagination %}
+    {% assign pag_t = site.data.translations[active_lang].pagination %}
     var newerLabel = "{{ pag_t.newer | default: '&larr; Newer Posts' }}";
     var olderLabel = "{{ pag_t.older | default: 'Older Posts &rarr;' }}";
 
