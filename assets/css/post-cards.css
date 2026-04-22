@@ -7,11 +7,9 @@
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Hide search label at desktop, keep icon only */
-@media (min-width: 992px) {
-  #nav-search-text {
-    display: none;
-  }
+/* Hide search label everywhere, icon is sufficient */
+#nav-search-text {
+  display: none;
 }
 
 @media (min-width: 992px) {
