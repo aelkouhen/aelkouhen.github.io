@@ -48,13 +48,14 @@
         </li>
       {%- endif -%}
     </ul>
+    {% if site.navbar-extra %}
+      <div class="navbar-extra-wrap d-flex align-items-center ml-2">
+        {% for file in site.navbar-extra %}
+          {% include {{ file }} %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
-
-  {% if site.navbar-extra %}
-    {% for file in site.navbar-extra %}
-      {% include {{ file }} %}
-    {% endfor %}
-  {% endif %}
 
   {% if site.avatar and page.show-avatar != false %}
     <div class="avatar-container">
