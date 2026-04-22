@@ -31,7 +31,7 @@ Because each service is stateless, all persistent state lives in CockroachDB. Th
 
 ---
 
-## Ory Hydra
+### Ory Hydra
 
 Ory Hydra is a server implementation of the [OAuth 2.0 authorization framework](https://oauth.net/2/) and [OpenID Connect Core 1.0](https://openid.net/connect/). It tracks clients, consent requests, and tokens with strong consistency to prevent replay attacks and duplicate authorizations.
 
@@ -58,7 +58,7 @@ CockroachDB stores all OAuth2 clients, authorization codes, access tokens, and c
 
 ---
 
-## Ory Kratos
+### Ory Kratos
 
 Ory Kratos stores user identity records, recovery flows, sessions, and login attempts in transactional tables. Each identity associates with one or more credentials stored in the `identity_credentials` table, defining authentication mechanisms such as passwords, social login, or other methods.
 
@@ -82,7 +82,7 @@ Each user identity record is stored in transactional CockroachDB tables:
 
 ---
 
-## Ory Keto
+### Ory Keto
 
 Ory Keto provides scalable, relationship-based access control (ReBAC) through relation tuples — the same model used by [Google Zanzibar](https://research.google/pubs/pub48190/).
 
@@ -130,7 +130,7 @@ This diagram illustrates a single cloud region deployment across three Availabil
 
 ---
 
-## Prerequisites
+### Prerequisites
 
 - AWS account with EKS and EC2 permissions
 - Configured AWS CLI profile
@@ -141,7 +141,7 @@ This diagram illustrates a single cloud region deployment across three Availabil
 
 ---
 
-## Step 1: Provision a CockroachDB Cluster
+### Step 1: Provision a CockroachDB Cluster
 
 Choose one deployment method:
 
@@ -153,7 +153,7 @@ Choose one deployment method:
 
 ---
 
-## Step 2: Create Databases for Ory Services
+### Step 2: Create Databases for Ory Services
 
 Separate databases isolate data across Ory components:
 
@@ -186,7 +186,7 @@ GRANT ALL ON DATABASE keto TO ory;
 
 ---
 
-## Step 3: Provision a Kubernetes Cluster
+### Step 3: Provision a Kubernetes Cluster
 
 Create the EKS cluster:
 
@@ -215,9 +215,9 @@ helm repo update
 
 ---
 
-## Step 4: Deploy Ory Services
+### Step 4: Deploy Ory Services
 
-### Deploy Ory Hydra
+#### Deploy Ory Hydra
 
 Create `hydra_values.yaml` (replace `{crdb-fqdn}`):
 
@@ -275,7 +275,7 @@ export HYDRA_PUBLIC_URL=http://$hydra_public_hostname:4444
 
 ---
 
-### Deploy Ory Kratos
+#### Deploy Ory Kratos
 
 Create `kratos_values.yaml` (replace `{crdb-fqdn}`):
 
@@ -338,7 +338,7 @@ export KRATOS_PUBLIC_URL=http://$kratos_public_hostname:4434
 
 ---
 
-### Deploy Ory Keto
+#### Deploy Ory Keto
 
 Create `keto_values.yaml` (replace `{crdb-fqdn}`):
 
@@ -404,9 +404,9 @@ export KETO_READ_REMOTE=http://$keto_read_hostname:4466
 
 ---
 
-## Step 5: Test the Integration
+### Step 5: Test the Integration
 
-### Test Ory Hydra
+#### Test Ory Hydra
 
 Create an OAuth2 client:
 
@@ -446,7 +446,7 @@ FROM public.hydra_oauth2_access;
 
 ---
 
-### Test Ory Kratos
+#### Test Ory Kratos
 
 Initialize the registration API flow and create a user:
 
@@ -508,7 +508,7 @@ JOIN public.identity_credential_types ict ON ic.identity_credential_type_id = ic
 
 ---
 
-### Test Ory Keto
+#### Test Ory Keto
 
 Create a relation tuple granting Alice viewer access to a document:
 
