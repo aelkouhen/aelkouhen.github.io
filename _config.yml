@@ -171,8 +171,8 @@ site-css:
   - "/assets/css/post-cards.css"
 
 # If you have common JavaScript files that should be included in every page, list them here
-#site-js:
-#  - "/assets/js/custom-script.js"
+site-js:
+  - "/assets/js/copy-code.js"
 
 #################################
 # --- Web Analytics Section --- #
