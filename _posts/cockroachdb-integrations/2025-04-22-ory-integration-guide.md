@@ -27,6 +27,10 @@ Ory's platform is composed of three independent, stateless services — each han
 | **Ory Kratos** | Identity management — users, credentials, sessions, verification |
 | **Ory Keto** | Relationship-based access control (ReBAC) via relation tuples |
 
+The following diagram shows the relationship between Ory Hydra, Kratos and Keto:
+
+<img src="/assets/img/integrate-ory-architecture-overview.png" alt="Ory Services" style="width:100%;margin:1.5rem 0;">
+
 Because each service is stateless, all persistent state lives in CockroachDB. This means horizontal scaling, rolling updates, and multi-region deployments are straightforward — no sticky sessions, no distributed caches to coordinate.
 
 ---
@@ -39,9 +43,11 @@ The OAuth 2.0 framework enables third-party applications to obtain limited acces
 
 <img src="/assets/img/integrate-ory-oauth2-flow.png" alt="OAuth 2.0 flow diagram" style="width:100%;margin:1.5rem 0;">
 
+This sequence diagram illustrates the OAuth 2.0 authorization flow as a series of requests and responses, using Ory Hydra as the authorization server:
+
 <img src="/assets/img/integrate-ory-hydra-flow.png" alt="Ory Hydra authorization flow" style="width:100%;margin:1.5rem 0;">
 
-This sequence diagram illustrates OAuth 2.0 authorization flow interactions between four components:
+The diagram depicts the interactions between four key components:
 
 - **Client** — an application seeking access to protected resources
 - **Resource Owner** — the end user
