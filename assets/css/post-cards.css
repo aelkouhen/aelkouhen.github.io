@@ -2,15 +2,6 @@
    Search overlay — polished results panel
    ===================================================== */
 
-#search-inner-wrap {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
-  padding: 0 1rem;
-  text-align: center;
-}
 
 #nav-search-input {
   text-align: left !important;
