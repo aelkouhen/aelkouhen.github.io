@@ -2,8 +2,7 @@
 layout: post
 title: "Integrate CockroachDB with Ory"
 subtitle: "A step-by-step guide to deploying Ory Hydra, Kratos, and Keto with CockroachDB"
-cover-img: /assets/img/integrate-ory-architecture-overview.png
-thumbnail-img: /assets/img/cockroachdb.webp
+thumbnail-img: /assets/img/integrate-ory-architecture-overview.png
 share-img: /assets/img/integrate-ory-architecture-overview.png
 tags: [cockroachdb-integrations, CockroachDB, ory, iam, kubernetes, oauth2, OIDC, identity]
 lang: en
