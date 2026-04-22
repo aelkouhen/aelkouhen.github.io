@@ -7,10 +7,9 @@
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Hide search label everywhere, icon is sufficient */
-#nav-search-text {
-  display: none;
-}
+/* Icon-only search: hide text, always show icon */
+#nav-search-text { display: none; }
+#nav-search-icon { display: inline-block; }
 
 @media (min-width: 992px) {
   .navbar-custom .nav-item.dropdown .dropdown-menu {
