@@ -10,14 +10,14 @@ layout: base
 <div class="{% if page.full-width %} container-fluid {% elsif page.wide %} container-xl {% else %} container-md {% endif %}">
   <div class="row">
     {% if page.wide %}
-    <div class="col-xl-3 d-none d-xl-block toc-col">
+    <div class="col-xl-2 d-none d-xl-block toc-col">
       <aside class="toc-sidebar" id="toc-sidebar">
         <p class="toc-title">{{ ui_t.on_this_page | default: "On this page" }}</p>
         <nav id="toc-nav"></nav>
       </aside>
     </div>
     {% endif %}
-    <div class="{% if page.full-width %} col {% elsif page.wide %} col-xl-8 offset-xl-0 col-lg-10 offset-lg-1 {% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
+    <div class="{% if page.full-width %} col {% elsif page.wide %} col-xl-9 offset-xl-0 col-lg-10 offset-lg-1{% else %} col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 {% endif %}">
 
       {% if page.gh-repo %}
         {% assign gh_split =  page.gh-repo | split:'/'  %}

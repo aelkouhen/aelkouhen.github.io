@@ -850,42 +850,50 @@ nav.top-nav-short-permanent ~ header > .intro-header.big-img {
 /* --- Tables --- */
 
 .table-wrapper {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 table {
-  padding: 0;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  display: block;
 }
 
 table tr {
-  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #e8e8e8;
   background-color: #ffffff;
-  margin: 0;
-  padding: 0;
 }
+
 table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #f7f9fc;
 }
+
 table tr th {
-  font-weight: bold;
-  border: 1px solid #cccccc;
+  background-color: #eef2f7;
+  font-weight: 600;
+  color: #333;
+  border: none;
+  border-right: 1px solid #dde3ec;
+  border-bottom: 2px solid #d0d8e4;
   text-align: left;
-  margin: 0;
-  padding: 0.375rem 0.8125rem;
+  padding: 0.65rem 1rem;
+  white-space: nowrap;
 }
+
 table tr td {
-  border: 1px solid #cccccc;
+  border: none;
+  border-right: 1px solid #eef0f3;
   text-align: left;
-  margin: 0;
-  padding: 0.375rem 0.8125rem;
+  padding: 0.6rem 1rem;
+  vertical-align: top;
 }
-table tr th :first-child,
-table tr td :first-child {
-  margin-top: 0;
-}
-table tr th :last-child,
-table tr td :last-child {
-  margin-bottom: 0;
+
+table tr th:last-child,
+table tr td:last-child {
+  border-right: none;
 }
 
 /* --- Code blocks --- */
