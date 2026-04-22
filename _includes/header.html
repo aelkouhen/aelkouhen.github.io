@@ -50,14 +50,8 @@
 {% elsif page.layout == 'home' %}
   {% assign _home_posts = site.posts | where: "lang", page.lang %}
   {% assign _home_posts_count = _home_posts | size %}
-  {% assign _all_home_tags = "" %}
-  {% for post in _home_posts %}
-    {% for tag in post.tags %}
-      {% assign _all_home_tags = _all_home_tags | append: tag | append: "|" %}
-    {% endfor %}
-  {% endfor %}
-  {% assign _home_unique_tags = _all_home_tags | split: "|" | uniq | compact %}
-  {% assign _home_topics_count = _home_unique_tags | size %}
+  {% assign _home_cat_links = site.navbar-links["Categories"] %}
+  {% assign _home_cat_count = _home_cat_links | size %}
 {% endif %}
 
 <header class="category-header-wrap">
@@ -98,10 +92,10 @@
             <span class="category-stat-value" style="color:{{ page.accent-color }}">{{ _home_posts_count }}</span>
             <span class="category-stat-label">Article{% if _home_posts_count != 1 %}s{% endif %}</span>
           </div>
-          {% if _home_topics_count > 0 %}
+          {% if _home_cat_count > 0 %}
           <div class="category-stat">
-            <span class="category-stat-value" style="color:{{ page.accent-color }}">{{ _home_topics_count }}</span>
-            <span class="category-stat-label">Topics</span>
+            <span class="category-stat-value" style="color:{{ page.accent-color }}">{{ _home_cat_count }}</span>
+            <span class="category-stat-label">Categor{% if _home_cat_count != 1 %}ies{% else %}y{% endif %}</span>
           </div>
           {% endif %}
         </div>
