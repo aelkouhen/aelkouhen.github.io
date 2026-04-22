@@ -105,6 +105,14 @@
   justify-content: center;
 }
 
+.category-icon-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+
 .category-icon-box {
   width: 160px;
   height: 160px;

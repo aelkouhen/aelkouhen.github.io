@@ -102,10 +102,14 @@
         {% endif %}
       </div>
 
-      {% if page.category-icon %}
+      {% if page.category-icon or page.layout == 'home' %}
       <div class="category-header-right">
         <div class="category-icon-box" style="background:linear-gradient(135deg,{{ page.accent-color }}18,{{ page.accent-color }}35);box-shadow:0 16px 48px {{ page.accent-color }}28;">
-          {{ page.category-icon }}
+          {% if page.layout == 'home' and site.avatar %}
+            <img src="{{ site.avatar | relative_url }}" alt="{{ site.title }}" class="category-icon-avatar">
+          {% else %}
+            {{ page.category-icon }}
+          {% endif %}
         </div>
       </div>
       {% endif %}
