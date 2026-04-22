@@ -2,7 +2,7 @@
 layout: base
 ---
 {% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
-{% assign ui_t = site.data.translations[active_lang].ui %}
+{% if active_lang == 'fr' %}{% assign ui_t = site.data.translations.fr.ui %}{% else %}{% assign ui_t = site.data.translations.en.ui %}{% endif %}
 
 {% include header.html type="post" %}
 <div id="reading-progress"></div>

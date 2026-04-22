@@ -2,6 +2,9 @@ en:
   ui:
     keep_reading: "Keep Reading"
     on_this_page: "On this page"
+    min_read: "min read"
+    updated: "Updated"
+    months: "January,February,March,April,May,June,July,August,September,October,November,December"
   pagination:
     newer: "&larr; Newer Posts"
     older: "Older Posts &rarr;"
@@ -20,6 +23,10 @@ fr:
   ui:
     keep_reading: "Continuer à lire"
     on_this_page: "Sur cette page"
+    min_read: "min de lecture"
+    updated: "Mis à jour"
+    date_day_first: true
+    months: "janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre"
   pagination:
     newer: "&larr; Articles récents"
     older: "Articles plus anciens &rarr;"

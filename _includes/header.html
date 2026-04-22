@@ -1,6 +1,36 @@
 <!-- TODO this file has become a mess, refactor it -->
 
 {% assign date_format = site.date_format | default: "%B %-d, %Y" %}
+{% assign active_lang = page.lang | default: site.active_lang | default: site.default_lang %}
+{% if active_lang == 'fr' %}{% assign ui_t = site.data.translations.fr.ui %}{% else %}{% assign ui_t = site.data.translations.en.ui %}{% endif %}
+{% assign ui_min_read = ui_t.min_read | default: "min read" %}
+{% assign ui_updated  = ui_t.updated  | default: "Updated" %}
+{% if ui_t.months %}
+  {% assign _months_arr = ui_t.months | split: "," %}
+  {% assign _mi = page.date | date: "%-m" | minus: 1 %}
+  {% assign _mn = _months_arr[_mi] %}
+  {% assign _dd = page.date | date: "%-d" %}
+  {% assign _yy = page.date | date: "%Y" %}
+  {% if ui_t.date_day_first %}
+    {% capture page_date_str %}{{ _dd }} {{ _mn }} {{ _yy }}{% endcapture %}
+  {% else %}
+    {% capture page_date_str %}{{ _mn }} {{ _dd }}, {{ _yy }}{% endcapture %}
+  {% endif %}
+  {% if page.last-updated %}
+    {% assign _mi = page.last-updated | date: "%-m" | minus: 1 %}
+    {% assign _mn = _months_arr[_mi] %}
+    {% assign _dd = page.last-updated | date: "%-d" %}
+    {% assign _yy = page.last-updated | date: "%Y" %}
+    {% if ui_t.date_day_first %}
+      {% capture last_updated_str %}{{ _dd }} {{ _mn }} {{ _yy }}{% endcapture %}
+    {% else %}
+      {% capture last_updated_str %}{{ _mn }} {{ _dd }}, {{ _yy }}{% endcapture %}
+    {% endif %}
+  {% endif %}
+{% else %}
+  {% assign page_date_str    = page.date       | date: date_format %}
+  {% assign last_updated_str = page.last-updated | date: date_format %}
+{% endif %}
 
 {% if page.cover-img or page.title %}
 
@@ -48,12 +78,12 @@
               <div class="post-author-info">
                 {% if page.author %}<span class="post-author-name">{{ page.author }}</span>{% endif %}
                 <span class="post-author-date">
-                  {{ page.date | date: date_format }}
-                  {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
+                  {{ page_date_str }}
+                  {% if page.last-updated %}&nbsp;&middot;&nbsp;{{ ui_updated }} {{ last_updated_str }}{% endif %}
                 </span>
               </div>
               <span class="post-read-time">
-                <i class="far fa-clock"></i> {{ read_mins }} min read
+                <i class="far fa-clock"></i> {{ read_mins }} {{ ui_min_read }}
               </span>
             </div>
           {% endif %}
@@ -90,12 +120,12 @@
               <div class="post-author-info">
                 {% if page.author %}<span class="post-author-name">{{ page.author }}</span>{% endif %}
                 <span class="post-author-date">
-                  {{ page.date | date: date_format }}
-                  {% if page.last-updated %}&nbsp;&middot;&nbsp;Updated {{ page.last-updated | date: date_format }}{% endif %}
+                  {{ page_date_str }}
+                  {% if page.last-updated %}&nbsp;&middot;&nbsp;{{ ui_updated }} {{ last_updated_str }}{% endif %}
                 </span>
               </div>
               <span class="post-read-time">
-                <i class="far fa-clock"></i> {{ read_mins }} min read
+                <i class="far fa-clock"></i> {{ read_mins }} {{ ui_min_read }}
               </span>
             </div>
           {% endif %}

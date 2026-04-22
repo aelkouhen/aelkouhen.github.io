@@ -13,11 +13,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  {% comment %}Iterate nav_translations to find matching lang — avoids variable bracket-access on ConfigurationDrop{% endcomment %}
-  {% assign nav_t = nil %}
-  {% for lang_entry in site.nav_translations %}
-    {% if lang_entry[0] == active_lang %}{% assign nav_t = lang_entry[1] %}{% endif %}
-  {% endfor %}
+  {% if active_lang == 'fr' %}{% assign nav_t = site.data.translations.fr.navbar %}{% else %}{% assign nav_t = site.data.translations.en.navbar %}{% endif %}
 
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
