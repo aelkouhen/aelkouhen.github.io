@@ -80,6 +80,8 @@
   align-items: center;
   gap: 0.6rem;
   flex-shrink: 0;
+  width: 200px;
+  justify-content: flex-end;
 }
 
 .search-result-date {
@@ -98,7 +100,7 @@
   padding: 0.2rem 0.55rem;
   border-radius: 999px;
   white-space: nowrap;
-  max-width: 110px;
+  max-width: 90px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
