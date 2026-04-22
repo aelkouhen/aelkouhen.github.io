@@ -33,26 +33,39 @@
 {% endif %}
 
 {% if page.accent-color and include.type == "page" %}
+{% if page.category-tag %}{% assign _cat_posts = site.tags[page.category-tag] %}{% endif %}
 
 <header class="category-header-wrap">
   <div class="container-xl">
-    <div class="row">
-      <div class="col">
-        <span class="category-header__accent" style="background:{{ page.accent-color }};"></span>
-        <h1 class="category-header__title">{{ page.title | strip_html }}</h1>
+    <div class="category-header-inner">
+
+      <div class="category-header-left">
+        <div class="category-header-breadcrumb" style="color:{{ page.accent-color }}">
+          <span class="category-header-line" style="background:{{ page.accent-color }}"></span>
+          Category
+        </div>
+        <h1 class="category-header-title">{{ page.title | strip_html }}</h1>
         {% if page.subtitle %}
-        <p class="category-header__subtitle">{{ page.subtitle | strip_html }}</p>
+        <p class="category-header-subtitle">{{ page.subtitle | strip_html }}</p>
         {% endif %}
-        {% if page.category-tag %}
-          {% assign _cat_posts = site.tags[page.category-tag] %}
-          {% if _cat_posts.size > 0 %}
-          <div class="category-header__meta">
-            <span class="category-header__count" style="color:{{ page.accent-color }}">{{ _cat_posts.size }}</span>
-            <span class="category-header__count-label">article{% if _cat_posts.size != 1 %}s{% endif %}</span>
+        {% if _cat_posts.size > 0 %}
+        <div class="category-header-stats">
+          <div class="category-stat">
+            <span class="category-stat-value" style="color:{{ page.accent-color }}">{{ _cat_posts.size }}</span>
+            <span class="category-stat-label">article{% if _cat_posts.size != 1 %}s{% endif %}</span>
           </div>
-          {% endif %}
+        </div>
         {% endif %}
       </div>
+
+      {% if page.category-icon %}
+      <div class="category-header-right">
+        <div class="category-icon-box" style="background:linear-gradient(135deg,{{ page.accent-color }}18,{{ page.accent-color }}35);box-shadow:0 16px 48px {{ page.accent-color }}28;">
+          {{ page.category-icon }}
+        </div>
+      </div>
+      {% endif %}
+
     </div>
   </div>
 </header>

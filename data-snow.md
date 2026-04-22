@@ -6,6 +6,7 @@ wide: true
 lang: en
 accent-color: "#29B5E8"
 category-tag: Snowflake
+category-icon: "❄️"
 ---
 
 {% include post-cards.html posts=site.tags.Snowflake %}

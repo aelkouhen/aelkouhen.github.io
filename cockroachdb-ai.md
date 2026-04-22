@@ -6,6 +6,7 @@ wide: true
 lang: en
 accent-color: "#008AFF"
 category-tag: "Artificial Intelligence"
+category-icon: "🤖"
 ---
 
 {% assign ai_posts = site.tags['Artificial Intelligence'] %}
