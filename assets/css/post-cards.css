@@ -135,6 +135,12 @@
   white-space: nowrap;
 }
 
+@media (max-width: 480px) {
+  .navbar-brand-title {
+    display: none;
+  }
+}
+
 /* =====================================================
    Category page header — Option 3 split layout
    ===================================================== */
@@ -371,7 +377,7 @@
   width: 0%;
   height: 3px;
   background: #008AFF;
-  z-index: 1029;
+  z-index: 1031;
   transition: width 0.08s linear;
   pointer-events: none;
 }
