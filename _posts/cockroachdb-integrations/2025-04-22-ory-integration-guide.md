@@ -30,7 +30,8 @@ Ory's platform is composed of three independent, stateless services — each han
 The following diagram shows the relationship between Ory Hydra, Kratos and Keto:
 
 <img src="/assets/img/integrate-ory-architecture-overview.png" alt="Ory Services" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :} **Ory Services**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :}
+**Ory Services**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Because each service is stateless, all persistent state lives in CockroachDB. This means horizontal scaling, rolling updates, and multi-region deployments are straightforward — no sticky sessions, no distributed caches to coordinate.
 
@@ -43,12 +44,14 @@ Ory Hydra is a server implementation of the [OAuth 2.0 authorization framework](
 The OAuth 2.0 framework enables third-party applications to obtain limited access to HTTP services on behalf of resource owners or independently.
 
 <img src="/assets/img/integrate-ory-oauth2-flow.png" alt="OAuth 2.0 flow diagram" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :} **OAuth 2.0 flow diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :}
+**OAuth 2.0 flow diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 This sequence diagram illustrates the OAuth 2.0 authorization flow as a series of requests and responses, using Ory Hydra as the authorization server:
 
 <img src="/assets/img/integrate-ory-hydra-flow.png" alt="Ory Hydra authorization flow" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :} **Ory Hydra authorization flow**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :}
+**Ory Hydra authorization flow**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The diagram depicts the interactions between four key components:
 
@@ -81,7 +84,8 @@ Kratos enables users to sign up and manage profiles without administrative inter
 - User-Facing Error Handling
 
 <img src="/assets/img/integrate-ory-kratos-registration.png" alt="Ory Kratos registration flow" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :} **Ory Kratos registration flow**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :}
+**Ory Kratos registration flow**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Each user identity record is stored in transactional CockroachDB tables:
 
@@ -106,7 +110,8 @@ Permission checks are answered based on:
 When asking "Is user Bob allowed to view document X?", the system checks Bob's view permission and verifies Bob's ownership. The permission model tells Ory Keto what to check.
 
 <img src="/assets/img/integrate-ory-permission-graph.png" alt="Ory Keto permission graph" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :} **Ory Keto permission graph**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :}
+**Ory Keto permission graph**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
@@ -132,7 +137,8 @@ The integration combines three Ory components, each operating as a stateless ser
 | **Ory Keto** | Relation tuples for RBAC/ABAC permissions |
 
 <img src="/assets/img/integrate-ory-single-region.svg" alt="Single-region Ory + CockroachDB architecture" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :} **Single-region Ory + CockroachDB architecture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+{: .mx-auto.d-block :}
+**Single-region Ory + CockroachDB architecture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 This diagram illustrates a single cloud region deployment across three Availability Zones: `us-east-1a`, `us-east-1b`, and `us-east-1c`.
 
