@@ -241,7 +241,7 @@
 
 /* Clip tags to 2 lines on regular cards */
 .card:not(.card--featured) .card__tags {
-  max-height: 3rem;
+  max-height: 3.6rem;
   overflow: hidden;
 }
 
