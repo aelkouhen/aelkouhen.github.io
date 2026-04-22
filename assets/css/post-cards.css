@@ -651,6 +651,32 @@ code {
   border-color: #4caf50;
 }
 
+/* Dark theme token colors — override Rouge light-theme defaults */
+.highlight .k,  .highlight .kd, .highlight .kn, .highlight .kp,
+.highlight .kr, .highlight .kt, .highlight .kc { color: #569cd6; } /* keywords → blue */
+.highlight .nb, .highlight .bp                 { color: #4ec9b0; } /* builtins → teal */
+.highlight .nf, .highlight .fm                 { color: #dcdcaa; } /* functions → yellow */
+.highlight .nc, .highlight .nn                 { color: #4ec9b0; } /* classes/ns → teal */
+.highlight .na, .highlight .ni, .highlight .no { color: #9cdcfe; } /* attributes → light blue */
+.highlight .s,  .highlight .s1, .highlight .s2,
+.highlight .sb, .highlight .sc, .highlight .sd,
+.highlight .se, .highlight .sh, .highlight .si,
+.highlight .sl, .highlight .ss, .highlight .sx { color: #ce9178; } /* strings → orange */
+.highlight .c,  .highlight .c1, .highlight .cm,
+.highlight .cs, .highlight .cp                 { color: #6a9955; font-style: italic; } /* comments → green */
+.highlight .mi, .highlight .mf, .highlight .mh,
+.highlight .il, .highlight .m,  .highlight .mb,
+.highlight .mo                                 { color: #b5cea8; } /* numbers → light green */
+.highlight .o,  .highlight .ow                { color: #d4d4d4; } /* operators → default */
+.highlight .p                                  { color: #d4d4d4; } /* punctuation → default */
+.highlight .n,  .highlight .nx                { color: #d4d4d4; } /* names → default */
+.highlight .nt                                 { color: #569cd6; } /* tag names → blue */
+.highlight .nv, .highlight .vc, .highlight .vg,
+.highlight .vi                                 { color: #9cdcfe; } /* variables → light blue */
+.highlight .ge                                 { font-style: italic; }
+.highlight .gs                                 { font-weight: bold; }
+.highlight .err                                { color: #f44747; background: transparent; } /* errors → red, no bg */
+
 /* =====================================================
    Reading experience
    ===================================================== */
