@@ -7,7 +7,7 @@ lang: fr
 permalink: /data-mainframe/
 accent-color: "#2C7A7B"
 category-tag: mainframe
-category-icon: "🖥️"
+category-img: "/assets/img/mainframe.png"
 ---
 
 {% include post-cards.html posts=site.tags.mainframe %}
