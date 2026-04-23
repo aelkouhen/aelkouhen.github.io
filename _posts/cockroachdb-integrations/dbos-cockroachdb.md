@@ -1,7 +1,7 @@
 ---
 date: 2026-05-28
 layout: post
-title: "Embedded Durable Execution with DBOS and CockroachDB"
+title: "Embedded Scalable Execution with DBOS and CockroachDB"
 subtitle: "How DBOS turns your existing database into a workflow engine, and why CockroachDB makes it globally distributed"
 cover-img: /assets/img/cover-dbos.webp
 thumbnail-img: /assets/img/cover-dbos.webp

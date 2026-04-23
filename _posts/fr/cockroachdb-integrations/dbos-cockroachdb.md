@@ -1,7 +1,7 @@
 ---
 date: 2026-05-28
 layout: post
-title: "Exécution durable embarquée avec DBOS et CockroachDB"
+title: "Exécution scalable embarquée avec DBOS et CockroachDB"
 subtitle: "Comment DBOS transforme votre base de données existante en moteur de workflows et pourquoi CockroachDB le rend distribué globalement"
 cover-img: /assets/img/cover-dbos.webp
 thumbnail-img: /assets/img/cover-dbos.webp
