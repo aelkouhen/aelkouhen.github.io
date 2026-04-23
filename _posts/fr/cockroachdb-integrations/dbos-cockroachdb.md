@@ -2,7 +2,7 @@
 date: 2026-05-28
 layout: post
 title: "Exécution scalable embarquée avec DBOS et CockroachDB"
-subtitle: "Comment DBOS transforme votre base de données existante en moteur de workflows et pourquoi CockroachDB le rend distribué globalement"
+subtitle: "Comment DBOS transforme votre base de données en moteur de workflows — et pourquoi CockroachDB supprime le plafond de scalabilité"
 cover-img: /assets/img/cover-dbos.webp
 thumbnail-img: /assets/img/cover-dbos.webp
 share-img: /assets/img/cover-dbos.webp
