@@ -42,7 +42,7 @@ Recommendation engines have evolved dramatically since their inception in the mi
 
 As web usage and data volumes grew, so did the sophistication of these systems – moving from heuristic approaches to machine learning models capable of capturing deeper patterns in user preferences. The emergence of deep learning marked a turning point, enabling the use of neural networks and embeddings to represent users and items in high-dimensional vector spaces.
 
-More recently, transformer-based architectures and real-time vector search have further enhanced the personalization and responsiveness of online recommendations. Today, recommendation engines are a critical part of nearly every digital platform — from e-commerce to streaming services — playing a central role in user engagement, retention, and revenue generation.
+More recently, transformer-based architectures and real-time vector search have further enhanced the personalization and responsiveness of online recommendations. Today, recommendation engines are a critical part of nearly every digital platform  -  from e-commerce to streaming services  -  playing a central role in user engagement, retention, and revenue generation.
 
 There are several types of recommendation systems commonly in use:
 
@@ -261,9 +261,9 @@ The choice of embedding technique depends on the specific data type, task, and a
 
 ### 2 - Vector Indexing
 
-Once you have created vector embeddings for your products, you may choose to store and query them in a vector database like [Pinecone](https://www.pinecone.io/), [Milvus](https://milvus.io), [Weaviate](https://weaviate.io/), or, [Qdrant](https://qdrant.tech/) — each optimized for fast similarity search. While these systems often prioritize performance over strong consistency, CockroachDB offers strong consistency, high isolation, horizontal scalability, and now supports vector data types and approximate similarity queries. This makes it a good option when [transactional semantics](https://www.cockroachlabs.com/guides/vector-search-meets-distributed-sql/) are needed alongside vector operations.
+Once you have created vector embeddings for your products, you may choose to store and query them in a vector database like [Pinecone](https://www.pinecone.io/), [Milvus](https://milvus.io), [Weaviate](https://weaviate.io/), or, [Qdrant](https://qdrant.tech/)  -  each optimized for fast similarity search. While these systems often prioritize performance over strong consistency, CockroachDB offers strong consistency, high isolation, horizontal scalability, and now supports vector data types and approximate similarity queries. This makes it a good option when [transactional semantics](https://www.cockroachlabs.com/guides/vector-search-meets-distributed-sql/) are needed alongside vector operations.
 
-Additionally, CockroachDB's new vector indexing system **C-SPANN**, incorporates ideas from Microsoft's [SPANN](https://www.microsoft.com/en-us/research/publication/spann-highly-efficient-billion-scale-approximate-nearest-neighbor-search/) and [SPFresh](https://www.microsoft.com/en-us/research/publication/spfresh-incremental-in-place-update-for-billion-scale-vector-search/) papers, as well as Google's [ScaNN](https://research.google/blog/announcing-scann-efficient-vector-similarity-search/) project. It was designed to support fast, real-time semantic search across billions of data items — such as photos, or documents — in a highly distributed and transactional environment.
+Additionally, CockroachDB's new vector indexing system **C-SPANN**, incorporates ideas from Microsoft's [SPANN](https://www.microsoft.com/en-us/research/publication/spann-highly-efficient-billion-scale-approximate-nearest-neighbor-search/) and [SPFresh](https://www.microsoft.com/en-us/research/publication/spfresh-incremental-in-place-update-for-billion-scale-vector-search/) papers, as well as Google's [ScaNN](https://research.google/blog/announcing-scann-efficient-vector-similarity-search/) project. It was designed to support fast, real-time semantic search across billions of data items  -  such as photos, or documents  -  in a highly distributed and transactional environment.
 
 Unlike traditional solutions that rely on in-memory datasets or batched writes, C-SPANN is built to function across regions with strong consistency, low latency, and linear scalability. It supports immediate searchability of new data, avoids central coordination, and fits naturally into CockroachDB's distributed key-value storage model.
 
@@ -279,9 +279,9 @@ CockroachDB uses a distance metric to measure the similarity between two vectors
 {: .mx-auto.d-block :}
 **Distance Metrics**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-We have described how C-SPANN can efficiently cluster large volumes of vectors while keeping the index up to date through real-time, incremental updates. However, there's an important nuance in practical applications: Vectors typically belong to distinct entities — such as users, customers, or product category — and most queries are intended to operate within the scope of a single entity. Including vectors from unrelated owners will dilute relevance in vector search.
+We have described how C-SPANN can efficiently cluster large volumes of vectors while keeping the index up to date through real-time, incremental updates. However, there's an important nuance in practical applications: Vectors typically belong to distinct entities  -  such as users, customers, or product category  -  and most queries are intended to operate within the scope of a single entity. Including vectors from unrelated owners will dilute relevance in vector search.
 
-CockroachDB addresses this elegantly by supporting **prefix columns** in vector indexes. This feature enables the index to be logically partitioned by ownership — or any other criteria — ensuring both isolation and query efficiency. Here's an example of creating the image vector index in CockroachDB based on the products table created previously.
+CockroachDB addresses this elegantly by supporting **prefix columns** in vector indexes. This feature enables the index to be logically partitioned by ownership  -  or any other criteria  -  ensuring both isolation and query efficiency. Here's an example of creating the image vector index in CockroachDB based on the products table created previously.
 
 ```sql
 CREATE VECTOR INDEX ON products (category, image_vector);
@@ -315,7 +315,7 @@ SELECT product_id, product_description FROM products WHERE category = $1 ORDER B
 
 For example, if you search a product with associated store locations and product images (encoded as vectors) in a single table, you can create a secondary index on the store location column to pre-filter data before performing a Vector Search.
 
-This means that instead of scanning the entire dataset, the system first narrows down the search to relevant locations — such as "_Casablanca_" — and then applies vector similarity search only within that subset. Such a hybrid search approach significantly improves query performance and resource efficiency, making it easier to build intelligent, high-performance AI applications at scale using familiar SQL syntax.
+This means that instead of scanning the entire dataset, the system first narrows down the search to relevant locations  -  such as "_Casablanca_"  -  and then applies vector similarity search only within that subset. Such a hybrid search approach significantly improves query performance and resource efficiency, making it easier to build intelligent, high-performance AI applications at scale using familiar SQL syntax.
 
 Below is an example of creating a query that returns the three most similar products (by image) to the one shown below, sorted by relevance score (Euclidean Distance set in the indexes created earlier).
 
@@ -350,7 +350,7 @@ query_vector = create_query_vector()
 fetch_similar_products(crdb_url, "Shoes", query_vector, limit=3)
 ```
 
-Even if the index contains billions of products, this query will search only the subset associated with a specific product category. Insert and search performance scales with the number of vectors tagged in that category — not the total volume of vectors in the system. This isolation reduces contention across products, as queries operate on separate index partitions and rows.
+Even if the index contains billions of products, this query will search only the subset associated with a specific product category. Insert and search performance scales with the number of vectors tagged in that category  -  not the total volume of vectors in the system. This isolation reduces contention across products, as queries operate on separate index partitions and rows.
 
 Under the hood, the index maintains an independent K-means tree for each category. From the system's standpoint, there's little difference between managing one billion vectors in a single tree or distributing them across a million smaller trees. In both cases, vectors are assigned to partitions and stored within ranges in CockroachDB's key-value layer. These ranges are automatically split, merged, and distributed across nodes, enabling near-linear scalability as usage grows.
 
@@ -380,8 +380,8 @@ If you want to provide interactive, content-based recommendations, you might wan
 - [Original article: Online Recommendation Engines with CockroachDB](https://www.cockroachlabs.com/blog/recommendation-engines-cockroachdb/)
 - [Amazon's item-to-item collaborative filtering](https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf)
 - [Google Colab notebook](https://colab.research.google.com/drive/15ibk5BoLmldi06UJ6a4gewEc5zxxCTZ9?usp=sharing)
-- [Sentence Transformers — all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
-- [Img2Vec — Image embeddings with PyTorch](https://github.com/christiansafka/img2vec)
+- [Sentence Transformers  -  all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
+- [Img2Vec  -  Image embeddings with PyTorch](https://github.com/christiansafka/img2vec)
 - [SPANN: Highly-Efficient Billion-scale ANN Search (Microsoft Research)](https://www.microsoft.com/en-us/research/publication/spann-highly-efficient-billion-scale-approximate-nearest-neighbor-search/)
 - [SPFresh: Incremental In-Place Update for Billion-Scale Vector Search](https://www.microsoft.com/en-us/research/publication/spfresh-incremental-in-place-update-for-billion-scale-vector-search/)
 - [ScaNN: Efficient Vector Similarity Search (Google Research)](https://research.google/blog/announcing-scann-efficient-vector-similarity-search/)

@@ -65,7 +65,7 @@ AuthZed has chosen CockroachDB as the underlying datastore for both AuthZed Dedi
 
 In the world of authorization, uptime and resiliency are essential. CockroachDB allows AuthZed and SpiceDB deployments to survive a node, AZ, or region outage with zero downtime.
 
-CockroachDB was built around this principle: its serializable isolation model provides the strongest transactional consistency guarantee in SQL — not "eventual," not "read-committed," but linearizable across a global cluster. That same property is what emerging authorization systems are now chasing, but for policy instead of data. That's why SpiceDB uses CockroachDB as the underlying datastore. With this design, it gains a globally distributed, strongly consistent SQL foundation.
+CockroachDB was built around this principle: its serializable isolation model provides the strongest transactional consistency guarantee in SQL  -  not "eventual," not "read-committed," but linearizable across a global cluster. That same property is what emerging authorization systems are now chasing, but for policy instead of data. That's why SpiceDB uses CockroachDB as the underlying datastore. With this design, it gains a globally distributed, strongly consistent SQL foundation.
 
 <img src="/assets/img/authzed-crdb-architecture.png" alt="AuthZed and CockroachDB architecture" style="width:100%;margin:1.5rem 0;">
 
@@ -97,11 +97,11 @@ Choose one of the following methods to create a new CockroachDB cluster, or use 
 
 > **Note:** Be sure to create a **secure** cluster. This is necessary for the user creation step of this tutorial.
 
-**Create a secure cluster locally** — if you have the CockroachDB binary installed locally, you can manually deploy a multi-node, self-hosted CockroachDB cluster on your local machine.
+**Create a secure cluster locally**  -  if you have the CockroachDB binary installed locally, you can manually deploy a multi-node, self-hosted CockroachDB cluster on your local machine.
 
-**Create a CockroachDB Self-Hosted cluster on AWS** — deploy a multi-node, self-hosted CockroachDB cluster on Amazon EC2 using AWS's managed load-balancing service.
+**Create a CockroachDB Self-Hosted cluster on AWS**  -  deploy a multi-node, self-hosted CockroachDB cluster on Amazon EC2 using AWS's managed load-balancing service.
 
-**Create a CockroachDB Cloud cluster** — CockroachDB Cloud is a fully-managed service run by Cockroach Labs. [Sign up](https://cockroachlabs.cloud/) and create a cluster using trial credits.
+**Create a CockroachDB Cloud cluster**  -  CockroachDB Cloud is a fully-managed service run by Cockroach Labs. [Sign up](https://cockroachlabs.cloud/) and create a cluster using trial credits.
 
 ### Step 2. Create a Database for AuthZed
 

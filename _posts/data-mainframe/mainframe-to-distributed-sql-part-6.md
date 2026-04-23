@@ -32,13 +32,13 @@ Previous articles in this series:
 
 ## Change Management Strategies: Navigating Organizational and Cultural Shifts
 
-Transitioning from mainframe systems to distributed database architectures requires more than technical adjustments — it involves significant organizational and cultural changes. These shifts can impact workflows, roles, and the broader organizational mindset.
+Transitioning from mainframe systems to distributed database architectures requires more than technical adjustments  -  it involves significant organizational and cultural changes. These shifts can impact workflows, roles, and the broader organizational mindset.
 
 A robust change management strategy is critical to ensuring that employees adapt to the new systems, processes remain efficient, and the migration delivers its intended value. Following are key strategies for developing an effective change management plan:
 
 **1. Build a Clear Vision and Communicate Early:** It is crucial for employees to understand the migration's purpose and how it aligns with the organization's goals.
 
-Developing a compelling narrative that explains the "why" behind the transition — such as improved scalability, cost-efficiency, or future-proofing — helps create clarity and engagement. Clearly articulating the benefits for employees, including enhanced tools, reduced workloads, or opportunities for skill development, fosters a sense of inclusion and purpose. Early and consistent communication through meetings, emails, and internal platforms is essential to reduce uncertainty, build trust, and ensure alignment throughout the migration process.
+Developing a compelling narrative that explains the "why" behind the transition  -  such as improved scalability, cost-efficiency, or future-proofing  -  helps create clarity and engagement. Clearly articulating the benefits for employees, including enhanced tools, reduced workloads, or opportunities for skill development, fosters a sense of inclusion and purpose. Early and consistent communication through meetings, emails, and internal platforms is essential to reduce uncertainty, build trust, and ensure alignment throughout the migration process.
 
 **2. Engage Stakeholders at Every Level:** Gaining buy-in from leadership and employees is necessary for ensuring smoother adoption of a migration effort and mitigating pushback.
 

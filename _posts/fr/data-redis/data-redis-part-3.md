@@ -153,7 +153,7 @@ cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().fil
 
 L'opération `filter()` invoque la fonction de filtrage une fois pour chaque enregistrement d'entrée reçu. L'enregistrement d'entrée désigné par `x` dans les exemples est un dictionnaire dans notre cas, et la fonction vérifie si la valeur de sa clé correspond au motif demandé.
 
-La principale différence entre la fonction qui utilise le motif de clés du Reader et celle qui utilise l'étape réside dans le moment où le filtrage se produit. Dans le cas du motif de clés, le filtrage est effectué par le Reader lui-même — après l'obtention des noms de clés mais avant la lecture de leurs valeurs. En revanche, avec l'opération `filter()` dans le flux, le Reader lit toutes les clés (et leurs valeurs) qui ne sont filtrées par l'étape que par la suite.
+La principale différence entre la fonction qui utilise le motif de clés du Reader et celle qui utilise l'étape réside dans le moment où le filtrage se produit. Dans le cas du motif de clés, le filtrage est effectué par le Reader lui-même  -  après l'obtention des noms de clés mais avant la lecture de leurs valeurs. En revanche, avec l'opération `filter()` dans le flux, le Reader lit toutes les clés (et leurs valeurs) qui ne sont filtrées par l'étape que par la suite.
 
 Les fonctions peuvent être aussi complexes que nécessaire et peuvent comprendre n'importe quel nombre d'étapes exécutées séquentiellement. De plus, l'API Python de RedisGears permet l'utilisation de toutes les fonctionnalités du langage, y compris l'importation et l'utilisation de packages externes.
 

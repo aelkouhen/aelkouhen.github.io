@@ -12,15 +12,15 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Aujourd'hui, l'information est générée et consommée à une échelle sans précédent. À chaque clic, glissement d'écran et transaction, des quantités massives de données sont collectées, prêtes à être exploitées pour produire des insights, éclairer la prise de décision et stimuler l'innovation. De nos jours, plus de 80 % des données générées par les organisations sont non structurées — et ce type de données ne fera que croître dans les décennies à venir.
+Aujourd'hui, l'information est générée et consommée à une échelle sans précédent. À chaque clic, glissement d'écran et transaction, des quantités massives de données sont collectées, prêtes à être exploitées pour produire des insights, éclairer la prise de décision et stimuler l'innovation. De nos jours, plus de 80 % des données générées par les organisations sont non structurées  -  et ce type de données ne fera que croître dans les décennies à venir.
 
 Les données non structurées sont de haute dimension et bruitées, ce qui les rend plus difficiles à analyser et à interpréter pour les bases de données traditionnelles avec leurs méthodes conventionnelles.
 
 ## Plongée dans la GenAI
 
-Bienvenue dans le monde de l'IA Générative (GenAI) — une technologie révolutionnaire qui a transformé la façon dont nous stockons, interrogeons et analysons les données. Derrière la magie de la GenAI se cache une pile technologique profonde, des structures de données et des innovations mathématiques.
+Bienvenue dans le monde de l'IA Générative (GenAI)  -  une technologie révolutionnaire qui a transformé la façon dont nous stockons, interrogeons et analysons les données. Derrière la magie de la GenAI se cache une pile technologique profonde, des structures de données et des innovations mathématiques.
 
-L'un des composants les plus fondamentaux — et pourtant souvent négligé — est l'utilisation des vector embeddings. Ces représentations de haute dimension permettent aux modèles GenAI de comprendre, d'organiser et de générer du contenu pertinent. Pour donner du sens à ces embeddings à grande échelle, nous avons besoin de systèmes spécialisés tels que les bases de données vectorielles. Ces bases de données ne sont pas simplement une évolution de leurs prédécesseurs ; elles représentent un bond extraordinaire dans la gestion des données.
+L'un des composants les plus fondamentaux  -  et pourtant souvent négligé  -  est l'utilisation des vector embeddings. Ces représentations de haute dimension permettent aux modèles GenAI de comprendre, d'organiser et de générer du contenu pertinent. Pour donner du sens à ces embeddings à grande échelle, nous avons besoin de systèmes spécialisés tels que les bases de données vectorielles. Ces bases de données ne sont pas simplement une évolution de leurs prédécesseurs ; elles représentent un bond extraordinaire dans la gestion des données.
 
 Ceci est le premier d'une série d'articles que je rédige pour vous emmener dans un voyage au cœur des bases de données vectorielles. En tant qu'Architecte Senior de Solutions Partenaires chez Cockroach Labs, j'ingénie régulièrement des déploiements de bases de données distribuées au sein d'écosystèmes de données variés. J'aime partager ce que j'ai appris en chemin, comme dans ma [série d'articles Mainframe to Distributed SQL](/2025-02-05-mainframe-to-distributed-sql-part-6/).
 
@@ -32,7 +32,7 @@ Que vous soyez un passionné de données, un chef d'entreprise cherchant un avan
 
 ## Qu'est-ce que l'IA Générative ?
 
-L'IA Générative représente une classe d'algorithmes d'intelligence artificielle capables de créer du contenu original — textes, images, musique, code ou même vidéos. Contrairement aux systèmes d'IA traditionnels qui effectuent des prédictions basées sur des sorties fixes et/ou peuvent seulement analyser ou classer des données existantes, les modèles génératifs peuvent produire de nouvelles sorties contextuellement pertinentes à partir de requêtes et d'entrées.
+L'IA Générative représente une classe d'algorithmes d'intelligence artificielle capables de créer du contenu original  -  textes, images, musique, code ou même vidéos. Contrairement aux systèmes d'IA traditionnels qui effectuent des prédictions basées sur des sorties fixes et/ou peuvent seulement analyser ou classer des données existantes, les modèles génératifs peuvent produire de nouvelles sorties contextuellement pertinentes à partir de requêtes et d'entrées.
 
 <img src="/assets/img/ai-intro-01.png" alt="AI Taxonomy" style="width:100%">
 
@@ -41,13 +41,13 @@ L'IA Générative représente une classe d'algorithmes d'intelligence artificiel
 
 Ces systèmes apprennent les distributions de probabilité sous-jacentes des données sur lesquelles ils sont entraînés, puis génèrent de nouveaux exemples ressemblant aux données originales sans les copier directement. La partie « générative » provient de l'échantillonnage de ces distributions apprises pour produire de nouvelles sorties. Cette capacité à « créer » plutôt qu'à « reconnaître » représente une avancée significative dans le domaine de l'IA.
 
-Ce processus n'est pas aléatoire — il est guidé par des représentations mathématiques des données appelées Vector Embeddings, et par un ensemble de techniques de récupération appelées Vector Similarity (VecSim).
+Ce processus n'est pas aléatoire  -  il est guidé par des représentations mathématiques des données appelées Vector Embeddings, et par un ensemble de techniques de récupération appelées Vector Similarity (VecSim).
 
 ### Vector Embeddings
 
 Les modèles d'IA générative ne « comprennent » pas le langage comme le font les humains. Pour comprendre le texte humain (aussi appelé langage naturel), les Grands Modèles de Langage (LLMs) sont des modèles de Traitement du Langage Naturel (NLP) conçus pour comprendre et générer du langage naturel de manière avancée. Ces modèles reposent généralement sur des réseaux de neurones. Ils peuvent traiter de grandes quantités de données textuelles pour effectuer diverses tâches, telles que la traduction automatique, la génération de texte, l'analyse de sentiment, la compréhension de texte, la réponse aux questions, et bien plus encore.
 
-Cependant, les LLMs ont besoin d'un moyen de représenter, naviguer et chercher dans ces textes. C'est là qu'intervient le concept de Vecteur. Les vecteurs sont des représentations mathématiques de points de données où chaque dimension du vecteur (embeddings) correspond à une caractéristique ou un attribut spécifique de la donnée — afin de déterminer les relations et de générer des continuations plausibles des requêtes.
+Cependant, les LLMs ont besoin d'un moyen de représenter, naviguer et chercher dans ces textes. C'est là qu'intervient le concept de Vecteur. Les vecteurs sont des représentations mathématiques de points de données où chaque dimension du vecteur (embeddings) correspond à une caractéristique ou un attribut spécifique de la donnée  -  afin de déterminer les relations et de générer des continuations plausibles des requêtes.
 
 Pensez aux vector embeddings comme à des coordonnées GPS pour le sens. Tout comme le GPS aide à localiser un endroit physique, les embeddings aident à localiser le sens d'un contenu dans un espace multidimensionnel, permettant la comparaison de similarité, le clustering et la récupération.
 
@@ -56,7 +56,7 @@ Pensez aux vector embeddings comme à des coordonnées GPS pour le sens. Tout co
 {: .mx-auto.d-block :}
 **Les vector embeddings comme coordonnées GPS pour le sens**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-En apprentissage automatique et en traitement du langage naturel, le texte, les images ou d'autres données non structurées peuvent être représentés sous forme de vector embeddings — chaque embedding capture un attribut de ces données. Par exemple, l'image d'un produit peut être représentée comme un vecteur, où chaque embedding représente une caractéristique spécifique de ce produit (marque, couleur, forme, taille…, etc.).
+En apprentissage automatique et en traitement du langage naturel, le texte, les images ou d'autres données non structurées peuvent être représentés sous forme de vector embeddings  -  chaque embedding capture un attribut de ces données. Par exemple, l'image d'un produit peut être représentée comme un vecteur, où chaque embedding représente une caractéristique spécifique de ce produit (marque, couleur, forme, taille…, etc.).
 
 Les vecteurs représentent efficacement des données brutes non structurées qui peuvent être de haute dimension et éparses (par exemple, les langues naturelles, les images, l'audio…). Les vector embeddings résolvent un problème fondamental en IA : comment représenter des données non numériques (comme du texte ou des images) sous une forme que les algorithmes peuvent traiter mathématiquement. Cette transformation permet de :
 
@@ -64,7 +64,7 @@ Les vecteurs représentent efficacement des données brutes non structurées qui
 - Effectuer des calculs - Nous pouvons mesurer des similarités, effectuer des additions ou soustractions conceptuelles
 - Réduire la dimensionnalité - Des concepts complexes sont représentés de manière compacte et efficace
 
-Grâce aux avancées du deep learning, des fournisseurs de modèles tels qu'OpenAI, Anthropic, HuggingFace, Cohere, et d'autres data scientists à travers le monde ont développé des modèles — appelés transformers — capables de transformer presque toute « entité » de données en sa représentation vectorielle. Ensuite, à l'aide d'approches mathématiques, ces représentations sont comparées dans un espace de recherche vectorielle pour mesurer à quel point deux éléments de données sont proches.
+Grâce aux avancées du deep learning, des fournisseurs de modèles tels qu'OpenAI, Anthropic, HuggingFace, Cohere, et d'autres data scientists à travers le monde ont développé des modèles  -  appelés transformers  -  capables de transformer presque toute « entité » de données en sa représentation vectorielle. Ensuite, à l'aide d'approches mathématiques, ces représentations sont comparées dans un espace de recherche vectorielle pour mesurer à quel point deux éléments de données sont proches.
 
 <img src="/assets/img/ai-intro-03.png" alt="Transforming Unstructured Data to Vector Embeddings" style="width:100%">
 
@@ -110,7 +110,7 @@ La recherche par similarité vectorielle alimente également des applications co
 
 Elle peut également aider à catégoriser du contenu, détecter des spams, analyser des sentiments, récupérer des images (trouver des photos visuellement similaires), et cartographier les données dans un espace où les éléments similaires se regroupent naturellement, même sans étiquettes. VSS s'appuie sur des métriques de distance comme la [similarité cosinus](https://www.geeksforgeeks.org/cosine-similarity/) ou la [distance euclidienne](https://www.geeksforgeeks.org/euclidean-distance/) pour comparer les embeddings et déterminer leur degré de similarité.
 
-Les systèmes GenAI utilisent la recherche par similarité vectorielle (VSS) comme colonne vertébrale mathématique pour récupérer du contenu basé sur la similarité sémantique plutôt que sur la correspondance exacte des données : lorsqu'un utilisateur saisit une requête, elle est convertie en un embedding. Le système trouve alors les vecteurs les plus similaires — et donc les résultats les plus pertinents — depuis un Feature Store ou, couramment, une base de données vectorielle.
+Les systèmes GenAI utilisent la recherche par similarité vectorielle (VSS) comme colonne vertébrale mathématique pour récupérer du contenu basé sur la similarité sémantique plutôt que sur la correspondance exacte des données : lorsqu'un utilisateur saisit une requête, elle est convertie en un embedding. Le système trouve alors les vecteurs les plus similaires  -  et donc les résultats les plus pertinents  -  depuis un Feature Store ou, couramment, une base de données vectorielle.
 
 <img src="/assets/img/ai-intro-06.png" alt="Vector databases" style="width:100%">
 
@@ -143,7 +143,7 @@ Un autre problème clé est la [gestion des métadonnées](https://www.cockroach
 
 ### Le rôle critique de la cohérence des données dans la GenAI
 
-La cohérence des données est le fondement d'une IA fiable, particulièrement pour la GenAI. Des données incohérentes — des embeddings non correspondants, des vecteurs obsolètes ou des entrées corrompues — peuvent conduire à de mauvaises performances du modèle, générant des sorties non pertinentes ou incorrectes.
+La cohérence des données est le fondement d'une IA fiable, particulièrement pour la GenAI. Des données incohérentes  -  des embeddings non correspondants, des vecteurs obsolètes ou des entrées corrompues  -  peuvent conduire à de mauvaises performances du modèle, générant des sorties non pertinentes ou incorrectes.
 
 Pour les LLMs, la cohérence garantit l'alignement entre les données d'entraînement et d'inférence. Si les embeddings utilisés pendant l'entraînement diffèrent de ceux lors de l'inférence (par exemple, en raison d'erreurs de prétraitement), le modèle peut mal interpréter les entrées, réduisant sa précision. Dans les systèmes de recommandation, des embeddings incohérents des utilisateurs ou des articles peuvent entraîner des suggestions non pertinentes, érodant la confiance.
 
@@ -155,13 +155,13 @@ La cohérence est également importante pour la GenAI multimodale, où les embed
 
 Intégrer CockroachDB dans votre pile technologique est un choix stratégique pour moderniser les systèmes legacy et se préparer aux exigences des applications pilotées par l'IA. Avec son type de données Vector natif, sa forte cohérence et un SLA de 99,999 % dans son offre cloud, [CockroachDB](https://www.cockroachlabs.com/product/overview/) offre les performances et la disponibilité requises pour les charges de travail nouvelle génération d'aujourd'hui.
 
-Pour répondre à cette demande, l'[implémentation de la recherche vectorielle](https://www.cockroachlabs.com/blog/vector-search-pgvector-cockroachdb/) de CockroachDB utilise la même interface que celle de pgvector pour PostgreSQL et vise à être compatible avec son API. Cette évolution élimine le besoin de bases de données vectorielles séparées dans de nombreux cas d'utilisation, permettant aux équipes d'exploiter des outils familiers tout en ajoutant des capacités natives à l'IA — brouillant ainsi les frontières entre les systèmes OLTP classiques et l'infrastructure IA moderne.
+Pour répondre à cette demande, l'[implémentation de la recherche vectorielle](https://www.cockroachlabs.com/blog/vector-search-pgvector-cockroachdb/) de CockroachDB utilise la même interface que celle de pgvector pour PostgreSQL et vise à être compatible avec son API. Cette évolution élimine le besoin de bases de données vectorielles séparées dans de nombreux cas d'utilisation, permettant aux équipes d'exploiter des outils familiers tout en ajoutant des capacités natives à l'IA  -  brouillant ainsi les frontières entre les systèmes OLTP classiques et l'infrastructure IA moderne.
 
-De plus, la scalabilité horizontale illimitée de CockroachDB vous permet de stocker et d'interroger des centaines de millions, voire des milliards de vector embeddings sans sacrifier les performances ou la fiabilité, essentielles pour les applications GenAI en temps réel. Ces requêtes rapides sont rendues possibles grâce à notre implémentation de Cockroach-SPANN, un algorithme d'indexation vectorielle distribuée développé en interne qui a été [rendu disponible dans la v25.2](https://www.cockroachlabs.com/blog/cockroachdb-252-performance-vector-indexing/). À mesure que votre empreinte de données s'étend, CockroachDB évolue automatiquement — éliminant le besoin de partitionnement manuel ou de reconfiguration complexe tout en garantissant des performances fluides et une simplicité opérationnelle.
+De plus, la scalabilité horizontale illimitée de CockroachDB vous permet de stocker et d'interroger des centaines de millions, voire des milliards de vector embeddings sans sacrifier les performances ou la fiabilité, essentielles pour les applications GenAI en temps réel. Ces requêtes rapides sont rendues possibles grâce à notre implémentation de Cockroach-SPANN, un algorithme d'indexation vectorielle distribuée développé en interne qui a été [rendu disponible dans la v25.2](https://www.cockroachlabs.com/blog/cockroachdb-252-performance-vector-indexing/). À mesure que votre empreinte de données s'étend, CockroachDB évolue automatiquement  -  éliminant le besoin de partitionnement manuel ou de reconfiguration complexe tout en garantissant des performances fluides et une simplicité opérationnelle.
 
-Au-delà de la résilience et des capacités de domiciliation des données de CockroachDB, son architecture distribuée permet des opérations SQL natives puissantes sur les données vectorielles — apportant une profondeur analytique à vos applications d'IA générative.
+Au-delà de la résilience et des capacités de domiciliation des données de CockroachDB, son architecture distribuée permet des opérations SQL natives puissantes sur les données vectorielles  -  apportant une profondeur analytique à vos applications d'IA générative.
 
-Par exemple, si vous stockez des articles avec les emplacements de magasins associés et des images de produits (encodées sous forme de vecteurs) dans une seule table, vous pouvez créer un index secondaire sur la colonne d'emplacement du magasin pour pré-filtrer les données avant d'effectuer une recherche vectorielle. Cela signifie qu'au lieu de scanner l'ensemble du jeu de données, le système réduit d'abord la recherche aux emplacements pertinents — comme « Casablanca » — puis applique la recherche par similarité vectorielle uniquement dans ce sous-ensemble. Cette approche de recherche hybride améliore considérablement les performances des requêtes et l'efficacité des ressources, facilitant la construction d'applications IA intelligentes et hautes performances à grande échelle en utilisant la syntaxe SQL familière.
+Par exemple, si vous stockez des articles avec les emplacements de magasins associés et des images de produits (encodées sous forme de vecteurs) dans une seule table, vous pouvez créer un index secondaire sur la colonne d'emplacement du magasin pour pré-filtrer les données avant d'effectuer une recherche vectorielle. Cela signifie qu'au lieu de scanner l'ensemble du jeu de données, le système réduit d'abord la recherche aux emplacements pertinents  -  comme « Casablanca »  -  puis applique la recherche par similarité vectorielle uniquement dans ce sous-ensemble. Cette approche de recherche hybride améliore considérablement les performances des requêtes et l'efficacité des ressources, facilitant la construction d'applications IA intelligentes et hautes performances à grande échelle en utilisant la syntaxe SQL familière.
 
 En tant que base de données distribuée hautement résiliente, CockroachDB offre les fondations techniques pour stocker, indexer et interroger les vector embeddings. Elle permet aux développeurs de stocker des vecteurs aussi facilement que des données relationnelles structurées. Ensuite, les capacités de recherche vectorielle offrent des fonctionnalités d'indexation et de recherche avancées nécessaires pour effectuer des recherches à faible latence à grande échelle, allant typiquement de dizaines de milliers à des centaines de millions de vecteurs distribués à travers un cluster de machines.
 
@@ -171,7 +171,7 @@ En tant que base de données distribuée hautement résiliente, CockroachDB offr
 
 ### Comment fonctionne la recherche par similarité sémantique ?
 
-Prenons l'exemple suivant. Il illustre comment la recherche par similarité sémantique fonctionne dans le contexte des Grands Modèles de Langage (LLMs). Voici trois phrases différentes que nous souhaitons représenter dans un espace de recherche vectorielle — chacune est transformée en un vector embedding en utilisant la bibliothèque `sentence_transformers` (de [HuggingFace](https://huggingface.co/sentence-transformers)) :
+Prenons l'exemple suivant. Il illustre comment la recherche par similarité sémantique fonctionne dans le contexte des Grands Modèles de Langage (LLMs). Voici trois phrases différentes que nous souhaitons représenter dans un espace de recherche vectorielle  -  chacune est transformée en un vector embedding en utilisant la bibliothèque `sentence_transformers` (de [HuggingFace](https://huggingface.co/sentence-transformers)) :
 
 - `That is a happy girl`
 - `That is a very happy person`

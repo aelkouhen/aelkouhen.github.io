@@ -105,7 +105,7 @@ Although the concept of IoT devices dates back several decades, the widespread a
 
 Architectures for IoT are Event-Driven Architectures that encompass the ability to create, update, and asynchronously move events across various parts of the data journey. This workflow involves three main areas: event production, routing, and consumption. An event must be produced and routed to something that consumes it without tightly coupled dependencies among the producer, event router, and consumer. 
 
-An event producer is a device in this architecture, which isn’t beneficial unless you can get its data. So, an IoT gateway is a critical component that collects and securely routes device data to the appropriate destinations on the internet. From there, events and measurements can flow into an event ingestion architecture with all challenges it brings—e.g., late-arriving data, data structure and schema disparities, data corruption, and connection disruption.
+An event producer is a device in this architecture, which isn’t beneficial unless you can get its data. So, an IoT gateway is a critical component that collects and securely routes device data to the appropriate destinations on the internet. From there, events and measurements can flow into an event ingestion architecture with all challenges it brings - e.g., late-arriving data, data structure and schema disparities, data corruption, and connection disruption.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhnaWxO0_9SNRiowv_-uUS6XpVmHfw0ItjLBUPyd9p7Mh8QaEAc2U4o35AjkpP5cpxFHAphpWOS_9Q76IyhQH-9yK3w5WLwUhLPUhK4dXc5rx-Ue7iAAZng5mMjrfh_MkirKfz03hrb0gYkT0fDzk6VuEmDnyDkpQn06Wg2gtRVBLRjwlM-vxithBSt){: .mx-auto.d-block :} *Architecture for IoT.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
@@ -230,7 +230,7 @@ Despite all of these changes, however, it's clear that the debate over how best 
 *   Akidau T. et al., The Dataflow Model: A Practical Approach to Balancing Correctness, Latency, and Cost in Massive-Scale, Unbounded, Out-of-Order Data Processing. Proceedings of the VLDB Endowment, vol. 8 (2015), pp. 1792-1803.
 *   Reis, J. and Housley M. Fundamentals of data engineering: Plan and build robust data systems. O’Reilly Media (2022).
 *   ["Lambda vs. Kappa Architecture. A Guide to Choosing the Right Data Processing Architecture for Your Needs"](https://nexocode.com/blog/posts/lambda-vs-kappa-architecture/), Dorota Owczarek.
-*   ["A brief introduction to two data processing architectures — Lambda and Kappa for Big Data"](https://towardsdatascience.com/a-brief-introduction-to-two-data-processing-architectures-lambda-and-kappa-for-big-data-4f35c28005bb), Iman Samizadeh, Ph.D.
+*   ["A brief introduction to two data processing architectures  -  Lambda and Kappa for Big Data"](https://towardsdatascience.com/a-brief-introduction-to-two-data-processing-architectures-lambda-and-kappa-for-big-data-4f35c28005bb), Iman Samizadeh, Ph.D.
 *   ["What Is Lambda Architecture?"](https://hazelcast.com/glossary/lambda-architecture/), Hazelcast Glosary.
 *   ["What Is the Kappa Architecture?"](https://hazelcast.com/glossary/kappa-architecture/), Hazelcast Glosary.
 *   ["Kappa Architecture is Mainstream Replacing Lambda"](https://www.kai-waehner.de/blog/2021/09/23/real-time-kappa-architecture-mainstream-replacing-batch-lambda/), Kai Waehner.

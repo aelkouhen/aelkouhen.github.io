@@ -12,11 +12,11 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Vous êtes arrivé à la dernière étape du parcours de données — le service des données pour les cas d'usage en aval. Maintenant que les données ont été ingérées, stockées et traitées en structures cohérentes et précieuses, il est temps d'en tirer de la valeur.
+Vous êtes arrivé à la dernière étape du parcours de données  -  le service des données pour les cas d'usage en aval. Maintenant que les données ont été ingérées, stockées et traitées en structures cohérentes et précieuses, il est temps d'en tirer de la valeur.
 
 Le service des données est la partie la plus enthousiasmante du cycle de vie des données. C'est là que la magie opère : l'étape de service concerne les données en action. Mais quelle est l'utilisation productive des données ? Pour répondre à cette question, vous devez considérer deux éléments : quel est le cas d'usage, et qui est l'utilisateur ?
 
-Dans cet article, vous découvrirez différentes façons de servir les données : vous préparerez les données pour l'analyse statistique et la visualisation. Ce sont les domaines les plus traditionnels du service des données — où les parties prenantes métier obtiennent de la visibilité et des insights à partir des données brutes collectées.
+Dans cet article, vous découvrirez différentes façons de servir les données : vous préparerez les données pour l'analyse statistique et la visualisation. Ce sont les domaines les plus traditionnels du service des données  -  où les parties prenantes métier obtiennent de la visibilité et des insights à partir des données brutes collectées.
 
 Ensuite, vous verrez comment servir les données pour le machine learning. En effet, pour éviter le célèbre adage « Garbage in, Garbage out », il est impossible de démarrer le machine learning sans des données de haute qualité correctement préparées. Tout au long du parcours de données, les ingénieurs de données travaillent en collaboration avec les data scientists et les ingénieurs ML pour acquérir, transformer et livrer les données nécessaires à l'entraînement des modèles.
 
