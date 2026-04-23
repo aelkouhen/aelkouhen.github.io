@@ -100,7 +100,7 @@ B. Une instance de notebook Amazon SageMaker avec différents modèles ML s'entr
 
 4\. Persister les données transactionnelles dans RedisJSON pour permettre l'indexation et l'interrogation des transactions à faible latence.
 
-{% highlight python linenos %}
+```python
 def persistTransactionalData(payload_dict):
     print("** persistTransactionalData - START")
     now = datetime.datetime.now() # current date and time
@@ -111,7 +111,7 @@ def persistTransactionalData(payload_dict):
     result = redis_client.json().get(key)
     print(result)
     print("** persistTransactionalData - END")
-{% endhighlight %}
+```
 
 5\. La première couche de l'approche multi-couches de détection de fraude est un système basé sur des règles qui utilise des règles prédéfinies pour identifier les activités potentiellement frauduleuses. Les règles peuvent être implémentées de manière à aller d'un « faible coût » à un « coût élevé ». Par exemple, en utilisant RedisBloom/Cuckoo Filters, vous pouvez implémenter efficacement la mise sur liste noire des adresses IP. Ensuite, avec les opérations géospatiales natives de Redis comme `GEOSEARCH`, `GEORADIUS` et `GEOPOS`, vous pouvez identifier les données de latitude et de longitude à partir des adresses IP des utilisateurs et les comparer avec l'adresse de l'utilisateur dans les enregistrements. Ainsi, vous pouvez appliquer une détection d'anomalies préliminaire sans utiliser l'inférence ML.
 
@@ -121,7 +121,7 @@ def persistTransactionalData(payload_dict):
 
 6\. Pour éviter les faux positifs et les faux négatifs, la fonction Lambda appelle les points d'accès des modèles SageMaker pour attribuer des scores d'anomalie et des scores de classification aux transactions entrantes.
 
-{% highlight python linenos %}
+```python
 def makeInferences(data_payload):
     print("** makeInferences - START")
     output = {}
@@ -130,12 +130,12 @@ def makeInferences(data_payload):
     print(output)
     print("** makeInferences - END")
     return output
-{% endhighlight %}
+```
 
 \- Détection d'anomalies :
 
 
-{% highlight python linenos %}
+```python
 def get_anomaly_prediction(data):
     sagemaker_endpoint_name = 'random-cut-forest-endpoint'
     sagemaker_runtime = boto3.client('sagemaker-runtime')
@@ -147,11 +147,11 @@ def get_anomaly_prediction(data):
     print("anomaly score: {}".format(anomaly_score))
     return {"score": anomaly_score}
     
-{% endhighlight %}
+```
 
 \- Prédiction de fraude :
 
-{% highlight python linenos %}
+```python
 def get_fraud_prediction(data, threshold=0.5):
     sagemaker_endpoint_name = 'fraud-detection-endpoint'
     sagemaker_runtime = boto3.client('sagemaker-runtime')
@@ -165,13 +165,13 @@ def get_fraud_prediction(data, threshold=0.5):
     print("classification pred_proba: {}, prediction: {}".format(pred_proba, prediction))
 
     return {"pred_proba": pred_proba, "prediction": prediction}
-{% endhighlight %}
+```
 
 7\. La fonction AWS Lambda exploite également Redis Enterprise Cloud comme feature store en ligne à faible latence.
 
 8\. La fonction AWS Lambda persiste ensuite les résultats des prédictions dans Redis Enterprise. Optionnellement, les résultats, ainsi que les détails transactionnels, peuvent également être stockés dans une base de données de séries temporelles pour des visualisations de données ultérieures à l'aide de Grafana.
 
-{% highlight python linenos %}
+```python
 def persistMLScores(output):
     print("** persistMLScores - START")
     print(output)
@@ -193,7 +193,7 @@ def persistMLScores(output):
         print("*** adding to non-fraudulent series with current timestamp")
 
     print("** persistMLScores - END")
-{% endhighlight %}
+```
 
 Ci-dessous se trouve le tableau de bord Grafana qui affiche les scores de fraude en temps réel pour les transactions entrantes. Pour toute transaction donnée, si le score dépasse 0,8, elle est considérée comme frauduleuse et affichée en rouge. De plus, d'autres graphiques sont utilisés pour visualiser l'activité frauduleuse dans le temps ou pour comparer les transactions frauduleuses et non frauduleuses (côté bas).
 

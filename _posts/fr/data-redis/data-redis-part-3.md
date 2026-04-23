@@ -32,12 +32,12 @@ Une fois le cluster Redis Enterprise créé, vous devez créer une base de donn�
 
 Installons maintenant [RedisGears](https://redis.com/modules/redis-gears/) sur le cluster. S'il est absent, suivez [ce guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) pour l'installer.
 
-{% highlight shell linenos %}
+```bash
 mkdir ~/tmp
 curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu18.04-x86_64.1.2.5.zip -o ~/tmp/redis-gears.zip
 cd ~/tmp
 curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@./redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
-{% endhighlight %}
+```
 
 ## Traitement de données avec RedisGears
 
@@ -85,13 +85,13 @@ La façon la plus simple d'écrire et d'exécuter une Gears Function peut être 
 
 Une fois à l'invite `redis-cli`, tapez ce qui suit puis appuyez sur `<ENTRÉE>` pour l'exécuter :
 
-{% highlight console linenos %}
+```console
 $ redis-cli -h cluster.redis-process.demo.redislabs.com -p 12000 
 cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
 
 1) (empty array)  
 2) (empty array)
-{% endhighlight %}
+```
 
 La fonction RedisGears que vous venez d'exécuter a répondu avec un tableau de résultats vide parce qu'elle n'avait pas de données à traiter (la base de données est vide). L'entrée initiale de toute fonction RedisGears peut être zéro, un ou plusieurs enregistrements générés par un Reader.
 
@@ -101,55 +101,55 @@ Un [Reader](https://oss.redis.com/redisgears/glossary.html#reader) est la premi�
 
 Il existe plusieurs [types de Readers](https://oss.redis.com/redisgears/readers.html) que le moteur propose. Le type de Reader d'une fonction est toujours déclaré lors de l'initialisation de son contexte `GearsBuilder()`. Sauf déclaration explicite, le Reader d'une fonction utilise par défaut le [KeysReader](https://oss.redis.com/redisgears/readers.html#keysreader), ce qui signifie que les lignes suivantes sont interchangeables :
 
-{% highlight python linenos %}
+```python
 GearsBuilder()                      # The context builder's default is
 GearsBuilder('KeysReader')          # the same as using the string 'KeysReader'
 GearsBuilder(reader='KeysReader')   # and as providing the 'reader' argument
 GB()                                # GB() is an alias for GearsBuilder()
-{% endhighlight %}
+```
 
 Ajoutons une paire de Hashes représentant des personnages fictifs et un hash représentant un pays. Exécutez ces commandes Redis :
 
-{% highlight sql linenos %}
+```sql
 HSET person:1 name "Rick Sanchez" age 70
 HSET person:2 name "Morty Smith" age 14  
 HSET country:FR name "France" continent "Europe"
-{% endhighlight %}
+```
 
 Maintenant que la base de données contient trois clés, la fonction retourne trois enregistrements de résultats, un pour chacun.
 
-{% highlight console linenos %}
+```console
 cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run()"  
 
 1)  1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
     2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
     3) "{'event': None, 'key': 'country:FR', 'type': 'hash', 'value': {'continent': 'Europe', 'name': 'France'}}"
 2)  (empty array)
-{% endhighlight %}
+```
 
 Par défaut, le KeysReader lit toutes les clés de la base de données. Ce comportement peut être contrôlé en fournissant au Reader un motif de type glob qui, lors de l'exécution de la fonction, est comparé à chaque nom de clé. Le Reader génère des enregistrements d'entrée uniquement pour les clés dont les noms correspondent au motif.
 
 Le motif de nom de clés du Reader est défini sur « \* » par défaut, de sorte que tout nom de clé y correspond. Une façon de remplacer le motif par défaut est via la méthode `run()` du contexte. Pour obtenir des enregistrements d'entrée composés uniquement de personnes, nous pouvons utiliser le motif `person:*` pour écarter les clés qui ne correspondent pas :
 
-{% highlight console linenos %}
+```console
 cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().run('person:*')"  
 
 1)  1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
     2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
 2)  (empty array)
-{% endhighlight %}
+```
 
 Le Reader peut générer n'importe quel nombre d'enregistrements d'entrée. Ces enregistrements sont utilisés comme entrée pour l'étape suivante du flux, dans laquelle les enregistrements peuvent être traités d'une certaine manière, puis transmis. Plusieurs étapes peuvent être ajoutées au flux, transformant de manière significative ses enregistrements d'entrée en un ou plusieurs enregistrements de sortie.
 
 Pour voir comment cela fonctionne en pratique, nous allons refactoriser notre fonction pour utiliser une opération [filter()](https://oss.redis.com/redisgears/operations.html#filter) comme étape plutôt que le motif de clés du Reader :
 
-{% highlight console linenos %}
+```console
 cluster.redis-process.demo.redislabs.com:12000> RG.PYEXECUTE "GearsBuilder().filter(lambda x: x['key'].startswith('person:')).run()"
 
 1)  1) "{'event': None, 'key': 'person:1', 'type': 'hash', 'value': {'age': '70', 'name': 'Rick Sanchez'}}"
     2) "{'event': None, 'key': 'person:2', 'type': 'hash', 'value': {'age': '14', 'name': 'Morty Smith'}}"
 2)  (empty array)
-{% endhighlight %}
+```
 
 L'opération `filter()` invoque la fonction de filtrage une fois pour chaque enregistrement d'entrée reçu. L'enregistrement d'entrée désigné par `x` dans les exemples est un dictionnaire dans notre cas, et la fonction vérifie si la valeur de sa clé correspond au motif demandé.
 
@@ -186,7 +186,7 @@ Nous avons utilisé [RIOT-File](https://developer.redis.com/riot/riot-file/index
 
 Imaginons que seuls les aéroports dans un rayon de 2 000 km de Paris soient pertinents à conserver dans le jeu de données. RedisGears peut traiter le jeu de données brut comme un bloc batch `airport:*` et créer un geo set Redis avec la fonction `create_geo_set`. Cette structure de données est utile pour trouver des points à proximité dans un rayon ou une zone donnée. Nous l'utilisons pour filtrer les aéroports et ne conserver que ceux dans un rayon de 2 000 km des coordonnées de Paris (Longitude : 2.3488, Latitude : 48.85341) comme détaillé dans la fonction `paris_nearest_airports`. Finalement, RedisGears supprime tous les aéroports hors de ce rayon spécifique et retourne le nombre d'aéroports supprimés du jeu de données.
 
-{% highlight python linenos %}
+```python
 import json
 
 def create_geo_set(key):
@@ -208,23 +208,23 @@ GearsBuilder()\
         .run("airport:*")
 
 ## Expected result: [289]
-{% endhighlight %}
+```
 
 De plus, vous pouvez utiliser RedisGears pour éliminer les informations inexactes et combler les lacunes. Cela inclut la suppression des détails inutiles, la déduplication, la correction des données corrompues ou mal formatées, le traitement des valeurs aberrantes, le remplissage des champs vides avec des valeurs appropriées et la masquage des entrées confidentielles.
 
 Créons les hashes représentant quelques personnages :
 
-{% highlight sql linenos %}
+```sql
 HSET person:1 name "Rick Sanchez" age 70
 HSET person:2 name "Morty Smith" age 14  
 HSET person:3 name "Summer Smith" age 17  
 HSET person:4 name "Beth Smith" age 35  
 HSET person:5 name "Shrimply Pibbles" age 87
-{% endhighlight %}
+```
 
 Vous pouvez utiliser la fonction RedisGears suivante pour formater le jeu de données et obtenir les prénoms et noms séparés dans différents champs.
 
-{% highlight python linenos %}
+```python
 def split_name(key):
     person_name = execute("HGET", key, "name")
     first_name = person_name.split(' ')[0]
@@ -245,7 +245,7 @@ GearsBuilder()\
 # 3) "['age', '87', 'fname', 'Shrimply', 'lname', 'Pibbles']"
 # 4) "['age', '14', 'fname', 'Morty', 'lname', 'Smith']"
 # 5) "['age', '17', 'fname', 'Summer', 'lname', 'Smith']"
-{% endhighlight %}
+```
 
 Le temps d'exécution d'une fonction dépend de ses entrées et de sa complexité. C'est pourquoi RedisGears exécute les fonctions batch de manière asynchrone dans un thread s'exécutant en arrière-plan, permettant ainsi au processus Redis principal de continuer à traiter les requêtes pendant que le moteur traite les données.
 
@@ -253,27 +253,27 @@ Le comportement par défaut de `RG.PYEXECUTE` est de bloquer le client appelant.
 
 Le blocage simplifie grandement la logique du client, mais pour les tâches longues, il est parfois souhaitable que le client continue son travail pendant l'exécution de la fonction. Les fonctions batch RedisGears peuvent être exécutées dans ce mode non-bloquant pour le client en ajoutant l'argument `UNBLOCKING` à la commande `RG.PYEXECUTE`. Par exemple, nous pouvons exécuter la première version de notre fonction simple de manière non bloquante :
 
-{% highlight console linenos %}
+```console
 $ cat myFunction.py | redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -x RG.PYEXECUTE UNBLOCKING  
 "0000000000000000000000000000000000000000-0"
-{% endhighlight %}
+```
 
 Lors de l'exécution en mode `UNBLOCKING`, le moteur répond avec un [identifiant d'exécution (Execution ID)](https://oss.redis.com/redisgears/functions.html#execution-id) qui représente l'exécution de la fonction en interne. Les identifiants d'exécution sont uniques. Ils sont composés de deux parties, un identifiant de shard et une séquence, délimités par un tiret ('-'). L'identifiant de shard est unique pour chaque shard dans un cluster Redis, tandis que la séquence est incrémentée à chaque exécution d'une fonction par le moteur.
 
 En appelant la commande [RG.DUMPEXECUTIONS](https://oss.redis.com/redisgears/commands.html#rgdumpexecutions), nous pouvons récupérer la liste des exécutions du moteur, qui ne contient actuellement qu'une seule entrée représentant la fonction que nous venons d'exécuter :
 
-{% highlight console linenos %}
+```console
 $ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
   
 1)  1) "executionId"   
     2) "0000000000000000000000000000000000000000-0"   
     3) "status"   
     4) "done"
-{% endhighlight %}
+```
 
 Comme l'exécution de la fonction est terminée, indiquée par la valeur `done` dans le champ status, nous pouvons maintenant obtenir ses résultats avec la commande [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults). Comme son nom l'indique, la commande retourne les résultats de l'exécution spécifiée par son identifiant :
 
-{% highlight console linenos %}
+```console
 $ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-0  
   
 1)  1)"['age', '35', 'fname', 'Beth', 'lname', 'Smith']"
@@ -281,7 +281,7 @@ $ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c 
     3)"['age', '87', 'fname', 'Shrimply', 'lname', 'Pibbles']"
     4)"['age', '14', 'fname', 'Morty', 'lname', 'Smith']"
     5)"['age', '17', 'fname', 'Summer', 'lname', 'Smith']"
-{% endhighlight %}
+```
 
 Avant le statut `done`, le moteur aurait répondu avec une erreur.
 
@@ -303,7 +303,7 @@ La fonction est exécutée une fois pour chaque nouvel enregistrement d'entrée 
 
 Pour essayer ceci, nous allons retourner les hashes de personnes avec les noms séparés en deux champs, comme vu précédemment. Mais au lieu de l'exécuter en mode batch, nous l'[`enregistrons (register())`](https://oss.redis.com/redisgears/functions.html#register) pour les personnes entrantes :
 
-{% highlight python linenos %}
+```python
 def split_name(key):
     person_name = execute("HGET", key, "name")
     first_name = person_name.split(' ')[0]
@@ -320,7 +320,7 @@ GearsBuilder()\
         .register("person:*")
 
 ## Expected result: ['OK']
-{% endhighlight %}
+```
 
 Ajoutons une nouvelle personne :
 
@@ -330,7 +330,7 @@ HSET person:6 name "Amine El-Kouhen" age 36
 
 Dès qu'une nouvelle personne est définie dans Redis, la fonction sera exécutée, et les résultats peuvent être obtenus lorsque le statut d'exécution indique `done`.
 
-{% highlight console linenos %}
+```console
 $ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.DUMPEXECUTIONS  
 
 1) 1) "executionId" 
@@ -339,16 +339,16 @@ $ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c 
    4) "done" 
    5) "registered" 
    6) (integer) 1 
-{% endhighlight %}
+```
 
 Vous pouvez ensuite obtenir les résultats de l'exécution spécifiée par son identifiant avec la commande [RG.GETRESULTS](https://oss.redis.com/redisgears/commands.html#rggetresults) :
 
-{% highlight console linenos %}
+```console
 $ redis-cli -h redis-12000.cluster.redis-process.demo.redislabs.com -p 12000 -c RG.GETRESULTS 0000000000000000000000000000000000000000-119  
   
 1) 1) "['age', '36', 'fname', 'Amine', 'lname', 'El-Kouhen']"
 2) (empty array)
-{% endhighlight %}
+```
 
 Nous pouvons utiliser le traitement de stream avec Gears pour effectuer des fonctions d'agrégation qui évoluent au fur et à mesure que les données sont ingérées dans Redis. Par exemple, supposons que les [données financières d'Apple](https://www.nasdaq.com/market-activity/stocks/aapl) soient stockées dans Redis. Les parties prenantes pourraient avoir besoin de voir le compte de résultat (Profit and Loss statement) en temps réel.
 
@@ -356,7 +356,7 @@ Nous pouvons utiliser le traitement de stream avec Gears pour effectuer des fonc
 
 Le **_Compte de Résultat_** (**P&L**) est un état financier qui commence par les revenus et déduit les coûts et dépenses pour obtenir le bénéfice net d'une entreprise, la rentabilité d'une période déterminée. Implémentons d'abord la logique que nous souhaitons exposer à nos utilisateurs :
 
-{% highlight python linenos %}
+```python
 def grouping_by_account(x):
   return x['value']['account']
 
@@ -394,7 +394,7 @@ gb.groupby(grouping_by_account, summer)
 gb.map(create_pnl)
 gb.map(consolidate_pnl)
 gb.register('record:*')
-{% endhighlight %}
+```
 
 Dans cette fonction Gears, nous avons introduit l'opération [groupby()](https://oss.redis.com/redisgears/operations.html#groupby). Elle effectue le regroupement des enregistrements selon des critères de regroupement et peut réaliser une agrégation par les éléments de regroupement. Ici, la fonction effectue une somme de tous les enregistrements groupés par nature comptable (par exemple, Revenus, Coûts, etc.)
 
@@ -404,7 +404,7 @@ Comme vous pouvez l'observer, cette fonction est une procédure déclenchée par
 
 Exécutons ces commandes pour créer de nouveaux enregistrements financiers. Pour simplifier l'exemple, chaque transaction financière ne consiste qu'en une nature comptable et un montant de transaction :
 
-{% highlight sql linenos %}
+```sql
 HSET record:1 account "Revenue" amount 316199
 HSET record:2 account "Revenue" amount 78129
 HSET record:3 account "Cost" amount 201471
@@ -412,7 +412,7 @@ HSET record:4 account "Cost" amount 22075
 HSET record:5 account "Operating Expenses" amount 26251
 HSET record:6 account "Operating Expenses" amount 25094
 HSET record:7 account "Provision" amount 19300
-{% endhighlight %}
+```
 
 En supposant que tous les enregistrements sont des transactions réelles, les parties prenantes peuvent obtenir la situation financière de l'entreprise en temps réel, et les différents revenus et dépenses sont mis à jour en continu.
 

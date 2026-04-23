@@ -31,11 +31,11 @@ You need to install and set up a few things for this article. First, you need to
 
 For the second part of this article, you need to download and install the [Trino](https://trino.io/docs/current/installation.html) server:
 
-{% highlight shell linenos %}
+```bash
 wget https://repo1.maven.org/maven2/io/trino/trino-server/403/trino-server-403.tar.gz
 mkdir /usr/lib/trino
 tar xzvf trino-server-403.tar.gz --directory /usr/lib/trino --strip-components 1
-{% endhighlight %}
+```
 
 Trino requires a 64-bit version of **Java 17+** in addition to **Python**. Trino also needs a data directory for storing logs, etc. Therefore, creating a data directory outside the installation directory is recommended, allowing it to be easily preserved when upgrading Trino.
 
@@ -57,7 +57,7 @@ node.environment=production
 
 Create a JVM config file in `/usr/lib/trino/etc/jvm.config`
 
-{% highlight properties linenos %}
+```properties
 -server
 -Xmx16G
 -XX:InitialRAMPercentage=80
@@ -74,16 +74,16 @@ Create a JVM config file in `/usr/lib/trino/etc/jvm.config`
 -Djdk.nio.maxCachedBufferSize=2000000
 -XX:+UnlockDiagnosticVMOptions
 -XX:+UseAESCTRIntrinsics
-{% endhighlight %}
+```
 
 Create the config properties file `/usr/lib/trino/etc/config.properties`
 
-{% highlight properties linenos %}
+```properties
 coordinator=true
 node-scheduler.include-coordinator=true
 http-server.http.port=8080
 discovery.uri=http://localhost:8080
-{% endhighlight %}
+```
 
 Create a logging configuration file `/usr/lib/trino/etc/log.properties`
 
@@ -93,11 +93,11 @@ io.trino=INFO
 
 Now, you need to download the latest release of [RediSearch Connector](https://github.com/redis-field-engineering/redis-sql-trino/releases/latest) and unzip without any directory structure under `/usr/lib/trino/plugin/redisearch`:
 
-{% highlight shell linenos %}
+```bash
 mkdir /usr/lib/trino/plugin/redisearch
 wget https://github.com/redis-field-engineering/redis-sql-trino/releases/download/v0.3.3/redis-sql-trino-0.3.3.zip -O /usr/lib/trino/plugin/redisearch/redis-sql-trino-0.3.3.zip
 unzip -j /usr/lib/trino/plugin/redisearch/redis-sql-trino-0.3.3.zip -d /usr/lib/trino/plugin/redisearch
-{% endhighlight %}
+```
 
 Create the catalog subdirectory `/usr/lib/trino/etc/catalog`:
 
@@ -107,10 +107,10 @@ mkdir /usr/lib/trino/etc/catalog
 
 Create a RediSearch connector configuration in `/usr/lib/trino/etc/catalog/redisearch.properties` and change/add [properties](https://redis-field-engineering.github.io/redis-sql-trino/#properties) as needed.
 
-{% highlight properties linenos %}
+```properties
 connector.name=redisearch
 redisearch.uri=redis://redis-12000.cluster.redis-serving.demo.redislabs.com:12000
-{% endhighlight %}
+```
 
 Start the Trino server:
 
@@ -120,10 +120,10 @@ Start the Trino server:
 
 Download [trino-cli-403-executable.jar](https://repo1.maven.org/maven2/io/trino/trino-cli/403/trino-cli-403-executable.jar) to use Trino's Client Line Interface (CLI): 
 
-{% highlight shell linenos %}
+```bash
 wget https://repo1.maven.org/maven2/io/trino/trino-cli/403/trino-cli-403-executable.jar -O /usr/local/bin/trino
 chmod +x /usr/local/bin/trino
-{% endhighlight %}
+```
 
 Most real-world applications will use the [Trino JDBC driver](https://trino.io/docs/current/client/jdbc.html) to issue queries. The Trino JDBC driver allows users to access Trino from Java-based applications or non-Java applications running in a JVM. Refer to the [Trino documentation](https://trino.io/docs/current/client/jdbc.html) for setup instructions.
 
@@ -151,21 +151,21 @@ To use Redis Smart Cache with an existing application, you must add the Redis Sm
 
 #### Maven:
 
-{% highlight xml linenos %}
+```xml
 <dependency>
     <groupId>com.redis</groupId>
     <artifactId>redis-smart-cache-jdbc</artifactId>
     <version>0.2.1</version>
 </dependency>
-{% endhighlight %}
+```
 
 #### Gradle:
 
-{% highlight gradle linenos %}
+```gradle
 dependencies {
     implementation 'com. redis:redis-smart-cache-jdbc:0.2.1'
 }
-{% endhighlight %}
+```
 
 Next, set your JDBC URI to the URI of your Redis instance prefixed by `JDBC:` for example: 
 
@@ -181,7 +181,7 @@ Redis Smart Cache uses rules to determine how SQL queries are cached. Rule confi
 
 Here is the default rule configuration:
 
-{% highlight yaml linenos %}
+```yaml
 {
   "rules": [
     {
@@ -194,7 +194,7 @@ Here is the default rule configuration:
     }
   ]
 }
-{% endhighlight %}
+```
 
 This default configuration contains a single passthrough rule where all SQL query results will be assigned a TTL of 1 hour.
 
@@ -217,10 +217,10 @@ After adding the Redis Smart Cache dependency and setting some basic configurati
 
 If you have a MySQL server installed, you can run this example on your local machine. Or, you can just clone this git repository:
 
-{% highlight shell linenos %}
+```bash
 git clone https://github.com/redis-field-engineering/redis-smart-cache.git
 cd redis-smart-cache
-{% endhighlight %}
+```
 
 And use Docker Compose to launch containers for MySQL, Grafana, Redis Stack, and Redis Smart Cache example app instance:
 
@@ -246,14 +246,14 @@ For this reason, Redis has developed a module called [RediSearch](https://redis
 
 The idea is to create secondary indices other than the keys (primary ones) and make queries on those indices. For example, we use the [`FT.CREATE`](https://redis.io/commands/ft.create) command to create an index on keys prefixed with person: with fields: name, age, and gender. Any existing hashes prefixed with person: are automatically indexed upon creation.
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE myIdx 
   ON HASH PREFIX 1 "person:" 
 SCHEMA 
   name TEXT NOSTEM 
   age NUMERIC SORTABLE 
   gender TAG SORTABLE
-{% endhighlight %}
+```
   
 Now, you can use [`FT.SEARCH`](https://redis.io/commands/ft.search) command to search the index for persons with names containing specific words.
 
@@ -323,16 +323,16 @@ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a re
 
 We do the same for the other tables, Chart of Accounts and Accounting Nature.
 
-{% highlight shell linenos %}
+```bash
 riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/ChartAccounts.csv --header hset --keyspace CoA --keys ACCOUNTNUM
 riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/AccountingNature.csv --header hset --keyspace AccountingNature --keys AccountingNatureCode
-{% endhighlight %}
+```
 
 Once you have your data ingested into Redis. You can create secondary indices on the three tables:
 
 `general_ledger` as a secondary index for the General Ledger table. We need Only the Account Number, the Transaction Amount (AMOUNTMST), and the Currency Code to be indexed. 
   
-{% highlight sql linenos %}
+```sql
 FT.CREATE general_ledger    
   ON HASH                
     PREFIX 1 "GeneralLedger:"    
@@ -340,11 +340,11 @@ FT.CREATE general_ledger
     ACCOUNTNUM TEXT SORTABLE 
     AMOUNTMST NUMERIC SORTABLE 
     CURRENCYCODE TAG SORTABLE
-{% endhighlight %}
+```
 
 `chart_accounts` as a secondary index for the Chart of Accounts table. 
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE chart_accounts    
   ON HASH                
     PREFIX 1 "CoA:"    
@@ -354,11 +354,11 @@ FT.CREATE chart_accounts
     Nature TEXT SORTABLE
     Statement TAG SORTABLE
     AccountingNatureCode TAG SORTABLE
-{% endhighlight %}
+```
 
 And `accounting_nature` as a secondary index for the Accounting Nature table. 
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE accounting_nature    
   ON HASH                
     PREFIX 1 "AccountingNature:"      
@@ -367,15 +367,15 @@ FT.CREATE accounting_nature
     AccountingNature TEXT SORTABLE
     Description TEXT NOSTEM
     AccountGroup TAG SORTABLE  
-{% endhighlight %}
+```
 
 Now, you can test these indices by running the following commands: 
 
-{% highlight sql linenos %}
+```sql
 FT.SEARCH general_ledger "@AMOUNTMST:[(100000 inf] @CURRENCYCODE:{EUR|USD}"  
 FT.SEARCH chart_accounts "@ACCOUNTNUM:61110801"  
 FT.SEARCH accounting_nature "@AccountGroup:{Payables|Receivables}"
-{% endhighlight %}
+```
 
 The first query returns the financial transactions over 10,000 euros or u.s. dollars. The second one returns details on account number 61110801. Finally, the last query returns all the Payables<sup>1</sup> and Receivables<sup>2</sup> account numbers. You can observe that using RediSearch commands is not evident for data engineers and may turn out to be a huge headache if you want to perform complex queries.
 
@@ -425,15 +425,15 @@ Then you can set up the Redis data source, by running:
 
 1\. the following command in [PowerShell](https://en.wikipedia.org/wiki/PowerShell) (Windows 10+) and substituting host, port, username, and password with the appropriate credentials. 
 
-{% highlight PowerShell linenos %}
+```powershell
 Add-OdbcDSN -Name "Redis" -DriverName "Redis" -Platform "64-bit" -DsnType "User" -SetPropertyValue @("host=hostname", "port=portNum", "username=username", "password=password")
-{% endhighlight %}
+```
 
 Here, I reuse the same database as the last section (Trino):
 
-{% highlight PowerShell linenos %}
+```powershell
 Add-OdbcDSN -Name "Redis" -DriverName "Redis" -Platform "64-bit" -DsnType "User" -SetPropertyValue @("host=redis-12000.cluster.redis-serving.demo.redislabs.com", "port=12000", "username=default", "password=redis-password")
-{% endhighlight %}
+```
 
 2\. Or, with the ODBC data sources GUI:
 
@@ -447,7 +447,7 @@ $ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a 
   
 Then, we will create a secondary index on ingested reports created by the last command::
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE ufo_report    
   ON HASH                
     PREFIX 1 "Report:" 
@@ -458,7 +458,7 @@ SCHEMA
   country TEXT SORTABLE
   city_longitude NUMERIC SORTABLE
   city_latitude NUMERIC SORTABLE
-{% endhighlight %}
+```
 
 Let's test the Redis ODBC driver with a Microsoft Excel Sheet. First, we run "get data from another source" in the Data menu, then choose the menu "from an ODBC driver".
 

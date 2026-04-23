@@ -86,16 +86,16 @@ wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-l
 
 Copiez et décompressez ensuite le fichier `redis-di-offline.tar.gz` téléchargé dans le nœud maître de votre cluster Redis sous le répertoire `/tmp` :
 
-{% highlight shell linenos %}
+```bash
 tar xvf /tmp/redis-di-offline.tar.gz -C /tmp
-{% endhighlight %}
+```
 
 Basculez l'utilisateur courant vers l'utilisateur avec lequel le cluster a été créé (généralement redislabs ou ubuntu). Installez [RedisGears](https://redis.com/modules/redis-gears/) sur le cluster. S'il est manquant, suivez [ce guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) pour l'installer.
 
-{% highlight shell linenos %}
+```bash
 curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu20.04-x86_64.1.2.5.zip -o /tmp/redis-gears.zip
 curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@/tmp/redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
-{% endhighlight %}
+```
 
 Installez ensuite le CLI RDI en décompressant `redis-di.tar.gz` dans le répertoire `/usr/local/bin/` :
 
@@ -143,10 +143,10 @@ docker load < /tmp/debezium_server.tar.gz
 
 Taguez ensuite l'image :
 
-{% highlight shell linenos %}
+```bash
 docker tag debezium/server:2.1.1.Final_offline debezium/server:2.1.1.Final
 docker tag debezium/server:2.1.1.Final_offline debezium/server:latest
-{% endhighlight %}
+```
 
 Pour le déploiement non conteneurisé, vous devez installer [Java 11](https://www.oracle.com/java/technologies/downloads/#java11) ou [Java 17](https://www.oracle.com/java/technologies/downloads/#java17). Téléchargez ensuite Debezium Server 2.1.1.Final depuis [ici](https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/2.1.1.Final/debezium-server-dist-2.1.1.Final.tar.gz).
 
@@ -160,10 +160,10 @@ Copiez le fichier `application.properties` généré par scaffold (créé par la
 
 Si vous utilisez `Oracle` comme base de données source, notez que Debezium Server n'inclut pas le pilote JDBC Oracle. Vous devez le télécharger et le placer dans le répertoire `debezium-server/lib` :
 
-{% highlight shell linenos %}
+```bash
 cd debezium-server/lib
 wget https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc8/21.1.0.0/ojdbc8-21.1.0.0.jar
-{% endhighlight %}
+```
 
 Démarrez ensuite Debezium Server depuis le répertoire `debezium-server` :
 
@@ -315,7 +315,7 @@ Nous allons configurer Debezium et Redis-DI pour capturer et collecter tout chan
 
 Pour utiliser le connecteur Debezium SQL Server, il est recommandé d'avoir un utilisateur dédié avec les permissions minimales requises dans SQL Server pour contrôler le rayon d'impact. Pour cela, vous devez exécuter le script T-SQL ci-dessous :
 
-{% highlight sql linenos %}
+```sql
 USE master
 GO
 CREATE LOGIN dbzuser WITH PASSWORD = 'dbz-password'
@@ -324,27 +324,27 @@ USE FO
 GO
 CREATE USER dbzuser FOR LOGIN dbzuser
 GO
-{% endhighlight %}
+```
 
 Et accorder les permissions requises au nouvel utilisateur
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO
 EXEC sp_addrolemember N'db_datareader', N'dbzuser'
 GO
-{% endhighlight %}
+```
 
 Vous devez ensuite activer la Capture de Changements de Données (CDC) pour la base de données et chaque table que vous souhaitez capturer.
   
-{% highlight sql linenos %}
+```sql
 EXEC msdb.dbo.rds_cdc_enable_db 'FO'
 GO
-{% endhighlight %}
+```
 
 Exécutez ce script T-SQL pour chaque table de la base de données et substituez le nom de la table dans `@source_name` :
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO
 EXEC sys.sp_cdc_enable_table
@@ -353,25 +353,25 @@ EXEC sys.sp_cdc_enable_table
 @role_name     = N'db_cdc',
 @supports_net_changes = 0
 GO
-{% endhighlight %}
+```
 
 Enfin, l'utilisateur Debezium créé précédemment (dbzuser) a besoin d'accéder aux données de changement capturées, il doit donc être ajouté au rôle créé à l'étape précédente
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO  
 EXEC sp_addrolemember N'db_cdc', N'dbzuser'
 GO
-{% endhighlight %}
+```
 
 Vous pouvez vérifier l'accès en exécutant ce script T-SQL en tant qu'utilisateur `dbzuser` :
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO  
 EXEC sys.sp_cdc_help_change_data_capture
 GO
-{% endhighlight %}
+```
 
 ### 2 - Configuration de Redis-DI
 
@@ -379,14 +379,14 @@ La commande scaffold de RDI a également généré un fichier appelé `config.ya
 
 Dans le fichier de configuration Redis Data Integration `config.yaml`, vous devez mettre à jour les détails de connexion/cible pour correspondre aux paramètres de la base de données cible.
 
-{% highlight yaml linenos %}
+```yaml
 connections:
   target:
     host: redis-14000.cluster.redis-ingest.demo.redislabs.com
     port: 14000
     user: default
     password: rdi-password  
-{% endhighlight %}
+```
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBTCib4MNlxu2oJZsMpwsiuZiyf2l1ASFAHVyDjs8BY3W2EgevGtFPdCv8jHFMLDc6aK04yJ9CuTw0Vy396BNaadumN1_DXzxizyBRFGdRM_s65wPQUknVj3iaLsXSQ0DTJuztGH5bEeIfkL1XwFRPvA-_5Pjv0t9cnHRvJPr_5lTn4elz7ivHLFRf){: .mx-auto.d-block :} *Configuration de Redis-DI*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -413,24 +413,24 @@ Ce préfixe sera utilisé dans le nom de clé des objets créés dans la base de
 
 Vous devez configurer le nom d'hôte et le port de votre base de données SQL Server.
 
-{% highlight properties linenos %}
+```properties
 debezium.source.database.hostname=rdi-db.cpqlgenz3kvv.eu-west-3.rds.amazonaws.com
 debezium.source.database.port=1433
-{% endhighlight %}
+```
 
 Et le nom d'utilisateur et le mot de passe de l'utilisateur Debezium (dbzuser).
 
-{% highlight properties linenos %}
+```properties
 debezium.source.database.user=dbzuser
 debezium.source.database.password=dbz-password
-{% endhighlight %}
+```
 
 Vous devez configurer le point de terminaison de votre base de données de configuration Redis-DI et le mot de passe.
 
-{% highlight properties linenos %}
+```properties
 debezium.sink.redis.address=redis-13000.cluster.redis-ingest.demo.redislabs.com:13000
 debezium.sink.redis.password=rdi-password
-{% endhighlight %}
+```
 
 Toutes les autres entrées du fichier créé par la commande `scaffold` de RDI peuvent être laissées à leurs valeurs par défaut.
 
@@ -456,10 +456,10 @@ Voici le snapshot de l'intégralité de la table GeneralLedger utilisé comme r�
   
 Ajoutons deux transactions au grand livre général et voyons comment le CDC capture les événements à la volée. La requête suivante insère deux transactions dans `GeneralLedger` :
 
-{% highlight sql linenos %}
+```sql
 INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFID, DIMENSION6_, SPL_JOBNUMBER, SPL_JOBDATE, JOURNALIZESEQNUM, CREATEDTRANSACTIONID, DEL_CREATEDTIME, DIMENSION, QTY, POSTING, OPERATIONSTAX, DIMENSION4_, REASONREFRECID, DIMENSION2_, DATAAREAID, CREATEDBY, SPL_LEDGERACCMIRRORING_TR, TRANSTYPE, DOCUMENTDATE, TRANSDATE, MODIFIEDBY, CREDITING, SPL_BALANCINGID, BONDBATCHTRANS_RU, RECID, MODIFIEDDATETIME, AMOUNTCUR, CURRENCYCODE, RECVERSION, CORRECT, ACCOUNTNUM, AMOUNTMST, CREATEDDATETIME, PERIODCODE, ALLOCATELEVEL, FURTHERPOSTINGTYPE, DIMENSION5_, VOUCHER, DIMENSION3_, ACKNOWLEDGEMENTDATE, EUROTRIANGULATION) VALUES ('GJN0055897','0','0.000000000000','1','NLANCOMOE','SHKGS177192','1900-01-01 00:00:00.0000000','0','5664282519','34568','NL03PC301','0.000000000000','14','0','MARI','0','34200','nl03','arie.','0','0','2020-11-18 00:00:00.0000000','2020-11-24 00:00:00.0000000','arie.','0','0','0','5734386059','2020-11-25 08:36:08.0000000','1.410.000.000.000.000','EUR','1','0','701100','1.410.000.000.000.000','2020-11-25 08:36:08.0000000','1','0','0','GENCAR','PII000866194','MISC','2020-11-24 00:00:00.0000000','0'); 
 INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFID, DIMENSION6_, SPL_JOBNUMBER, SPL_JOBDATE, JOURNALIZESEQNUM, CREATEDTRANSACTIONID, DEL_CREATEDTIME, DIMENSION, QTY, POSTING, OPERATIONSTAX, DIMENSION4_, REASONREFRECID, DIMENSION2_, DATAAREAID, CREATEDBY, SPL_LEDGERACCMIRRORING_TR, TRANSTYPE, DOCUMENTDATE, TRANSDATE, MODIFIEDBY, CREDITING, SPL_BALANCINGID, BONDBATCHTRANS_RU, RECID, MODIFIEDDATETIME, AMOUNTCUR, CURRENCYCODE, RECVERSION, CORRECT, ACCOUNTNUM, AMOUNTMST, CREATEDDATETIME, PERIODCODE, ALLOCATELEVEL, FURTHERPOSTINGTYPE, DIMENSION5_, VOUCHER, DIMENSION3_, ACKNOWLEDGEMENTDATE, EUROTRIANGULATION) VALUES ('GJN0055516','0','0.000000000000','0','NLMEINARN','SRTMS096263','1900-01-01 00:00:00.0000000','0','5664241334','36867','NL03PC301','0.000000000000','14','0','x','0','x','nl03','coos.','0','0','1900-01-01 00:00:00.0000000','2020-11-01 00:00:00.0000000','coos.','1','0','0','5733724085','2020-11-02 09:14:27.0000000','-358.050.000.000.000','EUR','1','0','245000','-358.050.000.000.000','2020-11-02 09:14:27.0000000','1','0','0','x','GOI001629867','x','2020-11-01 00:00:00.0000000','0');
-{% endhighlight %}
+```
 
 
 <!--

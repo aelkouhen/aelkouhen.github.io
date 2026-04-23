@@ -85,7 +85,7 @@ Transformer-based models represent a cutting-edge advancement in Natural Languag
 
 5\. To calculate customer satisfaction, the cloud function calls the transformer models endpoints from Hugging Face to assign sentiment and emotion scores to incoming sentences.
 
-{% highlight python linenos %}
+```python
 def perform_inference(data_payload):
     print("** perform_inference - START")
     output = {}
@@ -97,11 +97,11 @@ def perform_inference(data_payload):
 
     print("** perform_inference - END")
     return output
-{% endhighlight %}
+```
 
 \- Sentiment / Emotion Analyses:
 
-{% highlight python linenos %}
+```python
 def get_analysis(data, task, labels):
     MODEL = f"cardiffnlp/twitter-roberta-base-{task}"
     
@@ -125,11 +125,11 @@ def get_analysis(data, task, labels):
         output.insert(i, {'label_index' : int(ranking[i]),'label' : l, 'score' : np.round(float(s), 4)}) 
 
     return output
-{% endhighlight %}
+```
 
 6\. Cloud function further persists the satisfaction analysis results to Redis Enterprise. The function uses [RedisBloom](https://github.com/RedisBloom/RedisBloom) to calculate sentiments and emotions statistically and stores the results in a [time-series](https://redis.com/modules/redis-timeseries/) database for further data visualizations using Grafana.
 
-{% highlight python linenos %}
+```python
 def persist_conversation_score(customer_id,satisfaction_score):
     print("** persist_conversation_score - START")
     now = datetime.datetime.now() # current date and time
@@ -147,7 +147,7 @@ def persist_conversation_score(customer_id,satisfaction_score):
     redis_client.tdigest().add("satisfaction-tdigest", [float(satisfaction_score)])
 
     print("** persist_conversation_score - END")
-{% endhighlight %}
+```
 
 Below is the Grafana dashboard that shows real-time customer satisfaction scores for incoming calls. The dashboard displays the overall satisfaction score and current sentiments/emotions of any inbound conversation. In addition, other charts are used to visualize changes in satisfaction scores over time and to compare different sentiments and emotions (bottom side). The source code of this solution is available in the following [Github Repository](https://github.com/aelkouhen/gcp-customer-satisfaction).
 
@@ -159,10 +159,10 @@ According to this [article](https://www.sciencedirect.com/science/article/pii/S2
 
 In the example below, the t-digest contains the following 17 observations representing the satisfaction rates collected from 17 customers' calls: 32%, 64.5%, 98%, 82%, 33%, 18.5%, 32%, 19%, 21%, 56%, 61.3%, 61%, 61%, 60%, 53%, 32%, 45%, and 46%. As you can see, this distribution is skewed to the left. For this reason, we can use the t-digest data structure of Redis Bloom that returns, for each input value, an estimation of the fraction of observations smaller than a given satisfaction rate. 
 
-{% highlight console linenos %}
+```console
 $ TDIGEST.CDF satisfaction-tdigest 0.75
 1) "0.88235294117647056"
-{% endhighlight %}
+```
 
 Thus, calculating the quantile fractions using a t-digest indicates that 88.2% of customers have a lower satisfaction rate than 75%. In other terms, only 11.8% of customers exceed a satisfaction rate of 75%, which represents a low satisfaction level.
 

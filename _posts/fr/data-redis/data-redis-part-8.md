@@ -64,7 +64,7 @@ Chacune de ces phrases peut être transformée en un embedding vectoriel. Ci-des
 
 Les packages comme **sentence_transformers**, également de HuggingFace, fournissent des modèles faciles à utiliser pour des tâches comme la recherche par similarité sémantique, la recherche visuelle et bien d'autres. Pour créer des embeddings avec ces modèles, seulement quelques lignes de Python sont nécessaires :
 
-{% highlight python linenos %}
+```python
 from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
@@ -74,11 +74,11 @@ sentences = [
   "I love dogs"
 ]
 embeddings = model.encode(sentences)
-{% endhighlight %}
+```
 
 Ensuite, stockons ces embeddings vectoriels dans Redis :
 
-{% highlight python linenos %}
+```python
 import redis 
 
 # Redis connection params
@@ -90,7 +90,7 @@ redis_client = redis.from_url(redis_url)
 redis_client.hset('sentence:1', mapping={"text": "That is a happy girl", "embedding": convert_to_bytes(embeddings[0])})
 redis_client.hset('sentence:2', mapping={"text": "That is a very happy person", "embedding": convert_to_bytes(embeddings[1])})
 redis_client.hset('sentence:3', mapping={"text": "I love dogs", "embedding": convert_to_bytes(embeddings[3])})
-{% endhighlight %}
+```
 
 ### B. Indexation des vecteurs
 
@@ -102,7 +102,7 @@ Les métriques de distance fournissent un moyen fiable et mesurable de calculer 
 
 Voici un exemple de création d'un index avec `redis-py` après le chargement des vecteurs dans Redis.
 
-{% highlight python linenos %}
+```python
 from redis import Redis
 from redis.commands.search.field import VectorField, TagField
 
@@ -117,7 +117,7 @@ def create_flat_index(redis_conn: Redis, number_of_vectors: int, distance_metric
                                  	   "INITIAL_CAP": number_of_vectors,
 	                                   "BLOCK_SIZE": number_of_vectors})
 	redis_conn.ft().create_index([text_field])
-{% endhighlight %}
+```
 
 Les index ne doivent être créés qu'une seule fois et seront automatiquement ré-indexés à mesure que de nouveaux hashes sont stockés dans Redis. Après le chargement des vecteurs dans Redis et la création de l'index, des requêtes peuvent être formulées et exécutées pour toutes sortes de tâches de recherche basées sur la similarité.
 
@@ -129,19 +129,19 @@ Supposons que nous voulions comparer les trois phrases ci-dessus avec une nouvel
 
 Premièrement, nous créons l'embedding vectoriel pour la phrase de requête.
 
-{% highlight python linenos %}
+```python
 from sentence_transformers import SentenceTransformer
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 # create the vector embedding for the query
 query_embedding = model.encode("That is a happy boy")
-{% endhighlight %}
+```
 
 Une fois les vecteurs chargés dans Redis et l'index créé, des requêtes peuvent être formulées et exécutées pour toutes sortes de tâches de recherche basées sur la similarité.
 
 Voici un exemple de requête avec **[redis_py](https://github.com/redis/redis-py)** qui retourne les 3 phrases les plus similaires à la nouvelle (`That is a happy boy`), triées par score de pertinence (distance cosinus).
 
-{% highlight python linenos %}
+```python
 from redis.commands.search.query import Query
 
 def create_query(
@@ -157,7 +157,7 @@ def create_query(
         .paging(0, number_of_results)\
         .return_fields(*return_fields)\
         .dialect(2)
-{% endhighlight %}
+```
 
 En exécutant ce calcul entre notre vecteur de requête et les trois autres vecteurs dans le graphique ci-dessus, nous pouvons déterminer la similarité des phrases entre elles.
 
