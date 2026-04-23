@@ -113,6 +113,16 @@ Temporal officially supports PostgreSQL, MySQL, SQLite, and Cassandra. Cockroach
 - **Horizontal scalability**: scale reads and writes without sharding logic in the application
 - **PostgreSQL wire protocol**: Temporal's existing `postgres12` plugin works directly
 
+| Capability | CockroachDB Contribution |
+|---|---|
+| **Serializable isolation** | No lost updates or phantom reads under concurrent workflow execution |
+| **Multi-region replication** | History shards durable across data-center failures without manual failover |
+| **Horizontal scalability** | Add nodes to absorb more concurrent workflows without re-sharding |
+| **Automatic failover** | Node failures transparent to all four Temporal services |
+| **PostgreSQL compatibility** | Zero application code changes; `postgres12` plugin works directly |
+
+CockroachDB acts as a drop-in replacement for PostgreSQL, giving Temporal's stateless services an indestructible, globally distributed foundation. The only deployment work beyond a standard PostgreSQL setup is applying a CockroachDB-compatible visibility schema that resolves four PostgreSQL-specific constructs unsupported by CockroachDB.
+
 ---
 
 ## Deploying Temporal on CockroachDB
@@ -661,7 +671,11 @@ With this setup you can:
 
 Two dashboards give complementary views of the same load:
 
-**Temporal Web UI** (`http://localhost:8080` with the default Docker setup, or the UI endpoint of your deployment) lets you inspect individual workflow executions in real time: event history, activity status, retry counts, and current task queue depth. During a Maru run you can watch the open-execution count climb and fall, and drill into any failed workflow to see exactly which activity timed out.
+**Temporal Web UI** (`http://localhost:8080` with the default Docker setup, or the UI endpoint of your deployment) lets you inspect individual workflow executions in real time: event history, activity status, retry counts, and current task queue depth. During an Omes run you can watch the open-execution count climb and fall, and drill into any failed workflow to see exactly which activity timed out.
+
+<img src="/assets/img/temporal-ui-bench-workflows.png" alt="Temporal Web UI showing 72 BenchWorkflow executions" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Temporal Web UI: 72 BenchWorkflow executions (65 running, 3 completed, 4 terminated) backed by CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **CockroachDB Admin Console** (`http://<crdb-host>:8080`) exposes the database-level picture:
 
@@ -672,20 +686,6 @@ Two dashboards give complementary views of the same load:
 | **Node Map** | Per-node CPU, IOPS, and network; confirm no single node is saturated while others are idle |
 
 The combination gives you the full picture: Temporal tells you *which* workflows are slow; CockroachDB tells you *why* at the storage level.
-
----
-
-## Key Benefits
-
-| Capability | CockroachDB Contribution |
-|---|---|
-| **Serializable isolation** | No lost updates or phantom reads under concurrent workflow execution |
-| **Multi-region replication** | History shards durable across data-center failures without manual failover |
-| **Horizontal scalability** | Add nodes to absorb more concurrent workflows without re-sharding |
-| **Automatic failover** | Node failures transparent to all four Temporal services |
-| **PostgreSQL compatibility** | Zero application code changes; `postgres12` plugin works directly |
-
-CockroachDB acts as a drop-in replacement for PostgreSQL, giving Temporal's stateless services an indestructible, globally distributed foundation. The only deployment work beyond a standard PostgreSQL setup is applying a CockroachDB-compatible visibility schema that resolves four PostgreSQL-specific constructs unsupported by CockroachDB.
 
 ---
 
