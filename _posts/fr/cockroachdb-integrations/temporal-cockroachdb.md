@@ -10,7 +10,15 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Les applications d'IA modernes ne sont plus de simples appels d'inférence — ce sont des agents de longue durée qui planifient, agissent, observent et réessaient au fil du temps. Coordonner ces agents de manière fiable nécessite une **couche d'orchestration de workflows** qui survit aux pannes, passe à l'échelle horizontalement et garantit une sémantique d'exécution exactement-une-fois. [Temporal](https://temporal.io/) est l'une des plateformes open-source de référence pour cela — et [CockroachDB](https://www.cockroachlabs.com/) est son backend de persistance distribué idéal.
+Les applications d'IA modernes ne sont plus de simples appels d'inférence — ce sont des agents de longue durée qui planifient, agissent, observent et réessaient au fil du temps. Une boucle d'agent IA qui récupère du contexte depuis un vector store, appelle un LLM, écrit des résultats en base de données, attend une validation humaine, puis déclenche des actions en aval peut s'exécuter pendant des minutes, des heures, voire des jours. Sans une **couche d'orchestration durable**, toute défaillance d'infrastructure transitoire relance l'intégralité de la boucle depuis le début : refacturant des appels LLM coûteux, dupliquant les effets de bord et perdant tout le contexte accumulé.
+
+Coordonner ces agents de manière fiable nécessite une couche qui :
+- **Survit aux pannes** — l'état de l'agent est persisté après chaque étape, pas gardé en mémoire
+- **Garantit l'exécution exactement-une-fois** — un appel LLM ou une écriture API externe n'est jamais ré-invoqué après son succès
+- **Passe à l'échelle horizontalement** — des milliers d'instances d'agents concurrentes sans goulots d'étranglement
+- **Permet des longues attentes** — un agent peut attendre des jours une réponse humaine-dans-la-boucle sans maintenir un processus ouvert
+
+[Temporal](https://temporal.io/) est la plateforme open-source de référence pour ce type de problème. [CockroachDB](https://www.cockroachlabs.com/) est son backend de persistance distribué idéal — offrant au cluster d'exécution sans état de Temporal un socle de stockage indestructible et répliqué globalement.
 
 Un **framework d'orchestration de workflows** gère le cycle de vie de programmes multi-étapes à longue durée d'exécution. Au lieu d'écrire des boucles de retry, une logique de point de contrôle et une reprise sur panne manuellement, vous déclarez votre logique métier comme une séquence d'**étapes durables** et laissez le framework s'occuper du reste. Les promesses fondamentales sont :
 
@@ -248,37 +256,61 @@ persistence:
           keyFile: "/certs/client.temporal.key"
 ```
 
-### Étape 5 — Premier workflow d'agent durable
+### Étape 5 — Premier workflow d'agent IA durable
+
+La boucle d'agent suivante récupère du contexte, appelle un LLM, attend une validation humaine et écrit le résultat final. Chaque étape est une Activity — elle s'exécute exactement une fois même si le processus crashe entre les étapes. Un appel LLM coûteux n'est jamais ré-émis après son succès.
 
 ```python
 from temporalio import workflow, activity
-from temporalio.client import Client
-from temporalio.worker import Worker
+from temporalio.common import RetryPolicy
 from datetime import timedelta
 
 @activity.defn
-async def call_llm(prompt: str) -> str:
-    # Tout appel externe — facturé une seule fois, jamais ré-exécuté lors d'un retry
-    return await my_llm_client.complete(prompt)
+async def retrieve_context(task: str) -> str:
+    """Interroge un vector store pour le contexte pertinent."""
+    return await vector_store.search(task)
 
 @activity.defn
-async def write_result(result: str) -> None:
-    await db.insert(result)
+async def call_llm(context: str) -> str:
+    """Appelle le LLM — facturé une seule fois, jamais ré-exécuté lors d'un retry."""
+    return await llm_client.complete(f"Contexte : {context}, répondre.")
+
+@activity.defn
+async def request_human_approval(response: str) -> bool:
+    """Écrit l'approbation en attente en base — l'agent peut attendre des jours ici."""
+    return await approvals_db.create_pending(response)
+
+@activity.defn
+async def write_final_result(result: str) -> None:
+    """Persiste le résultat approuvé — exactement une fois."""
+    await results_db.insert(result)
 
 @workflow.defn
-class AgentWorkflow:
+class AICockroachAgentWorkflow:
     @workflow.run
     async def run(self, task: str) -> str:
-        # Chaque activité s'exécute exactement une fois malgré les pannes
+        # Étape 1 — récupération de contexte (retry sécurisé, idempotent)
+        context = await workflow.execute_activity(
+            retrieve_context, task,
+            start_to_close_timeout=timedelta(minutes=2),
+        )
+        # Étape 2 — appel LLM (exactement une fois — pas de double facturation)
         response = await workflow.execute_activity(
-            call_llm, task,
+            call_llm, context,
             start_to_close_timeout=timedelta(minutes=5),
-            retry_policy=RetryPolicy(maximum_attempts=3)
+            retry_policy=RetryPolicy(maximum_attempts=3),
         )
-        await workflow.execute_activity(
-            write_result, response,
-            start_to_close_timeout=timedelta(seconds=30)
+        # Étape 3 — humain-dans-la-boucle (l'agent dort jusqu'à approbation, jours si nécessaire)
+        approved = await workflow.execute_activity(
+            request_human_approval, response,
+            start_to_close_timeout=timedelta(days=7),
         )
+        # Étape 4 — persistance du résultat (écriture idempotente, exactement une fois)
+        if approved:
+            await workflow.execute_activity(
+                write_final_result, response,
+                start_to_close_timeout=timedelta(seconds=30),
+            )
         return response
 ```
 
