@@ -774,7 +774,7 @@ Two dashboards give complementary views of the same load:
 
 **Temporal Web UI** (`http://localhost:8080` with the default Docker setup, or the UI endpoint of your deployment) lets you inspect individual workflow executions in real time: event history, activity status, retry counts, and current task queue depth. During an Omes run you can watch the open-execution count climb and fall, and drill into any failed workflow to see exactly which activity timed out.
 
-<img src="/assets/img/temporal-ui-bench-workflows.png" alt="Temporal Web UI showing 72 BenchWorkflow executions" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/temporal-ui-bench-workflows.gif" alt="Temporal Web UI showing 72 BenchWorkflow executions" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **Temporal Web UI: 72 BenchWorkflow executions (65 running, 3 completed, 4 terminated) backed by CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 

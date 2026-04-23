@@ -772,7 +772,7 @@ Deux tableaux de bord offrent des vues complémentaires de la même charge :
 
 **L'interface web Temporal** (`http://localhost:8080` avec la configuration Docker par défaut) permet d'inspecter les exécutions de workflows individuels en temps réel : historique des événements, statut des activités, compteurs de réessais et profondeur actuelle des task queues. Pendant un run Omes, vous pouvez observer le nombre d'exécutions ouvertes monter et descendre, et accéder à tout workflow échoué pour voir exactement quelle activité a expiré.
 
-<img src="/assets/img/temporal-ui-bench-workflows.png" alt="Interface web Temporal avec 72 exécutions BenchWorkflow" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/temporal-ui-bench-workflows.gif" alt="Interface web Temporal avec 72 exécutions BenchWorkflow" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **Interface web Temporal : 72 exécutions BenchWorkflow (65 en cours, 3 complétées, 4 terminées) adossées à CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
