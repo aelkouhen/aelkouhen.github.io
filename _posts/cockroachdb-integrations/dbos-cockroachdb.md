@@ -286,9 +286,9 @@ python3 app/main.py
 
 ## Scalability Benchmarking
 
-The DBOS engineering team [benchmarked DBOS durable workflow throughput on PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), reaching **144K raw database writes per second** on a single co-located AWS RDS instance (`db.m7i.24xlarge` — 96 vCPU, 384 GB RAM, 120K IOPS). We ran the same benchmark — real DBOS **2-step workflows**, measuring **end-to-end completion throughput** — against both databases side by side from an EC2 instance co-located in AWS **us-east-1**, eliminating all WAN overhead:
+The DBOS engineering team [benchmarked DBOS durable workflow throughput on PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), reaching **144K raw database writes per second** on a single co-located AWS RDS instance (`db.m7i.24xlarge` — 96 vCPU, 384 GB RAM). We ran the same benchmark — real DBOS **2-step workflows**, measuring **end-to-end completion throughput** — against both databases side by side from an EC2 instance co-located in AWS **us-east-1**, eliminating all WAN overhead:
 
-- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, same region
+- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, 384 GB RAM, gp3 500 GiB — 16,000 IOPS, 1,000 MB/s throughput, same region
 - **CockroachDB 3 nodes** — `3× m7i.8xlarge`, 96 vCPU total, nodes spread across **multiple us-east-1 AZs** (genuine zone-redundant deployment)
 
 > **Benchmark artefacts:** scripts and raw results are in the repository under [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb):
