@@ -157,7 +157,7 @@ temporal-sql-tool \
 La cause racine est cette migration dans `schema/postgresql/v12/visibility/versioned/v1.1/manifest.json` :
 
 ```sql
--- PostgreSQL uniquement — ÉCHOUE sur CockroachDB
+-- PostgreSQL only — FAILS on CockroachDB
 CREATE EXTENSION IF NOT EXISTS btree_gin;
 CREATE INDEX custom_search_attributes_idx
   ON executions_visibility
@@ -167,7 +167,7 @@ CREATE INDEX custom_search_attributes_idx
 **Le correctif** : contourner l'outil de migration standard pour la base de visibilité et appliquer directement un schéma compatible CockroachDB. CockroachDB supporte nativement les index inversés sur les colonnes JSONB sans aucune extension :
 
 ```sql
--- Schéma de visibilité compatible CockroachDB
+-- CockroachDB-compatible visibility schema
 CREATE TABLE executions_visibility (
   namespace_id           VARCHAR(64)   NOT NULL,
   run_id                 VARCHAR(64)   NOT NULL,
@@ -192,7 +192,7 @@ CREATE TABLE executions_visibility (
   PRIMARY KEY (namespace_id, run_id)
 );
 
--- Index B-tree standard — fonctionnent identiquement sur CockroachDB
+-- Standard B-tree indexes — work identically on CockroachDB
 CREATE INDEX by_type_start_time
   ON executions_visibility (namespace_id, workflow_type_name, start_time DESC, run_id);
 CREATE INDEX by_workflow_id_start_time
@@ -203,7 +203,7 @@ CREATE INDEX by_close_time
   ON executions_visibility (namespace_id, status, close_time DESC, run_id)
   WHERE close_time IS NOT NULL;
 
--- Index inversé natif de CockroachDB remplace l'index GIN btree_gin
+-- CockroachDB native inverted index replaces btree_gin GIN index
 CREATE INVERTED INDEX by_search_attributes
   ON executions_visibility (search_attributes);
 ```
@@ -270,45 +270,45 @@ from datetime import timedelta
 
 @activity.defn
 async def retrieve_context(task: str) -> str:
-    """Interroge un vector store pour le contexte pertinent."""
+    """Query a vector store for relevant context."""
     return await vector_store.search(task)
 
 @activity.defn
 async def call_llm(context: str) -> str:
-    """Appelle le LLM — facturé une seule fois, jamais ré-exécuté lors d'un retry."""
-    return await llm_client.complete(f"Contexte : {context}, répondre.")
+    """Call the LLM — billed once, never re-executed on retry."""
+    return await llm_client.complete(f"Given this context: {context}, respond.")
 
 @activity.defn
 async def request_human_approval(response: str) -> bool:
-    """Écrit l'approbation en attente en base — l'agent peut attendre des jours ici."""
+    """Write pending approval to DB — the agent can wait days here."""
     return await approvals_db.create_pending(response)
 
 @activity.defn
 async def write_final_result(result: str) -> None:
-    """Persiste le résultat approuvé — exactement une fois."""
+    """Persist the approved result — exactly once."""
     await results_db.insert(result)
 
 @workflow.defn
 class AICockroachAgentWorkflow:
     @workflow.run
     async def run(self, task: str) -> str:
-        # Étape 1 — récupération de contexte (retry sécurisé, idempotent)
+        # Step 1 — retrieve context (retries safely, idempotent)
         context = await workflow.execute_activity(
             retrieve_context, task,
             start_to_close_timeout=timedelta(minutes=2),
         )
-        # Étape 2 — appel LLM (exactement une fois — pas de double facturation)
+        # Step 2 — LLM call (exactly once — no double billing)
         response = await workflow.execute_activity(
             call_llm, context,
             start_to_close_timeout=timedelta(minutes=5),
             retry_policy=RetryPolicy(maximum_attempts=3),
         )
-        # Étape 3 — humain-dans-la-boucle (l'agent dort jusqu'à approbation, jours si nécessaire)
+        # Step 3 — human-in-the-loop (agent sleeps until approved, days if needed)
         approved = await workflow.execute_activity(
             request_human_approval, response,
             start_to_close_timeout=timedelta(days=7),
         )
-        # Étape 4 — persistance du résultat (écriture idempotente, exactement une fois)
+        # Step 4 — persist result (idempotent write, exactly once)
         if approved:
             await workflow.execute_activity(
                 write_final_result, response,
