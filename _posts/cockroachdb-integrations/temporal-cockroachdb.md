@@ -2,7 +2,7 @@
 date: 2026-04-23
 layout: post
 title: "Durable Workflow Orchestration with Temporal and CockroachDB"
-subtitle: "How to run Temporal with CockroachDB as a distributed, strongly-consistent persistence backend  -  including the critical visibility schema fix"
+subtitle: "How to run Temporal with CockroachDB as a distributed, strongly-consistent persistence backend — including the critical visibility schema fix"
 cover-img: /assets/img/cover-temporal.svg
 thumbnail-img: /assets/img/cover-temporal.svg
 share-img: /assets/img/cover-temporal.svg
@@ -13,28 +13,28 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Modern AI applications are no longer single-shot inference calls  -  they are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
+Modern AI applications are no longer single-shot inference calls — they are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
 
 Coordinating these agents reliably requires a layer that:
-- **Survives crashes**  -  agent state is persisted after every step, not held in-memory
-- **Guarantees exactly-once execution**  -  an LLM call or external API write is never re-invoked after it succeeds
-- **Scales horizontally**  -  thousands of concurrent agent instances without bottlenecks
-- **Enables long sleeps**  -  an agent can wait days for a human-in-the-loop response without holding a process open
+- **Survives crashes** — agent state is persisted after every step, not held in-memory
+- **Guarantees exactly-once execution** — an LLM call or external API write is never re-invoked after it succeeds
+- **Scales horizontally** — thousands of concurrent agent instances without bottlenecks
+- **Enables long sleeps** — an agent can wait days for a human-in-the-loop response without holding a process open
 
-[Temporal](https://temporal.io/) is the leading open-source platform for this class of problem. [CockroachDB](https://www.cockroachlabs.com/) is its ideal distributed persistence backend  -  giving Temporal's stateless execution cluster an indestructible, globally replicated storage foundation.
+[Temporal](https://temporal.io/) is the leading open-source platform for this class of problem. [CockroachDB](https://www.cockroachlabs.com/) is its ideal distributed persistence backend — giving Temporal's stateless execution cluster an indestructible, globally replicated storage foundation.
 
 A **workflow orchestration framework** manages the lifecycle of long-running, multi-step programs. Instead of writing retry loops, checkpointing logic, and failure recovery by hand, you declare your business logic as a sequence of **durable steps** and let the framework handle the rest. The core promises are:
 
-- **Durability**  -  workflow state survives process crashes, restarts, and infrastructure failures
-- **Exactly-once semantics**  -  individual steps are never re-executed after they complete successfully
-- **Idempotency**  -  re-invoking the same workflow with the same ID is a no-op
-- **Observability**  -  the full execution history is inspectable at any point
+- **Durability** — workflow state survives process crashes, restarts, and infrastructure failures
+- **Exactly-once semantics** — individual steps are never re-executed after they complete successfully
+- **Idempotency** — re-invoking the same workflow with the same ID is a no-op
+- **Observability** — the full execution history is inspectable at any point
 
 ---
 
 ## What Is Temporal?
 
-[Temporal](https://temporal.io/) is an open-source, language-agnostic platform for building reliable distributed applications. It introduces the concept of **Durable Execution**  -  the guarantee that workflow logic runs to completion regardless of infrastructure failures.
+[Temporal](https://temporal.io/) is an open-source, language-agnostic platform for building reliable distributed applications. It introduces the concept of **Durable Execution** — the guarantee that workflow logic runs to completion regardless of infrastructure failures.
 
 ### Core Concepts
 
@@ -43,7 +43,7 @@ A **workflow orchestration framework** manages the lifecycle of long-running, mu
 | **Workflow** | A fault-tolerant function that orchestrates Activities; can run for years |
 | **Activity** | A single, retriable unit of work (API call, DB write, ML inference) |
 | **Worker** | A process that polls Temporal for tasks and executes Workflows and Activities |
-| **Event History** | An append-only log of every Command and Event in a workflow's lifetime  -  the source of truth for recovery |
+| **Event History** | An append-only log of every Command and Event in a workflow's lifetime — the source of truth for recovery |
 | **Namespace** | A logical isolation boundary; separate event histories, task queues, and quotas |
 | **Task Queue** | A durable channel connecting a Workflow/Activity to a set of Workers |
 | **Signal / Query** | Mechanisms for external code to send data to, or read state from, a running workflow |
@@ -56,13 +56,13 @@ Understanding why CockroachDB is the right persistence backend for Temporal requ
 
 ### Workflow as a State Machine
 
-Every running workflow is modelled as a state machine. Each external interaction  -  an activity completing, a timer firing, a signal arriving  -  produces a new **event** appended to the workflow's **event history** log. The current state of a workflow is fully determined by replaying that log from the beginning.
+Every running workflow is modelled as a state machine. Each external interaction — an activity completing, a timer firing, a signal arriving — produces a new **event** appended to the workflow's **event history** log. The current state of a workflow is fully determined by replaying that log from the beginning.
 
 <img src="/assets/img/temporal-state-machine.png" alt="Temporal workflow state machine" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **A workflow execution is a deterministic state machine driven by an append-only event history**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-When a Worker restarts after a crash, it re-fetches the event history and replays the workflow function. Steps that already completed are skipped instantly  -  execution continues from the last committed state.
+When a Worker restarts after a crash, it re-fetches the event history and replays the workflow function. Steps that already completed are skipped instantly — execution continues from the last committed state.
 
 ### Consistency is Non-Negotiable
 
@@ -72,21 +72,21 @@ Every state transition must atomically update the workflow state **and** enqueue
 {: .mx-auto.d-block :}
 **State transitions require atomically updating workflow state and task queue entries in a single transaction**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-This is why Temporal demands a strongly-consistent relational store with full ACID guarantees  -  and why CockroachDB, which provides serializable isolation at any scale, is a natural fit where a single PostgreSQL primary would become a bottleneck.
+This is why Temporal demands a strongly-consistent relational store with full ACID guarantees — and why CockroachDB, which provides serializable isolation at any scale, is a natural fit where a single PostgreSQL primary would become a bottleneck.
 
-### Visibility  -  Queryable Workflow Index
+### Visibility — Queryable Workflow Index
 
-In addition to the main persistence store, Temporal maintains a **Visibility store**  -  a secondary database optimised for querying workflow executions by status, type, start time, and custom search attributes stored as JSONB.
+In addition to the main persistence store, Temporal maintains a **Visibility store** — a secondary database optimised for querying workflow executions by status, type, start time, and custom search attributes stored as JSONB.
 
 <img src="/assets/img/temporal-visibility.png" alt="Temporal workflow visibility" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **The Visibility store indexes workflow executions for list and filter queries using JSONB search attributes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-The standard PostgreSQL visibility schema indexes JSONB via `CREATE EXTENSION IF NOT EXISTS btree_gin`  -  a PostgreSQL-only extension that **does not exist in CockroachDB**. The fix is CockroachDB's native `CREATE INVERTED INDEX`, which provides the same capability without any extension (see the schema section below).
+The standard PostgreSQL visibility schema indexes JSONB via `CREATE EXTENSION IF NOT EXISTS btree_gin` — a PostgreSQL-only extension that **does not exist in CockroachDB**. The fix is CockroachDB's native `CREATE INVERTED INDEX`, which provides the same capability without any extension (see the schema section below).
 
 ### Full Cluster Architecture with CockroachDB
 
-A Temporal cluster consists of four independently scalable stateless services fronting two durable storage tiers. When CockroachDB backs both stores, the entire persistence tier gains distributed replication, automatic failover, and horizontal scalability  -  all transparent to Temporal's services.
+A Temporal cluster consists of four independently scalable stateless services fronting two durable storage tiers. When CockroachDB backs both stores, the entire persistence tier gains distributed replication, automatic failover, and horizontal scalability — all transparent to Temporal's services.
 
 <img src="/assets/img/temporal-architecture-overview.png" alt="Temporal cluster architecture with CockroachDB" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
@@ -94,12 +94,12 @@ A Temporal cluster consists of four independently scalable stateless services fr
 
 | Service | Role |
 |---|---|
-| **Frontend** | gRPC gateway  -  routes client requests to the correct History shard |
+| **Frontend** | gRPC gateway — routes client requests to the correct History shard |
 | **History** | Owns workflow state machines; processes commands and records events |
 | **Matching** | Manages task queues; dispatches tasks to available Workers |
 | **Worker** | Runs internal system workflows (replication, archival, cleanup) |
-| **Persistence Store (CockroachDB)** | Event histories, timers, transfer queues  -  strong consistency, distributed writes |
-| **Visibility Store (CockroachDB)** | Queryable execution index  -  JSONB inverted index replaces `btree_gin` |
+| **Persistence Store (CockroachDB)** | Event histories, timers, transfer queues — strong consistency, distributed writes |
+| **Visibility Store (CockroachDB)** | Queryable execution index — JSONB inverted index replaces `btree_gin` |
 
 ---
 
@@ -107,17 +107,17 @@ A Temporal cluster consists of four independently scalable stateless services fr
 
 Temporal officially supports PostgreSQL, MySQL, SQLite, and Cassandra. CockroachDB is a natural fit for the persistence store because it brings:
 
-- **Distributed, strongly-consistent SQL**  -  the same ACID guarantees PostgreSQL provides, at any scale
-- **Active-active multi-region**  -  Temporal history shards can be distributed across regions without manual replication
-- **Automatic failover**  -  node failures are transparent to Temporal's services
-- **Horizontal scalability**  -  scale reads and writes without sharding logic in the application
-- **PostgreSQL wire protocol**  -  Temporal's existing `postgres12` plugin works directly
+- **Distributed, strongly-consistent SQL** — the same ACID guarantees PostgreSQL provides, at any scale
+- **Active-active multi-region** — Temporal history shards can be distributed across regions without manual replication
+- **Automatic failover** — node failures are transparent to Temporal's services
+- **Horizontal scalability** — scale reads and writes without sharding logic in the application
+- **PostgreSQL wire protocol** — Temporal's existing `postgres12` plugin works directly
 
 ---
 
 ## Deploying Temporal on CockroachDB
 
-### Step 1  -  Provision CockroachDB databases and user
+### Step 1 — Provision CockroachDB databases and user
 
 ```sql
 CREATE DATABASE temporal;
@@ -127,7 +127,7 @@ GRANT ALL ON DATABASE temporal TO temporal;
 GRANT ALL ON DATABASE temporal_visibility TO temporal;
 ```
 
-### Step 2  -  Initialize the persistence schema
+### Step 2 — Initialize the persistence schema
 
 The main schema works with CockroachDB out of the box via Temporal's SQL tool:
 
@@ -150,14 +150,14 @@ temporal-sql-tool \
   update-schema -d ./schema/postgresql/v12/temporal/versioned
 ```
 
-### Step 3  -  Fix the visibility schema for CockroachDB
+### Step 3 — Fix the visibility schema for CockroachDB
 
-> **This is the critical fix.** Temporal's advanced visibility schema contains `CREATE EXTENSION IF NOT EXISTS btree_gin`  -  a PostgreSQL-only extension that enables B-tree operators on GIN indexes. CockroachDB does not support this extension, and the schema migration **fails** at this line.
+> **This is the critical fix.** Temporal's advanced visibility schema contains `CREATE EXTENSION IF NOT EXISTS btree_gin` — a PostgreSQL-only extension that enables B-tree operators on GIN indexes. CockroachDB does not support this extension, and the schema migration **fails** at this line.
 
 The root cause is this migration in `schema/postgresql/v12/visibility/versioned/v1.1/manifest.json`:
 
 ```sql
--- PostgreSQL only  -  FAILS on CockroachDB
+-- PostgreSQL only — FAILS on CockroachDB
 CREATE EXTENSION IF NOT EXISTS btree_gin;
 CREATE INDEX custom_search_attributes_idx
   ON executions_visibility
@@ -192,7 +192,7 @@ CREATE TABLE executions_visibility (
   PRIMARY KEY (namespace_id, run_id)
 );
 
--- Standard B-tree indexes  -  work identically on CockroachDB
+-- Standard B-tree indexes — work identically on CockroachDB
 CREATE INDEX by_type_start_time
   ON executions_visibility (namespace_id, workflow_type_name, start_time DESC, run_id);
 CREATE INDEX by_workflow_id_start_time
@@ -217,7 +217,7 @@ cockroach sql \
   --file ./crdb_visibility_schema.sql
 ```
 
-### Step 4  -  Configure Temporal server
+### Step 4 — Configure Temporal server
 
 ```yaml
 persistence:
@@ -260,9 +260,9 @@ persistence:
           keyFile: "/certs/client.temporal.key"
 ```
 
-### Step 5  -  Write your first durable AI agent workflow
+### Step 5 — Write your first durable AI agent workflow
 
-The following agent loop retrieves context, calls an LLM, and writes the result to a database. Each step is an Activity  -  it executes exactly once even if the process crashes between steps. An LLM call that costs money is never re-issued after it succeeds.
+The following agent loop retrieves context, calls an LLM, and writes the result to a database. Each step is an Activity — it executes exactly once even if the process crashes between steps. An LLM call that costs money is never re-issued after it succeeds.
 
 ```python
 from temporalio import workflow, activity
@@ -278,40 +278,40 @@ async def retrieve_context(task: str) -> str:
 
 @activity.defn
 async def call_llm(context: str) -> str:
-    """Call the LLM  -  billed once, never re-executed on retry."""
+    """Call the LLM — billed once, never re-executed on retry."""
     return await llm_client.complete(f"Given this context: {context}, respond.")
 
 @activity.defn
 async def request_human_approval(response: str) -> bool:
-    """Write pending approval to DB  -  the agent can wait days here."""
+    """Write pending approval to DB — the agent can wait days here."""
     return await approvals_db.create_pending(response)
 
 @activity.defn
 async def write_final_result(result: str) -> None:
-    """Persist the approved result  -  exactly once."""
+    """Persist the approved result — exactly once."""
     await results_db.insert(result)
 
 @workflow.defn
 class AICockroachAgentWorkflow:
     @workflow.run
     async def run(self, task: str) -> str:
-        # Step 1  -  retrieve context (retries safely, idempotent)
+        # Step 1 — retrieve context (retries safely, idempotent)
         context = await workflow.execute_activity(
             retrieve_context, task,
             start_to_close_timeout=timedelta(minutes=2),
         )
-        # Step 2  -  LLM call (exactly once  -  no double billing)
+        # Step 2 — LLM call (exactly once — no double billing)
         response = await workflow.execute_activity(
             call_llm, context,
             start_to_close_timeout=timedelta(minutes=5),
             retry_policy=RetryPolicy(maximum_attempts=3),
         )
-        # Step 3  -  human-in-the-loop (agent sleeps until approved, days if needed)
+        # Step 3 — human-in-the-loop (agent sleeps until approved, days if needed)
         approved = await workflow.execute_activity(
             request_human_approval, response,
             start_to_close_timeout=timedelta(days=7),
         )
-        # Step 4  -  persist result (idempotent write, exactly once)
+        # Step 4 — persist result (idempotent write, exactly once)
         if approved:
             await workflow.execute_activity(
                 write_final_result, response,
@@ -330,9 +330,9 @@ class AICockroachAgentWorkflow:
 | **Multi-region replication** | History shards durable across data-center failures without manual failover |
 | **Horizontal scalability** | Add nodes to absorb more concurrent workflows without re-sharding |
 | **Automatic failover** | Node failures transparent to all four Temporal services |
-| **PostgreSQL compatibility** | Zero application code changes  -  `postgres12` plugin works directly |
+| **PostgreSQL compatibility** | Zero application code changes — `postgres12` plugin works directly |
 
-CockroachDB acts as a drop-in replacement for PostgreSQL, giving Temporal's stateless services an indestructible, globally distributed foundation  -  with one schema fix for the visibility store.
+CockroachDB acts as a drop-in replacement for PostgreSQL, giving Temporal's stateless services an indestructible, globally distributed foundation — with one schema fix for the visibility store.
 
 ---
 

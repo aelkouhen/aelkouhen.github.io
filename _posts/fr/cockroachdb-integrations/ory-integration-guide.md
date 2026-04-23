@@ -15,18 +15,18 @@ comments: true
 
 [Ory](https://www.ory.sh/) est une plateforme open-source de gestion des identités et des accès (IAM) fournissant des composants modulaires et cloud-natifs pour l'authentification et l'autorisation dans les systèmes distribués. Associée à CockroachDB comme couche de persistance, cette combinaison offre une infrastructure IAM entièrement scalable et résiliente, capable d'opérer sur plusieurs régions sans migrations de données complexes ni point de défaillance unique.
 
-Ce tutoriel présente un déploiement complet des trois services Ory  -  Hydra, Kratos et Keto  -  sur Kubernetes (AWS EKS), appuyé par un cluster CockroachDB sécurisé, avec vérification SQL de chaque enregistrement IAM stocké.
+Ce tutoriel présente un déploiement complet des trois services Ory — Hydra, Kratos et Keto — sur Kubernetes (AWS EKS), appuyé par un cluster CockroachDB sécurisé, avec vérification SQL de chaque enregistrement IAM stocké.
 
 ---
 
 ## Composants Principaux
 
-La plateforme Ory est composée de trois services indépendants et sans état  -  chacun gérant une couche distincte de la pile IAM :
+La plateforme Ory est composée de trois services indépendants et sans état — chacun gérant une couche distincte de la pile IAM :
 
 | Service | Responsabilité |
 |---------|---------------|
 | **Ory Hydra** | Serveur d'autorisation OAuth2 et fournisseur OpenID Connect |
-| **Ory Kratos** | Gestion des identités  -  utilisateurs, credentials, sessions, vérifications |
+| **Ory Kratos** | Gestion des identités — utilisateurs, credentials, sessions, vérifications |
 | **Ory Keto** | Contrôle d'accès basé sur les relations (ReBAC) via des tuples de relations |
 
 Le diagramme suivant illustre les relations entre Ory Hydra, Kratos et Keto :
@@ -35,7 +35,7 @@ Le diagramme suivant illustre les relations entre Ory Hydra, Kratos et Keto :
 {: .mx-auto.d-block :}
 **Services Ory**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Chaque service étant sans état, toute la persistance réside dans CockroachDB. La mise à l'échelle horizontale, les mises à jour progressives et les déploiements multi-régions deviennent simples  -  sans sessions collantes ni caches distribués à coordonner.
+Chaque service étant sans état, toute la persistance réside dans CockroachDB. La mise à l'échelle horizontale, les mises à jour progressives et les déploiements multi-régions deviennent simples — sans sessions collantes ni caches distribués à coordonner.
 
 ---
 
@@ -57,10 +57,10 @@ Ce diagramme de séquence illustre le flux d'autorisation OAuth 2.0 sous forme d
 
 Le diagramme représente les interactions entre quatre composants clés :
 
-- **Client**  -  une application cherchant à accéder à des ressources protégées
-- **Propriétaire de la ressource**  -  l'utilisateur final
-- **Ory Hydra**  -  le serveur d'autorisation
-- **Serveur de ressources**  -  l'API ou le service hébergeant les ressources protégées
+- **Client** — une application cherchant à accéder à des ressources protégées
+- **Propriétaire de la ressource** — l'utilisateur final
+- **Ory Hydra** — le serveur d'autorisation
+- **Serveur de ressources** — l'API ou le service hébergeant les ressources protégées
 
 Le flux commence lorsque le Client demande une autorisation au Propriétaire de la ressource, généralement via une redirection vers un écran de connexion ou de consentement fourni par Ory Hydra. Après approbation, le Propriétaire de la ressource fournit un grant d'autorisation au Client.
 
@@ -68,7 +68,7 @@ Le Client utilise ce grant pour demander un token d'accès à Hydra, en s'authen
 
 Avec le token d'accès, le Client demande les ressources protégées au Serveur de ressources, présentant le token comme preuve d'autorisation. Le Serveur de ressources valide le token par introspection ou vérification de signature (dans le cas d'un JWT) et sert la ressource demandée.
 
-CockroachDB stocke tous les clients OAuth2, les codes d'autorisation, les tokens d'accès et les sessions de consentement  -  durablement et avec cohérence linéarisable.
+CockroachDB stocke tous les clients OAuth2, les codes d'autorisation, les tokens d'accès et les sessions de consentement — durablement et avec cohérence linéarisable.
 
 ---
 
@@ -91,23 +91,23 @@ Kratos permet aux utilisateurs de s'inscrire et de gérer leur profil sans inter
 
 Chaque enregistrement d'identité utilisateur est stocké dans des tables transactionnelles CockroachDB :
 
-- **`identities`**  -  enregistrement d'identité principal avec schéma et état
-- **`identity_credentials`**  -  mots de passe, connexions sociales et autres méthodes d'authentification
-- **`sessions`**  -  tokens de session actifs et données d'expiration
-- **`verification_tokens`**  -  flux de vérification email/téléphone
+- **`identities`** — enregistrement d'identité principal avec schéma et état
+- **`identity_credentials`** — mots de passe, connexions sociales et autres méthodes d'authentification
+- **`sessions`** — tokens de session actifs et données d'expiration
+- **`verification_tokens`** — flux de vérification email/téléphone
 
 ---
 
 ### Ory Keto
 
-Ory Keto fournit un contrôle d'accès basé sur les relations (ReBAC) scalable via des tuples de relations  -  le même modèle utilisé par [Google Zanzibar](https://research.google/pubs/pub48190/).
+Ory Keto fournit un contrôle d'accès basé sur les relations (ReBAC) scalable via des tuples de relations — le même modèle utilisé par [Google Zanzibar](https://research.google/pubs/pub48190/).
 
 L'autorisation est vérifiée en évaluant si un tuple de relation existe (directement ou via une expansion récursive) permettant à un sujet d'effectuer une relation sur un objet dans un namespace. Ce modèle de données permet une haute scalabilité et flexibilité pour des schémas d'accès complexes incluant l'appartenance à des groupes, l'héritage de rôles et les droits d'accès hiérarchiques.
 
 Les vérifications de permissions sont répondues sur la base de :
 
-- **Données disponibles dans CockroachDB**  -  ex. « l'utilisateur Bob est propriétaire du document X »
-- **Règles de permission**  -  ex. « tous les propriétaires d'un document peuvent le consulter »
+- **Données disponibles dans CockroachDB** — ex. « l'utilisateur Bob est propriétaire du document X »
+- **Règles de permission** — ex. « tous les propriétaires d'un document peuvent le consulter »
 
 À la question « L'utilisateur Bob est-il autorisé à voir le document X ? », le système vérifie la permission de vue de Bob et confirme sa propriété. Le modèle de permission indique à Ory Keto quoi vérifier.
 
@@ -121,10 +121,10 @@ Les vérifications de permissions sont répondues sur la base de :
 
 Chaque service Ory nécessite une base de données fiable et cohérente. Les propriétés de CockroachDB répondent directement aux exigences IAM :
 
-- **Isolation sérialisable**  -  empêche la double dépense sur les tokens et les consentements dupliqués
-- **Actif-actif multi-régions**  -  les services Ory dans n'importe quelle région peuvent écrire sur le même cluster logique
-- **Scalabilité horizontale**  -  les tables de tokens croissent avec votre base d'utilisateurs sans re-sharding
-- **Résilience**  -  la réplication automatique basée sur Raft tolère transparentement les pannes de nœuds et de zones
+- **Isolation sérialisable** — empêche la double dépense sur les tokens et les consentements dupliqués
+- **Actif-actif multi-régions** — les services Ory dans n'importe quelle région peuvent écrire sur le même cluster logique
+- **Scalabilité horizontale** — les tables de tokens croissent avec votre base d'utilisateurs sans re-sharding
+- **Résilience** — la réplication automatique basée sur Raft tolère transparentement les pannes de nœuds et de zones
 
 ---
 
@@ -144,9 +144,9 @@ L'intégration combine trois composants Ory, chacun opérant comme un service sa
 
 Ce diagramme illustre un déploiement sur une seule région cloud répartie sur trois zones de disponibilité : `us-east-1a`, `us-east-1b` et `us-east-1c`.
 
-- **VPC Ory**  -  cluster Amazon EKS avec nœuds workers distribués entre les zones, exécutant les pods Hydra, Kratos et Keto avec routage ingress et service
-- **VPC CRDB**  -  nœuds CockroachDB sur les zones formant un cluster logique unique utilisant le consensus Raft pour la réplication des données
-- **Network Load Balancer**  -  achemine le trafic vers les nœuds sains avec basculement automatique
+- **VPC Ory** — cluster Amazon EKS avec nœuds workers distribués entre les zones, exécutant les pods Hydra, Kratos et Keto avec routage ingress et service
+- **VPC CRDB** — nœuds CockroachDB sur les zones formant un cluster logique unique utilisant le consensus Raft pour la réplication des données
+- **Network Load Balancer** — achemine le trafic vers les nœuds sains avec basculement automatique
 
 ---
 
@@ -165,11 +165,11 @@ Ce diagramme illustre un déploiement sur une seule région cloud répartie sur 
 
 Choisissez l'une des méthodes de déploiement :
 
-- **Local**  -  cluster auto-hébergé multi-nœuds avec le binaire CockroachDB
-- **AWS EC2**  -  cluster auto-hébergé sur Amazon EC2 avec load-balancing AWS géré
-- **CockroachDB Cloud**  -  service entièrement géré par Cockroach Labs avec crédits d'essai
+- **Local** — cluster auto-hébergé multi-nœuds avec le binaire CockroachDB
+- **AWS EC2** — cluster auto-hébergé sur Amazon EC2 avec load-balancing AWS géré
+- **CockroachDB Cloud** — service entièrement géré par Cockroach Labs avec crédits d'essai
 
-> **Important :** Créez un cluster **sécurisé**  -  la création d'utilisateurs l'exige.
+> **Important :** Créez un cluster **sécurisé** — la création d'utilisateurs l'exige.
 
 ---
 
@@ -177,9 +177,9 @@ Choisissez l'une des méthodes de déploiement :
 
 Des bases de données séparées isolent les données entre les composants Ory :
 
-- **Hydra**  -  gère les clients OAuth2, les sessions de consentement, les tokens d'accès/rafraîchissement
-- **Kratos**  -  gère les identités, credentials, sessions, tokens de vérification
-- **Keto**  -  stocke les tuples de relations (données RBAC/ABAC) pour les permissions
+- **Hydra** — gère les clients OAuth2, les sessions de consentement, les tokens d'accès/rafraîchissement
+- **Kratos** — gère les identités, credentials, sessions, tokens de vérification
+- **Keto** — stocke les tuples de relations (données RBAC/ABAC) pour les permissions
 
 Connectez-vous à votre client SQL CockroachDB :
 

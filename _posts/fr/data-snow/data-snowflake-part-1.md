@@ -330,13 +330,13 @@ Les channels sont destinés à être de longue durée lorsqu'un client insère a
 
 Les fichiers sont un dénominateur commun entre les processus qui produisent des données, qu'ils soient sur site ou dans le cloud. La plupart des ingestions se font par lots, où un fichier constitue un lot physique et parfois logique. Aujourd'hui, l'ingestion basée sur des fichiers utilisant COPY ou Snowpipe en auto-ingestion est la principale source de données ingérées dans Snowflake.
 
-Kafka (ou ses équivalents spécifiques au cloud) fournit une infrastructure supplémentaire de collecte et de distribution de données pour écrire et lire des flux d'enregistrements. Si les enregistrements d'événements doivent être distribués vers plusieurs destinations  -  principalement sous forme de flux  -  alors une telle organisation a du sens. Le traitement de flux (par opposition au traitement par lots) permet généralement des volumes de données plus faibles à des intervalles plus fréquents pour une latence quasi temps réel.
+Kafka (ou ses équivalents spécifiques au cloud) fournit une infrastructure supplémentaire de collecte et de distribution de données pour écrire et lire des flux d'enregistrements. Si les enregistrements d'événements doivent être distribués vers plusieurs destinations — principalement sous forme de flux — alors une telle organisation a du sens. Le traitement de flux (par opposition au traitement par lots) permet généralement des volumes de données plus faibles à des intervalles plus fréquents pour une latence quasi temps réel.
 
 Dans le cas du Connecteur Snowflake pour Kafka, la même considération de taille de fichier mentionnée précédemment s'applique toujours en raison de son utilisation de Snowpipe pour l'ingestion des données. Cependant, il peut y avoir un compromis entre la latence maximale souhaitée et une taille de fichier plus grande pour l'optimisation des coûts. La taille de fichier appropriée pour votre application peut ne pas correspondre aux recommandations ci-dessus, et c'est acceptable tant que les implications de coût sont mesurées et prises en compte.
 
 De plus, la quantité de mémoire disponible dans un nœud de cluster Kafka Connect peut limiter la taille du buffer et, par conséquent, la taille du fichier. Dans ce cas, la configuration de la valeur du timer (buffer.flush.time) est toujours une bonne idée pour s'assurer que les fichiers plus petits que la taille du buffer sont moins probables.
 
-Deux éléments  -  Buffer.flush.time et Buffer.flush.size  -  déterminent le nombre total de fichiers par minute que vous envoyez à Snowflake via le connecteur Kafka. Ainsi, l'ajustement de ces paramètres est très bénéfique en termes de performances. Voici deux exemples :
+Deux éléments — Buffer.flush.time et Buffer.flush.size — déterminent le nombre total de fichiers par minute que vous envoyez à Snowflake via le connecteur Kafka. Ainsi, l'ajustement de ces paramètres est très bénéfique en termes de performances. Voici deux exemples :
 - Si vous définissez buffer.flush.time à 240 secondes au lieu de 120 secondes sans rien changer d'autre, cela réduira le taux de base de fichiers/minute d'un facteur 2 (atteindre la taille du buffer avant le temps affectera ces calculs).
 - Si vous augmentez le Buffer.flush.size à 100 Mo sans rien changer d'autre, le taux de base de fichiers/minute sera réduit de 20 (atteindre la taille maximale du buffer avant le temps maximum du buffer affectera ces calculs).
 
@@ -346,7 +346,7 @@ Pour tester cette configuration localement, vous aurez besoin :
 - d'OpenJDK <= 15.0.2,
 - d'un utilisateur Snowflake pour le streaming Snowpipe avec une clé SSH définie comme méthode d'authentification.
 
-D'abord, vous devez créer un utilisateur distinct que vous utiliserez pour le Streaming Snowpipe. N'oubliez pas de remplacer <YOURPUBLICKEY> par les détails correspondants. Dans ce cas, vous devez supprimer les lignes de commentaire de début/fin du fichier de clé (ex. :  - –BEGIN PUBLIC KEY - –), mais veuillez conserver les caractères de nouvelle ligne.
+D'abord, vous devez créer un utilisateur distinct que vous utiliserez pour le Streaming Snowpipe. N'oubliez pas de remplacer <YOURPUBLICKEY> par les détails correspondants. Dans ce cas, vous devez supprimer les lignes de commentaire de début/fin du fichier de clé (ex. : —–BEGIN PUBLIC KEY—–), mais veuillez conserver les caractères de nouvelle ligne.
 
 {% highlight sql linenos %}
 create user snowpipe_streaming_user password='',  default_role = accountadmin, rsa_public_key='<YOURPUBLICKEY>';
@@ -374,7 +374,7 @@ cd kafka_2.13-3.3.1/libs
 curl https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/1.9.1/snowflake-kafka-connector-1.9.1.jar --output snowflake-kafka-connector-1.9.1.jar
 ```
 
-Créez le fichier de configuration `config/SF_connect.properties` avec les paramètres suivants. N'oubliez pas de remplacer `<YOURACCOUNT>` et `<YOURPRIVATEKEY>` par les détails correspondants. Veuillez également noter que lors de l'ajout d'une clé privée, vous devez supprimer tous les caractères de nouvelle ligne ainsi que les commentaires de début et de fin (ex. :  - –BEGIN PRIVATE KEY - –) :
+Créez le fichier de configuration `config/SF_connect.properties` avec les paramètres suivants. N'oubliez pas de remplacer `<YOURACCOUNT>` et `<YOURPRIVATEKEY>` par les détails correspondants. Veuillez également noter que lors de l'ajout d'une clé privée, vous devez supprimer tous les caractères de nouvelle ligne ainsi que les commentaires de début et de fin (ex. : —–BEGIN PRIVATE KEY—–) :
 
 {% highlight properties linenos %}
 name=snowpipe_streaming_ingest

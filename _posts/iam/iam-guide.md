@@ -34,7 +34,7 @@ At its core, IAM answers three basic questions:
 
 That's it. But once you start dealing with thousands of users, multiple applications, and different security requirements, those simple questions quickly turn into a tangled mess.
 
-IAM rests around the concept of **identity**, the digital representation of an entity such as a person, a service, or a device  -  whether human (like employees or customers) or non-human (such as microservices or IoT devices). It acts as the digital fingerprint of that entity within the system's domain. Each identity must be *distinct* and *unique* within its domain to ensure accurate access control and should remain *consistent* over time for reliable auditing and traceability. Identities can be enriched with context (e.g., time of access, device security state) to support dynamic policy evaluation and should provide *attributes* like name, email, device ID, roles, location, and more paired with *credentials* or *assertions* (e.g., passwords, certificates, tokens) that enable their verification through authentication mechanisms.
+IAM rests around the concept of **identity**, the digital representation of an entity such as a person, a service, or a device — whether human (like employees or customers) or non-human (such as microservices or IoT devices). It acts as the digital fingerprint of that entity within the system's domain. Each identity must be *distinct* and *unique* within its domain to ensure accurate access control and should remain *consistent* over time for reliable auditing and traceability. Identities can be enriched with context (e.g., time of access, device security state) to support dynamic policy evaluation and should provide *attributes* like name, email, device ID, roles, location, and more paired with *credentials* or *assertions* (e.g., passwords, certificates, tokens) that enable their verification through authentication mechanisms.
 
 Supporting the rest of IAM is a layer called Administration, which has the three major pillars alluded to above: Authentication, Authorization, and Accountability.
 
@@ -46,7 +46,7 @@ Authentication is the process of *verifying* an identity through mechanisms like
 
 Let's say we have a user named Allen who wants to access the system. The system needs to check whether the user is actually Allen. Traditionally, we've relied on passwords for this. But passwords are a nightmare. People often forget or reuse them, and worst of all, they choose easy ones like "123456" or "password." In addition, it's not that hard nowadays for malicious people to use HPC and quantum computing to break passwords. So while this first approach of authentication is simple and easy to implement, it's not the most secure.
 
-This is why multi-factor authentication (MFA) is becoming the new standard. With MFA, you're not just requiring a password but also something else  -  maybe a code sent to your phone, or a biometric scan (fingerprint, retina). So even if someone guesses, breaks or steals your password, they'd still need that second factor. Ultimately, proper authentication is not just about keeping hackers out  -  it's about making sure that you, as a legitimate user, are protected.
+This is why multi-factor authentication (MFA) is becoming the new standard. With MFA, you're not just requiring a password but also something else — maybe a code sent to your phone, or a biometric scan (fingerprint, retina). So even if someone guesses, breaks or steals your password, they'd still need that second factor. Ultimately, proper authentication is not just about keeping hackers out — it's about making sure that you, as a legitimate user, are protected.
 
 <img src="/assets/img/iam-p1-mfa-diagram.png" alt="Multi-factor authentication (MFA) diagram" style="width:100%">
 
@@ -59,7 +59,7 @@ This is why multi-factor authentication (MFA) is becoming the new standard. With
 
 Authorization answers the question, "What can a user do once they've successfully logged in?" Logging into a system doesn't mean unrestricted access. Authorization ensures that users can only access what's necessary for their role, much like how a visitor in a company may enter the lobby but not the CEO's office.
 
-In more technical terms, a network administrator may have the ability to access the entire infrastructure but should not use that level of access for routine tasks like reading email. That's where **Privileged Access Management (PAM)** plays a role  -  it enforces that elevated permissions are granted temporarily and monitored closely.
+In more technical terms, a network administrator may have the ability to access the entire infrastructure but should not use that level of access for routine tasks like reading email. That's where **Privileged Access Management (PAM)** plays a role — it enforces that elevated permissions are granted temporarily and monitored closely.
 
 Authorization can also involve contextual evaluation: for instance, access to sensitive files might be permitted from an office network but flagged or blocked if attempted from a foreign IP address in a café. Risk-based authorization mechanisms evaluate conditions like geographic location, device state, and behavioral anomalies. If any of these factors appear suspicious, additional verification may be required, or access may be denied altogether.
 
@@ -72,7 +72,7 @@ Authorization models vary in how they determine what a user is permitted to do. 
 
 While RBAC provides structure, exceptions and edge cases are common and can make managing access more nuanced than it appears on the surface, this is why we need more [granular control](https://www.cockroachlabs.com/blog/how-to-achieve-control-over-your-IAM-data/) options:
 
-- **Attribute-Based Access Control (ABAC)** offers more flexibility by using dynamic attributes  -  such as department, device type, or time of day  -  to enforce access decisions, supporting fine-grained policies.
+- **Attribute-Based Access Control (ABAC)** offers more flexibility by using dynamic attributes — such as department, device type, or time of day — to enforce access decisions, supporting fine-grained policies.
 - **Policy-Based Access Control (PBAC)** builds on ABAC by applying centralized, rule-based policies that are context-aware and adaptable to complex environments.
 
 Each model brings trade-offs between simplicity, expressiveness, and scalability, and modern IAM systems often blend elements of all three to meet diverse access control requirements.
@@ -88,7 +88,7 @@ Each model brings trade-offs between simplicity, expressiveness, and scalability
 
 Accountability, often overlooked, plays a vital role in ensuring the integrity and compliance of an IAM system. It is an essential capability for traceability and incident response, since it allows organizations to look back and verify that policies are enforced correctly and that no unauthorized actions have slipped through. Audit systems can enforce accountability by continuously tracking user activity and flagging anomalies or suspicious behavior.
 
-For example, if Allen who normally accesses CRM data begins downloading sensitive internal documents, an alert should be triggered  -  indicating a potential breach or insider threat. This ability to catch deviations early is critical.
+For example, if Allen who normally accesses CRM data begins downloading sensitive internal documents, an alert should be triggered — indicating a potential breach or insider threat. This ability to catch deviations early is critical.
 
 <img src="/assets/img/iam-p1-audit-trail.png" alt="ERP audit trail window" style="width:100%">
 
@@ -101,13 +101,13 @@ Modern audit strategies often leverage User Behavior Analytics (UBA), which buil
 
 ### 4. Administration: Connecting the dots
 
-At the core of any IAM system is the [**user store**](https://www.cockroachlabs.com/solutions/usecases/user-accounts-and-metadata/)  -  a centralized repository where all your information about identities lives  -  who they are, what they can do, and what they're supposed to have access to.
+At the core of any IAM system is the [**user store**](https://www.cockroachlabs.com/solutions/usecases/user-accounts-and-metadata/) — a centralized repository where all your information about identities lives — who they are, what they can do, and what they're supposed to have access to.
 
-In many organizations, this takes the form of systems like Microsoft's Active Directory (AD). Without a central directory, you'd be forced to manage user accounts separately across every application  -  a chaotic and insecure scenario.
+In many organizations, this takes the form of systems like Microsoft's Active Directory (AD). Without a central directory, you'd be forced to manage user accounts separately across every application — a chaotic and insecure scenario.
 
-This foundational layer handles the **lifecycle of user accounts**: creating, updating, and removing them as needed. While this may seem straightforward, the complexity grows quickly in environments with hundreds or thousands of users. Consider a large enterprise where roles frequently shift. Without proper management, a former employee could retain access to sensitive systems long after switching departments  -  or worse, after leaving the company entirely. On the flip side, new employees may face frustrating delays if their access isn't provisioned on time. That's where **identity governance** plays a critical role. These systems help automate the assignment and revocation of permissions, ensuring that access aligns with a user's current role and responsibilities.
+This foundational layer handles the **lifecycle of user accounts**: creating, updating, and removing them as needed. While this may seem straightforward, the complexity grows quickly in environments with hundreds or thousands of users. Consider a large enterprise where roles frequently shift. Without proper management, a former employee could retain access to sensitive systems long after switching departments — or worse, after leaving the company entirely. On the flip side, new employees may face frustrating delays if their access isn't provisioned on time. That's where **identity governance** plays a critical role. These systems help automate the assignment and revocation of permissions, ensuring that access aligns with a user's current role and responsibilities.
 
-But managing identities is only part of the equation. Users expect seamless access across tools without needing to log in repeatedly. **Single Sign-On (SSO)** solves this problem by allowing users to authenticate once and gain access to multiple systems  -  like having a single keycard that opens all the doors you're authorized to enter. However, SSO is mostly effective within internal ecosystems. When organizations begin collaborating with external partners or using third-party cloud services, **federation** becomes essential.
+But managing identities is only part of the equation. Users expect seamless access across tools without needing to log in repeatedly. **Single Sign-On (SSO)** solves this problem by allowing users to authenticate once and gain access to multiple systems — like having a single keycard that opens all the doors you're authorized to enter. However, SSO is mostly effective within internal ecosystems. When organizations begin collaborating with external partners or using third-party cloud services, **federation** becomes essential.
 
 <img src="/assets/img/iam-p1-federation.png" alt="Identity Federation diagram" style="width:100%">
 
@@ -122,25 +122,25 @@ Building a robust Identity and Access Management (IAM) system presents several c
 
 ### Managing Local Authentications
 
-In the early days of software development, each application was responsible for its own authentication and access control. Developers had to implement user databases, manage passwords, and create bespoke authorization systems  -  one per application. This approach was inefficient and introduced serious security risks. A single compromised app could jeopardize user credentials, especially when passwords were reused across systems.
+In the early days of software development, each application was responsible for its own authentication and access control. Developers had to implement user databases, manage passwords, and create bespoke authorization systems — one per application. This approach was inefficient and introduced serious security risks. A single compromised app could jeopardize user credentials, especially when passwords were reused across systems.
 
-This fragmentation also created pain points for users and administrators alike. Users had to juggle multiple passwords, leading to forgotten credentials and poor password hygiene. For IT teams, offboarding was a nightmare  -  removing a former employee's access was a tedious and manual process.
+This fragmentation also created pain points for users and administrators alike. Users had to juggle multiple passwords, leading to forgotten credentials and poor password hygiene. For IT teams, offboarding was a nightmare — removing a former employee's access was a tedious and manual process.
 
-The solution to this complexity is **claim-based access control**, a modern paradigm that shifts the responsibility of authentication away from individual applications. In this model, a **central Identity Provider (IdP)** handles all authentication. When a user logs in, the IdP verifies their identity and issues a set of **claims**  -  structured information such as user ID, roles, or permissions. Applications trust these claims to determine access, rather than managing authentication directly.
+The solution to this complexity is **claim-based access control**, a modern paradigm that shifts the responsibility of authentication away from individual applications. In this model, a **central Identity Provider (IdP)** handles all authentication. When a user logs in, the IdP verifies their identity and issues a set of **claims** — structured information such as user ID, roles, or permissions. Applications trust these claims to determine access, rather than managing authentication directly.
 
-Think of it like airport security: you present your passport (identity verification) and receive a boarding pass (claim) that confirms where you're allowed to go. The gate agent doesn't need to verify your identity from scratch  -  they just need to trust the boarding pass.
+Think of it like airport security: you present your passport (identity verification) and receive a boarding pass (claim) that confirms where you're allowed to go. The gate agent doesn't need to verify your identity from scratch — they just need to trust the boarding pass.
 
-This architecture offers major benefits. Developers are freed from the burden of building and maintaining authentication flows for every app. Security updates  -  like enabling MFA or biometric login  -  can be implemented centrally at the IdP level, rather than across each individual service.
+This architecture offers major benefits. Developers are freed from the burden of building and maintaining authentication flows for every app. Security updates — like enabling MFA or biometric login — can be implemented centrally at the IdP level, rather than across each individual service.
 
-For users, it means seamless access and fewer login interruptions. For administrators, it simplifies user management  -  disabling an account at the IdP revokes access across all connected systems ***instantly***. IAM systems must be highly available (***always-on***), and provide a high level of SLA as downtimes can lead to significant business losses.
+For users, it means seamless access and fewer login interruptions. For administrators, it simplifies user management — disabling an account at the IdP revokes access across all connected systems ***instantly***. IAM systems must be highly available (***always-on***), and provide a high level of SLA as downtimes can lead to significant business losses.
 
 ### Access Management in the Modern Architectures
 
-In today's software ecosystems, IAM extends far beyond the traditional login screen. Applications are no longer monolithic  -  they are [multi-tenant](https://www.cockroachlabs.com/blog/6-takeaways-multitenancy-saas-webinar/), globally distributed, API-driven, and built around highly dynamic, user-centric workflows. [SaaS platforms](https://www.cockroachlabs.com/solutions/verticals/saas/) require tenant-aware access control to ensure that one customer's data is logically and securely isolated from another's.
+In today's software ecosystems, IAM extends far beyond the traditional login screen. Applications are no longer monolithic — they are [multi-tenant](https://www.cockroachlabs.com/blog/6-takeaways-multitenancy-saas-webinar/), globally distributed, API-driven, and built around highly dynamic, user-centric workflows. [SaaS platforms](https://www.cockroachlabs.com/solutions/verticals/saas/) require tenant-aware access control to ensure that one customer's data is logically and securely isolated from another's.
 
 Public APIs need robust key management systems and the ability to enforce fine-grained permissions for each client or integration partner. Microservice architectures further complicate the landscape by introducing the need for inter-service authentication and dynamically evolving trust boundaries.
 
-To function effectively in these complex environments, IAM must be available ***at scale***  -  spanning time zones and cloud regions  -  while ensuring low-latency access decisions and continuous availability, even during high traffic volumes or infrastructure disruptions. As organizations grow, their IAM systems must scale to accommodate more users and systems. Traditional IAM storage backends may become performance bottlenecks if they can't scale effectively.
+To function effectively in these complex environments, IAM must be available ***at scale*** — spanning time zones and cloud regions — while ensuring low-latency access decisions and continuous availability, even during high traffic volumes or infrastructure disruptions. As organizations grow, their IAM systems must scale to accommodate more users and systems. Traditional IAM storage backends may become performance bottlenecks if they can't scale effectively.
 
 A modern IAM system needs to ensure that access decisions are consistently enforced no matter where a user connects from, avoiding discrepancies between regions that could lead to unauthorized access or frustrating denial of service. However, expanding into new regions introduces complexities in adhering to various data privacy regulations, as we'll explore below.
 
@@ -158,11 +158,11 @@ IAM is inherently stateful, relying on a continuously evolving set of attributes
 
 Many IAM platforms operate under the model of eventual consistency, where changes made in one part of the system take time to propagate across the entire infrastructure. While this model may be acceptable for non-critical applications such as analytics or reporting, it poses significant risks when applied to IAM.
 
-In IAM, decisions can only be based on the exact and current state of the system. Delayed revocation of access can leave systems exposed to unauthorized usage, race conditions during permission updates can result in users gaining or losing access unpredictably, and policy enforcement that varies by region undermines both user trust and regulatory compliance. In IAM, decisions must be based on the exact and current state of the system. This demands immediate correctness  -  administrators need to have full confidence that the policies, roles, and credentials they see reflect the true and synchronized reality across the system at any given moment.
+In IAM, decisions can only be based on the exact and current state of the system. Delayed revocation of access can leave systems exposed to unauthorized usage, race conditions during permission updates can result in users gaining or losing access unpredictably, and policy enforcement that varies by region undermines both user trust and regulatory compliance. In IAM, decisions must be based on the exact and current state of the system. This demands immediate correctness — administrators need to have full confidence that the policies, roles, and credentials they see reflect the true and synchronized reality across the system at any given moment.
 
 For instance, if a role change is made in one region but takes time to propagate, a user may temporarily gain or lose access inappropriately. Similarly, if a password reset is not reflected across all systems in real time, it creates a dangerous window of vulnerability where attackers could exploit stale credentials.
 
-Inconsistent or incomplete audit logs further compound the issue, hindering efforts to trace activity or investigate incidents. These scenarios underscore the need for strong consistency and transactional guarantees across all components of an IAM system  -  ensuring that every decision is based on the most current and reliable state of information.
+Inconsistent or incomplete audit logs further compound the issue, hindering efforts to trace activity or investigate incidents. These scenarios underscore the need for strong consistency and transactional guarantees across all components of an IAM system — ensuring that every decision is based on the most current and reliable state of information.
 
 ---
 
@@ -172,11 +172,11 @@ Inconsistent or incomplete audit logs further compound the issue, hindering effo
 <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/C_iusZx95Ao?start=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Identity and Access Management must occur with minimal latency, which rules out relying solely on centralized systems that introduce regional bottlenecks. Furthermore, IAM infrastructure must be resilient enough to survive network partitions, regional outages, and unexpected surges in traffic  -  continuing to enforce security policies and protect sensitive data even under duress. Achieving all of this is no small feat; it requires not only thoughtful system architecture but also foundational infrastructure that prioritizes consistency, availability, and global scalability.
+Identity and Access Management must occur with minimal latency, which rules out relying solely on centralized systems that introduce regional bottlenecks. Furthermore, IAM infrastructure must be resilient enough to survive network partitions, regional outages, and unexpected surges in traffic — continuing to enforce security policies and protect sensitive data even under duress. Achieving all of this is no small feat; it requires not only thoughtful system architecture but also foundational infrastructure that prioritizes consistency, availability, and global scalability.
 
 ### 1. Always-On Access Management
 
-CockroachDB is a distributed SQL database built for **high availability by default**, with robust resilience and data consistency guarantees. It ensures your IAM system stays operational even during node, zone, or region failures  -  meeting strict SLA requirements for authentication and access services without introducing complexity or downtime. CockroachDB uses the [Raft consensus protocol](https://www.cockroachlabs.com/blog/distributed-database-architecture/#Reliability-and-Availability) to ensure data consistency across distributed nodes, maintaining integrity during failover events.
+CockroachDB is a distributed SQL database built for **high availability by default**, with robust resilience and data consistency guarantees. It ensures your IAM system stays operational even during node, zone, or region failures — meeting strict SLA requirements for authentication and access services without introducing complexity or downtime. CockroachDB uses the [Raft consensus protocol](https://www.cockroachlabs.com/blog/distributed-database-architecture/#Reliability-and-Availability) to ensure data consistency across distributed nodes, maintaining integrity during failover events.
 
 Designed to eliminate **single points of failure**, CockroachDB's distributed architecture **replicates data across multiple nodes and regions**, with **automatic failover**. If one node or even an entire region goes down, CockroachDB continues operating seamlessly and data is available in another region, ensuring that authentication and authorization systems remain operational.
 
@@ -196,7 +196,7 @@ As identity bases expand and new services are added, IAM workloads such as login
 {: .mx-auto.d-block :}
 **Distributed IAM Platform**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-This ensures that no single node becomes a bottleneck, and that the system can continue performing reliably under high concurrency and volume  -  particularly during traffic spikes, such as the start of a workday or during a global product launch.
+This ensures that no single node becomes a bottleneck, and that the system can continue performing reliably under high concurrency and volume — particularly during traffic spikes, such as the start of a workday or during a global product launch.
 
 In [multi-tenant environments](https://www.cockroachlabs.com/blog/6-takeaways-multitenancy-saas-webinar/), IAM systems must enforce logical separation between tenants while maintaining performance at scale. CockroachDB supports this through features like **row-level geo-partitioning**, enabling efficient tenant isolation within a shared infrastructure. With consistent performance regardless of tenant count, IAM platforms can serve thousands of customers without compromising latency or correctness.
 
@@ -205,11 +205,11 @@ In [multi-tenant environments](https://www.cockroachlabs.com/blog/6-takeaways-mu
 {: .mx-auto.d-block :}
 **Global IAM data model**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-In addition, CockroachDB's scalability extends across geographic boundaries. In globally distributed IAM systems, latency and data locality are key. CockroachDB's [multi-region deployment model](https://www.cockroachlabs.com/docs/stable/multiregion-overview) allows identity data to be served close to the user  -  ensuring low-latency access decisions  -  while keeping access policies consistent across regions. This global scalability makes CockroachDB an ideal backbone for IAM systems that must deliver high availability, compliance, and real-time access control at planetary scale.
+In addition, CockroachDB's scalability extends across geographic boundaries. In globally distributed IAM systems, latency and data locality are key. CockroachDB's [multi-region deployment model](https://www.cockroachlabs.com/docs/stable/multiregion-overview) allows identity data to be served close to the user — ensuring low-latency access decisions — while keeping access policies consistent across regions. This global scalability makes CockroachDB an ideal backbone for IAM systems that must deliver high availability, compliance, and real-time access control at planetary scale.
 
 ### 3. Strongly Consistent Identity and Access Management
 
-CockroachDB's architecture is designed to deliver strong consistency through serializable isolation, ensuring that concurrent operations across globally distributed regions never result in stale or conflicting data  -  a foundational requirement for enforcing accurate authorization and authentication. With multi-region clusters, CockroachDB enables global availability, meaning IAM systems can serve users from the nearest region while still maintaining a single, consistent state of truth.
+CockroachDB's architecture is designed to deliver strong consistency through serializable isolation, ensuring that concurrent operations across globally distributed regions never result in stale or conflicting data — a foundational requirement for enforcing accurate authorization and authentication. With multi-region clusters, CockroachDB enables global availability, meaning IAM systems can serve users from the nearest region while still maintaining a single, consistent state of truth.
 
 <img src="/assets/img/iam-p1-serialized-transactions.png" alt="Serialized transactions in CockroachDB" style="width:100%">
 
@@ -218,7 +218,7 @@ CockroachDB's architecture is designed to deliver strong consistency through ser
 
 What sets CockroachDB apart is its ability to deliver [transactional correctness](https://www.cockroachlabs.com/docs/stable/transactions) across identity data, role assignments, policy updates, and session management. Every write is guaranteed to be atomic, consistent, isolated, and durable (ACID), eliminating the race conditions and propagation delays common in eventually consistent systems, like Cassandra. Even popular cloud-native solutions like Amazon Aurora may struggle to maintain cross-regional consistency without complex workarounds.
 
-In scenarios where milliseconds matter  -  such as revoking access to a compromised account  -  CockroachDB's **linearizable reads and writes** ensure that access decisions are always made against the most recent state, without the lag or uncertainty of asynchronous replication. By combining distributed resilience with strong consistency guarantees, CockroachDB enables IAM systems to operate securely and reliably, even in the face of regional outages, high concurrency, and global scale.
+In scenarios where milliseconds matter — such as revoking access to a compromised account — CockroachDB's **linearizable reads and writes** ensure that access decisions are always made against the most recent state, without the lag or uncertainty of asynchronous replication. By combining distributed resilience with strong consistency guarantees, CockroachDB enables IAM systems to operate securely and reliably, even in the face of regional outages, high concurrency, and global scale.
 
 ---
 

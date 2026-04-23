@@ -74,9 +74,9 @@ Phase Two fournit une plateforme de gestion centralisée permettant aux équipes
 - La Gestion des Realms donne le contrôle sur les realms Keycloak, les utilisateurs et les configurations d'identité.
 - La Configuration des Clusters, la Gestion des Clusters, les Ressources des Clusters et l'Accès aux Clusters sont utilisés pour déployer, mettre à l'échelle et se connecter aux clusters gérés.
 
-Essentiellement, cette couche est le plan de contrôle  -  elle régit la façon dont les clusters sous-jacents et les instances d'identité sont créés, maintenus et intégrés. Ce plan de contrôle simplifie le déploiement et la gestion qui nécessiteraient autrement des connaissances DevOps et une gestion des releases.
+Essentiellement, cette couche est le plan de contrôle — elle régit la façon dont les clusters sous-jacents et les instances d'identité sont créés, maintenus et intégrés. Ce plan de contrôle simplifie le déploiement et la gestion qui nécessiteraient autrement des connaissances DevOps et une gestion des releases.
 
-Chaque client exécute son propre environnement, géré et hébergé par Phase Two pour l'isolation et la conformité. Au sein de chaque cluster, Keycloak stocke et récupère les données des utilisateurs, des sessions et des realms depuis CockroachDB. Chaque cluster opère de manière indépendante  -  les données et configurations d'identité des clients ne se chevauchent pas.
+Chaque client exécute son propre environnement, géré et hébergé par Phase Two pour l'isolation et la conformité. Au sein de chaque cluster, Keycloak stocke et récupère les données des utilisateurs, des sessions et des realms depuis CockroachDB. Chaque cluster opère de manière indépendante — les données et configurations d'identité des clients ne se chevauchent pas.
 
 Phase Two orchestre ces déploiements, s'assurant que Keycloak et CockroachDB restent synchronisés, hautement disponibles et performants.
 
