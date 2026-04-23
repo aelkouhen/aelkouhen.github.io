@@ -337,6 +337,4 @@ CockroachDB acts as a drop-in replacement for PostgreSQL, giving Temporal's stat
 
 - [Temporal Documentation](https://docs.temporal.io/)
 - [Designing a Workflow Engine from First Principles](https://temporal.io/blog/workflow-engine-principles)
-- [CockroachDB Cloud](https://cockroachlabs.cloud/)
 - [CockroachDB Distributed SQL](https://www.cockroachlabs.com/blog/what-is-distributed-sql/)
-- [DBOS + CockroachDB — Embedded Durable Execution](/2026-04-24-dbos-cockroachdb/)
