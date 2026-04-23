@@ -53,7 +53,7 @@ Pour les charges de travail d'agents IA, ces garanties sont essentielles. Une bo
 
 Temporal sépare l'**exécution** (services sans état) du **stockage** (persistance durable) :
 
-<img src="https://docs.temporal.io/assets/images/temporal-system-simple-bbe37d1a86a71b86c23d97e676b4f6aa.svg" alt="Architecture du cluster Temporal" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/temporal-cluster-architecture.svg" alt="Architecture du cluster Temporal" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **Cluster Temporal : services sans état adossés à une couche de persistance durable**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 

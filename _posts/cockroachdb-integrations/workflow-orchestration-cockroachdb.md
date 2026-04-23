@@ -53,7 +53,7 @@ For agentic AI workloads these guarantees are essential. An agent loop that quer
 
 Temporal separates **execution** (stateless services) from **storage** (durable persistence):
 
-<img src="https://docs.temporal.io/assets/images/temporal-system-simple-bbe37d1a86a71b86c23d97e676b4f6aa.svg" alt="Temporal cluster architecture" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/img/temporal-cluster-architecture.svg" alt="Temporal cluster architecture" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **Temporal cluster: stateless services backed by a durable persistence layer**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
