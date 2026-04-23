@@ -243,7 +243,7 @@ GRANT ALL ON DATABASE temporal_visibility TO temporal;
 
 Le schéma principal fonctionne avec CockroachDB sans modification via l'outil SQL de Temporal. Téléchargez `temporal-sql-tool` depuis les [releases GitHub de Temporal](https://github.com/temporalio/temporal/releases) avec `temporal-server`. Les fichiers de schéma se trouvent dans l'archive source sous `schema/postgresql/v12/temporal/versioned/`.
 
-> **Important :** passez le nom d'hôte et le port en flags séparés. Le format combiné `--ep host:port` est rejeté avec une erreur de détection du port MySQL.
+> **Important :** passez le nom d'hôte et le port en flags séparés (`--ep <host> --port 26257`). `temporal-sql-tool` supporte plusieurs backends de base de données dont MySQL, et sa logique interne d'analyse des ports traite une chaîne `host:port` combinée comme un endpoint MySQL — ajoutant silencieusement `:3306` au lieu d'utiliser le port spécifié.
 
 ```bash
 temporal-sql-tool \
