@@ -87,7 +87,7 @@ A Temporal cluster consists of four independently scalable stateless services fr
 
 <img src="/assets/img/temporal-architecture-overview.png" alt="Temporal cluster architecture with CockroachDB" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Temporal cluster with CockroachDB as the persistence and visibility backend — stateless services scale independently, storage scales automatically**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Temporal cluster with CockroachDB as the persistence and visibility backend**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Service | Role |
 |---|---|
