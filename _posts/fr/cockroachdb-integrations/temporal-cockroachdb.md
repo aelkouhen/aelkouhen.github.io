@@ -232,12 +232,12 @@ sudo yum install -y postgresql
 ```sql
 CREATE DATABASE temporal;
 CREATE DATABASE temporal_visibility;
-CREATE USER temporal;
+CREATE USER temporal WITH PASSWORD 'your-password';
 GRANT ALL ON DATABASE temporal TO temporal;
 GRANT ALL ON DATABASE temporal_visibility TO temporal;
 ```
 
-> En **mode non sécurisé** (`--insecure` / `sslmode=disable`), CockroachDB n'autorise pas la définition d'un mot de passe. Utilisez `CREATE USER temporal;` sans clause de mot de passe. Pour un cluster sécurisé, ajoutez `WITH PASSWORD 'votre-mot-de-passe'` et renseignez le champ `password` dans la configuration du serveur.
+Définissez le même mot de passe que la variable d'environnement `TEMPORAL_DB_PASSWORD` utilisée aux étapes 2 et 4.
 
 ### Étape 2 : Initialisation du schéma de persistance
 
@@ -601,13 +601,13 @@ temporal-server --config-file ./base.yaml --allow-no-auth start
 Une fois le serveur démarré, créez le namespace par défaut et vérifiez le cluster :
 
 ```bash
-# Créer le namespace applicatif
+# Create the application namespace
 temporal --address localhost:7233 operator namespace create default
 
-# Confirmer que le cluster répond
+# Confirm the cluster is healthy
 temporal --address localhost:7233 operator cluster health
 
-# Lister les workflows système internes pour confirmer la connexion au visibility store
+# List internal system workflows to confirm the visibility store is connected
 temporal --address localhost:7233 -n temporal-system workflow list
 ```
 
