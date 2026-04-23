@@ -334,6 +334,4 @@ CockroachDB remplace PostgreSQL directement, offrant aux services sans état de 
 
 - [Documentation Temporal](https://docs.temporal.io/)
 - [Concevoir un moteur de workflow depuis les premiers principes](https://temporal.io/blog/workflow-engine-principles)
-- [CockroachDB Cloud](https://cockroachlabs.cloud/)
 - [SQL distribué CockroachDB](https://www.cockroachlabs.com/blog/what-is-distributed-sql/)
-- [DBOS + CockroachDB — Exécution durable embarquée](/2026-04-24-dbos-cockroachdb/)
