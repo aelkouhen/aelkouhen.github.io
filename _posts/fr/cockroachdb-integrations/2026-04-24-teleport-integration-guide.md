@@ -4,8 +4,8 @@ lang: fr
 title: "Intégrer CockroachDB avec Teleport"
 subtitle: "Guide pas-à-pas pour déployer Teleport Enterprise avec CockroachDB comme backend d'accès distribué mondialement et fortement cohérent"
 cover-img: /assets/img/cover-teleport-integration.webp
-thumbnail-img: /assets/img/teleport-crdb-architecture.png
-share-img: /assets/img/teleport-crdb-architecture.png
+thumbnail-img: /assets/img/cover-teleport-integration.webp
+share-img: /assets/img/cover-teleport-integration.webp
 tags: [integrations, CockroachDB, teleport, iam, kubernetes, security, zero-trust]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
