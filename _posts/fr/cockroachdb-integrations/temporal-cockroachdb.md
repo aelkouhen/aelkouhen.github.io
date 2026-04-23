@@ -562,6 +562,50 @@ class AICockroachAgentWorkflow:
 
 ---
 
+## Tests de charge et de performance
+
+### Benchmarking avec Maru
+
+[Maru](https://github.com/temporalio/maru) est l'outil officiel de test de charge de Temporal. Il génère des volumes configurables de workflows et d'activités contre un cluster en production et rapporte le débit, la latence et les taux d'erreur. Avec un backend CockroachDB, il permet d'observer comment le niveau de persistance se comporte à mesure que la concurrence augmente.
+
+Un benchmark typique démarre un worker aux côtés du scénario Maru :
+
+```bash
+# Start the bench worker (points at your Temporal frontend)
+go run ./cmd/bench worker --temporal-host localhost:7233 &
+
+# Run the scenario: 500 concurrent workflows, 5-minute duration
+go run ./cmd/bench start \
+  --workflow basic \
+  --concurrent-workflows 500 \
+  --duration 5m \
+  --temporal-host localhost:7233
+```
+
+Avec cette configuration, vous pouvez :
+
+- **Mesurer le débit de workflows** : workflows démarrés et terminés par seconde à différents niveaux de concurrence
+- **Observer la latence de persistance** : les métriques internes de Temporal exposent des histogrammes pour le polling des task queues et la persistance de l'historique ; les pics corrèlent avec l'amplification des écritures dans CockroachDB
+- **Valider le comportement de récupération** : supprimez un nœud CockroachDB en cours d'exécution et confirmez que les workflows en cours reprennent automatiquement une fois le cluster rétabli, sans intervention manuelle et sans perte de workflow
+
+### Observabilité
+
+Deux tableaux de bord offrent des vues complémentaires de la même charge :
+
+**L'interface web Temporal** (`http://localhost:8080` avec la configuration Docker par défaut) permet d'inspecter les exécutions de workflows individuels en temps réel : historique des événements, statut des activités, compteurs de réessais et profondeur actuelle des task queues. Pendant un run Maru, vous pouvez observer le nombre d'exécutions ouvertes monter et descendre, et accéder à tout workflow échoué pour voir exactement quelle activité a expiré.
+
+**La console d'administration CockroachDB** (`http://<crdb-host>:8080`) expose la vue au niveau de la base de données :
+
+| Panneau | Ce qu'il faut surveiller |
+|---|---|
+| **SQL Activity** | Requêtes par seconde, latence p50/p99 ; une latence élevée sur `INSERT INTO executions` signale une contention en écriture |
+| **Ranges** | Distribution des plages de données entre nœuds ; une distribution inégale signifie qu'un nœud est un point chaud pour les écritures de shards d'historique |
+| **Node Map** | CPU, IOPS et réseau par nœud ; vérifiez qu'aucun nœud n'est saturé pendant que les autres sont inactifs |
+
+Cette combinaison donne une vue complète : Temporal indique *quels* workflows sont lents ; CockroachDB explique *pourquoi* au niveau du stockage.
+
+---
+
 ## Bénéfices clés
 
 | Capacité | Contribution de CockroachDB |
