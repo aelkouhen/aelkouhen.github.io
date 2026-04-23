@@ -2,7 +2,7 @@
 date: 2026-02-20
 layout: post
 title: "Building RAG Applications with CockroachDB"
-subtitle: "From Naive RAG to Agentic RAG — a complete tutorial using LangChain, Memori, GCP Vertex AI, and Amazon Bedrock"
+subtitle: "From Naive RAG to Agentic RAG  -  a complete tutorial using LangChain, Memori, GCP Vertex AI, and Amazon Bedrock"
 cover-img: /assets/img/cover-ai-rag.webp
 thumbnail-img: /assets/img/cover-ai-rag.webp
 share-img: /assets/img/cover-ai-rag.webp
@@ -14,11 +14,11 @@ comments: true
 
 Large Language Models (LLMs) are transforming how we build intelligent applications, but they carry a fundamental limitation: their knowledge is frozen at training time. Ask a model about your internal documentation, your product catalogue, or last week's incident report and it will either refuse or hallucinate a plausible-sounding answer.
 
-**Retrieval-Augmented Generation (RAG)** solves this by grounding every LLM response in your own, up-to-date, domain-specific data. Rather than relying solely on pre-trained knowledge, a RAG system retrieves the most relevant documents from a private knowledge base, injects them as context into the prompt, and only then asks the LLM to generate an answer — precise, trustworthy, and anchored in verified data.
+**Retrieval-Augmented Generation (RAG)** solves this by grounding every LLM response in your own, up-to-date, domain-specific data. Rather than relying solely on pre-trained knowledge, a RAG system retrieves the most relevant documents from a private knowledge base, injects them as context into the prompt, and only then asks the LLM to generate an answer  -  precise, trustworthy, and anchored in verified data.
 
 But RAG is not a single technique. In the past two years the field has evolved rapidly from simple vector lookups to sophisticated agent-driven pipelines. This article covers:
 
-1. **The state of the art** — Naive RAG, Graph RAG, and Agentic RAG: how they work, when to use them, and where they fall short.
+1. **The state of the art**  -  Naive RAG, Graph RAG, and Agentic RAG: how they work, when to use them, and where they fall short.
 2. **Why CockroachDB** is an ideal foundation for any of these paradigms.
 3. **A complete, working tutorial** implementing a RAG pipeline on CockroachDB using both Google Cloud (Vertex AI) and AWS (Bedrock).
 
@@ -26,9 +26,9 @@ But RAG is not a single technique. In the past two years the field has evolved r
 
 ## The State of the Art of RAG
 
-RAG has evolved through three distinct generations, each addressing the limitations of the last. **Naive RAG** established the foundational retrieve-then-generate pattern — simple, fast, and effective for straightforward lookups, but brittle when queries require connecting facts across multiple documents. **Graph RAG** replaced flat vector chunks with a structured knowledge graph, enabling global sensemaking across large corpora at the cost of higher latency and indexing expense. **Agentic RAG** pushed further still, embedding autonomous agents that plan, retrieve iteratively, invoke external tools, and self-correct — trading predictability for the ability to tackle genuinely open-ended, multi-step reasoning tasks.
+RAG has evolved through three distinct generations, each addressing the limitations of the last. **Naive RAG** established the foundational retrieve-then-generate pattern  -  simple, fast, and effective for straightforward lookups, but brittle when queries require connecting facts across multiple documents. **Graph RAG** replaced flat vector chunks with a structured knowledge graph, enabling global sensemaking across large corpora at the cost of higher latency and indexing expense. **Agentic RAG** pushed further still, embedding autonomous agents that plan, retrieve iteratively, invoke external tools, and self-correct  -  trading predictability for the ability to tackle genuinely open-ended, multi-step reasoning tasks.
 
-Choosing between them is not a matter of "newer is better" — it is a question of matching the paradigm to the query complexity, latency budget, and cost envelope of your specific use case. The sections below break down each approach so you can make that call with confidence.
+Choosing between them is not a matter of "newer is better"  -  it is a question of matching the paradigm to the query complexity, latency budget, and cost envelope of your specific use case. The sections below break down each approach so you can make that call with confidence.
 
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
   <iframe src="https://www.youtube.com/embed/zZFQ4co4HzY" title="CockroachDB for AI/ML: LLMs and RAG" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
@@ -36,19 +36,19 @@ Choosing between them is not a matter of "newer is better" — it is a question 
 
 ### Naive RAG
 
-Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two distinct phases — an **offline ingestion pipeline** (steps 1–3) and an **online retrieval-and-generation pipeline** (steps 4–7) — connected through a shared vector store.
+Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two distinct phases  -  an **offline ingestion pipeline** (steps 1–3) and an **online retrieval-and-generation pipeline** (steps 4–7)  -  connected through a shared vector store.
 
-1. **Chunk** — raw documents (PDFs, CSVs, HTML) are split into fixed-size overlapping text segments by a chunker.
-2. **Encode** — each chunk is converted into a high-dimensional vector by an embedding model that captures its semantic meaning.
-3. **Index** — the resulting vectors are stored and indexed in the CockroachDB Vector Store, ready for similarity search.
-4. **Encode query** — the user's question is passed through the same embedding model to produce a query vector.
-5. **Similarity search** — CockroachDB compares the query vector against all indexed chunk vectors using cosine distance and returns the top-k closest matches.
-6. **Assemble context** — the retrieved chunks are combined with the original query into a single context block.
-7. **Generate** — the LLM receives context + query as a prompt and produces a grounded answer.
+1. **Chunk**  -  raw documents (PDFs, CSVs, HTML) are split into fixed-size overlapping text segments by a chunker.
+2. **Encode**  -  each chunk is converted into a high-dimensional vector by an embedding model that captures its semantic meaning.
+3. **Index**  -  the resulting vectors are stored and indexed in the CockroachDB Vector Store, ready for similarity search.
+4. **Encode query**  -  the user's question is passed through the same embedding model to produce a query vector.
+5. **Similarity search**  -  CockroachDB compares the query vector against all indexed chunk vectors using cosine distance and returns the top-k closest matches.
+6. **Assemble context**  -  the retrieved chunks are combined with the original query into a single context block.
+7. **Generate**  -  the LLM receives context + query as a prompt and produces a grounded answer.
 
-<img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
+<img src="/assets/img/ai-rag-naive.png" alt="Naive RAG pipeline  -  Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)" style="width:100%">
 {: .mx-auto.d-block :}
-**Naive RAG pipeline — Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Naive RAG pipeline  -  Ingestion (documents, chunker, embedding model, CockroachDB vector store) and Retrieval & Generation (user query, embedding, similarity search, context + LLM)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Strengths:** minimal complexity, fast to deploy, low latency (< 2 s), low cost. Proven effective for straightforward factual lookup. GPT-4 accuracy on medical MCQs improved from 73% to 80% with basic RAG alone.
 
@@ -62,22 +62,22 @@ Naive RAG is the foundational retrieve-then-generate paradigm. It runs in two di
 
 ### Graph RAG
 
-Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Local to Global: A Graph RAG Approach to Query-Focused Summarization"*, replaces flat vector chunks with a structured knowledge graph and hierarchical community summaries. The pipeline runs in two phases — **offline indexing** (steps 1–5) and **online retrieval & generation** (steps 6–10).
+Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Local to Global: A Graph RAG Approach to Query-Focused Summarization"*, replaces flat vector chunks with a structured knowledge graph and hierarchical community summaries. The pipeline runs in two phases  -  **offline indexing** (steps 1–5) and **online retrieval & generation** (steps 6–10).
 
-1. **Chunk** — source documents are split into text segments, just as in Naive RAG.
-2. **Entity extraction** — an LLM reads each chunk and identifies named entities (people, places, concepts) and the relationships between them.
-3. **Knowledge Graph** — extracted entities and relationships are assembled into a graph stored in a dedicated Graph DB.
-4. **Community clustering** — a community detection algorithm groups closely related entities into clusters.
-5. **Community summaries** — the LLM pre-generates a natural-language summary for each cluster; summaries are stored in both the Graph DB and a Vector DB for fast lookup.
-6. **Embed query** — the user query is converted into a vector.
-7. **Vector search** — the Vector DB is searched to find the most semantically relevant community summaries.
-8. **Graph hop** — for each matched community, the Graph DB is traversed to retrieve supporting entity relationships and fine-grained evidence.
-9. **LLM synthesis** — all retrieved summaries and graph context are passed to the LLM to compose a comprehensive answer.
-10. **Answer** — the final response is grounded in both community-level and entity-level evidence from across the entire corpus.
+1. **Chunk**  -  source documents are split into text segments, just as in Naive RAG.
+2. **Entity extraction**  -  an LLM reads each chunk and identifies named entities (people, places, concepts) and the relationships between them.
+3. **Knowledge Graph**  -  extracted entities and relationships are assembled into a graph stored in a dedicated Graph DB.
+4. **Community clustering**  -  a community detection algorithm groups closely related entities into clusters.
+5. **Community summaries**  -  the LLM pre-generates a natural-language summary for each cluster; summaries are stored in both the Graph DB and a Vector DB for fast lookup.
+6. **Embed query**  -  the user query is converted into a vector.
+7. **Vector search**  -  the Vector DB is searched to find the most semantically relevant community summaries.
+8. **Graph hop**  -  for each matched community, the Graph DB is traversed to retrieve supporting entity relationships and fine-grained evidence.
+9. **LLM synthesis**  -  all retrieved summaries and graph context are passed to the LLM to compose a comprehensive answer.
+10. **Answer**  -  the final response is grounded in both community-level and entity-level evidence from across the entire corpus.
 
-<img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
+<img src="/assets/img/ai-rag-graph.png" alt="Graph RAG pipeline  -  Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)" style="width:100%">
 {: .mx-auto.d-block :}
-**Graph RAG pipeline — Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Graph RAG pipeline  -  Indexing phase (source docs, LLM entity extraction, knowledge graph, community clusters and summaries) and Retrieval & Generation phase (vector DB, community summaries, graph DB traversal, LLM synthesis)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Strengths:** excels at global sensemaking and synthesis across large corpora (1M+ tokens). Microsoft testing showed 72–83% comprehensiveness vs. baseline RAG. Multi-hop reasoning and relationship tracing are first-class capabilities.
 
@@ -91,7 +91,7 @@ Graph RAG, pioneered by Microsoft Research in their April 2024 paper *"From Loca
 
 ### Agentic RAG
 
-Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results. The pipeline runs across three lanes — **Planning** (steps 1–3), **Multi-source Retrieval** (steps 4–5), and **Iterative Reasoning & Self-Correction** (steps 6–9).
+Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an intelligent orchestrator that plans, reasons iteratively, invokes tools, and adapts its retrieval strategy in real time based on intermediate results. The pipeline runs across three lanes  -  **Planning** (steps 1–3), **Multi-source Retrieval** (steps 4–5), and **Iterative Reasoning & Self-Correction** (steps 6–9).
 
 1. The **User Query** arrives at the **Agent Planner**, which analyses intent and scope.
 2. The planner decomposes the query into **Sub-Questions**, each addressable by a specific retrieval source or tool.
@@ -99,13 +99,13 @@ Agentic RAG embeds autonomous AI agents into the pipeline. The LLM acts as an in
 4. Retrieval executes in parallel across four sources: **Vector DB** (CockroachDB for semantic search), **Web Search** (real-time), **APIs & Tools** (structured data), and **Code Executor** (programmatic computations).
 5. All results are aggregated into a **Retrieved Context** package passed to the reasoning lane.
 6. The **LLM Reasoner** processes the context and produces a **Draft Answer**.
-7. A decision gate asks: **"Need more info?"** — if YES, the agent loops back to step 3 with a refined sub-question and reruns retrieval.
-8. If NO, the **Evaluator Agent** assesses quality: **"Relevant & Complete?"** — if NO, the answer is refined and re-evaluated.
+7. A decision gate asks: **"Need more info?"**  -  if YES, the agent loops back to step 3 with a refined sub-question and reruns retrieval.
+8. If NO, the **Evaluator Agent** assesses quality: **"Relevant & Complete?"**  -  if NO, the answer is refined and re-evaluated.
 9. If YES, the **Final Answer** is returned to the user.
 
-<img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
+<img src="/assets/img/ai-rag-agentic.png" alt="Agentic RAG pipeline  -  Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)" style="width:100%">
 {: .mx-auto.d-block :}
-**Agentic RAG pipeline — Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Agentic RAG pipeline  -  Planning (agent planner, sub-questions, tool selector), Multi-source Retrieval (vector DB, web search, APIs, code executor), and Iterative Reasoning (LLM reasoner, draft answer, self-correction loop, evaluator, final answer)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Strengths:** handles complex multi-step reasoning, integrates real-time data via web search and APIs, self-correcting, ideal for exploratory and discovery tasks. Accuracy of 75–90%+ on complex queries.
 
@@ -141,25 +141,25 @@ CockroachDB stores **source documents, metadata, vector embeddings, LLM caches, 
 
 ### Scalability and Resilience
 
-CockroachDB's distributed SQL architecture provides automatic self-healing from node failures, horizontal scale-out, and continuous availability — purpose-built for business-critical workloads at scale.
+CockroachDB's distributed SQL architecture provides automatic self-healing from node failures, horizontal scale-out, and continuous availability  -  purpose-built for business-critical workloads at scale.
 
-### Native Vector Store — No Extra Infrastructure
+### Native Vector Store  -  No Extra Infrastructure
 
-CockroachDB ships a native `VECTOR` type backed by the **C-SPANN distributed index** — purpose-built for distributed systems, not just a pgvector wrapper. Key capabilities that matter for RAG workloads:
+CockroachDB ships a native `VECTOR` type backed by the **C-SPANN distributed index**  -  purpose-built for distributed systems, not just a pgvector wrapper. Key capabilities that matter for RAG workloads:
 
-- **C-SPANN indexes** — a hierarchical K-means tree stored in CockroachDB's key-value layer; no single-node bottleneck, no warm-up cost, auto-splits as data grows (see [Real-Time Indexing for Billions of Vectors](/2025-11-23-cockroachdb-ai-spann/)).
-- **Advanced metadata filtering** — filter by any column alongside vector similarity in a single SQL query.
-- **Multi-tenancy with prefix columns** — each user or tenant gets its own index partition; performance is proportional to that tenant's data, not the total corpus.
+- **C-SPANN indexes**  -  a hierarchical K-means tree stored in CockroachDB's key-value layer; no single-node bottleneck, no warm-up cost, auto-splits as data grows (see [Real-Time Indexing for Billions of Vectors](/2025-11-23-cockroachdb-ai-spann/)).
+- **Advanced metadata filtering**  -  filter by any column alongside vector similarity in a single SQL query.
+- **Multi-tenancy with prefix columns**  -  each user or tenant gets its own index partition; performance is proportional to that tenant's data, not the total corpus.
 
 ### Dedicated LangChain Integration
 
-The `langchain-cockroachdb` package provides a first-class async integration with `AsyncCockroachDBVectorStore` — supporting document ingestion, similarity search, and metadata filtering, fully compatible with any LangChain chain or agent. Install it with:
+The `langchain-cockroachdb` package provides a first-class async integration with `AsyncCockroachDBVectorStore`  -  supporting document ingestion, similarity search, and metadata filtering, fully compatible with any LangChain chain or agent. Install it with:
 
 ```bash
 pip install langchain-cockroachdb
 ```
 
-As soon as an application needs to retrieve data, maintain conversational context, or reason across multiple steps, the amount of custom glue code grows fast. LangChain provides a structured way to orchestrate these workflows — and `langchain-cockroachdb` makes CockroachDB a drop-in vector source for any LangChain pipeline.
+As soon as an application needs to retrieve data, maintain conversational context, or reason across multiple steps, the amount of custom glue code grows fast. LangChain provides a structured way to orchestrate these workflows  -  and `langchain-cockroachdb` makes CockroachDB a drop-in vector source for any LangChain pipeline.
 
 ### Security and Data Governance
 
@@ -171,16 +171,16 @@ RBAC, Row-Level Security, and native geo-data placement enforce fine-grained per
 
 ### LangChain
 
-[LangChain](https://python.langchain.com/) is an open-source framework for building applications powered by large language models. Rather than writing raw API calls and stitching together custom plumbing, LangChain gives you a set of composable abstractions — document loaders, text splitters, embedding models, vector stores, retrievers, chains, and agents — that cover the entire lifecycle of an LLM application.
+[LangChain](https://python.langchain.com/) is an open-source framework for building applications powered by large language models. Rather than writing raw API calls and stitching together custom plumbing, LangChain gives you a set of composable abstractions  -  document loaders, text splitters, embedding models, vector stores, retrievers, chains, and agents  -  that cover the entire lifecycle of an LLM application.
 
 Its key strength for RAG is the **retrieval pipeline**:
 
 - **Document Loaders** ingest content from PDFs, CSVs, databases, Notion, Google Drive, Slack, and dozens of other sources into a standardised `Document` object.
-- **Text Splitters** break large documents into smaller, independently retrievable chunks — a critical step because embedding models have context-length limits and smaller chunks yield more precise similarity matches.
-- **Embedding Models** convert each chunk into a high-dimensional vector. LangChain supports 30+ embedding providers including Google Vertex AI, Amazon Bedrock, OpenAI, Cohere, and Ollama — all behind the same interface, so swapping providers requires changing one line.
+- **Text Splitters** break large documents into smaller, independently retrievable chunks  -  a critical step because embedding models have context-length limits and smaller chunks yield more precise similarity matches.
+- **Embedding Models** convert each chunk into a high-dimensional vector. LangChain supports 30+ embedding providers including Google Vertex AI, Amazon Bedrock, OpenAI, Cohere, and Ollama  -  all behind the same interface, so swapping providers requires changing one line.
 - **Vector Stores** store and index those embeddings for fast semantic search. LangChain integrates with 40+ backends, including the native `AsyncCockroachDBVectorStore` provided by the `langchain-cockroachdb` package.
-- **Retrievers** sit on top of vector stores and expose a single `.invoke(query)` interface — whether the underlying search is similarity-based, MMR, or hybrid with score thresholds.
-- **Chains and Agents** wire retrievers, prompts, and LLMs into end-to-end workflows. Chains follow a fixed execution path; agents let the LLM decide dynamically which tools to call and in what order — the backbone of Agentic RAG.
+- **Retrievers** sit on top of vector stores and expose a single `.invoke(query)` interface  -  whether the underlying search is similarity-based, MMR, or hybrid with score thresholds.
+- **Chains and Agents** wire retrievers, prompts, and LLMs into end-to-end workflows. Chains follow a fixed execution path; agents let the LLM decide dynamically which tools to call and in what order  -  the backbone of Agentic RAG.
 
 ```python
 from langchain_community.document_loaders import PyPDFLoader
@@ -198,11 +198,11 @@ await store.aadd_documents(chunks)
 results = await store.asimilarity_search_with_score("What is the Q3 revenue?", k=3)
 ```
 
-This composability is why LangChain is the de-facto standard for RAG: you can swap any component — embedding provider, vector backend, LLM — without rewriting the pipeline.
+This composability is why LangChain is the de-facto standard for RAG: you can swap any component  -  embedding provider, vector backend, LLM  -  without rewriting the pipeline.
 
 ### Memori
 
-[Memori](https://memorilabs.ai/) is a SQL-native, LLM-agnostic memory layer for production AI agents. Where LangChain handles the retrieval and generation pipeline, Memori handles **what the agent remembers between sessions** — turning raw conversations into structured, queryable knowledge that persists in your own database.
+[Memori](https://memorilabs.ai/) is a SQL-native, LLM-agnostic memory layer for production AI agents. Where LangChain handles the retrieval and generation pipeline, Memori handles **what the agent remembers between sessions**  -  turning raw conversations into structured, queryable knowledge that persists in your own database.
 
 Every time an LLM call is made, Memori automatically captures the exchange and classifies it into four memory types:
 
@@ -213,7 +213,7 @@ Every time an LLM call is made, Memori automatically captures the exchange and c
 | **Rules** | Constraints and instructions | "Never recommend competitor products" |
 | **Summaries** | Compressed conversation history | "Discussed onboarding steps in session #4" |
 
-On subsequent calls, Memori injects only the **relevant** memories as context — not the full history — using its own **tokenless recall** engine. This is the mechanism behind its claimed 98% reduction in LLM spend: instead of replaying entire conversation logs into the context window on every turn, only the semantically relevant snippets are retrieved in milliseconds from CockroachDB.
+On subsequent calls, Memori injects only the **relevant** memories as context  -  not the full history  -  using its own **tokenless recall** engine. This is the mechanism behind its claimed 98% reduction in LLM spend: instead of replaying entire conversation logs into the context window on every turn, only the semantically relevant snippets are retrieved in milliseconds from CockroachDB.
 
 Integration is a single SDK call:
 
@@ -226,19 +226,19 @@ with sql_engine.raw_connection() as conn:
     mem.config.storage.build()
 ```
 
-After `mem.llm.register(client)`, Memori intercepts all LLM calls automatically — no decorator, no manual cache lookup, no conversation injection code. It also provides an interactive **Memory Graph** that visualises how facts, preferences, and relationships evolve across sessions, plus an **Analytics Dashboard** that tracks memory creation rates, cache hit rates, and recall usage.
+After `mem.llm.register(client)`, Memori intercepts all LLM calls automatically  -  no decorator, no manual cache lookup, no conversation injection code. It also provides an interactive **Memory Graph** that visualises how facts, preferences, and relationships evolve across sessions, plus an **Analytics Dashboard** that tracks memory creation rates, cache hit rates, and recall usage.
 
-For enterprise deployments, Memori is PCI and SOC 2 compliant, supports RBAC with SSO/OAuth, configurable data retention and automatic purging, and full audit trails — with all data remaining in your own database by default.
+For enterprise deployments, Memori is PCI and SOC 2 compliant, supports RBAC with SSO/OAuth, configurable data retention and automatic purging, and full audit trails  -  with all data remaining in your own database by default.
 
 ---
 
 ## Tutorial: Building the RAG Pipeline
 
-The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini Embeddings + Gemini 2.5 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude Sonnet 4.6). The CockroachDB layer and LangChain pipeline are identical between the two — only the embedding and LLM clients change.
+The tutorial is structured in two parts. Part 1 uses Google Cloud's **Vertex AI** (Gemini Embeddings + Gemini 2.5 Flash generation). Part 2 uses Amazon Web Services' **Bedrock** (Titan Embed Text v2 + Claude Sonnet 4.6). The CockroachDB layer and LangChain pipeline are identical between the two  -  only the embedding and LLM clients change.
 
-<img src="/assets/img/ai-rag-crdb-dataflow.png" alt="RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response" style="width:100%">
+<img src="/assets/img/ai-rag-crdb-dataflow.png" alt="RAG data flow with CockroachDB  -  user question, vectorisation, similarity search, context injection, LLM response" style="width:100%">
 {: .mx-auto.d-block :}
-**RAG data flow with CockroachDB — user question, vectorisation, similarity search, context injection, LLM response**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**RAG data flow with CockroachDB  -  user question, vectorisation, similarity search, context injection, LLM response**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 The data flow: user submits a question → it is vectorised → CockroachDB performs similarity search → top-k relevant documents are retrieved → context is injected into the prompt → the LLM generates a grounded answer.
 
@@ -355,7 +355,7 @@ async def rag(query: str) -> str:
 
 ### Standard LLM Cache (SQLAlchemyCache)
 
-The cleanest approach to use an LLM cache on top of CockroachDB is LangChain's built-in SQLAlchemyCache, which integrates transparently with all LLM calls — no manual hash/UPSERT code needed. Use the sql_engine you already have:                                                                                                                                                                                                
+The cleanest approach to use an LLM cache on top of CockroachDB is LangChain's built-in SQLAlchemyCache, which integrates transparently with all LLM calls  -  no manual hash/UPSERT code needed. Use the sql_engine you already have:                                                                                                                                                                                                
 ```python
 from langchain.globals import set_llm_cache                                                                                                           from langchain.cache import SQLAlchemyCache                                
 
@@ -372,9 +372,9 @@ Once `mem.llm.register(client)` is called, Memori intercepts all LLM calls autom
 
 This replaces both the standard cache and the conversation history blocks in the tutorial. Memori handles structured memory, recall, and caching in one layer.
 
-Memori's semantic cache is built-in — it's not a separate component to configure. It operates at two levels:                                                                                                                         
-1. Tokenless recall (replaces your semantic cache): When a query is semantically similar to a previous one, Memori retrieves only the relevant cached context snippets from CockroachDB — no LLM call, no token spend. This is the "98% cost reduction" claim. It happens automatically once mem.llm.register(client) is called.
-2. Advanced Augmentation (runs in background): It converts conversations into structured semantic triples (facts, preferences, rules, relationships) stored in CockroachDB. Future queries are matched against this structured store semantically — more precise than raw embedding similarity.
+Memori's semantic cache is built-in  -  it's not a separate component to configure. It operates at two levels:                                                                                                                         
+1. Tokenless recall (replaces your semantic cache): When a query is semantically similar to a previous one, Memori retrieves only the relevant cached context snippets from CockroachDB  -  no LLM call, no token spend. This is the "98% cost reduction" claim. It happens automatically once mem.llm.register(client) is called.
+2. Advanced Augmentation (runs in background): It converts conversations into structured semantic triples (facts, preferences, rules, relationships) stored in CockroachDB. Future queries are matched against this structured store semantically  -  more precise than raw embedding similarity.
 
 So compared to the manual approach in the tutorial:
 
@@ -482,7 +482,7 @@ async def rag(query: str) -> str:
 
 ### Caching and History
 
-The standard cache and history implementations are **identical to Part 1** (using `sql_engine`). Only the vector store embedding client changes — use `bedrock_embeddings` (1024 dims) instead of the Vertex AI embeddings:
+The standard cache and history implementations are **identical to Part 1** (using `sql_engine`). Only the vector store embedding client changes  -  use `bedrock_embeddings` (1024 dims) instead of the Vertex AI embeddings:
 
 ```python
 await engine.ainit_vectorstore_table(
@@ -505,7 +505,7 @@ async def ask_claude_semantic(query): return await rag(query)
 
 ## GCP Vertex AI vs AWS Bedrock: Choosing Your Cloud AI Stack
 
-Both integrations produce identical results from CockroachDB's perspective — the vector store, caching, and history layers are unchanged. The decision comes down to your cloud strategy, model preferences, and compliance requirements.
+Both integrations produce identical results from CockroachDB's perspective  -  the vector store, caching, and history layers are unchanged. The decision comes down to your cloud strategy, model preferences, and compliance requirements.
 
 | | **GCP Vertex AI** | **AWS Bedrock** |
 |---|---|---|
@@ -522,23 +522,23 @@ Both integrations produce identical results from CockroachDB's perspective — t
 
 **Choose Vertex AI if** you are already on GCP, use BigQuery as a data source, or need tight Gemini 2.5 integration. **Choose Bedrock if** you are on AWS, want access to multiple third-party foundation models (Anthropic Claude Sonnet 4.6, Cohere, Meta Llama) from a single API, or need FedRAMP compliance.
 
-Both are equally well-suited to any of the three RAG paradigms described above — Naive, Graph, or Agentic — with CockroachDB serving as the unified data layer across all of them.
+Both are equally well-suited to any of the three RAG paradigms described above  -  Naive, Graph, or Agentic  -  with CockroachDB serving as the unified data layer across all of them.
 
 ---
 
 ## What RAG Unlocks: Real-World Use Cases
 
-The RAG patterns and infrastructure described above are not academic exercises — they directly enable a class of applications that would be impossible or unreliable without grounded retrieval. Below are two concrete examples that illustrate the breadth of what becomes possible once you have a working RAG pipeline on CockroachDB.
+The RAG patterns and infrastructure described above are not academic exercises  -  they directly enable a class of applications that would be impossible or unreliable without grounded retrieval. Below are two concrete examples that illustrate the breadth of what becomes possible once you have a working RAG pipeline on CockroachDB.
 
 ### Domain-Specific Conversational Assistants
 
-<img src="/assets/img/ai-rag-00.png" alt="RAG pipeline for domain-specific conversational assistant — knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions" style="width:100%">
+<img src="/assets/img/ai-rag-00.png" alt="RAG pipeline for domain-specific conversational assistant  -  knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions" style="width:100%">
 {: .mx-auto.d-block :}
-**RAG pipeline for domain-specific conversational assistant — knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**RAG pipeline for domain-specific conversational assistant  -  knowledge base (web content, documents, database), semantic search layer, context retrieval, LLM answering user questions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-The most direct application is a conversational assistant grounded in a private knowledge base. The knowledge base can be anything: internal documentation, support FAQs, regulatory filings, research papers, or a combination of web content, raw documents, and structured database records. Users ask questions in natural language — *"How do I configure two-factor authentication?"*, *"What does clause 4.3 of our SLA say?"*, *"Summarise the three most recent incident reports"* — and the RAG pipeline retrieves only the relevant context before asking the LLM to compose an answer.
+The most direct application is a conversational assistant grounded in a private knowledge base. The knowledge base can be anything: internal documentation, support FAQs, regulatory filings, research papers, or a combination of web content, raw documents, and structured database records. Users ask questions in natural language  -  *"How do I configure two-factor authentication?"*, *"What does clause 4.3 of our SLA say?"*, *"Summarise the three most recent incident reports"*  -  and the RAG pipeline retrieves only the relevant context before asking the LLM to compose an answer.
 
-The critical advantage over a fine-tuned model is **freshness**: the knowledge base updates in real time as documents are added or revised, without retraining. With CockroachDB as the vector store, a single upsert indexes the new content immediately, and the next query will already benefit from it. Pair this with Memori's session memory and the assistant also remembers user context across conversations — making it genuinely adaptive rather than stateless.
+The critical advantage over a fine-tuned model is **freshness**: the knowledge base updates in real time as documents are added or revised, without retraining. With CockroachDB as the vector store, a single upsert indexes the new content immediately, and the next query will already benefit from it. Pair this with Memori's session memory and the assistant also remembers user context across conversations  -  making it genuinely adaptive rather than stateless.
 
 Common deployments in this pattern include:
 - **Customer support bots** that answer product or policy questions from a live documentation corpus
@@ -548,13 +548,13 @@ Common deployments in this pattern include:
 
 ### Personalised E-Commerce Recommendations
 
-<img src="/assets/img/ai-rag-03.png" alt="RAG for e-commerce chatbot — product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog" style="width:100%">
+<img src="/assets/img/ai-rag-03.png" alt="RAG for e-commerce chatbot  -  product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog" style="width:100%">
 {: .mx-auto.d-block :}
-**RAG for e-commerce chatbot — product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**RAG for e-commerce chatbot  -  product catalogue embeddings in vector database, user natural language query, LangChain application backend, personalised product recommendation via chat dialog**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-E-commerce is a natural fit for RAG because product catalogues are large, change frequently, and carry rich semantic content — descriptions, reviews, attributes — that keyword search handles poorly. Rather than relying on brittle filter menus or pre-computed recommendation engines, a RAG-powered shopping assistant lets users describe what they need in natural language and returns products that genuinely match the intent.
+E-commerce is a natural fit for RAG because product catalogues are large, change frequently, and carry rich semantic content  -  descriptions, reviews, attributes  -  that keyword search handles poorly. Rather than relying on brittle filter menus or pre-computed recommendation engines, a RAG-powered shopping assistant lets users describe what they need in natural language and returns products that genuinely match the intent.
 
-In the architecture above, product descriptions, reviews, and attributes are embedded and indexed in the CockroachDB vector store. A user's query — *"I want a new shirt to make me look in shape at my brother's wedding"* — is embedded at query time, matched against the product catalogue via semantic similarity search, and the top candidates are passed to the LLM along with the user's chat history. The result is a personalised recommendation with an explanation: *"I would suggest this shirt — we have it in different colours that could work well."*
+In the architecture above, product descriptions, reviews, and attributes are embedded and indexed in the CockroachDB vector store. A user's query  -  *"I want a new shirt to make me look in shape at my brother's wedding"*  -  is embedded at query time, matched against the product catalogue via semantic similarity search, and the top candidates are passed to the LLM along with the user's chat history. The result is a personalised recommendation with an explanation: *"I would suggest this shirt  -  we have it in different colours that could work well."*
 
 What makes this viable at scale is exactly CockroachDB's multi-tenancy model: each customer's preference history, past interactions, and personalised embeddings live in their own index partition, so performance is proportional to that user's data rather than the size of the full catalogue. As the catalogue grows, the C-SPANN index auto-splits and rebalances without any operational intervention.
 
@@ -566,22 +566,22 @@ Beyond fashion retail, this same architecture powers:
 
 ### The Common Thread
 
-Both use cases share the same infrastructure: CockroachDB stores the knowledge or product corpus, serves as the vector index, caches LLM responses to reduce cost, and persists session memory via Memori. LangChain provides the orchestration layer that wires embeddings, retrieval, and generation into a coherent pipeline. The cloud AI stack — Vertex AI or Bedrock — provides the embedding and generation models.
+Both use cases share the same infrastructure: CockroachDB stores the knowledge or product corpus, serves as the vector index, caches LLM responses to reduce cost, and persists session memory via Memori. LangChain provides the orchestration layer that wires embeddings, retrieval, and generation into a coherent pipeline. The cloud AI stack  -  Vertex AI or Bedrock  -  provides the embedding and generation models.
 
-What changes between a support bot and a shopping assistant is only the domain data and the prompt. The architecture, the scaling properties, and the operational guarantees remain the same — which is precisely the value of building on a general-purpose distributed database rather than a purpose-built vector store.
+What changes between a support bot and a shopping assistant is only the domain data and the prompt. The architecture, the scaling properties, and the operational guarantees remain the same  -  which is precisely the value of building on a general-purpose distributed database rather than a purpose-built vector store.
 
 ---
 
 ## Resources
 
 - [CockroachDB vector search documentation](https://www.cockroachlabs.com/docs/stable/vector-search.html)
-- [langchain-cockroachdb — LangChain integration for CockroachDB](https://pypi.org/project/langchain-cockroachdb/)
+- [langchain-cockroachdb  -  LangChain integration for CockroachDB](https://pypi.org/project/langchain-cockroachdb/)
 - [Agent Development with CockroachDB using LangChain](https://www.cockroachlabs.com/blog/agent-development-cockroachdb-langchain/)
 - [From Local to Global: Microsoft GraphRAG paper (arXiv 2404.16130)](https://arxiv.org/abs/2404.16130)
 - [Agentic RAG survey (arXiv 2501.09136)](https://arxiv.org/abs/2501.09136)
 - [Amazon Bedrock model catalogue](https://aws.amazon.com/bedrock/)
-- [Google Vertex AI — Generative AI](https://cloud.google.com/vertex-ai/generative-ai/docs)
-- [Original RAG notebook — GCP](https://github.com/aelkouhen/redis-vss/blob/main/4-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20GCP.ipynb)
-- [Original RAG notebook — AWS](https://github.com/aelkouhen/redis-vss/blob/main/4bis-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20AWS.ipynb)
+- [Google Vertex AI  -  Generative AI](https://cloud.google.com/vertex-ai/generative-ai/docs)
+- [Original RAG notebook  -  GCP](https://github.com/aelkouhen/redis-vss/blob/main/4-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20GCP.ipynb)
+- [Original RAG notebook  -  AWS](https://github.com/aelkouhen/redis-vss/blob/main/4bis-%20Retrieval-Augmented%20Generation%20(RAG)%20-%20AWS.ipynb)
 - [Memori Labs](https://memorilabs.ai/)                                  
 - [Memori Labs Github Repository](https://github.com/MemoriLabs/Memori)

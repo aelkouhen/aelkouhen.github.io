@@ -44,7 +44,7 @@ Teleport offre :
 
 L'architecture de Teleport est conçue de fond en comble pour sécuriser l'accès à l'infrastructure dans des environnements dynamiques et distribués. Son architecture à agents minimaux s'appuie sur des protocoles standard comme SSH et HTTPS, simplifiant le déploiement et éliminant le besoin de logiciels supplémentaires sur les systèmes cibles. Grâce à l'authentification par certificat et à la rotation automatique des CA, elle supprime les risques liés aux identifiants à longue durée de vie.
 
-L'architecture de Teleport est construite avec la **Sécurité Zero Trust** comme principe fondateur — un modèle qui ne suppose aucune confiance implicite, même au sein du périmètre réseau. Au lieu de s'appuyer sur des adresses IP, des VPNs ou des sous-réseaux de confiance, chaque requête vers l'infrastructure est authentifiée et autorisée uniquement sur la base de l'identité et du rôle de l'utilisateur.
+L'architecture de Teleport est construite avec la **Sécurité Zero Trust** comme principe fondateur  -  un modèle qui ne suppose aucune confiance implicite, même au sein du périmètre réseau. Au lieu de s'appuyer sur des adresses IP, des VPNs ou des sous-réseaux de confiance, chaque requête vers l'infrastructure est authentifiée et autorisée uniquement sur la base de l'identité et du rôle de l'utilisateur.
 
 ---
 
@@ -72,7 +72,7 @@ L'autorité de certification du cluster. Il émet des certificats aux utilisateu
 - Le stockage des événements de session, des demandes d'accès et des journaux d'audit
 - La fonction d'API pour l'enregistrement des ressources et les décisions d'accès
 
-Étant stateful et piloté par des politiques, le serveur d'authentification s'appuie sur des backends de stockage durables et cohérents. Dans les déploiements multi-régions, ces backends doivent être distribués, hautement disponibles tout en préservant la cohérence forte. C'est là que CockroachDB devient un facteur clé — garantissant que l'état du serveur d'authentification est globalement cohérent et répliqué entre les géographies.
+Étant stateful et piloté par des politiques, le serveur d'authentification s'appuie sur des backends de stockage durables et cohérents. Dans les déploiements multi-régions, ces backends doivent être distribués, hautement disponibles tout en préservant la cohérence forte. C'est là que CockroachDB devient un facteur clé  -  garantissant que l'état du serveur d'authentification est globalement cohérent et répliqué entre les géographies.
 
 ### Service Proxy Teleport
 
@@ -89,11 +89,11 @@ Cette conception assure un accès sans agent, via navigateur ou CLI, depuis n'im
 
 Un Agent Teleport s'exécute dans le même réseau qu'une ressource cible et parle son protocole natif. Chaque agent connecte un type spécifique d'infrastructure au cluster :
 
-- **node agent** — connecte les serveurs Linux via SSH
-- **kube agent** — intègre les clusters Kubernetes via l'API Kubernetes
-- **db agent** — donne accès aux bases de données SQL/NoSQL comme PostgreSQL, MySQL et CockroachDB
-- **app agent** — expose des applications HTTP internes derrière SSO sécurisé et audit de sessions
-- **windows agent** — permet l'accès aux serveurs Windows via RDP (Enterprise)
+- **node agent**  -  connecte les serveurs Linux via SSH
+- **kube agent**  -  intègre les clusters Kubernetes via l'API Kubernetes
+- **db agent**  -  donne accès aux bases de données SQL/NoSQL comme PostgreSQL, MySQL et CockroachDB
+- **app agent**  -  expose des applications HTTP internes derrière SSO sécurisé et audit de sessions
+- **windows agent**  -  permet l'accès aux serveurs Windows via RDP (Enterprise)
 
 ### Accès pour les Réseaux Edge
 
@@ -104,20 +104,20 @@ Teleport permet aux utilisateurs d'accéder à des ressources situées n'importe
 {: .mx-auto.d-block :}
 **Nœuds distants Teleport via tunnel inverse**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-La technologie sous-jacente est le tunnel inverse — une connexion sécurisée établie par un site edge vers un cluster Teleport via le proxy du cluster. Cette approche adhère aux principes Zero Trust, où les réseaux, y compris les VPN, sont considérés comme intrinsèquement non fiables.
+La technologie sous-jacente est le tunnel inverse  -  une connexion sécurisée établie par un site edge vers un cluster Teleport via le proxy du cluster. Cette approche adhère aux principes Zero Trust, où les réseaux, y compris les VPN, sont considérés comme intrinsèquement non fiables.
 
 ### Journal d'Audit
 
 Le service d'authentification Teleport maintient un journal d'audit de toute l'activité dans le cluster, composé de deux éléments :
 
-- **Le journal d'audit** — enregistrements JSON bien documentés des événements de sécurité (tentatives de connexion, transferts de fichiers, exécutions de code, activité réseau).
-- **Sessions enregistrées** — enregistrements des sessions interactives établies via `ssh`, `RDP` et `kubectl exec`. Les sessions peuvent être rejouées via une interface web avec pause et retour arrière.
+- **Le journal d'audit**  -  enregistrements JSON bien documentés des événements de sécurité (tentatives de connexion, transferts de fichiers, exécutions de code, activité réseau).
+- **Sessions enregistrées**  -  enregistrements des sessions interactives établies via `ssh`, `RDP` et `kubectl exec`. Les sessions peuvent être rejouées via une interface web avec pause et retour arrière.
 
 ---
 
 ## Architecture Conjointe Teleport + CockroachDB
 
-Pour répondre aux exigences de niveau Tier 0, Teleport et CockroachDB offrent une valeur ajoutée conjointe pour la résilience et la cohérence multi-régions. Cette architecture permet des déploiements actif-actif de Teleport, garantissant que l'infrastructure d'accès peut survivre à des partitions réseau, des défaillances de nœuds et une charge mondiale — sans compromettre la sécurité ni la conformité.
+Pour répondre aux exigences de niveau Tier 0, Teleport et CockroachDB offrent une valeur ajoutée conjointe pour la résilience et la cohérence multi-régions. Cette architecture permet des déploiements actif-actif de Teleport, garantissant que l'infrastructure d'accès peut survivre à des partitions réseau, des défaillances de nœuds et une charge mondiale  -  sans compromettre la sécurité ni la conformité.
 
 <img src="/assets/img/teleport-crdb-architecture.png" alt="Architecture conjointe multi-régions Teleport et CockroachDB" style="width:100%;margin:1.5rem 0;">
 
@@ -133,10 +133,10 @@ Chaque composant Teleport s'appuie sur CockroachDB pour stocker son état de man
 
 CockroachDB est une base de données SQL distribuée conçue pour l'échelle mondiale et la haute disponibilité. Elle réplique les données sur plusieurs régions tout en offrant l'isolation sérialisable, la cohérence forte et le basculement automatique. Teleport supporte officiellement CockroachDB comme backend de stockage pour de bonnes raisons :
 
-- **Support multi-régions intégré** — conçu pour les déploiements géographiquement distribués
-- **Haute disponibilité** — maintient la cohérence et les garanties de disponibilité même lors de partitions réseau
-- **Scalabilité horizontale** — montée en charge des lectures et écritures sans sharding ni intervention manuelle
-- **Cohérence des données** — la cohérence forte par défaut garantit la fiabilité de l'état du cluster Teleport dans toutes les régions
+- **Support multi-régions intégré**  -  conçu pour les déploiements géographiquement distribués
+- **Haute disponibilité**  -  maintient la cohérence et les garanties de disponibilité même lors de partitions réseau
+- **Scalabilité horizontale**  -  montée en charge des lectures et écritures sans sharding ni intervention manuelle
+- **Cohérence des données**  -  la cohérence forte par défaut garantit la fiabilité de l'état du cluster Teleport dans toutes les régions
 
 ---
 
@@ -144,8 +144,8 @@ CockroachDB est une base de données SQL distribuée conçue pour l'échelle mon
 
 Ce guide présente une implémentation concrète de niveau production utilisant Teleport et CockroachDB dans un déploiement multi-régions. Dans cette architecture, CockroachDB joue deux rôles distincts :
 
-1. **Backend de stockage Teleport** — persistance de l'état du contrôle d'accès, des métadonnées d'identité et des informations de session.
-2. **Ressource protégée par Teleport** — l'accès au cluster CockroachDB lui-même est sécurisé via le Database Service de Teleport.
+1. **Backend de stockage Teleport**  -  persistance de l'état du contrôle d'accès, des métadonnées d'identité et des informations de session.
+2. **Ressource protégée par Teleport**  -  l'accès au cluster CockroachDB lui-même est sécurisé via le Database Service de Teleport.
 
 ### Prérequis
 
@@ -166,11 +166,11 @@ Choisissez l'une des méthodes suivantes pour créer un nouveau cluster Cockroac
 
 > **Note :** Créez impérativement un cluster **sécurisé**. C'est nécessaire pour les étapes suivantes de ce tutoriel.
 
-**Créer un cluster sécurisé localement** — si vous avez le binaire CockroachDB installé localement, vous pouvez déployer manuellement un cluster multi-nœuds autohébergé sur votre machine.
+**Créer un cluster sécurisé localement**  -  si vous avez le binaire CockroachDB installé localement, vous pouvez déployer manuellement un cluster multi-nœuds autohébergé sur votre machine.
 
-**Créer un cluster CockroachDB autohébergé sur AWS** — déployez un cluster multi-nœuds sur Amazon EC2 en utilisant le service de load-balancing géré d'AWS.
+**Créer un cluster CockroachDB autohébergé sur AWS**  -  déployez un cluster multi-nœuds sur Amazon EC2 en utilisant le service de load-balancing géré d'AWS.
 
-**Créer un cluster CockroachDB Cloud** — CockroachDB Cloud est un service entièrement géré par Cockroach Labs. [Inscrivez-vous](https://cockroachlabs.cloud/) et créez un cluster avec des crédits d'essai.
+**Créer un cluster CockroachDB Cloud**  -  CockroachDB Cloud est un service entièrement géré par Cockroach Labs. [Inscrivez-vous](https://cockroachlabs.cloud/) et créez un cluster avec des crédits d'essai.
 
 ### Étape 2. Configurer CockroachDB comme Backend de Stockage pour Teleport
 
@@ -471,7 +471,7 @@ Vous pouvez également accéder à vos bases de données CockroachDB via l'inter
 
 ## Prochaines Étapes
 
-Les tests ci-dessus confirment que chaque composant Teleport de ce déploiement est correctement connecté en utilisant CockroachDB comme couche de données partagée. Ensemble, ils permettent des systèmes d'accès à l'infrastructure qui restent corrects et disponibles — même en cas de panne régionale ou de partition réseau. Vous pouvez maintenant commencer à construire un contrôle d'accès à granularité fine sur vos actifs d'infrastructure avec CockroachDB et Teleport.
+Les tests ci-dessus confirment que chaque composant Teleport de ce déploiement est correctement connecté en utilisant CockroachDB comme couche de données partagée. Ensemble, ils permettent des systèmes d'accès à l'infrastructure qui restent corrects et disponibles  -  même en cas de panne régionale ou de partition réseau. Vous pouvez maintenant commencer à construire un contrôle d'accès à granularité fine sur vos actifs d'infrastructure avec CockroachDB et Teleport.
 
 ## Voir Aussi
 

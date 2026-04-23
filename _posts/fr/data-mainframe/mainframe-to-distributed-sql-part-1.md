@@ -117,7 +117,7 @@ Cependant, VSAM présente quelques inconvénients, notamment :
 
 ## Traitement par lots vs traitement transactionnel en ligne
 
-Qu'est-ce que le traitement par lots ? Le traitement par lots sur un ordinateur mainframe consiste à traiter de grandes quantités de données en groupes — ou lots — sans nécessiter d'interaction avec l'utilisateur. Cette méthode est fréquemment utilisée pour exécuter des tâches répétitives telles que les sauvegardes, le filtrage et le tri, plus efficacement que si elles étaient exécutées sur des transactions individuelles.
+Qu'est-ce que le traitement par lots ? Le traitement par lots sur un ordinateur mainframe consiste à traiter de grandes quantités de données en groupes  -  ou lots  -  sans nécessiter d'interaction avec l'utilisateur. Cette méthode est fréquemment utilisée pour exécuter des tâches répétitives telles que les sauvegardes, le filtrage et le tri, plus efficacement que si elles étaient exécutées sur des transactions individuelles.
 
 Aux débuts des mainframes, le traitement par lots s'est imposé comme l'approche prédominante de traitement des données. Par exemple, une pratique courante consistait à accumuler des données sur une période spécifique, comme les heures ouvrables, puis à les traiter pendant les heures creuses, généralement la nuit lorsque l'activité était minimale. Un autre scénario typique était le traitement de la paie, où les données étaient recueillies pendant des semaines et traitées à la fin de la période.
 
@@ -152,7 +152,7 @@ Les applications CICS sont traditionnellement exécutées en soumettant une dema
 
 Dans l'environnement z/OS, une installation mainframe CICS comprend une ou plusieurs « régions » réparties sur une ou plusieurs images du système z/OS. Bien qu'il traite des transactions interactives, chaque région CICS est généralement démarrée comme un travail par lots. Chaque région CICS comprend une tâche principale sur laquelle chaque transaction s'exécute, bien que certains services, tels que l'accès aux données IBM Db2, utilisent d'autres tâches.
 
-Au sein d'une région, les transactions sont multitâchées de manière coopérative — elles sont supposées se comporter correctement et céder le CPU plutôt que d'attendre. Les services CICS gèrent cela automatiquement. CICS prend facilement en charge des milliers de transactions par seconde (TPS) sur les serveurs IBM Z, ce qui en fait un pilier de l'informatique d'entreprise.
+Au sein d'une région, les transactions sont multitâchées de manière coopérative  -  elles sont supposées se comporter correctement et céder le CPU plutôt que d'attendre. Les services CICS gèrent cela automatiquement. CICS prend facilement en charge des milliers de transactions par seconde (TPS) sur les serveurs IBM Z, ce qui en fait un pilier de l'informatique d'entreprise.
 
 Chaque « tâche » ou transaction CICS unique se voit allouer sa propre mémoire dynamique au démarrage. Les demandes ultérieures de mémoire supplémentaire sont gérées par un appel au « programme de contrôle du stockage » (faisant partie du noyau CICS), qui est analogue à un système d'exploitation traditionnel : il gère le partage des ressources, l'intégrité des données et la priorisation de l'exécution, avec une réponse rapide. CICS autorise les utilisateurs, alloue des ressources (stockage et cycles), et transmet les requêtes de base de données des applications au gestionnaire de base de données approprié (tel que DB2).
 
@@ -210,7 +210,7 @@ IDMS est conçu pour des performances élevées en traitement transactionnel, ce
 
 L'administrateur de base de données (DBA) alloue un nombre fixe de pages dans un fichier pour chaque zone et définit quels enregistrements seront stockés dans chaque zone, y compris la façon dont ils seront stockés. IDMS inclut des pages spéciales d'allocation d'espace dans toute la base de données pour suivre l'espace libre disponible sur chaque page. Pour minimiser les exigences d'E/S, l'espace libre est surveillé pour toutes les pages uniquement lorsque l'espace libre pour toute la zone descend en dessous de 30 %.
 
-En revanche, le modèle réseau d'IDMS peut être plus complexe à concevoir et à gérer que les bases de données relationnelles, nécessitant des connaissances et des compétences spécialisées. Apprendre et maîtriser IDMS peut être difficile, particulièrement pour les nouveaux utilisateurs plus familiers avec un SGBDR — SGBDR signifie systèmes de gestion de bases de données relationnelles.
+En revanche, le modèle réseau d'IDMS peut être plus complexe à concevoir et à gérer que les bases de données relationnelles, nécessitant des connaissances et des compétences spécialisées. Apprendre et maîtriser IDMS peut être difficile, particulièrement pour les nouveaux utilisateurs plus familiers avec un SGBDR  -  SGBDR signifie systèmes de gestion de bases de données relationnelles.
 
 Qu'est-ce qu'un SGBDR ? Il s'agit d'un type de système de gestion de bases de données qui stocke les données dans un format structuré, en utilisant des lignes et des tables, permettant d'identifier et d'accéder aux données par rapport à d'autres données dans la base de données. CockroachDB est un exemple de SGBDR (bien qu'en tant que base de données SQL distribuée, il soit davantage que cela, puisqu'il combine les avantages des SGBDR traditionnels avec la scalabilité des bases de données NoSQL).
 

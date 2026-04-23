@@ -24,7 +24,7 @@ Heureusement, la mise en œuvre d'un moteur de recommandation n'a pas à être c
 
 ## Vue d'ensemble des systèmes de recommandation
 
-Les moteurs de recommandation sont des modèles statistiques qui analysent les données des utilisateurs — historique de navigation, comportement d'achat, préférences et données démographiques — pour fournir des recommandations personnalisées. Ces recommandations peuvent prendre la forme de suggestions de produits, de recommandations de contenus ou de services pertinents.
+Les moteurs de recommandation sont des modèles statistiques qui analysent les données des utilisateurs  -  historique de navigation, comportement d'achat, préférences et données démographiques  -  pour fournir des recommandations personnalisées. Ces recommandations peuvent prendre la forme de suggestions de produits, de recommandations de contenus ou de services pertinents.
 
 L'importance des moteurs de recommandation réside dans leur capacité à répondre aux préférences individuelles des utilisateurs et à simplifier leur prise de décision. En proposant des suggestions sur mesure, les entreprises peuvent fidéliser leurs utilisateurs, les maintenir plus longtemps sur leurs plateformes et, in fine, augmenter les taux de conversion et les ventes.
 
@@ -40,11 +40,11 @@ Il existe plusieurs types de systèmes de recommandation couramment utilisés en
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg4Ek38XSLMYES5vbgLjBogjIGdZZ6R80_i8-uPW5c5doDnloJT1zzgPDf6IBj_TE8K7DVhZYwET3spHOsdwxBxlyp3aLZ2YULB05ElhgE60OMaSU5z1FT8kBtKp47T2ahV-87kgRNmrvp_y6kHUnhQvhNrElCyMePBmKrgXVq8PrLjFGRtwJ0r6cJu){: .mx-auto.d-block :} *Filtrage collaboratif.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-*   **_Systèmes sensibles au contexte_** : Ces systèmes prennent en compte des informations contextuelles — heure, localisation, situation de l'utilisateur — pour fournir des recommandations plus pertinentes. Par exemple, un service de streaming musical pourrait suggérer des playlists énergiques pour l'entraînement le matin et de la musique relaxante le soir. De même, un site e-commerce proposera des articles spécifiques lors du Black Friday ou de Noël, différents de ce qu'il pourrait recommander le reste de l'année.
+*   **_Systèmes sensibles au contexte_** : Ces systèmes prennent en compte des informations contextuelles  -  heure, localisation, situation de l'utilisateur  -  pour fournir des recommandations plus pertinentes. Par exemple, un service de streaming musical pourrait suggérer des playlists énergiques pour l'entraînement le matin et de la musique relaxante le soir. De même, un site e-commerce proposera des articles spécifiques lors du Black Friday ou de Noël, différents de ce qu'il pourrait recommander le reste de l'année.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhn59TQ9XIKAzGPdB_jtZgIO1BBWIDA3AItaom8vNWM_tkbmYZj56ACpLu8CkejAHSSv-BbHUXqDb1AmX7VxU3kcnWPeuiQVbqCJYugZDF5R21sG0jR7NqJHWhQsUF31AzTTNvtXTGAeurFkx0YtFCXp4cEhnqAghHn7Ds4hDzB6t33fJlIH5GM1sIY){: .mx-auto.d-block :} *Recommandations sensibles au contexte.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-*   **_Systèmes de recommandation hybrides_** : Ces systèmes combinent plusieurs techniques de recommandation pour fournir des suggestions plus précises et plus diversifiées. Ils exploitent les points forts de différentes approches — filtrage basé sur le contenu et filtrage collaboratif, par exemple — pour surmonter leurs limitations respectives et proposer des recommandations plus efficaces.
+*   **_Systèmes de recommandation hybrides_** : Ces systèmes combinent plusieurs techniques de recommandation pour fournir des suggestions plus précises et plus diversifiées. Ils exploitent les points forts de différentes approches  -  filtrage basé sur le contenu et filtrage collaboratif, par exemple  -  pour surmonter leurs limitations respectives et proposer des recommandations plus efficaces.
 
 ## Moteurs de recommandation avec Redis
 
@@ -64,7 +64,7 @@ Les embeddings vectoriels sont des représentations mathématiques de points de 
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0eizIhh2_F60H_iq1B53iHZZFa9KhL1UYlUTyWnoZ2qNknZnhlGAyESe6NZOI47MMMuTmVIy4psZXz3y7cO4MRvb0FDmjAEHeeCwBWSg6r7b5tPQW8ZG-EMFWtuRVTp0NVBIXVK3MeInYxVlI9S2JrqBEKcBHb7MPLTMTsQ7vjtP0ga0o3eqzmyB_){: .mx-auto.d-block :} *Descriptions de produits représentées sous forme de vecteurs.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
-Les représentations vectorielles des données permettent aux algorithmes de machine learning de traiter et d'analyser l'information de manière efficace. Ces algorithmes s'appuient souvent sur des opérations mathématiques appliquées aux vecteurs — produits scalaires, addition de vecteurs, normalisation — pour calculer des similarités, des distances et des transformations.
+Les représentations vectorielles des données permettent aux algorithmes de machine learning de traiter et d'analyser l'information de manière efficace. Ces algorithmes s'appuient souvent sur des opérations mathématiques appliquées aux vecteurs  -  produits scalaires, addition de vecteurs, normalisation  -  pour calculer des similarités, des distances et des transformations.
 
 Mais surtout, les représentations vectorielles facilitent la comparaison et le regroupement de points de données dans un espace multidimensionnel. Des mesures de similarité, telles que la similarité cosinus ou la distance euclidienne, peuvent être calculées entre vecteurs pour déterminer la ressemblance ou la dissemblance entre points de données. Votre moteur de recommandation peut ainsi exploiter les vecteurs pour :
 
@@ -222,7 +222,7 @@ Le choix entre FLAT et HNSW dépend uniquement de votre cas d'usage, des caract�
 
 Les index n'ont besoin d'être créés qu'une seule fois et se réindexeront automatiquement au fur et à mesure que de nouveaux hashes sont stockés dans Redis. Les deux méthodes d'indexation partagent les mêmes paramètres obligatoires : le type, la dimension et la métrique de distance.
 
-Redis Enterprise utilise une métrique de distance pour mesurer la similarité entre deux vecteurs. Choisissez parmi trois métriques populaires — [Euclidienne](https://en.wikipedia.org/wiki/Euclidean_distance) (L2), [Produit interne](https://en.wikipedia.org/wiki/Inner_product_space) (IP) et [Similarité cosinus](https://en.wikipedia.org/wiki/Cosine_similarity) — utilisées pour calculer à quel point deux vecteurs sont « proches » ou « éloignés ».
+Redis Enterprise utilise une métrique de distance pour mesurer la similarité entre deux vecteurs. Choisissez parmi trois métriques populaires  -  [Euclidienne](https://en.wikipedia.org/wiki/Euclidean_distance) (L2), [Produit interne](https://en.wikipedia.org/wiki/Inner_product_space) (IP) et [Similarité cosinus](https://en.wikipedia.org/wiki/Cosine_similarity)  -  utilisées pour calculer à quel point deux vecteurs sont « proches » ou « éloignés ».
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheKTicWPBFMSoK53LHeSvikn9ZOklHrGfUYk0DXjDJXOrCaUd4Oeb_Nuam_xrKlTj8JvNgk2nQn9FYeKEYVE9aylJKDmNLUjiKz0uht6jOVC_HhI-qqFKGHhBDmOVddPrZsqCELjFe8H2f3vAbe1DRF5KGega_Gr4Y-DNOjAVHF2Wahsmu1BMA0wDl){: .mx-auto.d-block :} *Métriques de distance.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
@@ -355,7 +355,7 @@ Redis offre des capacités diverses qui peuvent considérablement réduire la co
 
 Avec la fonctionnalité de recherche par similarité vectorielle, Redis ouvre la voie à plusieurs applications révolutionnaires pour les entreprises, basées sur le calcul de similarité et de distance en temps réel. Les moteurs de recommandation en sont un exemple simple.
 
-Si vous souhaitez fournir des recommandations interactives basées sur le contenu, vous pourriez vouloir tirer parti de Redis en tant que base de données vectorielle et moteur de recherche par similarité. Quelle que soit la complexité souhaitée pour votre moteur de recommandation — collaboratif, basé sur le contenu, contextuel ou même hybride — Redis peut effectuer tous les calculs nécessaires et vous aider à déterminer la meilleure façon de délivrer vos recommandations.
+Si vous souhaitez fournir des recommandations interactives basées sur le contenu, vous pourriez vouloir tirer parti de Redis en tant que base de données vectorielle et moteur de recherche par similarité. Quelle que soit la complexité souhaitée pour votre moteur de recommandation  -  collaboratif, basé sur le contenu, contextuel ou même hybride  -  Redis peut effectuer tous les calculs nécessaires et vous aider à déterminer la meilleure façon de délivrer vos recommandations.
 
 ## Références
 

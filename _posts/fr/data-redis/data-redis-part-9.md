@@ -14,7 +14,7 @@ comments: true
 
 Dans l'article précédent, nous avons exploré les univers captivants des bases de données vectorielles et de la recherche par similarité vectorielle. Vous avez découvert le potentiel transformateur qu'ils offrent pour le stockage et la récupération de données non structurées, débloquant de nouvelles dimensions de compréhension dans divers domaines.
 
-Aujourd'hui, nous nous lançons dans une nouvelle expédition — une qui vous emmène au-delà des limites des méthodes de recherche singulières. Nous plongeons dans le domaine de la « Recherche Hybride », une approche multifacette qui synergise les atouts de la recherche par similarité vectorielle avec une riche tapisserie d'autres paradigmes de recherche. Dans cet article, nous explorerons comment la recherche hybride exploite la puissance de diverses techniques de recherche, telles que textuelles, numériques, conditionnelles, géographiques, et plus encore, pour fournir des solutions holistiques pour la récupération d'information.
+Aujourd'hui, nous nous lançons dans une nouvelle expédition  -  une qui vous emmène au-delà des limites des méthodes de recherche singulières. Nous plongeons dans le domaine de la « Recherche Hybride », une approche multifacette qui synergise les atouts de la recherche par similarité vectorielle avec une riche tapisserie d'autres paradigmes de recherche. Dans cet article, nous explorerons comment la recherche hybride exploite la puissance de diverses techniques de recherche, telles que textuelles, numériques, conditionnelles, géographiques, et plus encore, pour fournir des solutions holistiques pour la récupération d'information.
 
 # RediSearch : un moteur de recherche polyvalent
 

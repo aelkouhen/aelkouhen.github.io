@@ -57,9 +57,9 @@ Enfin, les systèmes distribués peuvent isoler les ressources pour différentes
 
 ### Scalabilité
 
-À mesure que les applications évoluent pour servir plus d'utilisateurs, les besoins en stockage et en calcul de la base de données augmentent avec le temps — et pas toujours à un rythme prévisible.
+À mesure que les applications évoluent pour servir plus d'utilisateurs, les besoins en stockage et en calcul de la base de données augmentent avec le temps  -  et pas toujours à un rythme prévisible.
 
-Essayer de suivre cette croissance avec une base de données à instance unique est difficile — vous devez soit :
+Essayer de suivre cette croissance avec une base de données à instance unique est difficile  -  vous devez soit :
 
 1. Payer pour plus de ressources que vous n'en avez besoin afin que votre base de données ait de la « marge de manœuvre » en termes de stockage et de puissance de calcul, ou
 2. Naviguer dans des mises à niveau matérielles régulières (scalabilité verticale) et des migrations pour s'assurer que l'instance de base de données s'exécute toujours sur une machine capable de gérer la charge actuelle.
@@ -102,7 +102,7 @@ Pour cette capacité, les bases de données distribuées s'appuient sur des prot
 
 ### Gestion décentralisée
 
-La gestion décentralisée est fondamentale aux bases de données distribuées, les distinguant des systèmes de bases de données traditionnels centralisés. Cette approche distribue le contrôle et la gestion sur plusieurs nœuds, améliorant la scalabilité globale, la tolérance aux pannes et la résilience du système. Dans un système décentralisé, chaque nœud fonctionne de manière indépendante tout en se coordonnant avec les autres nœuds — via des protocoles de consensus — pour gérer les données et traiter les transactions.
+La gestion décentralisée est fondamentale aux bases de données distribuées, les distinguant des systèmes de bases de données traditionnels centralisés. Cette approche distribue le contrôle et la gestion sur plusieurs nœuds, améliorant la scalabilité globale, la tolérance aux pannes et la résilience du système. Dans un système décentralisé, chaque nœud fonctionne de manière indépendante tout en se coordonnant avec les autres nœuds  -  via des protocoles de consensus  -  pour gérer les données et traiter les transactions.
 
 De plus, la gestion décentralisée permet un meilleur équilibrage de charge et une meilleure distribution des ressources. En empêchant qu'un seul nœud ne devienne un goulot d'étranglement, le système peut utiliser ses ressources plus efficacement, améliorant les performances.
 
@@ -149,11 +149,11 @@ Les bases de données distribuées sont intrinsèquement complexes. Bien que cet
 
 ### Réplication
 
-Du point de vue de votre application, une base de données distribuée fonctionne comme une base de données à instance unique — vous vous y connectez et envoyez des données de manière similaire. Cependant, une fois que les données atteignent la base de données, elles sont automatiquement répliquées et distribuées sur trois nœuds ou plus (instances individuelles de la base de données distribuée).
+Du point de vue de votre application, une base de données distribuée fonctionne comme une base de données à instance unique  -  vous vous y connectez et envoyez des données de manière similaire. Cependant, une fois que les données atteignent la base de données, elles sont automatiquement répliquées et distribuées sur trois nœuds ou plus (instances individuelles de la base de données distribuée).
 
 Pour illustrer ce processus, concentrons-nous sur un seul morceau de données (appelé range dans CockroachDB) écrit dans la base de données dans un cluster à trois nœuds et une seule région. Bien que des bases de données comme CockroachDB prennent en charge les déploiements multi-régions et un grand nombre de nœuds, cet exemple simplifie l'explication.
 
-Lorsque des données dans un range sont envoyées à la base de données, elles sont écrites dans trois réplicas — un sur chaque nœud. L'un de ces nœuds est désigné comme le « [leaseholder](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction#leaseholder-node) » pour ce range, coordonnant les requêtes de lecture et d'écriture pour les données. Cependant, n'importe quel nœud peut recevoir des requêtes, distinguant CockroachDB des systèmes actif-passif où toutes les requêtes doivent passer par un nœud « actif » central.
+Lorsque des données dans un range sont envoyées à la base de données, elles sont écrites dans trois réplicas  -  un sur chaque nœud. L'un de ces nœuds est désigné comme le « [leaseholder](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction#leaseholder-node) » pour ce range, coordonnant les requêtes de lecture et d'écriture pour les données. Cependant, n'importe quel nœud peut recevoir des requêtes, distinguant CockroachDB des systèmes actif-passif où toutes les requêtes doivent passer par un nœud « actif » central.
 
 <img src="/assets/img/mainframe-p3-dogs.gif" alt="Réplication des données sur les nœuds du cluster" style="width:100%">
 {: .mx-auto.d-block :}
@@ -179,7 +179,7 @@ De nombreuses bases de données distribuées, comme CockroachDB, utilisent le pr
 
 Pour comprendre le fonctionnement de Raft, vous devez connaître les concepts suivants :
 
-- **Quorum** : Si votre système distribué a N nœuds, vous avez besoin d'au moins (N/2) + 1 nœuds pour s'accorder sur une valeur — vous avez besoin d'une majorité (plus de 50 %) des votes pour avoir un consensus (comme dans toute élection politique). Un vote majoritaire garantit que lorsque (N/2) + 1 nœuds fonctionnent et répondent, au moins un nœud contient la valeur la plus récente pour une donnée donnée, pour les requêtes de lecture et d'écriture, même en cas de partition réseau ou autre défaillance dans le système.
+- **Quorum** : Si votre système distribué a N nœuds, vous avez besoin d'au moins (N/2) + 1 nœuds pour s'accorder sur une valeur  -  vous avez besoin d'une majorité (plus de 50 %) des votes pour avoir un consensus (comme dans toute élection politique). Un vote majoritaire garantit que lorsque (N/2) + 1 nœuds fonctionnent et répondent, au moins un nœud contient la valeur la plus récente pour une donnée donnée, pour les requêtes de lecture et d'écriture, même en cas de partition réseau ou autre défaillance dans le système.
 
 - **Tolérance aux pannes** : Dans un système basé sur le quorum, votre cluster peut tolérer N/2 pannes de nœuds si N est impair. (N/2)-1 sinon.
 
@@ -195,7 +195,7 @@ Pour comprendre le fonctionnement de Raft, vous devez connaître les concepts su
 
 - **Machine d'état** : Chaque nœud possède sa propre machine d'état. Raft doit s'assurer que toutes les entrées de journal validées sont finalement appliquées à la machine d'état, qui sert de source de vérité pour les données en mémoire.
 
-- **Terme** ou **bail** : Il représente une période de temps pendant laquelle un nœud agit en tant que leader. Le concept est basé sur le temps logique (pas le temps global) — c'est simplement un compteur géré par chaque nœud individuellement. Une fois qu'un terme se termine, un autre terme commence avec un nouveau leader. Même si les termes/baux entre nœuds peuvent différer à un moment donné, Raft dispose d'un mécanisme pour les synchroniser et les faire converger vers la même valeur.
+- **Terme** ou **bail** : Il représente une période de temps pendant laquelle un nœud agit en tant que leader. Le concept est basé sur le temps logique (pas le temps global)  -  c'est simplement un compteur géré par chaque nœud individuellement. Une fois qu'un terme se termine, un autre terme commence avec un nouveau leader. Même si les termes/baux entre nœuds peuvent différer à un moment donné, Raft dispose d'un mécanisme pour les synchroniser et les faire converger vers la même valeur.
 
 - **RPC :** Les nœuds participant à Raft communiquent entre eux en utilisant un Remote Procedure Call (RPC) par-dessus TCP. Ce protocole est adapté à la communication entre centres de données, systèmes internes et services (et non aux produits ou services destinés aux utilisateurs). Raft utilise deux types différents de requêtes RPC. À un niveau élevé :
 
@@ -213,7 +213,7 @@ Comme mentionné précédemment, un nœud peut être dans différents états sel
 {: .mx-auto.d-block :}
 **Transitions d'état des nœuds Raft**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Chaque nœud commence dans l'état **_Follower_**. Une fois le délai d'élection écoulé, il entre dans l'état **_Candidate_** — ce qui signifie que le nœud est maintenant éligible pour devenir **_Leader_**. Une fois qu'un candidat obtient une nette majorité des votes, il entre dans l'état Leader.
+Chaque nœud commence dans l'état **_Follower_**. Une fois le délai d'élection écoulé, il entre dans l'état **_Candidate_**  -  ce qui signifie que le nœud est maintenant éligible pour devenir **_Leader_**. Une fois qu'un candidat obtient une nette majorité des votes, il entre dans l'état Leader.
 
 S'il n'y a pas de gagnant clair pendant le processus d'élection, le candidat expire à nouveau, reste dans l'état Candidate, et une nouvelle élection commence. Pour comprendre comment un candidat peut être élu leader du cluster, examinons les séquences suivantes :
 
@@ -247,13 +247,13 @@ Lorsque l'ancien leader revient, il découvre qu'un nouveau leader a déjà ét�
 {: .mx-auto.d-block :}
 **Basculement et récupération du leader Raft**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Comme vous pouvez le voir, l'algorithme de consensus Raft, développé pour assurer la fiabilité dans les systèmes distribués, permet aux nœuds de s'accorder sur un seul état, même dans des scénarios de pannes. Raft fonctionne en élisant un leader parmi les nœuds, qui coordonne ensuite les journaux de transactions pour maintenir la cohérence du système. Ce processus de consensus implique des nœuds passant entre trois états — Follower, Candidate et Leader — pour garantir qu'un seul leader est actif à la fois.
+Comme vous pouvez le voir, l'algorithme de consensus Raft, développé pour assurer la fiabilité dans les systèmes distribués, permet aux nœuds de s'accorder sur un seul état, même dans des scénarios de pannes. Raft fonctionne en élisant un leader parmi les nœuds, qui coordonne ensuite les journaux de transactions pour maintenir la cohérence du système. Ce processus de consensus implique des nœuds passant entre trois états  -  Follower, Candidate et Leader  -  pour garantir qu'un seul leader est actif à la fois.
 
 Lors des transactions, un quorum, ou accord majoritaire entre les nœuds, est requis pour que les modifications soient validées. Raft garantit que toute entrée validée reste durable et reflète l'état système le plus récent, facilitant à la fois la cohérence des données et la tolérance aux pannes dans le cluster. CockroachDB étend Raft en un système MultiRaft, l'optimisant pour gérer de nombreuses transactions concurrentes dans une architecture hautement distribuée.
 
 ### MultiRaft : Raft adapté à CockroachDB
 
-Dans CockroachDB, les données sont divisées en ranges, chacun ayant son propre groupe de consensus — ce qui signifie que chaque nœud peut participer à des centaines de milliers de groupes de consensus ! Cela présente des défis uniques, que nous avons résolus en introduisant une couche au-dessus de Raft que nous appelons « [MultiRaft](https://github.com/cockroachdb/cockroach/blob/8187c2551352a6c28eba021effaebcbfe523d78c/docs/RFCS/20151213_dismantle_multiraft.md) ».
+Dans CockroachDB, les données sont divisées en ranges, chacun ayant son propre groupe de consensus  -  ce qui signifie que chaque nœud peut participer à des centaines de milliers de groupes de consensus ! Cela présente des défis uniques, que nous avons résolus en introduisant une couche au-dessus de Raft que nous appelons « [MultiRaft](https://github.com/cockroachdb/cockroach/blob/8187c2551352a6c28eba021effaebcbfe523d78c/docs/RFCS/20151213_dismantle_multiraft.md) ».
 
 Avec un seul range, un nœud (parmi trois ou cinq) est élu leader, et il envoie périodiquement des messages heartbeat aux followers. À mesure que le système se développe pour inclure davantage de ranges, le volume de trafic nécessaire pour gérer les heartbeats augmente également.
 
@@ -261,7 +261,7 @@ Avec un seul range, un nœud (parmi trois ou cinq) est élu leader, et il envoie
 {: .mx-auto.d-block :}
 **Heartbeats Raft par range**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Le nombre de ranges dans une base de données distribuée est significativement plus grand que le nombre de nœuds — cela contribue à améliorer les temps de récupération lorsqu'un nœud tombe en panne en maintenant les ranges de petite taille. Cependant, cela entraîne également un grand nombre de ranges aux membres qui se chevauchent.
+Le nombre de ranges dans une base de données distribuée est significativement plus grand que le nombre de nœuds  -  cela contribue à améliorer les temps de récupération lorsqu'un nœud tombe en panne en maintenant les ranges de petite taille. Cependant, cela entraîne également un grand nombre de ranges aux membres qui se chevauchent.
 
 Pour gérer cette situation efficacement, MultiRaft est utilisé. Au lieu d'exécuter Raft indépendamment pour chaque range, MultiRaft gère tous les ranges d'un nœud comme un groupe. Cela signifie que chaque paire de nœuds ne doit échanger des heartbeats qu'une seule fois par tick, quel que soit le nombre de ranges qu'ils partagent.
 
@@ -283,11 +283,11 @@ Pour démarrer la transaction, un client SQL (par exemple, une application) effe
 
 Comme nous l'avons expliqué précédemment, tous les nœuds CockroachDB ont un accès parfaitement symétrique aux données (Multi-Actif). Cela signifie que votre équilibreur de charge peut connecter votre client à n'importe quel nœud du cluster et accéder à toutes les données tout en garantissant une forte cohérence.
 
-Le nœud passerelle [analyse](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#sql-parser-planner-executor) d'abord l'instruction SQL du client pour s'assurer qu'elle est valide selon le dialecte SQL de CockroachDB, et utilise ces informations pour [générer un plan SQL logique](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#logical-planning). Étant donné que CockroachDB est une base de données distribuée, il est également important de tenir compte de la topologie d'un cluster, de sorte que le plan logique est ensuite converti en plan physique — ce qui signifie parfois pousser des opérations sur les machines physiques qui contiennent les données.
+Le nœud passerelle [analyse](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#sql-parser-planner-executor) d'abord l'instruction SQL du client pour s'assurer qu'elle est valide selon le dialecte SQL de CockroachDB, et utilise ces informations pour [générer un plan SQL logique](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#logical-planning). Étant donné que CockroachDB est une base de données distribuée, il est également important de tenir compte de la topologie d'un cluster, de sorte que le plan logique est ensuite converti en plan physique  -  ce qui signifie parfois pousser des opérations sur les machines physiques qui contiennent les données.
 
 Bien que CockroachDB présente une interface SQL aux clients, la base de données réelle est construite au-dessus d'un [stockage clé-valeur](https://www.cockroachlabs.com/docs/stable/architecture/overview.html#overview). Pour assurer cette médiation, le plan physique généré à la fin de l'analyse SQL est passé à l'exécuteur SQL, qui exécute le plan en effectuant des opérations clé-valeur via _TxnCoordSender_. Par exemple, l'exécuteur SQL convertit les instructions _INSERT_ en opérations _Put()_.
 
-Le nœud passerelle reçoit des _BatchRequests_ du _TxnCoordSender_. Il démantèle le _BatchRequest_ initial en prenant chaque opération et en trouvant quelle machine physique doit recevoir la requête pour le range — connu comme le leaseholder du range. L'adresse du leaseholder actuel du range est facilement disponible à la fois dans les caches locaux et dans les [méta-ranges du cluster](https://www.cockroachlabs.com/docs/v24.1/architecture/distribution-layer#meta-range-kv-structure).
+Le nœud passerelle reçoit des _BatchRequests_ du _TxnCoordSender_. Il démantèle le _BatchRequest_ initial en prenant chaque opération et en trouvant quelle machine physique doit recevoir la requête pour le range  -  connu comme le leaseholder du range. L'adresse du leaseholder actuel du range est facilement disponible à la fois dans les caches locaux et dans les [méta-ranges du cluster](https://www.cockroachlabs.com/docs/v24.1/architecture/distribution-layer#meta-range-kv-structure).
 
 Toutes les opérations d'écriture propagent également l'adresse du leaseholder au _TxnCoordSender_, afin qu'il puisse suivre et nettoyer les opérations d'écriture si nécessaire.
 
@@ -305,7 +305,7 @@ Si une opération rencontre une intention d'écriture pour une clé, elle tente 
 
 Si la lecture ne rencontre pas d'intention d'écriture et que l'opération clé-valeur est destinée à servir une lecture, elle peut simplement utiliser la valeur lue depuis l'instance du leaseholder du moteur de stockage. Cela fonctionne car le leaseholder devait faire partie du groupe de consensus Raft pour que toute écriture soit complète, ce qui signifie qu'il doit avoir la version la plus récente des données du range. Le leaseholder agrège toutes les réponses de lecture dans un _BatchResponse_ qui sera renvoyé au nœud passerelle.
 
-Une fois que la commande atteint le consensus (c'est-à-dire qu'une majorité de nœuds — y compris lui-même — reconnaissent la commande Raft), elle est validée dans le journal Raft du leader Raft et écrite dans le moteur de stockage. En même temps, le leader Raft envoie également une commande à tous les autres nœuds pour inclure la commande dans leurs journaux Raft.
+Une fois que la commande atteint le consensus (c'est-à-dire qu'une majorité de nœuds  -  y compris lui-même  -  reconnaissent la commande Raft), elle est validée dans le journal Raft du leader Raft et écrite dans le moteur de stockage. En même temps, le leader Raft envoie également une commande à tous les autres nœuds pour inclure la commande dans leurs journaux Raft.
 
 Une fois que le leader valide l'entrée du journal Raft, elle est considérée comme validée. L'interface SQL répond ensuite au client, et est maintenant prête à continuer à accepter de nouvelles connexions. À ce stade, la valeur est considérée comme écrite, et si une autre opération arrive et effectue une lecture depuis le moteur de stockage pour cette clé, elle rencontrera cette valeur.
 

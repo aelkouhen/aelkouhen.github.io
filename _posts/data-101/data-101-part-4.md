@@ -29,7 +29,7 @@ To create a performant and adequate data journey for business users, the data ar
 
 ## Data journey stages
 
-The data journey consists of many stages. The main ones are ingestion, storage, processing, and serving. Each stage has its own set of activities and considerations. The data journey also has a notion of "underlying" activities — critical activities across the entire lifecycle. These include security, data management, DataOps, orchestration, and software engineering.
+The data journey consists of many stages. The main ones are ingestion, storage, processing, and serving. Each stage has its own set of activities and considerations. The data journey also has a notion of "underlying" activities  -  critical activities across the entire lifecycle. These include security, data management, DataOps, orchestration, and software engineering.
 
 Understanding each stage of the data lifecycle will help you make better choices about tools and processes you apply to your data assets, depending on what you expect from the data platform.  Next, I will briefly overview the different stages that form the data journey. Further details about each step will be extensively detailed in the next blog posts.
 

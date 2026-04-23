@@ -12,7 +12,7 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-In large-scale, security-sensitive enterprises — particularly in finance — access infrastructure isn't just another service: it's a critical foundation. Access must be secure, observable, and compliant. Most importantly, it must always be available. When a global payments provider set out to standardize [Teleport](https://goteleport.com/) as its internal access platform, it had to meet the strict requirements of a Tier 0 classification, which mandates 99.999% availability across a globally distributed footprint.
+In large-scale, security-sensitive enterprises  -  particularly in finance  -  access infrastructure isn't just another service: it's a critical foundation. Access must be secure, observable, and compliant. Most importantly, it must always be available. When a global payments provider set out to standardize [Teleport](https://goteleport.com/) as its internal access platform, it had to meet the strict requirements of a Tier 0 classification, which mandates 99.999% availability across a globally distributed footprint.
 
 This article explores how this global leader in digital payments overcame limitations in their access infrastructure by using CockroachDB as the storage backend for Teleport. As a result, they were able to achieve the stringent reliability and global presence demands of a Tier 0 system.
 
@@ -31,9 +31,9 @@ Designed for resilience across multiple regions, and with data centers spanning 
 {: .mx-auto.d-block :}
 **Global Payments System**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-But operating across such a distributed environment comes with complexity — especially when it comes to infrastructure access. With teams located in different time zones and regions, they all need secure, compliant, and instantaneous access to systems for tasks like debugging, deployment, and monitoring. Access must be both highly secure and highly available, without introducing bottlenecks or relying on fragile VPNs or static credentials.
+But operating across such a distributed environment comes with complexity  -  especially when it comes to infrastructure access. With teams located in different time zones and regions, they all need secure, compliant, and instantaneous access to systems for tasks like debugging, deployment, and monitoring. Access must be both highly secure and highly available, without introducing bottlenecks or relying on fragile VPNs or static credentials.
 
-For this leading company, any tool used in its infrastructure must be evaluated against the company's internal classification for Tier 0 applications. Tier 0 applications are the most critical systems in an organization's IT infrastructure — foundational services upon which all other systems depend. Their failure would cause a widespread outage, disrupt core business operations, or compromise security and compliance. As such, Tier 0 applications must meet the highest standards of availability, reliability, and security. In this context, access management infrastructure — how engineers and services connect to compute, storage, and network resources — doesn't become a simple utility. It's a foundation.
+For this leading company, any tool used in its infrastructure must be evaluated against the company's internal classification for Tier 0 applications. Tier 0 applications are the most critical systems in an organization's IT infrastructure  -  foundational services upon which all other systems depend. Their failure would cause a widespread outage, disrupt core business operations, or compromise security and compliance. As such, Tier 0 applications must meet the highest standards of availability, reliability, and security. In this context, access management infrastructure  -  how engineers and services connect to compute, storage, and network resources  -  doesn't become a simple utility. It's a foundation.
 
 ### Key Characteristics of Tier 0 Systems
 
@@ -69,7 +69,7 @@ In modern infrastructure, access is the first line of defense. Whether you're co
 {: .mx-auto.d-block :}
 **Teleport Identity Platform**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Teleport provided a unified access control layer capable of managing permissions across heterogeneous systems. Its agentless architecture — leveraging standard protocols like SSH and HTTPS — simplified deployment and eliminated the need for additional software on target systems. Teleport also delivered real-time audit visibility, enabling security teams and compliance officers to monitor access events and session activity with precision. With certificate-based authentication and automatic certificate rotation, it removed the risks associated with long-lived credentials. Finally, deep SSO integration with the company's internal identity provider ensured seamless, centralized authentication, reinforcing both security and operational efficiency.
+Teleport provided a unified access control layer capable of managing permissions across heterogeneous systems. Its agentless architecture  -  leveraging standard protocols like SSH and HTTPS  -  simplified deployment and eliminated the need for additional software on target systems. Teleport also delivered real-time audit visibility, enabling security teams and compliance officers to monitor access events and session activity with precision. With certificate-based authentication and automatic certificate rotation, it removed the risks associated with long-lived credentials. Finally, deep SSO integration with the company's internal identity provider ensured seamless, centralized authentication, reinforcing both security and operational efficiency.
 
 Teleport offers:
 
@@ -81,9 +81,9 @@ Teleport offers:
 
 Teleport's architecture is purpose-built for securing access to infrastructure in dynamic, distributed environments. At its core, Teleport operates as a modular, distributed system, enabling it to adapt to diverse infrastructure topologies while maintaining strong security and observability guarantees.
 
-Teleport's architecture is built from the ground up with Zero Trust Security in mind — a model that assumes no implicit trust, even within the network perimeter. This approach is especially vital in distributed, cloud-native environments where traditional network-based security boundaries no longer apply.
+Teleport's architecture is built from the ground up with Zero Trust Security in mind  -  a model that assumes no implicit trust, even within the network perimeter. This approach is especially vital in distributed, cloud-native environments where traditional network-based security boundaries no longer apply.
 
-At the heart of Teleport's Zero Trust implementation is the principle of identity over network. Instead of relying on IP addresses, VPNs, or trusted subnets, every request to infrastructure — whether it's a Linux server, a database, or a Kubernetes cluster — is authenticated and authorized based solely on the user's identity and role. This ensures that access is tightly scoped, contextual, and fully traceable.
+At the heart of Teleport's Zero Trust implementation is the principle of identity over network. Instead of relying on IP addresses, VPNs, or trusted subnets, every request to infrastructure  -  whether it's a Linux server, a database, or a Kubernetes cluster  -  is authenticated and authorized based solely on the user's identity and role. This ensures that access is tightly scoped, contextual, and fully traceable.
 
 Let's take a closer look at the key components of Teleport's architecture.
 
@@ -98,7 +98,7 @@ Let's take a closer look at the key components of Teleport's architecture.
    - Storing session events, access requests, and audit logs
    - Acting as the API for resource registration and access decisions
 
-   Because it is stateful and policy-driven, the Auth Server relies on durable, consistent storage backends. In multi-region deployments, these storage backends have to be distributed, highly available while preserving strong consistency. This is where CockroachDB becomes a key enabler — ensuring that the Auth Server's state is globally consistent, and replicated across geographies.
+   Because it is stateful and policy-driven, the Auth Server relies on durable, consistent storage backends. In multi-region deployments, these storage backends have to be distributed, highly available while preserving strong consistency. This is where CockroachDB becomes a key enabler  -  ensuring that the Auth Server's state is globally consistent, and replicated across geographies.
 
 2. **`proxy`** – the gateway between external clients and internal resources. It routes requests, terminates TLS connections, and serves the Teleport Web UI. Clients authenticate and connect to the Proxy, which then:
    - Performs reverse tunneling to internal nodes
@@ -124,13 +124,13 @@ Let's take a closer look at the key components of Teleport's architecture.
    - Requesting elevated privileges or role access
    - Viewing session history and logs
 
-   Behind the scenes, `tsh` obtains a short-lived certificate for the user identity and resource scope — making it inherently safer than managing SSH keys or static credentials.
+   Behind the scenes, `tsh` obtains a short-lived certificate for the user identity and resource scope  -  making it inherently safer than managing SSH keys or static credentials.
 
 Together, these capabilities make Teleport a natural fit for DevSecOps teams operating in multi-region, compliance-sensitive environments. Whether you're building toward standards like PCI-DSS, FedRAMP, or ISO 27001, Teleport provides a secure, flexible, and audit-friendly access foundation.
 
 ### Teleport + CockroachDB Joint Architecture
 
-To meet Tier 0 requirements, this global payments provider made a strategic pivot to CockroachDB — a geo-distributed SQL database built for multi-region resilience and consistency. This change simplified operations, enabled active-active deployments of Teleport, and ensured that access infrastructure could survive network partitions, node failures, and global load — without compromising on security or compliance.
+To meet Tier 0 requirements, this global payments provider made a strategic pivot to CockroachDB  -  a geo-distributed SQL database built for multi-region resilience and consistency. This change simplified operations, enabled active-active deployments of Teleport, and ensured that access infrastructure could survive network partitions, node failures, and global load  -  without compromising on security or compliance.
 
 <img src="/assets/img/iam-p3-joint-architecture.jpg" alt="Multi-region Teleport + CockroachDB Joint Architecture" style="width:100%">
 
@@ -139,7 +139,7 @@ To meet Tier 0 requirements, this global payments provider made a strategic pivo
 
 Each of Teleport's components relied on CockroachDB to store their state in a consistent and durable way, enabling them to function correctly even in the presence of partial outages or regional network partitions.
 
-For instance, the Teleport Auth service is well-suited to operate with CockroachDB because of its stateless design and API-first philosophy. Each service can be deployed as a stateless service, with its only persistence requirement being [the backing SQL database](https://www.cockroachlabs.com/blog/what-is-distributed-sql/). This makes it straightforward to horizontally scale services, perform rolling updates, or deploy new regions without having to orchestrate complex data migrations. CockroachDB, in turn, provides the always-consistent database layer that ensures user identities, access control rules, and session tokens are always accurate — no matter which region is serving a request.
+For instance, the Teleport Auth service is well-suited to operate with CockroachDB because of its stateless design and API-first philosophy. Each service can be deployed as a stateless service, with its only persistence requirement being [the backing SQL database](https://www.cockroachlabs.com/blog/what-is-distributed-sql/). This makes it straightforward to horizontally scale services, perform rolling updates, or deploy new regions without having to orchestrate complex data migrations. CockroachDB, in turn, provides the always-consistent database layer that ensures user identities, access control rules, and session tokens are always accurate  -  no matter which region is serving a request.
 
 To achieve true global availability, it was critical to pair Teleport capabilities with a distributed SQL database that could keep up with the demands of cross-region replication, strong consistency guarantees, and fault tolerance. That's where CockroachDB came in.
 
@@ -148,9 +148,9 @@ To achieve true global availability, it was critical to pair Teleport capabiliti
 {: .mx-auto.d-block :}
 **CockroachDB attributes for Teleport**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-[CockroachDB](https://www.cockroachlabs.com/product/overview/) is a distributed SQL database designed for global scale and high availability. Since it became the first commercially available distributed SQL database, CockroachDB has become known for its enterprise-ready resilience. It replicates data across multiple regions while offering serializable isolation, strong consistency, and automated failover. By deploying Teleport components on top of CockroachDB, the global payments company was able to ensure that infrastructure access control data remained consistent and always available — even [during infrastructure disruptions](https://www.cockroachlabs.com/blog/database-testing-performance-under-adversity/). For instance, a DevSecOps team logging in from the UK, while a data center in the U.S. experiences downtime, would still be able to use infrastructure assets without issue. This level of resilience was critical for maintaining seamless user experiences across geographies.
+[CockroachDB](https://www.cockroachlabs.com/product/overview/) is a distributed SQL database designed for global scale and high availability. Since it became the first commercially available distributed SQL database, CockroachDB has become known for its enterprise-ready resilience. It replicates data across multiple regions while offering serializable isolation, strong consistency, and automated failover. By deploying Teleport components on top of CockroachDB, the global payments company was able to ensure that infrastructure access control data remained consistent and always available  -  even [during infrastructure disruptions](https://www.cockroachlabs.com/blog/database-testing-performance-under-adversity/). For instance, a DevSecOps team logging in from the UK, while a data center in the U.S. experiences downtime, would still be able to use infrastructure assets without issue. This level of resilience was critical for maintaining seamless user experiences across geographies.
 
-Teleport officially supports [CockroachDB as a storage backend](https://goteleport.com/docs/reference/backends/#cockroachdb) — and for good reason:
+Teleport officially supports [CockroachDB as a storage backend](https://goteleport.com/docs/reference/backends/#cockroachdb)  -  and for good reason:
 
 - **Built-in multi-region support**: CockroachDB is designed for geographically distributed deployments.
 - **High availability**: Even during network partitions, CockroachDB maintains consistency and uptime guarantees.
@@ -361,6 +361,6 @@ By following this guide, you have successfully set up a global infrastructure ac
 
 By using Teleport and CockroachDB, a global payments leader not only solved a technical scaling problem, but also created a foundation for future-proof, auditable, and regionally compliant infrastructure access across its global engineering teams.
 
-Their infrastructure story is more than just about technology choice — it's about aligning architecture with business-critical goals, and building systems that can uphold the trust of a global customer base that depends on this company every second of every day. By leveraging CockroachDB, this global payments leader enabled multi-region presence, resilience to network disruptions, and consistent access control across continents.
+Their infrastructure story is more than just about technology choice  -  it's about aligning architecture with business-critical goals, and building systems that can uphold the trust of a global customer base that depends on this company every second of every day. By leveraging CockroachDB, this global payments leader enabled multi-region presence, resilience to network disruptions, and consistent access control across continents.
 
 In this article, we also provided a hands-on guide to help you replicate this use case. We used CockroachDB as a storage backend to save internal states of the Teleport control plane, but also as a [Teleport Protected Resource (TPR)](https://goteleport.com/docs/enroll-resources/database-access/enroll-self-hosted-databases/cockroachdb-self-hosted/) that we secure using Teleport itself. Whether you're managing internal engineering access or scaling enterprise-wide, identity-aware infrastructure, Teleport and CockroachDB offer a powerful foundation for secure, always-on infrastructure access management.
