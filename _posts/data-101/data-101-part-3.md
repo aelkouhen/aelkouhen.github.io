@@ -93,7 +93,7 @@ Lambda and Kappa emerged as attempts to overcome the shortcomings of the Hadoop 
 
 Unifying multiple code paths is one of the most significant challenges when managing batch and stream processing. Even with the Kappa architecture's unified queuing and storage layer, engineers still face the challenge of using different tools for collecting real-time statistics and running batch aggregation jobs. Today, engineers are working to address this challenge in various ways. For instance, Google has made significant progress by developing the Dataflow model and the Apache Beam framework, which implements this model.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs_zYt5_YAN3FdJ7TLIPrUGMJYXj3IDIqOec-1-4ta7cFUbILFwdrN3xxDIjB82pCsCijsRh5bNaWYJ9mqZ_SVzM0VpQ1urlXtf4pftW8vvJtK4civN5Tor811UAj07_Ai3-y6zPN0dJXzmvVTsywzfrkoar5r8nxDMO3atOfmu06XP5FYTOuWBbAp/s2930/windowing-2.png){: .mx-auto.d-block :} *Windowing patterns.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/windowing-2.png){: .mx-auto.d-block :} *Windowing patterns.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 The fundamental concept behind the Dataflow model is to treat all data as events and perform aggregations over different types of windows. Real-time event streams are unbounded data, while data batches are bounded event streams that have natural windows. Engineers can choose from different windows, such as sliding or tumbling, for real-time aggregation. The Dataflow model enables real-time and batch processing to occur within the same system, using almost identical code. The idea of "batch as a special case of streaming" has become increasingly widespread, with frameworks like Flink and Spark adopting similar approaches.
 
@@ -123,7 +123,7 @@ In this chapter, I describe three topology-based data architectures in more deta
 
 A data hub is an architecture for managing data in a centralized way. It can be described as a data exchange with frictionless data flow at its core. It acts as a central repository of information with connections to other systems and customers, allowing data sharing between them. Endpoints interact with the Data Hub by providing data into it or receiving data from it, and the hub provides a mediation and management point, making visible how data flows across the enterprise. A data hub architecture facilitates this exchange by connecting producers and consumers of data together. The seminal work behind data hub architecture was a Gartner research [paper](https://www.gartner.com/en/documents/3597517) published in 2017. In this paper, Gartner suggested a technology-neutral architecture for connecting data producers and consumers, which was more advantageous than point-to-point alternatives. Subsequent research further developed this concept, resulting in the current definition of a data hub's attributes.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSGEDhwvOl03G83OuqVD2GZqCghZnC1LrsVkAyFZfQna_-sx4DNWcqRq4Wo0NVeytPYMxEPaCzYvf3VwSQuTlVpn6N8tgVfsis3386TfawoyHMZl4NzNwXT4hBZ5_ZJc5UUzw3JNA73RTg0JcgWkJtOCWtF4GxxKfvQ8icwKN8boxeuD38cN564s1Q/w472-h161/data%20hub%20attributes.png){: .mx-auto.d-block :} *Data hub attributes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/data-hub-attributes.png){: .mx-auto.d-block :} *Data hub attributes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 The hub is structured and consumed according to the models defined by its users. Governance policies are established to ensure data privacy, access control, security, retention, and disposal of information securely. Integration strategies such as APIs or ETL processes can be used for working with the data stored within the hub. Persistence defines which type of database should be utilized for storing this data (e.g., relational databases). The implementation of a Data Hub architecture is a facilitator for:
 
@@ -133,7 +133,7 @@ The hub is structured and consumed according to the models defined by its users.
 *   Improving knowledge of the exchanged data,
 *   Gradually building the company data model.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgCjvd3WDzzxMGviTm-M_GHFpd6OOhXnvat8P9r5m0z_-AGw0v3nuw75yI9IIV9MZ8-8wGZCg9vMZ9idtcUtacNrUft3ux7Nhc5JMpTuKVE_pWrBHpQnbILWWOz03DXhtCEqV5hViQFBA-fexRApMVwslBsPGHuy5NL0cX1UWcvowD81ez6Sm1APHxx/w379-h276/data%20hub.png){: .mx-auto.d-block :} *Data hub.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/data-hub.png){: .mx-auto.d-block :} *Data hub.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 Gartner proposed that specialized, purpose-built data hubs could be used for various purposes. These included analytics data hubs used for collecting and sharing information for downstream analytics processes; application data hubs used as domain context for specific applications or suites; integration data hubs designed to facilitate the sharing of data through different integration styles; master data hubs focused on distributing master data across enterprise operational systems and procedures; and finally, reference data hubs with similar goals but limited in scope to "reference" (e.g., commonly utilized codes).
 
@@ -155,13 +155,13 @@ One variation on ETL is ELT. With the ELT mode in data warehouse architectures, 
 
 During the era of big data, the data lake emerged as another widely used centralized architecture. The idea was to create a central repository where all types of structured and unstructured data could be stored without any strict structural constraints. The data lake was intended to empower businesses by providing unlimited data supply. The initial version of the data lake, known as "data lake 1.0," started with distributed systems like Hadoop (HDFS). As the cloud grew in popularity, these data lakes moved to cloud-based object storage, with extremely cheap storage costs and virtually limitless storage capacity. Instead of relying on a monolithic data warehouse where storage and compute are tightly coupled, the data lake stores an immense amount of data of any size and type.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgSz_fat1HplEzkM8Ud2tMPG00cqPOjJ3IclynCBGmc4ATmmr0ofdap-0oKHBk5ThN-vetdFUUAS8dUbA6mwzrmZQXRajIiUATDwTKfpldBHYcFHyNlNT5A4KjRVyud-1iskAuV5v0RFOFF664Wj7aAHxXN5WfLOFEEPykWRtJSINWMnVt3qdcO-dUS/s1994/data-lake-1.0.png){: .mx-auto.d-block :} *Data Lake 1.0.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/data-lake-1.0.png){: .mx-auto.d-block :} *Data Lake 1.0.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 Despite the hype and potential benefits, the first generation of data lakes - data lake 1.0 - had several significant drawbacks. The data lake essentially turned into a dumping ground, creating terms such as data swamp and dark data, as many data projects failed to live up to their initial promise. Managing data became increasingly difficult as the volume of data grew exponentially, and schema management, data cataloging, and discovery tools were lacking. In addition, the original data lake concept was essentially write-only, creating huge headaches with the arrival of regulations such as GDPR that required targeted deletion of user records. Processing data was also a major challenge, with relatively basic data transformations, such as joins, requiring the implementation of complex MapReduce jobs.
 
 Various players have sought to enhance the concept to fully realize its promise in response to the limitations of first-generation data lakes. For example, Databricks introduced the notion of a data lakehouse. The lakehouse incorporates the controls, data management, and data structures found in a data warehouse while still housing data in object storage and supporting a variety of query and transformation engines. In particular, the data lakehouse supports atomicity, consistency, isolation, and durability (ACID) transactions. It is a significant disruption from the original data lake, where you simply pour in data and never update or delete it. The term data lakehouse suggests a convergence between data lakes and data warehouses.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhobNwMnRTuFWdPOO5szlC9HQB-1LGM9xtER-xQVV3PwZewfXqtE7qXHD2m49GKCYmZ6MlmYEz8nrEbcD3x0Q0LEgAY758kvsELQFdbIiWO9JBu8GFt1Ei82-KOuJEXj-qR-3ENCA-IQC2CujO9wfqa4aVbVk4JT8uZZzT2U8HiBX7Qj3ZNj8MQq1jJ/s1024/data%20lakehouse.png){: .mx-auto.d-block :} *Data Lake + Data Warehouse = Data Lakehouse.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/data-lakehouse.png){: .mx-auto.d-block :} *Data Lake + Data Warehouse = Data Lakehouse.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 ### 2 - Decentralized Data Architectures: Data Fabric
 
@@ -175,7 +175,7 @@ Over the years, Noel has developed his Big Data Fabric concept further. His curr
 
 Gartner has also adopted the term "data fabric" and defined it similarly: they describe it as an emerging data management and integration design that enables flexible, reusable, and enhanced data integration pipelines, services, and semantics to support various operational or analytics use cases across multiple deployment platforms. Data fabrics combine different data integration techniques while utilizing active metadata, knowledge graphs, semantics, and machine learning (ML) to improve their design process. They define five inner attributes as parts of the data fabric:
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgW66S18yxSA1Ab3juAE2Fo22H4NRg7ecWfyoHazHHkRp4UB3CXFijN5DutUsLUOvkyXdMaV6IWvjn2TbxoaU6ZW7TyFt8hQq_BiiBm38W5pxeXJw-4AR0vMYdujEcBDKh0BDRY37tmA6Cmh-yFFLiHe9CT1O5CydZTfbnPCQ9CytL2Svub7XBxoqz8/w554-h163/data%20fabric.png){: .mx-auto.d-block :} *Data fabric attributes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/data-fabric.png){: .mx-auto.d-block :} *Data fabric attributes.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
  
 In a fabric, active metadata contains catalogs of passive data elements such as schemas, field types, data values, and knowledge graph relationships. The knowledge graph stores and visualizes the complex relationships between multiple data entities. It maintains data ontologies to help non-technical users to interpret data. 
 
@@ -193,7 +193,7 @@ A data mesh is a framework that enables business domains to own and operate thei
 
 In a subsequent [article](https://martinfowler.com/articles/data-mesh-principles.html), **_Zhamak_** revised her position by proposing four principles that form this new paradigm.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeIGaztMPmFF0_INbeOPm48zODc_UW9LiZZqA1m9H4NLxaNuwf3tCLXpGvRdaue4IO122weY1JEriq8-D0QU1x0jiLeeh0X4UiGz-zNDlEzEQy0Ub0NvLyizaSX-eD573Y2rgRRzJa5dY8b8RqwY2F0EmokiTSKfXESWnmG6fjOfPCywdgV0lIDzOn/w487-h178/data%20mesh%20principles.webp){: .mx-auto.d-block :} *Data mesh principles.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](/assets/img/data-mesh-principles.webp){: .mx-auto.d-block :} *Data mesh principles.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 * **Domain-oriented**: Data mesh is based on decentralizing and distributing responsibility for analytical data, its metadata, and the computation necessary to serve it to people closest to the data. This allows for continuous change and scalability in an organization's data ecosystem. To do this, Data Mesh decomposes components along organizational units or business domains that localize changes or evolution within that bounded context. By doing so, ownership of these components can be distributed across stakeholders close to the data.
 

@@ -21,7 +21,7 @@ To understand storage, we will start by studying the different levels of storag
 
 "Storage" means different things to different users. When we talk about storage, some people think about how data is stored physically; some focus on the raw material that holds the storage systems, while others think about the relevant storage system or technology for their use case. All these levels are important attributes of Storage, but they focus on different levels of abstraction.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjM-XW3J2nVsg_wzP8kM-yjUGzfTMkIBtFS5SSIWH1CEqAV9BqrcMiDPy_9rd0v-n-HfujnHGskP_lkNEwN9eLRQhFV3waxucN_UwhpeRaybLu4caqAHbUe3rmW_j2CH-QRXxoOgCUlJQcszlJrh7TMiSmz3xRk2c23YOFAFXdsa89vTUXuHaKlHMd6/w511-h746/storage-abstraction.png){: .mx-auto.d-block :} *Storage abstractions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/storage-abstraction.png){: .mx-auto.d-block :} *Storage abstractions.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Despite some storage abstraction levels being out of data engineers' control, It’s essential to understand their basic characteristics to assess the trade-offs inherent in any storage architecture. The following sections discuss the different storage abstraction levels.
 
@@ -50,7 +50,7 @@ Units for Measuring Data Storage Capacity:
 
 Storage is ubiquitous, which makes it easy to overlook its significance. For example, many software and data engineers use storage daily, yet they may need to gain more knowledge of how it operates and the trade-offs involved with different storage media.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjO4rbZPEOxAo4LxajlnLR7PcLGNf0s2HvGdqZyltBR4OhPmTShTOAVjnMIBPm__aC2fSrClirnu4DX40ePA_LzWuq9fk_tqUt10Vjpz1bQxdzNxe-zkAi5dU-t-r-bxz2VQ5v2Oqs9zwGtIVfttSp0YR8uHrXveE_nsO_wDJW-00dZqXd5I8ZPYu7N/w516-h303/storage-raw.png){: .mx-auto.d-block :} 
+![](/assets/img/storage-raw.png){: .mx-auto.d-block :} 
 
 Data in data journeys typically goes through various storage media such as magnetic storage, SSDs, and memory during different stages of the data pipeline. Storage and query systems are complex and require distributed systems, multiple hardware storage layers, and numerous services to function effectively. These systems require the right components to operate correctly. Therefore, it is crucial to understand these underlying systems and the ingredients required to ensure efficient and effective data processing. These are the different components that operate harmoniously to provide a storage media:
 
@@ -116,7 +116,7 @@ About a decade ago, architects began to conceptualize a single system for storin
 
 Unlike databases or data warehouses, a data lake captures anything the organization deems valuable for future use. The data lake represents an all-in-one process. Data comes from disparate sources and serves disparate consumers. We often see data lakes working with complimentary tools like data warehouses, which provide more querying options and other analytical features, and data marts because they create the other side of the spectrum: While data lakes are enormous repositories of raw data, data marts are more focused on specialized data (subject-oriented data).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqqEin6Ez2BAehABQavxWuzw3MYXjP95_RIm-k6QfVnqzk8SYqGHb9MKjDKMFacI2FKtbFjPxHaj7cGb8ebCIxBn-hBHWMYAX3mJMvvsQVBENRrLeXJtcTGk482ynMpadm6eph1qE5FH-2bY497ZeN_rHUVtTCnN3KcVD51YBi60G8lPgoKuqlzlL5/w471-h460/Demystifying-Storage.jpeg){: .mx-auto.d-block :} *Demystifying Data Storage - Credit Marc Lamberti.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/Demystifying-Storage.jpeg){: .mx-auto.d-block :} *Demystifying Data Storage - Credit Marc Lamberti.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 The continuous need for complimentary tools pushed many technology vendors to create a new concept that combines the best elements of data lakes and data warehouses. This new technology is called data lakehouses.
 
@@ -178,7 +178,7 @@ In bulk storage, the entire target dataset is cleared out and then entirely over
 
 However, using the full data load approach, one may experience difficulty in sustaining data loading with a small number of records (when you need to update only a few values but you have to erase then insert millions of objects), slow performance when dealing with large datasets and an inability to preserve historical data.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiR2FA0_qQ8acGmi_A6JAqCFf0uuTLt3NrglYlKmQX72bv_xoqm01dRJkDkYjcwSDynTfSesdWMJ3UWrYmdVmnJ6tLIYxabWkseMhv8KuZIG7JQcxOz0ZMjSyBgVroYas2Xt4hd39qFcPWWwhjSGjJxNI0_Pm__iorTuZOVI4Fwmtr2ztCptatyoxqM/w381-h333/StorageOption.png){: .mx-auto.d-block :} *Bulk vs. Incremental storage.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/StorageOption.png){: .mx-auto.d-block :} *Bulk vs. Incremental storage.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 On the other hand, the incremental load is a selective method of storing data from one or many sources to a target storage location. The incremental load model will attempt to compare the incoming data from the source systems with the existing data present in the destination for any new or changed data values since the last loading operation. Of course, some storage systems keep track of every modification, as a versioning control system could do.
 

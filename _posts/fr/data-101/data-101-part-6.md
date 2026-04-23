@@ -22,7 +22,7 @@ Pour comprendre le stockage, nous commencerons par étudier les différents nive
 
 Le « stockage » signifie différentes choses pour différents utilisateurs. Lorsque nous parlons de stockage, certaines personnes pensent à la façon dont les données sont stockées physiquement ; certains se concentrent sur la matière première qui supporte les systèmes de stockage, tandis que d'autres pensent au système ou à la technologie de stockage pertinente pour leur cas d'usage. Tous ces niveaux sont des attributs importants du stockage, mais ils se concentrent sur différents niveaux d'abstraction.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjM-XW3J2nVsg_wzP8kM-yjUGzfTMkIBtFS5SSIWH1CEqAV9BqrcMiDPy_9rd0v-n-HfujnHGskP_lkNEwN9eLRQhFV3waxucN_UwhpeRaybLu4caqAHbUe3rmW_j2CH-QRXxoOgCUlJQcszlJrh7TMiSmz3xRk2c23YOFAFXdsa89vTUXuHaKlHMd6/w511-h746/storage-abstraction.png){: .mx-auto.d-block :} *Abstractions de stockage.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/storage-abstraction.png){: .mx-auto.d-block :} *Abstractions de stockage.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Bien que certains niveaux d'abstraction du stockage soient hors du contrôle des ingénieurs de données, il est essentiel de comprendre leurs caractéristiques de base pour évaluer les compromis inhérents à toute architecture de stockage. Les sections suivantes discutent des différents niveaux d'abstraction du stockage.
 
@@ -51,7 +51,7 @@ Unités de mesure de la capacité de stockage des données :
 
 Le stockage est omniprésent, ce qui rend facile d'oublier son importance. Par exemple, de nombreux ingénieurs logiciels et de données utilisent le stockage quotidiennement, mais ils peuvent avoir besoin d'acquérir plus de connaissances sur son fonctionnement et les compromis impliqués avec différents supports de stockage.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjO4rbZPEOxAo4LxajlnLR7PcLGNf0s2HvGdqZyltBR4OhPmTShTOAVjnMIBPm__aC2fSrClirnu4DX40ePA_LzWuq9fk_tqUt10Vjpz1bQxdzNxe-zkAi5dU-t-r-bxz2VQ5v2Oqs9zwGtIVfttSp0YR8uHrXveE_nsO_wDJW-00dZqXd5I8ZPYu7N/w516-h303/storage-raw.png){: .mx-auto.d-block :} 
+![](/assets/img/storage-raw.png){: .mx-auto.d-block :} 
 
 Les données dans les parcours de données passent généralement par divers supports de stockage tels que les disques magnétiques, les SSD et la mémoire lors des différentes étapes du pipeline de données. Les systèmes de stockage et de requête sont complexes et nécessitent des systèmes distribués, plusieurs couches de stockage matériel et de nombreux services pour fonctionner efficacement. Ces systèmes nécessitent les bons composants pour fonctionner correctement. Il est donc crucial de comprendre ces systèmes sous-jacents et les éléments nécessaires pour assurer un traitement des données efficace. Voici les différents composants qui fonctionnent de manière harmonieuse pour fournir un support de stockage :
 
@@ -116,7 +116,7 @@ Il y a une dizaine d'années, les architectes ont commencé à conceptualiser un
 
 Contrairement aux bases de données ou aux data warehouses, un data lake capture tout ce que l'organisation juge précieux pour une utilisation future. Le data lake représente un processus tout-en-un. Les données proviennent de sources disparates et servent des consommateurs disparates. Nous voyons souvent les data lakes travailler avec des outils complémentaires comme les data warehouses et les data marts.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqqEin6Ez2BAehABQavxWuzw3MYXjP95_RIm-k6QfVnqzk8SYqGHb9MKjDKMFacI2FKtbFjPxHaj7cGb8ebCIxBn-hBHWMYAX3mJMvvsQVBENRrLeXJtcTGk482ynMpadm6eph1qE5FH-2bY497ZeN_rHUVtTCnN3KcVD51YBi60G8lPgoKuqlzlL5/w471-h460/Demystifying-Storage.jpeg){: .mx-auto.d-block :} *Démystifier le stockage des données - Crédit Marc Lamberti.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/Demystifying-Storage.jpeg){: .mx-auto.d-block :} *Démystifier le stockage des données - Crédit Marc Lamberti.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Le besoin continu d'outils complémentaires a poussé de nombreux fournisseurs technologiques à créer un nouveau concept qui combine les meilleurs éléments des data lakes et des data warehouses. Cette nouvelle technologie est appelée data lakehouse.
 
@@ -178,7 +178,7 @@ Dans le stockage en masse, l'ensemble du jeu de données cible est vidé puis en
 
 Cependant, en utilisant l'approche de chargement complet des données, on peut rencontrer des difficultés pour maintenir le chargement des données avec un petit nombre d'enregistrements, des performances lentes lors du traitement de grands ensembles de données et une incapacité à préserver les données historiques.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiR2FA0_qQ8acGmi_A6JAqCFf0uuTLt3NrglYlKmQX72bv_xoqm01dRJkDkYjcwSDynTfSesdWMJ3UWrYmdVmnJ6tLIYxabWkseMhv8KuZIG7JQcxOz0ZMjSyBgVroYas2Xt4hd39qFcPWWwhjSGjJxNI0_Pm__iorTuZOVI4Fwmtr2ztCptatyoxqM/w381-h333/StorageOption.png){: .mx-auto.d-block :} *Stockage en masse vs. stockage incrémental.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/StorageOption.png){: .mx-auto.d-block :} *Stockage en masse vs. stockage incrémental.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 D'autre part, le chargement incrémental est une méthode sélective de stockage des données d'une ou plusieurs sources vers un emplacement de stockage cible. Le modèle de chargement incrémental tentera de comparer les données entrantes des systèmes sources avec les données existantes dans la destination pour toute nouvelle valeur ou valeur modifiée depuis la dernière opération de chargement.
 

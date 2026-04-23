@@ -34,7 +34,7 @@ Selon Gartner, Augmented Data Catalogs 2019 : « Un catalogue de données crée 
 
 Les données sont un actif précieux, mais leur plein potentiel ne peut être libéré que lorsque les utilisateurs sont capables de les comprendre et de les transformer en informations significatives. À l'ère du big data, les organisations ne peuvent pas se permettre de laisser leurs utilisateurs métier dépendre des professionnels IT ou des analystes de données pour comprendre de grands volumes de données générées. Le catalogue de données sert de source unique d'informations fiables qui donne aux utilisateurs un aperçu de tous les actifs organisationnels disponibles.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjObtG5LlSNI7biAYsZTo6ZCarMpntVkLqvF44htA5aodQ2VNCgWHpeQJdoifwkEP5NxwGTVqW_kAoN0PN0vhI_I635J756xkZT1Rkko3KQrpWTK_RKJ5sjmxUBvEWKoLvRRfwEx_-hnY7FLRXjRE9fCHLxkiDK7LpLEVoyoCP_iG7HCqfQ6l_u6GGJ/w531-h212/data-catalog.png){: .mx-auto.d-block :} *Catalogue de données.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/data-catalog.png){: .mx-auto.d-block :} *Catalogue de données.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Nettoyage des données
 
@@ -109,7 +109,7 @@ De nombreuses considérations doivent être prises en compte pour choisir un for
 *   **Enforcement du schema** : le schema stocke la définition de chaque attribut et ses types. À moins que vos données ne soient immuables, vous devrez considérer l'évolution du schema pour déterminer si la structure de vos données change au fil du temps.
 *   **Stockage en lignes vs. en colonnes** : dans le stockage en lignes, les données sont organisées et stockées en lignes. Cette architecture facilite l'ajout rapide de nouveaux enregistrements et l'accès simultané à une ligne entière de données. Elle est couramment utilisée pour les systèmes OLTP. Inversement, le stockage en colonnes est le plus utile lors de l'exécution de requêtes analytiques nécessitant seulement un sous-ensemble de colonnes examinées sur de grands ensembles de données (OLAP).
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgrDH33UTOe7ZVldZR0jz01-p_daFWY66aAw9-182Ekbj0qJ2WliOYcvIE_PnUkpcojXWiUYgvJPm5jUov-_Dci6emJzcBA2rfEkeTXbpkFZAXUn_SasY70zjpm8PS9o7LgCtpy_27BiIQy36csIeqV3pdoD910yIdy7aURK0bG3MaF0Kz-qJ3B6Sct/w424-h155/row-column-properties.png){: .mx-auto.d-block :} *Regroupement des enregistrements par propriétés.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/row-column-properties.png){: .mx-auto.d-block :} *Regroupement des enregistrements par propriétés.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 *   **Divisible (Splittable)** : dans un système distribué comme Hadoop HDFS, il est essentiel d'avoir un fichier pouvant être décomposé en plusieurs parties. Cela permet de distribuer le traitement des données dans le système parmi ces morceaux, permettant ainsi de faire évoluer le traitement à l'infini.
 *   **Compression des données** : la compression peut réduire la taille des jeux de données stockés et ainsi diminuer les opérations d'E/S en lecture et accélérer les transferts de fichiers sur les réseaux.
@@ -136,19 +136,19 @@ XML est un langage de balisage créé par le W3C qui permet aux humains et aux m
 
 Apache Avro est un framework de sérialisation de données développé dans le cadre du projet Hadoop d'Apache. Il utilise un stockage basé sur les lignes pour sérialiser les données, en stockant le schema au format JSON, ce qui le rend facile à lire et interpréter pour n'importe quel programme. De plus, les données sont stockées sous forme binaire, ce qui les rend compactes et efficaces. Avro est divisible, compressible et prend en charge l'évolution du schema. En raison de son utilisation répandue dans de nombreuses applications telles que Kafka ou Spark, Avro reste l'un des formats les plus populaires pour l'échange d'informations entre systèmes.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjT5bXENly_qqgBPHCJtIRGsAPI2ioxfiVEU9gjObx1IXNLdf8siIeKCvS_wuv8B6DLGjNU2uM14tfOi4d7WOHYI8KA--G2gfY-y0VcehakZCTT28-7CkyC_zpv_men7r7ke0nrqRwWcbanRvkMD1lBOOCq5FhOoDScOnU0hdLCHx9JQwO-2qZrkxcX/w519-h209/avro.png){: .mx-auto.d-block :} *Structure du format AVRO.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/avro.png){: .mx-auto.d-block :} *Structure du format AVRO.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 #### 5- ProtoBuf (Protocol Buffers)
 
 Protobuf (abréviation de Protocol Buffers) est un format de sérialisation de données binaire développé par Google en 2008. Il est utilisé pour encoder efficacement des données structurées de manière extensible et neutre au niveau du langage, ce qui le rend idéal pour des applications telles que la communication réseau ou le stockage des paramètres de configuration. Le format Protocol Buffers (Protobuf) présente des avantages tels qu'être entièrement typé et prendre en charge l'évolution du schema et le traitement par lots/streaming, mais il ne prend pas en charge Map Reduce ni la compression.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBOYIhTAEa2kH4VJswAH9b1cDs5M0Ui_O8FqVPtrhdYaeZTpTerOY0C05KdBTu9K_eOYT_iu4RBPUSkcWrc-S3UoWvSyQB-AQFmlbalJjviDnYP7oMAC6cUrrAB4AD1qp-fJBV_riQbmwBa8By8nDdTpkpPu59zzkDji6CZ1aqHHPrV1Ac-WFINbWE/w584-h497/protobuf.png){: .mx-auto.d-block :} *Encodage de messages avec Protocol Buffers.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/protobuf.png){: .mx-auto.d-block :} *Encodage de messages avec Protocol Buffers.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 #### 6- ORC (Optimized Row Columnar) 
 
 Le format ORC (abréviation d'Optimized Row Columnar) a été développé par Hortonworks en partenariat avec Facebook. C'est un système de stockage de données orienté colonne. ORC est un format de fichier hautement compressible qui réduit la taille des données de 75 %. Il est plus efficace pour les requêtes OLAP que OLTP et est principalement utilisé pour le traitement par lots.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih7_47G24Rd7cUFEhawrkoxA5Jl0MBXl5E1d4-HLIFgLFKMEXAVVO6kJjYhzNkPSA2V89GwN6D0D_G96vb8ALpdYqy6YYhIzktW8QTn6lnnESM7n7s3I4QJtud1TWDGQPHVOJjP5vCNZiTiqWMFtnBDERGadoOYwjeZy4g8hXqA7JV650-mf5P4URJ/w410-h389/ORC.png){: .mx-auto.d-block :} *Structure du format ORC.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/ORC.png){: .mx-auto.d-block :} *Structure du format ORC.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 #### 7- Parquet
 
@@ -156,7 +156,7 @@ Parquet est un format de fichier open-source conçu pour l'écosystème Hadoop. 
 
 Databricks a récemment créé un nouveau format de fichier appelé Delta qui utilise des fichiers Parquet versionnés pour stocker des données. En plus des versions, Delta contient également un journal de transactions pour suivre tous les commits effectués sur la table afin de fournir des transactions ACID et d'exploiter la fonctionnalité de voyage dans le temps.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgq4XCrUOWU165j1mIgaDB7K2NCfx6MTN6X7CoE83zWEvYmDeqcQvjllC6sCOl9dmssWka9Zbz0mKqvI7esC8pmhBypdSpJz8McioY-Xd9uiIbH_lSlLPiMmU0NME70TgH73Njw4k6HYmbnbRp28dTtVDGTLJtSHtnGkJHgqNuwzbHpUwpK79EoAlnT/w456-h377/parquet.png){: .mx-auto.d-block :} *Structure du format Parquet.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/parquet.png){: .mx-auto.d-block :} *Structure du format Parquet.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
   
 La sélection du format de fichier doit être basée sur le type de requête et les cas d'usage associés. Voici un tableau récapitulatif des formats de données par rapport aux considérations sélectionnées :
 
@@ -181,7 +181,7 @@ La sélection du format de fichier doit être basée sur le type de requête et 
 
 Les organisations génèrent de vastes quantités de données quotidiennement, mais celles-ci ne sont utiles que si elles peuvent les utiliser pour obtenir des insights et promouvoir la croissance métier. La transformation des données consiste à convertir et à structurer les données d'une forme vers une forme utilisable, soutenant les processus décisionnels. La transformation des données est utilisée lorsque les données doivent être modifiées pour correspondre au format et à la structure du système cible. Cela peut avoir lieu dans ce qu'on appelle les pipelines de données.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1ImrFN_dlXOTMogpCd6B38sjAiTaWSGp35e3IU-N6fiFhEQzWFAjR7zuuHW-EUODPyWDuA-87LaO5MpPo5dhBlTqXm_29iI31XqTNcXE1mX22JB_sGRETRtWhVi5pwsIwZGu1-v-2SNdPERYKiWUlGJC-nlqDNGO5vKSG1Y5ghQ7HcuSR1QyflP28/w493-h160/data-transformation.png){: .mx-auto.d-block :} *Transformation des données.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/data-transformation.png){: .mx-auto.d-block :} *Transformation des données.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Après la préparation des données (appelée pré-traitement), un pipeline de transformation des données commence par une phase de mapping. Cela implique d'analyser comment les champs individuels seront modifiés, joints ou agrégés pour comprendre les changements nécessaires. Trois approches peuvent être suivies :
 

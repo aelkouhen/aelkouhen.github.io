@@ -140,7 +140,7 @@ A data mesh is a framework that enables business domains to own and operate thei
 
 In a subsequent [article](https://martinfowler.com/articles/data-mesh-principles.html), **_Zhamak_** revised her position by proposing four principles that form this new paradigm.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeIGaztMPmFF0_INbeOPm48zODc_UW9LiZZqA1m9H4NLxaNuwf3tCLXpGvRdaue4IO122weY1JEriq8-D0QU1x0jiLeeh0X4UiGz-zNDlEzEQy0Ub0NvLyizaSX-eD573Y2rgRRzJa5dY8b8RqwY2F0EmokiTSKfXESWnmG6fjOfPCywdgV0lIDzOn/w487-h178/data%20mesh%20principles.webp){: .mx-auto.d-block :} *Data mesh principles.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![](/assets/img/data-mesh-principles.webp){: .mx-auto.d-block :} *Data mesh principles.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 Snowflake offers several key capabilities for implementing automated data transformation pipelines and creating and governing data products. Snowflake’s platform is designed for ease of use, near-zero maintenance, and instantaneous scaling of resources to enable a true self-service experience. Each domain team can deploy and scale its resources according to its needs without impacting others and freeing them from relying on an infrastructure team.
 
