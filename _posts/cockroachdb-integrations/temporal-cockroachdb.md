@@ -794,6 +794,19 @@ The combination gives you the full picture: Temporal tells you *which* workflows
 
 ---
 
+## Scaling in Production
+
+As load increases, a few practices help maintain performance:
+
+- **Tune Temporal shard counts**: `numHistoryShards` in `base.yaml` controls write parallelism. Increasing it distributes history writes across more CockroachDB ranges, reducing contention. Start at 4 for development and scale to 512 or higher for production workloads.
+- **Monitor for hot ranges**: use the CockroachDB Admin Console's **Hot Ranges** page to identify ranges that receive a disproportionate share of writes. Hot ranges typically appear when a small number of Temporal history shards map to the same CockroachDB range.
+- **Leverage range splitting and distribution**: CockroachDB automatically splits and rebalances ranges as data grows, but you can pre-split the `executions` and `executions_visibility` tables for predictable write distribution at high shard counts.
+- **Consider a dedicated visibility backend for heavy query workloads**: Temporal's visibility store handles all `ListWorkflowExecutions` queries. Under heavy analytical query load, routing visibility to a separate CockroachDB database — or an Elasticsearch cluster — isolates query pressure from the history write path.
+
+These practices mirror approaches used successfully with other horizontally scalable databases, and they apply directly to CockroachDB without any Temporal-specific changes beyond configuration.
+
+---
+
 ## See Also
 
 - [Temporal Documentation](https://docs.temporal.io/)
