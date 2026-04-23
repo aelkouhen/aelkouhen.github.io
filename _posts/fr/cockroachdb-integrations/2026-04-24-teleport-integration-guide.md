@@ -1,4 +1,5 @@
 ---
+date: 2026-04-24
 layout: post
 lang: fr
 title: "Intégrer CockroachDB avec Teleport"

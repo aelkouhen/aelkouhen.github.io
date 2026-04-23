@@ -1,4 +1,5 @@
 ---
+date: 2024-09-17
 layout: post
 title: "Mainframe to Distributed SQL, An Introduction"
 subtitle: "What is a Mainframe?"

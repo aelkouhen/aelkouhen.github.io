@@ -1,4 +1,5 @@
 ---
+date: 2024-10-24
 layout: post
 title: "Mainframe to Distributed SQL, Part 2"
 subtitle: "The Imperative for Change"

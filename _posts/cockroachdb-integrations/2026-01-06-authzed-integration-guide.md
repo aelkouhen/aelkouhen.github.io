@@ -1,4 +1,5 @@
 ---
+date: 2026-01-06
 layout: post
 title: "Integrate CockroachDB with AuthZed"
 subtitle: "How CockroachDB powers AuthZed's SpiceDB as a strongly consistent, globally distributed authorization backend"

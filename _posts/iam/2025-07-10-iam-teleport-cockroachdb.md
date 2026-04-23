@@ -1,4 +1,5 @@
 ---
+date: 2025-07-10
 layout: post
 title: "When Teleport & CockroachDB Powered Global Tier 0 Access Management"
 subtitle: "How a global payments leader achieved 99.999% availability for infrastructure access"

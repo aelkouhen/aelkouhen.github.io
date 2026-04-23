@@ -1,4 +1,5 @@
 ---
+date: 2025-12-27
 layout: post
 lang: fr
 title: "Moteurs de recommandation en ligne avec CockroachDB"

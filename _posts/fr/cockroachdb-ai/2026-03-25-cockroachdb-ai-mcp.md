@@ -1,4 +1,5 @@
 ---
+date: 2026-03-25
 layout: post
 lang: fr
 title: "CockroachDB pour les agents IA : Serveurs MCP et automatisation du cycle de vie des bases de données"

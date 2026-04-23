@@ -1,4 +1,5 @@
 ---
+date: 2025-12-27
 layout: post
 title: "Online Recommendation Engines with CockroachDB"
 subtitle: "Building personalized recommendation systems with CockroachDB's native vector capabilities"

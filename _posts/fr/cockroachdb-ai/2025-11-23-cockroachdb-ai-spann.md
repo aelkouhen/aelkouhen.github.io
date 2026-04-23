@@ -1,4 +1,5 @@
 ---
+date: 2025-11-23
 layout: post
 lang: fr
 title: "Indexation en temps réel pour des milliards de vecteurs"

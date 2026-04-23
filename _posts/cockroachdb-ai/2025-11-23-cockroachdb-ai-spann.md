@@ -1,4 +1,5 @@
 ---
+date: 2025-11-23
 layout: post
 title: "Real-Time Indexing for Billions of Vectors"
 subtitle: "How we built fast, fresh vector indexing at scale in CockroachDB"

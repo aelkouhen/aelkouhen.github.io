@@ -1,4 +1,5 @@
 ---
+date: 2025-04-22
 layout: post
 lang: fr
 title: "Intégrer CockroachDB avec Ory"

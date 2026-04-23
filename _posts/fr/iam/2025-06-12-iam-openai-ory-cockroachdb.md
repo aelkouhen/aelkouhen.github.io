@@ -1,4 +1,5 @@
 ---
+date: 2025-06-12
 layout: post
 lang: fr
 title: "Dans la Pile IAM Toujours Disponible d'OpenAI avec Ory et CockroachDB"

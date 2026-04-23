@@ -1,4 +1,5 @@
 ---
+date: 2026-01-06
 layout: post
 lang: fr
 title: "Intégrer CockroachDB avec AuthZed"

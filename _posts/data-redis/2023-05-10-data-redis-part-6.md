@@ -1,4 +1,5 @@
 ---
+date: 2023-05-10
 layout: post
 title: "Data & Redis, Part 6"
 subtitle:  Fraud Detection with Redis & AWS

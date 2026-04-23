@@ -1,4 +1,5 @@
 ---
+date: 2025-08-04
 layout: post
 lang: fr
 title: "La Cohérence au-delà de la Base de Données"

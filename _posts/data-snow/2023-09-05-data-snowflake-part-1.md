@@ -1,4 +1,5 @@
 ---
+date: 2023-09-05
 layout: post
 title: "Data & Snowflake, Part 1"
 subtitle:  Data Ingestion with Snowflake

@@ -1,4 +1,5 @@
 ---
+date: 2026-02-20
 layout: post
 lang: fr
 title: "Construire des applications RAG avec CockroachDB"

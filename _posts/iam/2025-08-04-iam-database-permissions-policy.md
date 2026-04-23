@@ -1,4 +1,5 @@
 ---
+date: 2025-08-04
 layout: post
 title: "Consistency Beyond the Database"
 subtitle: "Managing Permissions and Policy in a Distributed World"

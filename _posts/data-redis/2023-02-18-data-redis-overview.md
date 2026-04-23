@@ -1,4 +1,5 @@
 ---
+date: 2023-02-18
 layout: post
 title: "Data & Redis, Overview"
 subtitle: Choosing the Right Data Architecture with Redis

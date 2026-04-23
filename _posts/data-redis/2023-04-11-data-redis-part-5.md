@@ -1,4 +1,5 @@
 ---
+date: 2023-04-11
 layout: post
 title: "Data & Redis, Part 5"
 subtitle:  Data Serving with Redis (Hands-on)

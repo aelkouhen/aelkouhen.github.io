@@ -1,4 +1,5 @@
 ---
+date: 2024-12-09
 layout: post
 title: "Mainframe to Distributed SQL, Part 4"
 subtitle: "Planning Your Data Modernization Strategy"

@@ -1,4 +1,5 @@
 ---
+date: 2025-07-10
 layout: post
 lang: fr
 title: "Quand Teleport & CockroachDB ont Propulsé la Gestion des Accès Mondiaux de Niveau 0"

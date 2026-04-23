@@ -1,4 +1,5 @@
 ---
+date: 2023-02-18
 layout: post
 lang: fr
 title: "Data & Redis, Vue d'ensemble"

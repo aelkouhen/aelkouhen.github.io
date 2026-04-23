@@ -1,4 +1,5 @@
 ---
+date: 2026-02-20
 layout: post
 title: "Building RAG Applications with CockroachDB"
 subtitle: "From Naive RAG to Agentic RAG — a complete tutorial using LangChain, Memori, GCP Vertex AI, and Amazon Bedrock"
