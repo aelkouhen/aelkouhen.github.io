@@ -127,6 +127,106 @@ CockroachDB remplace PostgreSQL directement, offrant aux services sans état de 
 
 ## Déployer Temporal sur CockroachDB
 
+### Prérequis : Installation des outils nécessaires
+
+Tous les binaires ci-dessous sont autonomes et ne nécessitent pas de gestionnaire de paquets. Choisissez la version correspondant à votre OS et architecture.
+
+#### Serveur Temporal et outil SQL
+
+Téléchargez l'archive Temporal depuis la [page des releases GitHub](https://github.com/temporalio/temporal/releases). L'archive contient `temporal-server`, `temporal-sql-tool` et `tdbg` :
+
+```bash
+VERSION="1.30.4"
+curl -L -o temporal.tar.gz \
+  "https://github.com/temporalio/temporal/releases/download/v${VERSION}/temporal_${VERSION}_linux_amd64.tar.gz"
+tar -xzf temporal.tar.gz
+chmod +x temporal-server temporal-sql-tool tdbg
+sudo mv temporal-server temporal-sql-tool tdbg /usr/local/bin/
+```
+
+> Sur macOS ARM64, remplacez `linux_amd64` par `darwin_arm64`.
+
+#### CLI Temporal
+
+Le CLI `temporal` permet de gérer les namespaces, démarrer des workflows et vérifier l'état du cluster. Téléchargez-le séparément :
+
+```bash
+CLI_VERSION="1.3.0"
+curl -L -o temporal.tar.gz \
+  "https://github.com/temporalio/cli/releases/download/v${CLI_VERSION}/temporal_cli_${CLI_VERSION}_linux_amd64.tar.gz"
+tar -xzf temporal.tar.gz
+chmod +x temporal
+sudo mv temporal /usr/local/bin/
+```
+
+#### Interface web Temporal (optionnel)
+
+Le serveur UI autonome se connecte à votre frontend Temporal via gRPC et sert le tableau de bord dans le navigateur :
+
+```bash
+UI_VERSION="2.49.1"
+curl -L -o temporal-ui.tar.gz \
+  "https://github.com/temporalio/ui-server/releases/download/v${UI_VERSION}/ui-server_${UI_VERSION}_linux_amd64.tar.gz"
+tar -xzf temporal-ui.tar.gz
+chmod +x ui-server
+sudo mv ui-server /usr/local/bin/temporal-ui-server
+```
+
+Créez un fichier de configuration minimal et démarrez-le :
+
+```bash
+mkdir -p ~/temporal-ui/config
+cat > ~/temporal-ui/config/development.yaml <<EOF
+temporalGrpcAddress: "localhost:7233"
+host: "0.0.0.0"
+port: 8080
+enableUi: true
+EOF
+
+temporal-ui-server --root ~/temporal-ui start
+```
+
+L'interface est ensuite accessible à `http://localhost:8080`.
+
+#### Omes — outil de test de charge
+
+[Omes](https://github.com/temporalio/omes) nécessite Go 1.21+. Installez Go si nécessaire :
+
+```bash
+# macOS
+brew install go
+
+# Linux (ajustez la version si besoin)
+curl -L https://go.dev/dl/go1.21.0.linux-amd64.tar.gz | sudo tar -C /usr/local -xzf -
+export PATH=$PATH:/usr/local/go/bin
+```
+
+Clonez et compilez Omes :
+
+```bash
+git clone https://github.com/temporalio/omes.git
+cd omes
+go build -o omes ./cmd/main.go
+sudo mv omes /usr/local/bin/
+```
+
+#### Client psql
+
+`psql` est utilisé pour appliquer directement le schéma de visibilité compatible CockroachDB. Il est fourni avec les outils client PostgreSQL :
+
+```bash
+# macOS
+brew install libpq && brew link --force libpq
+
+# Debian / Ubuntu
+sudo apt-get install -y postgresql-client
+
+# RHEL / Amazon Linux
+sudo yum install -y postgresql
+```
+
+---
+
 ### Étape 1 : Provisionnement des bases et de l'utilisateur
 
 ```sql
