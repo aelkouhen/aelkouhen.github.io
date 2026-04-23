@@ -10,6 +10,16 @@ from sqlalchemy.pool import QueuePool
 import psycopg2
 from dbos import DBOS, DBOSConfig, SetWorkflowID
 
+# Patch: sqlalchemy-cockroachdb version regex doesn't know v26.x yet
+import sqlalchemy_cockroachdb.base as _crdb
+_orig_ver = _crdb.CockroachDBDialect._get_server_version_info
+def _patched_ver(self, conn):
+    try:
+        return _orig_ver(self, conn)
+    except (AssertionError, Exception):
+        return (26, 1, 3)
+_crdb.CockroachDBDialect._get_server_version_info = _patched_ver
+
 NODE_IPS = ["18.209.130.220", "100.51.81.217", "44.207.208.13"]
 NLB_URL  = "postgresql://root@nlb-20260423194342360500000006-a4145919c7a3e780.elb.us-east-1.amazonaws.com:26257/dbos_system?sslmode=disable"
 
@@ -21,7 +31,7 @@ def _creator():
     return psycopg2.connect(url)
 
 engine = create_engine(
-    "postgresql+psycopg2://",
+    "cockroachdb+psycopg2://",
     creator=_creator,
     poolclass=QueuePool,
     pool_size=64,
@@ -54,8 +64,8 @@ def bench_workflow(task_id: str) -> str:
 
 # ── Helpers ───────────────────────────────────────────────────────────────
 
-CONCURRENCY_LEVELS  = [64, 128, 256, 512]
-WORKFLOWS_PER_LEVEL = 200
+CONCURRENCY_LEVELS = [64, 128, 256, 512]
+DURATION_PER_LEVEL = 30   # seconds per level
 
 def start_one() -> float:
     t0    = time.perf_counter()
@@ -65,16 +75,39 @@ def start_one() -> float:
     handle.get_result()
     return time.perf_counter() - t0
 
-def run_level(concurrency: int, total: int):
+def run_level(concurrency: int, duration: float):
     latencies = []
+    deadline  = time.perf_counter() + duration
+    in_flight = []
     t_start   = time.perf_counter()
+
     with ThreadPoolExecutor(max_workers=concurrency) as ex:
-        futures = [ex.submit(start_one) for _ in range(total)]
-        for f in as_completed(futures):
+        while True:
+            still_running = []
+            for f in in_flight:
+                if f.done():
+                    try:
+                        latencies.append(f.result())
+                    except Exception as e:
+                        print(f"  error: {e}")
+                else:
+                    still_running.append(f)
+            in_flight = still_running
+
+            if time.perf_counter() >= deadline:
+                break
+
+            while len(in_flight) < concurrency:
+                in_flight.append(ex.submit(start_one))
+
+            time.sleep(0.005)
+
+        for f in as_completed(in_flight):
             try:
                 latencies.append(f.result())
             except Exception as e:
                 print(f"  error: {e}")
+
     elapsed = time.perf_counter() - t_start
     return latencies, elapsed
 
@@ -103,7 +136,7 @@ print(f"{'Concurrency':>12} | {'Workflows/s':>12} | {'p50 (ms)':>10} | {'p95 (ms
 print("-" * 70)
 
 for c in CONCURRENCY_LEVELS:
-    lats, elapsed = run_level(c, WORKFLOWS_PER_LEVEL)
+    lats, elapsed = run_level(c, DURATION_PER_LEVEL)
     if not lats:
         print(f"{c:>12} | {'NO DATA':>12}")
         continue
