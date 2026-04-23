@@ -65,7 +65,7 @@ AuthZed a choisi CockroachDB comme datastore sous-jacent pour AuthZed Dedicated 
 
 Dans le domaine de l'autorisation, la disponibilité et la résilience sont essentielles. CockroachDB permet aux déploiements AuthZed et SpiceDB de survivre à une panne de nœud, de zone de disponibilité ou de région sans temps d'arrêt.
 
-CockroachDB a été construit autour de ce principe : son modèle d'isolation sérialisable offre la garantie de cohérence transactionnelle la plus forte en SQL — pas « éventuelle », pas « read-committed », mais linéarisable sur un cluster mondial. C'est précisément cette propriété que les systèmes d'autorisation émergents recherchent désormais, mais pour les politiques plutôt que pour les données. C'est pourquoi SpiceDB utilise CockroachDB comme datastore sous-jacent : il acquiert ainsi une fondation SQL distribuée mondialement et fortement cohérente.
+CockroachDB a été construit autour de ce principe : son modèle d'isolation sérialisable offre la garantie de cohérence transactionnelle la plus forte en SQL : pas « éventuelle », pas « read-committed », mais linéarisable sur un cluster mondial. C'est précisément cette propriété que les systèmes d'autorisation émergents recherchent désormais, mais pour les politiques plutôt que pour les données. C'est pourquoi SpiceDB utilise CockroachDB comme datastore sous-jacent : il acquiert ainsi une fondation SQL distribuée mondialement et fortement cohérente.
 
 <img src="/assets/img/authzed-crdb-architecture.png" alt="Architecture AuthZed et CockroachDB" style="width:100%;margin:1.5rem 0;">
 
@@ -97,11 +97,11 @@ Choisissez l'une des méthodes suivantes pour créer un nouveau cluster Cockroac
 
 > **Note :** Créez un cluster **sécurisé**. C'est nécessaire pour l'étape de création d'utilisateur de ce tutoriel.
 
-**Créer un cluster sécurisé localement** — si vous avez le binaire CockroachDB installé localement, vous pouvez déployer manuellement un cluster CockroachDB multi-nœuds et autohébergé sur votre machine.
+**Créer un cluster sécurisé localement** : si vous avez le binaire CockroachDB installé localement, vous pouvez déployer manuellement un cluster CockroachDB multi-nœuds et autohébergé sur votre machine.
 
-**Créer un cluster CockroachDB autohébergé sur AWS** — déployez un cluster multi-nœuds sur Amazon EC2 en utilisant le service de load-balancing géré d'AWS.
+**Créer un cluster CockroachDB autohébergé sur AWS** : déployez un cluster multi-nœuds sur Amazon EC2 en utilisant le service de load-balancing géré d'AWS.
 
-**Créer un cluster CockroachDB Cloud** — CockroachDB Cloud est un service entièrement géré par Cockroach Labs. [Inscrivez-vous](https://cockroachlabs.cloud/) et créez un cluster avec des crédits d'essai.
+**Créer un cluster CockroachDB Cloud** : CockroachDB Cloud est un service entièrement géré par Cockroach Labs. [Inscrivez-vous](https://cockroachlabs.cloud/) et créez un cluster avec des crédits d'essai.
 
 ### Étape 2. Créer une Base de Données pour AuthZed
 

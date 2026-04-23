@@ -33,7 +33,7 @@ Une stratégie de données vise à déterminer comment l'entreprise peut utilise
 
 ## Pourquoi une stratégie de données est-elle nécessaire ?
 
-Les données ne sont plus simplement un sous-produit de l'activité — elles constituent un actif vital qui peut orienter la prise de décision et, par conséquent, les revenus. Disposer d'une stratégie de données est essentiel pour que les organisations restent compétitives et innovantes face aux changements constants. Les entreprises peuvent atteindre leurs objectifs en collectant, en organisant et en utilisant efficacement leurs données, tout en déblocant de nouvelles opportunités qui leur seront bénéfiques.
+Les données ne sont plus simplement un sous-produit de l'activité. Elles constituent un actif vital qui peut orienter la prise de décision et, par conséquent, les revenus. Disposer d'une stratégie de données est essentiel pour que les organisations restent compétitives et innovantes face aux changements constants. Les entreprises peuvent atteindre leurs objectifs en collectant, en organisant et en utilisant efficacement leurs données, tout en déblocant de nouvelles opportunités qui leur seront bénéfiques.
 
 Disposer d'une stratégie de données permet aux organisations d'être innovantes, donne aux utilisateurs métier les moyens de travailler efficacement et maintient l'entreprise compétitive. Sans une stratégie de données adéquate, les organisations se heurtent à ces défis courants :
 
@@ -97,7 +97,7 @@ Après avoir obtenu le soutien de la direction et identifié les objectifs finau
 
 Vous pouvez vous appuyer sur les initiatives data existantes comme point de départ de votre stratégie de données. Cela peut vous aider à définir des victoires rapides atteignables et à prendre des mesures réalistes et progressives pour devenir plus data-driven.
 
-Avec une compréhension complète de votre situation actuelle, il est possible d'identifier les lacunes, les points de douleur existants et ce qui doit être amélioré — qu'il s'agisse de technologie, de processus ou de personnes — pour que les objectifs de l'organisation soient atteints.
+Avec une compréhension complète de votre situation actuelle, il est possible d'identifier les lacunes, les points de douleur existants et ce qui doit être amélioré (qu'il s'agisse de technologie, de processus ou de personnes) pour que les objectifs de l'organisation soient atteints.
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgr_HWVrq5OthOlD3M74S8a5PYmSe7NSSl3CmkmMfBslZjjBRdy_-Q_XfDeVDXuowsn5DGAao0g8itUKBzi9cXZ_Iu8vpVXUaIl0EQAEUnaS6H10bb43d27N-1g2Diwpq0HR1cYDyBXQXTjysIwCdbvTkoLkk6aWwJO6nCFl5ukn7MqB7L26YQsidBr){: .mx-auto.d-block :} *Évaluation de la maturité des données*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
@@ -121,7 +121,7 @@ Les prochains articles de cette série se concentreront particulièrement sur le
 
 Pour devenir une organisation data-driven, vous avez besoin de plus que de la technologie. Les bonnes personnes aux bons postes sont essentielles pour garantir que la technologie et les processus sont adoptés et que les objectifs métier sont atteints. Par exemple, l'équipe de stratégie de données comprend généralement des représentants du comité exécutif, de l'analyse métier et des équipes IT.
 
-Lorsque vous réfléchissez à qui utilise les données dans votre organisation, pensez à tout le monde — même ceux dont les responsabilités professionnelles tournent principalement autour d'autre chose que le travail avec les données. De plus, lorsqu'une organisation dispose de plusieurs ensembles de données, vous devez spécifier quel ensemble de données appartient à quel « propriétaire », c'est-à-dire qui est responsable du stockage, du traitement et de l'interprétation des différents ensembles de données.
+Lorsque vous réfléchissez à qui utilise les données dans votre organisation, pensez à tout le monde, même ceux dont les responsabilités professionnelles tournent principalement autour d'autre chose que le travail avec les données. De plus, lorsqu'une organisation dispose de plusieurs ensembles de données, vous devez spécifier quel ensemble de données appartient à quel « propriétaire », c'est-à-dire qui est responsable du stockage, du traitement et de l'interprétation des différents ensembles de données.
 
 La première étape pour constituer une équipe de stratégie de données efficace consiste à choisir ou à identifier votre modèle opérationnel. Votre modèle opérationnel dicte la structure de l'équipe et les rôles nécessaires pour atteindre vos objectifs.
 
@@ -173,7 +173,7 @@ Après avoir créé votre stratégie de données, vous êtes prêt à aller de l
 
 Après avoir évalué les compétences de votre équipe de données et comblé les lacunes, il est temps de créer un plan pour les doter des connaissances dont ils ont besoin pour réussir. Cela devrait inclure une orientation et une formation sur la culture des données, l'habilitation technique, les meilleures pratiques et la sensibilisation aux objectifs métier.
 
-Pour assurer un soutien financier continu à tous les éléments de votre feuille de route et aux changements imprévus, vous devez démontrer comment la mise en œuvre de cette stratégie a contribué à atteindre les objectifs métier — au-delà de la simple mesure des « heures économisées ». Appuyez-vous sur vos champions et parties prenantes pour soutenir et valider votre message de retour sur investissement.
+Pour assurer un soutien financier continu à tous les éléments de votre feuille de route et aux changements imprévus, vous devez démontrer comment la mise en œuvre de cette stratégie a contribué à atteindre les objectifs métier, au-delà de la simple mesure des « heures économisées ». Appuyez-vous sur vos champions et parties prenantes pour soutenir et valider votre message de retour sur investissement.
 
 Enfin, un plan de communication doit également être mis en place, détaillant qui doit recevoir des informations sur les changements de processus ou techniques, quelles métriques sont discutées, les prochaines initiatives, etc., tout en restant cohérent dans les messages qui mettent en avant les progrès réalisés et leur impact sur les objectifs métier. Le soutien de la direction fera également une grande différence ici !
 

@@ -209,7 +209,7 @@ Overall, this article provides a comprehensive overview of how Snowflake can be 
 *   ["Three-speed architecture on Snowflake"](https://medium.com/@reinout.korbee/three-speed-architecture-on-snowflake-ede3ed2652db), Reinout Korbee, Medium 2023.
 *   "Fundamentals of data engineering: Plan and build robust data systems", Reis, J. and Housley M., O’Reilly Media (2022).
 *   ["Lambda vs. Kappa Architecture. A Guide to Choosing the Right Data Processing Architecture for Your Needs"](https://nexocode.com/blog/posts/lambda-vs-kappa-architecture/), Dorota Owczarek.
-*   ["A brief introduction to two data processing architectures — Lambda and Kappa for Big Data"](https://towardsdatascience.com/a-brief-introduction-to-two-data-processing-architectures-lambda-and-kappa-for-big-data-4f35c28005bb), Iman Samizadeh, Ph.D.
+*   ["A brief introduction to two data processing architectures: Lambda and Kappa for Big Data"](https://towardsdatascience.com/a-brief-introduction-to-two-data-processing-architectures-lambda-and-kappa-for-big-data-4f35c28005bb), Iman Samizadeh, Ph.D.
 *   ["What Is Lambda Architecture?"](https://hazelcast.com/glossary/lambda-architecture/), Hazelcast Glosary.
 *   ["What Is the Kappa Architecture?"](https://hazelcast.com/glossary/kappa-architecture/), Hazelcast Glosary.
 *   ["Kappa Architecture is Mainstream Replacing Lambda"](https://www.kai-waehner.de/blog/2021/09/23/real-time-kappa-architecture-mainstream-replacing-batch-lambda/), Kai Waehner.

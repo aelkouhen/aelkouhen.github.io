@@ -265,7 +265,7 @@ Il existe neuf types de jointures : interne, externe, externe gauche, externe dr
 
 ## 4 - Modélisation des données
 
-La modélisation des données est une pratique qui existe depuis des décennies sous une forme ou une autre. La modélisation des données est devenue démodée au début et au milieu des années 2010 — l'essor des data lakes 1.0, du NoSQL et des plateformes big data a permis aux ingénieurs de contourner la modélisation traditionnelle des données. Cependant, l'absence de modélisation rigoureuse des données a créé des data swamps. De nos jours, nous ne parlons plus de « big data » ; nous préférons plutôt le terme « données utiles » et le retour progressif vers une modélisation rigoureuse des données (par ex., data lakehouse).
+La modélisation des données est une pratique qui existe depuis des décennies sous une forme ou une autre. La modélisation des données est devenue démodée au début et au milieu des années 2010 : l'essor des data lakes 1.0, du NoSQL et des plateformes big data a permis aux ingénieurs de contourner la modélisation traditionnelle des données. Cependant, l'absence de modélisation rigoureuse des données a créé des data swamps. De nos jours, nous ne parlons plus de « big data » ; nous préférons plutôt le terme « données utiles » et le retour progressif vers une modélisation rigoureuse des données (par ex., data lakehouse).
 
 Un modèle de données dépeint la relation entre les données et le monde réel. Il définit la manière optimale de structurer et de standardiser les données pour refléter avec précision les processus, définitions, flux de travail et logique de votre organisation. Le continuum de la modélisation des données comprend trois modèles de données principaux : conceptuel, logique et physique.
 

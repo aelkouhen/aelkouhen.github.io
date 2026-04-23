@@ -56,9 +56,9 @@ Finally, distributed systems can isolate resources for different tasks or tenant
 
 ### Scalability
 
-As applications grow to serve more users, the storage and computing requirements for the database will increase over time — and not always at a predictable rate.
+As applications grow to serve more users, the storage and computing requirements for the database will increase over time, and not always at a predictable rate.
 
-Trying to keep up with this growth when using a single-instance database is difficult—you either have to:
+Trying to keep up with this growth when using a single-instance database is difficult; you either have to:
 
 1. Pay for more resources than you need so that your database has "room to grow" in terms of storage and computing power, or
 2. Navigate regular hardware upgrades (vertical scalability) and migrations to ensure the database instance is always running on a machine capable of handling the current load.
@@ -148,11 +148,11 @@ Distributed databases are inherently complex. While this article won't delve int
 
 ### Replication
 
-From your application's perspective, a distributed database functions like a single-instance database — you connect to it and send data similarly. However, once the data reaches the database, it is automatically replicated and distributed across three or more nodes (individual instances of the distributed database).
+From your application's perspective, a distributed database functions like a single-instance database: you connect to it and send data similarly. However, once the data reaches the database, it is automatically replicated and distributed across three or more nodes (individual instances of the distributed database).
 
 To illustrate this process, let's focus on a single chunk of data (called range in CockroachDB) being written to the database in a three-node, single-region cluster. Though databases like CockroachDB support multi-region deployments and a large number of nodes, this example simplifies the explanation.
 
-When data in a range is sent to the database, it is written into three replicas —one on each node. One of these nodes is designated as the "[leaseholder](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction#leaseholder-node)" for this range, coordinating read and write requests for the data. However, any node can receive requests, distinguishing CockroachDB from active-passive systems where all requests must go through a central "Active" node.
+When data in a range is sent to the database, it is written into three replicas, one on each node. One of these nodes is designated as the "[leaseholder](https://www.cockroachlabs.com/docs/stable/architecture/life-of-a-distributed-transaction#leaseholder-node)" for this range, coordinating read and write requests for the data. However, any node can receive requests, distinguishing CockroachDB from active-passive systems where all requests must go through a central "Active" node.
 
 <img src="/assets/img/mainframe-p3-dogs.gif" alt="Data replication across cluster nodes" style="width:100%">
 {: .mx-auto.d-block :}
@@ -178,7 +178,7 @@ Many distributed databases, like CockroachDB, use the Raft protocol to ensure co
 
 To understand how Raft works, you need to know the following concepts:
 
-- **Quorum**: If your distributed system has N nodes, you need at least (N/2) + 1 nodes to agree on a value—basically, you need a majority (more than 50%) votes to have consensus (just like any political election). A majority vote ensures that when (N/2) + 1 nodes are running and responding, at least one node contains the latest value for a given data across read and write requests, even if there is a network partition or other failure in the system.
+- **Quorum**: If your distributed system has N nodes, you need at least (N/2) + 1 nodes to agree on a value. Basically, you need a majority (more than 50%) votes to have consensus (just like any political election). A majority vote ensures that when (N/2) + 1 nodes are running and responding, at least one node contains the latest value for a given data across read and write requests, even if there is a network partition or other failure in the system.
 
 - **Failure tolerance**: Under a quorum-based system, your cluster can tolerate N/2 node failures if N is odd. (N/2)-1 otherwise.
 
@@ -194,7 +194,7 @@ To understand how Raft works, you need to know the following concepts:
 
 - **State Machine**: Each node has its own state machine. Raft has to ensure that whatever log entries are committed are eventually applied to the state machine, which works as a source of truth for the data in memory.
 
-- **Term** or **lease**: it represents a time period through which a node acts as a leader. The concept is based on logical time (not global time)—it's just a counter managed by every node individually. Once a term terminates, another term starts with a new leader. Even though terms/leases across nodes may differ at a given time, Raft has a mechanism to sync and converge them to the same value.
+- **Term** or **lease**: it represents a time period through which a node acts as a leader. The concept is based on logical time (not global time); it is just a counter managed by every node individually. Once a term terminates, another term starts with a new leader. Even though terms/leases across nodes may differ at a given time, Raft has a mechanism to sync and converge them to the same value.
 
 - **RPC:** Nodes participating in Raft communicate with each other using a Remote Procedure Call (RPC) on top of TCP. This protocol is suitable for communication across data centers, internal systems, and services (not user-facing products or services). Raft uses two different RPC requests. At a high level:
 
@@ -212,7 +212,7 @@ As mentioned earlier, a node can be in different states depending on the cluster
 {: .mx-auto.d-block :}
 **Raft node state transitions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Each node starts from the **_Follower_** state. Once the election timeout is over, it enters the **_Candidate_** state—this means the node is now eligible to become a **_Leader_**. Once a candidate gets a clear majority of votes, it enters the Leader state.
+Each node starts from the **_Follower_** state. Once the election timeout is over, it enters the **_Candidate_** state, meaning the node is now eligible to become a **_Leader_**. Once a candidate gets a clear majority of votes, it enters the Leader state.
 
 If there is no clear winner during the election process, the candidate times out again, remains in the Candidate state, and a new election begins. To understand how a candidate can be elected as a cluster leader, let's look at the following sequences:
 
@@ -246,13 +246,13 @@ When the old leader comes back, it discovers that a new leader is already electe
 {: .mx-auto.d-block :}
 **Raft leader failover and recovery**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-As you can see, the Raft consensus algorithm, developed to ensure reliability in distributed systems, enables nodes to agree on a single state, even in failure scenarios. Raft operates by electing a leader from among nodes, who then coordinates transaction logs to maintain system consistency. This consensus process involves nodes transitioning between three states—Follower, Candidate, and Leader—to ensure only one leader is active at a time.
+As you can see, the Raft consensus algorithm, developed to ensure reliability in distributed systems, enables nodes to agree on a single state, even in failure scenarios. Raft operates by electing a leader from among nodes, who then coordinates transaction logs to maintain system consistency. This consensus process involves nodes transitioning between three states (Follower, Candidate, and Leader) to ensure only one leader is active at a time.
 
 During transactions, a quorum, or majority agreement among nodes, is required for changes to be committed. Raft ensures that any committed entry remains durable and reflects the most recent system state, facilitating both data consistency and fault tolerance across the cluster. CockroachDB extends Raft into a MultiRaft system, optimizing it for handling numerous, concurrent transactions across a highly distributed architecture.
 
 ### MultiRaft: Raft Tailored to CockroachDB
 
-In CockroachDB, the data is divided into ranges, each with its own consensus group — meaning that each node may be participating in hundreds of thousands of consensus groups! This presents some unique challenges, which we have addressed by introducing a layer on top of Raft that we call "[MultiRaft](https://github.com/cockroachdb/cockroach/blob/8187c2551352a6c28eba021effaebcbfe523d78c/docs/RFCS/20151213_dismantle_multiraft.md)."
+In CockroachDB, the data is divided into ranges, each with its own consensus group, meaning that each node may be participating in hundreds of thousands of consensus groups! This presents some unique challenges, which we have addressed by introducing a layer on top of Raft that we call "[MultiRaft](https://github.com/cockroachdb/cockroach/blob/8187c2551352a6c28eba021effaebcbfe523d78c/docs/RFCS/20151213_dismantle_multiraft.md)."
 
 With a single range, one node (out of three or five) is elected leader, and it periodically sends heartbeat messages to the followers. As the system grows to include more ranges, so does the amount of traffic required to handle heartbeats.
 
@@ -282,11 +282,11 @@ To begin the transaction, a SQL client (e.g., an app) performs some kind of busi
 
 As we explained earlier, all CockroachDB nodes have perfectly symmetrical access to data (Multi-Active). This means your load balancer can connect your client to any node in the cluster and access any data while still guaranteeing strong consistency.
 
-The gateway node first [parses](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#sql-parser-planner-executor) the client's SQL statement to ensure it's valid according to the CockroachDB dialect of SQL, and uses that information to [generate a logical SQL plan](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#logical-planning). Given that CockroachDB is a distributed database, though, it's also important to take a cluster's topology into account, so the logical plan is then converted into a physical plan—this means sometimes pushing operations onto the physical machines that contain the data.
+The gateway node first [parses](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#sql-parser-planner-executor) the client's SQL statement to ensure it's valid according to the CockroachDB dialect of SQL, and uses that information to [generate a logical SQL plan](https://www.cockroachlabs.com/docs/v24.1/architecture/sql-layer#logical-planning). Given that CockroachDB is a distributed database, though, it's also important to take a cluster's topology into account, so the logical plan is then converted into a physical plan. This sometimes means pushing operations onto the physical machines that contain the data.
 
 While CockroachDB presents a SQL interface to clients, the actual database is built on top of a [key-value store](https://www.cockroachlabs.com/docs/stable/architecture/overview.html#overview). To mediate this, the physical plan generated at the end of SQL parsing is passed to the SQL executor, which executes the plan by performing key-value operations through _TxnCoordSender_. For example, the SQL executor converts _INSERT_ statements into _Put()_ operations.
 
-The gateway node receives _BatchRequests_ from the _TxnCoordSender_. It dismantles the initial _BatchRequest_ by taking each operation and finding which physical machine should receive the request for the range — known as the range's leaseholder. The address of the range's current leaseholder is readily available in both local caches, as well as in the [cluster's meta ranges](https://www.cockroachlabs.com/docs/v24.1/architecture/distribution-layer#meta-range-kv-structure).
+The gateway node receives _BatchRequests_ from the _TxnCoordSender_. It dismantles the initial _BatchRequest_ by taking each operation and finding which physical machine should receive the request for the range, known as the range's leaseholder. The address of the range's current leaseholder is readily available in both local caches, as well as in the [cluster's meta ranges](https://www.cockroachlabs.com/docs/v24.1/architecture/distribution-layer#meta-range-kv-structure).
 
 All write operations also propagate the leaseholder's address back to the _TxnCoordSender_, so it can track and clean up write operations as necessary.
 
