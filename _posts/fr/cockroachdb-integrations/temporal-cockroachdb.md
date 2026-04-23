@@ -289,7 +289,7 @@ Les quatre incompatibilités, toutes présentes dans `schema/postgresql/v12/visi
 Le schéma doit également couvrir toutes les migrations jusqu'en v1.13, ce qu'exige la vérification de version au démarrage de Temporal. Sauvegardez le contenu suivant dans `crdb_visibility_schema.sql` et appliquez-le directement :
 
 ```sql
--- Tables de versionnement du schéma (requises pour la vérification au démarrage de Temporal)
+-- Schema version tracking tables (required for Temporal's startup version check)
 CREATE TABLE IF NOT EXISTS schema_version (
   version_partition       INT NOT NULL,
   db_name                 VARCHAR(255) NOT NULL,
@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS schema_update_history (
   PRIMARY KEY (version_partition, year, month, update_time)
 );
 
--- executions_visibility avec toutes les colonnes jusqu'à v1.13
+-- executions_visibility with all columns through v1.13
 -- TSVECTOR -> VARCHAR ; parse_timestamp() remplace ::timestamp ; btree_gin inutile
 CREATE TABLE executions_visibility (
   namespace_id         CHAR(64)      NOT NULL,
@@ -400,7 +400,7 @@ CREATE TABLE executions_visibility (
   PRIMARY KEY (namespace_id, run_id)
 );
 
--- Index d'expression standards (fenêtre ouverte/fermée avec COALESCE)
+-- Standard expression indexes (COALESCE open/close window pattern)
 CREATE INDEX default_idx           ON executions_visibility (namespace_id, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
 CREATE INDEX by_execution_time     ON executions_visibility (namespace_id, execution_time,     (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
 CREATE INDEX by_workflow_id        ON executions_visibility (namespace_id, workflow_id,        (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
@@ -459,7 +459,7 @@ CREATE INDEX by_keyword_08  ON executions_visibility (namespace_id, Keyword08,  
 CREATE INDEX by_keyword_09  ON executions_visibility (namespace_id, Keyword09,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
 CREATE INDEX by_keyword_10  ON executions_visibility (namespace_id, Keyword10,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
 
--- Index inversés CockroachDB remplaçant GIN multi-colonnes (namespace_id, col jsonb_path_ops)
+-- CockroachDB inverted indexes replace multi-column GIN (namespace_id, col jsonb_path_ops)
 CREATE INVERTED INDEX by_temporal_change_version     ON executions_visibility (TemporalChangeVersion);
 CREATE INVERTED INDEX by_binary_checksums            ON executions_visibility (BinaryChecksums);
 CREATE INVERTED INDEX by_build_ids                   ON executions_visibility (BuildIds);
@@ -472,7 +472,7 @@ CREATE INVERTED INDEX by_keyword_list_02             ON executions_visibility (K
 CREATE INVERTED INDEX by_keyword_list_03             ON executions_visibility (KeywordList03);
 CREATE INVERTED INDEX by_used_deployment_versions    ON executions_visibility (TemporalUsedWorkerDeploymentVersions);
 
--- Définit la version du schéma pour que la vérification au démarrage de Temporal passe
+-- Set the schema version so Temporal's startup compatibility check passes
 INSERT INTO schema_version (version_partition, db_name, creation_time, curr_version, min_compatible_version)
 VALUES (0, 'temporal_visibility', now(), '1.13', '0.1')
 ON CONFLICT DO NOTHING;
