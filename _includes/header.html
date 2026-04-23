@@ -123,6 +123,15 @@
           </div>
           {% endif %}
         </div>
+        {% if _home_cat_links.size > 0 %}
+        <div class="home-category-pills">
+          {% for cat_link in _home_cat_links %}
+            {% for cat in cat_link %}
+            <a href="{{ cat[1] }}" class="home-category-pill" style="border-color:{{ page.accent-color }}55;color:{{ page.accent-color }}">{{ cat[0] }}</a>
+            {% endfor %}
+          {% endfor %}
+        </div>
+        {% endif %}
         {% endif %}
       </div>
 
