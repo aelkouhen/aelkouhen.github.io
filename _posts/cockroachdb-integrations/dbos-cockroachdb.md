@@ -41,6 +41,10 @@ DBOS is a Python and TypeScript library that decorates ordinary functions with d
 
 DBOS is implemented entirely as an open-source library embedded in your application — there is no orchestration server and no external dependencies except a PostgreSQL-compatible database. While your application runs, DBOS checkpoints workflow and step state to that database. On failure, it uses those checkpoints to resume each workflow from the last completed step.
 
+<img src="/assets/img/dbos-architecture.png" alt="DBOS architecture: library embedded in the application process" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**DBOS architecture: the durable execution library lives inside your application process — the only external dependency is a Postgres-compatible database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 ### Checkpointing model
 
 Every workflow execution produces a fixed number of database writes regardless of complexity:
@@ -72,6 +76,10 @@ Two requirements for safe recovery:
 ### Conductor (optional)
 
 For production deployments, DBOS recommends connecting to **Conductor** — a management service that adds distributed recovery coordination, workflow dashboards, and queue observability. Conductor is architecturally off the critical path: each server opens an outbound websocket connection to it, and if the connection drops the application continues operating normally. Conductor has no direct access to your database and is never involved in workflow execution itself.
+
+<img src="/assets/img/dbos-conductor-architecture.png" alt="DBOS Conductor architecture" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Conductor is out of band: application servers open outbound websocket connections to it for observability and recovery — never for workflow execution**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 

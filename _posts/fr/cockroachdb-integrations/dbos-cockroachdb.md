@@ -41,6 +41,10 @@ DBOS est une bibliothèque Python et TypeScript qui décore des fonctions ordina
 
 DBOS est implémenté entièrement comme une bibliothèque open-source embarquée dans votre application — il n'y a pas de serveur d'orchestration et pas de dépendances externes excepté une base compatible PostgreSQL. Pendant l'exécution, DBOS crée des checkpoints de l'état des workflows et des étapes dans cette base. En cas de défaillance, il utilise ces checkpoints pour reprendre chaque workflow depuis la dernière étape complétée.
 
+<img src="/assets/img/dbos-architecture.png" alt="Architecture DBOS : bibliothèque embarquée dans le processus applicatif" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Architecture DBOS : la bibliothèque d'exécution durable vit dans votre processus applicatif — la seule dépendance externe est une base compatible Postgres**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 ### Modèle de checkpointing
 
 Chaque exécution de workflow produit un nombre fixe d'écritures en base quelle que soit sa complexité :
@@ -72,6 +76,10 @@ Deux conditions requises pour une récupération sûre :
 ### Conductor (optionnel)
 
 Pour les déploiements en production, DBOS recommande de se connecter à **Conductor** — un service de gestion qui ajoute la coordination de récupération distribuée, les tableaux de bord de workflows et l'observabilité des files. Conductor est architecturalement hors du chemin critique : chaque serveur ouvre une connexion websocket sortante vers lui, et si la connexion tombe l'application continue de fonctionner normalement. Conductor n'a pas d'accès direct à votre base de données et n'est jamais impliqué dans l'exécution des workflows elle-même.
+
+<img src="/assets/img/dbos-conductor-architecture.png" alt="Architecture DBOS Conductor" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Conductor est hors bande : les serveurs applicatifs ouvrent des connexions websocket sortantes vers lui pour l'observabilité et la récupération — jamais pour l'exécution des workflows**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
