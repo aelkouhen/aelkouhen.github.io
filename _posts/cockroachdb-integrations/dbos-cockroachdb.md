@@ -2,7 +2,7 @@
 date: 2026-04-24
 layout: post
 title: "Embedded Durable Execution with DBOS and CockroachDB"
-subtitle: "How DBOS turns your existing database into a workflow engine  -  and why CockroachDB makes it globally distributed"
+subtitle: "How DBOS turns your existing database into a workflow engine — and why CockroachDB makes it globally distributed"
 tags: [integrations, CockroachDB, dbos, workflow, orchestration, durable-execution]
 lang: en
 author: "Amine El Kouhen"
@@ -10,11 +10,11 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Modern AI applications are no longer single-shot inference calls  -  they are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
+Modern AI applications are no longer single-shot inference calls — they are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
 
-Most workflow orchestration platforms address this by deploying a dedicated cluster alongside your application. [DBOS](https://dbos.dev/) takes a fundamentally different approach: it embeds durable execution **directly into your application** using the database you already have. Your database is not just a data store  -  it is the execution engine. Pair DBOS with [CockroachDB](https://www.cockroachlabs.com/) and you get a globally distributed, self-healing execution platform with no additional infrastructure to manage.
+Most workflow orchestration platforms address this by deploying a dedicated cluster alongside your application. [DBOS](https://dbos.dev/) takes a fundamentally different approach: it embeds durable execution **directly into your application** using the database you already have. Your database is not just a data store — it is the execution engine. Pair DBOS with [CockroachDB](https://www.cockroachlabs.com/) and you get a globally distributed, self-healing execution platform with no additional infrastructure to manage.
 
-A **durable workflow** is a function whose execution state  -  which steps have completed, what they returned, what inputs were given  -  is persisted to the database after every step. If the process crashes mid-run, it restarts and replays from the last committed step: no work is lost, no step is re-executed, no external side effect is duplicated.
+A **durable workflow** is a function whose execution state — which steps have completed, what they returned, what inputs were given — is persisted to the database after every step. If the process crashes mid-run, it restarts and replays from the last committed step: no work is lost, no step is re-executed, no external side effect is duplicated.
 
 ---
 
@@ -26,7 +26,7 @@ DBOS is a Python and TypeScript library that decorates ordinary functions with d
 
 | Concept | Definition |
 |---|---|
-| **`@DBOS.workflow()`** | Decorator that makes a Python function durable  -  state is persisted before each step |
+| **`@DBOS.workflow()`** | Decorator that makes a Python function durable — state is persisted before each step |
 | **`@DBOS.step()`** | A unit of work inside a workflow; executes at least once but never re-executes after completion |
 | **Workflow ID** | The idempotency key; launching the same workflow ID twice is safe and returns the existing execution |
 | **`DBOS.set_event()`** | Publishes a named value from inside a workflow for external consumers to read |
@@ -41,13 +41,13 @@ DBOS manages three categories of tables in the system database:
 
 <img src="/assets/img/dbos-schema.png" alt="DBOS system database schema" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**DBOS system database schema  -  workflow state lives in your database, not in a separate service**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**DBOS system database schema — workflow state lives in your database, not in a separate service**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-- **Workflow status table**  -  one row per workflow execution, tracking ID, status, and function inputs
-- **Operation outputs table**  -  one row per completed step, storing the serialised return value for replay
-- **Events table**  -  named key-value pairs published within workflows and consumed via `get_event`
+- **Workflow status table** — one row per workflow execution, tracking ID, status, and function inputs
+- **Operation outputs table** — one row per completed step, storing the serialised return value for replay
+- **Events table** — named key-value pairs published within workflows and consumed via `get_event`
 
-When a process crashes and restarts, DBOS replays the workflow function against the saved step outputs. Any step whose result is already in the database is **skipped instantly**  -  only incomplete steps are re-executed. The result is exactly-once execution semantics without a dedicated orchestration service.
+When a process crashes and restarts, DBOS replays the workflow function against the saved step outputs. Any step whose result is already in the database is **skipped instantly** — only incomplete steps are re-executed. The result is exactly-once execution semantics without a dedicated orchestration service.
 
 ---
 
@@ -55,10 +55,10 @@ When a process crashes and restarts, DBOS replays the workflow function against 
 
 DBOS uses the PostgreSQL wire protocol, so it connects to CockroachDB directly without any driver changes. What CockroachDB adds over a single-node PostgreSQL is the persistence tier you always wanted but couldn't justify operating separately:
 
-- **Serializable isolation**  -  concurrent workflow executions never produce lost updates or phantom reads
-- **Multi-region active-active replication**  -  workflow state is durable across data-center failures without manual intervention
-- **Horizontal scalability**  -  the system database scales with your application without re-sharding
-- **Automatic failover**  -  CockroachDB node failures are transparent to DBOS, which simply retries on the next available node
+- **Serializable isolation** — concurrent workflow executions never produce lost updates or phantom reads
+- **Multi-region active-active replication** — workflow state is durable across data-center failures without manual intervention
+- **Horizontal scalability** — the system database scales with your application without re-sharding
+- **Automatic failover** — CockroachDB node failures are transparent to DBOS, which simply retries on the next available node
 
 For teams that want globally resilient agentic workflows without the complexity of a Temporal cluster, DBOS + CockroachDB is the lowest-overhead path.
 
@@ -70,7 +70,7 @@ There are two required configuration changes when using CockroachDB instead of P
 
 ### 1. Disable `LISTEN/NOTIFY`
 
-PostgreSQL's `LISTEN/NOTIFY` mechanism is used by DBOS to wake up waiting workflows without polling. CockroachDB does not implement this mechanism, so it must be disabled explicitly  -  DBOS falls back to polling automatically:
+PostgreSQL's `LISTEN/NOTIFY` mechanism is used by DBOS to wake up waiting workflows without polling. CockroachDB does not implement this mechanism, so it must be disabled explicitly — DBOS falls back to polling automatically:
 
 ```python
 from dbos import DBOS, DBOSConfig
@@ -85,7 +85,7 @@ config: DBOSConfig = {
     "system_database_url": database_url,
     # Pass a pre-built SQLAlchemy engine so DBOS uses the CockroachDB driver
     "system_database_engine": engine,
-    # CockroachDB does not support LISTEN/NOTIFY  -  use polling instead
+    # CockroachDB does not support LISTEN/NOTIFY — use polling instead
     "use_listen_notify": False,
 }
 DBOS(config=config)
@@ -114,7 +114,7 @@ export DBOS_COCKROACHDB_URL="postgresql://dbos_user:password@<crdb-host>:26257/d
 
 ## A Complete DBOS Agentic Workflow on CockroachDB
 
-The following example implements a three-step durable agent workflow backed by CockroachDB. The workflow publishes progress events after each step that a frontend can poll in real time. If the process crashes mid-execution, restarting it resumes from the last completed step  -  no re-billing, no duplicate writes, no lost context.
+The following example implements a three-step durable agent workflow backed by CockroachDB. The workflow publishes progress events after each step that a frontend can poll in real time. If the process crashes mid-execution, restarting it resumes from the last completed step — no re-billing, no duplicate writes, no lost context.
 
 ```python
 import os
@@ -144,21 +144,21 @@ STEPS_EVENT = "steps_event"
 
 @DBOS.step()
 def retrieve_context(task: str) -> str:
-    """Step 1  -  retrieve relevant context from the knowledge base."""
+    """Step 1 — retrieve relevant context from the knowledge base."""
     time.sleep(3)
     DBOS.logger.info(f"Context retrieved for: {task}")
     return f"context_for_{task}"
 
 @DBOS.step()
 def call_agent(context: str) -> str:
-    """Step 2  -  call the LLM/agent with the context."""
+    """Step 2 — call the LLM/agent with the context."""
     time.sleep(3)
     DBOS.logger.info("Agent invocation completed")
     return f"agent_response_given_{context}"
 
 @DBOS.step()
 def persist_result(response: str) -> None:
-    """Step 3  -  write the agent's output to the application database."""
+    """Step 3 — write the agent's output to the application database."""
     time.sleep(3)
     DBOS.logger.info(f"Result persisted: {response}")
 
@@ -216,10 +216,10 @@ python3 app/main.py
 | **Exactly-once steps** | Steps never re-execute after their output is committed to CockroachDB |
 | **Idempotent launches** | Same workflow ID always returns the existing execution |
 | **Global durability** | CockroachDB multi-region replication protects workflow state across regions |
-| **Zero driver changes** | PostgreSQL wire protocol  -  no CockroachDB-specific SDK required |
+| **Zero driver changes** | PostgreSQL wire protocol — no CockroachDB-specific SDK required |
 | **Observable progress** | `set_event` / `get_event` expose real-time step completion to frontends |
 
-The two configuration changes  -  `use_listen_notify: False` and a CockroachDB connection URL  -  are everything needed to make the DBOS system database globally distributed and fault-tolerant.
+The two configuration changes — `use_listen_notify: False` and a CockroachDB connection URL — are everything needed to make the DBOS system database globally distributed and fault-tolerant.
 
 ---
 
@@ -229,4 +229,4 @@ The two configuration changes  -  `use_listen_notify: False` and a CockroachDB c
 - [DBOS Python Workflow Tutorial](https://docs.dbos.dev/python/tutorials/workflow-tutorial)
 - [CockroachDB Cloud](https://cockroachlabs.cloud/)
 - [CockroachDB Distributed SQL](https://www.cockroachlabs.com/blog/what-is-distributed-sql/)
-- [Temporal + CockroachDB  -  Cluster-Based Durable Execution](/2026-04-23-temporal-cockroachdb/)
+- [Temporal + CockroachDB — Cluster-Based Durable Execution](/2026-04-23-temporal-cockroachdb/)

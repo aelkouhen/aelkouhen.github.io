@@ -20,7 +20,7 @@ In this series, we will explore the strengths and limitations of traditional mai
 
 For over 60 years, the mainframe computer has been the record system for leading businesses, governmental agencies, and learning institutions. Today, this technology has become pervasive worldwide: 92 of the world's top 100 banks, 10 of the world's top insurers, 18 of the top 25 retailers, and 70% of Fortune 500 Companies rely on the mainframe. If you've shopped, planned a vacation, or made a credit card payment, a mainframe almost certainly processed your transaction.
 
-World War II was a significant catalyst for the development of mainframes. The U.S. government saw this technology as a superior way to calculate weapon and logistics ballistics and crack enemy codes. The development of the Harvard Mark I  -  the first mainframe, then called "The Big Iron"  -  began in 1939 and was used first to do calculations for the Manhattan Project, the U.S. effort to build the nuclear bomb.
+World War II was a significant catalyst for the development of mainframes. The U.S. government saw this technology as a superior way to calculate weapon and logistics ballistics and crack enemy codes. The development of the Harvard Mark I — the first mainframe, then called "The Big Iron" — began in 1939 and was used first to do calculations for the Manhattan Project, the U.S. effort to build the nuclear bomb.
 
 What is a mainframe? The term "mainframe" emerged later in 1964, although its origin remains unclear. The concept drew inspiration from the telecommunications industry, specifically the central system within a telephone exchange. Over time, it evolved to signify large-scale computer systems capable of handling extensive data processing tasks, primarily tailored for business needs and adept at managing large-scale transactions.
 
@@ -28,13 +28,13 @@ In 1991, the American newspaper columnist and political analyst Stewart Alsop pr
 
 In fact, the death of the mainframe was greatly exaggerated.
 
-While there are challenges surrounding the mainframe, such as the increasing churn of seasoned mainframe staff, the "uncool" factor of the underlying technology, or the hefty costs associated with single-line items compared to the more diversified expenditure in distributed systems  -  nonetheless, for numerous specific use cases and industries, it remains the optimal choice in terms of value for IT investment. Many companies saw this technology as a must-have for being competitive. They would even showcase their mainframes by placing them in glass rooms at the headquarters.
+While there are challenges surrounding the mainframe, such as the increasing churn of seasoned mainframe staff, the "uncool" factor of the underlying technology, or the hefty costs associated with single-line items compared to the more diversified expenditure in distributed systems — nonetheless, for numerous specific use cases and industries, it remains the optimal choice in terms of value for IT investment. Many companies saw this technology as a must-have for being competitive. They would even showcase their mainframes by placing them in glass rooms at the headquarters.
 
 <img src="/assets/img/mainframe-diagram.png" alt="Mainframe to Distributed SQL" style="width:100%">
 {: .mx-auto.d-block :}
 **Mainframe to Distributed SQL**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-This technology proved quite durable. The mainframe's reliability, consistency, security, and performance have firmly established its position as the backbone of the digital economy. The continued dependence on this platform shows no indication of waning. By 2002, Alsop admitted his previous mistake, recognizing that corporate clients still prioritize centrally managed, highly reliable computing systems  -  precisely the expertise that IBM provides.
+This technology proved quite durable. The mainframe's reliability, consistency, security, and performance have firmly established its position as the backbone of the digital economy. The continued dependence on this platform shows no indication of waning. By 2002, Alsop admitted his previous mistake, recognizing that corporate clients still prioritize centrally managed, highly reliable computing systems — precisely the expertise that IBM provides.
 
 ---
 

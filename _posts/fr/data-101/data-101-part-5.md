@@ -60,9 +60,9 @@ Toutes les données sont non bornées jusqu'à ce qu'elles soient bornées. En e
 
 Les données produites par les sources de données seront rarement transmises directement en aval. Ce sous-système agit comme un proxy entre les sources externes et les systèmes de données. Vous verrez très probablement l'un des trois types de proxy suivants :
 
-* Les collecteurs  -  des applications qui exposent un endpoint public ou privé vers lequel les producteurs de données peuvent envoyer des événements.
-* Les connecteurs CDC  -  des applications qui se connectent aux journaux d'événements des bases de données backend et transmettent les mises à jour sélectionnées de la base de données vers le système de données.
-* Les extracteurs  -  des applications écrites par des ingénieurs qui interrogent les systèmes externes comme les sites web pour détecter les changements et transmettent les données en aval.
+* Les collecteurs — des applications qui exposent un endpoint public ou privé vers lequel les producteurs de données peuvent envoyer des événements.
+* Les connecteurs CDC — des applications qui se connectent aux journaux d'événements des bases de données backend et transmettent les mises à jour sélectionnées de la base de données vers le système de données.
+* Les extracteurs — des applications écrites par des ingénieurs qui interrogent les systèmes externes comme les sites web pour détecter les changements et transmettent les données en aval.
 
 Pour la collecte des données, trois patterns sont pertinents : les modèles Push, Pull et Poll. Dans le modèle push d'ingestion des données, un système source écrit des données vers une cible, qu'il s'agisse d'une base de données, d'un store d'objets ou d'un système de fichiers.
 
@@ -118,7 +118,7 @@ Le mouvement en temps réel ou par flux est essentiel pour que les organisations
 
 Les systèmes de messagerie publish-subscribe (PubSub) sont pertinents ici, permettant aux applications en temps réel de communiquer leurs données en publiant des messages. Les destinataires sont des abonnés de ces systèmes et reçoivent les données dès qu'elles sont publiées par la source de données. Ces types d'outils doivent être hautement scalables et tolérants aux pannes pour gérer de grands volumes de données.
 
-Lors de la mise en œuvre de l'ingestion en flux, les ingénieurs de données doivent prendre en compte quelques points tels que l'évolution du schema, les données arrivant en retard, les données hors ordre, la relecture des données, le temps de vie (TTL), la taille des messages et la gestion des échecs (par ex., les files de lettres mortes  -  Dead-Letter queues)...
+Lors de la mise en œuvre de l'ingestion en flux, les ingénieurs de données doivent prendre en compte quelques points tels que l'évolution du schema, les données arrivant en retard, les données hors ordre, la relecture des données, le temps de vie (TTL), la taille des messages et la gestion des échecs (par ex., les files de lettres mortes — Dead-Letter queues)...
 
 #### C. Mouvement des données hybride
 

@@ -30,7 +30,7 @@ Les systèmes de détection de fraude font face à plusieurs défis qui rendent 
 *   Coût : la mise en place et la maintenance d'un système de détection de fraude peuvent être coûteuses. Le coût comprend l'acquisition et le traitement de grandes quantités de données, le développement et la maintenance des algorithmes et modèles, et le recrutement de personnel pour gérer le système.
 *   Préoccupations de confidentialité : les systèmes de détection de fraude nécessitent un accès aux données sensibles des clients, ce qui peut soulever des préoccupations de confidentialité. Les entreprises doivent s'assurer que leurs systèmes de détection de fraude sont conformes aux réglementations sur la confidentialité et mettent en œuvre des mesures de sécurité appropriées pour protéger les données.
 
-Dans cet article, parmi les défis ci-dessus, nous nous concentrerons sur les deux principaux  -  les faux positifs et la latence. Les deux entraînent des clients insatisfaits et des pertes substantielles pour les vendeurs.
+Dans cet article, parmi les défis ci-dessus, nous nous concentrerons sur les deux principaux — les faux positifs et la latence. Les deux entraînent des clients insatisfaits et des pertes substantielles pour les vendeurs.
 
 ### 1 - Faux positifs
 
@@ -74,7 +74,7 @@ Les fonctions AWS Lambda consomment les messages de Kinesis (transactions des ut
 
 Rappelons les deux principaux défis de la détection de fraude présentés ci-dessus. Redis peut les aborder sous différents angles :
 
-1.  Premièrement, en appliquant les règles prédéfinies pour identifier les activités potentiellement frauduleuses (couche basée sur des règles)  -  en utilisant RedisBloom/Cuckoo Filters, vous pouvez implémenter efficacement la mise sur liste noire des adresses IP. Ensuite, avec les opérations géospatiales natives de Redis comme `GEOSEARCH`, `GEORADIUS` et `GEOPOS`, vous pouvez calculer les données de latitude et de longitude à partir des adresses IP des utilisateurs. De plus, Redis peut stocker et indexer du JSON via ses modules RedisJSON et RediSearch. Cela, ainsi que les autres types de données Redis, permet à l'application d'implémenter la logique de profilage des utilisateurs et des achats.
+1.  Premièrement, en appliquant les règles prédéfinies pour identifier les activités potentiellement frauduleuses (couche basée sur des règles) — en utilisant RedisBloom/Cuckoo Filters, vous pouvez implémenter efficacement la mise sur liste noire des adresses IP. Ensuite, avec les opérations géospatiales natives de Redis comme `GEOSEARCH`, `GEORADIUS` et `GEOPOS`, vous pouvez calculer les données de latitude et de longitude à partir des adresses IP des utilisateurs. De plus, Redis peut stocker et indexer du JSON via ses modules RedisJSON et RediSearch. Cela, ainsi que les autres types de données Redis, permet à l'application d'implémenter la logique de profilage des utilisateurs et des achats.
 2.  Le moteur d'apprentissage automatique doit lire rapidement les dernières valeurs de features du feature store en ligne et les utiliser au moment de l'inférence. Ensuite, basé sur les features en temps réel, le modèle ML notera la transaction. En raison de sa latence ultra-faible, Redis Enterprise est parfaitement adapté pour l'accès en ligne et en temps réel aux données de features dans le cadre d'une solution/implémentation de feature store en ligne.
 3.  Enfin, les données de séries temporelles peuvent être stockées dans Redis via le module RedisTimeSeries. Ceci est important si vous souhaitez implémenter un tableau de bord en temps réel.
 

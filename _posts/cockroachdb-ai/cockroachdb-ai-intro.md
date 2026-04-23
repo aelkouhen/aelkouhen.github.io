@@ -19,7 +19,7 @@ Unstructured data is high-dimensional and noisy, making it more challenging for 
 
 Enter the world of Generative AI (GenAI) – a groundbreaking technology that's revolutionized how we store, query, and analyze data. Behind the magic of GenAI lies a deep stack of technology, data structures, and mathematical innovations.
 
-One of the most foundational  -  yet often overlooked  -  components is the use of vector embeddings. These high-dimensional representations allow GenAI models to understand, organize, and generate meaningful content. To make sense of these embeddings at scale, we need specialized systems like vector databases. These databases are not just an evolution of their predecessors; they represent an extraordinary leap in data management.
+One of the most foundational — yet often overlooked — components is the use of vector embeddings. These high-dimensional representations allow GenAI models to understand, organize, and generate meaningful content. To make sense of these embeddings at scale, we need specialized systems like vector databases. These databases are not just an evolution of their predecessors; they represent an extraordinary leap in data management.
 
 This is the first of several articles I'm writing that will take you on a journey into vector databases. As the Sr. Partner Solutions Architect at Cockroach Labs, I routinely engineer distributed database deployments within diverse data ecosystems. I love sharing what I've learned in the process, such as with my [Mainframe to Distributed SQL article series](/2025-02-05-mainframe-to-distributed-sql-part-6/).
 
@@ -40,13 +40,13 @@ Generative AI represents a class of artificial intelligence algorithms capable o
 
 These systems learn the underlying probability distributions of the data they're trained on and then generate new examples that resemble the original data without directly copying it. The "generative" part comes from sampling these learned distributions to produce new outputs. This ability to "create" rather than "recognize" represents a significant advancement in the field of AI.
 
-This process isn't random  -  it's guided by mathematical representations of data called Vector Embeddings, and a set of retrieval techniques called Vector Similarity (VecSim).
+This process isn't random — it's guided by mathematical representations of data called Vector Embeddings, and a set of retrieval techniques called Vector Similarity (VecSim).
 
 ### Vector Embeddings
 
 Generative AI models don't "understand" language the way humans do. To understand human text (also called natural language), Large Language Models (LLMs) are Natural Language Processing (NLP) models designed to understand and generate natural language in advanced ways. These models are typically based on neural networks. They can process large amounts of text data to perform various tasks, such as machine translation, text generation, sentiment analysis, text comprehension, question answering, and more.
 
-However, LLMs need a way to represent, navigate, and search this text. This is where the concept of Vector comes in. Vectors are mathematical representations of data points where each vector dimension (embeddings) corresponds to a specific feature or attribute of the data  -  to determine relationships and generate plausible continuations of input prompts.
+However, LLMs need a way to represent, navigate, and search this text. This is where the concept of Vector comes in. Vectors are mathematical representations of data points where each vector dimension (embeddings) corresponds to a specific feature or attribute of the data — to determine relationships and generate plausible continuations of input prompts.
 
 Think of vector embeddings as GPS coordinates for meaning. Just as GPS helps locate a physical place, embeddings help locate the meaning of content in a multidimensional space, enabling similarity comparison, clustering, and retrieval.
 
@@ -63,7 +63,7 @@ Vectors efficiently represent raw unstructured data that can be high-dimensional
 - Performing calculations - We can measure similarities, perform conceptual additions or subtractions
 - Reducing dimensionality - Complex concepts are represented in a compact and efficient manner
 
-Thanks to advances in deep learning, model providers such as OpenAI, Anthropic, HuggingFace, Cohere, and other data scientists around the world have built models  -  called transformers  -  capable of transforming almost any data "entity" into its vector representation. Next, using mathematical approaches, these representations are compared in a vector search space to measure how closely related two pieces of data are.
+Thanks to advances in deep learning, model providers such as OpenAI, Anthropic, HuggingFace, Cohere, and other data scientists around the world have built models — called transformers — capable of transforming almost any data "entity" into its vector representation. Next, using mathematical approaches, these representations are compared in a vector search space to measure how closely related two pieces of data are.
 
 <img src="/assets/img/ai-intro-03.png" alt="Transforming Unstructured Data to Vector Embeddings" style="width:100%">
 
@@ -109,7 +109,7 @@ Vector similarity search also powers applications like recommendation engines, a
 
 It can also help categorize content, detect spam, analyze sentiment, retrieve images (finding visually similar photos), and map data into a space where similar items group naturally, even without labels. VSS relies on distance metrics like [cosine similarity](https://www.geeksforgeeks.org/cosine-similarity/) or [Euclidean distance](https://www.geeksforgeeks.org/euclidean-distance/) to compare embeddings and determine how alike they are.
 
-GenAI systems use Vector Similarity Search (VSS) as a mathematical backbone to retrieve content based on semantic similarity rather than exact data matching: When a user enters a query, it is converted into an embedding. The system then finds the most similar vectors  -  and thus the most relevant results  -  from a Feature Store or, commonly, a Vector Database.
+GenAI systems use Vector Similarity Search (VSS) as a mathematical backbone to retrieve content based on semantic similarity rather than exact data matching: When a user enters a query, it is converted into an embedding. The system then finds the most similar vectors — and thus the most relevant results — from a Feature Store or, commonly, a Vector Database.
 
 <img src="/assets/img/ai-intro-06.png" alt="Vector databases" style="width:100%">
 
@@ -142,7 +142,7 @@ Another key issue is [metadata management](https://www.cockroachlabs.com/glossar
 
 ### The Critical Role of Data Consistency in GenAI
 
-Data consistency is the foundation of reliable AI, particularly for GenAI. Inconsistent data - mismatched embeddings, outdated vectors, or corrupted inputs - can lead to poor model performance, generating irrelevant or incorrect outputs.
+Data consistency is the foundation of reliable AI, particularly for GenAI. Inconsistent data—mismatched embeddings, outdated vectors, or corrupted inputs—can lead to poor model performance, generating irrelevant or incorrect outputs.
 
 For LLMs, consistency ensures that training and inference data align. If embeddings used during training differ from those at inference (e.g., due to preprocessing errors), the model may misinterpret inputs, reducing accuracy. In recommendation systems, inconsistent user or item embeddings can result in irrelevant suggestions, eroding trust.
 
@@ -154,13 +154,13 @@ Consistency also matters for multimodal GenAI, where text, images, and audio emb
 
 Integrating CockroachDB in your technological stack is a strategic move for modernizing legacy systems and preparing for the demands of AI-driven applications. With its built-in Vector datatype, the strong consistency, and a 99.999% SLA in its cloud offering, [CockroachDB](https://www.cockroachlabs.com/product/overview/) delivers the performance and availability required for today's next-gen workloads.
 
-To meet this demand, CockroachDB's [Vector Search implementation](https://www.cockroachlabs.com/blog/vector-search-pgvector-cockroachdb/) uses the same interface as that of PostgreSQL pgvector's and aims to be compatible with its API. This evolution eliminates the need for separate vector databases in many use cases, enabling teams to leverage familiar tools while adding AI-native capabilities  -  effectively blurring the lines between classical OLTP systems and modern AI infrastructure.
+To meet this demand, CockroachDB's [Vector Search implementation](https://www.cockroachlabs.com/blog/vector-search-pgvector-cockroachdb/) uses the same interface as that of PostgreSQL pgvector's and aims to be compatible with its API. This evolution eliminates the need for separate vector databases in many use cases, enabling teams to leverage familiar tools while adding AI-native capabilities — effectively blurring the lines between classical OLTP systems and modern AI infrastructure.
 
-Additionally, CockroachDB's limitless horizontal scalability allows you to store and query hundreds of millions or even billions of vector embeddings without sacrificing performance or reliability, which are essential for real-time GenAI applications. These fast queries are made possible with our implementation of Cockroach-SPANN, an internally developed distributed vector indexing algorithm that was [made available in v25.2](https://www.cockroachlabs.com/blog/cockroachdb-252-performance-vector-indexing/). As your data footprint expands, CockroachDB automatically scales out  -  eliminating the need for manual sharding or complex reconfiguration while ensuring seamless performance and operational simplicity.
+Additionally, CockroachDB's limitless horizontal scalability allows you to store and query hundreds of millions or even billions of vector embeddings without sacrificing performance or reliability, which are essential for real-time GenAI applications. These fast queries are made possible with our implementation of Cockroach-SPANN, an internally developed distributed vector indexing algorithm that was [made available in v25.2](https://www.cockroachlabs.com/blog/cockroachdb-252-performance-vector-indexing/). As your data footprint expands, CockroachDB automatically scales out — eliminating the need for manual sharding or complex reconfiguration while ensuring seamless performance and operational simplicity.
 
-Beyond CockroachDB's resilience and data domiciling capabilities, its distributed architecture enables powerful, SQL-native operations on vector data  -  bringing analytical depth to your generative AI applications.
+Beyond CockroachDB's resilience and data domiciling capabilities, its distributed architecture enables powerful, SQL-native operations on vector data — bringing analytical depth to your generative AI applications.
 
-For example, if you store items with associated store locations and product images (encoded as vectors) in a single table, you can create a secondary index on the store location column to pre-filter data before performing a Vector Search. This means that instead of scanning the entire dataset, the system first narrows down the search to relevant locations  -  such as "Casablanca"  -  and then applies vector similarity search only within that subset. This hybrid search approach significantly improves query performance and resource efficiency, making it easier to build intelligent, high-performance AI applications at scale using familiar SQL syntax.
+For example, if you store items with associated store locations and product images (encoded as vectors) in a single table, you can create a secondary index on the store location column to pre-filter data before performing a Vector Search. This means that instead of scanning the entire dataset, the system first narrows down the search to relevant locations — such as "Casablanca" — and then applies vector similarity search only within that subset. This hybrid search approach significantly improves query performance and resource efficiency, making it easier to build intelligent, high-performance AI applications at scale using familiar SQL syntax.
 
 As a highly resilient distributed database, CockroachDB offers the technical foundations to store, index, and query vector embeddings. It allows developers to store vectors as easily as structured relational data. Then, the Vector Search capabilities provide advanced indexing and search capabilities required to perform low-latency search at scale, typically ranging from tens of thousands to hundreds of millions of vectors distributed across a cluster of machines.
 

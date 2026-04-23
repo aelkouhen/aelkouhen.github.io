@@ -29,7 +29,7 @@ Que vous cherchiez à moderniser une infrastructure existante, à adopter le clo
 
 ## Approches de migration des bases de données mainframe
 
-La migration des bases de données mainframe vers des systèmes distribués modernes est une étape cruciale pour atteindre scalabilité, efficacité des coûts et agilité. Cependant, l'approche choisie impacte significativement la complexité, le calendrier et le succès final de la transition. Cette section compare les stratégies de migration courantes  -  **réhébergement, re-platforming**, **refactoring** et **réécriture** (aussi appelé **reconstruction**)  -  puis examine leurs implications pour l'adoption de bases de données distribuées.
+La migration des bases de données mainframe vers des systèmes distribués modernes est une étape cruciale pour atteindre scalabilité, efficacité des coûts et agilité. Cependant, l'approche choisie impacte significativement la complexité, le calendrier et le succès final de la transition. Cette section compare les stratégies de migration courantes — **réhébergement, re-platforming**, **refactoring** et **réécriture** (aussi appelé **reconstruction**) — puis examine leurs implications pour l'adoption de bases de données distribuées.
 
 ### Migration par réhébergement
 
@@ -131,7 +131,7 @@ _« Réécrire une application métier est aussi ardu que l'ancien processus de 
 
 ### Choisir la bonne approche
 
-Voyons les choses d'un autre angle  -  la représentation visuelle ci-dessous illustre la dynamique des coûts et des économies associées aux différentes approches de migration de bases de données mainframe au fil du temps.
+Voyons les choses d'un autre angle — la représentation visuelle ci-dessous illustre la dynamique des coûts et des économies associées aux différentes approches de migration de bases de données mainframe au fil du temps.
 
 L'axe vertical représente l'impact financier : les valeurs négatives indiquent les dépenses budgétaires, tandis que les valeurs positives représentent les économies réalisées. L'axe horizontal mesure le temps en mois, montrant la nature à long terme des projets de migration, qui s'étendent généralement sur plusieurs années.
 
@@ -196,7 +196,7 @@ Par exemple, des outils comme la [suite de modernisation mainframe LIBER*M de mL
 
 Les solutions de mLogica mettent l'accent sur un temps d'arrêt minimal, ce qui est crucial pour les systèmes critiques. En tirant parti de ces outils, les organisations peuvent transformer des mainframes sur site complexes en architectures cloud distribuées agiles.
 
-D'autres outils comme BluAge  -  maintenant intégré dans le cadre du service de migration mainframe AWS  -  se concentrent sur l'automatisation de la réingénierie des systèmes existants. Leur suite technologique est conçue pour convertir le code et les données existants en langages et frameworks modernes. Les fonctionnalités incluent :
+D'autres outils comme BluAge — maintenant intégré dans le cadre du service de migration mainframe AWS — se concentrent sur l'automatisation de la réingénierie des systèmes existants. Leur suite technologique est conçue pour convertir le code et les données existants en langages et frameworks modernes. Les fonctionnalités incluent :
 
 - **Analyse du code source** : BluAge identifie les dépendances, les redondances et les opportunités d'optimisation au sein de la base de code existante.
 - **Conversion automatisée** : Le code existant est converti en langages modernes, tels que Java ou C#, assurant la compatibilité avec les architectures distribuées.
@@ -306,7 +306,7 @@ La migration en ligne offre plusieurs avantages, notamment la capacité de teste
 
 Cependant, cette approche peut être intensive en ressources et coûteuse, car l'exécution de systèmes parallèles nécessite une synchronisation soigneuse pour assurer la cohérence des données. La migration en ligne est particulièrement adaptée aux scénarios impliquant de grands ensembles de données ou des applications critiques où les temps d'arrêt doivent être minimaux ou évités complètement.
 
-La stratégie de migration **Blue-Green** est une approche de migration en ligne qui minimise les temps d'arrêt et les risques en maintenant deux environnements identiques  -  l'un actif (bleu) et l'autre inactif (vert). Les données sont migrées et testées dans l'environnement inactif avant de basculer le trafic vers celui-ci. Cette approche assure un service ininterrompu et fournit un mécanisme de restauration facile en cas de problèmes. Le coût du maintien d'environnements dupliqués et l'effort impliqué dans la synchronisation sont des défis importants avec cette méthode.
+La stratégie de migration **Blue-Green** est une approche de migration en ligne qui minimise les temps d'arrêt et les risques en maintenant deux environnements identiques — l'un actif (bleu) et l'autre inactif (vert). Les données sont migrées et testées dans l'environnement inactif avant de basculer le trafic vers celui-ci. Cette approche assure un service ininterrompu et fournit un mécanisme de restauration facile en cas de problèmes. Le coût du maintien d'environnements dupliqués et l'effort impliqué dans la synchronisation sont des défis importants avec cette méthode.
 
 Il y a également la migration **Red-Black** qui est une dérivation de la stratégie de migration Blue-Green. Dans cette approche, deux environnements sont maintenus : l'environnement « Red » (actif) et l'environnement « Black » (en attente). La base de données cible est déployée dans l'environnement Black tandis que l'environnement Red reste actif. Une fois que l'environnement Black est testé et vérifié, le trafic est basculé de l'environnement Red vers l'environnement Black. La seule différence entre cette stratégie et le Blue-Green est que vous n'avez pas besoin de maintenir les deux bases de données servant les utilisateurs en même temps.
 
@@ -338,9 +338,9 @@ Elle atténue également les risques en permettant des migrations incrémentales
 
 ## Un voyage transformateur
 
-Moderniser d'une architecture mainframe vers une architecture distribuée est un voyage parsemé de défis  -  mais regorgeant d'opportunités de transformation !
+Moderniser d'une architecture mainframe vers une architecture distribuée est un voyage parsemé de défis — mais regorgeant d'opportunités de transformation !
 
-En suivant les meilleures pratiques  -  telles que la planification stratégique, la migration par phases, une surveillance robuste et la montée en compétences des équipes  -  et en tirant les leçons des expériences de l'industrie, les organisations peuvent assurer une transition transparente. En fin de compte, la sélection des outils et techniques appropriés en fonction des besoins spécifiques de votre organisation est déterminante pour le succès de l'effort de modernisation.
+En suivant les meilleures pratiques — telles que la planification stratégique, la migration par phases, une surveillance robuste et la montée en compétences des équipes — et en tirant les leçons des expériences de l'industrie, les organisations peuvent assurer une transition transparente. En fin de compte, la sélection des outils et techniques appropriés en fonction des besoins spécifiques de votre organisation est déterminante pour le succès de l'effort de modernisation.
 
 ---
 

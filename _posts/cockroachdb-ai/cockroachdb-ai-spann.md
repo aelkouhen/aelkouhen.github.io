@@ -30,13 +30,13 @@ Read on to learn how we combined recent academic research with practical enginee
 
 ## Embedding Meaning into Vectors
 
-To start, it's important to understand how systems can make sense of photos or search documents by meaning. Companies like [OpenAI](https://www.cockroachlabs.com/blog/openai-iam-architecture-ory-cockroachdb/) offer embedding models that convert an image, document, or other media into a long list of floating-point numbers  -  a vector  -  that captures its meaning. If two photos or documents are similar, say two beach photos, they'll be mapped to vectors that are near each other in high-dimensional space.
+To start, it's important to understand how systems can make sense of photos or search documents by meaning. Companies like [OpenAI](https://www.cockroachlabs.com/blog/openai-iam-architecture-ory-cockroachdb/) offer embedding models that convert an image, document, or other media into a long list of floating-point numbers — a vector — that captures its meaning. If two photos or documents are similar, say two beach photos, they'll be mapped to vectors that are near each other in high-dimensional space.
 
 <img src="/assets/img/ai-spann-02.png" alt="Example vector space" style="width:100%">
 {: .mx-auto.d-block :}
 **Example vector space**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Embedding meaning into vectors reduces complex problems like image recognition and semantic search into a simpler one: finding nearby vectors. These models are built on the same deep learning techniques that power systems like [ChatGPT](https://www.cockroachlabs.com/blog/openai-modern-iam-cockroachdb-ory/)  -  large neural networks trained to capture meaning and context across many kinds of data.
+Embedding meaning into vectors reduces complex problems like image recognition and semantic search into a simpler one: finding nearby vectors. These models are built on the same deep learning techniques that power systems like [ChatGPT](https://www.cockroachlabs.com/blog/openai-modern-iam-cockroachdb-ory/) — large neural networks trained to capture meaning and context across many kinds of data.
 
 This even works across media types. Multimodal models embed text and images into the same vector space. So the word "beach" and an actual beach photo end up in the same region. When a user types "beach," we can embed that query into a vector and search for nearby photo vectors. The closest matches are very likely to be related to the beach.
 
@@ -48,7 +48,7 @@ This even works across media types. Multimodal models embed text and images into
 
 Embedding vectors often have hundreds or thousands of dimensions that allow them to represent complex meaning. But that also makes them hard to search. Think about it: should beach photos come before or after food photos? What about photos of food at the beach? There's no natural ordering for multi-dimensional vectors, the way there is for numbers or strings. That means traditional indexes don't apply.
 
-Instead of scanning for exact matches, semantic queries need to find vectors that are nearby in multi-dimensional space. At a small scale, brute-force search is often good enough  -  you can scan the dataset, compute distances, and return the closest matches. But as the number of vectors grows into the tens of thousands or beyond, that approach quickly becomes too slow to be practical.
+Instead of scanning for exact matches, semantic queries need to find vectors that are nearby in multi-dimensional space. At a small scale, brute-force search is often good enough — you can scan the dataset, compute distances, and return the closest matches. But as the number of vectors grows into the tens of thousands or beyond, that approach quickly becomes too slow to be practical.
 
 Vector indexes address this by efficiently finding approximate nearest neighbors. These indexes trade a small amount of accuracy for a large gain in performance. While they don't guarantee that the exact nearest vectors will be returned, the results are close enough to be useful, and the performance benefits make real-time search possible at scale.
 
