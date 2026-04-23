@@ -188,7 +188,7 @@ temporal-ui-server --root ~/temporal-ui start
 
 The UI is then available at `http://localhost:8080`.
 
-#### Omes — load testing tool
+#### Omes: Load Testing Tool
 
 [Omes](https://github.com/temporalio/omes) requires Go 1.21+. Install Go first if needed:
 
@@ -243,7 +243,7 @@ Set the same password as the `TEMPORAL_DB_PASSWORD` environment variable used in
 
 The main schema works with CockroachDB out of the box via Temporal's SQL tool. Download `temporal-sql-tool` from the [Temporal GitHub releases](https://github.com/temporalio/temporal/releases) alongside `temporal-server`. The schema files are in the source tarball under `schema/postgresql/v12/temporal/versioned/`.
 
-> **Important:** pass hostname and port as separate flags (`--ep <host> --port 26257`). `temporal-sql-tool` supports multiple database backends including MySQL, and its internal port-parsing logic treats a combined `host:port` string as a MySQL endpoint — silently appending `:3306` instead of using the port you specified.
+> **Important:** pass hostname and port as separate flags (`--ep <host> --port 26257`). `temporal-sql-tool` supports multiple database backends including MySQL, and its internal port-parsing logic treats a combined `host:port` string as a MySQL endpoint, silently appending `:3306` instead of using the port you specified.
 
 ```bash
 temporal-sql-tool \
@@ -766,7 +766,7 @@ With this setup you can:
 
 - **Measure workflow throughput**: workflows started per second at varying concurrency levels
 - **Observe persistence latency**: p50/p95 latency directly reflects CockroachDB write performance; a co-located CockroachDB cluster typically delivers p50 <100 ms, while a remote cluster over a WAN shows 3–6 s per write
-- **Validate recovery behavior**: kill a CockroachDB node mid-run and confirm that in-flight workflows resume automatically once the cluster re-elects a leaseholder — no manual intervention and no workflow loss
+- **Validate recovery behavior**: kill a CockroachDB node mid-run and confirm that in-flight workflows resume automatically once the cluster re-elects a leaseholder, with no manual intervention and no workflow loss
 
 ### Observability
 
@@ -776,7 +776,7 @@ Two dashboards give complementary views of the same load:
 
 <img src="/assets/img/temporal-ui-bench-workflows.gif" alt="Temporal Web UI: 72 BenchWorkflow executions transitioning from running to completed" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Temporal Web UI: 72 BenchWorkflow executions running against CockroachDB — workflows transition to completed and the UI scrolls into a finished execution's event history**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Temporal Web UI: 72 BenchWorkflow executions running against CockroachDB; workflows transition to completed and the UI scrolls into a finished execution's event history**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **CockroachDB Admin Console** (`http://<crdb-host>:8080`) exposes the database-level picture:
 
@@ -801,7 +801,7 @@ As load increases, a few practices help maintain performance:
 - **Tune Temporal shard counts**: `numHistoryShards` in `base.yaml` controls write parallelism. Increasing it distributes history writes across more CockroachDB ranges, reducing contention. Start at 4 for development and scale to 512 or higher for production workloads.
 - **Monitor for hot ranges**: use the CockroachDB Admin Console's **Hot Ranges** page to identify ranges that receive a disproportionate share of writes. Hot ranges typically appear when a small number of Temporal history shards map to the same CockroachDB range.
 - **Leverage range splitting and distribution**: CockroachDB automatically splits and rebalances ranges as data grows, but you can pre-split the `executions` and `executions_visibility` tables for predictable write distribution at high shard counts.
-- **Consider a dedicated visibility backend for heavy query workloads**: Temporal's visibility store handles all `ListWorkflowExecutions` queries. Under heavy analytical query load, routing visibility to a separate CockroachDB database — or an Elasticsearch cluster — isolates query pressure from the history write path.
+- **Consider a dedicated visibility backend for heavy query workloads**: Temporal's visibility store handles all `ListWorkflowExecutions` queries. Under heavy analytical query load, routing visibility to a separate CockroachDB database (or an Elasticsearch cluster), isolates query pressure from the history write path.
 
 These practices mirror approaches used successfully with other horizontally scalable databases, and they apply directly to CockroachDB without any Temporal-specific changes beyond configuration.
 

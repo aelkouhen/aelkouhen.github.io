@@ -2,7 +2,7 @@
 date: 2026-05-28
 layout: post
 title: "Embedded Scalable Execution with DBOS and CockroachDB"
-subtitle: "How DBOS turns your database into a workflow engine — and why CockroachDB removes the scalability ceiling"
+subtitle: "How DBOS turns your database into a workflow engine, and why CockroachDB removes the scalability ceiling"
 cover-img: /assets/img/cover-dbos.webp
 thumbnail-img: /assets/img/cover-dbos.webp
 share-img: /assets/img/cover-dbos.webp
@@ -15,7 +15,7 @@ comments: true
 
 Modern AI applications are no longer single-shot inference calls. They are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
 
-Platforms like [Temporal](https://temporal.io/) solve this by deploying a dedicated orchestration cluster — a separate server process with its own persistence backend — that your application workers connect to over gRPC. This is powerful, but it means an extra service to provision, monitor, scale, and keep available before your first workflow can run.
+Platforms like [Temporal](https://temporal.io/) solve this by deploying a dedicated orchestration cluster (a separate server process with its own persistence backend) that your application workers connect to over gRPC. This is powerful, but it means an extra service to provision, monitor, scale, and keep available before your first workflow can run.
 
 [DBOS](https://dbos.dev/) takes a fundamentally different approach: it embeds durable execution **directly into your application** as a Python or TypeScript library, using the database you already have. There is no orchestration server, no task queue, no sidecar process. Your application writes workflow state to tables in its own database as a natural side effect of execution, and recovers from those tables on restart. Pair DBOS with [CockroachDB](https://www.cockroachlabs.com/) and you get a globally distributed, self-healing execution platform with no additional infrastructure to manage.
 
@@ -42,11 +42,11 @@ DBOS is a Python and TypeScript library that decorates ordinary functions with d
 
 ## Architecture
 
-DBOS is implemented entirely as an open-source library embedded in your application — there is no orchestration server and no external dependencies except a PostgreSQL-compatible database. While your application runs, DBOS checkpoints workflow and step state to that database. On failure, it uses those checkpoints to resume each workflow from the last completed step.
+DBOS is implemented entirely as an open-source library embedded in your application: there is no orchestration server and no external dependencies except a PostgreSQL-compatible database. While your application runs, DBOS checkpoints workflow and step state to that database. On failure, it uses those checkpoints to resume each workflow from the last completed step.
 
 <img src="/assets/img/dbos-architecture.png" alt="DBOS architecture: library embedded in the application process" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**DBOS architecture: the durable execution library lives inside your application process — the only external dependency is a Postgres-compatible database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**DBOS architecture: the durable execution library lives inside your application process; the only external dependency is a Postgres-compatible database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Checkpointing model
 
@@ -60,7 +60,7 @@ Write sizes are proportional to your inputs and outputs. For large payloads (fil
 
 ### Distributed deployment
 
-DBOS scales naturally to a fleet of servers. All application servers connect to the **same system database** — this is the only coordination point. By default, each workflow runs on a single server; durable queues distribute work across the fleet with configurable rate and concurrency limits.
+DBOS scales naturally to a fleet of servers. All application servers connect to the **same system database**, the only coordination point. By default, each workflow runs on a single server; durable queues distribute work across the fleet with configurable rate and concurrency limits.
 
 For multi-application setups (e.g., an API server, a data-ingestion service, and an AI agent loop), each application connects to its own isolated system database. A single physical database host can serve multiple system databases. The **DBOS Client** lets external code enqueue jobs and monitor results across application boundaries.
 
@@ -68,9 +68,9 @@ For multi-application setups (e.g., an API server, a data-ingestion service, and
 
 When a process crashes, DBOS detects incomplete workflows and replays them in three steps:
 
-1. **Detection** — at startup, DBOS scans for pending workflows. In distributed deployments, Conductor coordinates detection across the fleet.
-2. **Restart** — each interrupted workflow is called again with its original checkpointed inputs.
-3. **Resume** — as the workflow re-executes, every step whose output is already checkpointed is skipped instantly. Execution resumes from the first un-checkpointed step.
+1. **Detection**: at startup, DBOS scans for pending workflows. In distributed deployments, Conductor coordinates detection across the fleet.
+2. **Restart**: each interrupted workflow is called again with its original checkpointed inputs.
+3. **Resume**: as the workflow re-executes, every step whose output is already checkpointed is skipped instantly. Execution resumes from the first un-checkpointed step.
 
 Two requirements for safe recovery:
 - **Determinism**: the workflow function must produce the same steps in the same order given the same inputs. Non-deterministic operations (DB access, API calls, random numbers, timestamps) must live inside `@DBOS.step()` decorators, never directly in the workflow body.
@@ -78,11 +78,11 @@ Two requirements for safe recovery:
 
 ### Conductor (optional)
 
-For production deployments, DBOS recommends connecting to **Conductor** — a management service that adds distributed recovery coordination, workflow dashboards, and queue observability. Conductor is architecturally off the critical path: each server opens an outbound websocket connection to it, and if the connection drops the application continues operating normally. Conductor has no direct access to your database and is never involved in workflow execution itself.
+For production deployments, DBOS recommends connecting to **Conductor**, a management service that adds distributed recovery coordination, workflow dashboards, and queue observability. Conductor is architecturally off the critical path: each server opens an outbound websocket connection to it, and if the connection drops the application continues operating normally. Conductor has no direct access to your database and is never involved in workflow execution itself.
 
 <img src="/assets/img/dbos-conductor-architecture.png" alt="DBOS Conductor architecture" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Conductor is out of band: application servers open outbound websocket connections to it for observability and recovery — never for workflow execution**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Conductor is out of band: application servers open outbound websocket connections to it for observability and recovery, never for workflow execution**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
@@ -99,7 +99,7 @@ When DBOS connects to CockroachDB, it provisions three categories of tables in t
 
 <img src="/assets/img/dbos-schema.png" alt="DBOS system database schema in CockroachDB" style="width:60%;margin:1.5rem auto;display:block;">
 {: .mx-auto.d-block :}
-**Tables created by DBOS in CockroachDB: workflow state, step outputs, and events — all in your existing database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Tables created by DBOS in CockroachDB: workflow state, step outputs, and events, all in your existing database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 - **Workflow status table**: one row per execution, tracking ID, status, and function inputs
 - **Operation outputs table**: one row per completed step, storing the serialised return value for replay
@@ -128,7 +128,7 @@ There are two required configuration changes when using CockroachDB instead of P
 |---|---|
 | **Python 3.10+** | DBOS 2.x requires Python 3.10 or later |
 | **CockroachDB cluster** | A running CockroachDB instance (local, CockroachDB Cloud, or self-hosted) |
-| **System database** | A dedicated database for DBOS state — create it once: `CREATE DATABASE dbos_system;` |
+| **System database** | A dedicated database for DBOS state; create it once: `CREATE DATABASE dbos_system;` |
 | **Python packages** | `dbos[otel]`, `fastapi[standard]`, `psycopg2-binary`, `sqlalchemy-cockroachdb`, `uvicorn` |
 
 ```bash
@@ -290,25 +290,25 @@ python3 app/main.py
 
 All benchmarks ran from an EC2 instance co-located in AWS **us-east-1**, eliminating WAN overhead:
 
-- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, 384 GB RAM, gp3 500 GiB — 16,000 IOPS, 1,000 MB/s throughput
-- **CockroachDB 3 nodes** — `3× m7i.8xlarge`, 96 vCPU total, nodes spread across **multiple us-east-1 AZs** (genuine zone-redundant deployment)
+- **PostgreSQL RDS 17**: `db.m7i.24xlarge`, 96 vCPU, 384 GB RAM, gp3 500 GiB, 16,000 IOPS, 1,000 MB/s throughput
+- **CockroachDB 3 nodes**: `3× m7i.8xlarge`, 96 vCPU total, nodes spread across **multiple us-east-1 AZs** (genuine zone-redundant deployment)
 
 > **Benchmark artefacts:** all scripts and raw JSON results are published in the repository under [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb):
 > [`raw_write_bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/raw_write_bench.py) · [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`results_raw_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_raw_pg.json) · [`results_raw_crdb.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_raw_crdb.json) · [`results_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_pg.json) · [`results_coloc.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_coloc.json)
 
 ---
 
-### Step 1 — Fact-check: what the DBOS blog actually measured
+### Step 1: Fact-check what the DBOS blog actually measured
 
-The DBOS engineering team [published a benchmark](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres) claiming **144K database writes per second** on PostgreSQL (`db.m7i.24xlarge` — 96 vCPU, 384 GB RAM). Reading the methodology carefully reveals an important distinction: **that figure measures raw `INSERT` throughput into a simple 3-column table, not end-to-end DBOS workflow completions.** The benchmark client was co-located on the same host as the database, and the test performed bare `INSERT` statements with autocommit — no workflow orchestration, no step sequencing, no durability checkpointing.
+The DBOS engineering team [published a benchmark](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres) claiming **144K database writes per second** on PostgreSQL (`db.m7i.24xlarge`, 96 vCPU, 384 GB RAM). Reading the methodology carefully reveals an important distinction: **that figure measures raw `INSERT` throughput into a simple 3-column table, not end-to-end DBOS workflow completions.** The benchmark client was co-located on the same host as the database, and the test performed bare `INSERT` statements with autocommit (no workflow orchestration, no step sequencing, no durability checkpointing).
 
 We replicated this exact methodology on **both** PostgreSQL and CockroachDB to establish an honest baseline before comparing real workflow performance.
 
-**Raw write benchmark** — 3-column table (`id`, `val`, `ts`), single-row `INSERT` per operation, autocommit, concurrent writers:
+**Raw write benchmark**: 3-column table (`id`, `val`, `ts`), single-row `INSERT` per operation, autocommit, concurrent writers:
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-raw-throughput.png" alt="Raw INSERT throughput: PostgreSQL vs CockroachDB across concurrency levels" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Raw INSERT peak: PostgreSQL 62,990 writes/s · CockroachDB 54,740 writes/s. PG is faster on raw writes — its local WAL flush (~1.9 ms p50) beats CockroachDB's cross-AZ Raft quorum (~4–8 ms p50). Both are far below the DBOS blog's 144K claim, which used a higher-IOPS storage configuration co-located with the benchmark client.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Raw INSERT peak: PostgreSQL 62,990 writes/s · CockroachDB 54,740 writes/s. PG is faster on raw writes; its local WAL flush (~1.9 ms p50) beats CockroachDB's cross-AZ Raft quorum (~4–8 ms p50). Both are far below the DBOS blog's 144K claim, which used a higher-IOPS storage configuration co-located with the benchmark client.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Concurrency | PG writes/s | PG p50 (ms) | CRDB writes/s | CRDB p50 (ms) |
 |:-----------:|:-----------:|:-----------:|:-------------:|:-------------:|
@@ -320,24 +320,24 @@ We replicated this exact methodology on **both** PostgreSQL and CockroachDB to e
 | 256 | 37,478 | 5.1 | 31,820 | 7.1 |
 | **512** | **62,990** | 5.8 | **54,740** | 8.3 |
 
-Our raw write numbers are lower than the DBOS blog's 144K because their storage configuration had significantly higher provisioned IOPS and the benchmark client ran on the same host as the database (zero network round-trip). Our setup — EC2 client to RDS over the us-east-1 network, gp3 at 16K IOPS — reflects real-world deployment conditions, not a co-located best-case.
+Our raw write numbers are lower than the DBOS blog's 144K because their storage configuration had significantly higher provisioned IOPS and the benchmark client ran on the same host as the database (zero network round-trip). Our setup (EC2 client to RDS over the us-east-1 network, gp3 at 16K IOPS) reflects real-world deployment conditions, not a co-located best-case.
 
 ---
 
-### Step 2 — Why raw writes ≠ workflow completions
+### Step 2: Why raw writes ≠ workflow completions
 
 A DBOS 2-step workflow is not a single `INSERT`. It produces **4 sequential, acknowledged database writes**:
 
-1. Workflow start — inputs persisted before any step runs
-2. Step 1 output committed — return value stored for replay
-3. Step 2 output committed — return value stored for replay
-4. Workflow completion — final status updated
+1. Workflow start: inputs persisted before any step runs
+2. Step 1 output committed: return value stored for replay
+3. Step 2 output committed: return value stored for replay
+4. Workflow completion: final status updated
 
-**Critically, each write must be fully acknowledged before the next step begins.** This is the durability guarantee: if the process crashes after step 1, step 2 is never re-executed. The sequential commit chain means workflow latency ≈ 4 × single-write latency — throughput does not scale with raw write capacity.
+**Critically, each write must be fully acknowledged before the next step begins.** This is the durability guarantee: if the process crashes after step 1, step 2 is never re-executed. The sequential commit chain means workflow latency ≈ 4 × single-write latency; throughput does not scale with raw write capacity.
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-raw-vs-workflow.png" alt="Raw write peak vs DBOS workflow peak: PostgreSQL and CockroachDB" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Raw writes vs actual DBOS workflow completions at peak throughput. The ~500× gap between raw writes and workflow throughput is not a bug — it is the cost of durable, exactly-once execution guarantees.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Raw writes vs actual DBOS workflow completions at peak throughput. The ~500× gap between raw writes and workflow throughput is not a bug; it is the cost of durable, exactly-once execution guarantees.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Metric | PostgreSQL | CockroachDB (3 nodes) |
 |---|---|---|
@@ -349,19 +349,19 @@ The ratio is the overhead of durable orchestration: every workflow completion se
 
 ---
 
-### Step 3 — Real DBOS workflow benchmark: PostgreSQL vs CockroachDB
+### Step 3: Real DBOS Workflow Benchmark PostgreSQL vs CockroachDB
 
-### Results — throughput: PostgreSQL vs CockroachDB
+### Results: Throughput PostgreSQL vs CockroachDB
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-throughput.png" alt="DBOS workflow throughput: PostgreSQL vs CockroachDB, co-located in us-east-1" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **Both databases plateau at ~117 wf/s. PostgreSQL peaks faster (122 wf/s at c=4); CockroachDB reaches its 3-node ceiling at c=32 (117.5 wf/s). The bottleneck is the sequential step-commit pattern in DBOS, not the database engine.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-### Results — latency: PostgreSQL vs CockroachDB
+### Results: Latency PostgreSQL vs CockroachDB
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="DBOS workflow latency p50/p95: PostgreSQL vs CockroachDB under load" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**PostgreSQL is faster at low concurrency (19 ms p50 at c=1 — local WAL flush). At c=8 both databases converge to identical p50: 69 ms. Above c=32 both plateau at ~250 ms — the sequential commit pattern dominates completely. Both benchmarks run at Read Committed isolation.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**PostgreSQL is faster at low concurrency (19 ms p50 at c=1 (local WAL flush)). At c=8 both databases converge to identical p50: 69 ms. Above c=32 both plateau at ~250 ms; the sequential commit pattern dominates completely. Both benchmarks run at Read Committed isolation.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Concurrency | PG wf/s | PG p50 (ms) | CRDB wf/s | CRDB p50 (ms) |
 |:-----------:|:-------:|:-----------:|:---------:|:-------------:|
@@ -376,15 +376,15 @@ The ratio is the overhead of durable orchestration: every workflow completion se
 
 ### The scalability argument
 
-Both databases saturate at **~117 wf/s** under this DBOS workflow load — the bottleneck is DBOS's sequential step-commit pattern, not the database. The difference is what happens when you need **more than 117 wf/s**.
+Both databases saturate at **~117 wf/s** under this DBOS workflow load : the bottleneck is DBOS's sequential step-commit pattern, not the database. The difference is what happens when you need **more than 117 wf/s**.
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="CockroachDB scale-out vs PostgreSQL measured ceiling of 122 wf/s" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**PostgreSQL's ceiling is measured at 122 wf/s — a hard limit of its single-node WAL. CockroachDB surpasses that ceiling at just ~3.1 nodes and keeps scaling linearly. Each node adds ~39 wf/s.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**PostgreSQL's ceiling is measured at 122 wf/s, a hard limit of its single-node WAL. CockroachDB surpasses that ceiling at just ~3.1 nodes and keeps scaling linearly. Each node adds ~39 wf/s.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-PostgreSQL's **Write-Ahead Log serialises every write through a single flush path**. Once that path is saturated, no additional hardware increases write throughput — you can scale reads with replicas, but writes are bounded by one node forever. CockroachDB replaces the single WAL with a **distributed Raft log**: each node flushes its own log, and writes are spread across the cluster. The throughput ceiling rises with every node you add.
+PostgreSQL's **Write-Ahead Log serialises every write through a single flush path**. Once that path is saturated, no additional hardware increases write throughput; you can scale reads with replicas, but writes are bounded by one node forever. CockroachDB replaces the single WAL with a **distributed Raft log**: each node flushes its own log, and writes are spread across the cluster. The throughput ceiling rises with every node you add.
 
-With just **4 nodes**, CockroachDB (~156 wf/s projected) already exceeds PostgreSQL's measured ceiling. And it keeps scaling — 10 nodes means ~390 wf/s, with zone-redundant durability throughout.
+With just **4 nodes**, CockroachDB (~156 wf/s projected) already exceeds PostgreSQL's measured ceiling. And it keeps scaling: 10 nodes means ~390 wf/s, with zone-redundant durability throughout.
 
 ### Summary
 
@@ -394,11 +394,11 @@ With just **4 nodes**, CockroachDB (~156 wf/s projected) already exceeds Postgre
 | p50 at c=1 | **19 ms** (local WAL) | 65 ms (Raft, cross-AZ) | ~65 ms |
 | p50 at c=8 | 69 ms | **69 ms** | ~69 ms |
 | p50 at saturation (c=32+) | ~250 ms | ~250 ms | ~250 ms |
-| Write scale-out | **No — WAL is one node** | Yes | **Yes — linear** |
+| Write scale-out | **No (WAL is one node)** | Yes | **Yes (linear)** |
 | Node failure | Manual failover | Automatic | Automatic |
 | Multi-region durability | External tooling | Built-in | Built-in |
 
-Both benchmarks ran at **Read Committed** isolation. PostgreSQL's advantage at low concurrency (19 ms vs 65 ms p50 at c=1) is purely the cost of Raft cross-AZ quorum — it disappears at c=8 where both databases land at identical 69 ms p50. At saturation both converge to ~250 ms. The decisive difference is **what happens at scale**: PostgreSQL has hit its ceiling, CockroachDB has not even started climbing.
+Both benchmarks ran at **Read Committed** isolation. PostgreSQL's advantage at low concurrency (19 ms vs 65 ms p50 at c=1) is purely the cost of Raft cross-AZ quorum; it disappears at c=8 where both databases land at identical 69 ms p50. At saturation both converge to ~250 ms. The decisive difference is **what happens at scale**: PostgreSQL has hit its ceiling, CockroachDB has not even started climbing.
 
 ---
 
