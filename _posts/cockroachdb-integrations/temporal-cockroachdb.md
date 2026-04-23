@@ -232,12 +232,12 @@ sudo yum install -y postgresql
 ```sql
 CREATE DATABASE temporal;
 CREATE DATABASE temporal_visibility;
-CREATE USER temporal;
+CREATE USER temporal WITH PASSWORD 'your-password';
 GRANT ALL ON DATABASE temporal TO temporal;
 GRANT ALL ON DATABASE temporal_visibility TO temporal;
 ```
 
-> In **insecure mode** (`--insecure` / `sslmode=disable`), CockroachDB does not allow setting passwords. Use `CREATE USER temporal;` with no password clause. For a secure cluster, append `WITH PASSWORD 'your-password'` and set the `password` field in the server config.
+Set the same password as the `TEMPORAL_DB_PASSWORD` environment variable used in Steps 2 and 4.
 
 ### Step 2: Initialize the persistence schema
 
