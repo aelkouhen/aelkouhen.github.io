@@ -113,6 +113,16 @@ Temporal supporte officiellement PostgreSQL, MySQL, SQLite et Cassandra. Cockroa
 - **Scalabilité horizontale** : scalez lectures et écritures sans logique de sharding dans l'application
 - **Protocole filaire PostgreSQL** : le plugin `postgres12` de Temporal fonctionne directement
 
+| Capacité | Contribution de CockroachDB |
+|---|---|
+| **Isolation sérialisable** | Pas de mises à jour perdues ni de lectures fantômes sous exécution concurrente |
+| **Réplication multi-région** | Shards d'historique durables à travers les défaillances de data center |
+| **Scalabilité horizontale** | Ajoutez des nœuds pour absorber plus de workflows concurrents sans re-sharding |
+| **Basculement automatique** | Défaillances de nœuds transparentes pour les quatre services Temporal |
+| **Compatibilité PostgreSQL** | Aucune modification du code applicatif ; le plugin `postgres12` fonctionne directement |
+
+CockroachDB remplace PostgreSQL directement, offrant aux services sans état de Temporal une fondation indestructible et distribuée globalement. Le seul travail de déploiement supplémentaire par rapport à une installation PostgreSQL standard est l'application d'un schéma de visibilité adapté à CockroachDB, qui résout quatre constructions PostgreSQL non supportées.
+
 ---
 
 ## Déployer Temporal sur CockroachDB
@@ -659,7 +669,11 @@ Avec cette configuration, vous pouvez :
 
 Deux tableaux de bord offrent des vues complémentaires de la même charge :
 
-**L'interface web Temporal** (`http://localhost:8080` avec la configuration Docker par défaut) permet d'inspecter les exécutions de workflows individuels en temps réel : historique des événements, statut des activités, compteurs de réessais et profondeur actuelle des task queues. Pendant un run Maru, vous pouvez observer le nombre d'exécutions ouvertes monter et descendre, et accéder à tout workflow échoué pour voir exactement quelle activité a expiré.
+**L'interface web Temporal** (`http://localhost:8080` avec la configuration Docker par défaut) permet d'inspecter les exécutions de workflows individuels en temps réel : historique des événements, statut des activités, compteurs de réessais et profondeur actuelle des task queues. Pendant un run Omes, vous pouvez observer le nombre d'exécutions ouvertes monter et descendre, et accéder à tout workflow échoué pour voir exactement quelle activité a expiré.
+
+<img src="/assets/img/temporal-ui-bench-workflows.png" alt="Interface web Temporal avec 72 exécutions BenchWorkflow" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Interface web Temporal : 72 exécutions BenchWorkflow (65 en cours, 3 complétées, 4 terminées) adossées à CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **La console d'administration CockroachDB** (`http://<crdb-host>:8080`) expose la vue au niveau de la base de données :
 
@@ -670,20 +684,6 @@ Deux tableaux de bord offrent des vues complémentaires de la même charge :
 | **Node Map** | CPU, IOPS et réseau par nœud ; vérifiez qu'aucun nœud n'est saturé pendant que les autres sont inactifs |
 
 Cette combinaison donne une vue complète : Temporal indique *quels* workflows sont lents ; CockroachDB explique *pourquoi* au niveau du stockage.
-
----
-
-## Bénéfices clés
-
-| Capacité | Contribution de CockroachDB |
-|---|---|
-| **Isolation sérialisable** | Pas de mises à jour perdues ni de lectures fantômes sous exécution concurrente |
-| **Réplication multi-région** | Shards d'historique durables à travers les défaillances de data center |
-| **Scalabilité horizontale** | Ajoutez des nœuds pour absorber plus de workflows concurrents sans re-sharding |
-| **Basculement automatique** | Défaillances de nœuds transparentes pour les quatre services Temporal |
-| **Compatibilité PostgreSQL** | Aucune modification du code applicatif ; le plugin `postgres12` fonctionne directement |
-
-CockroachDB remplace PostgreSQL directement, offrant aux services sans état de Temporal une fondation indestructible et distribuée globalement. Le seul travail de déploiement supplémentaire par rapport à une installation PostgreSQL standard est l'application d'un schéma de visibilité adapté à CockroachDB, qui résout quatre constructions PostgreSQL non supportées.
 
 ---
 
