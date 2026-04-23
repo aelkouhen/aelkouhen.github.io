@@ -10,7 +10,15 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Modern AI applications are no longer single-shot inference calls — they are long-running agents that plan, act, observe, and retry across time. Coordinating these agents reliably requires a **workflow orchestration layer** that survives crashes, scales horizontally, and guarantees exactly-once execution semantics. [Temporal](https://temporal.io/) is one of the leading open-source platforms for this — and [CockroachDB](https://www.cockroachlabs.com/) is its ideal distributed persistence backend.
+Modern AI applications are no longer single-shot inference calls — they are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
+
+Coordinating these agents reliably requires a layer that:
+- **Survives crashes** — agent state is persisted after every step, not held in-memory
+- **Guarantees exactly-once execution** — an LLM call or external API write is never re-invoked after it succeeds
+- **Scales horizontally** — thousands of concurrent agent instances without bottlenecks
+- **Enables long sleeps** — an agent can wait days for a human-in-the-loop response without holding a process open
+
+[Temporal](https://temporal.io/) is the leading open-source platform for this class of problem. [CockroachDB](https://www.cockroachlabs.com/) is its ideal distributed persistence backend — giving Temporal's stateless execution cluster an indestructible, globally replicated storage foundation.
 
 A **workflow orchestration framework** manages the lifecycle of long-running, multi-step programs. Instead of writing retry loops, checkpointing logic, and failure recovery by hand, you declare your business logic as a sequence of **durable steps** and let the framework handle the rest. The core promises are:
 
@@ -249,37 +257,63 @@ persistence:
           keyFile: "/certs/client.temporal.key"
 ```
 
-### Step 5 — Write your first durable agent workflow
+### Step 5 — Write your first durable AI agent workflow
+
+The following agent loop retrieves context, calls an LLM, and writes the result to a database. Each step is an Activity — it executes exactly once even if the process crashes between steps. An LLM call that costs money is never re-issued after it succeeds.
 
 ```python
 from temporalio import workflow, activity
 from temporalio.client import Client
 from temporalio.worker import Worker
+from temporalio.common import RetryPolicy
 from datetime import timedelta
 
 @activity.defn
-async def call_llm(prompt: str) -> str:
-    # Any external call — billed once, never re-executed on retry
-    return await my_llm_client.complete(prompt)
+async def retrieve_context(task: str) -> str:
+    """Query a vector store for relevant context."""
+    return await vector_store.search(task)
 
 @activity.defn
-async def write_result(result: str) -> None:
-    await db.insert(result)
+async def call_llm(context: str) -> str:
+    """Call the LLM — billed once, never re-executed on retry."""
+    return await llm_client.complete(f"Given this context: {context}, respond.")
+
+@activity.defn
+async def request_human_approval(response: str) -> bool:
+    """Write pending approval to DB — the agent can wait days here."""
+    return await approvals_db.create_pending(response)
+
+@activity.defn
+async def write_final_result(result: str) -> None:
+    """Persist the approved result — exactly once."""
+    await results_db.insert(result)
 
 @workflow.defn
-class AgentWorkflow:
+class AICockroachAgentWorkflow:
     @workflow.run
     async def run(self, task: str) -> str:
-        # Each activity executes exactly once despite crashes
+        # Step 1 — retrieve context (retries safely, idempotent)
+        context = await workflow.execute_activity(
+            retrieve_context, task,
+            start_to_close_timeout=timedelta(minutes=2),
+        )
+        # Step 2 — LLM call (exactly once — no double billing)
         response = await workflow.execute_activity(
-            call_llm, task,
+            call_llm, context,
             start_to_close_timeout=timedelta(minutes=5),
-            retry_policy=RetryPolicy(maximum_attempts=3)
+            retry_policy=RetryPolicy(maximum_attempts=3),
         )
-        await workflow.execute_activity(
-            write_result, response,
-            start_to_close_timeout=timedelta(seconds=30)
+        # Step 3 — human-in-the-loop (agent sleeps until approved, days if needed)
+        approved = await workflow.execute_activity(
+            request_human_approval, response,
+            start_to_close_timeout=timedelta(days=7),
         )
+        # Step 4 — persist result (idempotent write, exactly once)
+        if approved:
+            await workflow.execute_activity(
+                write_final_result, response,
+                start_to_close_timeout=timedelta(seconds=30),
+            )
         return response
 ```
 

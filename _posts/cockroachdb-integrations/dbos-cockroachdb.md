@@ -10,7 +10,9 @@ author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
 ---
 
-Most workflow orchestration platforms require you to deploy and operate a dedicated cluster alongside your application. [DBOS](https://dbos.dev/) takes a fundamentally different approach: it embeds durable execution **directly into your application** using the database you already have. Your database is not just a data store — it is the execution engine. Pair DBOS with [CockroachDB](https://www.cockroachlabs.com/) and you get a globally distributed, self-healing execution platform with no additional infrastructure to manage.
+Modern AI applications are no longer single-shot inference calls — they are long-running agents that plan, act, observe, and retry across time. An AI agent loop that retrieves context from a vector store, calls an LLM, writes results to a database, waits for human approval, and then triggers downstream actions can run for minutes, hours, or even days. Without a **durable orchestration layer**, any transient infrastructure failure restarts the entire loop from scratch: re-billing expensive LLM calls, duplicating side effects, and losing all accumulated context.
+
+Most workflow orchestration platforms address this by deploying a dedicated cluster alongside your application. [DBOS](https://dbos.dev/) takes a fundamentally different approach: it embeds durable execution **directly into your application** using the database you already have. Your database is not just a data store — it is the execution engine. Pair DBOS with [CockroachDB](https://www.cockroachlabs.com/) and you get a globally distributed, self-healing execution platform with no additional infrastructure to manage.
 
 A **durable workflow** is a function whose execution state — which steps have completed, what they returned, what inputs were given — is persisted to the database after every step. If the process crashes mid-run, it restarts and replays from the last committed step: no work is lost, no step is re-executed, no external side effect is duplicated.
 
