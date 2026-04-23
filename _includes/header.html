@@ -128,7 +128,9 @@
           {% for cat_link in _home_cat_links %}
             {% for cat in cat_link %}
             {% assign _cat_key = cat[0] %}
-            <a href="{{ cat[1] }}" class="home-category-pill" style="border-color:{{ page.accent-color }}55;color:{{ page.accent-color }}">{{ _navbar_t[_cat_key] | default: _cat_key }}</a>
+            {% assign _cat_label = _cat_key %}
+            {% for nav_item in _navbar_t %}{% if nav_item[0] == _cat_key %}{% assign _cat_label = nav_item[1] %}{% endif %}{% endfor %}
+            <a href="{{ cat[1] }}" class="home-category-pill" style="border-color:{{ page.accent-color }}55;color:{{ page.accent-color }}">{{ _cat_label }}</a>
             {% endfor %}
           {% endfor %}
         </div>
