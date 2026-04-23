@@ -1,32 +1,75 @@
 """
-Benchmark with direct node connections (no NLB), round-robin across 3 nodes.
+DBOS workflow benchmark — full concurrency range c=1..512, round-robin across 3 direct node IPs.
+Connection pool uses a custom creator that cycles connections across nodes, bypassing the NLB.
 """
-import time, statistics, os, json, psycopg2, itertools
+import time, statistics, json, uuid, itertools
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from sqlalchemy import create_engine, event
+from sqlalchemy.pool import QueuePool
+import psycopg2
+from dbos import DBOS, DBOSConfig, SetWorkflowID
 
-NODE_IPS = ["13.222.72.12", "98.89.79.106", "100.24.96.151"]
-DB_URLS  = [f"postgresql://root@{ip}:26257/dbos_system?sslmode=disable" for ip in NODE_IPS]
-node_cycle = itertools.cycle(DB_URLS)
+NODE_IPS = ["18.209.130.220", "100.51.81.217", "44.207.208.13"]
+NLB_URL  = "postgresql://root@nlb-20260423194342360500000006-a4145919c7a3e780.elb.us-east-1.amazonaws.com:26257/dbos_system?sslmode=disable"
 
-CONCURRENCY_LEVELS = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
-WRITES_PER_LEVEL   = 200
+# Round-robin creator: each new connection goes to the next node in sequence
+_ip_cycle = itertools.cycle(NODE_IPS)
 
-def single_write(db_url):
-    t0 = time.perf_counter()
-    conn = psycopg2.connect(db_url)
-    conn.autocommit = False
-    with conn.cursor() as cur:
-        cur.execute("INSERT INTO dbos_bench_writes (payload) VALUES (%s)", ("bench",))
-    conn.commit()
-    conn.close()
+def _creator():
+    ip  = next(_ip_cycle)
+    url = f"postgresql://root@{ip}:26257/dbos_system?sslmode=disable"
+    return psycopg2.connect(url)
+
+engine = create_engine(
+    "postgresql+psycopg2://",
+    creator=_creator,
+    poolclass=QueuePool,
+    pool_size=64,
+    max_overflow=128,
+)
+
+config: DBOSConfig = {
+    "name":                   "bench-workflow-direct",
+    "system_database_url":    NLB_URL,   # DBOS migrations use NLB; data ops use the pool above
+    "system_database_engine": engine,
+    "use_listen_notify":      False,
+}
+DBOS(config=config)
+
+# ── Workflow ──────────────────────────────────────────────────────────────
+
+@DBOS.step()
+def step_one(task_id: str) -> str:
+    return f"done_{task_id}"
+
+@DBOS.step()
+def step_two(result: str) -> str:
+    return f"committed_{result}"
+
+@DBOS.workflow()
+def bench_workflow(task_id: str) -> str:
+    r1 = step_one(task_id)
+    r2 = step_two(r1)
+    return r2
+
+# ── Helpers ───────────────────────────────────────────────────────────────
+
+CONCURRENCY_LEVELS  = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+WORKFLOWS_PER_LEVEL = 200
+
+def start_one() -> float:
+    t0    = time.perf_counter()
+    wf_id = str(uuid.uuid4())
+    with SetWorkflowID(wf_id):
+        handle = DBOS.start_workflow(bench_workflow, wf_id)
+    handle.get_result()
     return time.perf_counter() - t0
 
-def bench_writes(concurrency, total):
+def run_level(concurrency: int, total: int):
     latencies = []
-    urls = [next(node_cycle) for _ in range(total)]
-    t_start = time.perf_counter()
+    t_start   = time.perf_counter()
     with ThreadPoolExecutor(max_workers=concurrency) as ex:
-        futures = [ex.submit(single_write, url) for url in urls]
+        futures = [ex.submit(start_one) for _ in range(total)]
         for f in as_completed(futures):
             try:
                 latencies.append(f.result())
@@ -37,28 +80,36 @@ def bench_writes(concurrency, total):
 
 def percentile(data, p):
     data = sorted(data)
-    idx = int(len(data) * p / 100)
-    return data[min(idx, len(data)-1)]
+    idx  = int(len(data) * p / 100)
+    return data[min(idx, len(data) - 1)]
 
-write_results = []
-print(f"\nDirect-node benchmark (round-robin across {NODE_IPS})")
-print(f"{'Concurrency':>12} | {'Writes/s':>10} | {'p50 (ms)':>10} | {'p95 (ms)':>10} | {'p99 (ms)':>10}")
-print("-" * 65)
+# ── Run ───────────────────────────────────────────────────────────────────
+
+DBOS.launch()
+
+results = []
+print(f"\nDBOS workflow benchmark — direct node IPs {NODE_IPS}")
+print(f"Workflow: 2 steps, wait for completion (end-to-end latency)")
+print(f"{'Concurrency':>12} | {'Workflows/s':>12} | {'p50 (ms)':>10} | {'p95 (ms)':>10} | {'p99 (ms)':>10}")
+print("-" * 70)
 
 for c in CONCURRENCY_LEVELS:
-    lats, elapsed = bench_writes(c, WRITES_PER_LEVEL)
+    lats, elapsed = run_level(c, WORKFLOWS_PER_LEVEL)
+    if not lats:
+        print(f"{c:>12} | {'NO DATA':>12}")
+        continue
     tput = len(lats) / elapsed
     r = {
         "concurrency": c,
-        "throughput": tput,
-        "p50": percentile(lats, 50) * 1000,
-        "p95": percentile(lats, 95) * 1000,
-        "p99": percentile(lats, 99) * 1000,
-        "mean": statistics.mean(lats) * 1000,
+        "throughput":  tput,
+        "p50":         percentile(lats, 50) * 1000,
+        "p95":         percentile(lats, 95) * 1000,
+        "p99":         percentile(lats, 99) * 1000,
+        "mean":        statistics.mean(lats) * 1000,
     }
-    write_results.append(r)
-    print(f"{c:>12} | {tput:>10.1f} | {r['p50']:>10.0f} | {r['p95']:>10.0f} | {r['p99']:>10.0f}", flush=True)
+    results.append(r)
+    print(f"{c:>12} | {tput:>12.1f} | {r['p50']:>10.0f} | {r['p95']:>10.0f} | {r['p99']:>10.0f}", flush=True)
 
 with open("/tmp/dbos-bench/results_direct.json", "w") as f:
-    json.dump({"writes": write_results}, f, indent=2)
+    json.dump({"workflows": results}, f, indent=2)
 print("\nSaved to /tmp/dbos-bench/results_direct.json")
