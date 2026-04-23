@@ -98,10 +98,6 @@ Un cluster Temporal est composé de quatre services sans état passant à l'éch
 | **Persistence Store (CockroachDB)** | Historiques d'événements, timers, files de transfert — forte cohérence, écritures distribuées |
 | **Visibility Store (CockroachDB)** | Index d'exécution interrogeable — index inversé JSONB remplace `btree_gin` |
 
-<img src="/assets/img/temporal-cluster-architecture.svg" alt="Architecture du cluster Temporal" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Cluster Temporal : services sans état adossés à une couche de persistance durable**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-
 ---
 
 ## Pourquoi CockroachDB pour Temporal ?
