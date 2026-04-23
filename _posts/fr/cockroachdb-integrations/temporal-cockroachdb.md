@@ -142,6 +142,10 @@ temporal-sql-tool \
   --port 26257 \
   --db temporal \
   --user temporal \
+  --tls \
+  --tls-ca-file /certs/ca.crt \
+  --tls-cert-file /certs/client.temporal.crt \
+  --tls-key-file /certs/client.temporal.key \
   setup-schema -v 0.0
 
 temporal-sql-tool \
@@ -150,10 +154,12 @@ temporal-sql-tool \
   --port 26257 \
   --db temporal \
   --user temporal \
+  --tls \
+  --tls-ca-file /certs/ca.crt \
+  --tls-cert-file /certs/client.temporal.crt \
+  --tls-key-file /certs/client.temporal.key \
   update-schema -d ./schema/postgresql/v12/temporal/versioned
 ```
-
-Pour un cluster avec TLS, ajoutez `--tls --tls-ca-file /certs/ca.crt --tls-cert-file /certs/client.temporal.crt --tls-key-file /certs/client.temporal.key` aux deux commandes.
 
 ### Étape 3 : Correction du schéma de visibilité pour CockroachDB
 
@@ -371,7 +377,7 @@ psql "postgresql://temporal@<crdb-host>:26257/temporal_visibility?sslmode=disabl
 
 ### Étape 4 : Configurer et démarrer le serveur Temporal
 
-Sauvegardez le contenu suivant dans `base.yaml`. La configuration doit être dans un fichier ; le flag `--config-file` accepte un chemin absolu ou relatif au répertoire courant. Pour CockroachDB en mode non sécurisé, définissez `tls.enabled: false` et passez `sslmode=disable` via `connectAttributes` :
+Sauvegardez le contenu suivant dans `base.yaml`. La configuration doit être dans un fichier ; le flag `--config-file` accepte un chemin absolu ou relatif au répertoire courant :
 
 ```yaml
 log:
@@ -390,13 +396,16 @@ persistence:
         connectAddr: "<crdb-host>:26257"
         connectProtocol: "tcp"
         user: "temporal"
+        password: "${TEMPORAL_DB_PASSWORD}"
         maxConns: 20
         maxIdleConns: 20
         maxConnLifetime: "1h"
         tls:
-          enabled: false
-        connectAttributes:
-          sslmode: "disable"
+          enabled: true
+          caFile: "/certs/ca.crt"
+          certFile: "/certs/client.temporal.crt"
+          keyFile: "/certs/client.temporal.key"
+          serverName: "<crdb-host>"
     crdb-visibility:
       sql:
         pluginName: "postgres12"
@@ -404,13 +413,16 @@ persistence:
         connectAddr: "<crdb-host>:26257"
         connectProtocol: "tcp"
         user: "temporal"
+        password: "${TEMPORAL_DB_PASSWORD}"
         maxConns: 10
         maxIdleConns: 10
         maxConnLifetime: "1h"
         tls:
-          enabled: false
-        connectAttributes:
-          sslmode: "disable"
+          enabled: true
+          caFile: "/certs/ca.crt"
+          certFile: "/certs/client.temporal.crt"
+          keyFile: "/certs/client.temporal.key"
+          serverName: "<crdb-host>"
 
 global:
   membership:
@@ -465,22 +477,6 @@ namespaceDefaults:
       state: "disabled"
     visibility:
       state: "disabled"
-```
-
-Pour un cluster avec TLS, remplacez les deux blocs datastore par la configuration suivante :
-
-```yaml
-        user: "temporal"
-        password: "${TEMPORAL_DB_PASSWORD}"
-        maxConns: 20
-        maxIdleConns: 20
-        maxConnLifetime: "1h"
-        tls:
-          enabled: true
-          caFile: "/certs/ca.crt"
-          certFile: "/certs/client.temporal.crt"
-          keyFile: "/certs/client.temporal.key"
-          serverName: "<crdb-host>"
 ```
 
 Démarrez le serveur avec `--allow-no-auth` (requis quand aucun autoriseur n'est configuré) :
