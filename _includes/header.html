@@ -60,10 +60,10 @@
   {% endfor %}
   {% assign _top_tags = _tag_scores | split: "|" | sort | reverse | compact %}
 {% elsif page.layout == 'home' %}
-  {% assign _home_posts = site.posts | where: "lang", page.lang %}
-  {% assign _home_posts_count = _home_posts | size %}
+  {% assign _home_posts_count = site.posts | size %}
   {% assign _home_cat_links = site.navbar-links["Categories"] %}
   {% assign _home_cat_count = _home_cat_links | size %}
+  {% assign _navbar_t = _t_data.navbar %}
 {% endif %}
 
 <header class="category-header-wrap">
@@ -127,7 +127,8 @@
         <div class="home-category-pills">
           {% for cat_link in _home_cat_links %}
             {% for cat in cat_link %}
-            <a href="{{ cat[1] }}" class="home-category-pill" style="border-color:{{ page.accent-color }}55;color:{{ page.accent-color }}">{{ _t_data.navbar[cat[0]] | default: cat[0] }}</a>
+            {% assign _cat_key = cat[0] %}
+            <a href="{{ cat[1] }}" class="home-category-pill" style="border-color:{{ page.accent-color }}55;color:{{ page.accent-color }}">{{ _navbar_t[_cat_key] | default: _cat_key }}</a>
             {% endfor %}
           {% endfor %}
         </div>
