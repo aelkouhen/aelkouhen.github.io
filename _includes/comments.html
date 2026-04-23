@@ -1,3 +1,7 @@
 {% if page.comments %}
-  {% include disqus.html %}
+  {% if site.giscus.repository %}
+    {% include giscus-comment.html %}
+  {% elsif site.disqus %}
+    {% include disqus.html %}
+  {% endif %}
 {% endif %}
