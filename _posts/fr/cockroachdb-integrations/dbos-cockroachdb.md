@@ -286,13 +286,70 @@ python3 app/main.py
 
 ## Benchmarking de scalabilité
 
-L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), atteignant **144K écritures brutes en base de données par seconde** sur une instance AWS RDS unique (`db.m7i.24xlarge` — 96 vCPU, 384 Go RAM). Nous avons effectué le même benchmark — de vrais **workflows DBOS à 2 étapes**, mesurant le **débit de complétion bout en bout** — sur les deux bases de données en parallèle, depuis une instance EC2 co-localisée dans AWS **us-east-1**, sans latence WAN :
+### Environnement de test
 
-- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, 384 Go RAM, gp3 500 Gio — 16 000 IOPS, 1 000 Mo/s de débit, même région
+Tous les benchmarks ont été exécutés depuis une instance EC2 co-localisée dans AWS **us-east-1**, sans latence WAN :
+
+- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, 384 Go RAM, gp3 500 Gio — 16 000 IOPS, 1 000 Mo/s de débit
 - **CockroachDB 3 nœuds** — `3× m7i.8xlarge`, 96 vCPU au total, nœuds répartis sur **plusieurs AZ de us-east-1** (déploiement réellement redondant)
 
-> **Artefacts du benchmark :** scripts et résultats bruts disponibles dans le dépôt sous [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb) :
-> [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`charts_v5.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/charts_v5.py) · [`results_coloc.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_coloc.json) · [`results_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_pg.json)
+> **Artefacts du benchmark :** tous les scripts et résultats JSON bruts sont publiés dans le dépôt sous [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb) :
+> [`raw_write_bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/raw_write_bench.py) · [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`results_raw_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_raw_pg.json) · [`results_raw_crdb.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_raw_crdb.json) · [`results_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_pg.json) · [`results_coloc.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_coloc.json)
+
+---
+
+### Étape 1 — Fact-check : ce que le blog DBOS a réellement mesuré
+
+L'équipe DBOS a [publié un benchmark](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres) affirmant **144K écritures par seconde** sur PostgreSQL (`db.m7i.24xlarge` — 96 vCPU, 384 Go RAM). En lisant attentivement la méthodologie, une distinction importante apparaît : **ce chiffre mesure le débit d'`INSERT` bruts dans une table à 3 colonnes, pas des completions de workflows DBOS bout en bout.** Le client de benchmark tournait sur le même hôte que la base de données, et le test effectuait de simples `INSERT` en autocommit — sans orchestration de workflow, sans séquencement d'étapes, sans checkpointing de durabilité.
+
+Nous avons répliqué exactement cette méthodologie sur **PostgreSQL et CockroachDB** pour établir une baseline honnête avant de comparer les performances réelles en workflows.
+
+**Benchmark d'écritures brutes** — table à 3 colonnes (`id`, `val`, `ts`), `INSERT` d'une ligne par opération, autocommit, writers concurrents :
+
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-raw-throughput.png" alt="Débit INSERT brut : PostgreSQL vs CockroachDB selon la concurrence" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Pic d'INSERT bruts : PostgreSQL 62 990 écritures/s · CockroachDB 54 740 écritures/s. PG est plus rapide sur les écritures brutes — son flush WAL local (~1,9 ms p50) l'emporte sur le quorum Raft cross-AZ de CockroachDB (~4–8 ms p50). Les deux sont bien en dessous des 144K du blog DBOS, qui utilisait une configuration de stockage à IOPS bien plus élevés avec le client co-localisé sur la DB.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+| Concurrence | PG écritures/s | PG p50 (ms) | CRDB écritures/s | CRDB p50 (ms) |
+|:-----------:|:--------------:|:-----------:|:----------------:|:-------------:|
+| 1 | 728 | 1,4 | 277 | 3,6 |
+| 8 | 4 125 | 1,9 | 1 659 | 4,7 |
+| 32 | 6 584 | 4,1 | 6 344 | 4,9 |
+| 64 | 12 016 | 4,3 | 8 448 | 6,8 |
+| 128 | 19 380 | 5,1 | 16 039 | 7,1 |
+| 256 | 37 478 | 5,1 | 31 820 | 7,1 |
+| **512** | **62 990** | 5,8 | **54 740** | 8,3 |
+
+Nos chiffres d'écritures brutes sont inférieurs aux 144K du blog DBOS car leur configuration de stockage avait des IOPS provisionnés bien plus élevés et le client tournait sur le même hôte que la base (zéro latence réseau). Notre setup — client EC2 vers RDS sur le réseau us-east-1, gp3 à 16 000 IOPS — reflète des conditions de déploiement réelles, pas un cas optimal co-localisé.
+
+---
+
+### Étape 2 — Pourquoi écritures brutes ≠ completions de workflows
+
+Un workflow DBOS à 2 étapes n'est pas un simple `INSERT`. Il produit **4 écritures séquentielles et acquittées** :
+
+1. Démarrage du workflow — entrées persistées avant toute étape
+2. Sortie de l'étape 1 validée — valeur de retour stockée pour la reprise
+3. Sortie de l'étape 2 validée — valeur de retour stockée pour la reprise
+4. Complétion du workflow — statut final mis à jour
+
+**Chaque écriture doit être entièrement acquittée avant que l'étape suivante commence.** C'est la garantie de durabilité : si le processus crashe après l'étape 1, l'étape 2 ne sera jamais ré-exécutée. La chaîne de commits séquentiels implique que la latence du workflow ≈ 4 × latence d'une écriture — le débit ne scale pas avec la capacité d'écriture brute.
+
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-raw-vs-workflow.png" alt="Pic d'écritures brutes vs completions de workflows DBOS : PostgreSQL et CockroachDB" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Écritures brutes vs completions réelles de workflows DBOS au pic de débit. L'écart ~500× entre écritures brutes et débit de workflows n'est pas un bug — c'est le coût des garanties d'exécution durable et exactement-une-fois.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+| Métrique | PostgreSQL | CockroachDB (3 nœuds) |
+|---|---|---|
+| Écritures brutes/s (pic) | 62 990 | 54 740 |
+| Workflows DBOS/s (pic) | **122** | **117** |
+| Ratio (brut ÷ workflow) | ~516× | ~469× |
+
+Le ratio représente l'overhead de l'orchestration durable : chaque completion de workflow sérialise 4 allers-retours vers la base de données, chacun attendant l'acquittement avant de commencer le suivant.
+
+---
+
+### Étape 3 — Benchmark réel de workflows DBOS : PostgreSQL vs CockroachDB
 
 ### Résultats — débit : PostgreSQL vs CockroachDB
 

@@ -1,0 +1,104 @@
+{
+  "raw_writes": [
+    {
+      "concurrency": 1,
+      "writes": 8296,
+      "throughput": 276.53,
+      "p50": 3.583,
+      "p95": 4.056,
+      "p99": 4.395,
+      "mean": 3.614,
+      "errors": 0
+    },
+    {
+      "concurrency": 2,
+      "writes": 12443,
+      "throughput": 414.77,
+      "p50": 4.821,
+      "p95": 5.986,
+      "p99": 6.48,
+      "mean": 4.82,
+      "errors": 0
+    },
+    {
+      "concurrency": 4,
+      "writes": 27315,
+      "throughput": 910.5,
+      "p50": 4.227,
+      "p95": 5.959,
+      "p99": 6.412,
+      "mean": 4.391,
+      "errors": 0
+    },
+    {
+      "concurrency": 8,
+      "writes": 49764,
+      "throughput": 1658.8,
+      "p50": 4.684,
+      "p95": 6.092,
+      "p99": 6.522,
+      "mean": 4.821,
+      "errors": 0
+    },
+    {
+      "concurrency": 16,
+      "writes": 99833,
+      "throughput": 3327.77,
+      "p50": 4.646,
+      "p95": 6.214,
+      "p99": 6.726,
+      "mean": 4.806,
+      "errors": 0
+    },
+    {
+      "concurrency": 32,
+      "writes": 190334,
+      "throughput": 6344.47,
+      "p50": 4.872,
+      "p95": 6.558,
+      "p99": 7.307,
+      "mean": 5.043,
+      "errors": 0
+    },
+    {
+      "concurrency": 64,
+      "writes": 253446,
+      "throughput": 8448.2,
+      "p50": 6.792,
+      "p95": 13.601,
+      "p99": 18.272,
+      "mean": 7.576,
+      "errors": 0
+    },
+    {
+      "concurrency": 128,
+      "writes": 481180,
+      "throughput": 16039.33,
+      "p50": 7.066,
+      "p95": 15.105,
+      "p99": 20.631,
+      "mean": 7.992,
+      "errors": 0
+    },
+    {
+      "concurrency": 256,
+      "writes": 954594,
+      "throughput": 31819.8,
+      "p50": 7.139,
+      "p95": 16.001,
+      "p99": 22.281,
+      "mean": 8.187,
+      "errors": 0
+    },
+    {
+      "concurrency": 512,
+      "writes": 1642194,
+      "throughput": 54739.8,
+      "p50": 8.303,
+      "p95": 21.918,
+      "p99": 31.314,
+      "mean": 10.031,
+      "errors": 0
+    }
+  ]
+}
