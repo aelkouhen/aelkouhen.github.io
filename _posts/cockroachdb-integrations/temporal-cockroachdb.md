@@ -159,6 +159,8 @@ For a TLS-enabled cluster, add `--tls --tls-ca-file /certs/ca.crt --tls-cert-fil
 
 > **This step requires bypassing `temporal-sql-tool` entirely for the visibility database.** Migration `v1.2` (`advanced_visibility.sql`) introduces four CockroachDB incompatibilities that cause the tool to hard-fail. Applying a hand-crafted schema directly with `psql` is the correct path.
 
+`btree_gin` is still one of the incompatibilities: CockroachDB genuinely does not support that extension. The original documentation, however, pointed to migration `v1.1` as the source, and treated `btree_gin` as the sole problem. Both are wrong. The extension call lives inside a `DO LANGUAGE 'plpgsql'` anonymous code block in `v1.2`. CockroachDB rejects the `DO` block itself before it even reaches the extension check, so the first error is not "extension not found" but "anonymous code blocks not supported". Two further incompatibilities wait in the same file after that.
+
 The four incompatibilities, all in `schema/postgresql/v12/visibility/versioned/v1.2/advanced_visibility.sql`:
 
 | Incompatibility | Root cause | Fix |
