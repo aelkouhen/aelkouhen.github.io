@@ -481,7 +481,8 @@ ON CONFLICT DO NOTHING;
 Apply it with `psql` (no `cockroach` CLI required):
 
 ```bash
-psql "postgresql://temporal@<crdb-host>:26257/temporal_visibility?sslmode=disable" \
+PGPASSWORD="${TEMPORAL_DB_PASSWORD}" psql \
+  "postgresql://temporal@<crdb-host>:26257/temporal_visibility?sslmode=verify-full&sslrootcert=/certs/ca.crt&sslcert=/certs/client.temporal.crt&sslkey=/certs/client.temporal.key" \
   --file ./crdb_visibility_schema.sql
 ```
 
