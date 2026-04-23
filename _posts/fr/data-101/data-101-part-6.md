@@ -101,7 +101,7 @@ Une **base de données** est une collection de données structurées stockées s
 
     - **_Bases de données de documents_** : stockent les données dans des documents organisés en collections contenant des paires clé-valeur ou d'autres structures imbriquées complexes (par ex., JSON).
     - **_Stores clé-valeur_** : ce type de base de données NoSQL stocke chaque élément comme un nom d'attribut (ou « clé ») avec sa valeur ; ils fournissent un moyen simple de stocker de grandes quantités de données structurées pouvant être rapidement accessibles en spécifiant la clé unique pour chaque information.
-    - **_Bases de données colonnes_** : ce type est optimisé pour les requêtes sur de grands ensembles de données — en stockant les colonnes de données séparément plutôt que les lignes.
+    - **_Bases de données colonnes_** : ce type est optimisé pour les requêtes sur de grands ensembles de données, en stockant les colonnes de données séparément plutôt que les lignes.
     - **_Bases de données de graphes_** : une base de données de graphes utilise des nœuds connectés par des arêtes, ce qui la rend idéale pour les applications où les relations entre les entités nécessitent des temps d'accès rapides et une capacité de stockage efficace.
     - **_Bases de données de séries temporelles_** : une base de données de séries temporelles est une base de données NoSQL optimisée pour stocker et analyser des données de séries temporelles telles que les relevés de capteurs, les cours des actions, les métriques système, etc.
     - **_Registres immuables_** : un registre immuable est un système de tenue des registres dans lequel les enregistrements ne peuvent pas être modifiés ou supprimés une fois écrits. L'un des exemples les plus connus est la blockchain.

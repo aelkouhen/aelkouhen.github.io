@@ -85,7 +85,7 @@ En marketing, les experts métier (SME) ont commencé à utiliser deux caractér
 *   Une donnée est un ensemble d'observations et de faits, matérialisés par des valeurs ou des mesures et organisés pour en faire un matériau utile à l'analyse.
 *   Les données sont partout et peuvent être qualitatives (descriptives) ou quantitatives (numériques).
 *   Les données n'ont pas de signification en elles-mêmes ; elles doivent être mises en contexte, interprétées et analysées pour en tirer des insights. Elles doivent également contenir suffisamment d'informations pour que des conclusions significatives puissent être tirées et que des actions puissent être entreprises.
-*   Les données possèdent différentes caractéristiques. Dans les articles suivants, nous verrons que chaque caractéristique a un impact important sur le parcours des données. Chaque action effectuée sur les données — qu'il s'agisse de la collecte, du stockage, du traitement, de la visualisation ou de l'interprétation — dépend des 7 V des données.
+*   Les données possèdent différentes caractéristiques. Dans les articles suivants, nous verrons que chaque caractéristique a un impact important sur le parcours des données. Chaque action effectuée sur les données (qu'il s'agisse de la collecte, du stockage, du traitement, de la visualisation ou de l'interprétation) dépend des 7 V des données.
 
 ## Références
 

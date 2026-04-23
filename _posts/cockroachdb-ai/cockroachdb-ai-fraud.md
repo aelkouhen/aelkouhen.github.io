@@ -14,15 +14,15 @@ comments: true
 
 In the arms race against financial fraud, milliseconds matter. For any given transaction, fraud detection systems must decide whether or not it's fraudulent and immediately act accordingly. Failing to definitively address fraud leads to significant losses, harms organizations' brand image, tarnishes their reputation, and inevitably repels customers.
 
-The incidence of fraud has reached record levels. [Estimates](https://www.cyberdefensemagazine.com/the-true-cost-of-cybercrime-why-global-damages-could-reach-1-2-1-5-trillion-by-end-of-year-2025/) for the worldwide cost of fraud — including cybercrime, financial fraud, and related losses — range from $1.2 trillion to over $1.5 trillion annually by the end of 2025.
+The incidence of fraud has reached record levels. [Estimates](https://www.cyberdefensemagazine.com/the-true-cost-of-cybercrime-why-global-damages-could-reach-1-2-1-5-trillion-by-end-of-year-2025/) for the worldwide cost of fraud (including cybercrime, financial fraud, and related losses) range from $1.2 trillion to over $1.5 trillion annually by the end of 2025.
 
 Meanwhile, fraudsters are evolving fast and moving in tandem with digital banking transformations, devising crafty ways to steal or fake customers' identities and commit fraud at a high velocity. As a result, traditional rules-based (offline) fraud detection systems are no longer effective, as they rely on static heuristics and batch processing that can't keep pace with adaptive, real-time fraud tactics.
 
-Fraud detection systems must ingest massive volumes of transactional data, evaluate it against dynamic rulesets, and make decisions in real time — all while operating across global infrastructure. Traditional databases often buckle under this pressure and deliver poor fraud prevention performance, due to inefficient data access strategies.
+Fraud detection systems must ingest massive volumes of transactional data, evaluate it against dynamic rulesets, and make decisions in real time, all while operating across global infrastructure. Traditional databases often buckle under this pressure and deliver poor fraud prevention performance, due to inefficient data access strategies.
 
 Enter [CockroachDB](https://www.cockroachlabs.com/product/overview/), a distributed SQL database built for scale, resilience, and performance. When it comes to the latest generation of AI-powered fraud detection systems, the heart of CockroachDB's advantage lies its [advanced vector indexing capabilities](/2025-11-23-cockroachdb-ai-spann/). In addition to the existing geo-partitioned and inverted indexes, CockroachDB empowers developers to build online fraud detection systems that are both fast and intelligent.
 
-This article explores how these new vector indexing features enable low-latency anomaly detection, real-time alerting, and region-aware decision making — without compromising on correctness or scale.
+This article explores how these new vector indexing features enable low-latency anomaly detection, real-time alerting, and region-aware decision making, without compromising on correctness or scale.
 
 ---
 
@@ -58,7 +58,7 @@ The multi-layer approach is a technique used in fraud detection systems to impro
 
 The rules can be implemented so that it can start from a "low cost" to "high cost." If a user makes a purchase within already-known categories and within min/max transaction amounts, the application can tag the transaction as non-fraudulent and skip further detection steps.
 
-- ***Anomaly Detection Layer***: The second layer is an anomaly detection system that identifies unusual activity based on statistical analyses of transactional data. This layer uses machine learning (ML) algorithms such as [Random Cut Forest](https://docs.aws.amazon.com/sagemaker/latest/dg/randomcutforest.html) to identify patterns that are not typically seen in legitimate transactions. This layer involves first converting data into a high-dimensional vector space using embedding techniques — here the embeddings represent the different fraud attributes/rules like location, transaction amount, user profile, IP addresses… then training a random forest model on these embeddings to identify anomalies as data points that deviate significantly from the norm.
+- ***Anomaly Detection Layer***: The second layer is an anomaly detection system that identifies unusual activity based on statistical analyses of transactional data. This layer uses machine learning (ML) algorithms such as [Random Cut Forest](https://docs.aws.amazon.com/sagemaker/latest/dg/randomcutforest.html) to identify patterns that are not typically seen in legitimate transactions. This layer involves first converting data into a high-dimensional vector space using embedding techniques (here the embeddings represent the different fraud attributes/rules like location, transaction amount, user profile, IP addresses), then training a random forest model on these embeddings to identify anomalies as data points that deviate significantly from the norm.
 
 - ***Predictive Modeling Layer***: The third layer is a predictive modeling system that uses advanced machine learning algorithms, such as [XGBoost](https://www.nvidia.com/en-us/glossary/xgboost/), to predict the likelihood of fraud. This layer uses historical data to train the models and can detect new fraud patterns that are not detected by the previous layers. This layer can also be effectively used to predict anomalies when combined with vector embeddings.
 
@@ -110,13 +110,13 @@ Second, to provide a low-latency fraud detection system, the engine needs to qui
 
 However, even with a good storage backend, plugging the anomaly detection system into a distributed SQL database like CockroachDB isn't straightforward. To support elastic scalability, fault tolerance, and multi-region availability, CockroachDB designed vector indexing with a novel approach:
 
-- First, it should operate without a central coordinator — every node in the cluster must be able to handle reads and writes independently, avoiding bottlenecks or single points of failure.
+- First, it should operate without a central coordinator. Every node in the cluster must be able to handle reads and writes independently, avoiding bottlenecks or single points of failure.
 
 - The index must also avoid relying on large in-memory structures; instead, its state should be stored persistently to accommodate serverless and low-memory environments without long warm-up times.
 
 - The index must avoid hot spots by distributing workload evenly across the cluster, even under high-volume inserts or queries.
 
-- Lastly, it must support incremental updates — handling inserts and deletes in real time without blocking queries or requiring full rebuilds. These requirements ruled out many conventional indexing strategies, prompting the design of a new approach tailored to CockroachDB's distributed architecture.
+- Lastly, it must support incremental updates, handling inserts and deletes in real time without blocking queries or requiring full rebuilds. These requirements ruled out many conventional indexing strategies, prompting the design of a new approach tailored to CockroachDB's distributed architecture.
 
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
 <iframe src="https://www.youtube.com/embed/j2ElRBAH8vM" title="CockroachDB For AI/ML: Vector Indexing" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
@@ -124,7 +124,7 @@ However, even with a good storage backend, plugging the anomaly detection system
 
 This vector indexing algorithm (called C-SPANN) is designed to organize vectors into partitions based on similarity, with each partition typically containing dozens to hundreds of vectors.
 
-Each of these partitions is represented by a **centroid** — the average of all vectors within it — serving as a "center of mass" for that group. These centroids are then recursively clustered into higher-level partitions, forming a multi-level tree structure (a hierarchical K-means tree).
+Each of these partitions is represented by a **centroid**, the average of all vectors within it, serving as a "center of mass" for that group. These centroids are then recursively clustered into higher-level partitions, forming a multi-level tree structure (a hierarchical K-means tree).
 
 This hierarchical organization allows the index to rapidly narrow down the search space by traversing from broad clusters to increasingly specific subsets. The result is significantly improved efficiency and speed of vector lookups.
 
@@ -309,7 +309,7 @@ Below is the Grafana dashboard that shows real-time fraud scores for incoming tr
 
 CockroachDB's distributed architecture and vector indexing capabilities unlock something powerful: a new level of speed and intelligence for real-time fraud detection.
 
-When paired with AWS AI services like Bedrock, SageMaker and Lambda, you can build a robust, scalable pipeline that detects anomalies early, classifies them accurately, and responds within seconds. This system not only reduces fraud risk, but also avoids blocking legitimate users — maintaining security and user trust, so enterprises can grow.
+When paired with AWS AI services like Bedrock, SageMaker and Lambda, you can build a robust, scalable pipeline that detects anomalies early, classifies them accurately, and responds within seconds. This system not only reduces fraud risk, but also avoids blocking legitimate users, maintaining security and user trust so enterprises can grow.
 
 ---
 

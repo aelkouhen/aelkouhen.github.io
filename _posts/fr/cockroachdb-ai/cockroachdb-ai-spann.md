@@ -31,13 +31,13 @@ Lisez la suite pour découvrir comment nous avons combiné des recherches acadé
 
 ## Incorporer le sens dans des vecteurs
 
-Pour commencer, il est important de comprendre comment les systèmes peuvent analyser des photos ou chercher dans des documents par leur sens. Des entreprises comme [OpenAI](https://www.cockroachlabs.com/blog/openai-iam-architecture-ory-cockroachdb/) proposent des modèles d'embedding qui convertissent une image, un document ou tout autre média en une longue liste de nombres à virgule flottante — un vecteur — qui capture son sens. Si deux photos ou documents sont similaires, par exemple deux photos de plage, ils seront mappés vers des vecteurs proches les uns des autres dans un espace de haute dimension.
+Pour commencer, il est important de comprendre comment les systèmes peuvent analyser des photos ou chercher dans des documents par leur sens. Des entreprises comme [OpenAI](https://www.cockroachlabs.com/blog/openai-iam-architecture-ory-cockroachdb/) proposent des modèles d'embedding qui convertissent une image, un document ou tout autre média en une longue liste de nombres à virgule flottante, un vecteur, qui capture son sens. Si deux photos ou documents sont similaires, par exemple deux photos de plage, ils seront mappés vers des vecteurs proches les uns des autres dans un espace de haute dimension.
 
 <img src="/assets/img/ai-spann-02.png" alt="Example vector space" style="width:100%">
 {: .mx-auto.d-block :}
 **Exemple d'espace vectoriel**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Incorporer le sens dans des vecteurs réduit des problèmes complexes comme la reconnaissance d'images et la recherche sémantique à un problème plus simple : trouver des vecteurs proches. Ces modèles sont construits sur les mêmes techniques de deep learning qui alimentent des systèmes comme [ChatGPT](https://www.cockroachlabs.com/blog/openai-modern-iam-cockroachdb-ory/) — de grands réseaux de neurones entraînés pour capturer le sens et le contexte à travers de nombreux types de données.
+Incorporer le sens dans des vecteurs réduit des problèmes complexes comme la reconnaissance d'images et la recherche sémantique à un problème plus simple : trouver des vecteurs proches. Ces modèles sont construits sur les mêmes techniques de deep learning qui alimentent des systèmes comme [ChatGPT](https://www.cockroachlabs.com/blog/openai-modern-iam-cockroachdb-ory/), de grands réseaux de neurones entraînés pour capturer le sens et le contexte à travers de nombreux types de données.
 
 Cela fonctionne même entre différents types de médias. Les modèles multimodaux intègrent du texte et des images dans le même espace vectoriel. Ainsi, le mot « plage » et une vraie photo de plage finissent dans la même région. Lorsqu'un utilisateur tape « plage », nous pouvons intégrer cette requête dans un vecteur et rechercher des vecteurs de photos proches. Les correspondances les plus proches sont très probablement liées à la plage.
 
@@ -49,7 +49,7 @@ Cela fonctionne même entre différents types de médias. Les modèles multimoda
 
 Les vecteurs d'embedding ont souvent des centaines ou des milliers de dimensions qui leur permettent de représenter des sens complexes. Mais cela les rend aussi difficiles à chercher. Réfléchissez-y : les photos de plage doivent-elles venir avant ou après les photos de nourriture ? Qu'en est-il des photos de nourriture à la plage ? Il n'y a pas d'ordre naturel pour les vecteurs multidimensionnels, comme il y en a pour les nombres ou les chaînes de caractères. Cela signifie que les index traditionnels ne s'appliquent pas.
 
-Au lieu de chercher des correspondances exactes, les requêtes sémantiques ont besoin de trouver des vecteurs proches dans un espace multidimensionnel. À petite échelle, la recherche par force brute est souvent suffisante — vous pouvez scanner le jeu de données, calculer les distances et retourner les correspondances les plus proches. Mais à mesure que le nombre de vecteurs croît vers des dizaines de milliers et au-delà, cette approche devient trop lente pour être pratique.
+Au lieu de chercher des correspondances exactes, les requêtes sémantiques ont besoin de trouver des vecteurs proches dans un espace multidimensionnel. À petite échelle, la recherche par force brute est souvent suffisante : vous pouvez scanner le jeu de données, calculer les distances et retourner les correspondances les plus proches. Mais à mesure que le nombre de vecteurs croît vers des dizaines de milliers et au-delà, cette approche devient trop lente pour être pratique.
 
 Les index vectoriels résolvent ce problème en trouvant efficacement les voisins les plus proches approximatifs. Ces index échangent une petite quantité de précision contre un grand gain en performance. S'ils ne garantissent pas que les vecteurs les plus proches exacts seront retournés, les résultats sont suffisamment proches pour être utiles, et les gains de performance rendent la recherche en temps réel possible à grande échelle.
 
@@ -151,7 +151,7 @@ Le résultat est le meilleur des deux mondes : des scans rapides et compacts ave
 
 ## Un index pour chaque utilisateur
 
-J'ai expliqué comment C-SPANN peut regrouper un grand nombre de vecteurs et maintenir l'index à jour avec des mises à jour incrémentales en temps réel. Mais il y a un autre aspect important de l'histoire. Dans la plupart des applications réelles, ces vecteurs appartiennent à quelqu'un — qu'il s'agisse d'un utilisateur, d'un client, d'un locataire, ou de tout autre propriétaire. Et la plupart des requêtes sont limitées à un seul propriétaire. En fait, inclure des vecteurs d'autres propriétaires pourrait être un problème de sécurité.
+J'ai expliqué comment C-SPANN peut regrouper un grand nombre de vecteurs et maintenir l'index à jour avec des mises à jour incrémentales en temps réel. Mais il y a un autre aspect important de l'histoire. Dans la plupart des applications réelles, ces vecteurs appartiennent à quelqu'un, qu'il s'agisse d'un utilisateur, d'un client, d'un locataire ou de tout autre propriétaire. Et la plupart des requêtes sont limitées à un seul propriétaire. En fait, inclure des vecteurs d'autres propriétaires pourrait être un problème de sécurité.
 
 Les index vectoriels de CockroachDB gèrent cela proprement en supportant les colonnes de préfixe, qui permettent à l'index d'être partitionné par propriété (ou par n'importe quoi d'autre). Voici un exemple simple :
 
