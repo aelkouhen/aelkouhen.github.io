@@ -243,7 +243,7 @@ GRANT ALL ON DATABASE temporal_visibility TO temporal;
 
 The main schema works with CockroachDB out of the box via Temporal's SQL tool. Download `temporal-sql-tool` from the [Temporal GitHub releases](https://github.com/temporalio/temporal/releases) alongside `temporal-server`. The schema files are in the source tarball under `schema/postgresql/v12/temporal/versioned/`.
 
-> **Important:** pass hostname and port as separate flags. The combined `--ep host:port` form is rejected with a MySQL port detection error.
+> **Important:** pass hostname and port as separate flags (`--ep <host> --port 26257`). `temporal-sql-tool` supports multiple database backends including MySQL, and its internal port-parsing logic treats a combined `host:port` string as a MySQL endpoint — silently appending `:3306` instead of using the port you specified.
 
 ```bash
 temporal-sql-tool \
