@@ -87,7 +87,7 @@ Un cluster Temporal est composé de quatre services sans état passant à l'éch
 
 <img src="/assets/img/temporal-architecture-overview.png" alt="Architecture du cluster Temporal avec CockroachDB" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Cluster Temporal avec CockroachDB comme backend de persistance et de visibilité — les services sans état et le stockage passent à l'échelle indépendamment**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Cluster Temporal avec CockroachDB comme backend de persistance et de visibilité**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Service | Rôle |
 |---|---|
