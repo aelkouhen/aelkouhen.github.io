@@ -286,9 +286,9 @@ python3 app/main.py
 
 ## Benchmarking de scalabilité
 
-L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), atteignant **144K écritures brutes en base de données par seconde** sur une instance AWS RDS unique (`db.m7i.24xlarge` — 96 vCPU, 384 Go RAM, 120K IOPS). Nous avons effectué le même benchmark — de vrais **workflows DBOS à 2 étapes**, mesurant le **débit de complétion bout en bout** — sur les deux bases de données en parallèle, depuis une instance EC2 co-localisée dans AWS **us-east-1**, sans latence WAN :
+L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), atteignant **144K écritures brutes en base de données par seconde** sur une instance AWS RDS unique (`db.m7i.24xlarge` — 96 vCPU, 384 Go RAM). Nous avons effectué le même benchmark — de vrais **workflows DBOS à 2 étapes**, mesurant le **débit de complétion bout en bout** — sur les deux bases de données en parallèle, depuis une instance EC2 co-localisée dans AWS **us-east-1**, sans latence WAN :
 
-- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, même région
+- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, 384 Go RAM, gp3 500 Gio — 16 000 IOPS, 1 000 Mo/s de débit, même région
 - **CockroachDB 3 nœuds** — `3× m7i.8xlarge`, 96 vCPU au total, nœuds répartis sur **plusieurs AZ de us-east-1** (déploiement réellement redondant)
 
 > **Artefacts du benchmark :** scripts et résultats bruts disponibles dans le dépôt sous [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb) :
