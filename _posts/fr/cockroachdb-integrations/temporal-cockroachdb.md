@@ -6,7 +6,7 @@ subtitle: "Comment exécuter Temporal avec CockroachDB comme backend de persista
 cover-img: /assets/img/cover-temporal.svg
 thumbnail-img: /assets/img/cover-temporal.svg
 share-img: /assets/img/cover-temporal.svg
-tags: [integrations, CockroachDB, temporal, workflow, orchestration, durable-execution]
+tags: [integrations, CockroachDB, temporal, workflow, orchestration, Agentic AI, Artificial Intelligence]
 lang: fr
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
