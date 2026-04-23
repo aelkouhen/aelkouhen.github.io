@@ -123,7 +123,10 @@ from sqlalchemy import create_engine
 import os
 
 database_url = os.environ["DBOS_COCKROACHDB_URL"]
-engine = create_engine(database_url)
+# SQLAlchemy's postgresql dialect cannot parse CockroachDB's version string;
+# the cockroachdb dialect (sqlalchemy-cockroachdb) handles it correctly.
+crdb_url = database_url.replace("postgresql://", "cockroachdb://", 1)
+engine = create_engine(crdb_url)
 
 config: DBOSConfig = {
     "name": "my-agent-app",
@@ -173,7 +176,9 @@ app = FastAPI()
 
 # ── CockroachDB connection ──────────────────────────────────────────────────
 database_url = os.environ["DBOS_COCKROACHDB_URL"]
-engine = create_engine(database_url)
+# Use cockroachdb:// dialect so SQLAlchemy can parse CockroachDB's version string
+crdb_url = database_url.replace("postgresql://", "cockroachdb://", 1)
+engine = create_engine(crdb_url)
 
 config: DBOSConfig = {
     "name": "agent-workflow",
@@ -246,7 +251,7 @@ if __name__ == "__main__":
 Installez les dépendances et lancez :
 
 ```bash
-pip install "dbos[otel]==2.15.0" "fastapi[standard]"
+pip install "dbos[otel]==2.15.0" "fastapi[standard]" psycopg2-binary sqlalchemy-cockroachdb
 export DBOS_COCKROACHDB_URL="postgresql://dbos_user:pass@localhost:26257/dbos_system?sslmode=disable"
 python3 app/main.py
 ```
