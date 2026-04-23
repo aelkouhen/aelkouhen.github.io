@@ -45,7 +45,7 @@ Les données peuvent être classifiées différemment selon la perspective chois
 
 Sur le plan statistique, les variables qualitatives doivent être transformées en variables indicatrices (dummy variables) avant toute analyse. Par exemple, on pourrait artificiellement attribuer des chiffres à des catégories. Si vos catégories sont des couleurs, on pourrait attribuer le chiffre 1 au rouge et 2 au bleu, mais ces chiffres n'ont aucune signification mathématique. On ne conclurait pas que le bleu vaut deux fois le rouge !
 
-![Types de données](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhB4XSG8o7jUbM0mIN_YpuJLdlMrnhoyxtXKViW9H1f0nHxm1vejVSbZnpRBV1WjeLtx2AhLWZGy1kXi54pvHSyeU7DSxZejyFNBbZGrVK2g4odUMpWNEipzoAesnJxygY4evJu1v_DtYEEHThH8c8VoLIRETthnbzNJpCX3KPEJxIP565cbwz743tX/w453-h437/Type_Data.png){: .mx-auto.d-block :} *Types de données*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![Types de données](/assets/img/Type_Data.png){: .mx-auto.d-block :} *Types de données*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 ## Impact des données
 
@@ -78,7 +78,7 @@ En marketing, les experts métier (SME) ont commencé à utiliser deux caractér
 *   **_Variabilité :_** une mesure de la variation des valeurs au sein de chaque variante de données. Ce concept est lié au contexte des données et au sens qui leur est attribué. Dans une organisation, ce sens peut constamment changer, ce qui a un impact significatif sur l'homogénéisation des données. Ce concept diffère de la variété : imaginez un café qui propose six mélanges différents de café (c'est la variété), mais si vous prenez le même mélange chaque jour et qu'il a un goût différent chaque jour, c'est la variabilité.
 *   **_Visualisation :_** la visualisation est essentielle dans le monde actuel. Utiliser des graphiques et des diagrammes pour visualiser de grandes quantités de données complexes est beaucoup plus efficace pour transmettre du sens que les données brutes dans des feuilles de calcul remplies de chiffres et de formules.
 
-![Les 7 V des données](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimY0UCmJbBGvTnlFSbKWX0NgDN3e43c5uMFiOlbYBjupnLDU_ByNdnHMKTacfs8WhbPUQ-sfO98RCBSs_-PXjdASJDkhCsQkIV7_SWyHCsmuUPOaUobxCcnV2Z37tzIGFopLBDzvfBbuCJPXwE8xqV7F_K33hyMfvh9BriT-4DJVYSZza2_CrNI-z0/w442-h429/7V.png){: .mx-auto.d-block :} *Les 7 V des données*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![Les 7 V des données](/assets/img/7V.png){: .mx-auto.d-block :} *Les 7 V des données*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 ## Résumé
 

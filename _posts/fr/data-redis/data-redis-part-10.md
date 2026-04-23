@@ -143,10 +143,10 @@ def create_product_catalog():
            'id': [1253, 9976, 3626, 2746],
            'description': ['Herringbone Brown Classic', 'Herringbone Wool Suit Navy Blue', 'Peaky Blinders Tweed Outfit', 'Cable Knitted Scarf and Bobble Hat'],
            'image_url': [
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg',
-                 'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg'
+                 '/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
+                 '/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
+                 '/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg',
+                 '/assets/img/Mocara_MaxwellFlat_900x.jpg'
                  ]
            }
 
@@ -295,7 +295,7 @@ Dans l'exemple ci-dessous, nous retournons le même résultat que la requête pr
 FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.2 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6c" LIMIT 0 10 DIALECT 2
 ```
 
-Voici un exemple de création d'une requête avec **[redis_py](https://github.com/redis/redis-py)** qui retourne les 3 produits les plus similaires (par image) à [celui-ci](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg), triés par score de pertinence (similarité cosinus définie dans les index créés précédemment).
+Voici un exemple de création d'une requête avec **[redis_py](https://github.com/redis/redis-py)** qui retourne les 3 produits les plus similaires (par image) à [celui-ci](/assets/img/test_image.jpg), triés par score de pertinence (similarité cosinus définie dans les index créés précédemment).
 
 {% highlight python linenos %}
 import numpy as np
@@ -308,7 +308,7 @@ from img2vec_pytorch import Img2Vec
 
 # Function to create the query parameter (query_vector)
 def create_query_vector():
-   query_image_url = "https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg"
+   query_image_url = "/assets/img/test_image.jpg"
    # Resnet-18 to create image embeddings
    image_model = Img2Vec()
    # generate image vector

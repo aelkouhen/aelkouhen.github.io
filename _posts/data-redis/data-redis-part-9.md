@@ -201,7 +201,7 @@ Redis combines the power of searching structured, semi-structured, and unstructu
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijyUOfN5IwNumywSWITsni0TSaci-t8CCStq5WXkY0blxY-p0uR0bB-wTcsjY9Ch8AGQFUGg1Ai1T_o1Oh4mw8V7LV-CDE-E0TsVw3O3LzMxl2TmcWiD07N3Gi-EBWlLN6zac_zFBj-3idgM2wMUe7Mt6d1yRkXhETXvsTBRzQK1bVQtLXN9xKsBr5WnE){: .mx-auto.d-block :} *Implementing recommendation systems using Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced here: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/2bis- Hybrid Search.ipynb)
+The instructions above are a brief overview to demonstrate the building blocks for Vector Similarity Search using Redis. You can try this out with the notebook referenced here: [![Open In Colab](/assets/img/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/2bis- Hybrid Search.ipynb)
 
 # Summary
 

@@ -24,11 +24,11 @@ En plus de ces structures de données natives, plusieurs extensions (appelées m
 
 Faisons un rappel des niveaux d'abstraction de stockage introduits dans la série Data 101. Le « stockage » signifie différentes choses pour différents utilisateurs. Par exemple, quand on parle de stockage, certaines personnes pensent à la façon dont les données sont stockées physiquement ; d'autres se concentrent sur le matériau brut qui contient les systèmes de stockage, tandis que d'autres encore pensent au système ou à la technologie de stockage pertinent pour leur cas d'usage. Tous ces niveaux sont des attributs importants du stockage, mais ils se concentrent sur différents niveaux d'abstraction.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGmGkc4Erw1sltbtjsyJUWI9vCY3N3di1rMd4wab9VtedKbLXtwd8GDVU0XnuRXvUQjY37N0vwXaUTrsjAQZ29Q9M1ADm_LdmANoLSxEImYJTB9aR2kTg0Azzgv4v7E8I4lab7nYnsXjq4hn6gPcEnLZj_q_q1Y0Sbf1435MuX0N_zO4iU_3Cwo3uy/w511-h746/Storage-redis.png){: .mx-auto.d-block :} *Abstractions de stockage - Périmètre Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/Storage-redis.png){: .mx-auto.d-block :} *Abstractions de stockage - Périmètre Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Pour atteindre des performances maximales, Redis fonctionne en mémoire. Les données sont stockées et manipulées directement en RAM sans persistance sur disque. La mémoire est rapide et permet à Redis d'avoir des performances très prévisibles. Les jeux de données composés de 10 000 ou 40 millions de clés auront des performances similaires. Ce support de stockage brut fournit un accès plus rapide aux données (au moins 1 000 fois plus rapide que l'accès disque). L'accès pur en mémoire offre un débit élevé en lecture et en écriture et une faible latence. Le compromis est que le jeu de données ne peut pas être plus grand que la mémoire.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9DDcu0Rrcjag1Eo_8Tx82kjBvn1nYI7Jqsf3Bpcsv3gmbXq6GLgMrEJtYVVC7Taar1brcWp6UWYr8AyLm2gnNgEIJg2A7UP22zbVvNnwl29gpLYiSe0VnbYfDvaNuw9Bahr586E4jspxPr0AXrUcSWnkgmJW-Gii8wsRa3piHOei2Hb9PRUys5e2i/s574/redis-memory.gif){: .mx-auto.d-block :} *Redis : performances en mémoire ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/redis-memory.gif){: .mx-auto.d-block :} *Redis : performances en mémoire ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Une autre raison des hautes performances de Redis est un peu contre-intuitive. Une instance Redis est principalement mono-thread. Les applications multi-threads nécessitent des verrous ou d'autres mécanismes de synchronisation. Elles sont notoirement difficiles à raisonner. Dans de nombreuses applications, la complexité ajoutée est source de bugs et sacrifie la stabilité, rendant difficile la justification du gain de performance. Dans le cas de Redis, le chemin de code mono-thread est facile à comprendre.
 
@@ -77,7 +77,7 @@ _Client 1_ essaie d'acquérir le verrou en définissant une clé avec une valeur
 *   Si la clé était déjà définie, la commande `SETNX` renvoie 0, indiquant qu'un autre client détient déjà le verrou.
     *   Dans ce cas, _Client 1_ attend et réessaie l'opération `SETNX` jusqu'à ce que l'autre client libère le verrou.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDKmegh34geV661MMXSC32qgjPgtPyvHMmJNl5Rs-tIgsuJgtsnhmEOuPLsfXa7phXvJM3oW1yt2wbzLqB4rvhumtuHeL78dnpNgWbD7RiCAZrZMQYlMOtyvvGQNkT7R8U5Y-7jBuMxRsHmdnqI4UwJ8EFBrB182IPCUbdv2j79d40imROTnftGu-e/w531-h555/distributed-lock.png){: .mx-auto.d-block :} *Exemple d'implémentation d'un verrou distribué.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/distributed-lock.png){: .mx-auto.d-block :} *Exemple d'implémentation d'un verrou distribué.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Cette implémentation simple peut être suffisante pour de nombreux cas d'usage, mais elle n'est pas complètement tolérante aux pannes. Pour une utilisation en production, de nombreuses [bibliothèques clientes](https://redis.io/docs/manual/patterns/distributed-locks/) Redis fournissent des implémentations de verrous distribués de haute qualité prêtes à l'emploi.
 
@@ -100,17 +100,17 @@ Des limiteurs de débit plus sophistiqués comme l'algorithme du seau percé peu
 
 Redis est une façon délicieuse d'implémenter divers tableaux de scores de jeu pour la plupart des jeux qui ne sont pas à très grande échelle. Les ensembles triés (Sorted Sets) sont la structure de données fondamentale qui rend cela possible. Un ensemble trié est une collection d'éléments uniques, chacun associé à un score. Les éléments sont triés par score. Cela permet une récupération rapide des éléments par score en temps logarithmique.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjns5YEOXoMSh71kCBCsYXnmuz5TvMJM1UVHVFsAULnbQrDTfNpr_6mtnUX4uH5SXQ9LyXwEtcOpOSCaE0Ah1XYDZzQGAkQ96aPjSt_gNk0i-lXDZIbxAfnP9UsIWU_57qyKFcoaYZmDlb4lg6CCGd1zIQq_UNu5UITPjfxtOSzWl-5FugtuPwQzgNp/w470-h324/redis-leaderboards.gif){: .mx-auto.d-block :} *SortedSets Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/redis-leaderboards.gif){: .mx-auto.d-block :} *SortedSets Redis ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 6 - File de messages (Message Queue)
 
 Lorsque vous avez besoin de stocker et de traiter une série indéterminée d'événements/messages, vous pouvez envisager Redis. En fait, les listes Redis (listes chaînées de valeurs de chaînes) sont fréquemment utilisées pour implémenter des _listes_, des _piles_, des _files LIFO_ et des _files FIFO_. De plus, Redis utilise également les listes pour implémenter des architectures de messagerie Pub/Sub.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhpRjfKrC6UeaRIV29JjbhUQ761YmfvJ2PqFNKdOokrBzqizAdqG5L1IenZW8NRz1UhwPJZAfluv6SVUNuNOLmfledWE8Vkeve5qTfx7aWIAQs5Y1brZO3xuS2bZ7_Z16IWePPNUUo4sCIA62F9TqMPOxhaMS5YwEogk6dtfl0HY9KnjUaacjWI1NxS/w475-h361/queue-stack.gif){: .mx-auto.d-block :} *Push et Pop dans/depuis les listes Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/queue-stack.gif){: .mx-auto.d-block :} *Push et Pop dans/depuis les listes Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Dans le paradigme éditeurs/abonnés (**Pub/Sub**), les émetteurs (éditeurs) ne sont pas programmés pour envoyer leurs messages à des destinataires spécifiques (abonnés). Au lieu de cela, les messages publiés sont caractérisés dans des canaux sans connaissance des abonnés qu'il pourrait y avoir. De même, les abonnés expriment leur intérêt pour un ou plusieurs canaux et ne reçoivent que les messages qui les intéressent sans savoir quels éditeurs existent. Ce découplage des éditeurs et des abonnés permet la communication entre différents composants ou systèmes de manière faiblement couplée, permettant une plus grande évolutivité et une topologie réseau plus dynamique.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA5drNyq6SwzMepPBF4gER0xxTjVboP3K2D2IO09SpXoltU64m49mbC53mB24D-ZPLlgotZit9WjHSwVtF7O7fR74q-PhBWgH5CJkPIVSuNaSxCatU-zS5fDIRouPk5jg2le5i4MstJy5HJvm0ATmBhRpobyJD4T4yTK0pZc1W1zlmSMtz5J70I9Hv/w461-h334/pubsub.gif){: .mx-auto.d-block :} *Paradigme Éditeur/Abonné.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/pubsub.gif){: .mx-auto.d-block :} *Paradigme Éditeur/Abonné.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Redis fournit également une structure de données spécifique, appelée Redis Streams, qui agit comme un journal en ajout uniquement. Vous pouvez utiliser les streams pour enregistrer et diffuser simultanément des événements en temps réel. Voici quelques exemples de cas d'usage de Redis Streams :
 
@@ -141,7 +141,7 @@ Tout dans le système est optimisé pour parcourir rapidement les données, avec
 
 La recherche en texte intégral consiste à rechercher du contenu textuel dans des documents textuels étendus et à retourner des résultats contenant tout ou partie des mots de la requête. Bien que les bases de données traditionnelles soient excellentes pour le stockage et la récupération de données générales (correspondance exacte), effectuer des recherches en texte intégral a été difficile. C'est pourquoi Redis a créé le module [RedisJSON](https://redis.io/docs/stack/json) pour stocker nativement des documents JSON. Ce module a permis à Redis de stocker, mettre à jour et récupérer tout ou partie des valeurs JSON dans une base de données Redis, comme tout autre type de données Redis.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEim-JGrqIe9RfloL9QIrMKKgoMQyTey0Z0cDM4FFYiM3tdU2AZe-BJ6G-6zg3IsOUlfgNLh38c2OqUTOBJY7gWjVsFFvgE-xH7XDTgKWTYbAv0jW8y0j6No42UnP2mMiSty8FixBspcYeS7RBabFPe4hzLM5DieVFgyOMwOPXEE7Gg1rXQ2A3MHArH3/w515-h247/google_autocomplete.gif){: .mx-auto.d-block :} *Moteur de recherche Google - Autocomplétion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/google_autocomplete.gif){: .mx-auto.d-block :} *Moteur de recherche Google - Autocomplétion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 RedisJSON fonctionne parfaitement avec le module [RediSearch](https://redis.io/docs/stack/search) pour créer des index secondaires et interroger des documents JSON. De plus, RediSearch permet des requêtes multi-champs, l'agrégation, la correspondance de phrases exactes, le filtrage numérique, le filtrage géographique et la recherche sémantique par similarité sur les requêtes textuelles.
 
@@ -161,7 +161,7 @@ Dans cette section, je vais rapidement passer en revue les structures de donnée
 
 Les chaînes Redis stockent des séquences d'octets, notamment du texte, des objets sérialisés et des tableaux binaires. En tant que telles, les chaînes sont le type de données Redis le plus basique. Elles sont souvent utilisées pour la mise en cache, mais prennent également en charge des fonctionnalités supplémentaires qui vous permettent d'implémenter des compteurs atomiques ou des verrous et d'effectuer des opérations bit à bit. Les chaînes combinées avec TTL et une politique d'éviction sont la structure préférée lors de l'implémentation d'un cache.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOYbB0GSms2A7LP-JbLmcqAtyH4CVKSCvV1jBTNO6vjjrA_qp_Aql_x1Z_yn3_SxnNNScT7zlv3n7uoLM3Ga0trTbgsgffdgayUEQjULEBH4Ud4ZXnDotFudJWBAz-zo9CAKRnvICWRS90lSbVg99hHDAfe1hAcuItvtONYOwJuT02wZpBYxdYKebz/w395-h102/string.png){: .mx-auto.d-block :} *Une chaîne Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/string.png){: .mx-auto.d-block :} *Une chaîne Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 La plupart des opérations sur les chaînes ont une complexité algorithmique de O(1), ce qui signifie qu'elles sont très efficaces. Cependant, faites attention aux commandes [SUBSTR](https://redis.io/commands/substr), [GETRANGE](https://redis.io/commands/getrange) et [SETRANGE](https://redis.io/commands/setrange), qui peuvent être O(n). Ces commandes d'accès aléatoire aux chaînes peuvent causer des problèmes de performance lors du traitement de grandes chaînes. Une seule chaîne Redis peut avoir une taille maximale de 512 Mo par défaut. Si vous stockez des données structurées, vous pourriez également envisager les hashes.
 
@@ -175,7 +175,7 @@ Les hashes Redis sont des types à structure d'enregistrement sous forme de coll
 
 Un ensemble Redis est une collection non ordonnée de chaînes uniques (membres). Vous pouvez utiliser les ensembles Redis pour suivre efficacement les éléments uniques (par exemple, suivre toutes les adresses IP uniques accédant à un article de blog donné), représenter des relations (par exemple, l'ensemble de tous les utilisateurs ayant un rôle donné) ou effectuer des opérations inter-ensembles telles que l'intersection, l'union et les différences. La taille maximale d'un ensemble Redis est de 4 294 967 295 (2<sup>32</sup> - 1) membres uniques, ce qui signifie une taille maximale de 2 147 Po (4 294 967 295 x 512 Mo) par ensemble.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk4fOdr1lQ7StLvj0T9LCovBnRBNf7cjlX4yXjwVNknTmZxTzzIpDDgkHEViJbmGLBzjq_HQn8ajQ0TbOZgM01t6GV-DLaQXeBHbW-76_pF_VYjOFItvn1ox9jRkFaXJOCU9LMViQxzhzUDTGx3DRmWfwG_x8BDTiHsv2cSr8cR8MZrZ9PAmCTZOWz/s320/set.png){: .mx-auto.d-block :} *Un ensemble d'éléments uniques.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/set.png){: .mx-auto.d-block :} *Un ensemble d'éléments uniques.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 La plupart des opérations sur les ensembles, y compris l'ajout, la suppression et la vérification de l'appartenance d'un élément à un ensemble, sont O(1). Cela signifie qu'elles sont très efficaces. Cependant, pour les grands ensembles avec des centaines de milliers de membres ou plus, vous devriez faire preuve de prudence lors de l'exécution de la commande [SMEMBERS](https://redis.io/commands/smembers). Cette commande est O(n) et renvoie l'ensemble entier en une seule réponse. Comme alternative, envisagez [SSCAN](https://redis.io/commands/sscan), qui vous permet de récupérer tous les membres de l'ensemble de manière itérative.
 
@@ -187,7 +187,7 @@ La plupart des opérations sur les ensembles triés sont O(log(n)), où n est le
 
 Les ensembles triés Redis peuvent facilement maintenir des listes ordonnées des meilleurs scores dans un jeu en ligne massivement multijoueur (tableaux de classement), vous pouvez utiliser un ensemble trié pour construire un limiteur de débit à fenêtre glissante pour prévenir des requêtes API excessives, et vous pouvez les utiliser pour stocker des séries temporelles, en utilisant un horodatage comme score.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4XWLxNrB76siS9pscJ6nLXNbZQQmAwwXqeP4cXIgiw87mG49FkmIWdGxmOIBPpSaTj-44iCuK-T8vJCw7NEq9NzuRm25bsty57hkk97IspsKflVkVnLfhlBikny2CUI4Qs5yiAAvCMywfqVPvZAznN1cQn2wbLWuTtwHivmhfqoMOad9PMBq-S19k/w468-h196/zset.png){: .mx-auto.d-block :} *Un ensemble trié Redis (ZSet).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/zset.png){: .mx-auto.d-block :} *Un ensemble trié Redis (ZSet).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Ils sont également souvent utilisés comme index secondaires pour les requêtes de plage. Par exemple, pour obtenir tous les clients avec un nom spécifique (par exemple, « Amine ») avec des âges entre 30 et 50. Les ensembles triés Redis sont parfois utilisés pour indexer d'autres structures de données Redis. Si vous avez besoin d'indexer et d'interroger vos données, envisagez [RediSearch](https://redis.io/docs/stack/search) et [RedisJSON](https://redis.io/docs/stack/json).
 
@@ -225,7 +225,7 @@ Cette structure de données n'est pas vraiment une nouvelle structure de donnée
 
 Une autre structure de données dérivée dans Redis est le Bitmap. Les bitmaps Redis sont une extension du type de données chaîne qui vous permet de traiter une chaîne comme un vecteur de bits. Vous pouvez également effectuer des opérations bit à bit sur une ou plusieurs chaînes, telles que AND, OR et XOR. Par exemple, supposons que vous ayez 100 capteurs de mouvement déployés sur un terrain étiquetés de 0 à 99. Vous voulez déterminer rapidement si un capteur donné a détecté un mouvement au cours de l'heure. Tout ce que vous pouvez faire est de créer un bitmap avec une clé pour chaque heure et laisser les capteurs le définir avec leur identifiant lorsqu'ils capturent un mouvement. Vous pouvez ensuite simplement voir quels capteurs ont émis un signal sur votre terrain en affichant le bitmap.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7_tO_lRIm07tRXSr6nyvwFc8ZJcxV-BQihfWlREn4ngD_cLMNkIdouCipcgihwtRr0FwrvUjc3YU_bjxMRbmTXaKFFyhR9LGZ67d9nQCg1LqWcPAlwg9mLMlXOduiT6jkZXbjhfpQdWBwR_Ctik8VfOhDHg4A1AExx3Q85X_3Phhka6Qhx-CWfjV_/w384-h385/bitmap.gif){: .mx-auto.d-block :} *Un Bitmap présentant les capteurs activés sur le terrain.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/bitmap.gif){: .mx-auto.d-block :} *Un Bitmap présentant les capteurs activés sur le terrain.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 9 - Bitfield
 
@@ -251,7 +251,7 @@ Il existe d'autres structures de données probabilistes dans Redis. Elles sont r
 *   **Top-K** : indique les k valeurs les plus fréquentes dans un ensemble de données.
 *   **t-digest** peut indiquer quelle fraction (pourcentage) des valeurs de l'ensemble de données est inférieure à une valeur donnée. Par exemple, vous pouvez utiliser t-digest pour estimer efficacement des percentiles (par exemple, les 50e, 90e et 99e percentiles) lorsque votre entrée est une séquence de mesures (comme la température ou la latence du serveur). Et ce n'est qu'un exemple ; nous en expliquons davantage ci-dessous.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv7bA_UdF1u62w6a9MslvQbNw_pmUeU0SVlyMnWeLg5yOKxCiKgcg77WMxkD8JqcmNyXLWPWhW7s3_L2yMJARZzf_PKL4XzBwxySEeUa0bYCyVqskVfap9KUhdfFoai6SjUB8OpakrUDLHVil7j0wyWVuHowHyj8JFxpBOxCenv4MpUuPHdQnDMnYR/s500/redis-tdigest.webp){: .mx-auto.d-block :} *Redis Bloom (t-digest) calculant les niveaux de confiance.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/redis-tdigest.webp){: .mx-auto.d-block :} *Redis Bloom (t-digest) calculant les niveaux de confiance.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Ces structures de données peuvent être utiles dans plusieurs scénarios : la maintenance prédictive, la surveillance du trafic réseau ou l'analyse de jeux en ligne sont quelques exemples où vous pouvez utiliser les structures de données [RedisBloom](https://redis.io/docs/stack/bloom/).
 

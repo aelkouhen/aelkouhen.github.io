@@ -200,15 +200,15 @@ def load_product_catalog():
           'description': ['Herringbone Brown Classic', 'Herringbone Wool Suit Navy Blue', 'Peaky Blinders Tweed Outfit', 'Cable Knitted Scarf and Bobble Hat', 'ADIDAS Men White Pluto Sports Shoes', 'ADIDAS Unisex White Shoes', 'Nike STAR RUNNER 4', 'Adidas SL 72 Unisex Shoes', 'Adidas Adizero F50 2 M Mens Running Jogging Shoes'],
           'category': ['Suits', 'Suits', 'Suits', 'Hats', 'Shoes', 'Shoes', 'Shoes', 'Shoes', 'Shoes'],
           'image_url': [
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/Mocara_MaxwellFlat_900x.jpg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/393e9315126350d97000721f330aa964.jpg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/6d62ba4de5c73b36d44f6bff05d2457e.jpg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/7185ef5d96833937481c19a47edac96a.jpg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/8cf52572340c3592e5f0ede116a0206f.jpg',
-                'https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/men/b3d19377041615d8a7cf46b96ef67c4c.jpg'
+                '/assets/img/donegal-herringbone-tweed-men_s-jacket.jpeg',
+                '/assets/img/Mens-Herringbone-Tweed-Check-3-Piece-Wool-Suit-Navy-Blue.webp',
+                '/assets/img/Marc-Darcy-Enzo-Mens-Herringbone-Tweed-Check-3-Piece-Suit.jpeg',
+                '/assets/img/Mocara_MaxwellFlat_900x.jpg',
+                '/assets/data/products/men/393e9315126350d97000721f330aa964.jpg',
+                '/assets/data/products/men/6d62ba4de5c73b36d44f6bff05d2457e.jpg',
+                '/assets/data/products/men/7185ef5d96833937481c19a47edac96a.jpg',
+                '/assets/data/products/men/8cf52572340c3592e5f0ede116a0206f.jpg',
+                '/assets/data/products/men/b3d19377041615d8a7cf46b96ef67c4c.jpg'
                 ]
           }
 
@@ -322,7 +322,7 @@ Voici un exemple de création d'une requête qui retourne les trois produits les
 
 ```python
 def create_query_vector():
-  query_image_url = "https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/products/2eca615a43d0098f4bb5fc90004c3678.jpg"
+  query_image_url = "/assets/data/products/2eca615a43d0098f4bb5fc90004c3678.jpg"
   # Resnet-18 to create image embeddings
   image_model = Img2Vec()
   # generate image vector

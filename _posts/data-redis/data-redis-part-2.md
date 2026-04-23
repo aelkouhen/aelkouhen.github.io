@@ -23,11 +23,11 @@ On top of these native data structures, several extensions (called modules) prov
 
 Let's make a recall for the storage levels of abstractions introduced in the Data 101 series. "Storage" means different things to different users. For example, when we talk about storage, some people think about how data is stored physically; some focus on the raw material that holds the storage systems, while others think about the relevant storage system or technology for their use case. All these levels are important attributes of Storage, but they focus on different levels of abstraction.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGmGkc4Erw1sltbtjsyJUWI9vCY3N3di1rMd4wab9VtedKbLXtwd8GDVU0XnuRXvUQjY37N0vwXaUTrsjAQZ29Q9M1ADm_LdmANoLSxEImYJTB9aR2kTg0Azzgv4v7E8I4lab7nYnsXjq4hn6gPcEnLZj_q_q1Y0Sbf1435MuX0N_zO4iU_3Cwo3uy/w511-h746/Storage-redis.png){: .mx-auto.d-block :} *Storage abstractions - Redis Scoped.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/Storage-redis.png){: .mx-auto.d-block :} *Storage abstractions - Redis Scoped.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 To achieve top performance, Redis works in memory. Data is stored and manipulated directly in RAM without disk persistence. Memory is fast and allows Redis to have a very predictable performance. Datasets composed of 10k or 40 million keys will perform similarly. This raw storage support provides faster access to data (at least 1000 times faster than disk access). Pure memory access provides high read and write throughput and low latency. The trade-off is that the dataset cannot be larger than memory.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9DDcu0Rrcjag1Eo_8Tx82kjBvn1nYI7Jqsf3Bpcsv3gmbXq6GLgMrEJtYVVC7Taar1brcWp6UWYr8AyLm2gnNgEIJg2A7UP22zbVvNnwl29gpLYiSe0VnbYfDvaNuw9Bahr586E4jspxPr0AXrUcSWnkgmJW-Gii8wsRa3piHOei2Hb9PRUys5e2i/s574/redis-memory.gif){: .mx-auto.d-block :} *Redis: in-memory performance ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/redis-memory.gif){: .mx-auto.d-block :} *Redis: in-memory performance ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Another reason behind the high performance of Redis is a bit unintuitive. A Redis Instance is primarily single-threaded. Multi-threaded applications require locks or other synchronization mechanisms. They are notoriously hard to reason about. In many applications, the added complexity is bug-prone and sacrifices stability, making it difficult to justify the performance gain. In the case of Redis, the single-threaded code path is easy to understand.
 
@@ -76,7 +76,7 @@ _Client 1_ tries to acquire the lock by setting a key with a unique value and a 
 *   If the key was already set, the `SETNX` command returns 0, indicating that another client already holds the lock. 
     *   In this case, _Client 1_ waits and retries the `SETNX` operation until the other client releases the lock.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDKmegh34geV661MMXSC32qgjPgtPyvHMmJNl5Rs-tIgsuJgtsnhmEOuPLsfXa7phXvJM3oW1yt2wbzLqB4rvhumtuHeL78dnpNgWbD7RiCAZrZMQYlMOtyvvGQNkT7R8U5Y-7jBuMxRsHmdnqI4UwJ8EFBrB182IPCUbdv2j79d40imROTnftGu-e/w531-h555/distributed-lock.png){: .mx-auto.d-block :} *Example of a Distributed Lock implementation.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/distributed-lock.png){: .mx-auto.d-block :} *Example of a Distributed Lock implementation.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 This simple implementation might be good enough for many use cases, but it is not completely fault-tolerant. For production use, many Redis [client libraries](https://redis.io/docs/manual/patterns/distributed-locks/) provide high-quality distributed lock implementation built out of the box.
 
@@ -99,17 +99,17 @@ More sophisticated rate limiters like the leaky bucket algorithm can also be imp
 
 Redis is a delightful way to implement various gaming leaderboards for most games that are not super large-scale. Sorted Sets are the fundamental data structure that enables this. A Sorted Set is a collection of unique elements, each with a score associated with it. The elements are sorted by score. This allows for quick retrieval of the elements by the score in logarithmic time.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjns5YEOXoMSh71kCBCsYXnmuz5TvMJM1UVHVFsAULnbQrDTfNpr_6mtnUX4uH5SXQ9LyXwEtcOpOSCaE0Ah1XYDZzQGAkQ96aPjSt_gNk0i-lXDZIbxAfnP9UsIWU_57qyKFcoaYZmDlb4lg6CCGd1zIQq_UNu5UITPjfxtOSzWl-5FugtuPwQzgNp/w470-h324/redis-leaderboards.gif){: .mx-auto.d-block :} *Redis SortedSets ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/redis-leaderboards.gif){: .mx-auto.d-block :} *Redis SortedSets ©ByteByteGo.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 6 - Message Queue
 
 When you need to store and process an indeterminate series of events/messages, you can consider Redis. In fact, Redis Lists (linked lists of string values) are frequently used to implement _Lists_, _Stacks_, _LIFO queues_, and _FIFO queues_. In addition, Redis also uses the lists to implement Pub/Sub messaging architectures. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhpRjfKrC6UeaRIV29JjbhUQ761YmfvJ2PqFNKdOokrBzqizAdqG5L1IenZW8NRz1UhwPJZAfluv6SVUNuNOLmfledWE8Vkeve5qTfx7aWIAQs5Y1brZO3xuS2bZ7_Z16IWePPNUUo4sCIA62F9TqMPOxhaMS5YwEogk6dtfl0HY9KnjUaacjWI1NxS/w475-h361/queue-stack.gif){: .mx-auto.d-block :} *Push and Pop into/from Redis Lists.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/queue-stack.gif){: .mx-auto.d-block :} *Push and Pop into/from Redis Lists.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 In the publishers/subscribers (**Pub/Sub**) paradigm, senders (publishers) are not programmed to send their messages to specific receivers (subscribers). Instead, published messages are characterized into channels without knowledge of what (if any) subscribers there may be. Likewise, subscribers express interest in one or more channels and only receive messages that are of interest without knowing what (if any) publishers exist. This decoupling of publishers and subscribers enables the communication between different components or systems in a loosely-coupled manner, allowing greater scalability and more dynamic network topology. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhA5drNyq6SwzMepPBF4gER0xxTjVboP3K2D2IO09SpXoltU64m49mbC53mB24D-ZPLlgotZit9WjHSwVtF7O7fR74q-PhBWgH5CJkPIVSuNaSxCatU-zS5fDIRouPk5jg2le5i4MstJy5HJvm0ATmBhRpobyJD4T4yTK0pZc1W1zlmSMtz5J70I9Hv/w461-h334/pubsub.gif){: .mx-auto.d-block :} *Publisher/Subscriber Paradigm.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/pubsub.gif){: .mx-auto.d-block :} *Publisher/Subscriber Paradigm.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Redis also provides a specific data structure, called Redis Streams, that acts like an append-only log. You can use streams to record and simultaneously syndicate events in real-time. Examples of Redis stream use cases include: 
 
@@ -140,7 +140,7 @@ Everything about the system is optimized for traversing through data quickly, wi
 
 Full-text search refers to searching some text content inside extensive text documents and returning results that contain some or all of the words from the query. While traditional databases are great for storing and retrieving general data (exact matching), performing full-text searches has been challenging. This is why Redis created the [RedisJSON](https://redis.io/docs/stack/json) module to store JSON documents natively. This module allowed Redis to store, update, and retrieve all or a few JSON values in a Redis database, similar to any other Redis data type. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEim-JGrqIe9RfloL9QIrMKKgoMQyTey0Z0cDM4FFYiM3tdU2AZe-BJ6G-6zg3IsOUlfgNLh38c2OqUTOBJY7gWjVsFFvgE-xH7XDTgKWTYbAv0jW8y0j6No42UnP2mMiSty8FixBspcYeS7RBabFPe4hzLM5DieVFgyOMwOPXEE7Gg1rXQ2A3MHArH3/w515-h247/google_autocomplete.gif){: .mx-auto.d-block :} *Google Search Engine - Autocompletion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/google_autocomplete.gif){: .mx-auto.d-block :} *Google Search Engine - Autocompletion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 RedisJSON works seamlessly with the [RediSearch](https://redis.io/docs/stack/search) module to create secondary indexes and query JSON documents. In addition, RediSearch enables multi-field queries, aggregation, exact phrase matching, numeric filtering, geo-filtering, and similarity semantic search on top of text queries.
 
@@ -160,7 +160,7 @@ In this section, I'll quickly review the native data structures that help you ad
 
 Redis strings store sequences of bytes, including text, serialized objects, and binary arrays. As such, strings are the most basic Redis data type. They're often used for caching but also support additional functionality that lets you implement atomic counters or locks and perform bitwise operations. Strings combined with TTL and eviction policy are the preferred structure when implementing a cache.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOYbB0GSms2A7LP-JbLmcqAtyH4CVKSCvV1jBTNO6vjjrA_qp_Aql_x1Z_yn3_SxnNNScT7zlv3n7uoLM3Ga0trTbgsgffdgayUEQjULEBH4Ud4ZXnDotFudJWBAz-zo9CAKRnvICWRS90lSbVg99hHDAfe1hAcuItvtONYOwJuT02wZpBYxdYKebz/w395-h102/string.png){: .mx-auto.d-block :} *A Redis String.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/string.png){: .mx-auto.d-block :} *A Redis String.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Most string operations have algorithmic complexity of O(1), which means they're highly efficient. However, be careful with the [SUBSTR](https://redis.io/commands/substr), [GETRANGE](https://redis.io/commands/getrange), and [SETRANGE](https://redis.io/commands/setrange) commands, which can be O(n). These random-access string commands may cause performance issues when dealing with large strings. A single Redis string can be a maximum of 512 MB by default. If you're storing structured data, you may also want to consider Hashes. 
 
@@ -174,7 +174,7 @@ Redis hashes are record-structured types as collections of field-value pairs. Y
 
 A Redis set is an unordered collection of unique strings (members). You can use Redis sets to efficiently track unique items (e.g., track all unique IP addresses accessing a given blog post), represent relations (e.g., the set of all users with a given role), or perform cross-sets operations such as intersection, unions, and differences. The max size of a Redis set is 4,294,967,295 (2<sup>32</sup> - 1) unique members, which means a maximum size of 2,147PB (4,294,967,295 x 512MB) per set. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk4fOdr1lQ7StLvj0T9LCovBnRBNf7cjlX4yXjwVNknTmZxTzzIpDDgkHEViJbmGLBzjq_HQn8ajQ0TbOZgM01t6GV-DLaQXeBHbW-76_pF_VYjOFItvn1ox9jRkFaXJOCU9LMViQxzhzUDTGx3DRmWfwG_x8BDTiHsv2cSr8cR8MZrZ9PAmCTZOWz/s320/set.png){: .mx-auto.d-block :} *A Set of unique elements.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/set.png){: .mx-auto.d-block :} *A Set of unique elements.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Most set operations, including adding, removing, and checking whether an item is a set member, are O(1). This means that they're highly efficient. However, for large sets with hundreds of thousands of members or more, you should exercise caution when running the [SMEMBERS](https://redis.io/commands/smembers) command. This command is O(n) and returns the entire set in a single response. As an alternative, consider the [SSCAN](https://redis.io/commands/sscan), which lets you retrieve all set members iteratively.
 
@@ -188,7 +188,7 @@ Most sorted set operations are O(log(n)), where n is the number of members. You 
 
 Redis sorted sets can easily maintain ordered lists of the highest scores in a massive online game (leaderboards), you can use a sorted set to build a sliding window rate limiter to prevent excessive API requests, and you can use them to store time series, using a timestamp as a score.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4XWLxNrB76siS9pscJ6nLXNbZQQmAwwXqeP4cXIgiw87mG49FkmIWdGxmOIBPpSaTj-44iCuK-T8vJCw7NEq9NzuRm25bsty57hkk97IspsKflVkVnLfhlBikny2CUI4Qs5yiAAvCMywfqVPvZAznN1cQn2wbLWuTtwHivmhfqoMOad9PMBq-S19k/w468-h196/zset.png){: .mx-auto.d-block :} *A Redis Sorted Set (ZSet).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/zset.png){: .mx-auto.d-block :} *A Redis Sorted Set (ZSet).*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 They are also often used as secondary indices for range queries. For example, to get all the customers with a specific name (e.g., "Amine") with ages between 30 and 50. Redis sorted sets are sometimes used for indexing other Redis data structures. If you need to index and query your data, consider [RediSearch](https://redis.io/docs/stack/search) and [RedisJSON](https://redis.io/docs/stack/json).
 
@@ -226,7 +226,7 @@ This data structure is not really a new native data structure but a derived data
 
 Another derivative data structure in Redis is the Bitmap. Redis bitmaps are an extension of the string data type that lets you treat a string like a bit vector. You can also perform bitwise operations on one or more strings, such as AND, OR, and XOR. For example, suppose you have 100 movement sensors deployed in a field labeled 0-99. You want to quickly determine whether a given sensor has detected a movement within the hour. All you can do is create a bitmap with a key for each hour and let the sensors set it with their ID when they capture a movement. Then, you can simply see which sensor was pinging in your field by displaying the bitmap.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7_tO_lRIm07tRXSr6nyvwFc8ZJcxV-BQihfWlREn4ngD_cLMNkIdouCipcgihwtRr0FwrvUjc3YU_bjxMRbmTXaKFFyhR9LGZ67d9nQCg1LqWcPAlwg9mLMlXOduiT6jkZXbjhfpQdWBwR_Ctik8VfOhDHg4A1AExx3Q85X_3Phhka6Qhx-CWfjV_/w384-h385/bitmap.gif){: .mx-auto.d-block :} *A Bitmap presenting the activated sensors in the field.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/bitmap.gif){: .mx-auto.d-block :} *A Bitmap presenting the activated sensors in the field.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### 9 - Bitfield
 
@@ -252,7 +252,7 @@ There exist other probabilistic data structures in Redis. They are grouped in a 
 *   **Top-K**: indicates the top k most frequent values in a dataset.
 *   **t-digest** can indicate which fraction (percentage) of the dataset values are smaller than a given value. For example, you can use t-digest to efficiently estimate percentiles (e.g., the 50th, 90th, and 99th percentile) when your input is a sequence of measurements (such as temperature or server latency). And that’s just one example; we explain more of them below.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv7bA_UdF1u62w6a9MslvQbNw_pmUeU0SVlyMnWeLg5yOKxCiKgcg77WMxkD8JqcmNyXLWPWhW7s3_L2yMJARZzf_PKL4XzBwxySEeUa0bYCyVqskVfap9KUhdfFoai6SjUB8OpakrUDLHVil7j0wyWVuHowHyj8JFxpBOxCenv4MpUuPHdQnDMnYR/s500/redis-tdigest.webp){: .mx-auto.d-block :} *Redis Bloom (t-digest) calculating confidence levels.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+![](/assets/img/redis-tdigest.webp){: .mx-auto.d-block :} *Redis Bloom (t-digest) calculating confidence levels.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 These data structures may help in several scenarios: predictive maintenance, network traffic monitoring, or online gaming analysis are a few examples where you can use [RedisBloom](https://redis.io/docs/stack/bloom/) data structures. 
 

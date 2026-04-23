@@ -203,7 +203,7 @@ Redis combine la puissance de la recherche de données structurées, semi-struct
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijyUOfN5IwNumywSWITsni0TSaci-t8CCStq5WXkY0blxY-p0uR0bB-wTcsjY9Ch8AGQFUGg1Ai1T_o1Oh4mw8V7LV-CDE-E0TsVw3O3LzMxl2TmcWiD07N3Gi-EBWlLN6zac_zFBj-3idgM2wMUe7Mt6d1yRkXhETXvsTBRzQK1bVQtLXN9xKsBr5WnE){: .mx-auto.d-block :} *Implémentation de systèmes de recommandation avec Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-Les instructions ci-dessus sont un bref aperçu pour démontrer les éléments de base de la Recherche par Similarité Vectorielle avec Redis. Vous pouvez l'essayer avec le notebook référencé ici : [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/2bis- Hybrid Search.ipynb)
+Les instructions ci-dessus sont un bref aperçu pour démontrer les éléments de base de la Recherche par Similarité Vectorielle avec Redis. Vous pouvez l'essayer avec le notebook référencé ici : [![Open In Colab](/assets/img/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/2bis- Hybrid Search.ipynb)
 
 # Résumé
 

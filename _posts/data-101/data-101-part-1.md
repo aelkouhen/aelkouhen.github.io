@@ -44,7 +44,7 @@ Data can be classified differently depending on the chosen perspective (by value
 
 Statistically, qualitative variables must be transformed into dummy variables before any analysis. For example, we could artificially assign numbers to categories. For instance, if your categories are colors, we could give the number 1 to red and 2 to blue, but these do not have meaning in a mathematical sense. We would not conclude that blue is twice as much as red is!  
 
-![Types of Data](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhB4XSG8o7jUbM0mIN_YpuJLdlMrnhoyxtXKViW9H1f0nHxm1vejVSbZnpRBV1WjeLtx2AhLWZGy1kXi54pvHSyeU7DSxZejyFNBbZGrVK2g4odUMpWNEipzoAesnJxygY4evJu1v_DtYEEHThH8c8VoLIRETthnbzNJpCX3KPEJxIP565cbwz743tX/w453-h437/Type_Data.png){: .mx-auto.d-block :} *Types of Data*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![Types of Data](/assets/img/Type_Data.png){: .mx-auto.d-block :} *Types of Data*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 ## Impact of Data
 
@@ -77,7 +77,7 @@ In marketing, subject-matter experts (SME) started to use two additional charact
 *   **_Variability:_** a measure of the variation in the values within each variant of data. This concept is related to the context of data and the meaning given to it. In an organization, the meaning can constantly change, significantly impacting data homogenization. This concept differs from a variety: Imagine a coffee shop that offers six different blends of coffee (this is Variety), but if you get the same blend every day. It tastes different every day; that is variability.
 *   **_Visualization:_** Visualization is critical in today’s world. Using charts and graphs to visualize large amounts of complex data is much more effective in conveying meaning than raw data in spreadsheets chock-full numbers and formulas.
 
-![7 V's of Data](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimY0UCmJbBGvTnlFSbKWX0NgDN3e43c5uMFiOlbYBjupnLDU_ByNdnHMKTacfs8WhbPUQ-sfO98RCBSs_-PXjdASJDkhCsQkIV7_SWyHCsmuUPOaUobxCcnV2Z37tzIGFopLBDzvfBbuCJPXwE8xqV7F_K33hyMfvh9BriT-4DJVYSZza2_CrNI-z0/w442-h429/7V.png){: .mx-auto.d-block :} *7 V's of Data*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
+![7 V's of Data](/assets/img/7V.png){: .mx-auto.d-block :} *7 V's of Data*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}   
 
 ## Summary
 

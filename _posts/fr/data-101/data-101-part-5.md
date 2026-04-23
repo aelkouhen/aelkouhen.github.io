@@ -30,7 +30,7 @@ Dans cette étape, les données brutes sont extraites d'une ou plusieurs sources
 
 La couche d'ingestion peut être décomposée en trois sous-couches :
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg98V1tem2vRj1Gc3uGaQJDyNo_lZI6BM_EYhb4tl529hbakML9WxFIPUs_CBIYcHgZRr6ktf40t7FDE5_jrcjWipro7HN81CRDTdypMxYDFAm9rmkPe_4nis46FppNcqM-cMRLZnww1gZDAdlSiGlxrbHFEtJSzUKy_imddfiJwpeOc64dGtLumqH4/w361-h453/ingestion-layer.png){: .mx-auto.d-block :} *Couche d'ingestion ©SWIRLAI.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/ingestion-layer.png){: .mx-auto.d-block :} *Couche d'ingestion ©SWIRLAI.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 ### 1 - Sources de données
 
@@ -52,7 +52,7 @@ Nous nous concentrons ici sur les différentes sources de données depuis lesque
 
 La caractéristique la plus importante de cette sous-couche reste la vélocité des données. En fait, les données se présentent sous deux formes : bornées et non bornées. Les données non bornées sont les données telles qu'elles existent dans la réalité, au fur et à mesure que les événements se produisent, de manière sporadique ou continue, en cours et en flux. Les données bornées sont une façon commode de regrouper les données sur une certaine limite, comme le temps.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfoWhDNhBVSKvvTPdWGG_dmuCdf1IRIPO6i3_0fNX4J1MRdoVUIfnvDxKtC5-KZsWD8yVits0ytaFMAecaYoI6eebO_iN18o_yetMK1l4W_TG3AbGXd-hVTx-6pjcNsFwlCNnSdu9WS1Ru8oiF_Y5rWmXTqFluuRU8IixJnsjwLWXWn8QXLGus3s8-/w373-h333/bounded_unbounded.png){: .mx-auto.d-block :} *Données bornées vs. données non bornées.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/bounded_unbounded.png){: .mx-auto.d-block :} *Données bornées vs. données non bornées.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 Toutes les données sont non bornées jusqu'à ce qu'elles soient bornées. En effet, les processus métier ont longtemps imposé des limites artificielles aux données en découpant des lots discrets. N'oubliez pas le vrai caractère non borné de vos données ; les systèmes d'ingestion en streaming sont simplement un outil pour préserver la nature non bornée des données afin que les étapes suivantes du cycle de vie puissent également les traiter en continu.
 
@@ -96,7 +96,7 @@ Lors de l'ingestion des données, assurez-vous que votre destination peut désé
 
 Bien que la plupart des outils d'ingestion puissent gérer un volume élevé de données avec une large gamme de formats (structurés, non structurés...), ils diffèrent dans leur capacité à gérer la vélocité des données. En conséquence, nous distinguons souvent trois catégories principales de mouvement des données : basé sur les lots (batch), en temps réel ou basé sur les flux (stream), et hybride.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjT-eVXe6tYthglvjfCcQkzm6cKW_QBIAocbWokf5A5c6yS3PNpT0cwDwcv2g1EfI672oj053EV3er1sLwZmPCcJoVK4F-sEfWYkkqb3xVwvUl6UiQ7pNgU_k9gVB-DZAm8Zy06F_lgqydmNxKogZ7mfU2Mf1JaMaA_5UbTQENLgoDKwbAcjzHKTlp2/w463-h459/Ingestion.png){: .mx-auto.d-block :} *Types de mouvement des données.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/Ingestion.png){: .mx-auto.d-block :} *Types de mouvement des données.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 #### A. Mouvement des données par lots (Batch)
 
@@ -104,7 +104,7 @@ Le mouvement des données par lots est le processus de collecte et de transfert 
 
 L'ingestion par lots à intervalles de temps est répandue dans l'ETL traditionnel pour le data warehousing. Ce pattern est souvent utilisé pour traiter les données une fois par jour, la nuit pendant les heures creuses, pour fournir des rapports quotidiens, mais d'autres fréquences peuvent également être utilisées.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhTcyv67zUfiDSCJWXRUmuLuxJICIsRvA0Oa0ID5YDrbFmLLSdXJU5ssEj6SKD2BqOPCDDt6u3OwHmwy_FPLait5kNcGhy_3uexziT4ocgrCKvpN0dwcntP0kyEBJiSObOryf2Dax5bdXWBjI884CaRU870HDnxEpFmqjObrQn59_YJKLujB05Y-Gg6/w430-h433/batch-time-size.png){: .mx-auto.d-block :} *Ingestion par lots : intervalle de temps vs. taille.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/batch-time-size.png){: .mx-auto.d-block :} *Ingestion par lots : intervalle de temps vs. taille.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 L'ingestion par lots basée sur la taille est assez courante lorsque des données sont déplacées d'un système de streaming vers un stockage d'objets ; en fin de compte, vous devez découper les données en blocs discrets pour un traitement futur dans un data lake. Certains systèmes d'ingestion basés sur la taille peuvent diviser les données en objets selon divers critères, tels que la taille en octets du nombre total d'événements.
 

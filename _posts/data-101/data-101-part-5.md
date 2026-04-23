@@ -29,7 +29,7 @@ In this stage, raw data are extracted from one or more data sources, replicated,
 
 The ingestion layer can be decomposed into three sub-layers: 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg98V1tem2vRj1Gc3uGaQJDyNo_lZI6BM_EYhb4tl529hbakML9WxFIPUs_CBIYcHgZRr6ktf40t7FDE5_jrcjWipro7HN81CRDTdypMxYDFAm9rmkPe_4nis46FppNcqM-cMRLZnww1gZDAdlSiGlxrbHFEtJSzUKy_imddfiJwpeOc64dGtLumqH4/w361-h453/ingestion-layer.png){: .mx-auto.d-block :} *Ingestion Layer ©SWIRLAI.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/ingestion-layer.png){: .mx-auto.d-block :} *Ingestion Layer ©SWIRLAI.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 ### 1 - Data sources
 
@@ -51,7 +51,7 @@ Here, we focus on different data sources you can ingest data. Although I will ci
 
 The most important characteristic of this sub-layer is still the data velocity. In fact, data comes in two forms: bounded and unbounded. Unbounded data is data as it exists in reality, as events happen, either sporadically or continuously, ongoing and flowing. Bounded data is a convenient way of bucketing data across some boundary, such as time. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfoWhDNhBVSKvvTPdWGG_dmuCdf1IRIPO6i3_0fNX4J1MRdoVUIfnvDxKtC5-KZsWD8yVits0ytaFMAecaYoI6eebO_iN18o_yetMK1l4W_TG3AbGXd-hVTx-6pjcNsFwlCNnSdu9WS1Ru8oiF_Y5rWmXTqFluuRU8IixJnsjwLWXWn8QXLGus3s8-/w373-h333/bounded_unbounded.png){: .mx-auto.d-block :} *Bounded vs. Unbounded data.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
+![](/assets/img/bounded_unbounded.png){: .mx-auto.d-block :} *Bounded vs. Unbounded data.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
 All data is unbounded until it’s bounded. Indeed, Business processes have long imposed artificial bounds on data by cutting discrete batches. Remember the true unboundedness of your data; streaming ingestion systems are simply a tool for preserving the unbounded nature of data so that subsequent steps in the lifecycle can also process it continuously.
 
@@ -95,7 +95,7 @@ When ingesting data, ensure that your destination can deserialize the data it re
 
 While most ingestion tools can handle a high volume of data with a wide range of formats (structured, unstructured...), they differ in handling the data velocity. As a result, we often distinguish three main categories of data movement: batch-based, real-time or stream-based, and hybrid. 
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjT-eVXe6tYthglvjfCcQkzm6cKW_QBIAocbWokf5A5c6yS3PNpT0cwDwcv2g1EfI672oj053EV3er1sLwZmPCcJoVK4F-sEfWYkkqb3xVwvUl6UiQ7pNgU_k9gVB-DZAm8Zy06F_lgqydmNxKogZ7mfU2Mf1JaMaA_5UbTQENLgoDKwbAcjzHKTlp2/w463-h459/Ingestion.png){: .mx-auto.d-block :} *Data movement types.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/Ingestion.png){: .mx-auto.d-block :} *Data movement types.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 #### A. Batch-based data movement
 
@@ -103,7 +103,7 @@ Batch-based data movement is the process of collecting and transferring data in 
 
 Time-interval batch ingestion is widespread in traditional business ETL for data warehousing. This pattern is often used to process data once a day, overnight during off-hours, to provide daily reporting, but other frequencies can also be used.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhTcyv67zUfiDSCJWXRUmuLuxJICIsRvA0Oa0ID5YDrbFmLLSdXJU5ssEj6SKD2BqOPCDDt6u3OwHmwy_FPLait5kNcGhy_3uexziT4ocgrCKvpN0dwcntP0kyEBJiSObOryf2Dax5bdXWBjI884CaRU870HDnxEpFmqjObrQn59_YJKLujB05Y-Gg6/w430-h433/batch-time-size.png){: .mx-auto.d-block :} *Time-interval vs. Size-based batch ingestion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
+![](/assets/img/batch-time-size.png){: .mx-auto.d-block :} *Time-interval vs. Size-based batch ingestion.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
 Size-based batch ingestion is quite common when data is moved from a streaming-based system into object storage; ultimately, you must cut the data into discrete blocks for future processing in a data lake. Some size-based ingestion systems can break data into objects based on various criteria, such as the size in bytes of the total number of events.
 

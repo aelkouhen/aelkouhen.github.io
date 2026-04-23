@@ -165,7 +165,7 @@ En exécutant ce calcul entre notre vecteur de requête et les trois autres vect
 
 Comme vous l'avez peut-être supposé, `That is a happy boy` est la phrase la plus similaire à `That is a very happy person` et `That is a happy girl`, et très éloignée de `I love dogs`. Cet exemple ne capture qu'un des nombreux cas d'utilisation possibles pour les embeddings vectoriels : la _Recherche par Similarité Sémantique_.
 
-Les instructions ci-dessus sont un bref aperçu pour démontrer les éléments de base de la Recherche par Similarité Vectorielle avec Redis. Vous pouvez l'essayer avec le notebook référencé ici : [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search.ipynb)
+Les instructions ci-dessus sont un bref aperçu pour démontrer les éléments de base de la Recherche par Similarité Vectorielle avec Redis. Vous pouvez l'essayer avec le notebook référencé ici : [![Open In Colab](/assets/img/colab-badge.svg)](https://github.com/aelkouhen/redis-vss/blob/main/1-%20Text%20Vector%20Search.ipynb)
 
 Restez à l'écoute pour les prochains articles qui parleront des capacités avancées de Redis et du VSS.
 
