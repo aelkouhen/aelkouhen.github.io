@@ -39,17 +39,39 @@ DBOS is a Python and TypeScript library that decorates ordinary functions with d
 
 ## Architecture
 
-DBOS manages three categories of tables in the system database:
+DBOS is implemented entirely as an open-source library embedded in your application — there is no orchestration server and no external dependencies except a PostgreSQL-compatible database. While your application runs, DBOS checkpoints workflow and step state to that database. On failure, it uses those checkpoints to resume each workflow from the last completed step.
 
-<img src="/assets/img/dbos-schema.png" alt="DBOS system database schema" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**DBOS system database schema: workflow state lives in your database, not in a separate service**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+### Checkpointing model
 
-- **Workflow status table**: one row per workflow execution, tracking ID, status, and function inputs
-- **Operation outputs table**: one row per completed step, storing the serialised return value for replay
-- **Events table**: named key-value pairs published within workflows and consumed via `get_event`
+Every workflow execution produces a fixed number of database writes regardless of complexity:
 
-When a process crashes and restarts, DBOS replays the workflow function against the saved step outputs. Any step whose result is already in the database is **skipped instantly**; only incomplete steps are re-executed. The result is exactly-once execution semantics without a dedicated orchestration service.
+- **One write at workflow start**: inputs are persisted before any step runs
+- **One write per completed step**: the step's return value is stored so replay can skip it
+- **One write at workflow end**: the final status is committed
+
+Write sizes are proportional to your inputs and outputs. For large payloads (files, embeddings), the recommended pattern is to store them externally (e.g., S3) and have steps return pointers only.
+
+### Distributed deployment
+
+DBOS scales naturally to a fleet of servers. All application servers connect to the **same system database** — this is the only coordination point. By default, each workflow runs on a single server; durable queues distribute work across the fleet with configurable rate and concurrency limits.
+
+For multi-application setups (e.g., an API server, a data-ingestion service, and an AI agent loop), each application connects to its own isolated system database. A single physical database host can serve multiple system databases. The **DBOS Client** lets external code enqueue jobs and monitor results across application boundaries.
+
+### Workflow recovery
+
+When a process crashes, DBOS detects incomplete workflows and replays them in three steps:
+
+1. **Detection** — at startup, DBOS scans for pending workflows. In distributed deployments, Conductor coordinates detection across the fleet.
+2. **Restart** — each interrupted workflow is called again with its original checkpointed inputs.
+3. **Resume** — as the workflow re-executes, every step whose output is already checkpointed is skipped instantly. Execution resumes from the first un-checkpointed step.
+
+Two requirements for safe recovery:
+- **Determinism**: the workflow function must produce the same steps in the same order given the same inputs. Non-deterministic operations (DB access, API calls, random numbers, timestamps) must live inside `@DBOS.step()` decorators, never directly in the workflow body.
+- **Idempotency**: steps may be retried on recovery and must be safe to re-execute.
+
+### Conductor (optional)
+
+For production deployments, DBOS recommends connecting to **Conductor** — a management service that adds distributed recovery coordination, workflow dashboards, and queue observability. Conductor is architecturally off the critical path: each server opens an outbound websocket connection to it, and if the connection drops the application continues operating normally. Conductor has no direct access to your database and is never involved in workflow execution itself.
 
 ---
 
@@ -61,6 +83,16 @@ DBOS uses the PostgreSQL wire protocol, so it connects to CockroachDB directly w
 - **Multi-region active-active replication**: workflow state is durable across data-center failures without manual intervention
 - **Horizontal scalability**: the system database scales with your application without re-sharding
 - **Automatic failover**: CockroachDB node failures are transparent to DBOS, which simply retries on the next available node
+
+When DBOS connects to CockroachDB, it provisions three categories of tables in the system database:
+
+<img src="/assets/img/dbos-schema.png" alt="DBOS system database schema in CockroachDB" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Tables created by DBOS in CockroachDB: workflow state, step outputs, and events — all in your existing database**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+- **Workflow status table**: one row per execution, tracking ID, status, and function inputs
+- **Operation outputs table**: one row per completed step, storing the serialised return value for replay
+- **Events table**: named key-value pairs published within workflows and consumed via `get_event`
 
 For teams that want globally resilient agentic workflows without the complexity of a Temporal cluster, DBOS + CockroachDB is the lowest-overhead path.
 
@@ -231,4 +263,4 @@ The two configuration changes (`use_listen_notify: False` and a CockroachDB conn
 - [DBOS Python Workflow Tutorial](https://docs.dbos.dev/python/tutorials/workflow-tutorial)
 - [CockroachDB Cloud](https://cockroachlabs.cloud/)
 - [CockroachDB Distributed SQL](https://www.cockroachlabs.com/blog/what-is-distributed-sql/)
-- [Temporal + CockroachDB: Cluster-Based Durable Execution](/2026-04-23-temporal-cockroachdb/)
+- [Temporal + CockroachDB: Cluster-Based Durable Execution](/2026-04-24-temporal-cockroachdb/)
