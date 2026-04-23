@@ -1,9 +1,8 @@
 """
-Charts v5: real DBOS workflow benchmark on 3× m7i.8xlarge (96 vCPU).
-1. CockroachDB-only throughput scaling (c=1..512)
-2. CockroachDB-only latency profile (p50 / p95)
-3. Per-vCPU bar — co-located workflow estimate vs PG raw-write ceiling
-4. Scale-out line — CRDB linear vs PG hard ceiling
+Charts v5: real co-located DBOS workflow benchmark — 3× m7i.8xlarge (96 vCPU), us-east-1.
+1. Throughput vs concurrency (c=1..512)
+2. Latency profile p50/p95 (c=1..512)
+3. Per-node linear scale-out projection vs PG WAL ceiling
 """
 import json, matplotlib
 matplotlib.use("Agg")
@@ -17,19 +16,19 @@ ASSET_DIR = f"{BLOG_ROOT}/assets/bench/dbos-cockroachdb"
 import os
 os.makedirs(ASSET_DIR, exist_ok=True)
 
-with open("/tmp/dbos-bench/results_direct.json") as f:
-    direct = json.load(f)
+with open("/tmp/dbos-bench/results_coloc.json") as f:
+    data = json.load(f)
 
-wfs   = sorted(direct["workflows"], key=lambda x: x["concurrency"])
-conc  = [r["concurrency"] for r in wfs]
-tput  = [r["throughput"]  for r in wfs]
-p50   = [r["p50"]         for r in wfs]
-p95   = [r["p95"]         for r in wfs]
+wfs  = sorted(data["workflows"], key=lambda x: x["concurrency"])
+conc = [r["concurrency"] for r in wfs]
+tput = [r["throughput"]  for r in wfs]
+p50  = [r["p50"]         for r in wfs]
+p95  = [r["p95"]         for r in wfs]
 
-CRDB  = "#0055FF"
-PG    = "#FF6B35"
-GRID  = "#E8E8E8"
-BG    = "#FAFAFA"
+CRDB = "#0055FF"
+PG   = "#FF6B35"
+GRID = "#E8E8E8"
+BG   = "#FAFAFA"
 
 plt.rcParams.update({
     "font.family": "sans-serif",
@@ -40,42 +39,32 @@ plt.rcParams.update({
     "grid.linewidth": 0.8,
 })
 
-# ── Derived numbers ────────────────────────────────────────────────────────
-CRDB_VCPU       = 96                     # 3× m7i.8xlarge
-PEAK_WAN        = max(tput)              # 32.7 wf/s
-WAN_P50_MS      = p50[0]                 # ~3,525 ms at c=1
-COLOC_P50_MS    = 10.0                   # ~10 ms co-located (2-step DBOS workflow)
-WAN_FACTOR      = WAN_P50_MS / COLOC_P50_MS
-COLOC_PEAK      = PEAK_WAN * WAN_FACTOR  # ~11,500 wf/s co-located on 96 vCPU
-CRDB_PER_VCPU   = COLOC_PEAK / CRDB_VCPU
+PEAK        = max(tput)               # 116.6 wf/s
+PEAK_IDX    = tput.index(PEAK)
+NODES       = 3
+PER_NODE    = PEAK / NODES            # ~38.9 wf/s per node
 
-# PG reference: 144K raw writes/s on 96 vCPU; each 2-step DBOS workflow ≈ 7 writes
-PG_RAW_WS       = 144_000
-WF_WRITES       = 7
-PG_WF_PEAK      = PG_RAW_WS / WF_WRITES  # ~20,571 wf/s
-PG_PER_VCPU     = PG_WF_PEAK / CRDB_VCPU  # ~214 wf/s per vCPU — single-node ceiling
-
-# ── Chart 1: CockroachDB throughput vs concurrency ────────────────────────
+# ── Chart 1: Throughput vs concurrency ───────────────────────────────────
 fig, ax = plt.subplots(figsize=(9, 5), facecolor=BG)
 ax.set_facecolor(BG)
 
 ideal = [tput[0] * c for c in conc]
 ax.plot(conc, ideal, "--", color="#BBBBBB", linewidth=1.5, label="Ideal linear scaling")
 ax.plot(conc, tput,  "o-", color=CRDB,     linewidth=2.5, markersize=7,
-        label="CockroachDB 3-node (measured, direct IPs)")
+        label="CockroachDB 3-node (co-located, direct IPs)")
 
-peak_idx = tput.index(PEAK_WAN)
-ax.annotate(f"Peak: {PEAK_WAN:.0f} wf/s\n(c={conc[peak_idx]})",
-            xy=(conc[peak_idx], PEAK_WAN),
-            xytext=(conc[peak_idx] - 130, PEAK_WAN * 0.82),
-            fontsize=9, color=CRDB,
-            arrowprops=dict(arrowstyle="->", color=CRDB, lw=1.2))
+ax.annotate(
+    f"Peak: {PEAK:.0f} wf/s\n(c={conc[PEAK_IDX]}, p50={p50[PEAK_IDX]:.0f}ms)",
+    xy=(conc[PEAK_IDX], PEAK),
+    xytext=(conc[PEAK_IDX] - 140, PEAK * 0.82),
+    fontsize=9, color=CRDB,
+    arrowprops=dict(arrowstyle="->", color=CRDB, lw=1.2))
 
 ax.set_xlabel("Concurrent workflows", fontsize=12)
 ax.set_ylabel("Workflows / second", fontsize=12)
 ax.set_title(
     "CockroachDB: DBOS Workflow Throughput vs. Concurrency (c=1 to c=512)\n"
-    "Measured over WAN — 3-node 96-vCPU cluster, direct node connections",
+    "Co-located in AWS us-east-1 — 3-node 96-vCPU cluster, round-robin direct connections",
     fontsize=12, pad=14)
 ax.set_xticks(conc)
 ax.tick_params(axis='x', rotation=45)
@@ -86,7 +75,7 @@ for dest in [f"/tmp/dbos-bench/dbos-bench-crdb-throughput.png",
     fig.savefig(dest, dpi=150, bbox_inches="tight")
 plt.close()
 
-# ── Chart 2: CockroachDB latency profile ──────────────────────────────────
+# ── Chart 2: Latency profile ──────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(9, 5), facecolor=BG)
 ax.set_facecolor(BG)
 
@@ -98,7 +87,7 @@ ax.set_xlabel("Concurrent workflows", fontsize=12)
 ax.set_ylabel("End-to-end latency (ms)", fontsize=12)
 ax.set_title(
     "CockroachDB DBOS Workflow Latency Under Load (c=1 to c=512)\n"
-    "WAN measurements (~3,500ms floor) — co-located deployments see single-digit ms p50",
+    "Co-located in AWS us-east-1 — p50 rises as queue builds beyond cluster capacity",
     fontsize=12, pad=14)
 ax.set_xticks(conc)
 ax.tick_params(axis='x', rotation=45)
@@ -110,72 +99,49 @@ for dest in [f"/tmp/dbos-bench/dbos-bench-crdb-latency.png",
     fig.savefig(dest, dpi=150, bbox_inches="tight")
 plt.close()
 
-# ── Chart 3: Per-vCPU bar — CRDB co-located estimate vs PG ceiling ────────
-fig, ax = plt.subplots(figsize=(7, 5), facecolor=BG)
-ax.set_facecolor(BG)
-
-labels = [
-    "PostgreSQL\ndb.m7i.24xlarge\n(96 vCPU, single node)\n[ceiling]",
-    "CockroachDB\n3× m7i.8xlarge\n(96 vCPU, 3 nodes)\n[co-located est.]",
-]
-vals = [PG_PER_VCPU, CRDB_PER_VCPU]
-bars = ax.bar(labels, vals, color=[PG, CRDB], width=0.45, zorder=3)
-for bar, val in zip(bars, vals):
-    ax.text(bar.get_x() + bar.get_width() / 2, val + 1,
-            f"{val:,.0f} wf/s", ha="center", va="bottom", fontsize=13, fontweight="bold")
-
-ax.set_ylabel("DBOS workflows per second per vCPU", fontsize=11)
-ax.set_title(
-    "DBOS Workflow Throughput per vCPU\n"
-    "CockroachDB co-located estimate vs PostgreSQL single-node ceiling",
-    fontsize=12, pad=14)
-ax.set_ylim(0, max(vals) * 1.3)
-ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
-ax.tick_params(axis='x', length=0)
-fig.tight_layout()
-for dest in [f"/tmp/dbos-bench/dbos-bench-per-vcpu.png",
-             f"{ASSET_DIR}/dbos-bench-per-vcpu.png"]:
-    fig.savefig(dest, dpi=150, bbox_inches="tight")
-plt.close()
-
-# ── Chart 4: Scale-out — CRDB linear vs PG hard ceiling ───────────────────
-vcpu_range = np.linspace(0, 384, 400)
-crdb_line  = CRDB_PER_VCPU * vcpu_range
-pg_ceiling = PG_WF_PEAK   # single-node max
+# ── Chart 3: CockroachDB linear scale-out projection ─────────────────────
+# Show measured point + extrapolation up to 30 nodes.
+# PG annotation: architectural note only (no fabricated wf/s number).
+MAX_NODES  = 30
+node_range = np.linspace(0, MAX_NODES, 200)
+crdb_line  = PER_NODE * node_range
 
 fig, ax = plt.subplots(figsize=(9, 5), facecolor=BG)
 ax.set_facecolor(BG)
 
-ax.axhline(pg_ceiling, color=PG, linestyle="--", linewidth=2, alpha=0.85,
-           label=f"PostgreSQL ceiling — {pg_ceiling:,.0f} wf/s\n(single WAL; adding hardware doesn't help)")
-ax.plot(vcpu_range, crdb_line, color=CRDB, linewidth=2.5,
-        label="CockroachDB — linear scale-out\n(distributed Raft; add nodes, gain throughput)")
+ax.plot(node_range, crdb_line, color=CRDB, linewidth=2.5,
+        label=f"CockroachDB linear scale-out (~{PER_NODE:.0f} wf/s per node added)")
 
-ax.scatter([CRDB_VCPU], [COLOC_PEAK], color=CRDB, s=90, zorder=5)
+# Projected milestones
+for n, label in [(6, "6 nodes\n~234 wf/s"), (12, "12 nodes\n~467 wf/s"), (24, "24 nodes\n~934 wf/s")]:
+    y = PER_NODE * n
+    ax.scatter([n], [y], color=CRDB, s=60, zorder=5, alpha=0.6)
+    ax.annotate(label, xy=(n, y), xytext=(n + 0.5, y - 40),
+                fontsize=8, color=CRDB, alpha=0.8)
+
+# Mark measured point
+ax.scatter([NODES], [PEAK], color=CRDB, s=110, zorder=6)
 ax.annotate(
-    f"Measured (co-located est.)\n{COLOC_PEAK:,.0f} wf/s\n({CRDB_VCPU} vCPU)",
-    xy=(CRDB_VCPU, COLOC_PEAK),
-    xytext=(CRDB_VCPU + 30, COLOC_PEAK + 5_000),
-    fontsize=9, color=CRDB,
-    arrowprops=dict(arrowstyle="->", color=CRDB, lw=1.1))
+    f"★ Measured\n{PEAK:.0f} wf/s\n({NODES} nodes, 96 vCPU)",
+    xy=(NODES, PEAK),
+    xytext=(NODES + 2, PEAK + 50),
+    fontsize=10, color=CRDB, fontweight="bold",
+    arrowprops=dict(arrowstyle="->", color=CRDB, lw=1.2))
 
-pg_eq_vcpu = pg_ceiling / CRDB_PER_VCPU
-ax.scatter([pg_eq_vcpu], [pg_ceiling], color=CRDB, s=90, zorder=5)
-ax.annotate(
-    f"CRDB reaches PG ceiling\nat {pg_eq_vcpu:.0f} vCPU, then keeps going",
-    xy=(pg_eq_vcpu, pg_ceiling),
-    xytext=(pg_eq_vcpu + 20, pg_ceiling - 8_000),
-    fontsize=9, color=CRDB,
-    arrowprops=dict(arrowstyle="->", color=CRDB, lw=1.1))
+# PG annotation: can't scale out at all
+ax.text(MAX_NODES * 0.6, PER_NODE * MAX_NODES * 0.15,
+        "PostgreSQL: write-ahead log is a single-node\nbottleneck — adding hardware beyond one\ninstance doesn't increase write throughput.",
+        fontsize=9, color=PG,
+        bbox=dict(boxstyle="round,pad=0.4", facecolor="#FFF3EE", edgecolor=PG, alpha=0.9))
 
-ax.set_xlabel("Total vCPU", fontsize=12)
+ax.set_xlabel("CockroachDB nodes", fontsize=12)
 ax.set_ylabel("DBOS Workflows / second", fontsize=12)
 ax.set_title(
-    "CockroachDB Scales Linearly — PostgreSQL Hits a Hard Ceiling\n"
-    "PostgreSQL WAL is a single-node bottleneck; CockroachDB Raft distributes across nodes",
+    "CockroachDB: Linear Throughput Scale-Out (Measured + Projected)\n"
+    "3-node baseline measured at 117 wf/s — each additional node adds ~39 wf/s",
     fontsize=12, pad=14)
-ax.set_xlim(0, 384)
-ax.set_ylim(0, CRDB_PER_VCPU * 384 * 1.05)
+ax.set_xlim(0, MAX_NODES)
+ax.set_ylim(0, PER_NODE * MAX_NODES * 1.08)
 ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f"{int(x):,}"))
 ax.legend(fontsize=10, loc="upper left")
 fig.tight_layout()
@@ -184,12 +150,8 @@ for dest in [f"/tmp/dbos-bench/dbos-bench-linear-vs-ceiling.png",
     fig.savefig(dest, dpi=150, bbox_inches="tight")
 plt.close()
 
-print("4 charts saved to /tmp/dbos-bench/ and assets/bench/dbos-cockroachdb/")
-print(f"\nKey numbers (3× m7i.8xlarge, 96 vCPU):")
-print(f"  WAN peak            : {PEAK_WAN:.1f} wf/s at c={conc[peak_idx]}")
-print(f"  WAN p50 (c=1)       : {WAN_P50_MS:.0f} ms")
-print(f"  WAN factor          : {WAN_FACTOR:.0f}×  ({WAN_P50_MS:.0f}ms / {COLOC_P50_MS:.0f}ms co-located)")
-print(f"  Co-located peak est : {COLOC_PEAK:,.0f} wf/s on {CRDB_VCPU} vCPU")
-print(f"  CRDB per vCPU       : {CRDB_PER_VCPU:,.0f} wf/s")
-print(f"  PG per vCPU (est.)  : {PG_PER_VCPU:,.0f} wf/s  (144K raw writes / 7 / 96 vCPU)")
-print(f"  PG ceiling          : {pg_ceiling:,.0f} wf/s  (hard — single WAL)")
+print("3 charts saved.")
+print(f"\nKey numbers (co-located, 3× m7i.8xlarge, 96 vCPU):")
+print(f"  Peak throughput     : {PEAK:.1f} wf/s  (c={conc[PEAK_IDX]})")
+print(f"  Best p50 latency    : {min(p50):.0f} ms  (c={conc[p50.index(min(p50))]})")
+print(f"  Per-node throughput : {PER_NODE:.1f} wf/s")
