@@ -82,7 +82,7 @@ En plus du store principal, Temporal maintient un **Visibility store**, une base
 {: .mx-auto.d-block :}
 **Le Visibility store indexe les exécutions de workflow pour les requêtes de liste et filtre via des attributs de recherche JSONB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Le schéma PostgreSQL standard indexe le JSONB via `CREATE EXTENSION IF NOT EXISTS btree_gin`, une extension exclusive à PostgreSQL qui **n'existe pas dans CockroachDB**. Le correctif est le `CREATE INVERTED INDEX` natif de CockroachDB, qui offre la même capacité sans aucune extension (voir la section schéma ci-dessous).
+Le schéma PostgreSQL standard introduit plusieurs incompatibilités avec CockroachDB dès la migration `v1.2` (`advanced_visibility.sql`). Contourner `temporal-sql-tool` pour la base de visibilité et appliquer directement un schéma compatible CockroachDB résout l'ensemble de ces problèmes (voir l'étape 3 ci-dessous).
 
 ### Architecture complète du cluster avec CockroachDB
 
@@ -99,7 +99,7 @@ Un cluster Temporal est composé de quatre services sans état passant à l'éch
 | **Matching** | Gère les files de tâches ; distribue les tâches aux Workers disponibles |
 | **Worker** | Exécute les workflows système internes (réplication, archivage, nettoyage) |
 | **Persistence Store (CockroachDB)** | Historiques d'événements, timers, files de transfert ; forte cohérence, écritures distribuées |
-| **Visibility Store (CockroachDB)** | Index d'exécution interrogeable ; index inversé JSONB remplace `btree_gin` |
+| **Visibility Store (CockroachDB)** | Index d'exécution interrogeable ; `CREATE INVERTED INDEX` remplace les constructions GIN spécifiques à PostgreSQL |
 
 ---
 
@@ -122,108 +122,264 @@ Temporal supporte officiellement PostgreSQL, MySQL, SQLite et Cassandra. Cockroa
 ```sql
 CREATE DATABASE temporal;
 CREATE DATABASE temporal_visibility;
-CREATE USER temporal WITH PASSWORD 'temporal';
+CREATE USER temporal;
 GRANT ALL ON DATABASE temporal TO temporal;
 GRANT ALL ON DATABASE temporal_visibility TO temporal;
 ```
 
+> En **mode non sécurisé** (`--insecure` / `sslmode=disable`), CockroachDB n'autorise pas la définition d'un mot de passe. Utilisez `CREATE USER temporal;` sans clause de mot de passe. Pour un cluster sécurisé, ajoutez `WITH PASSWORD 'votre-mot-de-passe'` et renseignez le champ `password` dans la configuration du serveur.
+
 ### Étape 2 : Initialisation du schéma de persistance
 
-Le schéma principal fonctionne avec CockroachDB sans modification via l'outil SQL de Temporal :
+Le schéma principal fonctionne avec CockroachDB sans modification via l'outil SQL de Temporal. Téléchargez `temporal-sql-tool` depuis les [releases GitHub de Temporal](https://github.com/temporalio/temporal/releases) avec `temporal-server`. Les fichiers de schéma se trouvent dans l'archive source sous `schema/postgresql/v12/temporal/versioned/`.
+
+> **Important :** passez le nom d'hôte et le port en flags séparés. Le format combiné `--ep host:port` est rejeté avec une erreur de détection du port MySQL.
 
 ```bash
 temporal-sql-tool \
   --plugin postgres12 \
-  --ep "<crdb-host>:26257" \
+  --ep "<crdb-host>" \
+  --port 26257 \
   --db temporal \
-  --tls \
-  --tls-ca-file /certs/ca.crt \
-  --tls-cert-file /certs/client.temporal.crt \
-  --tls-key-file /certs/client.temporal.key \
+  --user temporal \
   setup-schema -v 0.0
 
 temporal-sql-tool \
   --plugin postgres12 \
-  --ep "<crdb-host>:26257" \
+  --ep "<crdb-host>" \
+  --port 26257 \
   --db temporal \
-  --tls ... \
+  --user temporal \
   update-schema -d ./schema/postgresql/v12/temporal/versioned
 ```
 
+Pour un cluster avec TLS, ajoutez `--tls --tls-ca-file /certs/ca.crt --tls-cert-file /certs/client.temporal.crt --tls-key-file /certs/client.temporal.key` aux deux commandes.
+
 ### Étape 3 : Correction du schéma de visibilité pour CockroachDB
 
-> **C'est le correctif critique.** Le schéma de visibilité avancée de Temporal contient `CREATE EXTENSION IF NOT EXISTS btree_gin`, une extension exclusive à PostgreSQL. CockroachDB ne supporte pas cette extension et la migration de schéma **échoue** à cette ligne.
+> **Cette étape nécessite de contourner complètement `temporal-sql-tool` pour la base de visibilité.** La migration `v1.2` (`advanced_visibility.sql`) introduit quatre incompatibilités avec CockroachDB qui font échouer l'outil. Appliquer directement un schéma adapté via `psql` est la bonne approche.
 
-La cause racine est cette migration dans `schema/postgresql/v12/visibility/versioned/v1.1/manifest.json` :
+Les quatre incompatibilités, toutes présentes dans `schema/postgresql/v12/visibility/versioned/v1.2/advanced_visibility.sql` :
+
+| Incompatibilité | Cause racine | Correctif |
+|---|---|---|
+| `DO LANGUAGE 'plpgsql' $$...$$` | Les blocs de code anonymes ne sont pas supportés dans CockroachDB | Supprimer entièrement ; aucune configuration d'extension n'est nécessaire |
+| Type de colonne `TSVECTOR` | Non supporté dans CockroachDB | Remplacer par `VARCHAR(4096)` |
+| `(s::timestamptz AT TIME ZONE 'UTC')` dans les colonnes calculées `STORED` | Cast dépendant du contexte ; CockroachDB le rejette dans les colonnes calculées stockées | Utiliser `parse_timestamp(s)` à la place |
+| `USING GIN (namespace_id, col jsonb_path_ops)` | Index GIN multi-colonnes avec `jsonb_path_ops` non supporté | Utiliser `CREATE INVERTED INDEX (col)` sur la seule colonne JSONB |
+
+Le schéma doit également couvrir toutes les migrations jusqu'en v1.13, ce qu'exige la vérification de version au démarrage de Temporal. Sauvegardez le contenu suivant dans `crdb_visibility_schema.sql` et appliquez-le directement :
 
 ```sql
--- PostgreSQL only — FAILS on CockroachDB
-CREATE EXTENSION IF NOT EXISTS btree_gin;
-CREATE INDEX custom_search_attributes_idx
-  ON executions_visibility
-  USING gin(search_attributes jsonb_path_ops);
-```
+-- Tables de versionnement du schéma (requises pour la vérification au démarrage de Temporal)
+CREATE TABLE IF NOT EXISTS schema_version (
+  version_partition       INT NOT NULL,
+  db_name                 VARCHAR(255) NOT NULL,
+  creation_time           TIMESTAMP,
+  curr_version            VARCHAR(64),
+  min_compatible_version  VARCHAR(64),
+  PRIMARY KEY (version_partition, db_name)
+);
 
-**Le correctif** : contourner l'outil de migration standard pour la base de visibilité et appliquer directement un schéma compatible CockroachDB. CockroachDB supporte nativement les index inversés sur les colonnes JSONB sans aucune extension :
+CREATE TABLE IF NOT EXISTS schema_update_history (
+  version_partition INT NOT NULL,
+  year              INT NOT NULL,
+  month             INT NOT NULL,
+  update_time       TIMESTAMP,
+  description       VARCHAR(255),
+  manifest_md5      VARCHAR(64),
+  new_version       VARCHAR(64),
+  old_version       VARCHAR(64),
+  PRIMARY KEY (version_partition, year, month, update_time)
+);
 
-```sql
--- CockroachDB-compatible visibility schema
+-- executions_visibility avec toutes les colonnes jusqu'à v1.13
+-- TSVECTOR -> VARCHAR ; parse_timestamp() remplace ::timestamp ; btree_gin inutile
 CREATE TABLE executions_visibility (
-  namespace_id           VARCHAR(64)   NOT NULL,
-  run_id                 VARCHAR(64)   NOT NULL,
-  start_time             TIMESTAMPTZ   NOT NULL,
-  execution_time         TIMESTAMPTZ   NOT NULL,
-  workflow_id            VARCHAR(255)  NOT NULL,
-  workflow_type_name     VARCHAR(255)  NOT NULL,
-  status                 INT4          NOT NULL,
-  close_time             TIMESTAMPTZ,
-  history_length         BIGINT,
-  history_size_bytes     BIGINT,
-  execution_duration     BIGINT,
-  state_transition_count BIGINT,
-  memo                   BYTEA,
-  encoding               VARCHAR(64)   NOT NULL,
-  task_queue             VARCHAR(255)  NOT NULL DEFAULT '',
-  search_attributes      JSONB,
-  parent_workflow_id     VARCHAR(255),
-  parent_run_id          VARCHAR(255),
-  root_workflow_id       VARCHAR(255)  NOT NULL DEFAULT '',
-  root_run_id            VARCHAR(255)  NOT NULL DEFAULT '',
+  namespace_id         CHAR(64)      NOT NULL,
+  run_id               CHAR(64)      NOT NULL,
+  start_time           TIMESTAMP     NOT NULL,
+  execution_time       TIMESTAMP     NOT NULL,
+  workflow_id          VARCHAR(255)  NOT NULL,
+  workflow_type_name   VARCHAR(255)  NOT NULL,
+  status               INTEGER       NOT NULL,
+  close_time           TIMESTAMP     NULL,
+  history_length       BIGINT,
+  history_size_bytes   BIGINT        NULL,
+  execution_duration   BIGINT        NULL,
+  state_transition_count BIGINT      NULL,
+  memo                 BYTEA,
+  encoding             VARCHAR(64)   NOT NULL,
+  task_queue           VARCHAR(255)  DEFAULT '' NOT NULL,
+  search_attributes    JSONB         NULL,
+  parent_workflow_id   VARCHAR(255)  NULL,
+  parent_run_id        VARCHAR(255)  NULL,
+  root_workflow_id     VARCHAR(255)  NOT NULL DEFAULT '',
+  root_run_id          VARCHAR(255)  NOT NULL DEFAULT '',
+  _version             BIGINT        NOT NULL DEFAULT 0,
+
+  -- Attributs de recherche prédéfinis (calculés depuis le blob JSONB search_attributes)
+  TemporalChangeVersion      JSONB         AS (search_attributes->'TemporalChangeVersion')                                       STORED,
+  BinaryChecksums            JSONB         AS (search_attributes->'BinaryChecksums')                                             STORED,
+  BuildIds                   JSONB         AS (search_attributes->'BuildIds')                                                     STORED,
+  BatcherUser                VARCHAR(255)  AS (search_attributes->>'BatcherUser')                                                STORED,
+  TemporalScheduledStartTime TIMESTAMP     AS (parse_timestamp(search_attributes->>'TemporalScheduledStartTime'))                STORED,
+  TemporalScheduledById      VARCHAR(255)  AS (search_attributes->>'TemporalScheduledById')                                      STORED,
+  TemporalSchedulePaused     BOOLEAN       AS ((search_attributes->'TemporalSchedulePaused')::boolean)                           STORED,
+  TemporalNamespaceDivision  VARCHAR(255)  AS (search_attributes->>'TemporalNamespaceDivision')                                  STORED,
+  TemporalPauseInfo          JSONB         AS (search_attributes->'TemporalPauseInfo')                                           STORED,
+  TemporalWorkerDeploymentVersion    VARCHAR(255)  AS (search_attributes->>'TemporalWorkerDeploymentVersion')                    STORED,
+  TemporalWorkflowVersioningBehavior VARCHAR(255)  AS (search_attributes->>'TemporalWorkflowVersioningBehavior')                 STORED,
+  TemporalWorkerDeployment           VARCHAR(255)  AS (search_attributes->>'TemporalWorkerDeployment')                           STORED,
+  TemporalReportedProblems           JSONB         AS (search_attributes->'TemporalReportedProblems')                            STORED,
+  TemporalBool01         BOOLEAN       AS ((search_attributes->'TemporalBool01')::boolean)                                       STORED,
+  TemporalBool02         BOOLEAN       AS ((search_attributes->'TemporalBool02')::boolean)                                       STORED,
+  TemporalDatetime01     TIMESTAMP     AS (parse_timestamp(search_attributes->>'TemporalDatetime01'))                            STORED,
+  TemporalDatetime02     TIMESTAMP     AS (parse_timestamp(search_attributes->>'TemporalDatetime02'))                            STORED,
+  TemporalDouble01       DECIMAL(20,5) AS ((search_attributes->'TemporalDouble01')::decimal)                                     STORED,
+  TemporalDouble02       DECIMAL(20,5) AS ((search_attributes->'TemporalDouble02')::decimal)                                     STORED,
+  TemporalInt01          BIGINT        AS ((search_attributes->'TemporalInt01')::bigint)                                         STORED,
+  TemporalInt02          BIGINT        AS ((search_attributes->'TemporalInt02')::bigint)                                         STORED,
+  TemporalKeyword01      VARCHAR(255)  AS (search_attributes->>'TemporalKeyword01')                                              STORED,
+  TemporalKeyword02      VARCHAR(255)  AS (search_attributes->>'TemporalKeyword02')                                              STORED,
+  TemporalKeyword03      VARCHAR(255)  AS (search_attributes->>'TemporalKeyword03')                                              STORED,
+  TemporalKeyword04      VARCHAR(255)  AS (search_attributes->>'TemporalKeyword04')                                              STORED,
+  TemporalKeywordList01  JSONB         AS (search_attributes->'TemporalKeywordList01')                                           STORED,
+  TemporalKeywordList02  JSONB         AS (search_attributes->'TemporalKeywordList02')                                           STORED,
+  TemporalLowCardinalityKeyword01 VARCHAR(255) AS (search_attributes->>'TemporalLowCardinalityKeyword01')                        STORED,
+  TemporalUsedWorkerDeploymentVersions JSONB   AS (search_attributes->'TemporalUsedWorkerDeploymentVersions')                    STORED,
+
+  -- Attributs de recherche personnalisés pré-alloués
+  Bool01     BOOLEAN       AS ((search_attributes->'Bool01')::boolean)      STORED,
+  Bool02     BOOLEAN       AS ((search_attributes->'Bool02')::boolean)      STORED,
+  Bool03     BOOLEAN       AS ((search_attributes->'Bool03')::boolean)      STORED,
+  Datetime01 TIMESTAMP     AS (parse_timestamp(search_attributes->>'Datetime01')) STORED,
+  Datetime02 TIMESTAMP     AS (parse_timestamp(search_attributes->>'Datetime02')) STORED,
+  Datetime03 TIMESTAMP     AS (parse_timestamp(search_attributes->>'Datetime03')) STORED,
+  Double01   DECIMAL(20,5) AS ((search_attributes->'Double01')::decimal)    STORED,
+  Double02   DECIMAL(20,5) AS ((search_attributes->'Double02')::decimal)    STORED,
+  Double03   DECIMAL(20,5) AS ((search_attributes->'Double03')::decimal)    STORED,
+  Int01      BIGINT        AS ((search_attributes->'Int01')::bigint)        STORED,
+  Int02      BIGINT        AS ((search_attributes->'Int02')::bigint)        STORED,
+  Int03      BIGINT        AS ((search_attributes->'Int03')::bigint)        STORED,
+  Keyword01  VARCHAR(255)  AS (search_attributes->>'Keyword01')             STORED,
+  Keyword02  VARCHAR(255)  AS (search_attributes->>'Keyword02')             STORED,
+  Keyword03  VARCHAR(255)  AS (search_attributes->>'Keyword03')             STORED,
+  Keyword04  VARCHAR(255)  AS (search_attributes->>'Keyword04')             STORED,
+  Keyword05  VARCHAR(255)  AS (search_attributes->>'Keyword05')             STORED,
+  Keyword06  VARCHAR(255)  AS (search_attributes->>'Keyword06')             STORED,
+  Keyword07  VARCHAR(255)  AS (search_attributes->>'Keyword07')             STORED,
+  Keyword08  VARCHAR(255)  AS (search_attributes->>'Keyword08')             STORED,
+  Keyword09  VARCHAR(255)  AS (search_attributes->>'Keyword09')             STORED,
+  Keyword10  VARCHAR(255)  AS (search_attributes->>'Keyword10')             STORED,
+  Text01     VARCHAR(4096) AS (search_attributes->>'Text01')                STORED,
+  Text02     VARCHAR(4096) AS (search_attributes->>'Text02')                STORED,
+  Text03     VARCHAR(4096) AS (search_attributes->>'Text03')                STORED,
+  KeywordList01 JSONB      AS (search_attributes->'KeywordList01')          STORED,
+  KeywordList02 JSONB      AS (search_attributes->'KeywordList02')          STORED,
+  KeywordList03 JSONB      AS (search_attributes->'KeywordList03')          STORED,
+
   PRIMARY KEY (namespace_id, run_id)
 );
 
--- Standard B-tree indexes — work identically on CockroachDB
-CREATE INDEX by_type_start_time
-  ON executions_visibility (namespace_id, workflow_type_name, start_time DESC, run_id);
-CREATE INDEX by_workflow_id_start_time
-  ON executions_visibility (namespace_id, workflow_id, start_time DESC, run_id);
-CREATE INDEX by_status_start_time
-  ON executions_visibility (namespace_id, status, start_time DESC, run_id);
-CREATE INDEX by_close_time
-  ON executions_visibility (namespace_id, status, close_time DESC, run_id)
-  WHERE close_time IS NOT NULL;
+-- Index d'expression standards (fenêtre ouverte/fermée avec COALESCE)
+CREATE INDEX default_idx           ON executions_visibility (namespace_id, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_execution_time     ON executions_visibility (namespace_id, execution_time,     (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_workflow_id        ON executions_visibility (namespace_id, workflow_id,        (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_workflow_type      ON executions_visibility (namespace_id, workflow_type_name, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_status             ON executions_visibility (namespace_id, status,             (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_history_length     ON executions_visibility (namespace_id, history_length,     (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_history_size_bytes ON executions_visibility (namespace_id, history_size_bytes, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_execution_duration ON executions_visibility (namespace_id, execution_duration, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_state_transition_count ON executions_visibility (namespace_id, state_transition_count, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_task_queue         ON executions_visibility (namespace_id, task_queue,         (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_parent_workflow_id ON executions_visibility (namespace_id, parent_workflow_id, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_parent_run_id      ON executions_visibility (namespace_id, parent_run_id,      (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_root_workflow_id   ON executions_visibility (namespace_id, root_workflow_id,   (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_root_run_id        ON executions_visibility (namespace_id, root_run_id,        (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_batcher_user       ON executions_visibility (namespace_id, BatcherUser,        (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_scheduled_start_time ON executions_visibility (namespace_id, TemporalScheduledStartTime, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_scheduled_by_id      ON executions_visibility (namespace_id, TemporalScheduledById,     (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_schedule_paused      ON executions_visibility (namespace_id, TemporalSchedulePaused,    (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_namespace_division   ON executions_visibility (namespace_id, TemporalNamespaceDivision, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_worker_deployment_version ON executions_visibility (namespace_id, TemporalWorkerDeploymentVersion, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_workflow_versioning_behavior ON executions_visibility (namespace_id, TemporalWorkflowVersioningBehavior, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_worker_deployment ON executions_visibility (namespace_id, TemporalWorkerDeployment, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_bool_01     ON executions_visibility (namespace_id, TemporalBool01,   (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_bool_02     ON executions_visibility (namespace_id, TemporalBool02,   (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_datetime_01 ON executions_visibility (namespace_id, TemporalDatetime01, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_datetime_02 ON executions_visibility (namespace_id, TemporalDatetime02, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_double_01   ON executions_visibility (namespace_id, TemporalDouble01,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_double_02   ON executions_visibility (namespace_id, TemporalDouble02,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_int_01      ON executions_visibility (namespace_id, TemporalInt01,     (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_int_02      ON executions_visibility (namespace_id, TemporalInt02,     (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_keyword_01  ON executions_visibility (namespace_id, TemporalKeyword01, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_keyword_02  ON executions_visibility (namespace_id, TemporalKeyword02, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_keyword_03  ON executions_visibility (namespace_id, TemporalKeyword03, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_keyword_04  ON executions_visibility (namespace_id, TemporalKeyword04, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_temporal_low_cardinality_keyword_01 ON executions_visibility (namespace_id, TemporalLowCardinalityKeyword01, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_bool_01  ON executions_visibility (namespace_id, Bool01,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_bool_02  ON executions_visibility (namespace_id, Bool02,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_bool_03  ON executions_visibility (namespace_id, Bool03,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_datetime_01 ON executions_visibility (namespace_id, Datetime01, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_datetime_02 ON executions_visibility (namespace_id, Datetime02, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_datetime_03 ON executions_visibility (namespace_id, Datetime03, (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_double_01   ON executions_visibility (namespace_id, Double01,   (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_double_02   ON executions_visibility (namespace_id, Double02,   (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_double_03   ON executions_visibility (namespace_id, Double03,   (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_int_01      ON executions_visibility (namespace_id, Int01,      (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_int_02      ON executions_visibility (namespace_id, Int02,      (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_int_03      ON executions_visibility (namespace_id, Int03,      (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_01  ON executions_visibility (namespace_id, Keyword01,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_02  ON executions_visibility (namespace_id, Keyword02,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_03  ON executions_visibility (namespace_id, Keyword03,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_04  ON executions_visibility (namespace_id, Keyword04,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_05  ON executions_visibility (namespace_id, Keyword05,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_06  ON executions_visibility (namespace_id, Keyword06,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_07  ON executions_visibility (namespace_id, Keyword07,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_08  ON executions_visibility (namespace_id, Keyword08,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_09  ON executions_visibility (namespace_id, Keyword09,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
+CREATE INDEX by_keyword_10  ON executions_visibility (namespace_id, Keyword10,  (COALESCE(close_time, '9999-12-31 23:59:59')) DESC, start_time DESC, run_id);
 
--- CockroachDB native inverted index replaces btree_gin GIN index
-CREATE INVERTED INDEX by_search_attributes
-  ON executions_visibility (search_attributes);
+-- Index inversés CockroachDB remplaçant GIN multi-colonnes (namespace_id, col jsonb_path_ops)
+CREATE INVERTED INDEX by_temporal_change_version     ON executions_visibility (TemporalChangeVersion);
+CREATE INVERTED INDEX by_binary_checksums            ON executions_visibility (BinaryChecksums);
+CREATE INVERTED INDEX by_build_ids                   ON executions_visibility (BuildIds);
+CREATE INVERTED INDEX by_temporal_pause_info         ON executions_visibility (TemporalPauseInfo);
+CREATE INVERTED INDEX by_temporal_reported_problems  ON executions_visibility (TemporalReportedProblems);
+CREATE INVERTED INDEX by_temporal_keyword_list_01    ON executions_visibility (TemporalKeywordList01);
+CREATE INVERTED INDEX by_temporal_keyword_list_02    ON executions_visibility (TemporalKeywordList02);
+CREATE INVERTED INDEX by_keyword_list_01             ON executions_visibility (KeywordList01);
+CREATE INVERTED INDEX by_keyword_list_02             ON executions_visibility (KeywordList02);
+CREATE INVERTED INDEX by_keyword_list_03             ON executions_visibility (KeywordList03);
+CREATE INVERTED INDEX by_used_deployment_versions    ON executions_visibility (TemporalUsedWorkerDeploymentVersions);
+
+-- Définit la version du schéma pour que la vérification au démarrage de Temporal passe
+INSERT INTO schema_version (version_partition, db_name, creation_time, curr_version, min_compatible_version)
+VALUES (0, 'temporal_visibility', now(), '1.13', '0.1')
+ON CONFLICT DO NOTHING;
 ```
 
-Initialisez la base de visibilité avec ce fichier de schéma directement :
+Appliquez-le avec `psql` (le CLI `cockroach` n'est pas nécessaire) :
 
 ```bash
-cockroach sql \
-  --url "postgresql://temporal@<crdb-host>:26257/temporal_visibility" \
-  --certs-dir=/certs \
+psql "postgresql://temporal@<crdb-host>:26257/temporal_visibility?sslmode=disable" \
   --file ./crdb_visibility_schema.sql
 ```
 
-### Étape 4 : Configuration du serveur Temporal
+### Étape 4 : Configurer et démarrer le serveur Temporal
+
+Sauvegardez le contenu suivant dans `base.yaml`. La configuration doit être dans un fichier ; le flag `--config-file` accepte un chemin absolu ou relatif au répertoire courant. Pour CockroachDB en mode non sécurisé, définissez `tls.enabled: false` et passez `sslmode=disable` via `connectAttributes` :
 
 ```yaml
+log:
+  stdout: true
+  level: "info"
+
 persistence:
   defaultStore: crdb-default
   visibilityStore: crdb-visibility
-  numHistoryShards: 512
+  numHistoryShards: 4
   datastores:
     crdb-default:
       sql:
@@ -231,6 +387,87 @@ persistence:
         databaseName: "temporal"
         connectAddr: "<crdb-host>:26257"
         connectProtocol: "tcp"
+        user: "temporal"
+        maxConns: 20
+        maxIdleConns: 20
+        maxConnLifetime: "1h"
+        tls:
+          enabled: false
+        connectAttributes:
+          sslmode: "disable"
+    crdb-visibility:
+      sql:
+        pluginName: "postgres12"
+        databaseName: "temporal_visibility"
+        connectAddr: "<crdb-host>:26257"
+        connectProtocol: "tcp"
+        user: "temporal"
+        maxConns: 10
+        maxIdleConns: 10
+        maxConnLifetime: "1h"
+        tls:
+          enabled: false
+        connectAttributes:
+          sslmode: "disable"
+
+global:
+  membership:
+    maxJoinDuration: 30s
+    broadcastAddress: "127.0.0.1"
+
+services:
+  frontend:
+    rpc:
+      grpcPort: 7233
+      membershipPort: 6933
+      bindOnLocalHost: true
+  matching:
+    rpc:
+      grpcPort: 7235
+      membershipPort: 6935
+      bindOnLocalHost: true
+  history:
+    rpc:
+      grpcPort: 7234
+      membershipPort: 6934
+      bindOnLocalHost: true
+  worker:
+    rpc:
+      grpcPort: 7239
+      membershipPort: 6939
+      bindOnLocalHost: true
+
+clusterMetadata:
+  enableGlobalNamespace: false
+  failoverVersionIncrement: 10
+  masterClusterName: "active"
+  currentClusterName: "active"
+  clusterInformation:
+    active:
+      enabled: true
+      initialFailoverVersion: 1
+      rpcAddress: "127.0.0.1:7233"
+
+dcRedirectionPolicy:
+  policy: "noop"
+
+archival:
+  history:
+    state: "disabled"
+  visibility:
+    state: "disabled"
+
+namespaceDefaults:
+  archival:
+    history:
+      state: "disabled"
+    visibility:
+      state: "disabled"
+```
+
+Pour un cluster avec TLS, remplacez les deux blocs datastore par la configuration suivante :
+
+```yaml
         user: "temporal"
         password: "${TEMPORAL_DB_PASSWORD}"
         maxConns: 20
@@ -241,25 +478,33 @@ persistence:
           caFile: "/certs/ca.crt"
           certFile: "/certs/client.temporal.crt"
           keyFile: "/certs/client.temporal.key"
-    crdb-visibility:
-      sql:
-        pluginName: "postgres12"
-        databaseName: "temporal_visibility"
-        connectAddr: "<crdb-host>:26257"
-        connectProtocol: "tcp"
-        user: "temporal"
-        password: "${TEMPORAL_DB_PASSWORD}"
-        maxConns: 10
-        maxIdleConns: 10
-        maxConnLifetime: "1h"
-        tls:
-          enabled: true
-          caFile: "/certs/ca.crt"
-          certFile: "/certs/client.temporal.crt"
-          keyFile: "/certs/client.temporal.key"
+          serverName: "<crdb-host>"
 ```
 
-### Étape 5 : Premier workflow d'agent IA durable
+Démarrez le serveur avec `--allow-no-auth` (requis quand aucun autoriseur n'est configuré) :
+
+```bash
+temporal-server --config-file ./base.yaml --allow-no-auth start
+```
+
+### Étape 5 : Initialisation du cluster
+
+Une fois le serveur démarré, créez le namespace par défaut et vérifiez le cluster :
+
+```bash
+# Créer le namespace applicatif
+temporal --address localhost:7233 operator namespace create default
+
+# Confirmer que le cluster répond
+temporal --address localhost:7233 operator cluster health
+
+# Lister les workflows système internes pour confirmer la connexion au visibility store
+temporal --address localhost:7233 -n temporal-system workflow list
+```
+
+Le health check doit renvoyer `SERVING` et la liste doit afficher deux workflows système en cours (`temporal-sys-history-scanner` et `temporal-sys-tq-scanner`).
+
+### Étape 6 : Premier workflow d'agent IA durable
 
 La boucle d'agent suivante récupère du contexte, appelle un LLM, attend une validation humaine et écrit le résultat final. Chaque étape est une Activity ; elle s'exécute exactement une fois même si le processus crashe entre les étapes. Un appel LLM coûteux n'est jamais ré-émis après son succès.
 
@@ -329,7 +574,7 @@ class AICockroachAgentWorkflow:
 | **Basculement automatique** | Défaillances de nœuds transparentes pour les quatre services Temporal |
 | **Compatibilité PostgreSQL** | Aucune modification du code applicatif ; le plugin `postgres12` fonctionne directement |
 
-CockroachDB remplace PostgreSQL directement, offrant aux services sans état de Temporal une fondation indestructible et distribuée globalement, avec un seul correctif de schéma pour le visibility store.
+CockroachDB remplace PostgreSQL directement, offrant aux services sans état de Temporal une fondation indestructible et distribuée globalement. Le seul travail de déploiement supplémentaire par rapport à une installation PostgreSQL standard est l'application d'un schéma de visibilité adapté à CockroachDB, qui résout quatre constructions PostgreSQL non supportées.
 
 ---
 
