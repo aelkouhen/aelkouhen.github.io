@@ -1,4 +1,5 @@
 ---
+date: 2023-06-13
 layout: post
 title: "Data & Redis, Part 9"
 subtitle:  Mastering the Search Multiverse with Redis

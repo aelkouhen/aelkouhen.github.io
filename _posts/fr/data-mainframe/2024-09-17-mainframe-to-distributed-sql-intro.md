@@ -1,4 +1,5 @@
 ---
+date: 2024-09-17
 layout: post
 lang: fr
 title: "Du Mainframe au SQL Distribué, Une Introduction"

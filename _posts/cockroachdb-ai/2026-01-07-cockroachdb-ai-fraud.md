@@ -1,4 +1,5 @@
 ---
+date: 2026-01-07
 layout: post
 title: "Fraud Detection at Scale with CockroachDB & AWS AI"
 subtitle: "How vector indexing enables low-latency, intelligent threat response at global scale"

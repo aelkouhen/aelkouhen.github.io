@@ -1,4 +1,5 @@
 ---
+date: 2025-01-23
 layout: post
 lang: fr
 title: "Du Mainframe au SQL Distribué, Partie 5"

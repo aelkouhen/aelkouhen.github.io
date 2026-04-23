@@ -1,4 +1,5 @@
 ---
+date: 2023-05-22
 layout: post
 title: "Data & Redis, Part 7"
 subtitle:  Customer Satisfaction Monitoring with Redis & GCP

@@ -1,4 +1,5 @@
 ---
+date: 2025-10-05
 layout: post
 title: "Getting Started with GenAI Using CockroachDB"
 cover-img: /assets/img/cover-ai-intro.webp

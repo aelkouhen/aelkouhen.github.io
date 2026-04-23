@@ -1,4 +1,5 @@
 ---
+date: 2025-06-12
 layout: post
 title: "Inside OpenAI's Always-On IAM Stack with Ory and CockroachDB"
 subtitle: "How OpenAI built a resilient, multi-region CIAM platform"

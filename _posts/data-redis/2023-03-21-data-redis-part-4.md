@@ -1,4 +1,5 @@
 ---
+date: 2023-03-21
 layout: post
 title: "Data & Redis, Part 4"
 subtitle:  Data Processing with RDI (Hands-on)

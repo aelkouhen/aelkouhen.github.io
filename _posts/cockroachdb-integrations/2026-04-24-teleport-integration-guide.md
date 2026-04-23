@@ -1,4 +1,5 @@
 ---
+date: 2026-04-24
 layout: post
 title: "Integrate CockroachDB with Teleport"
 subtitle: "A step-by-step guide to deploying Teleport Enterprise with CockroachDB as a globally distributed, strongly consistent access control backend"

@@ -1,4 +1,5 @@
 ---
+date: 2023-02-21
 layout: post
 title: "Data & Redis, Part 1"
 subtitle:  Data Ingestion with Redis (Hands-on)

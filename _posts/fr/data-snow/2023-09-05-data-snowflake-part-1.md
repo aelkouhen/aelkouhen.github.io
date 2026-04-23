@@ -1,4 +1,5 @@
 ---
+date: 2023-09-05
 layout: post
 lang: fr
 title: "Data & Snowflake, Partie 1"

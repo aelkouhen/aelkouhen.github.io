@@ -1,4 +1,5 @@
 ---
+date: 2023-07-04
 layout: post
 lang: fr
 title: "Data & Snowflake, Vue d'ensemble"

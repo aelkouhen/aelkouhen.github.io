@@ -1,4 +1,5 @@
 ---
+date: 2025-02-05
 layout: post
 title: "Mainframe to Distributed SQL, Part 6"
 subtitle: "Managing Change"

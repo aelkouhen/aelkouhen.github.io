@@ -1,4 +1,5 @@
 ---
+date: 2023-07-04
 layout: post
 title: "Data & Snowflake, Overview"
 subtitle: Choosing the Right Data Architecture with Snowflake

@@ -1,4 +1,5 @@
 ---
+date: 2025-04-22
 layout: post
 title: "Integrate CockroachDB with Ory"
 subtitle: "A step-by-step guide to deploying Ory Hydra, Kratos, and Keto with CockroachDB"

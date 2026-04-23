@@ -1,4 +1,5 @@
 ---
+date: 2025-10-05
 layout: post
 lang: fr
 title: "Premiers pas avec GenAI et CockroachDB"

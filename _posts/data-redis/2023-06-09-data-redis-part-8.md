@@ -1,4 +1,5 @@
 ---
+date: 2023-06-09
 layout: post
 title: "Data & Redis, Part 8"
 subtitle:  RedisCover Redis for Vector Similarity Search

@@ -1,4 +1,5 @@
 ---
+date: 2023-03-07
 layout: post
 title: "Data & Redis, Part 3"
 subtitle:  Data Processing with Redis Gears (Hands-on)

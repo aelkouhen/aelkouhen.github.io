@@ -1,4 +1,5 @@
 ---
+date: 2026-03-25
 layout: post
 title: "CockroachDB for AI Agents: MCP Servers and Database Lifecycle Automation"
 subtitle: "How CockroachDB becomes agent-ready with MCP servers, CLI tools, and agent skills"

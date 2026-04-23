@@ -1,4 +1,5 @@
 ---
+date: 2025-01-23
 layout: post
 title: "Mainframe to Distributed SQL, Part 5"
 subtitle: "Transitioning to a Distributed Architecture"

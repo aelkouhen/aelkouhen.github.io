@@ -1,4 +1,5 @@
 ---
+date: 2025-09-14
 layout: post
 lang: fr
 title: "Déployer Keycloak sur CockroachDB avec Phase Two"

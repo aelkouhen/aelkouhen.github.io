@@ -1,4 +1,5 @@
 ---
+date: 2023-06-20
 layout: post
 title: "Data & Redis, Part 10"
 subtitle:  Online Recommendation Systems with Redis

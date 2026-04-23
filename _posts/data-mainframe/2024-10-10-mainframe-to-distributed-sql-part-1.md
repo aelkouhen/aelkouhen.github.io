@@ -1,4 +1,5 @@
 ---
+date: 2024-10-10
 layout: post
 title: "Mainframe to Distributed SQL, Part 1"
 subtitle: "Understanding Mainframe Database Architecture"

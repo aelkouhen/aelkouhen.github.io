@@ -1,4 +1,5 @@
 ---
+date: 2023-05-10
 layout: post
 lang: fr
 title: "Data & Redis, Partie 6"
