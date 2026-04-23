@@ -67,7 +67,7 @@ Bien que certains datasets puissent être stockés séquentiellement, les DASDs 
 
 Pour localiser rapidement un dataset spécifique, le mainframe utilise un système de **catalogue** et un **VTOC** (volume table of contents) qui suivent ses emplacements. En pratique, presque tous les datasets sur disque sont catalogués. L'un des effets secondaires est que tous les datasets (catalogués) doivent avoir des noms uniques.
 
-<img src="/assets/img/mainframe-p1-vtoc.png" alt="Diagramme du Volume Table of Contents (VTOC)" style="width:100%">
+<img src="/assets/img/mainframe-p1-vtoc.png" alt="Diagramme du Volume Table of Contents (VTOC)" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Diagramme du Volume Table of Contents (VTOC)**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -170,7 +170,7 @@ L'Information Management System (IMS) d'IBM a été développé au milieu des an
 
 Le système de gestion de base de données (SGBD) IMS a introduit l'idée que le code applicatif devrait être séparé des données. Avant IMS, une application mainframe fusionnait le code et les données en un seul bloc. Mais cela s'est avéré difficile à gérer, notamment en raison des données dupliquées et de la nécessité de réutilisabilité. Une innovation clé d'IMS consistait à séparer ces deux parties. IMS contrôle l'accès et la récupération des données. Les programmes applicatifs peuvent toujours accéder aux données et les parcourir en utilisant l'interface d'appel standard DL/I.
 
-<img src="/assets/img/mainframe-p1-ims.png" alt="Les principaux composants d'IMS" style="width:100%">
+<img src="/assets/img/mainframe-p1-ims.png" alt="Les principaux composants d'IMS" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Les principaux composants d'IMS**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -264,7 +264,7 @@ Db2 stocke les données dans diverses tables liées pour former des relations. C
 
 Chaque ligne possède un identifiant unique, la clé primaire, qui facilite la recherche, la mise à jour et la suppression des informations. La clé primaire est automatiquement indexée dans une base de données relationnelle, mais des index supplémentaires peuvent être créés sur d'autres colonnes pour améliorer la vitesse des opérations.
 
-<img src="/assets/img/mainframe-p1-pk-fk.png" alt="Diagramme de la clé primaire et de la clé étrangère" style="width:100%">
+<img src="/assets/img/mainframe-p1-pk-fk.png" alt="Diagramme de la clé primaire et de la clé étrangère" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Diagramme de la clé primaire et de la clé étrangère**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
