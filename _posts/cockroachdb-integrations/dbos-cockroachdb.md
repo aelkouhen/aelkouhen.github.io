@@ -3,6 +3,9 @@ date: 2026-04-24
 layout: post
 title: "Embedded Durable Execution with DBOS and CockroachDB"
 subtitle: "How DBOS turns your existing database into a workflow engine, and why CockroachDB makes it globally distributed"
+cover-img: /assets/img/cover-dbos.webp
+thumbnail-img: /assets/img/cover-dbos.webp
+share-img: /assets/img/cover-dbos.webp
 tags: [integrations, CockroachDB, dbos, workflow, orchestration, durable-execution]
 lang: en
 author: "Amine El Kouhen"
