@@ -286,61 +286,59 @@ python3 app/main.py
 
 ## Scalability Benchmarking
 
-The DBOS engineering team [benchmarked DBOS durable workflow throughput on PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), reaching **144K raw writes per second** on a single co-located AWS RDS instance (`db.m7i.24xlarge` — 96 vCPU, 384 GB RAM, 120K IOPS). We ran the equivalent benchmark against a **3-node CockroachDB cluster on AWS us-east-1** (`3× m5.large` — 6 vCPU total), connected over WAN (~800ms round-trip). Before comparing any numbers, two hardware setups this different require normalisation.
+The DBOS engineering team [benchmarked DBOS durable workflow throughput on PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), reaching **144K raw writes per second** on a single co-located AWS RDS instance (`db.m7i.24xlarge` — 96 vCPU, 384 GB RAM, 120K IOPS). We ran real DBOS 2-step workflows against a **3-node CockroachDB cluster on AWS us-east-1** (`3× m7i.8xlarge` — 96 vCPU total), connected over WAN (~3.5s round-trip per workflow from the benchmark client). Each workflow executes two `@DBOS.step()` functions and waits for full completion.
 
 > **Benchmark artefacts:** scripts and raw results are in the repository under [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb):
-> [`bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench.py) · [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`charts_v5.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/charts_v4.py) · [`results_direct.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_direct.json)
+> [`bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench.py) · [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`charts_v5.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/charts_v5.py) · [`results_direct.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_direct.json)
 
-### Step 1 — Apples-to-apples: throughput per vCPU
+### Step 1 — Apples-to-apples: workflow throughput per vCPU
 
-The only fair unit for comparing different hardware is **writes per vCPU per second**. Our WAN peak of 117.7/s over a 3-node cluster maps to roughly **~9,400/s co-located** (WAN RTT ~800ms; co-located RTT ~10ms — 80× factor). Divided by 6 vCPU:
+The WAN floor at c=1 is **3,525 ms** per workflow — a 2-step DBOS workflow involves ~7 database round trips, and each crosses the Atlantic. Co-located deployments remove that floor, leaving only the actual DB cost (~10 ms). This gives a **352× latency factor**, which translates directly to throughput: our WAN peak of **32.7 wf/s** on 96 vCPU maps to roughly **~11,500 wf/s co-located**.
 
-<img src="/assets/img/dbos-bench-per-vcpu.png" alt="Write throughput per vCPU: CockroachDB 1,570/s vs PostgreSQL 1,500/s" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-per-vcpu.png" alt="DBOS workflow throughput per vCPU: CockroachDB 120 wf/s vs PostgreSQL 214 wf/s ceiling" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**CockroachDB delivers 1,570 writes/s per vCPU co-located — essentially identical to PostgreSQL's 1,500/s per vCPU**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**CockroachDB delivers ~120 DBOS workflows/s per vCPU co-located — PostgreSQL's single-node ceiling is ~214 wf/s per vCPU, but it cannot be exceeded by adding hardware**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | | PostgreSQL | CockroachDB |
 |---|---|---|
-| Hardware | db.m7i.24xlarge (96 vCPU) | 3× m5.large (6 vCPU) |
-| Measured throughput | 144,000/s (co-located) | 117.7/s (WAN) → ~9,400/s co-located |
-| **Per-vCPU throughput** | **1,500/s** | **~1,570/s** |
+| Hardware | db.m7i.24xlarge (96 vCPU) | 3× m7i.8xlarge (96 vCPU) |
+| Measured throughput | 144,000 raw writes/s | **32.7 wf/s (WAN)** → ~11,500 wf/s co-located |
+| **Per-vCPU wf throughput** | **~214 wf/s** (ceiling) | **~120 wf/s** (co-located est.) |
 
-Per vCPU, both databases deliver the same raw write throughput. The hardware advantage PostgreSQL appears to have vanishes once you account for the 16× vCPU difference.
+CockroachDB's distributed Raft consensus adds per-operation overhead compared to PostgreSQL's single-node WAL — that's the cost of the architectural guarantee that lets it scale beyond one node. The key question is what happens when you need to go *beyond* what a single node can provide.
 
-### Step 2 — Extrapolation to 96 vCPU and beyond
+### Step 2 — Beyond the ceiling
 
-At equal hardware (96 vCPU), CockroachDB projects to **~150,700 writes/s** — slightly ahead of PostgreSQL's 144,000/s. But that is not the important number. The important number is what happens *after* 96 vCPU.
+PostgreSQL tops out at ~20,600 wf/s regardless of hardware. CockroachDB at 96 vCPU is at ~11,500 wf/s co-located — but it does not stop there.
 
-<img src="/assets/img/dbos-bench-linear-vs-ceiling.png" alt="CockroachDB scales linearly — PostgreSQL hits a hard WAL ceiling at 144K/s" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="CockroachDB scales linearly — PostgreSQL hits a hard WAL ceiling at ~20K wf/s" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
 **PostgreSQL is bounded by its single Write-Ahead Log — throughput stops growing regardless of added hardware. CockroachDB's distributed Raft has no such ceiling.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-PostgreSQL's **Write-Ahead Log is a single-node bottleneck**: every committed write must flush through one serial path. At ~144K/s that path is saturated — adding more vCPU, more IOPS, or more memory to the same instance yields no further gain. CockroachDB replaces the single WAL with a **distributed Raft log** — each node maintains its own, and writes are spread across the cluster without competing for a shared flush queue. Add a node, gain proportional throughput. There is no ceiling.
+PostgreSQL's **Write-Ahead Log is a single-node bottleneck**: every committed write must flush through one serial path. Once saturated, adding more vCPU, IOPS, or memory yields no further gain. CockroachDB replaces the single WAL with a **distributed Raft log** — each node maintains its own, and writes are spread across the cluster without competing for a shared flush queue. Add a node, gain proportional throughput. At ~170 vCPU (roughly two more nodes), CockroachDB surpasses PostgreSQL's hard ceiling — and keeps going.
 
-### Supporting data — CockroachDB's internal scaling behaviour
+### Supporting data — CockroachDB's measured scaling behaviour
 
-The charts below show how CockroachDB alone behaves under increasing concurrency. No PostgreSQL comparisons are included here — those comparisons are done above, on equal terms.
-
-<img src="/assets/img/dbos-bench-crdb-throughput.png" alt="CockroachDB write throughput c=1 to c=512" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-throughput.png" alt="CockroachDB DBOS workflow throughput c=1 to c=512" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**CockroachDB write throughput grows from 0.8/s at c=1 to 117.7/s at c=256 — a 145× improvement with 256× more writers**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**DBOS workflow throughput grows from 0.3/s at c=1 to 32.7/s at c=256 — a 109× improvement with 256× more concurrent workflows over WAN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-<img src="/assets/img/dbos-bench-crdb-latency.png" alt="CockroachDB write latency p50 and p95 under load" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="CockroachDB workflow latency p50 and p95 under load" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**p50 latency rises from ~841ms at c=1 to ~1,537ms at c=256 — an 83% increase while throughput grew 145×. The ~800ms floor is WAN round-trip; co-located deployments see single-digit ms p50.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**p50 latency rises from ~3,525ms at c=1 to ~6,983ms at c=256 — 2× increase while throughput grew 109×. The ~3.5s WAN floor disappears in co-located deployments, where p50 is single-digit ms.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Summary
 
-| | PostgreSQL (96 vCPU) | CockroachDB (6 vCPU) | CockroachDB (96 vCPU, projected) |
+| | PostgreSQL (96 vCPU) | CockroachDB (96 vCPU, co-located est.) | CockroachDB (192+ vCPU) |
 |---|---|---|---|
-| Throughput | 144,000/s | ~9,400/s co-located | **~150,700/s** |
-| Per-vCPU throughput | 1,500/s | ~1,570/s | ~1,570/s |
+| Peak wf throughput | ~20,600/s (**hard ceiling**) | ~11,500/s | **>20,600/s — keeps scaling** |
+| Per-vCPU wf throughput | ~214/s | ~120/s | ~120/s |
 | Scale-out ceiling | **Yes — WAL-limited** | No | **No — keeps scaling** |
 | Scale-out strategy | Vertical only | Horizontal | Horizontal |
 | Node failure handling | Manual failover | Transparent, automatic | Transparent, automatic |
 | Multi-region durability | External tooling | Built-in | Built-in |
 
-At equal vCPU, CockroachDB matches PostgreSQL write-for-write. PostgreSQL cannot go further — its WAL is the hard ceiling. CockroachDB has no such ceiling: add nodes, gain throughput, indefinitely.
+CockroachDB's per-vCPU throughput is lower than PostgreSQL's single-node peak — distributed consensus has a cost. But that cost buys something PostgreSQL cannot offer: **no ceiling**. PostgreSQL's WAL saturates at ~20K wf/s and stops. CockroachDB crosses that line with a few extra nodes and keeps climbing.
 
 ---
 
