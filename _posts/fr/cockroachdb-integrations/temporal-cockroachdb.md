@@ -785,6 +785,10 @@ Deux tableaux de bord offrent des vues complémentaires de la même charge :
 
 Cette combinaison donne une vue complète : Temporal indique *quels* workflows sont lents ; CockroachDB explique *pourquoi* au niveau du stockage.
 
+<img src="/assets/img/crdb-admin-sql-metrics.png" alt="Tableau de bord SQL de la console d'administration CockroachDB" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Console d'administration CockroachDB (v24.3.8) : tableau de bord SQL montrant les sessions ouvertes et le taux de connexion sur le cluster à 3 nœuds pendant le benchmark Temporal. Le panneau Summary affiche 5,2 QPS et une latence p99 de 8,9 ms.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 ---
 
 ## Voir aussi

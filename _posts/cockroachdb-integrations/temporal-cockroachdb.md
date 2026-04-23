@@ -787,6 +787,10 @@ Two dashboards give complementary views of the same load:
 
 The combination gives you the full picture: Temporal tells you *which* workflows are slow; CockroachDB tells you *why* at the storage level.
 
+<img src="/assets/img/crdb-admin-sql-metrics.png" alt="CockroachDB Admin Console SQL metrics dashboard" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**CockroachDB Admin Console (v24.3.8): SQL metrics dashboard showing open sessions and connection rate across the 3-node cluster during the Temporal benchmark. Summary panel shows 5.2 QPS and p99 latency of 8.9 ms.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
 ---
 
 ## See Also
