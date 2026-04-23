@@ -299,7 +299,7 @@ L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blo
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="Latence de workflow CockroachDB p50 et p95 sous charge, co-localisé" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**La latence p50 est de 72 ms au pic de débit (c=8) — chaque workflow DBOS à 2 étapes requiert plusieurs tours de consensus Raft successifs, chacun nécessitant le quorum sur 2 nœuds parmi 3.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**La latence p50 est de 72 ms au pic de débit (c=8) — les 3 nœuds sont répartis sur plusieurs AZ de us-east-1 (déploiement réellement redondant). Chaque quorum Raft franchit les frontières d'AZ ; cette latence est celle d'une production réelle, pas d'un rack unique.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Concurrence | Débit (wf/s) | p50 (ms) | p95 (ms) |
 |:-----------:|:------------:|:--------:|:--------:|
@@ -317,7 +317,7 @@ Le cluster à 3 nœuds sature à **~117 wf/s** — c'est la capacité de *ces tr
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="Scale-out linéaire de CockroachDB : 117 wf/s mesurés sur 3 nœuds, projection linéaire avec les nœuds supplémentaires" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Baseline mesurée : 117 wf/s sur 3 nœuds. Chaque nœud ajoute ~39 wf/s. Le WAL de PostgreSQL est un chemin d'écriture mono-nœud — il ne peut pas être distribué sur des instances supplémentaires.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Baseline mesurée : 117 wf/s sur 3 nœuds répartis sur plusieurs AZ (redondance de zone). Chaque nœud ajoute ~39 wf/s. Le WAL de PostgreSQL est un chemin d'écriture mono-nœud — il ne peut pas être distribué sur des instances supplémentaires.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Le **Write-Ahead Log de PostgreSQL sérialise chaque écriture dans un seul chemin de flush**. Une fois ce chemin saturé, aucun matériel supplémentaire n'améliore le débit d'écriture — on peut scaler les lectures avec des réplicas, mais les écritures restent bornées par un seul nœud pour toujours. CockroachDB remplace le WAL unique par un **log Raft distribué** : chaque nœud flush son propre log, et les écritures se répartissent sur le cluster. Le plafond de débit monte avec chaque nœud ajouté.
 
@@ -326,7 +326,7 @@ Le **Write-Ahead Log de PostgreSQL sérialise chaque écriture dans un seul chem
 | | PostgreSQL | CockroachDB (3 nœuds) | CockroachDB (N nœuds) |
 |---|---|---|---|
 | Débit wf maximum | Plafond mono-nœud | **117 wf/s (mesuré)** | **~39 × N wf/s** |
-| p50 au pic de concurrence | Sub-ms (WAL local) | ~72 ms (quorum Raft) | ~72 ms |
+| p50 au pic de concurrence | Sub-ms (WAL local) | ~72 ms (quorum Raft, cross-AZ) | ~72 ms |
 | Scale-out en écriture | **Non — WAL = 1 nœud** | Oui | **Oui — linéaire** |
 | Défaillance de nœud | Basculement manuel | Automatique | Automatique |
 | Durabilité multi-région | Outillage externe | Natif | Natif |

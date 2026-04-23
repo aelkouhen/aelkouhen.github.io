@@ -299,7 +299,7 @@ The DBOS engineering team [benchmarked DBOS durable workflow throughput on Postg
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="CockroachDB workflow latency p50 and p95 under load, co-located" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**p50 latency is 72 ms at peak throughput (c=8) — each 2-step DBOS workflow requires multiple sequential Raft consensus rounds, each achieving quorum across 2 of 3 nodes.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**p50 latency is 72 ms at peak throughput (c=8) — the 3 nodes are spread across multiple us-east-1 AZs (genuine zone-redundant deployment). Each Raft quorum write crosses AZ boundaries; this is real production-grade latency, not a same-rack measurement.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Concurrency | Throughput (wf/s) | p50 (ms) | p95 (ms) |
 |:-----------:|:-----------------:|:--------:|:--------:|
@@ -317,7 +317,7 @@ The 3-node cluster saturates at **~117 wf/s** — that is the capacity of *these
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="CockroachDB linear scale-out: 117 wf/s measured on 3 nodes, projects linearly with additional nodes" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Measured baseline: 117 wf/s on 3 nodes. Each node adds ~39 wf/s. PostgreSQL's WAL is a single-node write path — it cannot be distributed across additional instances.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Measured baseline: 117 wf/s on 3 nodes across multiple AZs (zone-redundant). Each node adds ~39 wf/s. PostgreSQL's WAL is a single-node write path — it cannot be distributed across additional instances.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 PostgreSQL's **Write-Ahead Log serialises every write through a single flush path**. Once that path is saturated, no additional hardware increases write throughput — you can scale reads with replicas, but writes are bounded by one node forever. CockroachDB replaces the single WAL with a **distributed Raft log**: each node flushes its own log, and writes are spread across the cluster. The throughput ceiling rises with every node you add.
 
@@ -326,7 +326,7 @@ PostgreSQL's **Write-Ahead Log serialises every write through a single flush pat
 | | PostgreSQL | CockroachDB (3 nodes) | CockroachDB (N nodes) |
 |---|---|---|---|
 | Peak wf/s | Single-node ceiling | **117 wf/s (measured)** | **~39 × N wf/s** |
-| p50 at peak concurrency | Sub-ms (local WAL) | ~72 ms (Raft quorum) | ~72 ms |
+| p50 at peak concurrency | Sub-ms (local WAL) | ~72 ms (Raft quorum, cross-AZ) | ~72 ms |
 | Write scale-out | **No — WAL is one node** | Yes | **Yes — linear** |
 | Node failure | Manual failover | Automatic | Automatic |
 | Multi-region durability | External tooling | Built-in | Built-in |
