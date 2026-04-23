@@ -290,6 +290,14 @@ The DBOS engineering team [benchmarked DBOS durable workflow throughput on Postg
 
 CockroachDB's distributed architecture eliminates this bottleneck by design. Each node maintains its own Raft log; concurrent writes are distributed across the cluster without competing for a shared flush queue. We benchmarked DBOS against a 3-node CockroachDB cluster on AWS us-east-1 accessed over WAN (~800ms round-trip) and measured three properties that tell the CockroachDB story.
 
+> **Benchmark artefacts:** all scripts and raw results used in this section are available in the repository under [`assets/bench/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench):
+> - [`bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/bench.py) — baseline write + workflow benchmark via NLB
+> - [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/bench_direct.py) — round-robin across 3 direct node IPs (used for final numbers)
+> - [`bench_high_concurrency.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/bench_high_concurrency.py) — extends results to c=64–512
+> - [`charts_v4.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/charts_v4.py) — chart generation (requires matplotlib, numpy)
+> - [`results.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/results.json) — NLB results (writes + workflows)
+> - [`results_direct.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/results_direct.json) — direct-node results (used for all charts above)
+
 ### Near-linear throughput scaling
 
 <img src="/assets/img/dbos-bench-scaling-throughput.png" alt="Near-linear write throughput scaling on CockroachDB vs PostgreSQL WAL bottleneck model" style="width:100%;margin:1.5rem 0;">

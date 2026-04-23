@@ -290,6 +290,14 @@ L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blo
 
 L'architecture distribuée de CockroachDB élimine ce goulot par conception. Chaque nœud maintient son propre log Raft ; les écritures concurrentes sont distribuées sur le cluster sans se disputer une file de flush partagée. Nous avons mesuré DBOS sur un cluster CockroachDB à 3 nœuds sur AWS us-east-1 en accès WAN (~800 ms aller-retour) et mesuré trois propriétés qui illustrent l'avantage CockroachDB.
 
+> **Artefacts du benchmark :** tous les scripts et résultats bruts utilisés dans cette section sont disponibles dans le dépôt sous [`assets/bench/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench) :
+> - [`bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/bench.py) — benchmark écriture + workflow via NLB
+> - [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/bench_direct.py) — round-robin sur 3 IPs de nœuds directs (chiffres finaux)
+> - [`bench_high_concurrency.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/bench_high_concurrency.py) — étend les résultats à c=64–512
+> - [`charts_v4.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/charts_v4.py) — génération des graphiques (nécessite matplotlib, numpy)
+> - [`results.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/results.json) — résultats NLB (écritures + workflows)
+> - [`results_direct.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/results_direct.json) — résultats nœuds directs (utilisés pour tous les graphiques ci-dessus)
+
 ### Scaling quasi-linéaire du débit
 
 <img src="/assets/img/dbos-bench-scaling-throughput.png" alt="Scaling quasi-linéaire du débit d'écriture sur CockroachDB vs goulot WAL PostgreSQL" style="width:100%;margin:1.5rem 0;">
