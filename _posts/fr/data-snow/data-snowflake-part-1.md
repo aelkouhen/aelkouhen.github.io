@@ -29,16 +29,16 @@ Snowflake prend en charge l'ingestion de données dans de multiples formats et m
 
 La commande `INSERT` est le mécanisme d'ingestion le plus simple pour importer une petite quantité de données. Elle met à jour une table en insérant une ou plusieurs lignes. Les valeurs insérées dans chaque colonne de la table ou les résultats d'une requête peuvent être explicitement spécifiés. Voici la syntaxe de l'instruction `INSERT` :
 
-{% highlight sql linenos %}
+```sql
 INSERT [ OVERWRITE ] INTO <target_table> [ ( <target_col_name> [ , ... ] ) ]
        {
 VALUES ( { <value> | DEFAULT | NULL } [ , ... ] ) [ , ( ... ) ]  |  <query>
        }
-{% endhighlight %}
+```
 
 Vous pouvez insérer plusieurs lignes en utilisant des valeurs explicitement spécifiées dans une liste séparée par des virgules dans la clause `VALUES` :
 
-{% highlight sql linenos %}
+```sql
 INSERT INTO employees
   VALUES
   ('Lysandra','Reeves','1-212-759-3751','New York',10018),
@@ -52,11 +52,11 @@ SELECT * FROM employees;
 | Lysandra   | Reeves    | 1-212-759-3751 | New York      | 10018       |
 | Michael    | Arnett    | 1-650-230-8467 | San Francisco | 94116       |
 +------------+-----------+----------------+---------------+-------------
-{% endhighlight %}
+```
 
 Vous pouvez également insérer plusieurs lignes en utilisant une requête `select`. Par exemple :
 
-{% highlight sql linenos %}
+```sql
 SELECT * FROM contractors;
 
 +------------------+-----------------+----------------+---------------+----------+
@@ -83,10 +83,10 @@ SELECT * FROM employees;
 | Bradley    | Greenbloom | 1-650-445-0676 | NULL          | 94110       |
 | Laurel     | Slater     | 1-650-633-4495 | NULL          | 94115       |
 +------------+------------+----------------+---------------+-------------+
-{% endhighlight %}
+```
 
 Vous pouvez également insérer plusieurs objets JSON dans une colonne VARIANT d'une table :
-{% highlight sql json linenos %}
+```sql
 INSERT INTO prospects
   SELECT PARSE_JSON(column1)
   FROM VALUES
@@ -112,7 +112,7 @@ INSERT INTO prospects
     "phone": "+1 (979) 587-3021",
     "address": "441 Dover Street, Ada, New Mexico, 5922"
   }');
-{% endhighlight %}
+```
 
 Enfin, si vous utilisez la clause `OVERWRITE` avec une insertion multi-lignes, l'instruction reconstruit et écrase la table avec le contenu de la clause `VALUES`.
 
@@ -137,7 +137,7 @@ Ces transformations à la volée peuvent inclure :
 
 COPY s'intègre bien dans une infrastructure existante où un ou plusieurs warehouses sont gérés en taille et en suspension/reprise pour obtenir le meilleur rapport qualité-prix pour diverses charges de travail, telles que les requêtes `SELECT` ou les transformations de données. Voici la syntaxe d'une commande `COPY` simple :
 
-{% highlight sql json linenos %}
+```sql
 COPY INTO [<namespace>.]<table_name>
      FROM { internalStage | externalStage | externalLocation }
 [ FILES = ( '<file_name>' [ , '<file_name>' ] [ , ... ] ) ]
@@ -146,53 +146,53 @@ COPY INTO [<namespace>.]<table_name>
                     TYPE = { CSV | JSON | AVRO | ORC | PARQUET | XML } [ formatTypeOptions ] } ) ]
 [ copyOptions ]
 [ VALIDATION_MODE = RETURN_<n>_ROWS | RETURN_ERRORS | RETURN_ALL_ERRORS ]
-{% endhighlight %}
+```
 
 Où :
 
-{% highlight sql linenos %}
+```sql
 internalStage ::=
     @[<namespace>.]<int_stage_name>[/<path>]
   | @[<namespace>.]%<table_name>[/<path>]
   | @~[/<path>]
-{% endhighlight %}
+```
 
 Par exemple, pour charger des fichiers depuis un stage interne nommé dans une table, la commande est :
 
-{% highlight sql linenos %}
+```sql
 COPY INTO mytable
 FROM @my_int_stage;
-{% endhighlight %}
+```
 
 En utilisant la commande `CREATE STAGE`, vous pouvez charger des fichiers depuis un stage externe nommé que vous avez déjà créé. Le stage externe nommé référence un emplacement externe (Amazon S3, Google Cloud Storage ou Microsoft Azure). Par exemple :
 
-{% highlight sql linenos %}
+```sql
 COPY INTO mytable
   FROM s3://mybucket/data/files
   CREDENTIALS=(AWS_KEY_ID='$AWS_ACCESS_KEY_ID' AWS_SECRET_KEY='$AWS_SECRET_ACCESS_KEY')
   STORAGE_INTEGRATION = myint
   ENCRYPTION=(MASTER_KEY = 'eSx...')
   FILE_FORMAT = (FORMAT_NAME = my_csv_format);
-{% endhighlight %}
+```
 
-{% highlight sql linenos %}
+```sql
 COPY INTO mytable
   FROM 'gcs://mybucket/data/files'
   STORAGE_INTEGRATION = myint
   FILE_FORMAT = (FORMAT_NAME = my_csv_format);
-{% endhighlight %}
+```
 
-{% highlight sql linenos %}
+```sql
 COPY INTO mytable
   FROM 'azure://myaccount.blob.core.windows.net/mycontainer/data/files'
   CREDENTIALS=(AZURE_SAS_TOKEN='?sv=2016-05-31&ss=b&srt=sco&sp=rwdl&se=2018-06-27T10:05:50Z&st=2017-06-27T02:05:50Z&spr=https,http&sig=bgqQwoXwxzuD2GJfagRg7VOS8hzNr3QLT7rhS8OFRLQ%3D')
   ENCRYPTION=(TYPE='AZURE_CSE' MASTER_KEY = 'kPx...')
   FILE_FORMAT = (FORMAT_NAME = my_csv_format);
-{% endhighlight %}
+```
 
 Pour le chargement de données avec transformation, la syntaxe de la commande est la suivante :
 
-{% highlight sql linenos %}
+```sql
 COPY INTO [<namespace>.]<table_name> [ ( <col_name> [ , <col_name> ... ] ) ]
      FROM ( SELECT [<alias>.]$<file_col_num>[.<element>] [ , [<alias>.]$<file_col_num>[.<element>] ... ]
             FROM { internalStage | externalStage } )
@@ -201,7 +201,7 @@ COPY INTO [<namespace>.]<table_name> [ ( <col_name> [ , <col_name> ... ] ) ]
 [ FILE_FORMAT = ( { FORMAT_NAME = '[<namespace>.]<file_format_name>' |
                     TYPE = { CSV | JSON | AVRO | ORC | PARQUET | XML } [ formatTypeOptions ] } ) ]
 [ copyOptions ]
-{% endhighlight %}
+```
 
 La commande `COPY` repose sur un warehouse géré par le client, aussi certains éléments sont à prendre en compte lors du choix de la taille de warehouse appropriée. L'aspect le plus critique est le degré de parallélisme, car chaque thread peut ingérer un seul fichier simultanément. Le Warehouse XS fournit huit threads, et chaque incrément de taille de warehouse double le nombre de threads disponibles. La conclusion simplifiée est que pour un nombre de fichiers significativement élevé, on peut s'attendre à un parallélisme optimal pour chaque taille de warehouse donnée, réduisant de moitié le temps d'ingestion du grand lot de fichiers à chaque étape de montée en taille. Cependant, cette accélération peut être limitée par des facteurs tels que les délais réseau ou d'E/S dans des scénarios réels. Ces facteurs doivent être pris en compte pour les jobs d'ingestion plus importants et peuvent nécessiter un benchmarking individuel lors de la phase de planification.
 
@@ -348,18 +348,18 @@ Pour tester cette configuration localement, vous aurez besoin :
 
 D'abord, vous devez créer un utilisateur distinct que vous utiliserez pour le Streaming Snowpipe. N'oubliez pas de remplacer <YOURPUBLICKEY> par les détails correspondants. Dans ce cas, vous devez supprimer les lignes de commentaire de début/fin du fichier de clé (ex. : -----BEGIN PUBLIC KEY-----), mais veuillez conserver les caractères de nouvelle ligne.
 
-{% highlight sql linenos %}
+```sql
 create user snowpipe_streaming_user password='',  default_role = accountadmin, rsa_public_key='<YOURPUBLICKEY>';
 grant role accountadmin  to user snowpipe_streaming_user;
-{% endhighlight %}
+```
 
 Ici, vous allez créer la base de données que vous utiliserez ultérieurement.
 
-{% highlight sql linenos %}
+```sql
 CREATE OR REPLACE DATABASE hol_streaming;
 USE DATABASE hol_streaming;
 CREATE OR REPLACE WAREHOUSE hol_streaming_wh WITH WAREHOUSE_SIZE = 'XSMALL' MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 1 AUTO_SUSPEND = 60;
-{% endhighlight %}
+```
 
 Ensuite, ouvrons le terminal et exécutons les commandes suivantes pour télécharger Kafka et le connecteur Kafka Snowflake :
 
@@ -376,7 +376,7 @@ curl https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/1.9.
 
 Créez le fichier de configuration `config/SF_connect.properties` avec les paramètres suivants. N'oubliez pas de remplacer `<YOURACCOUNT>` et `<YOURPRIVATEKEY>` par les détails correspondants. Veuillez également noter que lors de l'ajout d'une clé privée, vous devez supprimer tous les caractères de nouvelle ligne ainsi que les commentaires de début et de fin (ex. : -----BEGIN PRIVATE KEY-----) :
 
-{% highlight properties linenos %}
+```properties
 name=snowpipe_streaming_ingest
 connector.class=com.snowflake.kafka.connector.SnowflakeSinkConnector
 tasks.max=1
@@ -396,7 +396,7 @@ key.converter=org.apache.kafka.connect.json.JsonConverter
 value.converter=org.apache.kafka.connect.json.JsonConverter
 key.converter.schemas.enable=false
 value.converter.schemas.enable=false
-{% endhighlight %}
+```
 
 Maintenant que c'est réglé, lançons tout ensemble. Veuillez noter que vous pourriez obtenir des erreurs pour cette étape si vous utilisez JDK>=v15. Et vous pourriez avoir besoin de plusieurs sessions de terminal séparées :
 
@@ -450,22 +450,22 @@ D'abord, vous devez extraire ce [fichier](https://sfquickstarts.s3.us-west-1.ama
 
 Depuis votre terminal, naviguez vers votre répertoire de travail, puis vers le répertoire extrait (`CDCSimulatorApp`), et exécutez ces deux commandes :
 
-{% highlight bash linenos %}
+```bash
 openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out rsa_key.p8 -nocrypt
 openssl rsa -in rsa_key.p8 -pubout -out rsa_key.pub
-{% endhighlight %}
+```
 
 Dans Snowflake, créez un rôle dédié pour votre application de streaming. Pour cela, exécutez ces commandes en utilisant la clé publique générée à l'étape précédente (le contenu de `rsa_key.pub`) :
 
-{% highlight sql linenos %}
+```sql
 create role if not exists VHOL_CDC_AGENT;
 create or replace user vhol_streaming1 COMMENT="Creating for VHOL";
 alter user vhol_streaming1 set rsa_public_key='<Paste Your Public Key Here>';
-{% endhighlight %}
+```
 
 Vous devrez modifier le fichier snowflake.properties pour qu'il corresponde au nom de votre compte Snowflake (deux endroits) :
 
-{% highlight properties linenos %}
+```properties
 user=vhol_streaming1
 role=VHOL_CDC_AGENT
 account=<MY_SNOWFLAKE_ACCOUNT>
@@ -481,34 +481,34 @@ TOKEN_KEY=11
 DEBUG=FALSE
 SHOW_KEYS=TRUE
 NUM_ROWS=1000000
-{% endhighlight %}
+```
 
 Créez de nouveaux rôles pour ce tutoriel et accordez les permissions :
 
-{% highlight sql linenos %}
+```sql
 use role ACCOUNTADMIN;
 set myname = current_user();
 create role if not exists VHOL;
 grant role VHOL to user identifier($myname);
 grant role VHOL_CDC_AGENT to user vhol_streaming1;
-{% endhighlight %}
+```
 
 Créez un virtual warehouse de calcul dédié (taille XS), puis créez la base de données utilisée tout au long de ce tutoriel :
 
-{% highlight sql linenos %}
+```sql
 create or replace warehouse VHOL_CDC_WH WAREHOUSE_SIZE = XSMALL, AUTO_SUSPEND = 5, AUTO_RESUME= TRUE;
 grant all privileges on warehouse VHOL_CDC_WH to role VHOL;
-{% endhighlight %}
+```
 
-{% highlight sql linenos %}
+```sql
 create database VHOL_ENG_CDC;
 use database VHOL_ENG_CDC;
 grant ownership on schema PUBLIC to role VHOL;
 revoke all privileges on database VHOL_ENG_CDC from role ACCOUNTADMIN;
 grant ownership on database VHOL_ENG_CDC to role VHOL;
-{% endhighlight %}
+```
 
-{% highlight sql linenos %}
+```sql
 use role VHOL;
 use database VHOL_ENG_CDC;
 create schema ENG;
@@ -518,14 +518,14 @@ grant usage on database VHOL_ENG_CDC to role VHOL_CDC_AGENT;
 grant usage on schema ENG to role VHOL_CDC_AGENT;
 grant usage on database VHOL_ENG_CDC to role PUBLIC;
 grant usage on schema PUBLIC to role PUBLIC;
-{% endhighlight %}
+```
 
 Créez une table de staging/atterrissage où toutes les données entrantes arriveront initialement. Chaque ligne contiendra une transaction, mais le JSON sera stocké en tant que type de données `VARIANT` dans Snowflake.
 
-{% highlight sql linenos %}
+```sql
 create or replace table ENG.CDC_STREAMING_TABLE (RECORD_CONTENT variant);
 grant insert on table ENG.CDC_STREAMING_TABLE to role VHOL_CDC_AGENT;
-{% endhighlight %}
+```
 
 Vous pouvez exécuter `Test.sh` pour vous assurer que tout est correctement configuré. Vous êtes maintenant prêt à streamer des données dans Snowflake !
 

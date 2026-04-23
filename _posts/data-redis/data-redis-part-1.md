@@ -85,16 +85,16 @@ wget https://qa-onprem.s3.amazonaws.com/redis-di/latest/redis-di-offline-rhel7-l
 
 Then Copy and unpack the downloaded `redis-di-offline.tar.gz` into the master node of your Redis Cluster under the `/tmp` directory:
 
-{% highlight shell linenos %}
+```bash
 tar xvf /tmp/redis-di-offline.tar.gz -C /tmp
-{% endhighlight %}
+```
 
 Switch the current user to the user with whom the cluster was created (usually redislabs or ubuntu). Install [RedisGears](https://redis.com/modules/redis-gears/) on the cluster. In case it’s missing, follow [this guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) to install it. 
 
-{% highlight shell linenos %}
+```bash
 curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu20.04-x86_64.1.2.5.zip -o /tmp/redis-gears.zip
 curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@/tmp/redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
-{% endhighlight %}
+```
 
 Then you install the RDI CLI by unpacking `redis-di.tar.gz` into `/usr/local/bin/` directory:
 
@@ -142,10 +142,10 @@ docker load < /tmp/debezium_server.tar.gz
 
 Then tag the image:
 
-{% highlight shell linenos %}
+```bash
 docker tag debezium/server:2.1.1.Final_offline debezium/server:2.1.1.Final
 docker tag debezium/server:2.1.1.Final_offline debezium/server:latest
-{% endhighlight %}
+```
 
 For the non-containerized deployment, you need to install [Java 11](https://www.oracle.com/java/technologies/downloads/#java11) or [Java 17](https://www.oracle.com/java/technologies/downloads/#java17). Then download Debezium Server 2.1.1.Final from [here](https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/2.1.1.Final/debezium-server-dist-2.1.1.Final.tar.gz).
 
@@ -159,10 +159,10 @@ Copy the scaffolded `application.properties` file (created by the [scaffold comm
 
 If you use `Oracle` as your source DB, please note that Debezium Server does not include the Oracle JDBC driver. You should download it and locate it under `debezium-server/lib` directory:
 
-{% highlight shell linenos %}
+```bash
 cd debezium-server/lib
 wget https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc8/21.1.0.0/ojdbc8-21.1.0.0.jar
-{% endhighlight %}
+```
 
 Then, start Debezium Server from `debezium-server` directory:
 
@@ -314,7 +314,7 @@ We will configure Debezium and Redis-DI to capture and collect any change in thi
 
 To use the Debezium SQL Server connector, it is a good practice to have a dedicated user with the minimal required permissions in SQL Server to control blast radius. For that, you need to run the T-SQL script below:
 
-{% highlight sql linenos %}
+```sql
 USE master
 GO
 CREATE LOGIN dbzuser WITH PASSWORD = 'dbz-password'
@@ -323,27 +323,27 @@ USE FO
 GO
 CREATE USER dbzuser FOR LOGIN dbzuser
 GO
-{% endhighlight %}
+```
 
 And Grant the Required Permissions to the new User
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO
 EXEC sp_addrolemember N'db_datareader', N'dbzuser'
 GO
-{% endhighlight %}
+```
 
 Then you must enable Change Data Capture (CDC) for the database and each table you want to capture. 
   
-{% highlight sql linenos %}
+```sql
 EXEC msdb.dbo.rds_cdc_enable_db 'FO'
 GO
-{% endhighlight %}
+```
 
 Run this T-SQL script for each table in the database and substitute the table name in `@source_name`:
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO
 EXEC sys.sp_cdc_enable_table
@@ -352,25 +352,25 @@ EXEC sys.sp_cdc_enable_table
 @role_name     = N'db_cdc',
 @supports_net_changes = 0
 GO
-{% endhighlight %}
+```
 
 Finally, the Debezium user created earlier (dbzuser) needs access to the captured change data, so it must be added to the role created in the previous step
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO  
 EXEC sp_addrolemember N'db_cdc', N'dbzuser'
 GO
-{% endhighlight %}
+```
 
 You can verify access by running this T-SQL script as user `dbzuser`:
 
-{% highlight sql linenos %}
+```sql
 USE FO
 GO  
 EXEC sys.sp_cdc_help_change_data_capture
 GO
-{% endhighlight %}
+```
 
 ### 2 - Redis-DI Configuration
 
@@ -378,14 +378,14 @@ The RDI scaffold command also generated a file called `config.yaml`. This file h
 
 In the Redis Data Integration configuration file `config.yaml`, you need to update the connection/target details to match the target database settings.
 
-{% highlight yaml linenos %}
+```yaml
 connections:
   target:
     host: redis-14000.cluster.redis-ingest.demo.redislabs.com
     port: 14000
     user: default
     password: rdi-password  
-{% endhighlight %}
+```
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjBTCib4MNlxu2oJZsMpwsiuZiyf2l1ASFAHVyDjs8BY3W2EgevGtFPdCv8jHFMLDc6aK04yJ9CuTw0Vy396BNaadumN1_DXzxizyBRFGdRM_s65wPQUknVj3iaLsXSQ0DTJuztGH5bEeIfkL1XwFRPvA-_5Pjv0t9cnHRvJPr_5lTn4elz7ivHLFRf){: .mx-auto.d-block :} *Redis-DI configuration*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -412,24 +412,24 @@ This prefix will be used in the key name of the created objects in the Redis-DI 
 
 You need to configure the Hostname and port of your SQL Server database.
 
-{% highlight properties linenos %}
+```properties
 debezium.source.database.hostname=rdi-db.cpqlgenz3kvv.eu-west-3.rds.amazonaws.com
 debezium.source.database.port=1433
-{% endhighlight %}
+```
 
 And the Username and password of the Debezium user (dbzuser).
 
-{% highlight properties linenos %}
+```properties
 debezium.source.database.user=dbzuser
 debezium.source.database.password=dbz-password
-{% endhighlight %}
+```
 
 You need to configure the endpoint of your Redis-DI config database and the password.
 
-{% highlight properties linenos %}
+```properties
 debezium.sink.redis.address=redis-13000.cluster.redis-ingest.demo.redislabs.com:13000
 debezium.sink.redis.password=rdi-password
-{% endhighlight %}
+```
 
 All other entries in the file created through the RDI `scaffold` command can be left at their default values.
 
@@ -455,10 +455,10 @@ Here is the snapshot of the entire GeneralLedger table used as a baseline. The w
   
 Let's add two transactions to the general ledger and see how the CDC captures the events on the fly. The following query inserts two transactions into `GeneralLedger`:
 
-{% highlight sql linenos %}
+```sql
 INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFID, DIMENSION6_, SPL_JOBNUMBER, SPL_JOBDATE, JOURNALIZESEQNUM, CREATEDTRANSACTIONID, DEL_CREATEDTIME, DIMENSION, QTY, POSTING, OPERATIONSTAX, DIMENSION4_, REASONREFRECID, DIMENSION2_, DATAAREAID, CREATEDBY, SPL_LEDGERACCMIRRORING_TR, TRANSTYPE, DOCUMENTDATE, TRANSDATE, MODIFIEDBY, CREDITING, SPL_BALANCINGID, BONDBATCHTRANS_RU, RECID, MODIFIEDDATETIME, AMOUNTCUR, CURRENCYCODE, RECVERSION, CORRECT, ACCOUNTNUM, AMOUNTMST, CREATEDDATETIME, PERIODCODE, ALLOCATELEVEL, FURTHERPOSTINGTYPE, DIMENSION5_, VOUCHER, DIMENSION3_, ACKNOWLEDGEMENTDATE, EUROTRIANGULATION) VALUES ('GJN0055897','0','0.000000000000','1','NLANCOMOE','SHKGS177192','1900-01-01 00:00:00.0000000','0','5664282519','34568','NL03PC301','0.000000000000','14','0','MARI','0','34200','nl03','arie.','0','0','2020-11-18 00:00:00.0000000','2020-11-24 00:00:00.0000000','arie.','0','0','0','5734386059','2020-11-25 08:36:08.0000000','1.410.000.000.000.000','EUR','1','0','701100','1.410.000.000.000.000','2020-11-25 08:36:08.0000000','1','0','0','GENCAR','PII000866194','MISC','2020-11-24 00:00:00.0000000','0'); 
 INSERT INTO dbo.GeneralLedger (JOURNALNUM, SPLTRMAGSUM, AMOUNTMSTSECOND, TAXREFID, DIMENSION6_, SPL_JOBNUMBER, SPL_JOBDATE, JOURNALIZESEQNUM, CREATEDTRANSACTIONID, DEL_CREATEDTIME, DIMENSION, QTY, POSTING, OPERATIONSTAX, DIMENSION4_, REASONREFRECID, DIMENSION2_, DATAAREAID, CREATEDBY, SPL_LEDGERACCMIRRORING_TR, TRANSTYPE, DOCUMENTDATE, TRANSDATE, MODIFIEDBY, CREDITING, SPL_BALANCINGID, BONDBATCHTRANS_RU, RECID, MODIFIEDDATETIME, AMOUNTCUR, CURRENCYCODE, RECVERSION, CORRECT, ACCOUNTNUM, AMOUNTMST, CREATEDDATETIME, PERIODCODE, ALLOCATELEVEL, FURTHERPOSTINGTYPE, DIMENSION5_, VOUCHER, DIMENSION3_, ACKNOWLEDGEMENTDATE, EUROTRIANGULATION) VALUES ('GJN0055516','0','0.000000000000','0','NLMEINARN','SRTMS096263','1900-01-01 00:00:00.0000000','0','5664241334','36867','NL03PC301','0.000000000000','14','0','x','0','x','nl03','coos.','0','0','1900-01-01 00:00:00.0000000','2020-11-01 00:00:00.0000000','coos.','1','0','0','5733724085','2020-11-02 09:14:27.0000000','-358.050.000.000.000','EUR','1','0','245000','-358.050.000.000.000','2020-11-02 09:14:27.0000000','1','0','0','x','GOI001629867','x','2020-11-01 00:00:00.0000000','0');
-{% endhighlight %}
+```
 
 
 <!--

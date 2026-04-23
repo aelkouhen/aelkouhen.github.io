@@ -32,10 +32,10 @@ Pour Redis Data Integration, vous avez besoin de deux bases de données : la bas
 
 Installons maintenant [RedisGears](https://redis.com/modules/redis-gears/) sur le cluster. S'il est absent, suivez [ce guide](https://redis-data-integration.docs.dev.redislabs.com/installation/install-redis-gears.html) pour l'installer.
 
-{% highlight shell linenos %}
+```bash
 curl -s https://redismodules.s3.amazonaws.com/redisgears/redisgears.Linux-ubuntu20.04-x86_64.1.2.5.zip -o /tmp/redis-gears.zip
 curl -v -k -s -u "<REDIS_CLUSTER_USER>:<REDIS_CLUSTER_PASSWORD>" -F "module=@/tmp/redis-gears.zip" https://<REDIS_CLUSTER_HOST>:9443/v2/modules
-{% endhighlight %}
+```
 
 ### 3 - Installer Redis Data Integration (RDI)
 
@@ -116,10 +116,10 @@ docker load < /tmp/debezium_server.tar.gz
 
 Puis étiquetez l'image :
 
-{% highlight shell linenos %}
+```bash
 docker tag debezium/server:2.1.1.Final_offline debezium/server:2.1.1.Final
 docker tag debezium/server:2.1.1.Final_offline debezium/server:latest
-{% endhighlight %}
+```
 
 Pour le déploiement sans conteneur, vous devez installer [Java 11](https://www.oracle.com/java/technologies/downloads/#java11) ou [Java 17](https://www.oracle.com/java/technologies/downloads/#java17). Téléchargez ensuite Debezium Server 2.1.1.Final depuis [ici](https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/2.1.1.Final/debezium-server-dist-2.1.1.Final.tar.gz).
 
@@ -133,10 +133,10 @@ Copiez le fichier `application.properties` généré par le scaffold (créé par
 
 Si vous utilisez `Oracle` comme base de données source, notez que Debezium Server n'inclut pas le pilote JDBC Oracle. Vous devez le télécharger et le placer dans le répertoire `debezium-server/lib` :
 
-{% highlight shell linenos %}
+```bash
 cd debezium-server/lib
 wget https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc8/21.1.0.0/ojdbc8-21.1.0.0.jar
-{% endhighlight %}
+```
 
 Démarrez ensuite Debezium Server depuis le répertoire `debezium-server` :
 
@@ -213,7 +213,7 @@ Ce processus sélectionne un sous-ensemble de votre jeu de données (colonnes sp
 
 En utilisant Redis Data Integration, le filtrage des données des employés ([exemple](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/mssql_script_emp_filter) ci-dessus) pour ne conserver que les personnes ayant un salaire supérieur à 1 000 peut être implémenté avec les blocs YAML suivants :
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 transform:
@@ -221,7 +221,7 @@ transform:
     with:
       language: sql
       expression: SAL>1000
-{% endhighlight %}
+```
 
 Lorsque vous placez ce fichier YAML dans le dossier `jobs`, Redis Data Integration capturera les modifications de la table source et appliquera le filtre pour ne stocker que les enregistrements confirmant l'expression de filtrage (voir [Data & Redis - partie 1](https://aelkouhen.github.io/2023-02-21-data-redis-part-1/) pour la configuration RDI et SQL Server).
 
@@ -235,7 +235,7 @@ Ce processus comble les lacunes de base dans le jeu de données. Il améliore é
 
 Supposons l'[exemple](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/mssql_script_emp_enrich) ci-dessus. Nous devons remplacer tous les salaires NULL dans la table des employés par une valeur par défaut de 0. En SQL, la fonction `COALESCE` retourne la première valeur non-NULL dans la liste d'attributs. Ainsi `COALESCE(SAL, 0)` retourne le salaire s'il n'est pas null ou 0 sinon. Avec RDI, nous pouvons implémenter cet enrichissement en utilisant le job suivant :
 
-{% highlight yaml linenos %}
+```yaml
 source:
     table: Employee
   transform:
@@ -246,7 +246,7 @@ source:
           ENAME: ENAME
           SAL: COALESCE(SAL, 0)
         language: sql
-{% endhighlight %}
+```
     
 Dans cette configuration, nous avons utilisé le bloc map qui mappe chaque enregistrement source vers une nouvelle sortie basée sur les expressions. Ici, nous n'avons modifié que le champ salary qui implémente l'expression `COALESCE`.
 
@@ -254,7 +254,7 @@ Dans cette configuration, nous avons utilisé le bloc map qui mappe chaque enreg
 
 Si vous utilisez SQL Server, une autre alternative pour effectuer cet enrichissement est d'utiliser la fonction `ISNULL`. Ainsi, nous pouvons utiliser `ISNULL(SAL, 0)` dans le bloc d'expression. La fonction `ISNULL` et l'expression `COALESCE` ont un objectif similaire mais peuvent se comporter différemment. Comme `ISNULL` est une fonction, elle n'est évaluée qu'une seule fois. Cependant, les valeurs d'entrée pour l'expression `COALESCE` peuvent être évaluées plusieurs fois. De plus, la détermination du type de données de l'expression résultante est différente. `ISNULL` utilise le type de données du premier paramètre, `COALESCE` suit les règles d'expression `CASE` et retourne le type de données de la valeur ayant la précédence la plus élevée.
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 transform:
@@ -265,7 +265,7 @@ transform:
         ENAME: ENAME
         SAL: ISNULL(SAL, 0)
       language: sql 
-{% endhighlight %}
+```
 
 ### 3 - Séparation (Splitting)
 
@@ -275,7 +275,7 @@ La séparation de champs en plusieurs champs consiste en deux opérations atomiq
 
 Dans l'[exemple](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/mssql_script_emp_split) ci-dessus, nous séparons `EFULLNAME` en deux champs : `ELASTNAME` et `EFIRSTNAME`. La configuration suivante utilise le bloc `add_field` pour créer les nouveaux champs `ELASTNAME` et `EFIRSTNAME`. Ensuite, nous pouvons utiliser la fonction `SUBSTRING` de SQL ou la fonction `SPLIT` de JMESPath. Dans les deux cas, nous avons besoin du bloc supplémentaire `remove_field` pour supprimer la colonne source `EFULLNAME`.
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 transform:
@@ -291,7 +291,7 @@ transform:
   - uses: remove_field
     with:
       field: EFULLNAME
-{% endhighlight %}
+```
     
 La fonction split décompose `EFULLNAME` en un tableau en utilisant les séparateurs de chaîne fournis comme paramètres (le caractère virgule comme séparateur).
 
@@ -305,7 +305,7 @@ La fusion de plusieurs champs en un seul consiste en deux opérations atomiques 
 
 Dans l'[exemple](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/mssql_script_emp_merge) ci-dessus, nous fusionnons `EFIRSTNAME` et `ELASTNAME` en un seul champ : `EFULLNAME`. La configuration suivante utilise le bloc `add_field` pour créer le nouveau champ `EFULLNAME` et deux blocs `remove_field` pour supprimer les colonnes fusionnées `EFIRSTNAME` et `ELASTNAME`. Pour exprimer la règle de transformation, nous pouvons utiliser la fonction `CONCAT_WS` de SQL ou les fonctions `JOIN` / `CONCAT` de JMESPath.
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 transform:
@@ -321,7 +321,7 @@ transform:
       fields:
         - field: EFIRSTNAME
         - field: ELASTNAME
-{% endhighlight %}
+```
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgh4OiMWaTT54PsII8wf8f7Tw2JPsI5qajZgyTfaRmbbZCjTLvvclsqCN8lODE7tdsrT6Wvo_2gNy_EjXE8fZG_aHHY5al-7Fc1jdWWHlsx8OFEDHkxDz1RTuM9pTDNkF6eoMOLppDHyHxc4NX0mMKxeA8lF7oH0l30Evk6_XPmnmWl3U0IEIe3lHW4){: .mx-auto.d-block :} *Fusion du prénom et du nom de famille en un seul champ.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
@@ -333,7 +333,7 @@ Outre la suppression de colonnes spécifiques de la source avec le bloc `remove_
 
 Par exemple, supposons le cas d'utilisation [ci-dessus](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/mssql_script_emp_drop). Si nous observons la colonne `EMPNO`, nous avons un identifiant distinct pour chaque enregistrement. Cependant, trois enregistrements sont en réalité des doublons. Dans ce cas, nous voulons supprimer ces doublons selon les champs `EFULLNAME` et `SAL` et non selon `EMPNO`. La solution dans RDI est de créer une nouvelle clé qui préserve l'unicité des enregistrements : une clé composée de la concaténation de `EFULLNAME` et `SAL`. Ainsi, RDI peut supprimer les doublons basés sur la clé nouvellement créée.
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 output:
@@ -343,7 +343,7 @@ output:
       key:
         expression: hash(concat([EFULLNAME, '-', SAL]), 'sha3_512')
         language: jmespath
-{% endhighlight %}
+```
 
 De plus, nous utilisons la fonction hash pour créer un identifiant plutôt qu'un ensemble de champs concaténés. Cependant, sachez qu'il est possible que deux concaténations (chaînes différentes) aient les mêmes valeurs de hachage. Cela peut se produire parce que nous prenons le modulo 'M' dans la valeur de hachage finale. Dans ce cas, deux combinaisons différentes de (EFULLNAME '-' SAL) peuvent avoir les mêmes valeurs de hachage, appelé une collision.
 
@@ -359,7 +359,7 @@ La dérivation consiste en des calculs transversaux entre colonnes. Avec RDI, no
 
 Le job suivant implémente ce type de dérivation en SQL en additionnant les champs `SAL` et `BONUS` et en les stockant dans un champ supplémentaire appelé `TOTALCOMP` :
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 transform:
@@ -369,7 +369,7 @@ transform:
         - field: TOTALCOMP
           language: sql
           expression: SAL + BONUS
-{% endhighlight %}
+```
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizA3KDK1kHPfXSWnJvV4FyvbSpElFK7R2ShFLAbSyfN3dNoUtGOLTUwXa4h_ZrcxIFzr8o9v8L0JMJRfgjf666Z3fBBDncT5EXO-NY0OtPON8tHnMfCaImbpxJ23SFyRi3W_vPcEq5wHys7O6XgvYjuNRqphOyBYjSLADZY9zT4UwtQmR3VJOzDqf9){: .mx-auto.d-block :} *Dérivation de la rémunération totale à partir des champs Salaire et Prime.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"} 
 
@@ -387,7 +387,7 @@ Supposons les [deux tables](https://raw.githubusercontent.com/aelkouhen/aelkouhe
 
 Créons le fichier suivant dans le répertoire jobs. Ce fichier déclaratif fusionne les deux tables en un seul objet JSON. Il démontre également la facilité de configurer une telle transformation complexe avec un simple fichier déclaratif YAML.
 
-{% highlight yaml linenos %}
+```yaml
 source:
   table: Employee
 output:
@@ -400,11 +400,11 @@ output:
         parent_key: DEPTNO         # cannot be composite
         path: $.Employees          # path must start from root ($)
         structure: map  
-{% endhighlight %}
+```
 
 Lors de l'utilisation du connecteur SQL Server Debezium, il est recommandé de disposer d'un utilisateur dédié avec les permissions minimales requises dans SQL Server pour contrôler le rayon d'impact. Pour cela, vous devez exécuter le script T-SQL ci-dessous :
 
-{% highlight sql linenos %}
+```sql
 USE master
 GO
 CREATE LOGIN dbzuser WITH PASSWORD = 'dbz-password'
@@ -413,27 +413,27 @@ USE HR
 GO
 CREATE USER dbzuser FOR LOGIN dbzuser
 GO
-{% endhighlight %}
+```
 
 Et accordez les permissions requises au nouvel utilisateur :
 
-{% highlight sql linenos %}
+```sql
 USE HR
 GO
 EXEC sp_addrolemember N'db_datareader', N'dbzuser'
 GO
-{% endhighlight %}
+```
 
 Vous devez ensuite activer le Change Data Capture (CDC) pour chaque base de données et table que vous souhaitez capturer.
 
-{% highlight sql linenos %}
+```sql
 EXEC msdb.dbo.rds_cdc_enable_db 'HR'
 GO
-{% endhighlight %}
+```
 
 Exécutez ce script T-SQL pour chaque table dans la base de données et remplacez le nom de la table dans `@source_name` par les noms des tables (Employee et Department) :
 
-{% highlight sql linenos %}
+```sql
 USE HR
 GO
 EXEC sys.sp_cdc_enable_table
@@ -442,29 +442,29 @@ EXEC sys.sp_cdc_enable_table
 @role_name     = N'db_cdc',
 @supports_net_changes = 0
 GO
-{% endhighlight %}
+```
 
 Enfin, l'utilisateur Debezium créé précédemment (dbzuser) doit avoir accès aux données de modification capturées, il doit donc être ajouté au rôle créé à l'étape précédente.
 
-{% highlight sql linenos %}
+```sql
 USE HR
 GO  
 EXEC sp_addrolemember N'db_cdc', N'dbzuser'
 GO
-{% endhighlight %}
+```
 
 Vous pouvez vérifier l'accès en exécutant ce script T-SQL en tant qu'utilisateur dbzuser :
 
-{% highlight sql linenos %}
+```sql
 USE HR
 GO  
 EXEC sys.sp_cdc_help_change_data_capture
 GO
-{% endhighlight %}
+```
 
 Dans le fichier de configuration RDI config.yaml, vous devez ajouter certains des paramètres suivants.
 
-{% highlight yaml linenos %}
+```yaml
 connections:
   target:
     host: redis-13000.cluster.redis-ingest.demo.redislabs.com
@@ -474,7 +474,7 @@ connections:
 applier:
   target_data_type: json
   json_update_strategy: merge 
-{% endhighlight %}
+```
 
 {: .box-warning}
 **Attention :** Si vous souhaitez exécuter des jobs de normalisation/dénormalisation, il est obligatoire de charger la version 0.100 (au minimum) de Redis Data Integration.
@@ -571,8 +571,7 @@ Cela créera un modèle de `config.yaml` et un dossier nommé `jobs` dans le ré
 
 Supposons que le point d'accès de votre base de données MySQL cible est `rdi-wb-db.cluster-cpqlgenz3kvv.eu-west-3.rds.amazonaws.com`. Vous devez ajouter la ou les connexions requises pour les cibles en aval dans la section `connections` du `config.yaml`, par exemple :
 
-{% highlight yaml linenos %}
-
+```yaml
 connections:
   my-sql-target:
     type: mysql
@@ -581,11 +580,11 @@ connections:
     database: sales
     user: admin
     password: rdi-password
-{% endhighlight %}
+```
 
 Dans le serveur MySQL, vous devez créer la base de données sales et les deux tables, `Invoice` et `InvoiceLine` :
 
-{% highlight sql linenos %}
+```sql
 USE mysql;
 CREATE DATABASE `sales`;
 
@@ -610,11 +609,11 @@ CREATE TABLE `sales`.`InvoiceLine` (
     `UnitPrice` int NOT NULL,
     PRIMARY KEY (InvoiceLineId)
 );
-{% endhighlight %}
+```
 
 Créons maintenant le fichier suivant dans le répertoire jobs. Ce fichier déclaratif divise la structure JSON et crée les deux tables dans une base de données MySQL appelée sales. Vous pouvez définir différentes cibles pour ces deux tables en définissant d'autres connexions dans le fichier `config.yaml`.
 
-{% highlight yaml linenos %}
+```yaml
 source:
   keyspace:
     pattern : invoice:*
@@ -649,7 +648,7 @@ output:
         - Quantity: IL.Quantity
         - TrackId: IL.TrackId
         - InvoiceId
-{% endhighlight %}
+```
 
 Pour démarrer le pipeline, exécutez la commande [`deploy`](https://redis-data-integration.docs.dev.redislabs.com/reference/cli/redis-di-deploy.html) :
 

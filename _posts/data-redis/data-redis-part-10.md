@@ -91,7 +91,7 @@ Vector Embeddings are created through an embedding process that maps discrete or
 
 These are just a few examples of how embeddings are created. Our recommendation engine uses a variant of BERT called [all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) to create sequential data embeddings for product descriptions. To generate product image embeddings, we use the [Img2Vec](https://github.com/christiansafka/img2vec) model (an implementation of Resnet-18). Both models are hosted and runnable online, with no expertise or installation required.
 
-{% highlight python linenos %}
+```python
 import os
 import redis
 
@@ -200,7 +200,7 @@ products = create_product_catalog()
 product_vectors = create_product_vectors(products)
 # Store vectors in Redis
 store_product_vectors(redis_conn, product_vectors)
-{% endhighlight %}
+```
 
 To create User embeddings, you can leverage the Two-Tower Neural Networks approach. It consists of two separate neural network models, often called "towers," that process different types of input data in parallel.
 
@@ -227,7 +227,7 @@ Redis Enterprise uses a distance metric to measure the similarity between two ve
 
 Below is an example of creating image and text indexes in Redis based on the vectors created earlier.
 
-{% highlight python linenos %}
+```python
 from redis import redis
 from redis.commands.search.field import VectorField
 from redis.commands.search.indexDefinition import (
@@ -265,7 +265,7 @@ def create_hnsw_index(
 
 # Create an HNSW search index for the products created earlier.
 create_hnsw_index(redis_conn, 4, 'product_vector:')
-{% endhighlight %}
+```
 
 After vectors are loaded into Redis and indexes have been created, queries can be formed and executed for all kinds of similarity-based search tasks.
 
@@ -296,7 +296,7 @@ FT.SEARCH idx "@img_vec:[VECTOR_RANGE 0.2 $BLOB]" PARAMS 3 BLOB "\x12\xa9\xf5\x6
 
 Below is an example of creating a query with **[redis_py](https://github.com/redis/redis-py)** that returns the 3 most similar products (by image) to [this one](https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/img/test_image.jpg), sorted by relevance score (cosine similarity set in the indexes created earlier).
 
-{% highlight python linenos %}
+```python
 import numpy as np
 from redis.commands.search.query import Query
 
@@ -337,7 +337,7 @@ def create_query(
 params_dict = {"query_vector" : create_query_vector()}   
 results = redis_conn.ft('idx').search(create_query(['product_id', '__img_vector_score']), query_params=params_dict)
 print(results) 
-{% endhighlight %}
+```
 
 You can try this out! The instructions above are a brief overview to demonstrate the building blocks for a real-time recommendation engine using Redis. I recommend two projects that leverage the VSS capability in Redis. The first one is the [Fashion Product Finder](https://redisvss.partee.io/) implemented using [redis-om-python](https://github.com/redis/redis-om-python). 
 

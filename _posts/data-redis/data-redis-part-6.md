@@ -99,7 +99,7 @@ B. An Amazon SageMaker notebook instance with different ML models will train on 
 
 4\. Persist transactional data into RedisJSON to enable low-latency indexing and querying of transactions.
 
-{% highlight python linenos %}
+```python
 def persistTransactionalData(payload_dict):
     print("** persistTransactionalData - START")
     now = datetime.datetime.now() # current date and time
@@ -110,7 +110,7 @@ def persistTransactionalData(payload_dict):
     result = redis_client.json().get(key)
     print(result)
     print("** persistTransactionalData - END")
-{% endhighlight %}
+```
 
 5\. The first layer in the fraud detection multi-layer approach is a rule-based system that uses predefined rules to identify potential fraudulent activity. The rules can be implemented so that it can start from a "low cost" to "high cost". For example, using RedisBloom/Cuckoo Filters, you can efficiently implement the blacklisting of the IP addresses. Then, with Redis geospatial native operations like `GEOSEARCH`, `GEORADIUS`, and `GEOPOS`, you can identify latitude and longitude data from users' IP addresses and compare it with the user's address in the records. Thus, you can apply preliminary anomaly detection without using ML inference.
 
@@ -120,7 +120,7 @@ def persistTransactionalData(payload_dict):
 
 6\. To avoid false positives and false negatives, the Lambda function calls the SageMaker models endpoints to assign anomaly scores and classification scores to incoming transactions.
 
-{% highlight python linenos %}
+```python
 def makeInferences(data_payload):
     print("** makeInferences - START")
     output = {}
@@ -129,12 +129,12 @@ def makeInferences(data_payload):
     print(output)
     print("** makeInferences - END")
     return output
-{% endhighlight %}
+```
 
 \- Anomalie detection:  
 
 
-{% highlight python linenos %}
+```python
 def get_anomaly_prediction(data):
     sagemaker_endpoint_name = 'random-cut-forest-endpoint'
     sagemaker_runtime = boto3.client('sagemaker-runtime')
@@ -146,11 +146,11 @@ def get_anomaly_prediction(data):
     print("anomaly score: {}".format(anomaly_score))
     return {"score": anomaly_score}
     
-{% endhighlight %}
+```
 
 \-Fraud Prediction:
 
-{% highlight python linenos %}
+```python
 def get_fraud_prediction(data, threshold=0.5):
     sagemaker_endpoint_name = 'fraud-detection-endpoint'
     sagemaker_runtime = boto3.client('sagemaker-runtime')
@@ -164,13 +164,13 @@ def get_fraud_prediction(data, threshold=0.5):
     print("classification pred_proba: {}, prediction: {}".format(pred_proba, prediction))
 
     return {"pred_proba": pred_proba, "prediction": prediction}
-{% endhighlight %}
+```
 
 7\. AWS Lambda function also leverages Redis Enterprise Cloud as a low-latency (Online) feature store.
 
 8\. AWS Lambda function further persists the prediction results to Redis Enterprise. Optionally, the results, along with transactional details, can also be stored in a time-series database for further data visualizations using Grafana.
 
-{% highlight python linenos %}
+```python
 def persistMLScores(output):
     print("** persistMLScores - START")
     print(output)
@@ -192,7 +192,7 @@ def persistMLScores(output):
         print("*** adding to non-fraudulent series with current timestamp")
 
     print("** persistMLScores - END")
-{% endhighlight %}
+```
 
 Below is the Grafana dashboard that shows real-time fraud scores for incoming transactions. For any given transaction, if the score exceeds 0.8, it is considered fraudulent and shown in red. In addition, other charts are used to visualize fraud activity over time or to compare fraudulent vs. non-fraudulent (bottom side).
 

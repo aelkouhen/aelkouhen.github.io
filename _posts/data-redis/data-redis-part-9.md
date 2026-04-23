@@ -39,7 +39,7 @@ Distance metrics provide a reliable and measurable way to calculate the simila
 RediSearch exposes the usual search capabilities, combining full text, geographical, and numeric pre-filters along with the K Nearest Neighbors (KNN) vector search. For this, you can use vector similarity queries in the [FT.SEARCH](https://redis.io/commands/ft.search) query command and you must specify the option `DIALECT 2` or greater to use a vector similarity query. For example, you can make a query that returns similar products of a given item by its image available in stores around your home!
 Let's consider the following product object. It consists of the product image, name, vector embedding of the product image, gender, and the store location in which you can find this product:
 
-{% highlight json linenos %}
+```json
 {
   "product_id": "8cf52572340c3592e5f0ede116a0206f",
   "product_embedding": [3.0499367713928223,0.6722652912139893,1.209347128868103,0.4089492857456207,0.00762720312923193,0.16665008664131165,0.23197419941425323,0.7637760639190674,...],
@@ -49,13 +49,13 @@ Let's consider the following product object. It consists of the product image, n
   "price": 18.99,
   "location": "50.69098, 3.17655"
 }
-{% endhighlight %}
+```
 
 For each store, multiple documents exist following the structure above and representing each product available in the store. Now, let's create a search index to query the different attributes of the product:
 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidgdT8jEUp06JqSQNW-DpJNbqw_5lk9Ep6YNeZ84Q3e6dqZsj1WElgATgbYg8eeJrPrYPExpQbHUOKQ4FSXuO7WsFoTpvX-JXwIS95WLCNNbZxzKUlFcBIR39R66toubiD__hrXcPJpnf7Yu76VfJAxbQjNwtUc0IhqxB3_sLRIltgvIe4BY5D3UAuC8c){: .mx-auto.d-block :} *Storing Vectors in Redis.*{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}  
 
-{% highlight python linenos %}
+```python
 from redis.commands.search.field import (
     TagField,
     VectorField,
@@ -104,31 +104,31 @@ def create_hybrid_index(
         fields = [gender_field, name_field, url_field, price_field, location_field, image_field],
         definition = IndexDefinition(prefix=[prefix], index_type=IndexType.JSON)
     )
-{% endhighlight %}
+```
 
 You can start testing this index by performing some basic full-text searches. First, find all products with the keyword `Addidas`. Note we voluntarily make a typo in the brand name `Adidas` to test the fuzzy search. The executed search query is:
 
-{% highlight python linenos %}
+```python
 query = (
     Query('@name:%addidas%').return_fields('id', 'name', 'image', 'price')
 )
 
 results = redis_client.ft("product_index").search(query)
-{% endhighlight %}
+```
 
 Now, we will look for the same products with a filter on price: Only product that costs less or equal to `50 euros`. The executed search query is:
 
-{% highlight python linenos %}
+```python
 query = (
     Query('@name:%Adidas% @price:[0 50]').return_fields('id', 'name', 'image', 'price')
 )
 
 results = redis_client.ft("product_index").search(query)
-{% endhighlight %}
+```
 
 Now, we can make hybrid searches using vector similarity search and standard search. For this, we will start by looking for all products that are similar to a given image (a product image), and we will specify a pre-filtering condition to limit the search to a certain category of products (e.g., gender, footwear...). For this, we create a helper function called `hybrid_similarity_search` to create an embedding from the query image and compare it to other vectors having the same prefix according to the index created previously, in addition to filtering by the gender tag.
 
-{% highlight python linenos %}
+```python
 def hybrid_similarity_search(query_image: str, query_tag: str, k: int, return_fields: tuple, index_name: str = "product_index") -> list:
     # create a redis query object
     redis_query = (
@@ -145,16 +145,16 @@ def hybrid_similarity_search(query_image: str, query_tag: str, k: int, return_fi
     results = redis_client.ft(index_name).search(
         redis_query, query_params={"query_vector": query_vector}
     )
-{% endhighlight %}
+```
 
-{% highlight python linenos %}
+```python
 # 2. Create query arguments
 query_image = "drive/MyDrive/ColabDrive/products/input/2eca615a43d0098f4bb5fc90004c3678.jpg"
 query_tag = "women"
 
 # 3. Perform the hybrid vector similarity search with the given parameters
 results = hybrid_similarity_search(query_image, query_tag, k=3, return_fields=('distance', '$.product_id', '$.product_image', '$.gender'))
-{% endhighlight %}
+```
 
 The expected result is a dataframe containing only women items similar to the given input image. 
 
@@ -162,7 +162,7 @@ The expected result is a dataframe containing only women items similar to the gi
 
 Similarly, looking for products that are similar to a given one and available in stores near a given location is a simple query. For this, let's update the previous helper function to make pre-filtering by locations around `Paris` with a radius of `30 km`.
 
-{% highlight python linenos %}
+```python
 def hybrid_similarity_search(query_image: str, location: str, radius: str, k: int, return_fields: tuple, index_name: str = "product_index") -> list:
     # create a redis query object
     redis_query = (
@@ -179,9 +179,9 @@ def hybrid_similarity_search(query_image: str, location: str, radius: str, k: in
     results = redis_client.ft(index_name).search(
         redis_query, query_params={"query_vector": query_vector}
     )
-{% endhighlight %}
+```
 
-{% highlight python linenos %}
+```python
 # 2. Create query arguments
 query_image = "drive/MyDrive/ColabDrive/products/input/2eca615a43d0098f4bb5fc90004c3678.jpg"
 paris_coordinates = "48.866667 2.333333"
@@ -189,7 +189,7 @@ radius = "30 km"
 
 # 3. Perform the hybrid vector similarity search with the given parameters
 results = hybrid_similarity_search(query_image, paris_coordinates, radius, k=3, return_fields=('distance', '$.product_id', '$.product_image', '$.product_name', '$.location'))
-{% endhighlight %}
+```
 
 The example above returns the same result as the previous query. Still, we specify the coordinates of Paris and the radius in which we want to perform the search between the given image vector and all the products' vectors already stored in Redis. The result can be displayed on a map for a more user-friendly interface.
 

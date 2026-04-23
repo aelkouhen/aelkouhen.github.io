@@ -32,11 +32,11 @@ Vous devez installer et configurer quelques éléments pour cet article. Tout d'
 
 Pour la deuxième partie de cet article, vous devez télécharger et installer le serveur [Trino](https://trino.io/docs/current/installation.html) :
 
-{% highlight shell linenos %}
+```bash
 wget https://repo1.maven.org/maven2/io/trino/trino-server/403/trino-server-403.tar.gz
 mkdir /usr/lib/trino
 tar xzvf trino-server-403.tar.gz --directory /usr/lib/trino --strip-components 1
-{% endhighlight %}
+```
 
 Trino nécessite une version 64 bits de **Java 17+** en plus de **Python**. Trino a également besoin d'un répertoire de données pour stocker les journaux, etc. Par conséquent, il est recommandé de créer un répertoire de données en dehors du répertoire d'installation, permettant de le conserver facilement lors des mises à niveau de Trino.
 
@@ -58,7 +58,7 @@ node.environment=production
 
 Créez un fichier de configuration JVM dans `/usr/lib/trino/etc/jvm.config`
 
-{% highlight properties linenos %}
+```properties
 -server
 -Xmx16G
 -XX:InitialRAMPercentage=80
@@ -75,16 +75,16 @@ Créez un fichier de configuration JVM dans `/usr/lib/trino/etc/jvm.config`
 -Djdk.nio.maxCachedBufferSize=2000000
 -XX:+UnlockDiagnosticVMOptions
 -XX:+UseAESCTRIntrinsics
-{% endhighlight %}
+```
 
 Créez le fichier de propriétés de configuration `/usr/lib/trino/etc/config.properties`
 
-{% highlight properties linenos %}
+```properties
 coordinator=true
 node-scheduler.include-coordinator=true
 http-server.http.port=8080
 discovery.uri=http://localhost:8080
-{% endhighlight %}
+```
 
 Créez un fichier de configuration de journalisation `/usr/lib/trino/etc/log.properties`
 
@@ -94,11 +94,11 @@ io.trino=INFO
 
 Vous devez maintenant télécharger la dernière version du [connecteur RediSearch](https://github.com/redis-field-engineering/redis-sql-trino/releases/latest) et le décompresser sans aucune structure de répertoire dans `/usr/lib/trino/plugin/redisearch` :
 
-{% highlight shell linenos %}
+```bash
 mkdir /usr/lib/trino/plugin/redisearch
 wget https://github.com/redis-field-engineering/redis-sql-trino/releases/download/v0.3.3/redis-sql-trino-0.3.3.zip -O /usr/lib/trino/plugin/redisearch/redis-sql-trino-0.3.3.zip
 unzip -j /usr/lib/trino/plugin/redisearch/redis-sql-trino-0.3.3.zip -d /usr/lib/trino/plugin/redisearch
-{% endhighlight %}
+```
 
 Créez le sous-répertoire catalog `/usr/lib/trino/etc/catalog` :
 
@@ -108,10 +108,10 @@ mkdir /usr/lib/trino/etc/catalog
 
 Créez une configuration du connecteur RediSearch dans `/usr/lib/trino/etc/catalog/redisearch.properties` et modifiez/ajoutez des [propriétés](https://redis-field-engineering.github.io/redis-sql-trino/#properties) selon vos besoins.
 
-{% highlight properties linenos %}
+```properties
 connector.name=redisearch
 redisearch.uri=redis://redis-12000.cluster.redis-serving.demo.redislabs.com:12000
-{% endhighlight %}
+```
 
 Démarrez le serveur Trino :
 
@@ -121,10 +121,10 @@ Démarrez le serveur Trino :
 
 Téléchargez [trino-cli-403-executable.jar](https://repo1.maven.org/maven2/io/trino/trino-cli/403/trino-cli-403-executable.jar) pour utiliser l'interface en ligne de commande (CLI) de Trino :
 
-{% highlight shell linenos %}
+```bash
 wget https://repo1.maven.org/maven2/io/trino/trino-cli/403/trino-cli-403-executable.jar -O /usr/local/bin/trino
 chmod +x /usr/local/bin/trino
-{% endhighlight %}
+```
 
 La plupart des applications réelles utiliseront le [pilote JDBC Trino](https://trino.io/docs/current/client/jdbc.html) pour émettre des requêtes. Le pilote JDBC Trino permet aux utilisateurs d'accéder à Trino depuis des applications basées sur Java ou des applications non-Java s'exécutant dans une JVM. Consultez la [documentation Trino](https://trino.io/docs/current/client/jdbc.html) pour les instructions de configuration.
 
@@ -152,21 +152,21 @@ Pour utiliser Redis Smart Cache avec une application existante, vous devez ajout
 
 #### Maven :
 
-{% highlight xml linenos %}
+```xml
 <dependency>
     <groupId>com.redis</groupId>
     <artifactId>redis-smart-cache-jdbc</artifactId>
     <version>0.2.1</version>
 </dependency>
-{% endhighlight %}
+```
 
 #### Gradle :
 
-{% highlight gradle linenos %}
+```gradle
 dependencies {
     implementation 'com. redis:redis-smart-cache-jdbc:0.2.1'
 }
-{% endhighlight %}
+```
 
 Ensuite, définissez votre URI JDBC vers l'URI de votre instance Redis préfixée par `JDBC:`, par exemple :
 
@@ -182,7 +182,7 @@ Redis Smart Cache utilise des règles pour déterminer comment les requêtes SQL
 
 Voici la configuration de règle par défaut :
 
-{% highlight yaml linenos %}
+```yaml
 {
   "rules": [
     {
@@ -195,7 +195,7 @@ Voici la configuration de règle par défaut :
     }
   ]
 }
-{% endhighlight %}
+```
 
 Cette configuration par défaut contient une règle de passage unique où tous les résultats de requêtes SQL se verront attribuer une TTL de 1 heure.
 
@@ -218,10 +218,10 @@ Après avoir ajouté la dépendance Redis Smart Cache et défini quelques config
 
 Si vous avez un serveur MySQL installé, vous pouvez exécuter cet exemple sur votre machine locale. Ou bien, vous pouvez simplement cloner ce dépôt git :
 
-{% highlight shell linenos %}
+```bash
 git clone https://github.com/redis-field-engineering/redis-smart-cache.git
 cd redis-smart-cache
-{% endhighlight %}
+```
 
 Et utiliser Docker Compose pour lancer des conteneurs pour MySQL, Grafana, Redis Stack et l'instance d'application Redis Smart Cache :
 
@@ -247,14 +247,14 @@ Pour cette raison, Redis a développé un module appelé [RediSearch](https://re
 
 L'idée est de créer des indices secondaires autres que les clés (primaires) et d'effectuer des requêtes sur ces indices. Par exemple, nous utilisons la commande [`FT.CREATE`](https://redis.io/commands/ft.create) pour créer un index sur les clés préfixées par `person:` avec les champs : name, age et gender. Tout hash existant préfixé par `person:` est automatiquement indexé lors de la création.
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE myIdx 
   ON HASH PREFIX 1 "person:" 
 SCHEMA 
   name TEXT NOSTEM 
   age NUMERIC SORTABLE 
   gender TAG SORTABLE
-{% endhighlight %}
+```
   
 Vous pouvez maintenant utiliser la commande [`FT.SEARCH`](https://redis.io/commands/ft.search) pour rechercher dans l'index des personnes dont les noms contiennent des mots spécifiques.
 
@@ -308,16 +308,16 @@ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a re
 
 Nous faisons de même pour les autres tables, Plan de Comptes et Nature Comptable.
 
-{% highlight shell linenos %}
+```bash
 riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/ChartAccounts.csv --header hset --keyspace CoA --keys ACCOUNTNUM
 riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a redis-password import https://raw.githubusercontent.com/aelkouhen/aelkouhen.github.io/main/assets/data/AccountingNature.csv --header hset --keyspace AccountingNature --keys AccountingNatureCode
-{% endhighlight %}
+```
 
 Une fois vos données ingérées dans Redis, vous pouvez créer des indices secondaires sur les trois tables :
 
 `general_ledger` comme index secondaire pour la table Grand Livre Général. Nous n'avons besoin d'indexer que le Numéro de Compte, le Montant de la Transaction (AMOUNTMST) et le Code de Devise.
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE general_ledger    
   ON HASH                
     PREFIX 1 "GeneralLedger:"    
@@ -325,11 +325,11 @@ FT.CREATE general_ledger
     ACCOUNTNUM TEXT SORTABLE 
     AMOUNTMST NUMERIC SORTABLE 
     CURRENCYCODE TAG SORTABLE
-{% endhighlight %}
+```
 
 `chart_accounts` comme index secondaire pour la table Plan de Comptes.
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE chart_accounts    
   ON HASH                
     PREFIX 1 "CoA:"    
@@ -339,11 +339,11 @@ FT.CREATE chart_accounts
     Nature TEXT SORTABLE
     Statement TAG SORTABLE
     AccountingNatureCode TAG SORTABLE
-{% endhighlight %}
+```
 
 Et `accounting_nature` comme index secondaire pour la table Nature Comptable.
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE accounting_nature    
   ON HASH                
     PREFIX 1 "AccountingNature:"      
@@ -352,15 +352,15 @@ FT.CREATE accounting_nature
     AccountingNature TEXT SORTABLE
     Description TEXT NOSTEM
     AccountGroup TAG SORTABLE  
-{% endhighlight %}
+```
 
 Vous pouvez maintenant tester ces indices en exécutant les commandes suivantes :
 
-{% highlight sql linenos %}
+```sql
 FT.SEARCH general_ledger "@AMOUNTMST:[(100000 inf] @CURRENCYCODE:{EUR|USD}"  
 FT.SEARCH chart_accounts "@ACCOUNTNUM:61110801"  
 FT.SEARCH accounting_nature "@AccountGroup:{Payables|Receivables}"
-{% endhighlight %}
+```
 
 La première requête retourne les transactions financières supérieures à 10 000 euros ou dollars américains. La deuxième retourne les détails du numéro de compte 61110801. Enfin, la dernière requête retourne tous les numéros de comptes Fournisseurs<sup>1</sup> et Clients<sup>2</sup>. Vous pouvez observer que l'utilisation des commandes RediSearch n'est pas évidente pour les ingénieurs de données et peut s'avérer être un vrai casse-tête si vous souhaitez effectuer des requêtes complexes.
 
@@ -408,15 +408,15 @@ Vous pouvez ensuite configurer la source de données Redis, en exécutant :
 
 1\. la commande suivante dans [PowerShell](https://en.wikipedia.org/wiki/PowerShell) (Windows 10+) en remplaçant l'hôte, le port, le nom d'utilisateur et le mot de passe par les informations d'identification appropriées.
 
-{% highlight PowerShell linenos %}
+```powershell
 Add-OdbcDSN -Name "Redis" -DriverName "Redis" -Platform "64-bit" -DsnType "User" -SetPropertyValue @("host=hostname", "port=portNum", "username=username", "password=password")
-{% endhighlight %}
+```
 
 Ici, je réutilise la même base de données que la dernière section (Trino) :
 
-{% highlight PowerShell linenos %}
+```powershell
 Add-OdbcDSN -Name "Redis" -DriverName "Redis" -Platform "64-bit" -DsnType "User" -SetPropertyValue @("host=redis-12000.cluster.redis-serving.demo.redislabs.com", "port=12000", "username=default", "password=redis-password")
-{% endhighlight %}
+```
 
 2\. Ou, avec l'interface graphique des sources de données ODBC :
 
@@ -430,7 +430,7 @@ $ riot-file -h redis-12000.cluster.redis-serving.demo.redislabs.com -p 12000 -a 
   
 Ensuite, nous allons créer un index secondaire sur les rapports ingérés créés par la dernière commande :
 
-{% highlight sql linenos %}
+```sql
 FT.CREATE ufo_report    
   ON HASH                
     PREFIX 1 "Report:" 
@@ -441,7 +441,7 @@ SCHEMA
   country TEXT SORTABLE
   city_longitude NUMERIC SORTABLE
   city_latitude NUMERIC SORTABLE
-{% endhighlight %}
+```
 
 Testons le pilote ODBC Redis avec une feuille Microsoft Excel. D'abord, nous exécutons « obtenir des données depuis une autre source » dans le menu Données, puis nous choisissons le menu « depuis un pilote ODBC ».
 
