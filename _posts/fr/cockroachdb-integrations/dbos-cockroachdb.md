@@ -83,9 +83,9 @@ engine = create_engine(database_url)
 config: DBOSConfig = {
     "name": "my-agent-app",
     "system_database_url": database_url,
-    # Fournir un engine SQLAlchemy pré-construit pour le driver CockroachDB
+    # Pass a pre-built SQLAlchemy engine so DBOS uses the CockroachDB driver
     "system_database_engine": engine,
-    # CockroachDB ne supporte pas LISTEN/NOTIFY — utiliser le polling
+    # CockroachDB does not support LISTEN/NOTIFY — use polling instead
     "use_listen_notify": False,
 }
 DBOS(config=config)
@@ -126,7 +126,7 @@ from sqlalchemy import create_engine
 
 app = FastAPI()
 
-# ── Connexion CockroachDB ───────────────────────────────────────────────────
+# ── CockroachDB connection ──────────────────────────────────────────────────
 database_url = os.environ["DBOS_COCKROACHDB_URL"]
 engine = create_engine(database_url)
 
@@ -134,35 +134,35 @@ config: DBOSConfig = {
     "name": "agent-workflow",
     "system_database_url": database_url,
     "system_database_engine": engine,
-    "use_listen_notify": False,   # Requis : CockroachDB n'a pas de LISTEN/NOTIFY
+    "use_listen_notify": False,   # Required: CockroachDB has no LISTEN/NOTIFY
 }
 DBOS(config=config)
 
 STEPS_EVENT = "steps_event"
 
-# ── Étapes du workflow ──────────────────────────────────────────────────────
+# ── Workflow steps ──────────────────────────────────────────────────────────
 
 @DBOS.step()
 def retrieve_context(task: str) -> str:
-    """Étape 1 : récupère le contexte pertinent depuis la base de connaissances."""
+    """Step 1 — retrieve relevant context from the knowledge base."""
     time.sleep(3)
-    DBOS.logger.info(f"Contexte récupéré pour : {task}")
+    DBOS.logger.info(f"Context retrieved for: {task}")
     return f"context_for_{task}"
 
 @DBOS.step()
 def call_agent(context: str) -> str:
-    """Étape 2 : invoque le LLM/agent avec le contexte."""
+    """Step 2 — call the LLM/agent with the context."""
     time.sleep(3)
-    DBOS.logger.info("Invocation de l'agent terminée")
+    DBOS.logger.info("Agent invocation completed")
     return f"agent_response_given_{context}"
 
 @DBOS.step()
 def persist_result(response: str) -> None:
-    """Étape 3 : écrit la sortie de l'agent dans la base applicative."""
+    """Step 3 — write the agent's output to the application database."""
     time.sleep(3)
-    DBOS.logger.info(f"Résultat persisté : {response}")
+    DBOS.logger.info(f"Result persisted: {response}")
 
-# ── Workflow durable ────────────────────────────────────────────────────────
+# ── Durable workflow ────────────────────────────────────────────────────────
 
 @DBOS.workflow()
 def agent_workflow(task: str) -> None:
@@ -175,23 +175,23 @@ def agent_workflow(task: str) -> None:
     persist_result(response)
     DBOS.set_event(STEPS_EVENT, 3)
 
-# ── Endpoints HTTP ──────────────────────────────────────────────────────────
+# ── HTTP endpoints ──────────────────────────────────────────────────────────
 
 @app.post("/agent/{task_id}")
 def start_agent(task_id: str, task: str) -> dict:
-    """Lance de manière idempotente un workflow d'agent durable."""
+    """Idempotently launch a durable agent workflow."""
     with SetWorkflowID(task_id):
         DBOS.start_workflow(agent_workflow, task)
-    return {"workflow_id": task_id, "status": "démarré"}
+    return {"workflow_id": task_id, "status": "started"}
 
-@app.get("/agent/{task_id}/progression")
+@app.get("/agent/{task_id}/progress")
 def get_progress(task_id: str) -> dict:
-    """Interroge la progression du workflow (0-3 étapes complétées)."""
+    """Poll workflow progress (0-3 completed steps)."""
     try:
         step = DBOS.get_event(task_id, STEPS_EVENT, timeout_seconds=0)
     except KeyError:
-        return {"etapes_completees": 0}
-    return {"etapes_completees": step if step is not None else 0}
+        return {"completed_steps": 0}
+    return {"completed_steps": step if step is not None else 0}
 
 if __name__ == "__main__":
     DBOS.launch()
