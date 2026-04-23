@@ -566,29 +566,96 @@ class AICockroachAgentWorkflow:
 
 ## Load and Performance Testing
 
-### Benchmarking with Maru
+### Benchmarking with Omes
 
-[Maru](https://github.com/temporalio/maru) is Temporal's official load-testing tool. It drives configurable volumes of workflows and activities against a live cluster and reports throughput, latency, and error rates. Against a CockroachDB backend it lets you observe how the persistence tier behaves as concurrency grows.
+[Omes](https://github.com/temporalio/omes) is Temporal's official load-testing tool (the successor to the deprecated Maru). It drives configurable volumes of workflows and activities against a live cluster and reports throughput, latency, and error rates. Against a CockroachDB backend it lets you observe how the persistence tier behaves as concurrency grows.
 
-A typical benchmark run starts a worker alongside the Maru bench scenario:
+Build Omes from source and run the `throughput_stress` scenario:
 
 ```bash
-# Start the bench worker (points at your Temporal frontend)
-go run ./cmd/bench worker --temporal-host localhost:7233 &
+git clone https://github.com/temporalio/omes.git
+cd omes
 
-# Run the scenario: 500 concurrent workflows, 5-minute duration
-go run ./cmd/bench start \
-  --workflow basic \
-  --concurrent-workflows 500 \
+# Register the custom search attribute Omes requires
+temporal operator search-attribute create \
+  --namespace default \
+  --name OmesExecutionID \
+  --type Keyword
+
+# Run: 50 concurrent workflows, 5-minute duration
+go run ./cmd/main.go run-scenario-with-worker \
+  --scenario throughput_stress \
+  --language go \
+  --server-address localhost:7233 \
+  --namespace default \
   --duration 5m \
-  --temporal-host localhost:7233
+  --max-concurrent 50
+```
+
+Other useful scenarios:
+
+| Scenario | What it tests |
+|---|---|
+| `workflow_with_single_noop_activity` | Minimal round-trip: one workflow, one no-op activity |
+| `throughput_stress` | Sustained write throughput to the persistence store |
+| `state_transitions_steady` | Steady-state state-transition rate; use `--option state-transitions-per-second=N` |
+| `ebb_and_flow` | Oscillating backlog between min and max concurrent workflows |
+
+> **Co-location matters.** Omes uses Temporal's [Workflow Update](https://docs.temporal.io/workflows#update) API internally, which requires sub-second round-trips between the client, server, and persistence store. Run Omes from a machine in the same datacenter or VPC as your CockroachDB cluster. Running against a remote CockroachDB over a WAN connection inflates every write operation (typical p50 rises to 3–6 seconds instead of <100 ms), which causes Omes' internal update timeouts to fire before scenarios complete.
+
+For a quick persistence latency baseline that works over any connection, use the Temporal Go SDK directly to measure raw `StartWorkflowExecution` throughput:
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "sort"
+    "sync"
+    "time"
+    "go.temporal.io/sdk/client"
+)
+
+func main() {
+    c, _ := client.Dial(client.Options{HostPort: "localhost:7233", Namespace: "default"})
+    defer c.Close()
+
+    const total, concurrency = 20, 3
+    latencies := make([]time.Duration, 0, total)
+    var mu sync.Mutex
+    var wg sync.WaitGroup
+    sem := make(chan struct{}, concurrency)
+
+    t0 := time.Now()
+    for i := 0; i < total; i++ {
+        wg.Add(1); sem <- struct{}{}
+        go func(i int) {
+            defer wg.Done(); defer func() { <-sem }()
+            start := time.Now()
+            c.ExecuteWorkflow(context.Background(), client.StartWorkflowOptions{
+                ID: fmt.Sprintf("bench-%d-%d", time.Now().UnixMicro(), i),
+                TaskQueue: "bench-queue",
+            }, "BenchWorkflow", i)
+            mu.Lock(); latencies = append(latencies, time.Since(start)); mu.Unlock()
+        }(i)
+    }
+    wg.Wait()
+    elapsed := time.Since(t0)
+
+    sort.Slice(latencies, func(i, j int) bool { return latencies[i] < latencies[j] })
+    fmt.Printf("Throughput: %.1f/sec | p50: %v | p95: %v\n",
+        float64(len(latencies))/elapsed.Seconds(),
+        latencies[len(latencies)*50/100].Round(time.Millisecond),
+        latencies[len(latencies)*95/100].Round(time.Millisecond))
+}
 ```
 
 With this setup you can:
 
-- **Measure workflow throughput**: workflows started and completed per second at varying concurrency levels
-- **Observe persistence latency**: Temporal's internal metrics expose histogram data for task-queue polling and history persistence; spikes correlate with CockroachDB write amplification
-- **Validate recovery behavior**: kill a CockroachDB node mid-run and confirm that in-flight workflows resume automatically once the cluster re-elects a lease holder — no manual intervention and no workflow loss
+- **Measure workflow throughput**: workflows started per second at varying concurrency levels
+- **Observe persistence latency**: p50/p95 latency directly reflects CockroachDB write performance; a co-located CockroachDB cluster typically delivers p50 <100 ms, while a remote cluster over a WAN shows 3–6 s per write
+- **Validate recovery behavior**: kill a CockroachDB node mid-run and confirm that in-flight workflows resume automatically once the cluster re-elects a leaseholder — no manual intervention and no workflow loss
 
 ### Observability
 

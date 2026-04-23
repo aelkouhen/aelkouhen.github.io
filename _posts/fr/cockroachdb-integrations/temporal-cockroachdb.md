@@ -564,28 +564,95 @@ class AICockroachAgentWorkflow:
 
 ## Tests de charge et de performance
 
-### Benchmarking avec Maru
+### Benchmarking avec Omes
 
-[Maru](https://github.com/temporalio/maru) est l'outil officiel de test de charge de Temporal. Il génère des volumes configurables de workflows et d'activités contre un cluster en production et rapporte le débit, la latence et les taux d'erreur. Avec un backend CockroachDB, il permet d'observer comment le niveau de persistance se comporte à mesure que la concurrence augmente.
+[Omes](https://github.com/temporalio/omes) est l'outil officiel de test de charge de Temporal (successeur de Maru, désormais déprécié). Il génère des volumes configurables de workflows et d'activités contre un cluster en production et rapporte le débit, la latence et les taux d'erreur. Avec un backend CockroachDB, il permet d'observer comment le niveau de persistance se comporte à mesure que la concurrence augmente.
 
-Un benchmark typique démarre un worker aux côtés du scénario Maru :
+Compilez Omes depuis les sources et lancez le scénario `throughput_stress` :
 
 ```bash
-# Start the bench worker (points at your Temporal frontend)
-go run ./cmd/bench worker --temporal-host localhost:7233 &
+git clone https://github.com/temporalio/omes.git
+cd omes
 
-# Run the scenario: 500 concurrent workflows, 5-minute duration
-go run ./cmd/bench start \
-  --workflow basic \
-  --concurrent-workflows 500 \
+# Register the custom search attribute Omes requires
+temporal operator search-attribute create \
+  --namespace default \
+  --name OmesExecutionID \
+  --type Keyword
+
+# Run: 50 concurrent workflows, 5-minute duration
+go run ./cmd/main.go run-scenario-with-worker \
+  --scenario throughput_stress \
+  --language go \
+  --server-address localhost:7233 \
+  --namespace default \
   --duration 5m \
-  --temporal-host localhost:7233
+  --max-concurrent 50
+```
+
+Autres scénarios utiles :
+
+| Scénario | Ce qu'il teste |
+|---|---|
+| `workflow_with_single_noop_activity` | Aller-retour minimal : un workflow, une activité no-op |
+| `throughput_stress` | Débit d'écriture soutenu vers le store de persistance |
+| `state_transitions_steady` | Taux de transitions d'état constant ; utilisez `--option state-transitions-per-second=N` |
+| `ebb_and_flow` | Backlog oscillant entre un minimum et un maximum de workflows concurrents |
+
+> **La co-localisation est essentielle.** Omes utilise l'API [Workflow Update](https://docs.temporal.io/workflows#update) de Temporal en interne, ce qui nécessite des allers-retours sous la seconde entre le client, le serveur et le store de persistance. Exécutez Omes depuis une machine dans le même datacenter ou VPC que votre cluster CockroachDB. Une connexion à CockroachDB via un WAN fait monter chaque opération d'écriture à 3–6 secondes de latence (contre <100 ms en local), ce qui déclenche les timeouts internes d'Omes avant la fin des scénarios.
+
+Pour une mesure de latence de persistance rapide, utilisez directement le SDK Go de Temporal pour mesurer le débit brut de `StartWorkflowExecution` :
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "sort"
+    "sync"
+    "time"
+    "go.temporal.io/sdk/client"
+)
+
+func main() {
+    c, _ := client.Dial(client.Options{HostPort: "localhost:7233", Namespace: "default"})
+    defer c.Close()
+
+    const total, concurrency = 20, 3
+    latencies := make([]time.Duration, 0, total)
+    var mu sync.Mutex
+    var wg sync.WaitGroup
+    sem := make(chan struct{}, concurrency)
+
+    t0 := time.Now()
+    for i := 0; i < total; i++ {
+        wg.Add(1); sem <- struct{}{}
+        go func(i int) {
+            defer wg.Done(); defer func() { <-sem }()
+            start := time.Now()
+            c.ExecuteWorkflow(context.Background(), client.StartWorkflowOptions{
+                ID: fmt.Sprintf("bench-%d-%d", time.Now().UnixMicro(), i),
+                TaskQueue: "bench-queue",
+            }, "BenchWorkflow", i)
+            mu.Lock(); latencies = append(latencies, time.Since(start)); mu.Unlock()
+        }(i)
+    }
+    wg.Wait()
+    elapsed := time.Since(t0)
+
+    sort.Slice(latencies, func(i, j int) bool { return latencies[i] < latencies[j] })
+    fmt.Printf("Throughput: %.1f/sec | p50: %v | p95: %v\n",
+        float64(len(latencies))/elapsed.Seconds(),
+        latencies[len(latencies)*50/100].Round(time.Millisecond),
+        latencies[len(latencies)*95/100].Round(time.Millisecond))
+}
 ```
 
 Avec cette configuration, vous pouvez :
 
-- **Mesurer le débit de workflows** : workflows démarrés et terminés par seconde à différents niveaux de concurrence
-- **Observer la latence de persistance** : les métriques internes de Temporal exposent des histogrammes pour le polling des task queues et la persistance de l'historique ; les pics corrèlent avec l'amplification des écritures dans CockroachDB
+- **Mesurer le débit de workflows** : workflows démarrés par seconde à différents niveaux de concurrence
+- **Observer la latence de persistance** : la latence p50/p95 reflète directement les performances d'écriture de CockroachDB ; un cluster co-localisé délivre typiquement un p50 <100 ms, tandis qu'un cluster distant en WAN affiche 3–6 s par écriture
 - **Valider le comportement de récupération** : supprimez un nœud CockroachDB en cours d'exécution et confirmez que les workflows en cours reprennent automatiquement une fois le cluster rétabli, sans intervention manuelle et sans perte de workflow
 
 ### Observabilité
