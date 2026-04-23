@@ -188,7 +188,7 @@ temporal-ui-server --root ~/temporal-ui start
 
 L'interface est ensuite accessible à `http://localhost:8080`.
 
-#### Omes — outil de test de charge
+#### Omes : outil de test de charge
 
 [Omes](https://github.com/temporalio/omes) nécessite Go 1.21+. Installez Go si nécessaire :
 
@@ -243,7 +243,7 @@ Définissez le même mot de passe que la variable d'environnement `TEMPORAL_DB_P
 
 Le schéma principal fonctionne avec CockroachDB sans modification via l'outil SQL de Temporal. Téléchargez `temporal-sql-tool` depuis les [releases GitHub de Temporal](https://github.com/temporalio/temporal/releases) avec `temporal-server`. Les fichiers de schéma se trouvent dans l'archive source sous `schema/postgresql/v12/temporal/versioned/`.
 
-> **Important :** passez le nom d'hôte et le port en flags séparés (`--ep <host> --port 26257`). `temporal-sql-tool` supporte plusieurs backends de base de données dont MySQL, et sa logique interne d'analyse des ports traite une chaîne `host:port` combinée comme un endpoint MySQL — ajoutant silencieusement `:3306` au lieu d'utiliser le port spécifié.
+> **Important :** passez le nom d'hôte et le port en flags séparés (`--ep <host> --port 26257`). `temporal-sql-tool` supporte plusieurs backends de base de données dont MySQL, et sa logique interne d'analyse des ports traite une chaîne `host:port` combinée comme un endpoint MySQL, ajoutant silencieusement `:3306` au lieu d'utiliser le port spécifié.
 
 ```bash
 temporal-sql-tool \
@@ -629,40 +629,40 @@ async def retrieve_context(task: str) -> str:
 
 @activity.defn
 async def call_llm(context: str) -> str:
-    """Call the LLM — billed once, never re-executed on retry."""
+    """Call the LLM (billed once, never re-executed on retry)."""
     return await llm_client.complete(f"Given this context: {context}, respond.")
 
 @activity.defn
 async def request_human_approval(response: str) -> bool:
-    """Write pending approval to DB — the agent can wait days here."""
+    """Write pending approval to DB (the agent can wait days here)."""
     return await approvals_db.create_pending(response)
 
 @activity.defn
 async def write_final_result(result: str) -> None:
-    """Persist the approved result — exactly once."""
+    """Persist the approved result, exactly once."""
     await results_db.insert(result)
 
 @workflow.defn
 class AICockroachAgentWorkflow:
     @workflow.run
     async def run(self, task: str) -> str:
-        # Step 1 — retrieve context (retries safely, idempotent)
+        # Step 1: retrieve context (retries safely, idempotent)
         context = await workflow.execute_activity(
             retrieve_context, task,
             start_to_close_timeout=timedelta(minutes=2),
         )
-        # Step 2 — LLM call (exactly once — no double billing)
+        # Step 2: LLM call (exactly once, no double billing)
         response = await workflow.execute_activity(
             call_llm, context,
             start_to_close_timeout=timedelta(minutes=5),
             retry_policy=RetryPolicy(maximum_attempts=3),
         )
-        # Step 3 — human-in-the-loop (agent sleeps until approved, days if needed)
+        # Step 3: human-in-the-loop (agent sleeps until approved, days if needed)
         approved = await workflow.execute_activity(
             request_human_approval, response,
             start_to_close_timeout=timedelta(days=7),
         )
-        # Step 4 — persist result (idempotent write, exactly once)
+        # Step 4: persist result (idempotent write, exactly once)
         if approved:
             await workflow.execute_activity(
                 write_final_result, response,
@@ -774,7 +774,7 @@ Deux tableaux de bord offrent des vues complémentaires de la même charge :
 
 <img src="/assets/img/temporal-ui-bench-workflows.gif" alt="Interface web Temporal : 72 exécutions BenchWorkflow passant de l'état running à completed" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Interface web Temporal : 72 exécutions BenchWorkflow adossées à CockroachDB — les workflows passent à l'état complété et l'interface défile jusqu'à l'historique d'événements d'une exécution terminée**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Interface web Temporal : 72 exécutions BenchWorkflow adossées à CockroachDB ; les workflows passent à l'état complété et l'interface défile jusqu'à l'historique d'événements d'une exécution terminée**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **La console d'administration CockroachDB** (`http://<crdb-host>:8080`) expose la vue au niveau de la base de données :
 
@@ -799,7 +799,7 @@ Cette combinaison donne une vue complète : Temporal indique *quels* workflows s
 - **Ajuster le nombre de shards Temporal** : `numHistoryShards` dans `base.yaml` contrôle le parallélisme des écritures. L'augmenter distribue les écritures d'historique sur davantage de ranges CockroachDB, réduisant la contention. Commencez à 4 en développement et montez à 512 ou plus en production.
 - **Surveiller les hot ranges** : utilisez la page **Hot Ranges** de la console d'administration CockroachDB pour identifier les ranges qui reçoivent une part disproportionnée des écritures. Les hot ranges apparaissent généralement quand un petit nombre de shards d'historique Temporal correspond au même range CockroachDB.
 - **Exploiter le splitting et la distribution des ranges** : CockroachDB divise et rééquilibre automatiquement les ranges à mesure que les données croissent, mais vous pouvez pré-diviser les tables `executions` et `executions_visibility` pour une distribution prévisible des écritures à fort nombre de shards.
-- **Envisager un backend de visibilité dédié pour les charges analytiques lourdes** : le visibility store Temporal gère toutes les requêtes `ListWorkflowExecutions`. Sous une forte charge de requêtes analytiques, router la visibilité vers une base CockroachDB séparée — ou un cluster Elasticsearch — isole la pression des requêtes du chemin d'écriture de l'historique.
+- **Envisager un backend de visibilité dédié pour les charges analytiques lourdes** : le visibility store Temporal gère toutes les requêtes `ListWorkflowExecutions`. Sous une forte charge de requêtes analytiques, router la visibilité vers une base CockroachDB séparée (ou un cluster Elasticsearch), isole la pression des requêtes du chemin d'écriture de l'historique.
 
 Ces pratiques reflètent les approches utilisées avec succès avec d'autres bases de données horizontalement scalables, et s'appliquent directement à CockroachDB sans modification du code Temporal, uniquement par configuration.
 
