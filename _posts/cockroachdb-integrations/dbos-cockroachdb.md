@@ -2,7 +2,7 @@
 date: 2026-05-28
 layout: post
 title: "Embedded Scalable Execution with DBOS and CockroachDB"
-subtitle: "How DBOS turns your existing database into a workflow engine, and why CockroachDB makes it globally distributed"
+subtitle: "How DBOS turns your database into a workflow engine — and why CockroachDB removes the scalability ceiling"
 cover-img: /assets/img/cover-dbos.webp
 thumbnail-img: /assets/img/cover-dbos.webp
 share-img: /assets/img/cover-dbos.webp
