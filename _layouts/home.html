@@ -4,11 +4,12 @@ layout: page
 
 {{ content }}
 
+{% assign _home_lang = page.lang | default: site.default_lang %}
 {% if paginator %}
-  {% assign posts = paginator.posts %}
+  {% assign posts = paginator.posts | where: "lang", _home_lang %}
   {% include post-cards.html posts=posts %}
 {% else %}
-  {% assign posts = site.posts %}
+  {% assign posts = site.posts | where: "lang", _home_lang %}
   {% assign page_size = site.pagination.per_page | default: 7 %}
   <div id="js-post-list">
     {% include post-cards.html posts=posts %}
