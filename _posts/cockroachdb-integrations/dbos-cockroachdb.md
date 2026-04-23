@@ -342,8 +342,8 @@ A DBOS 2-step workflow is not a single `INSERT`. It produces **4 sequential, ack
 | Metric | PostgreSQL | CockroachDB (3 nodes) |
 |---|---|---|
 | Raw writes/s (peak) | 62,990 | 54,740 |
-| DBOS workflows/s (peak) | **122** | **117** |
-| Ratio (raw ÷ workflow) | ~516× | ~469× |
+| DBOS workflows/s (peak) | **122** | **117.5** |
+| Ratio (raw ÷ workflow) | ~516× | ~466× |
 
 The ratio is the overhead of durable orchestration: every workflow completion serialises 4 round-trips through the database, each one waiting for acknowledgement before the next begins.
 
@@ -355,24 +355,24 @@ The ratio is the overhead of durable orchestration: every workflow completion se
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-throughput.png" alt="DBOS workflow throughput: PostgreSQL vs CockroachDB, co-located in us-east-1" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Both databases plateau at ~117 wf/s. PostgreSQL peaks faster (122 wf/s at c=4); CockroachDB reaches its 3-node ceiling at c=32 (116.6 wf/s). The bottleneck is the sequential step-commit pattern in DBOS, not the database engine.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Both databases plateau at ~117 wf/s. PostgreSQL peaks faster (122 wf/s at c=4); CockroachDB reaches its 3-node ceiling at c=32 (117.5 wf/s). The bottleneck is the sequential step-commit pattern in DBOS, not the database engine.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ### Results — latency: PostgreSQL vs CockroachDB
 
 <img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="DBOS workflow latency p50/p95: PostgreSQL vs CockroachDB under load" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**PostgreSQL is faster at low concurrency (19 ms p50 at c=1 — local WAL flush). CockroachDB costs ~72 ms p50 at peak throughput (Raft quorum across AZs). Both converge above c=32 as DBOS's sequential commit pattern dominates.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**PostgreSQL is faster at low concurrency (19 ms p50 at c=1 — local WAL flush). At c=8 both databases converge to identical p50: 69 ms. Above c=32 both plateau at ~250 ms — the sequential commit pattern dominates completely. Both benchmarks run at Read Committed isolation.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 | Concurrency | PG wf/s | PG p50 (ms) | CRDB wf/s | CRDB p50 (ms) |
 |:-----------:|:-------:|:-----------:|:---------:|:-------------:|
-| 1 | 48.0 | 19 | 12.4 | 80 |
-| 4 | **122.0 (peak)** | 29 | 53.4 | 74 |
-| 8 | 104.5 | 69 | **104.9** | **72** |
-| 16 | 114.0 | 122 | 106.3 | 138 |
-| 32 | 117.8 | 248 | **116.6 (peak)** | 251 |
-| 64 | 118.0 | 519 | 116.3 | 526 |
-| 256 | 115.9 | 2,166 | 113.5 | 2,216 |
-| 512 | 113.5 | 4,428 | 110.9 | 4,535 |
+| 1 | 48.0 | 19 | 14.6 | 65 |
+| 4 | **122.0 (peak)** | 29 | 61.5 | 62 |
+| **8** | 104.5 | **69** | **110.2** | **69** |
+| 16 | 114.0 | 122 | 107.0 | 138 |
+| 32 | 117.8 | 248 | **117.5 (peak)** | 250 |
+| 64 | 118.0 | 519 | 116.6 | 525 |
+| 256 | 115.9 | 2,166 | 114.5 | 2,202 |
+| 512 | 113.5 | 4,428 | 112.3 | 4,474 |
 
 ### The scalability argument
 
@@ -390,14 +390,15 @@ With just **4 nodes**, CockroachDB (~156 wf/s projected) already exceeds Postgre
 
 | | PostgreSQL RDS 17 (96 vCPU) | CockroachDB (3 nodes, multi-AZ) | CockroachDB (N nodes) |
 |---|---|---|---|
-| Peak wf/s | **122 wf/s (measured)** | 116.6 wf/s (measured) | **~39 × N wf/s** |
-| p50 at low concurrency | **19 ms** (local WAL) | 80 ms (Raft, cross-AZ) | ~80 ms |
-| p50 at saturation | ~248 ms | ~251 ms | ~72 ms |
+| Peak wf/s | **122 wf/s (measured)** | 117.5 wf/s (measured) | **~39 × N wf/s** |
+| p50 at c=1 | **19 ms** (local WAL) | 65 ms (Raft, cross-AZ) | ~65 ms |
+| p50 at c=8 | 69 ms | **69 ms** | ~69 ms |
+| p50 at saturation (c=32+) | ~250 ms | ~250 ms | ~250 ms |
 | Write scale-out | **No — WAL is one node** | Yes | **Yes — linear** |
 | Node failure | Manual failover | Automatic | Automatic |
 | Multi-region durability | External tooling | Built-in | Built-in |
 
-PostgreSQL wins on per-node latency at low concurrency — a local WAL flush is simply faster than a cross-AZ Raft quorum. At saturation both databases are equivalent. The decisive difference is **what happens at scale**: PostgreSQL has hit its ceiling, CockroachDB has not even started climbing.
+Both benchmarks ran at **Read Committed** isolation. PostgreSQL's advantage at low concurrency (19 ms vs 65 ms p50 at c=1) is purely the cost of Raft cross-AZ quorum — it disappears at c=8 where both databases land at identical 69 ms p50. At saturation both converge to ~250 ms. The decisive difference is **what happens at scale**: PostgreSQL has hit its ceiling, CockroachDB has not even started climbing.
 
 ---
 
