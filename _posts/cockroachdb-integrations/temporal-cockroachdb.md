@@ -564,6 +564,50 @@ class AICockroachAgentWorkflow:
 
 ---
 
+## Load and Performance Testing
+
+### Benchmarking with Maru
+
+[Maru](https://github.com/temporalio/maru) is Temporal's official load-testing tool. It drives configurable volumes of workflows and activities against a live cluster and reports throughput, latency, and error rates. Against a CockroachDB backend it lets you observe how the persistence tier behaves as concurrency grows.
+
+A typical benchmark run starts a worker alongside the Maru bench scenario:
+
+```bash
+# Start the bench worker (points at your Temporal frontend)
+go run ./cmd/bench worker --temporal-host localhost:7233 &
+
+# Run the scenario: 500 concurrent workflows, 5-minute duration
+go run ./cmd/bench start \
+  --workflow basic \
+  --concurrent-workflows 500 \
+  --duration 5m \
+  --temporal-host localhost:7233
+```
+
+With this setup you can:
+
+- **Measure workflow throughput**: workflows started and completed per second at varying concurrency levels
+- **Observe persistence latency**: Temporal's internal metrics expose histogram data for task-queue polling and history persistence; spikes correlate with CockroachDB write amplification
+- **Validate recovery behavior**: kill a CockroachDB node mid-run and confirm that in-flight workflows resume automatically once the cluster re-elects a lease holder — no manual intervention and no workflow loss
+
+### Observability
+
+Two dashboards give complementary views of the same load:
+
+**Temporal Web UI** (`http://localhost:8080` with the default Docker setup, or the UI endpoint of your deployment) lets you inspect individual workflow executions in real time: event history, activity status, retry counts, and current task queue depth. During a Maru run you can watch the open-execution count climb and fall, and drill into any failed workflow to see exactly which activity timed out.
+
+**CockroachDB Admin Console** (`http://<crdb-host>:8080`) exposes the database-level picture:
+
+| Panel | What to watch |
+|---|---|
+| **SQL Activity** | Queries per second, p50/p99 latency; high latency on `INSERT INTO executions` signals write contention |
+| **Ranges** | Distribution of data ranges across nodes; an uneven distribution means one node is a hotspot for history-shard writes |
+| **Node Map** | Per-node CPU, IOPS, and network; confirm no single node is saturated while others are idle |
+
+The combination gives you the full picture: Temporal tells you *which* workflows are slow; CockroachDB tells you *why* at the storage level.
+
+---
+
 ## Key Benefits
 
 | Capability | CockroachDB Contribution |
