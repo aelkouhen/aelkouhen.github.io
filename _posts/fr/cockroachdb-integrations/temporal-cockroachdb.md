@@ -792,6 +792,19 @@ Cette combinaison donne une vue complète : Temporal indique *quels* workflows s
 
 ---
 
+## Passage à l'échelle en production
+
+À mesure que la charge augmente, quelques pratiques permettent de maintenir les performances :
+
+- **Ajuster le nombre de shards Temporal** : `numHistoryShards` dans `base.yaml` contrôle le parallélisme des écritures. L'augmenter distribue les écritures d'historique sur davantage de ranges CockroachDB, réduisant la contention. Commencez à 4 en développement et montez à 512 ou plus en production.
+- **Surveiller les hot ranges** : utilisez la page **Hot Ranges** de la console d'administration CockroachDB pour identifier les ranges qui reçoivent une part disproportionnée des écritures. Les hot ranges apparaissent généralement quand un petit nombre de shards d'historique Temporal correspond au même range CockroachDB.
+- **Exploiter le splitting et la distribution des ranges** : CockroachDB divise et rééquilibre automatiquement les ranges à mesure que les données croissent, mais vous pouvez pré-diviser les tables `executions` et `executions_visibility` pour une distribution prévisible des écritures à fort nombre de shards.
+- **Envisager un backend de visibilité dédié pour les charges analytiques lourdes** : le visibility store Temporal gère toutes les requêtes `ListWorkflowExecutions`. Sous une forte charge de requêtes analytiques, router la visibilité vers une base CockroachDB séparée — ou un cluster Elasticsearch — isole la pression des requêtes du chemin d'écriture de l'historique.
+
+Ces pratiques reflètent les approches utilisées avec succès avec d'autres bases de données horizontalement scalables, et s'appliquent directement à CockroachDB sans modification du code Temporal, uniquement par configuration.
+
+---
+
 ## Voir aussi
 
 - [Documentation Temporal](https://docs.temporal.io/)
