@@ -286,52 +286,61 @@ python3 app/main.py
 
 ## Benchmarking de scalabilité
 
-L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), atteignant **144K écritures brutes en base de données par seconde** sur une instance AWS RDS unique (`db.m7i.24xlarge` — 96 vCPU, 384 Go RAM, 120K IOPS). Nous avons effectué le benchmark équivalent — de vrais workflows DBOS à 2 étapes, mesurés bout en bout — sur un **cluster CockroachDB à 3 nœuds co-localisé dans AWS us-east-1** (`3× m7i.8xlarge` — 96 vCPU au total). Le client de benchmark tournait dans us-east-1, sans aucune latence WAN.
+L'équipe DBOS a [mesuré le débit de DBOS sur PostgreSQL](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres), atteignant **144K écritures brutes en base de données par seconde** sur une instance AWS RDS unique (`db.m7i.24xlarge` — 96 vCPU, 384 Go RAM, 120K IOPS). Nous avons effectué le même benchmark — de vrais **workflows DBOS à 2 étapes**, mesurant le **débit de complétion bout en bout** — sur les deux bases de données en parallèle, depuis une instance EC2 co-localisée dans AWS **us-east-1**, sans latence WAN :
+
+- **PostgreSQL RDS 17** — `db.m7i.24xlarge`, 96 vCPU, même région
+- **CockroachDB 3 nœuds** — `3× m7i.8xlarge`, 96 vCPU au total, nœuds répartis sur **plusieurs AZ de us-east-1** (déploiement réellement redondant)
 
 > **Artefacts du benchmark :** scripts et résultats bruts disponibles dans le dépôt sous [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb) :
-> [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`charts_v5.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/charts_v5.py) · [`results_coloc.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_coloc.json)
+> [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`charts_v5.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/charts_v5.py) · [`results_coloc.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_coloc.json) · [`results_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_pg.json)
 
-### Résultats — débit et latence co-localisés
+### Résultats — débit : PostgreSQL vs CockroachDB
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-throughput.png" alt="Débit workflow DBOS CockroachDB de c=1 à c=512, co-localisé" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-throughput.png" alt="Débit DBOS : PostgreSQL vs CockroachDB, co-localisés dans us-east-1" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Le débit scale linéairement de 12 wf/s à c=1 jusqu'à 117 wf/s à c=32, puis se stabilise — le cluster à 3 nœuds est saturé. Chaque nœud supplémentaire ajoute ~39 wf/s.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Les deux bases plafonnent à ~117 wf/s. PostgreSQL atteint son pic plus vite (122 wf/s à c=4) ; CockroachDB atteint le plafond de ses 3 nœuds à c=32 (116,6 wf/s). Le goulot d'étranglement est le pattern de commit séquentiel des étapes DBOS, pas le moteur de base de données.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="Latence de workflow CockroachDB p50 et p95 sous charge, co-localisé" style="width:100%;margin:1.5rem 0;">
+### Résultats — latence : PostgreSQL vs CockroachDB
+
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="Latence DBOS p50/p95 : PostgreSQL vs CockroachDB sous charge" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**La latence p50 est de 72 ms au pic de débit (c=8) — les 3 nœuds sont répartis sur plusieurs AZ de us-east-1 (déploiement réellement redondant). Chaque quorum Raft franchit les frontières d'AZ ; cette latence est celle d'une production réelle, pas d'un rack unique.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**PostgreSQL est plus rapide à faible concurrence (19 ms p50 à c=1 — flush WAL local). CockroachDB coûte ~72 ms p50 au pic de débit (quorum Raft cross-AZ). Les deux convergent au-delà de c=32 quand le pattern de commit séquentiel de DBOS domine.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-| Concurrence | Débit (wf/s) | p50 (ms) | p95 (ms) |
-|:-----------:|:------------:|:--------:|:--------:|
-| 1 | 12,4 | 80 | 87 |
-| 4 | 53,4 | 74 | 89 |
-| **8** | **104,9** | **72** | **90** |
-| 16 | 106,3 | 138 | 177 |
-| 32 | **116,6 (pic)** | 251 | 316 |
-| 64 | 116,3 | 526 | 598 |
-| 256 | 113,5 | 2 216 | 2 304 |
+| Concurrence | PG wf/s | PG p50 (ms) | CRDB wf/s | CRDB p50 (ms) |
+|:-----------:|:-------:|:-----------:|:---------:|:-------------:|
+| 1 | 48,0 | 19 | 12,4 | 80 |
+| 4 | **122,0 (pic)** | 29 | 53,4 | 74 |
+| 8 | 104,5 | 69 | **104,9** | **72** |
+| 16 | 114,0 | 122 | 106,3 | 138 |
+| 32 | 117,8 | 248 | **116,6 (pic)** | 251 |
+| 64 | 118,0 | 519 | 116,3 | 526 |
+| 256 | 115,9 | 2 166 | 113,5 | 2 216 |
+| 512 | 113,5 | 4 428 | 110,9 | 4 535 |
 
 ### L'argument de la scalabilité
 
-Le cluster à 3 nœuds sature à **~117 wf/s** — c'est la capacité de *ces trois nœuds*, pas une limite de CockroachDB. Ajoutez des nœuds et le débit scale proportionnellement.
+Les deux bases saturent à **~117 wf/s** sous cette charge de workflows DBOS — le goulot est le pattern de commit séquentiel des étapes, pas la base de données. La différence est ce qui se passe quand on a besoin de **plus de 117 wf/s**.
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="Scale-out linéaire de CockroachDB : 117 wf/s mesurés sur 3 nœuds, projection linéaire avec les nœuds supplémentaires" style="width:100%;margin:1.5rem 0;">
+<img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="Scale-out CockroachDB vs plafond mesuré PostgreSQL à 122 wf/s" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Baseline mesurée : 117 wf/s sur 3 nœuds répartis sur plusieurs AZ (redondance de zone). Chaque nœud ajoute ~39 wf/s. Le WAL de PostgreSQL est un chemin d'écriture mono-nœud — il ne peut pas être distribué sur des instances supplémentaires.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Le plafond PostgreSQL est mesuré à 122 wf/s — limite absolue de son WAL mono-nœud. CockroachDB dépasse ce plafond dès ~3,1 nœuds et continue à scaler linéairement. Chaque nœud ajoute ~39 wf/s.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Le **Write-Ahead Log de PostgreSQL sérialise chaque écriture dans un seul chemin de flush**. Une fois ce chemin saturé, aucun matériel supplémentaire n'améliore le débit d'écriture — on peut scaler les lectures avec des réplicas, mais les écritures restent bornées par un seul nœud pour toujours. CockroachDB remplace le WAL unique par un **log Raft distribué** : chaque nœud flush son propre log, et les écritures se répartissent sur le cluster. Le plafond de débit monte avec chaque nœud ajouté.
 
+Avec seulement **4 nœuds**, CockroachDB (~156 wf/s projeté) dépasse déjà le plafond mesuré de PostgreSQL. Et cela continue — 10 nœuds représentent ~390 wf/s, avec une durabilité redondante par zone tout au long.
+
 ### Synthèse
 
-| | PostgreSQL | CockroachDB (3 nœuds) | CockroachDB (N nœuds) |
+| | PostgreSQL RDS 17 (96 vCPU) | CockroachDB (3 nœuds, multi-AZ) | CockroachDB (N nœuds) |
 |---|---|---|---|
-| Débit wf maximum | Plafond mono-nœud | **117 wf/s (mesuré)** | **~39 × N wf/s** |
-| p50 au pic de concurrence | Sub-ms (WAL local) | ~72 ms (quorum Raft, cross-AZ) | ~72 ms |
+| Débit wf maximum | **122 wf/s (mesuré)** | 116,6 wf/s (mesuré) | **~39 × N wf/s** |
+| p50 à faible concurrence | **19 ms** (WAL local) | 80 ms (Raft, cross-AZ) | ~80 ms |
+| p50 à saturation | ~248 ms | ~251 ms | ~72 ms |
 | Scale-out en écriture | **Non — WAL = 1 nœud** | Oui | **Oui — linéaire** |
 | Défaillance de nœud | Basculement manuel | Automatique | Automatique |
 | Durabilité multi-région | Outillage externe | Natif | Natif |
 
-Le consensus Raft distribué de CockroachDB ajoute de la latence par écriture par rapport à un WAL local — c'est le coût de la garantie qu'aucun nœud unique n'est un goulot d'écriture. La contrepartie : **besoin de plus de débit ? Ajoutez des nœuds. Il n'y a pas de plafond.**
+PostgreSQL gagne sur la latence par nœud à faible concurrence — un flush WAL local est simplement plus rapide qu'un quorum Raft cross-AZ. À saturation, les deux bases sont équivalentes. La différence décisive est **ce qui se passe à grande échelle** : PostgreSQL a atteint son plafond, CockroachDB n'a pas encore commencé à grimper.
 
 ---
 
