@@ -2,7 +2,7 @@
 date: 2026-04-23
 layout: post
 title: "Orchestration de workflows durables avec Temporal et CockroachDB"
-subtitle: "Comment exécuter Temporal avec CockroachDB comme backend de persistance distribué et fortement cohérent — correctif critique du schéma de visibilité inclus"
+subtitle: "Comment exécuter Temporal avec CockroachDB comme backend de persistance distribué et fortement cohérent"
 cover-img: /assets/img/cover-temporal.svg
 thumbnail-img: /assets/img/cover-temporal.svg
 share-img: /assets/img/cover-temporal.svg
