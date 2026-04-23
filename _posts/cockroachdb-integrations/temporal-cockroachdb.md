@@ -3,6 +3,9 @@ date: 2026-04-23
 layout: post
 title: "Durable Workflow Orchestration with Temporal and CockroachDB"
 subtitle: "How to run Temporal with CockroachDB as a distributed, strongly-consistent persistence backend — including the critical visibility schema fix"
+cover-img: /assets/img/cover-temporal.svg
+thumbnail-img: /assets/img/cover-temporal.svg
+share-img: /assets/img/cover-temporal.svg
 tags: [integrations, CockroachDB, temporal, workflow, orchestration, durable-execution]
 lang: en
 author: "Amine El Kouhen"
