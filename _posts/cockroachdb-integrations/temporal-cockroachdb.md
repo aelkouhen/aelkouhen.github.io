@@ -1,7 +1,7 @@
 ---
 date: 2026-04-23
 layout: post
-title: "Durable Workflow Orchestration with Temporal and CockroachDB"
+title: "Integrate CockroachDB with Temporal"
 subtitle: "How to run Temporal with CockroachDB as a distributed, strongly-consistent persistence backend"
 cover-img: /assets/img/cover-temporal.svg
 thumbnail-img: /assets/img/cover-temporal.svg
