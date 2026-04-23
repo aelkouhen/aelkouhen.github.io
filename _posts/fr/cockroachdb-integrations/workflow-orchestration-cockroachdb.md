@@ -51,16 +51,54 @@ Pour les charges de travail d'agents IA, ces garanties sont essentielles. Une bo
 
 ### Architecture
 
-Temporal sépare l'**exécution** (services sans état) du **stockage** (persistance durable) :
+Comprendre pourquoi CockroachDB est le bon backend de persistance pour Temporal nécessite de comprendre comment Temporal stocke son état. Les choix de conception qui rendent Temporal fiable exigent exactement le type de base de données distribuée et fortement cohérente que CockroachDB fournit.
 
-<img src="/assets/img/temporal-cluster-architecture.svg" alt="Architecture du cluster Temporal" style="width:100%;margin:1.5rem 0;">
+#### Workflow comme machine à états
+
+Chaque workflow en cours d'exécution est modélisé comme une machine à états. Chaque interaction externe — une activité terminée, un timer déclenché, un signal reçu — produit un nouvel **événement** ajouté au **journal d'historique** du workflow. L'état courant d'un workflow est entièrement déterminé en rejouant ce journal depuis le début.
+
+<img src="/assets/img/temporal-state-machine.png" alt="Machine à états du workflow Temporal" style="width:100%;margin:1.5rem 0;">
 {: .mx-auto.d-block :}
-**Cluster Temporal : services sans état adossés à une couche de persistance durable**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+**Une exécution de workflow est une machine à états déterministe pilotée par un historique d'événements en ajout seul**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Le cluster est composé de quatre services sans état — **Frontend**, **History**, **Matching** et **Worker** — chacun passant à l'échelle indépendamment. Tout l'état durable transite par deux stores distincts :
+Quand un Worker redémarre après un crash, il récupère l'historique des événements et rejoue la fonction de workflow. Les étapes déjà terminées sont ignorées instantanément — l'exécution reprend depuis le dernier état validé.
 
-- **Persistence Store** — état du workflow, historique des événements, timers et files de tâches. Requiert forte cohérence et latence faible.
-- **Visibility Store** — index interrogeable des exécutions de workflow par statut, type et attributs de recherche personnalisés.
+#### La cohérence est non négociable
+
+Chaque transition d'état doit atomiquement mettre à jour l'état du workflow **et** mettre en file la prochaine tâche. Si l'une des deux écritures échoue, le système entre dans un état incohérent irrécupérable : une tâche fantôme qui ne sera jamais délivrée.
+
+<img src="/assets/img/temporal-transactions.png" alt="Mises à jour transactionnelles Temporal" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Les transitions d'état requièrent une mise à jour atomique de l'état du workflow et des entrées de file de tâches dans une seule transaction**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+C'est pourquoi Temporal exige un store relationnel fortement cohérent avec des garanties ACID complètes — et pourquoi CockroachDB, qui offre l'isolation sérialisable à n'importe quelle échelle, est un choix naturel là où un primaire PostgreSQL unique deviendrait un goulot d'étranglement.
+
+#### Visibilité — Index interrogeable des workflows
+
+En plus du store principal, Temporal maintient un **Visibility store** — une base de données secondaire optimisée pour interroger les exécutions de workflow par statut, type, heure de démarrage et attributs de recherche personnalisés stockés en JSONB.
+
+<img src="/assets/img/temporal-visibility.png" alt="Visibilité des workflows Temporal" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Le Visibility store indexe les exécutions de workflow pour les requêtes de liste et filtre via des attributs de recherche JSONB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+Le schéma PostgreSQL standard indexe le JSONB via `CREATE EXTENSION IF NOT EXISTS btree_gin` — une extension exclusive à PostgreSQL qui **n'existe pas dans CockroachDB**. Le correctif est le `CREATE INVERTED INDEX` natif de CockroachDB, qui offre la même capacité sans aucune extension (voir la section schéma ci-dessous).
+
+#### Architecture complète du cluster avec CockroachDB
+
+Un cluster Temporal est composé de quatre services sans état passant à l'échelle indépendamment, devant deux niveaux de stockage durable. Quand CockroachDB supporte les deux stores, l'ensemble du niveau de persistance bénéficie de la réplication distribuée, du basculement automatique et de la scalabilité horizontale — tout cela de manière transparente pour les services Temporal.
+
+<img src="/assets/img/temporal-architecture-overview.png" alt="Architecture du cluster Temporal avec CockroachDB" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Cluster Temporal avec CockroachDB comme backend de persistance et de visibilité — les services sans état et le stockage passent à l'échelle indépendamment**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+
+| Service | Rôle |
+|---|---|
+| **Frontend** | Passerelle gRPC — route les requêtes clients vers le bon shard History |
+| **History** | Gère les machines à états des workflows ; traite les commandes et enregistre les événements |
+| **Matching** | Gère les files de tâches ; distribue les tâches aux Workers disponibles |
+| **Worker** | Exécute les workflows système internes (réplication, archivage, nettoyage) |
+| **Persistence Store (CockroachDB)** | Historiques d'événements, timers, files de transfert — forte cohérence, écritures distribuées |
+| **Visibility Store (CockroachDB)** | Index d'exécution interrogeable — index inversé JSONB remplace `btree_gin` |
 
 ### Pourquoi CockroachDB pour Temporal ?
 
