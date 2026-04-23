@@ -66,7 +66,7 @@ Although some datasets might be stored sequentially, DASDs can handle direct acc
 
 To locate a specific dataset quickly, the mainframe uses a **catalog** system and **VTOC** (volume table of contents) that tracks its locations. In practice, almost all disk datasets are cataloged. One side effect is that all (cataloged) datasets must have unique names.
 
-<img src="/assets/img/mainframe-p1-vtoc.png" alt="Volume table of contents (VTOC) diagram" style="width:100%">
+<img src="/assets/img/mainframe-p1-vtoc.png" alt="Volume table of contents (VTOC) diagram" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Volume table of contents (VTOC) diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -169,7 +169,7 @@ IBM's Information Management System (IMS) was developed in the mid-1960s to meet
 
 The IMS database management system (DBMS) introduced the idea that application code should be separate from the data. Before IMS, a mainframe application would meld the coding and data into one. But this proved to be unwieldy, such as with duplicate data and the need for reusability. A key innovation for IMS was to separate both of these parts. IMS controls the access and recovery of the data. Application programs can still access and navigate the data using the DL/I standard callable interface.
 
-<img src="/assets/img/mainframe-p1-ims.png" alt="The main components of IMS" style="width:100%">
+<img src="/assets/img/mainframe-p1-ims.png" alt="The main components of IMS" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **The main components of IMS**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -263,7 +263,7 @@ Db2 stores data in various tables that are linked to form relationships. Each ta
 
 Each row has a unique identifier, the primary key, which facilitates searching, updating, and deleting information. The primary key is automatically indexed in a relational database, but additional indexes can be created on other columns to enhance operation speed.
 
-<img src="/assets/img/mainframe-p1-pk-fk.png" alt="Primary key and foreign key diagram" style="width:100%">
+<img src="/assets/img/mainframe-p1-pk-fk.png" alt="Primary key and foreign key diagram" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Primary key and foreign key diagram**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
