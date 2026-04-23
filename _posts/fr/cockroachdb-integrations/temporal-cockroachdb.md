@@ -33,10 +33,6 @@ Un **framework d'orchestration de workflows** gère le cycle de vie de programme
 
 [Temporal](https://temporal.io/) est une plateforme open-source, indépendante du langage, pour construire des applications distribuées fiables. Elle introduit le concept d'**exécution durable** — la garantie que la logique d'un workflow s'exécute jusqu'à complétion quelle que soit la défaillance d'infrastructure.
 
-<img src="/assets/img/temporal-cluster-architecture.svg" alt="Architecture du cluster Temporal" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Cluster Temporal : services sans état adossés à une couche de persistance durable**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-
 ### Concepts clés
 
 | Concept | Définition |
@@ -101,6 +97,10 @@ Un cluster Temporal est composé de quatre services sans état passant à l'éch
 | **Worker** | Exécute les workflows système internes (réplication, archivage, nettoyage) |
 | **Persistence Store (CockroachDB)** | Historiques d'événements, timers, files de transfert — forte cohérence, écritures distribuées |
 | **Visibility Store (CockroachDB)** | Index d'exécution interrogeable — index inversé JSONB remplace `btree_gin` |
+
+<img src="/assets/img/temporal-cluster-architecture.svg" alt="Architecture du cluster Temporal" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Cluster Temporal : services sans état adossés à une couche de persistance durable**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 

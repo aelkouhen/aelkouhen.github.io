@@ -33,10 +33,6 @@ A **workflow orchestration framework** manages the lifecycle of long-running, mu
 
 [Temporal](https://temporal.io/) is an open-source, language-agnostic platform for building reliable distributed applications. It introduces the concept of **Durable Execution** — the guarantee that workflow logic runs to completion regardless of infrastructure failures.
 
-<img src="/assets/img/temporal-cluster-architecture.svg" alt="Temporal cluster architecture" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Temporal cluster: stateless services backed by a durable persistence layer**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-
 ### Core Concepts
 
 | Concept | Definition |
@@ -101,6 +97,10 @@ A Temporal cluster consists of four independently scalable stateless services fr
 | **Worker** | Runs internal system workflows (replication, archival, cleanup) |
 | **Persistence Store (CockroachDB)** | Event histories, timers, transfer queues — strong consistency, distributed writes |
 | **Visibility Store (CockroachDB)** | Queryable execution index — JSONB inverted index replaces `btree_gin` |
+
+<img src="/assets/img/temporal-cluster-architecture.svg" alt="Temporal cluster architecture" style="width:100%;margin:1.5rem 0;">
+{: .mx-auto.d-block :}
+**Temporal cluster: stateless services backed by a durable persistence layer**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 ---
 
