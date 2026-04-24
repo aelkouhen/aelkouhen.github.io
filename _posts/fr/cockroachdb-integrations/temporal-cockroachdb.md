@@ -82,7 +82,14 @@ En plus du store principal, Temporal maintient un **Visibility store**, une base
 {: .mx-auto.d-block :}
 **Le Visibility store indexe les exécutions de workflow pour les requêtes de liste et filtre via des attributs de recherche JSONB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Le schéma PostgreSQL standard introduit plusieurs incompatibilités avec CockroachDB dès la migration `v1.2` (`advanced_visibility.sql`). Contourner `temporal-sql-tool` pour la base de visibilité et appliquer directement un schéma compatible CockroachDB résout l'ensemble de ces problèmes (voir l'étape 3 ci-dessous).
+Le schéma PostgreSQL standard introduit quatre incompatibilités avec CockroachDB dans la migration `v1.2` (`advanced_visibility.sql`), provoquant l'échec immédiat de `temporal-sql-tool` avant qu'il puisse alimenter la base de visibilité :
+
+- **Blocs PL/pgSQL anonymes** — `DO LANGUAGE 'plpgsql' $$ ... $$` est rejeté directement par CockroachDB. Le bloc a pour objectif d'installer conditionnellement l'extension `btree_gin`, également non supportée, mais l'erreur se déclenche sur la syntaxe `DO` elle-même, avant même d'atteindre la vérification de l'extension.
+- **Type de colonne `TSVECTOR`** — utilisé pour la gestion de la recherche plein texte dans PostgreSQL ; CockroachDB n'a pas d'équivalent et rejette la définition de colonne.
+- **Cast de timestamp contextuel dans les colonnes `STORED`** — `(s::timestamptz AT TIME ZONE 'UTC')` est du SQL valide en contexte libre mais CockroachDB le refuse dans une expression de colonne calculée persistée ; `parse_timestamp(s)` est le remplacement compatible.
+- **Index GIN multi-colonnes avec `jsonb_path_ops`** — `USING GIN (namespace_id, col jsonb_path_ops)` mélange une colonne non-JSONB avec une classe d'opérateur JSONB, ce que CockroachDB n'autorise pas ; un `CREATE INVERTED INDEX` mono-colonne sur la colonne JSONB est l'équivalent correct.
+
+Contourner entièrement `temporal-sql-tool` pour la base de visibilité et appliquer directement un schéma compatible CockroachDB via `psql` résout les quatre problèmes (voir l'étape 3 ci-dessous).
 
 ### Architecture complète du cluster avec CockroachDB
 
@@ -275,7 +282,7 @@ temporal-sql-tool \
 
 > **Cette étape nécessite de contourner complètement `temporal-sql-tool` pour la base de visibilité.** La migration `v1.2` (`advanced_visibility.sql`) introduit quatre incompatibilités avec CockroachDB qui font échouer l'outil. Appliquer directement un schéma adapté via `psql` est la bonne approche.
 
-`btree_gin` reste bien l'une des incompatibilités : CockroachDB ne supporte pas cette extension. Mais la documentation originale pointait vers la migration `v1.1` comme source du problème et traitait `btree_gin` comme le seul obstacle. Ces deux affirmations sont incorrectes. L'appel à l'extension se trouve dans un bloc anonyme `DO LANGUAGE 'plpgsql'` situé dans `v1.2`. CockroachDB rejette le bloc `DO` lui-même avant même d'atteindre la ligne de l'extension : le premier message d'erreur n'est donc pas « extension introuvable » mais « blocs de code anonymes non supportés ». Deux incompatibilités supplémentaires attendent dans le même fichier après cela.
+`btree_gin` est effectivement l'une des incompatibilités — CockroachDB ne supporte pas cette extension. Il convient de noter que l'incompatibilité se manifeste dans la migration `v1.2` et non dans `v1.1` comme l'indiquent certains guides antérieurs, et que `btree_gin` n'est pas le seul obstacle. L'appel à l'extension est encapsulé dans un bloc anonyme `DO LANGUAGE 'plpgsql'` ; CockroachDB ne supportant pas les blocs de code anonymes, l'échec survient au niveau de l'instruction `DO` plutôt qu'au niveau de la recherche de l'extension. Trois incompatibilités supplémentaires se trouvent dans le même fichier.
 
 Les quatre incompatibilités, toutes présentes dans `schema/postgresql/v12/visibility/versioned/v1.2/advanced_visibility.sql` :
 
