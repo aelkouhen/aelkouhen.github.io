@@ -355,7 +355,7 @@ Même si l'index contient des milliards de produits, cette requête ne cherchera
 
 En coulisses, l'index maintient un arbre K-means indépendant pour chaque catégorie. Du point de vue du système, il y a peu de différence entre la gestion d'un milliard de vecteurs dans un seul arbre ou leur distribution à travers un million d'arbres plus petits. Dans les deux cas, les vecteurs sont assignés à des partitions et stockés dans des plages de la couche clé-valeur de CockroachDB. Ces plages sont automatiquement divisées, fusionnées et distribuées à travers les nœuds, permettant une scalabilité quasi-linéaire à mesure que l'utilisation croît.
 
-<img src="/assets/img/ai-recom-13.png" alt="Partitioned vector indexing" style="width:100%">
+<img src="/assets/img/ai-recom-13.png" alt="Partitioned vector indexing" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Indexation vectorielle partitionnée**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
