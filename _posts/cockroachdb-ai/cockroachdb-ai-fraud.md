@@ -152,7 +152,7 @@ The diagram below illustrates the fraud detection solution architecture implemen
 
 RCF assigns an anomaly score to each data point. Low scores indicate that the data point is normal, while high scores indicate the presence of an anomaly. The threshold for what is considered "low" or "high" depends on the application, but typically scores beyond three standard deviations (**3σ**) from the mean are considered anomalous.
 
-<img src="/assets/img/ai-fraud-05.png" alt="Anomaly score" style="width:100%">
+<img src="/assets/img/ai-fraud-05.png" alt="Anomaly score" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Anomaly score**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 

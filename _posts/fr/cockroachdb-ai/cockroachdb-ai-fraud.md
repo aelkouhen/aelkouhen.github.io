@@ -153,7 +153,7 @@ Le diagramme ci-dessous illustre l'architecture de la solution de détection de 
 
 RCF attribue un score d'anomalie à chaque point de données. Des scores faibles indiquent que le point de données est normal, tandis que des scores élevés indiquent la présence d'une anomalie. Le seuil de ce qui est considéré comme « faible » ou « élevé » dépend de l'application, mais généralement les scores au-delà de trois écarts-types (**3σ**) par rapport à la moyenne sont considérés comme anormaux.
 
-<img src="/assets/img/ai-fraud-05.png" alt="Anomaly score" style="width:100%">
+<img src="/assets/img/ai-fraud-05.png" alt="Anomaly score" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Score d'anomalie**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
