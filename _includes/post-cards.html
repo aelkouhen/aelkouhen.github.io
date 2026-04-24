@@ -1,4 +1,4 @@
-{% assign card_posts = include.posts %}
+{% assign card_posts = include.posts | where_exp: "post", "post.date <= site.time" %}
 {% include get-translation-data.html %}
 {% assign _cards_ui_t = _t_data.ui %}
 
