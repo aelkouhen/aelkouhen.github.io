@@ -409,7 +409,7 @@ Zooming out further, CockroachDB MCP servers occupy a distinct niche relative to
 
 | Server | Best For | Access Model |
 |---|---|---|
-| [**CockroachDB (this article)**](https://github.com/amineelkouhen/mcp-cockroachdb) | Distributed operational database: developer workflow and ops | Full admin |
+| [**CockroachDB (A. El Kouhen)**](https://github.com/amineelkouhen/mcp-cockroachdb) | Distributed operational database: developer workflow and ops | Full admin |
 | [**PostgreSQL (Anton O.)**](https://github.com/antonorlov/mcp-postgres-server) | Single-node developer workflow, simplicity, direct access | Read + Write |
 | [**MongoDB (Official)**](https://github.com/mongodb-js/mongodb-mcp-server) | Data exploration and secure schema inspection | Read-only |
 | [**DuckDB (MotherDuck)**](https://github.com/motherduckdb/mcp-server-motherduck) | Local and cloud analytics, hybrid SQL execution | Analytics |
