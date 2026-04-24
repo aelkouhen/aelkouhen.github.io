@@ -6,7 +6,7 @@ title: "Data & Redis, Partie 5"
 subtitle: Service de données avec Redis (Pratique)
 thumbnail-img: assets/img/redis-smartcache.png
 share-img: assets/img/redis-serving.gif
-tags: [Business Analytics,data serving,data virtualization,data visualization,Hands-On,vector database]
+tags: [Business Analytics,data serving,data virtualization,data visualization,Guide,vector database]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true

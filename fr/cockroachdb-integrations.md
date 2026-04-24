@@ -11,5 +11,5 @@ category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🔗"
 ---
 
-{% assign integration_posts = site.tags['integrations'] %}
+{% assign integration_posts = site.tags['Guide'] | where_exp: "post", "post.tags contains 'CockroachDB'" %}
 {% include post-cards.html posts=integration_posts %}

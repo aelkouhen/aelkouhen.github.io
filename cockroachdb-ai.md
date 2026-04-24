@@ -10,5 +10,5 @@ category-img: "/assets/img/cockroachdb.webp"
 category-icon: "🤖"
 ---
 
-{% assign ai_posts = site.tags['Artificial Intelligence'] %}
+{% assign ai_posts = site.tags['Artificial Intelligence'] | where_exp: "post", "post.tags contains 'CockroachDB'" %}
 {% include post-cards.html posts=ai_posts %}
