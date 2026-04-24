@@ -33,7 +33,7 @@ Whether you're a data enthusiast, a business leader seeking a competitive edge, 
 
 Generative AI represents a class of artificial intelligence algorithms capable of creating original content – text, images, music, code, or even videos. Unlike traditional AI systems that make predictions based on fixed outputs and/or can merely analyze or classify existing data, generative models can produce new and contextually relevant outputs based on prompts and inputs.
 
-<img src="/assets/img/ai-intro-01.png" alt="AI Taxonomy" style="width:100%">
+<img src="/assets/img/ai-intro-01.png" alt="AI Taxonomy" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 
 {: .mx-auto.d-block :}
 **AI Taxonomy**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
@@ -80,7 +80,7 @@ Vector similarity metrics enable the measurement of similarity or dissimilarity 
 - Multimodal data: It handles text, images, or audio by comparing embeddings across formats.
 - Scalability: It efficiently processes large datasets, like e-commerce catalogs or media libraries.
 
-<img src="/assets/img/ai-intro-04.png" alt="Distance (similarity) between vectors in a vector search space" style="width:100%">
+<img src="/assets/img/ai-intro-04.png" alt="Distance (similarity) between vectors in a vector search space" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 
 {: .mx-auto.d-block :}
 **Distance (similarity) between vectors in a vector search space**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}

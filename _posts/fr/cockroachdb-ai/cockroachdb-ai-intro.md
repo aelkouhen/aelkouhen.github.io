@@ -34,7 +34,7 @@ Que vous soyez un passionné de données, un chef d'entreprise cherchant un avan
 
 L'IA Générative représente une classe d'algorithmes d'intelligence artificielle capables de créer du contenu original (textes, images, musique, code ou même vidéos). Contrairement aux systèmes d'IA traditionnels qui effectuent des prédictions basées sur des sorties fixes et/ou peuvent seulement analyser ou classer des données existantes, les modèles génératifs peuvent produire de nouvelles sorties contextuellement pertinentes à partir de requêtes et d'entrées.
 
-<img src="/assets/img/ai-intro-01.png" alt="AI Taxonomy" style="width:100%">
+<img src="/assets/img/ai-intro-01.png" alt="AI Taxonomy" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 
 {: .mx-auto.d-block :}
 **Taxonomie de l'IA**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
@@ -81,7 +81,7 @@ Les métriques de similarité vectorielle permettent de mesurer la similarité o
 - Données multimodales : elle traite du texte, des images ou de l'audio en comparant des embeddings entre différents formats.
 - Scalabilité : elle traite efficacement de grands ensembles de données, comme des catalogues e-commerce ou des bibliothèques multimédias.
 
-<img src="/assets/img/ai-intro-04.png" alt="Distance (similarity) between vectors in a vector search space" style="width:100%">
+<img src="/assets/img/ai-intro-04.png" alt="Distance (similarity) between vectors in a vector search space" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 
 {: .mx-auto.d-block :}
 **Distance (similarité) entre vecteurs dans un espace de recherche vectorielle**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
