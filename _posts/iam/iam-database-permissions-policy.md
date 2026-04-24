@@ -145,7 +145,7 @@ If the output of `zed version` shows the server version as "unknown" then your C
 
 Writing one or more object type definitions is the first step in developing an authorization relationship schema.
 
-<img src="/assets/img/iam-p4-user-document-schema.png" alt="Authorization relationship schema for user and document" style="width:100%">
+<img src="/assets/img/iam-p4-user-document-schema.png" alt="Authorization relationship schema for user and document" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 
 {: .mx-auto.d-block :}
 **Authorization relationship schema**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}

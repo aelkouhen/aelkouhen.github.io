@@ -146,7 +146,7 @@ Si la sortie de `zed version` indique la version du serveur comme « unknown »,
 
 L'écriture d'une ou plusieurs définitions de types d'objets est la première étape dans le développement d'un schéma de relation d'autorisation.
 
-<img src="/assets/img/iam-p4-user-document-schema.png" alt="Authorization relationship schema for user and document" style="width:100%">
+<img src="/assets/img/iam-p4-user-document-schema.png" alt="Authorization relationship schema for user and document" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 
 {: .mx-auto.d-block :}
 **Schéma de relation d'autorisation**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
