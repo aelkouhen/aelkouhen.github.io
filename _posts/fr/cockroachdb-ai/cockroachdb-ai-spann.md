@@ -19,7 +19,7 @@ Notre startup de partage de photos n'a jamais atteint des millions d'utilisateur
 
 Même avec seulement quelques centaines d'éléments, les utilisateurs s'attendent à une recherche rapide et précise. S'ils téléchargent quelque chose, ils veulent le trouver immédiatement. S'ils effectuent une recherche, ils veulent des résultats en un clin d'œil. De plus en plus, la recherche par mots-clés de base ne suffit plus. À l'ère de ChatGPT, les utilisateurs s'attendent à une recherche sémantique, avec des résultats basés sur le sens du contenu, pas seulement sur les noms de fichiers, les métadonnées, les mots-clés ou les tags.
 
-<img src="/assets/img/ai-spann-01.png" alt="CockroachDB Vector Search AI workflow" style="width:100%">
+<img src="/assets/img/ai-spann-01.png" alt="CockroachDB Vector Search AI workflow" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Workflow de recherche vectorielle IA avec CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -33,7 +33,7 @@ Lisez la suite pour découvrir comment nous avons combiné des recherches acadé
 
 Pour commencer, il est important de comprendre comment les systèmes peuvent analyser des photos ou chercher dans des documents par leur sens. Des entreprises comme [OpenAI](https://www.cockroachlabs.com/blog/openai-iam-architecture-ory-cockroachdb/) proposent des modèles d'embedding qui convertissent une image, un document ou tout autre média en une longue liste de nombres à virgule flottante, un vecteur, qui capture son sens. Si deux photos ou documents sont similaires, par exemple deux photos de plage, ils seront mappés vers des vecteurs proches les uns des autres dans un espace de haute dimension.
 
-<img src="/assets/img/ai-spann-02.png" alt="Example vector space" style="width:100%">
+<img src="/assets/img/ai-spann-02.png" alt="Example vector space" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Exemple d'espace vectoriel**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -43,7 +43,7 @@ Cela fonctionne même entre différents types de médias. Les modèles multimoda
 
 ## Comment le sens est indexé
 
-<img src="/assets/img/ai-spann-03.png" alt="Illustration of the output of embedding models" style="width:100%">
+<img src="/assets/img/ai-spann-03.png" alt="Illustration of the output of embedding models" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Illustration de la sortie des modèles d'embedding**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -73,19 +73,19 @@ Ces contraintes ont éliminé de nombreuses approches courantes. Nous avions bes
 
 ## Présentation de C-SPANN
 
-<img src="/assets/img/ai-spann-04.png" alt="Research before CockroachDB C-SPANN" style="width:100%">
+<img src="/assets/img/ai-spann-04.png" alt="Research before CockroachDB C-SPANN" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Recherches avant CockroachDB C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 C-SPANN, abréviation de CockroachDB SPANN, est un algorithme d'indexation vectorielle qui intègre des idées des publications [SPANN](https://www.microsoft.com/en-us/research/wp-content/uploads/2021/11/SPANN_finalversion1.pdf) et [SPFresh](https://www.microsoft.com/en-us/research/publication/spfresh-incremental-in-place-update-for-billion-scale-vector-search/) de Microsoft Research, ainsi que du projet ScaNN de Google.
 
-<img src="/assets/img/ai-spann-05.png" alt="K-means tree powering C-SPANN CockroachDB vector indexing" style="width:100%">
+<img src="/assets/img/ai-spann-05.png" alt="K-means tree powering C-SPANN CockroachDB vector indexing" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Arbre K-means alimentant l'indexation vectorielle C-SPANN de CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Au cœur de C-SPANN se trouve un arbre K-means hiérarchique. Les vecteurs sont regroupés en partitions basées sur leur similarité, chaque partition contenant entre des dizaines et des centaines de vecteurs. Chaque partition possède un centroïde, qui est la moyenne des vecteurs qu'elle contient, représentant leur « centre de masse ». Ces centroïdes sont récursivement regroupés en partitions de niveau supérieur, formant un arbre qui réduit efficacement l'espace de recherche.
 
-<img src="/assets/img/ai-spann-06.png" alt="Partitions mapped to CockroachDB nodes" style="width:100%">
+<img src="/assets/img/ai-spann-06.png" alt="Partitions mapped to CockroachDB nodes" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Partitions mappées sur les nœuds CockroachDB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -109,7 +109,7 @@ Regardez cette démonstration de l'évangéliste technique Rob Reid pour voir l'
 
 Les divisions se produisent automatiquement en arrière-plan pour réduire l'impact sur les transactions au premier plan. Lorsqu'une division est déclenchée, les vecteurs dans la partition d'origine sont divisés en deux groupes à peu près égaux en utilisant une variante équilibrée de l'algorithme K-means. Chaque groupe devient une nouvelle partition plus étroitement regroupée avec son propre centroïde. L'arbre est mis à jour pour refléter ce changement, et les futures insertions sont acheminées vers les nouvelles partitions en fonction de leur proximité avec ces nouveaux centroïdes. Voici un exemple où la partition 4 est remplacée par les partitions 5 et 6 au niveau feuille de l'arbre :
 
-<img src="/assets/img/ai-spann-07.png" alt="Example partition replacement in C-SPANN" style="width:100%">
+<img src="/assets/img/ai-spann-07.png" alt="Example partition replacement in C-SPANN" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Exemple de remplacement de partition dans C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -117,7 +117,7 @@ Il convient également de noter que les divisions de partitions sont distinctes 
 
 Il y a une subtilité à noter : certains vecteurs peuvent ne plus être dans la « bonne » partition après une division. Un vecteur dans la partition en cours de division peut être plus proche du centroïde d'une partition voisine que de l'un des deux nouveaux centroïdes. De même, un vecteur dans une partition voisine peut maintenant être plus proche de l'un des nouveaux centroïdes. Dans les deux cas, les vecteurs doivent être relocalisés vers la partition dont le centroïde est le plus proche. Pour voir comment cela peut se produire, considérez ces clusters rouge et bleu (les centroïdes sont marqués d'un X) :
 
-<img src="/assets/img/ai-spann-08.png" alt="Partition split and vector relocation" style="width:100%">
+<img src="/assets/img/ai-spann-08.png" alt="Partition split and vector relocation" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Division de partition et relocalisation de vecteurs**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -139,7 +139,7 @@ Cette approche s'intègre naturellement avec l'arbre K-means : chaque vecteur es
 
 Bien que je ne rentre pas dans tous les détails, je veux vous montrer à quel point l'algorithme de base RaBitQ est beau et simple. Chaque vecteur de données est d'abord « mélangé » avec une transformation orthogonale aléatoire, ce qui répartit plus uniformément tout biais des données entre les dimensions tout en préservant les angles et les distances. Il est ensuite centré sur la moyenne par rapport au centroïde de la partition et normalisé à une longueur unitaire. Enfin, chaque dimension est convertie en un bit : zéro si la valeur est inférieure à zéro, un sinon.
 
-<img src="/assets/img/ai-spann-09.png" alt="RaBitQ quantization in C-SPANN" style="width:100%">
+<img src="/assets/img/ai-spann-09.png" alt="RaBitQ quantization in C-SPANN" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Quantification RaBitQ dans C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
