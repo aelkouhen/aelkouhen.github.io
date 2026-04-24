@@ -354,7 +354,7 @@ Even if the index contains billions of products, this query will search only the
 
 Under the hood, the index maintains an independent K-means tree for each category. From the system's standpoint, there's little difference between managing one billion vectors in a single tree or distributing them across a million smaller trees. In both cases, vectors are assigned to partitions and stored within ranges in CockroachDB's key-value layer. These ranges are automatically split, merged, and distributed across nodes, enabling near-linear scalability as usage grows.
 
-<img src="/assets/img/ai-recom-13.png" alt="Partitioned vector indexing" style="width:100%">
+<img src="/assets/img/ai-recom-13.png" alt="Partitioned vector indexing" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Partitioned vector indexing**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
