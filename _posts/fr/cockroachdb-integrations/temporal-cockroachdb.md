@@ -82,14 +82,7 @@ En plus du store principal, Temporal maintient un **Visibility store**, une base
 {: .mx-auto.d-block :}
 **Le Visibility store indexe les exécutions de workflow pour les requêtes de liste et filtre via des attributs de recherche JSONB**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-Le schéma PostgreSQL standard introduit quatre incompatibilités avec CockroachDB dans la migration `v1.2` (`advanced_visibility.sql`), provoquant l'échec immédiat de `temporal-sql-tool` avant qu'il puisse alimenter la base de visibilité :
-
-- **Blocs PL/pgSQL anonymes** — `DO LANGUAGE 'plpgsql' $$ ... $$` est rejeté directement par CockroachDB. Le bloc a pour objectif d'installer conditionnellement l'extension `btree_gin`, également non supportée, mais l'erreur se déclenche sur la syntaxe `DO` elle-même, avant même d'atteindre la vérification de l'extension.
-- **Type de colonne `TSVECTOR`** — utilisé pour la gestion de la recherche plein texte dans PostgreSQL ; CockroachDB n'a pas d'équivalent et rejette la définition de colonne.
-- **Cast de timestamp contextuel dans les colonnes `STORED`** — `(s::timestamptz AT TIME ZONE 'UTC')` est du SQL valide en contexte libre mais CockroachDB le refuse dans une expression de colonne calculée persistée ; `parse_timestamp(s)` est le remplacement compatible.
-- **Index GIN multi-colonnes avec `jsonb_path_ops`** — `USING GIN (namespace_id, col jsonb_path_ops)` mélange une colonne non-JSONB avec une classe d'opérateur JSONB, ce que CockroachDB n'autorise pas ; un `CREATE INVERTED INDEX` mono-colonne sur la colonne JSONB est l'équivalent correct.
-
-Contourner entièrement `temporal-sql-tool` pour la base de visibilité et appliquer directement un schéma compatible CockroachDB via `psql` résout les quatre problèmes (voir l'étape 3 ci-dessous).
+Le schéma de visibilité se présente sous forme de DDL PostgreSQL standard et fonctionne parfaitement lorsque Temporal tourne sur un primaire PostgreSQL classique. Les bases de données SQL distribuées telles que CockroachDB ou YugabyteDB ne supportent cependant pas toutes les extensions et constructions syntaxiques PostgreSQL sur lesquelles ce schéma s'appuie, et la migration standard ne peut donc pas être appliquée telle quelle. YugabyteDB a déjà documenté [un parcours d'installation pour faire tourner Temporal sur sa plateforme](https://www.yugabyte.com/blog/getting-started-yugabytedb-temporal/). Pour CockroachDB, la solution équivalente consiste à contourner `temporal-sql-tool` pour la base de visibilité et à appliquer directement un schéma adapté via `psql` (voir l'étape 3 ci-dessous).
 
 ### Architecture complète du cluster avec CockroachDB
 
