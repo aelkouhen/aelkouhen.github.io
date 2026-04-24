@@ -48,7 +48,7 @@ There are several types of recommendation systems commonly in use:
 
 **Content-Based Filtering**: This approach recommends items to users based on their preferences and characteristics. It analyzes the content and attributes of items that users have interacted with or rated positively and suggests similar items. For example, if a user enjoys action films in a movie recommendation system, the system would recommend other action movies.
 
-<img src="/assets/img/ai-recom-01.png" alt="Content-Based Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-01.png" alt="Content-Based Filtering" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Content-Based Filtering**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -58,13 +58,13 @@ There are several types of recommendation systems commonly in use:
 
 - **Item-Based Collaborative Filtering**: It identifies items that are similar based on user behavior and recommends items that are similar to those previously interacted with by the user (Scenario C).
 
-<img src="/assets/img/ai-recom-02.png" alt="Collaborative Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-02.png" alt="Collaborative Filtering" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Collaborative Filtering**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **Context-Aware Systems**: These systems consider contextual information, such as time, location, and user context, to provide more relevant recommendations. For instance, a music streaming service might recommend energetic workout playlists in the morning and relaxing music in the evening. Likewise, an e-commerce website will suggest specific items when it's Black Friday or Christmas, different from what it could recommend in other periods of the year.
 
-<img src="/assets/img/ai-recom-03.png" alt="Context-Aware Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-03.png" alt="Context-Aware Filtering" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Context-Aware Filtering**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -76,13 +76,13 @@ There are several types of recommendation systems commonly in use:
 
 Unlike offline recommendation engines that generate personalized recommendations based on historical data, an ideal recommendation engine should prioritize resource efficiency, deliver high-performance real-time updates (online), and provide accurate and relevant choices to users. For example, it can be ineffective to suggest to a customer an item they have already bought only because your recommendation system wasn't aware of the customer's last actions.
 
-<img src="/assets/img/ai-recom-04.png" alt="Offline Recommendation Systems" style="width:100%">
+<img src="/assets/img/ai-recom-04.png" alt="Offline Recommendation Systems" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Offline Recommendation Systems**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Online engines should react to customers' actions while they are still browsing your site, and recalculate the recommendations accordingly. This would give the customers a feeling that they have a dedicated sales assistant, making their experiences more personalized.
 
-<img src="/assets/img/ai-recom-05.png" alt="Online Recommendation Systems" style="width:100%">
+<img src="/assets/img/ai-recom-05.png" alt="Online Recommendation Systems" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Online Recommendation Systems**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -96,7 +96,7 @@ Implementing such systems using the distributed SQL database [CockroachDB](https
 
 A [vector embedding](https://www.cockroachlabs.com/blog/genai-using-cockroachdb/#Vector-Embeddings) is a mathematical representation of something (like text or images) as a list of numbers, where closeness in numbers means closeness in meaning. These embeddings are mapped in multi-dimensional space to perform proximity calculations to understand the relationship between the meaning of items.
 
-<img src="/assets/img/ai-recom-06.png" alt="Product descriptions presented as vectors" style="width:100%">
+<img src="/assets/img/ai-recom-06.png" alt="Product descriptions presented as vectors" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Product descriptions presented as vectors**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -267,7 +267,7 @@ Additionally, CockroachDB's new vector indexing system **C-SPANN**, incorporates
 
 Unlike traditional solutions that rely on in-memory datasets or batched writes, C-SPANN is built to function across regions with strong consistency, low latency, and linear scalability. It supports immediate searchability of new data, avoids central coordination, and fits naturally into CockroachDB's distributed key-value storage model.
 
-<img src="/assets/img/ai-recom-10.png" alt="C-SPANN" style="width:100%">
+<img src="/assets/img/ai-recom-10.png" alt="C-SPANN" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -303,7 +303,7 @@ This indexing system unlocks advanced search capabilities like finding the "top 
 
 Consequently, CockroachDB exposes the usual search functionality, combining full text, numerical, and geographical pre-filters with K-Nearest Neighbors (KNN) vector search: With CockroachDB, you can query products stored as vectors while pre-filtering by location, price and description, and choose the relevant vector distance metrics to calculate how "similar" or "dissimilar" two products are.
 
-<img src="/assets/img/ai-recom-12.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:100%">
+<img src="/assets/img/ai-recom-12.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Calculating Cosine Similarity between Product Descriptions**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 

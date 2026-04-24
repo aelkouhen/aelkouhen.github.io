@@ -49,7 +49,7 @@ Il existe plusieurs types de systèmes de recommandation couramment utilisés :
 
 **Filtrage basé sur le contenu** : Cette approche recommande des articles aux utilisateurs en fonction de leurs préférences et caractéristiques. Elle analyse le contenu et les attributs des articles avec lesquels les utilisateurs ont interagi ou qu'ils ont évalués positivement et suggère des articles similaires. Par exemple, si un utilisateur aime les films d'action dans un système de recommandation de films, le système recommandera d'autres films d'action.
 
-<img src="/assets/img/ai-recom-01.png" alt="Content-Based Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-01.png" alt="Content-Based Filtering" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Filtrage basé sur le contenu**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -59,13 +59,13 @@ Il existe plusieurs types de systèmes de recommandation couramment utilisés :
 
 - **Filtrage collaboratif basé sur les articles** : Il identifie les articles similaires basés sur le comportement des utilisateurs et recommande des articles similaires à ceux avec lesquels l'utilisateur a précédemment interagi (Scénario C).
 
-<img src="/assets/img/ai-recom-02.png" alt="Collaborative Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-02.png" alt="Collaborative Filtering" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Filtrage collaboratif**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 **Systèmes sensibles au contexte** : Ces systèmes prennent en compte des informations contextuelles, comme l'heure, la localisation et le contexte de l'utilisateur, pour fournir des recommandations plus pertinentes. Par exemple, un service de streaming musical pourrait recommander des playlists d'entraînement énergiques le matin et de la musique relaxante le soir. De même, un site de e-commerce suggérera des articles spécifiques lors du Black Friday ou de Noël, différents de ce qu'il pourrait recommander à d'autres périodes de l'année.
 
-<img src="/assets/img/ai-recom-03.png" alt="Context-Aware Filtering" style="width:100%">
+<img src="/assets/img/ai-recom-03.png" alt="Context-Aware Filtering" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Filtrage sensible au contexte**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -77,13 +77,13 @@ Il existe plusieurs types de systèmes de recommandation couramment utilisés :
 
 Contrairement aux moteurs de recommandation hors ligne qui génèrent des recommandations personnalisées basées sur des données historiques, un moteur de recommandation idéal devrait prioriser l'efficacité des ressources, fournir des mises à jour en temps réel (en ligne) hautes performances, et offrir des choix précis et pertinents aux utilisateurs. Par exemple, il peut être inefficace de suggérer à un client un article qu'il a déjà acheté simplement parce que votre système de recommandation n'était pas au courant des dernières actions du client.
 
-<img src="/assets/img/ai-recom-04.png" alt="Offline Recommendation Systems" style="width:100%">
+<img src="/assets/img/ai-recom-04.png" alt="Offline Recommendation Systems" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Systèmes de recommandation hors ligne**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
 Les moteurs en ligne doivent réagir aux actions des clients pendant qu'ils naviguent encore sur votre site et recalculer les recommandations en conséquence. Cela donnerait aux clients la sensation d'avoir un assistant commercial dédié, rendant leurs expériences plus personnalisées.
 
-<img src="/assets/img/ai-recom-05.png" alt="Online Recommendation Systems" style="width:100%">
+<img src="/assets/img/ai-recom-05.png" alt="Online Recommendation Systems" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Systèmes de recommandation en ligne**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -97,7 +97,7 @@ La mise en œuvre de tels systèmes avec la base de données SQL distribuée [Co
 
 Un [vector embedding](https://www.cockroachlabs.com/blog/genai-using-cockroachdb/#Vector-Embeddings) est une représentation mathématique de quelque chose (comme du texte ou des images) sous forme d'une liste de nombres, où la proximité des nombres signifie la proximité du sens. Ces embeddings sont mappés dans un espace multidimensionnel pour effectuer des calculs de proximité afin de comprendre la relation entre le sens des articles.
 
-<img src="/assets/img/ai-recom-06.png" alt="Product descriptions presented as vectors" style="width:100%">
+<img src="/assets/img/ai-recom-06.png" alt="Product descriptions presented as vectors" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Descriptions de produits représentées sous forme de vecteurs**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -268,7 +268,7 @@ De plus, le nouveau système d'indexation vectorielle **C-SPANN** de CockroachDB
 
 Contrairement aux solutions traditionnelles qui s'appuient sur des ensembles de données en mémoire ou des écritures par lots, C-SPANN est conçu pour fonctionner à travers des régions avec une forte cohérence, une faible latence et une scalabilité linéaire. Il prend en charge la possibilité de rechercher immédiatement les nouvelles données, évite la coordination centrale et s'intègre naturellement dans le modèle de stockage clé-valeur distribué de CockroachDB.
 
-<img src="/assets/img/ai-recom-10.png" alt="C-SPANN" style="width:100%">
+<img src="/assets/img/ai-recom-10.png" alt="C-SPANN" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **C-SPANN**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -304,7 +304,7 @@ Ce système d'indexation débloque des capacités de recherche avancées comme l
 
 Par conséquent, CockroachDB expose la fonctionnalité de recherche habituelle, combinant les pré-filtres de texte intégral, numériques et géographiques avec la recherche de voisins les plus proches (KNN) vectorielle : avec CockroachDB, vous pouvez interroger des produits stockés sous forme de vecteurs tout en pré-filtrant par localisation, prix et description, et choisir les métriques de distance vectorielle pertinentes pour calculer à quel point deux produits sont « similaires » ou « dissimilaires ».
 
-<img src="/assets/img/ai-recom-12.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:100%">
+<img src="/assets/img/ai-recom-12.png" alt="Calculating Cosine Similarity between Product Descriptions" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Calcul de la similarité cosinus entre des descriptions de produits**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
