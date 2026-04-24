@@ -6,7 +6,7 @@ subtitle: "How DBOS turns your database into a workflow engine, and why Cockroac
 cover-img: /assets/img/cover-dbos.webp
 thumbnail-img: /assets/img/cover-dbos.webp
 share-img: /assets/img/cover-dbos.webp
-tags: [Guide, CockroachDB, dbos, workflow, orchestration, Artificial Intelligence, Agentic AI]
+tags: [CockroachDB, dbos, workflow, orchestration, Artificial Intelligence, Agentic AI]
 lang: en
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
