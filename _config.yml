@@ -267,6 +267,7 @@ date_format: "%B %-d, %Y"
 #################################################################################
 
 # Output options (more information on Jekyll's site)
+future: false
 timezone: "Europe/Paris"
 markdown: kramdown
 highlighter: rouge
