@@ -282,7 +282,7 @@ temporal-sql-tool \
 
 > **This step requires bypassing `temporal-sql-tool` entirely for the visibility database.** Migration `v1.2` (`advanced_visibility.sql`) introduces four CockroachDB incompatibilities that cause the tool to hard-fail. Applying a hand-crafted schema directly with `psql` is the correct path.
 
-`btree_gin` is indeed one of the incompatibilities — CockroachDB does not support that extension. It is worth noting that the incompatibility surfaces in migration `v1.2`, not `v1.1` as some earlier guides suggest, and `btree_gin` is not the only obstacle. The extension call is wrapped inside a `DO LANGUAGE 'plpgsql'` anonymous code block; since CockroachDB does not support anonymous code blocks, the failure occurs at the `DO` statement rather than at the extension lookup. Three additional incompatibilities follow in the same file.
+`btree_gin` is indeed one of the incompatibilities, as CockroachDB does not support that extension. It is worth noting that the incompatibility surfaces in migration `v1.2`, not `v1.1` as some earlier guides suggest, and `btree_gin` is not the only obstacle. The extension call is wrapped inside a `DO LANGUAGE 'plpgsql'` anonymous code block; since CockroachDB does not support anonymous code blocks, the failure occurs at the `DO` statement rather than at the extension lookup. Three additional incompatibilities follow in the same file.
 
 The four incompatibilities, all in `schema/postgresql/v12/visibility/versioned/v1.2/advanced_visibility.sql`:
 
