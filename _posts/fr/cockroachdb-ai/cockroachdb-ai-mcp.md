@@ -27,7 +27,7 @@ Le [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-p
 
 Avant MCP, faire interroger une base de données par un agent LLM nécessitait de lui fournir manuellement des informations de schéma, d'écrire du code d'intégration personnalisé et de gérer les problèmes de sécurité pour chaque nouveau modèle ou framework d'agent. MCP élimine cette surcharge en fournissant une couche de découverte et d'invocation standardisée.
 
-<img src="/assets/img/ai-mcp-protocol.jpg" alt="Model Context Protocol Overview" style="width:100%">
+<img src="/assets/img/ai-mcp-protocol.jpg" alt="Model Context Protocol Overview" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Vue d'ensemble du Model Context Protocol**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -311,7 +311,7 @@ Le **consentement en lecture seule** ne permet que des outils sûrs et introspec
 
 Le **consentement en écriture** active des outils supplémentaires tels que `create_database`, `create_table` et `insert_rows`. Les opérations SQL destructives (`DROP`, `TRUNCATE`) restent non supportées.
 
-<img src="/assets/img/ai-mcp-03.png" alt="Authorizing MCP Access: Read and Write Consent" style="width:100%">
+<img src="/assets/img/ai-mcp-03.png" alt="Authorizing MCP Access: Read and Write Consent" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Autorisation de l'accès MCP : Consentement en lecture et en écriture**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 

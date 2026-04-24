@@ -26,7 +26,7 @@ The [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-
 
 Before MCP, getting an LLM agent to query a database meant manually feeding it schema information, writing custom integration code, and managing security concerns for every new model or agent framework. MCP eliminates this overhead by providing a standardized discovery and invocation layer.
 
-<img src="/assets/img/ai-mcp-protocol.jpg" alt="Model Context Protocol Overview" style="width:100%">
+<img src="/assets/img/ai-mcp-protocol.jpg" alt="Model Context Protocol Overview" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Model Context Protocol Overview**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
@@ -310,7 +310,7 @@ Every tool invocation performs a Cloud RBAC check before execution. Requests are
 
 **Write consent** enables additional tools such as `create_database`, `create_table`, and `insert_rows`. Destructive SQL operations (`DROP`, `TRUNCATE`) remain unsupported.
 
-<img src="/assets/img/ai-mcp-03.png" alt="Authorizing MCP Access: Read and Write Consent" style="width:100%">
+<img src="/assets/img/ai-mcp-03.png" alt="Authorizing MCP Access: Read and Write Consent" style="width:60%; display:block; margin-left:auto; margin-right:auto;">
 {: .mx-auto.d-block :}
 **Authorizing MCP Access: Read and Write Consent**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
