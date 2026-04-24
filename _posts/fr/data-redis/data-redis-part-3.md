@@ -6,7 +6,7 @@ title: "Data & Redis, Partie 3"
 subtitle: Traitement de données avec Redis Gears (Pratique)
 thumbnail-img: assets/img/redis-gears.svg
 share-img: https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtmTRQc0M2a5Lt2-Rni8QuaxDSrIIkFPeqM68hCksWLs3NQjC_K7SP2EUWJnDwr0LVGSkLn8zzknzacleejTXVjIG2Bp5ko-UkzSyXNNhfIgpFkUuqZi4wVa04c2vK1Voieo0CnFnBvKuBVHwqPYwoh7p6KCWUkigaREieIhQKZxcizRCcus0UBM_B
-tags: [Redis Gears,Hands-On,data processing,distributed processing,data transformation,MapReduce,Real-Time Analytics,Redis]
+tags: [Redis Gears,Guide,data processing,distributed processing,data transformation,MapReduce,Real-Time Analytics,Redis]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true

@@ -6,7 +6,7 @@ title: "Data & Snowflake, Partie 1"
 subtitle: Ingestion de données avec Snowflake
 thumbnail-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/1ecf154a-5a16-4353-ba85-c2e91a8e65fa
 share-img: https://github.com/aelkouhen/aelkouhen.github.io/assets/22400454/b80c58c5-749e-4661-930f-fa5133a63a86
-tags: [auto-ingest,data ingestion,dynamic tables,Kafka,Snowflake,Snowpipe,Snowpipe Streaming]
+tags: [Guide,auto-ingest,data ingestion,dynamic tables,Kafka,Snowflake,Snowpipe,Snowpipe Streaming]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
