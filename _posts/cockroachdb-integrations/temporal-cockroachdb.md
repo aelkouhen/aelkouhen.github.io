@@ -82,14 +82,7 @@ In addition to the main persistence store, Temporal maintains a **Visibility sto
 {: .mx-auto.d-block :}
 **The Visibility store indexes workflow executions for list and filter queries using JSONB search attributes**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
 
-The standard PostgreSQL visibility schema introduces four CockroachDB incompatibilities in migration `v1.2` (`advanced_visibility.sql`), causing `temporal-sql-tool` to hard-fail before it can populate the visibility database:
-
-- **Anonymous PL/pgSQL blocks** — `DO LANGUAGE 'plpgsql' $$ ... $$` is rejected by CockroachDB outright. The block's purpose is to conditionally install the `btree_gin` extension, which CockroachDB also doesn't support, but the error fires on the `DO` syntax itself, before the extension check is even reached.
-- **`TSVECTOR` column type** — used for full-text-search bookkeeping in PostgreSQL; CockroachDB has no equivalent and rejects the column definition.
-- **Context-dependent timestamp cast in `STORED` computed columns** — `(s::timestamptz AT TIME ZONE 'UTC')` is valid free-standing SQL but CockroachDB refuses it inside a stored computed column expression; `parse_timestamp(s)` is the compatible replacement.
-- **Multi-column GIN index with `jsonb_path_ops`** — `USING GIN (namespace_id, col jsonb_path_ops)` mixes a non-JSONB column with a JSONB operator class, which CockroachDB does not allow; a single-column `CREATE INVERTED INDEX` on the JSONB column is the correct equivalent.
-
-Bypassing `temporal-sql-tool` for the visibility database entirely and applying a hand-crafted CockroachDB-compatible schema directly with `psql` resolves all four issues (see Step 3 below).
+The visibility schema ships as standard PostgreSQL DDL and works seamlessly when Temporal runs on a single PostgreSQL primary. Distributed SQL databases such as CockroachDB or YugabyteDB, however, do not support every PostgreSQL extension and syntax construct the schema relies on, so the out-of-the-box migration cannot be applied as-is. YugabyteDB has already documented [a setup path for running Temporal on their platform](https://www.yugabyte.com/blog/getting-started-yugabytedb-temporal/). For CockroachDB, the equivalent is to bypass `temporal-sql-tool` for the visibility database and apply a hand-crafted compatible schema directly with `psql` (see Step 3 below).
 
 ### Full Cluster Architecture with CockroachDB
 
