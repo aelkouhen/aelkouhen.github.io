@@ -6,7 +6,7 @@ subtitle: "A step-by-step guide to deploying Ory Hydra, Kratos, and Keto with Co
 cover-img: /assets/img/cover-ory-cockroach.avif
 thumbnail-img: /assets/img/cover-ory-cockroach.avif
 share-img: /assets/img/cover-ory-cockroach.avif
-tags: [integrations, CockroachDB, ory, iam, kubernetes, oauth2, OIDC, identity]
+tags: [Guide, CockroachDB, ory, iam, kubernetes, oauth2, OIDC, identity]
 lang: en
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
