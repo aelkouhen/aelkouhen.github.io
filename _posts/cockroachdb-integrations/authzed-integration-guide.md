@@ -6,7 +6,7 @@ subtitle: "How CockroachDB powers AuthZed's SpiceDB as a strongly consistent, gl
 cover-img: /assets/img/cover-authzed-cockroach.png
 thumbnail-img: /assets/img/cover-authzed-cockroach.png
 share-img: /assets/img/cover-authzed-cockroach.png
-tags: [integrations, CockroachDB, iam, authzed, spicedb, authorization, ReBAC, permissions]
+tags: [Guide, CockroachDB, iam, authzed, spicedb, authorization, ReBAC, permissions]
 lang: en
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"

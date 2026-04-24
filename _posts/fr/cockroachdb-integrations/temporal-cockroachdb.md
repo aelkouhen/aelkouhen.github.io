@@ -6,7 +6,7 @@ subtitle: "Un guide pas-à-pas pour exécuter l'orchestration de workflows durab
 cover-img: /assets/img/cover-temporal.svg
 thumbnail-img: /assets/img/cover-temporal.svg
 share-img: /assets/img/cover-temporal.svg
-tags: [integrations, CockroachDB, temporal, workflow, orchestration, Agentic AI, Artificial Intelligence]
+tags: [Guide, CockroachDB, temporal, workflow, orchestration, Agentic AI, Artificial Intelligence]
 lang: fr
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"

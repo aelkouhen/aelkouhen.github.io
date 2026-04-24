@@ -6,7 +6,7 @@ subtitle: "A Step-By-Step Guide to Run Durable Workflow Orchestration with Tempo
 cover-img: /assets/img/cover-temporal.svg
 thumbnail-img: /assets/img/cover-temporal.svg
 share-img: /assets/img/cover-temporal.svg
-tags: [integrations, CockroachDB, temporal, workflow, orchestration, Agentic AI, Artificial Intelligence]
+tags: [Guide, CockroachDB, temporal, workflow, orchestration, Agentic AI, Artificial Intelligence]
 lang: en
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"

@@ -7,7 +7,7 @@ subtitle: "Guide pas-à-pas pour déployer Teleport Enterprise avec CockroachDB 
 cover-img: /assets/img/cover-teleport-integration.webp
 thumbnail-img: /assets/img/cover-teleport-integration.webp
 share-img: /assets/img/cover-teleport-integration.webp
-tags: [integrations, CockroachDB, teleport, iam, kubernetes, security, zero-trust]
+tags: [Guide, CockroachDB, teleport, iam, kubernetes, security, zero-trust]
 author: "Amine El Kouhen"
 author-avatar: "/assets/img/amine_elkouhen.jpg"
 comments: true
