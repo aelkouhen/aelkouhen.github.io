@@ -1,5 +1,5 @@
 ---
-date: 2026-01-07
+date: 2026-01-28
 layout: post
 lang: fr
 title: "Détection de fraude à grande échelle avec CockroachDB & AWS AI"
