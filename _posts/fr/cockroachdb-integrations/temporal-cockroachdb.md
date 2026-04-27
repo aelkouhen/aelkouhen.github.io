@@ -17,11 +17,9 @@ Les applications d'IA modernes ne sont plus de simples appels d'inférence : ce 
 
 Coordonner ces agents de manière fiable nécessite une couche qui :
 - **Survit aux pannes** : l'état de l'agent est persisté après chaque étape, pas gardé en mémoire
-- **Garantit l'exécution exactement-une-fois** : un appel LLM ou une écriture API externe n'est jamais ré-invoqué après son succès
+- **Vise la sémantique exactement-une-fois** : par l'idempotence et la déduplication, garantissant que même si des appels LLM ou des écritures API externes sont relancés, leurs effets ne sont appliqués qu'une seule fois
 - **Passe à l'échelle horizontalement** : des milliers d'instances d'agents concurrentes sans goulots d'étranglement
 - **Permet des longues attentes** : un agent peut attendre des jours une réponse humaine-dans-la-boucle sans maintenir un processus ouvert
-
-[Temporal](https://temporal.io/) est la plateforme open-source de référence pour ce type de problème. [CockroachDB](https://www.cockroachlabs.com/) est son backend de persistance distribué idéal, offrant au cluster d'exécution sans état de Temporal un socle de stockage indestructible et répliqué globalement.
 
 Un **framework d'orchestration de workflows** gère le cycle de vie de programmes multi-étapes à longue durée d'exécution. Au lieu d'écrire des boucles de retry, une logique de point de contrôle et une reprise sur panne manuellement, vous déclarez votre logique métier comme une séquence d'**étapes durables** et laissez le framework s'occuper du reste. Les promesses fondamentales sont :
 
@@ -47,6 +45,10 @@ Un **framework d'orchestration de workflows** gère le cycle de vie de programme
 | **Namespace** | Frontière d'isolation logique ; historiques d'événements, files de tâches et quotas séparés |
 | **Task Queue** | Canal durable reliant un Workflow/Activity à un ensemble de Workers |
 | **Signal / Query** | Mécanismes permettant à du code externe d'envoyer des données à, ou de lire l'état d'un workflow en cours |
+
+---
+
+[CockroachDB](https://www.cockroachlabs.com/) est la base de données distribuée, compatible PostgreSQL, de référence, conçue pour la mise à l'échelle mondiale. Elle fournit des transactions ACID sérialisables, une réplication multi-région active-active et un basculement automatique, le tout via le protocole wire PostgreSQL standard. Pour Temporal, cela signifie que le plugin de persistance `postgres12` existant fonctionne directement, tandis que l'architecture distribuée supprime le plafond de scalabilité qu'un primaire PostgreSQL unique imposerait à mesure que le volume de workflows augmente.
 
 ---
 
@@ -121,7 +123,7 @@ Temporal supporte officiellement PostgreSQL, MySQL, SQLite et Cassandra. Cockroa
 | **Basculement automatique** | Défaillances de nœuds transparentes pour les quatre services Temporal |
 | **Compatibilité PostgreSQL** | Aucune modification du code applicatif ; le plugin `postgres12` fonctionne directement |
 
-CockroachDB remplace PostgreSQL directement, offrant aux services sans état de Temporal une fondation indestructible et distribuée globalement. Le seul travail de déploiement supplémentaire par rapport à une installation PostgreSQL standard est l'application d'un schéma de visibilité adapté à CockroachDB, qui résout quatre constructions PostgreSQL non supportées.
+CockroachDB se connecte à Temporal via le plugin standard `postgres12`, sans nécessiter aucune modification du code applicatif de Temporal. La seule étape de déploiement supplémentaire consiste à appliquer un schéma de visibilité compatible CockroachDB qui résout un petit nombre de constructions PostgreSQL non supportées par CockroachDB.
 
 ---
 
@@ -802,6 +804,14 @@ Cette combinaison donne une vue complète : Temporal indique *quels* workflows s
 - **Envisager un backend de visibilité dédié pour les charges analytiques lourdes** : le visibility store Temporal gère toutes les requêtes `ListWorkflowExecutions`. Sous une forte charge de requêtes analytiques, router la visibilité vers une base CockroachDB séparée (ou un cluster Elasticsearch), isole la pression des requêtes du chemin d'écriture de l'historique.
 
 Ces pratiques reflètent les approches utilisées avec succès avec d'autres bases de données horizontalement scalables, et s'appliquent directement à CockroachDB sans modification du code Temporal, uniquement par configuration.
+
+---
+
+## Avertissement important
+
+CockroachDB n'est **pas un backend officiellement supporté par Temporal**. Le pattern décrit dans cet article est validé par des tests pratiques et répond à de vrais besoins architecturaux, notamment la distribution mondiale, les opérations sans interruption et la durabilité multi-région, mais il sort du périmètre de support officiel de Temporal. Avant d'adopter cette architecture en production, il est recommandé de consulter les équipes techniques concernées chez CockroachDB et Temporal afin d'évaluer les implications pour votre charge de travail spécifique.
+
+Il est également fortement recommandé de **réaliser des tests de charge avec des workflows représentatifs de la production** avant toute mise en production. Des outils comme [Omes](https://github.com/temporalio/omes), l'outil de benchmarking officiel de Temporal, permettent de générer une concurrence et un volume réalistes sur votre cluster CockroachDB, et de valider que le setup répond aux exigences de latence, de débit et de fiabilité avant d'y faire transiter du trafic en production.
 
 ---
 
