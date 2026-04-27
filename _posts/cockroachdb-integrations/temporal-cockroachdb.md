@@ -811,7 +811,7 @@ These practices mirror approaches used successfully with other horizontally scal
 
 ## Important Disclaimer
 
-CockroachDB is **not an officially supported backend for Temporal**. The pattern described in this post is validated through hands-on testing and addresses real architectural needs — global distribution, zero-downtime operations, and multi-region durability — but it falls outside Temporal's official support matrix. Before adopting this architecture in a production environment, consult with the relevant technical teams at both CockroachDB and Temporal to understand the implications for your specific workload.
+CockroachDB is **not an officially supported backend for Temporal**. The pattern described in this post is validated through hands-on testing and addresses real architectural needs (global distribution, zero-downtime operations, and multi-region durability) but falls outside Temporal's official support matrix. Before adopting this architecture in a production environment, consult with the relevant technical teams at both CockroachDB and Temporal to understand the implications for your specific workload.
 
 Additionally, it is strongly recommended to **load test the setup with production-representative workflows** before promoting it to production. Use tools such as [Omes](https://github.com/temporalio/omes) (Temporal's official benchmarking tool) to drive realistic concurrency and volume against your CockroachDB cluster, and validate that the setup meets your latency, throughput, and reliability requirements before any customer-facing traffic runs through it.
 
