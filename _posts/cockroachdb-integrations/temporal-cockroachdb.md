@@ -17,11 +17,9 @@ Modern AI applications are no longer single-shot inference calls. They are long-
 
 Coordinating these agents reliably requires a layer that:
 - **Survives crashes**: agent state is persisted after every step, not held in-memory
-- **Guarantees exactly-once execution**: an LLM call or external API write is never re-invoked after it succeeds
+- **Aims for exactly-once semantics**: through idempotency and deduplication, ensuring that even if LLM calls or external API writes are retried, their effects are applied only once
 - **Scales horizontally**: thousands of concurrent agent instances without bottlenecks
 - **Enables long sleeps**: an agent can wait days for a human-in-the-loop response without holding a process open
-
-[Temporal](https://temporal.io/) is the leading open-source platform for this class of problem. [CockroachDB](https://www.cockroachlabs.com/) is its ideal distributed persistence backend, giving Temporal's stateless execution cluster an indestructible, globally replicated storage foundation.
 
 A **workflow orchestration framework** manages the lifecycle of long-running, multi-step programs. Instead of writing retry loops, checkpointing logic, and failure recovery by hand, you declare your business logic as a sequence of **durable steps** and let the framework handle the rest. The core promises are:
 
@@ -47,6 +45,10 @@ A **workflow orchestration framework** manages the lifecycle of long-running, mu
 | **Namespace** | A logical isolation boundary; separate event histories, task queues, and quotas |
 | **Task Queue** | A durable channel connecting a Workflow/Activity to a set of Workers |
 | **Signal / Query** | Mechanisms for external code to send data to, or read state from, a running workflow |
+
+---
+
+[CockroachDB](https://www.cockroachlabs.com/) is the leading distributed, PostgreSQL-compatible database built for global scale. It provides serializable ACID transactions, active-active multi-region replication, and automatic failover, all through the standard PostgreSQL wire protocol. For Temporal, this means the existing `postgres12` persistence plugin works directly, while the distributed architecture removes the scalability ceiling that a single PostgreSQL primary would impose as workflow volume grows.
 
 ---
 
@@ -121,7 +123,7 @@ Temporal officially supports PostgreSQL, MySQL, SQLite, and Cassandra. Cockroach
 | **Automatic failover** | Node failures transparent to all four Temporal services |
 | **PostgreSQL compatibility** | Zero application code changes; `postgres12` plugin works directly |
 
-CockroachDB acts as a drop-in replacement for PostgreSQL, giving Temporal's stateless services an indestructible, globally distributed foundation. The only deployment work beyond a standard PostgreSQL setup is applying a CockroachDB-compatible visibility schema that resolves four PostgreSQL-specific constructs unsupported by CockroachDB.
+CockroachDB connects to Temporal through the standard `postgres12` plugin, requiring no changes to Temporal's application code. The only additional deployment step is applying a CockroachDB-compatible visibility schema that resolves a small number of PostgreSQL-specific constructs not supported by CockroachDB.
 
 ---
 
@@ -804,6 +806,14 @@ As load increases, a few practices help maintain performance:
 - **Consider a dedicated visibility backend for heavy query workloads**: Temporal's visibility store handles all `ListWorkflowExecutions` queries. Under heavy analytical query load, routing visibility to a separate CockroachDB database (or an Elasticsearch cluster), isolates query pressure from the history write path.
 
 These practices mirror approaches used successfully with other horizontally scalable databases, and they apply directly to CockroachDB without any Temporal-specific changes beyond configuration.
+
+---
+
+## Important Disclaimer
+
+CockroachDB is **not an officially supported backend for Temporal**. The pattern described in this post is validated through hands-on testing and addresses real architectural needs — global distribution, zero-downtime operations, and multi-region durability — but it falls outside Temporal's official support matrix. Before adopting this architecture in a production environment, consult with the relevant technical teams at both CockroachDB and Temporal to understand the implications for your specific workload.
+
+Additionally, it is strongly recommended to **load test the setup with production-representative workflows** before promoting it to production. Use tools such as [Omes](https://github.com/temporalio/omes) (Temporal's official benchmarking tool) to drive realistic concurrency and volume against your CockroachDB cluster, and validate that the setup meets your latency, throughput, and reliability requirements before any customer-facing traffic runs through it.
 
 ---
 
