@@ -8,6 +8,7 @@ en:
     prev_post: "Previous Post"
     next_post: "Next Post"
     og_locale: "en_US"
+    coming_soon: "Coming soon"
     months: "January,February,March,April,May,June,July,August,September,October,November,December"
   pagination:
     newer: "&larr; Newer Posts"
@@ -34,6 +35,7 @@ fr:
     prev_post: "Article précédent"
     next_post: "Article suivant"
     og_locale: "fr_FR"
+    coming_soon: "Bientôt disponible"
     date_day_first: true
     months: "janvier,février,mars,avril,mai,juin,juillet,août,septembre,octobre,novembre,décembre"
   pagination:

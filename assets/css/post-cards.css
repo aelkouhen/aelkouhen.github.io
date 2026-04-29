@@ -536,6 +536,7 @@
 
 /* Individual card */
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -1128,4 +1129,50 @@ footer .footer-brand-col .list-inline-item a {
 
 .footer-nav-list a:hover {
   text-decoration: none;
+}
+
+/* Coming soon ribbon */
+.card__ribbon {
+  position: absolute;
+  top: 18px;
+  right: -56px;
+  width: 200px;
+  text-align: center;
+  background: linear-gradient(135deg, #d9534f 0%, #c9302c 100%);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0;
+  transform: rotate(45deg);
+  z-index: 3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+/* Coming soon card state */
+.card--coming-soon {
+  cursor: default;
+}
+
+.card--coming-soon:hover {
+  transform: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.card--coming-soon .card__image-wrap {
+  cursor: default;
+}
+
+.card--coming-soon .card__image-wrap img {
+  filter: grayscale(0.35) brightness(0.92);
+}
+
+.card--coming-soon:hover .card__image-wrap img {
+  transform: none;
+}
+
+.card--coming-soon .card__title {
+  color: #555;
 }
