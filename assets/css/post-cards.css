@@ -1134,15 +1134,15 @@ footer .footer-brand-col .list-inline-item a {
 /* Coming soon ribbon */
 .card__ribbon {
   position: absolute;
-  top: 18px;
-  right: -56px;
+  top: 26px;
+  right: -54px;
   width: 200px;
   text-align: center;
   background: linear-gradient(135deg, #d9534f 0%, #c9302c 100%);
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.4rem 0;
   transform: rotate(45deg);
