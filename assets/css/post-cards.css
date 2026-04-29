@@ -1151,28 +1151,3 @@ footer .footer-brand-col .list-inline-item a {
   pointer-events: none;
 }
 
-/* Coming soon card state */
-.card--coming-soon {
-  cursor: default;
-}
-
-.card--coming-soon:hover {
-  transform: none;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
-
-.card--coming-soon .card__image-wrap {
-  cursor: default;
-}
-
-.card--coming-soon .card__image-wrap img {
-  filter: grayscale(0.35) brightness(0.92);
-}
-
-.card--coming-soon:hover .card__image-wrap img {
-  transform: none;
-}
-
-.card--coming-soon .card__title {
-  color: #555;
-}
