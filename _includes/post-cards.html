@@ -1,9 +1,12 @@
-{% assign card_posts = include.posts | where_exp: "post", "post.date <= site.time" %}
+{% assign card_posts = include.posts %}
 {% include get-translation-data.html %}
 {% assign _cards_ui_t = _t_data.ui %}
 
 <div class="card-grid">
   {% for post in card_posts %}
+
+    {%- assign is_future = false -%}
+    {%- if post.date > site.time -%}{%- assign is_future = true -%}{%- endif -%}
 
     {%- capture thumbnail -%}
       {%- if post.thumbnail-img -%}
@@ -18,12 +21,22 @@
     {%- endcapture -%}
     {%- assign thumbnail = thumbnail | strip -%}
 
-    <article class="card{% if forloop.first %} card--featured{% endif %}">
+    <article class="card{% if forloop.first %} card--featured{% endif %}{% if is_future %} card--coming-soon{% endif %}">
+
+      {%- if is_future -%}
+      <span class="card__ribbon">{{ _cards_ui_t.coming_soon | default: "Coming soon" }}</span>
+      {%- endif -%}
 
       {%- if thumbnail != "" -%}
+      {%- if is_future -%}
+      <div class="card__image-wrap">
+        <img src="{{ thumbnail | absolute_url }}" alt="{{ post.title | strip_html }}" loading="lazy">
+      </div>
+      {%- else -%}
       <a href="{{ post.url | absolute_url }}" class="card__image-wrap" aria-label="{{ post.title | strip_html }}">
         <img src="{{ thumbnail | absolute_url }}" alt="{{ post.title | strip_html }}" loading="lazy">
       </a>
+      {%- endif -%}
       {%- endif -%}
 
       <div class="card__body">
@@ -35,9 +48,13 @@
         </div>
         {%- endif -%}
 
+        {%- if is_future -%}
+        <h2 class="card__title">{{ post.title | strip_html }}</h2>
+        {%- else -%}
         <a href="{{ post.url | absolute_url }}" class="card__title-link">
           <h2 class="card__title">{{ post.title | strip_html }}</h2>
         </a>
+        {%- endif -%}
 
         <p class="card__excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
 
