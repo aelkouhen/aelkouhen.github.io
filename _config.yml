@@ -282,6 +282,9 @@ pagination:
 kramdown:
   input: GFM
 
+# Build future-dated posts so scheduled drafts are listed.
+future: true
+
 # Default YAML values (more information on Jekyll's site)
 defaults:
   -
