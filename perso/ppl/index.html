@@ -358,6 +358,16 @@
     .card[hidden] { display: none !important; }
   }
 
+
+  .card-loc {
+    display: inline-block; font-size: 6.5pt; line-height: 1;
+    padding: 0.4mm 1mm; border-radius: 1mm; margin-right: 0.6mm;
+    vertical-align: 1px;
+  }
+  .card-loc-home { background: rgba(34,197,94,0.18); border: 1px solid rgba(34,197,94,0.5); }
+  .card-loc-gym  { background: rgba(168,85,247,0.18); border: 1px solid rgba(168,85,247,0.5); }
+  @media print { .card-loc { opacity: 0.85; } }
+
 </style>
 </head>
 <body>
@@ -417,92 +427,169 @@
       <div class="muscle-group">
         <div class="muscle-label">CHEST</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-barbell-bench-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Floor Press (Barbell)" aria-label="Swap to Floor Press (Barbell)">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=4Y2ZdHCOXok" title="How to PROPERLY Bench Press for Growth (5 Easy Steps), Jeremy Ethier" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg" alt="Barbell Bench Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Bench_Press_-_Medium_Grip/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=4Y2ZdHCOXok" title="How to PROPERLY Bench Press for Growth (5 Easy Steps), Jeremy Ethier" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Barbell Bench Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=4Y2ZdHCOXok" title="How to PROPERLY Bench Press for Growth (5 Easy Steps), Jeremy Ethier" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Barbell Bench Press</div></a>
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Lats</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Pause at chest. Drive through mid-foot, slight arch, retract scapulae.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-barbell-bench-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Barbell Bench Press" aria-label="Swap to Barbell Bench Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=Izkam7-uklQ" title="How to Do the Barbell Floor Press - Men's Health, 3v (alternative to Barbell Bench Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Floor_Press/0.jpg" alt="Floor Press (Barbell)" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Floor_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Izkam7-uklQ" title="How to Do the Barbell Floor Press - Men's Health, 3v (alternative to Barbell Bench Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Floor Press (Barbell)</div></a>
+            <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Lats</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Stops at the floor. Shoulder-friendly press. Pause briefly.</div>
+          </div></li>
+        <li class="card" data-pair="alt-incline-barbell-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Landmine Press" aria-label="Swap to Landmine Press">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=jPLdzuHckI8" title="Incline Barbell Press, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/0.jpg" alt="Incline Barbell Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=jPLdzuHckI8" title="Incline Barbell Press, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Incline Barbell Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=jPLdzuHckI8" title="Incline Barbell Press, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Incline Barbell Press</div></a>
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">30° bench, retract scapulae, control descent to upper chest.</div>
+          </div></li>
+        <li class="card" data-pair="alt-incline-barbell-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Incline Barbell Press" aria-label="Swap to Incline Barbell Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=Sjb5meztfSE" title="Single-Arm Landmine Press [technique breakdown], Coach Joe Drake (alternative to Incline Barbell Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Side_Laterals/0.jpg" alt="Landmine Press" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Side_Laterals/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Sjb5meztfSE" title="Single-Arm Landmine Press [technique breakdown], Coach Joe Drake (alternative to Incline Barbell Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Landmine Press</div></a>
+            <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">One bar end on the floor. Press at 30 degrees, neutral wrist.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">SHOULDERS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-standing-overhead-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Push Press" aria-label="Swap to Push Press">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=_RlRDWO2jfg" title="Build Bigger Shoulders With Perfect Training Technique (The Overhead Press), Jeff Nippard" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Military_Press/0.jpg" alt="Standing Overhead Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Military_Press/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=_RlRDWO2jfg" title="Build Bigger Shoulders With Perfect Training Technique (The Overhead Press), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Standing Overhead Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=_RlRDWO2jfg" title="Build Bigger Shoulders With Perfect Training Technique (The Overhead Press), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Standing Overhead Press</div></a>
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Traps</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
             <div class="card-cue">Strict, no leg drive. Squeeze glutes, brace abs. Bar over mid-foot.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-standing-overhead-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Standing Overhead Press" aria-label="Swap to Standing Overhead Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=ep30avTSMB0" title="How to Perform the PUSH PRESS  - Shoulder Exercise Tutorial, Buff Dudes Workouts (alternative to Standing Overhead Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Push_Press/0.jpg" alt="Push Press" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Push_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ep30avTSMB0" title="How to Perform the PUSH PRESS  - Shoulder Exercise Tutorial, Buff Dudes Workouts (alternative to Standing Overhead Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Push Press</div></a>
+            <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Traps</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
+            <div class="card-cue">Slight leg dip to drive the bar up. Use for overload.</div>
+          </div></li>
+        <li class="card" data-pair="alt-db-lateral-raise" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Leaning DB Lateral Raise" aria-label="Swap to Leaning DB Lateral Raise">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=OuG1smZTsQQ" title="Lateral Raise, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/0.jpg" alt="DB Lateral Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=OuG1smZTsQQ" title="Lateral Raise, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> DB Lateral Raise</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=OuG1smZTsQQ" title="Lateral Raise, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> DB Lateral Raise</div></a>
             <div class="card-sets">4 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
             <div class="card-cue">Slight forward lean. Lead with elbow. Stop just above parallel.</div>
+          </div></li>
+        <li class="card" data-pair="alt-db-lateral-raise" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: DB Lateral Raise" aria-label="Swap to DB Lateral Raise">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=qWif_7SOYpQ" title="How To Perform the Leaning Lateral Raise | Shoulders Exercise Tutorial, Buff Dudes Workouts (alternative to DB Lateral Raise)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/0.jpg" alt="Leaning DB Lateral Raise" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=qWif_7SOYpQ" title="How To Perform the Leaning Lateral Raise | Shoulders Exercise Tutorial, Buff Dudes Workouts (alternative to DB Lateral Raise)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Leaning DB Lateral Raise</div></a>
+            <div class="card-sets">4 × 10-12 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
+            <div class="card-cue">Hold rack post, lean away. Single arm, full ROM.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">TRICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-weighted-dips" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Bench Dip" aria-label="Swap to Bench Dip">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=yN6Q1UI_xkE" title="How To Do Dips For A Bigger Chest and Shoulders (Fix Mistakes!), Jeff Nippard" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dips_-_Triceps_Version/0.jpg" alt="Weighted Dips" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dips_-_Triceps_Version/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=yN6Q1UI_xkE" title="How To Do Dips For A Bigger Chest and Shoulders (Fix Mistakes!), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Weighted Dips</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=yN6Q1UI_xkE" title="How To Do Dips For A Bigger Chest and Shoulders (Fix Mistakes!), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Weighted Dips</div></a>
             <div class="card-sets">3 × 8-12 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lower chest</span><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Slight forward lean for chest emphasis, upright for triceps. Full ROM.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-weighted-dips" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Weighted Dips" aria-label="Swap to Weighted Dips">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=jdFzYGmvDyg" title="Stop Doing Bench Dips Like This!, ATHLEAN-X™ (alternative to Weighted Dips)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bench_Dips/0.jpg" alt="Bench Dip" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bench_Dips/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=jdFzYGmvDyg" title="Stop Doing Bench Dips Like This!, ATHLEAN-X™ (alternative to Weighted Dips)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Bench Dip</div></a>
+            <div class="card-sets">3 × 8-12 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lower chest</span><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Hands behind on bench, feet on second bench. Add DB on lap.</div>
+          </div></li>
+        <li class="card" data-pair="alt-close-grip-bench-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: JM Press" aria-label="Swap to JM Press">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=XEFDMwmrLAM" title="Close Grip Bench Press, Marcus Filly" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg" alt="Close-Grip Bench Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Close-Grip_Barbell_Bench_Press/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=XEFDMwmrLAM" title="Close Grip Bench Press, Marcus Filly" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Close-Grip Bench Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=XEFDMwmrLAM" title="Close Grip Bench Press, Marcus Filly" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Close-Grip Bench Press</div></a>
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Inner chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
             <div class="card-cue">Grip just inside shoulder width. Elbows tucked. Triceps + inner chest.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-close-grip-bench-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Close-Grip Bench Press" aria-label="Swap to Close-Grip Bench Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=Tih5iHyELsE" title="JM Press, Renaissance Periodization (alternative to Close-Grip Bench Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/JM_Press/0.jpg" alt="JM Press" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/JM_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Tih5iHyELsE" title="JM Press, Renaissance Periodization (alternative to Close-Grip Bench Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> JM Press</div></a>
+            <div class="card-sets">3 × 8-10 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Inner chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
+            <div class="card-cue">Half-press, half-skullcrusher. Elbows tucked, bar to nose.</div>
+          </div></li>
+        <li class="card" data-pair="alt-tricep-pushdown-cable" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Single-Arm Cable Pushdown" aria-label="Swap to Single-Arm Cable Pushdown">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=6Fzep104f0s" title="Cable Triceps Pushdown, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown_-_Rope_Attachment/0.jpg" alt="Tricep Pushdown (Cable)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown_-_Rope_Attachment/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=6Fzep104f0s" title="Cable Triceps Pushdown, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Tricep Pushdown (Cable)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=6Fzep104f0s" title="Cable Triceps Pushdown, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Tricep Pushdown (Cable)</div></a>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Elbows pinned to ribs. Lock out fully, squeeze 1 sec.</div>
+          </div></li>
+        <li class="card" data-pair="alt-tricep-pushdown-cable" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Tricep Pushdown (Cable)" aria-label="Swap to Tricep Pushdown (Cable)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=Cp_bShvMY4c" title="Cable Single Arm Pushdown, Renaissance Periodization (alternative to Tricep Pushdown (Cable))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown/0.jpg" alt="Single-Arm Cable Pushdown" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Cp_bShvMY4c" title="Cable Single Arm Pushdown, Renaissance Periodization (alternative to Tricep Pushdown (Cable))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Single-Arm Cable Pushdown</div></a>
+            <div class="card-sets">3 × 10-12 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
+            <div class="card-cue">One arm at a time. Fixes asymmetries, longer ROM.</div>
           </div></li>
         </ol>
       </div>
@@ -516,103 +603,191 @@
       <div class="muscle-group">
         <div class="muscle-label">CHEST</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-incline-db-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Low-Incline Cable Press" aria-label="Swap to Low-Incline Cable Press">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=0f6-uCUKqgA" title="Incline Dumbbell Press BETTER | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Press/0.jpg" alt="Incline DB Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Press/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=0f6-uCUKqgA" title="Incline Dumbbell Press BETTER | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Incline DB Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=0f6-uCUKqgA" title="Incline Dumbbell Press BETTER | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Incline DB Press</div></a>
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">30° bench. Dumbbells stack over elbows at the bottom, no flare.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-incline-db-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Incline DB Press" aria-label="Swap to Incline DB Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=oetM1Gwz2DE" title="Cable low incline Press, Scott Abel Coaching (alternative to Incline DB Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Chest_Press/0.jpg" alt="Low-Incline Cable Press" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Chest_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=oetM1Gwz2DE" title="Cable low incline Press, Scott Abel Coaching (alternative to Incline DB Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Low-Incline Cable Press</div></a>
+            <div class="card-sets">3 × 8-10 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Bench at 15 degrees, cables low. Drive up and inward.</div>
+          </div></li>
+        <li class="card" data-pair="alt-flat-db-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Weighted Push-Up" aria-label="Swap to Weighted Push-Up">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=SzcSrpVr0GA" title="Stop Doing Dumbbell Bench Press Like This (I'M BEGGING YOU!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Bench_Press/0.jpg" alt="Flat DB Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Bench_Press/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=SzcSrpVr0GA" title="Stop Doing Dumbbell Bench Press Like This (I'M BEGGING YOU!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Flat DB Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=SzcSrpVr0GA" title="Stop Doing Dumbbell Bench Press Like This (I'M BEGGING YOU!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Flat DB Press</div></a>
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Greater ROM than barbell. Squeeze chest at top, don&amp;#x27;t clank dumbbells.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-flat-db-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Flat DB Press" aria-label="Swap to Flat DB Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=J9xGkYB2YIg" title="Weighted Push-up Form, UKC Sports Scholars (alternative to Flat DB Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pushups/0.jpg" alt="Weighted Push-Up" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pushups/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=J9xGkYB2YIg" title="Weighted Push-up Form, UKC Sports Scholars (alternative to Flat DB Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Weighted Push-Up</div></a>
+            <div class="card-sets">3 × 8-10 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Plate on upper back. Full ROM, chest to floor.</div>
+          </div></li>
+        <li class="card" data-pair="alt-cable-crossover-low-to-high" data-variant="primary"><button class="card-swap" type="button" title="Swap to: High-to-Low Cable Fly" aria-label="Swap to High-to-Low Cable Fly">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=taI4XduLpTk" title="How to Do Cable Crossovers, LIVESTRONG" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Low_Cable_Crossover/0.jpg" alt="Cable Crossover (Low to High)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Low_Cable_Crossover/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=taI4XduLpTk" title="How to Do Cable Crossovers, LIVESTRONG" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Cable Crossover (Low to High)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=taI4XduLpTk" title="How to Do Cable Crossovers, LIVESTRONG" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Cable Crossover (Low to High)</div></a>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Biceps</span></div>
             <div class="card-cue">Pulleys low, hands meet above eye line. Upper chest fiber bias.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-cable-crossover-low-to-high" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Cable Crossover (Low to High)" aria-label="Swap to Cable Crossover (Low to High)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=hhruLxo9yZU" title="How To Do A High to Low Cable Fly/ Cable Crossover, PureGym (alternative to Cable Crossover (Low to High))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Crossover/0.jpg" alt="High-to-Low Cable Fly" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Crossover/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=hhruLxo9yZU" title="How To Do A High to Low Cable Fly/ Cable Crossover, PureGym (alternative to Cable Crossover (Low to High))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> High-to-Low Cable Fly</div></a>
+            <div class="card-sets">3 × 10-12 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Biceps</span></div>
+            <div class="card-cue">Cables set high, sweep down across body. Hits lower chest.</div>
+          </div></li>
+        <li class="card" data-pair="alt-flat-bench-cable-flyes" data-variant="primary"><button class="card-swap" type="button" title="Swap to: DB Flyes" aria-label="Swap to DB Flyes">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=JUDTGZh4rhg" title="STOP F*cking Up Cable Flys (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Flat_Bench_Cable_Flyes/0.jpg" alt="Flat Bench Cable Flyes" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Flat_Bench_Cable_Flyes/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=JUDTGZh4rhg" title="STOP F*cking Up Cable Flys (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Flat Bench Cable Flyes</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=JUDTGZh4rhg" title="STOP F*cking Up Cable Flys (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Flat Bench Cable Flyes</div></a>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
             <div class="card-cue">Slight elbow bend, hug a tree. Constant cable tension across full ROM.</div>
+          </div></li>
+        <li class="card" data-pair="alt-flat-bench-cable-flyes" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Flat Bench Cable Flyes" aria-label="Swap to Flat Bench Cable Flyes">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=_LwuS1PdbdM" title="Feel The Dumbbell Fly MORE | Targeting The Muscle, Renaissance Periodization (alternative to Flat Bench Cable Flyes)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Flyes/0.jpg" alt="DB Flyes" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Flyes/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=_LwuS1PdbdM" title="Feel The Dumbbell Fly MORE | Targeting The Muscle, Renaissance Periodization (alternative to Flat Bench Cable Flyes)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> DB Flyes</div></a>
+            <div class="card-sets">3 × 12-15 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
+            <div class="card-cue">Slight elbow bend. Stretch wide, squeeze at top.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">SHOULDERS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-seated-db-shoulder-press" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Arnold Press" aria-label="Swap to Arnold Press">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=0JfYxMRsUCQ" title="Dumbbell Shoulder Press | Exercise Guide, Bodybuilding.com" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Dumbbell_Press/0.jpg" alt="Seated DB Shoulder Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Dumbbell_Press/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=0JfYxMRsUCQ" title="Dumbbell Shoulder Press | Exercise Guide, Bodybuilding.com" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Seated DB Shoulder Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=0JfYxMRsUCQ" title="Dumbbell Shoulder Press | Exercise Guide, Bodybuilding.com" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Seated DB Shoulder Press</div></a>
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Upper chest</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Back supported. Press in a slight arc, lock out without shrugging.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-seated-db-shoulder-press" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Seated DB Shoulder Press" aria-label="Swap to Seated DB Shoulder Press">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=ris9tKqMwgU" title="Stop F*cking Up The Arnold Press (PROPER FORM!), ATHLEAN-X™ (alternative to Seated DB Shoulder Press)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Shoulder_Press/0.jpg" alt="Arnold Press" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Shoulder_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ris9tKqMwgU" title="Stop F*cking Up The Arnold Press (PROPER FORM!), ATHLEAN-X™ (alternative to Seated DB Shoulder Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Arnold Press</div></a>
+            <div class="card-sets">3 × 8-10 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Upper chest</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Start palms in, rotate to palms out at top. Full shoulder ROM.</div>
+          </div></li>
+        <li class="card" data-pair="alt-cable-lateral-raise" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Machine Lateral Raise" aria-label="Swap to Machine Lateral Raise">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=Sp8be0IFNvk" title="How to Fix your Cable Lateral Raise | DB vs. CABLE, John Jewett" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Seated_Lateral_Raise/0.jpg" alt="Cable Lateral Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Seated_Lateral_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=Sp8be0IFNvk" title="How to Fix your Cable Lateral Raise | DB vs. CABLE, John Jewett" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Cable Lateral Raise</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Sp8be0IFNvk" title="How to Fix your Cable Lateral Raise | DB vs. CABLE, John Jewett" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Cable Lateral Raise</div></a>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
             <div class="card-cue">Cable behind body. Lead with elbow, slow eccentric, no momentum.</div>
+          </div></li>
+        <li class="card" data-pair="alt-cable-lateral-raise" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Cable Lateral Raise" aria-label="Swap to Cable Lateral Raise">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=0o07iGKUarI" title="Machine Lateral Raise, Renaissance Periodization (alternative to Cable Lateral Raise)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lateral_Raise_-_With_Bands/0.jpg" alt="Machine Lateral Raise" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lateral_Raise_-_With_Bands/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=0o07iGKUarI" title="Machine Lateral Raise, Renaissance Periodization (alternative to Cable Lateral Raise)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Machine Lateral Raise</div></a>
+            <div class="card-sets">4 × 12-15 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
+            <div class="card-cue">Strap in tight. Constant tension throughout the rep.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">TRICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-skull-crushers-ez-bar" data-variant="primary"><button class="card-swap" type="button" title="Swap to: DB Skull Crushers" aria-label="Swap to DB Skull Crushers">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=8t2a93BjDec" title="How to Do SKULLCRUSHERS for BIG Triceps | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Skullcrusher/0.jpg" alt="Skull Crushers (EZ-Bar)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Skullcrusher/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=8t2a93BjDec" title="How to Do SKULLCRUSHERS for BIG Triceps | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Skull Crushers (EZ-Bar)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=8t2a93BjDec" title="How to Do SKULLCRUSHERS for BIG Triceps | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Skull Crushers (EZ-Bar)</div></a>
             <div class="card-sets">3 × 8-10 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Lower to forehead or behind head. Keep elbows tucked, don&amp;#x27;t flare.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-skull-crushers-ez-bar" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Skull Crushers (EZ-Bar)" aria-label="Swap to Skull Crushers (EZ-Bar)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=ir5PsbniVSc" title="How To: Dumbbell Skull Crusher, ScottHermanFitness (alternative to Skull Crushers (EZ-Bar))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lying_Dumbbell_Tricep_Extension/0.jpg" alt="DB Skull Crushers" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lying_Dumbbell_Tricep_Extension/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ir5PsbniVSc" title="How To: Dumbbell Skull Crusher, ScottHermanFitness (alternative to Skull Crushers (EZ-Bar))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> DB Skull Crushers</div></a>
+            <div class="card-sets">3 × 8-10 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
+            <div class="card-cue">Lower DBs to ears, not forehead. Elbows fixed in space.</div>
+          </div></li>
+        <li class="card" data-pair="alt-overhead-rope-triceps-ext" data-variant="primary"><button class="card-swap" type="button" title="Swap to: DB Overhead Extension" aria-label="Swap to DB Overhead Extension">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=1u18yJELsh0" title="Cable Overhead Triceps Extension, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Rope_Overhead_Triceps_Extension/0.jpg" alt="Overhead Rope Triceps Ext." loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Rope_Overhead_Triceps_Extension/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=1u18yJELsh0" title="Cable Overhead Triceps Extension, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Overhead Rope Triceps Ext.</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=1u18yJELsh0" title="Cable Overhead Triceps Extension, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Overhead Rope Triceps Ext.</div></a>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps long head</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Arms by ears, full stretch at bottom. Hits the long head.</div>
+          </div></li>
+        <li class="card" data-pair="alt-overhead-rope-triceps-ext" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Overhead Rope Triceps Ext." aria-label="Swap to Overhead Rope Triceps Ext.">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=a9oPnZReIRE" title="Dumbbell Overhead Tricep Extension - OPEX Exercise Library, OPEX Fitness (alternative to Overhead Rope Triceps Ext.)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#ef4444;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Triceps_Press/0.jpg" alt="DB Overhead Extension" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Triceps_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=a9oPnZReIRE" title="Dumbbell Overhead Tricep Extension - OPEX Exercise Library, OPEX Fitness (alternative to Overhead Rope Triceps Ext.)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> DB Overhead Extension</div></a>
+            <div class="card-sets">3 × 12-15 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps long head</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">One DB with both hands. Stretch the long head of the triceps.</div>
           </div></li>
         </ol>
       </div>
@@ -633,97 +808,174 @@
       <div class="muscle-group">
         <div class="muscle-label">BACK</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-weighted-pull-up" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Chin-Up" aria-label="Swap to Chin-Up">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=wk2HkH2_3m0" title="How to Build an Incredible Physique with Weighted Pull ups, Kinobody" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pullups/0.jpg" alt="Weighted Pull-Up" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pullups/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=wk2HkH2_3m0" title="How to Build an Incredible Physique with Weighted Pull ups, Kinobody" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Weighted Pull-Up</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=wk2HkH2_3m0" title="How to Build an Incredible Physique with Weighted Pull ups, Kinobody" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Weighted Pull-Up</div></a>
             <div class="card-sets">4 × 5-6 · 3 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Full hang to chin over bar. Add weight when you hit 6 clean reps.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-weighted-pull-up" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Weighted Pull-Up" aria-label="Swap to Weighted Pull-Up">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=mRy9m2Q9_1I" title="Proper Chin-Up Form, KILO Personal Trainer & Strength Coach Education (alternative to Weighted Pull-Up)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Chin-Up/0.jpg" alt="Chin-Up" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Chin-Up/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=mRy9m2Q9_1I" title="Proper Chin-Up Form, KILO Personal Trainer & Strength Coach Education (alternative to Weighted Pull-Up)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Chin-Up</div></a>
+            <div class="card-sets">4 × 5-6 · 3 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Supinated grip, shoulder-width. Hits biceps harder than pull-up.</div>
+          </div></li>
+        <li class="card" data-pair="alt-conventional-sumo-deadlift" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Trap Bar Deadlift" aria-label="Swap to Trap Bar Deadlift">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=XxWcirHIwVo" title="How to PROPERLY Deadlift for Growth (5 Easy Steps), Jeremy Ethier" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sumo_Deadlift/0.jpg" alt="Conventional / Sumo Deadlift" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sumo_Deadlift/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=XxWcirHIwVo" title="How to PROPERLY Deadlift for Growth (5 Easy Steps), Jeremy Ethier" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Conventional / Sumo Deadlift</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=XxWcirHIwVo" title="How to PROPERLY Deadlift for Growth (5 Easy Steps), Jeremy Ethier" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Conventional / Sumo Deadlift</div></a>
             <div class="card-sets">3 × 3-5 · 3-4 min · RPE 7-8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lower back</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Brace, hinge, push the floor away. No grinders. Reset every rep.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-conventional-sumo-deadlift" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Conventional / Sumo Deadlift" aria-label="Swap to Conventional / Sumo Deadlift">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=v709aJKv-gM" title="Trap Bar Deadlift, Renaissance Periodization (alternative to Conventional / Sumo Deadlift)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Trap_Bar_Deadlift/0.jpg" alt="Trap Bar Deadlift" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Trap_Bar_Deadlift/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=v709aJKv-gM" title="Trap Bar Deadlift, Renaissance Periodization (alternative to Conventional / Sumo Deadlift)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Trap Bar Deadlift</div></a>
+            <div class="card-sets">3 × 3-5 · 3-4 min · RPE 7-8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lower back</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Stand inside the bar. Easier on lower back, more quad.</div>
+          </div></li>
+        <li class="card" data-pair="alt-barbell-row-pendlay-bent-over" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Yates Row" aria-label="Swap to Yates Row">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=RQU8wZPbioA" title="How To Barbell Row, Alan Thrall (Untamed Strength)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bent_Over_Barbell_Row/0.jpg" alt="Barbell Row (Pendlay/Bent-over)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bent_Over_Barbell_Row/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=RQU8wZPbioA" title="How To Barbell Row, Alan Thrall (Untamed Strength)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Barbell Row (Pendlay/Bent-over)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=RQU8wZPbioA" title="How To Barbell Row, Alan Thrall (Untamed Strength)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Barbell Row (Pendlay/Bent-over)</div></a>
             <div class="card-sets">3 × 6-8 · 2.5 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-X" title="Stabilizer">Lower back</span></div>
             <div class="card-cue">Torso ~45°. Pull bar to lower ribs. Strict, no body English.</div>
+          </div></li>
+        <li class="card" data-pair="alt-barbell-row-pendlay-bent-over" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Barbell Row (Pendlay/Bent-over)" aria-label="Swap to Barbell Row (Pendlay/Bent-over)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=ryxwNKu23OQ" title="How to YATES ROW (INSANE total back developer!), Geoffrey Verity Schofield (alternative to Barbell Row (Pendlay/Bent-over))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Grip_Bent-Over_Rows/0.jpg" alt="Yates Row" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Grip_Bent-Over_Rows/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ryxwNKu23OQ" title="How to YATES ROW (INSANE total back developer!), Geoffrey Verity Schofield (alternative to Barbell Row (Pendlay/Bent-over))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Yates Row</div></a>
+            <div class="card-sets">3 × 6-8 · 2.5 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-X" title="Stabilizer">Lower back</span></div>
+            <div class="card-cue">Underhand grip, upright torso. Hits lats and biceps hard.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">REAR DELTS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-face-pull-cable-rope" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Band Pull-Apart" aria-label="Swap to Band Pull-Apart">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=ljgqer1ZpXg" title="STOP F*cking Up Face Pulls (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Face_Pull/0.jpg" alt="Face Pull (Cable, Rope)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Face_Pull/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=ljgqer1ZpXg" title="STOP F*cking Up Face Pulls (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Face Pull (Cable, Rope)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ljgqer1ZpXg" title="STOP F*cking Up Face Pulls (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Face Pull (Cable, Rope)</div></a>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rotator cuff</span></div>
             <div class="card-cue">Pull to nose, external rotation, elbows high. Shoulder health gold.</div>
+          </div></li>
+        <li class="card" data-pair="alt-face-pull-cable-rope" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Face Pull (Cable, Rope)" aria-label="Swap to Face Pull (Cable, Rope)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=kZNeqj-wtE0" title="How to Do A Band Pull Apart - Posture Exercises - Wellen, Wellen (alternative to Face Pull (Cable, Rope))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Band_Pull_Apart/0.jpg" alt="Band Pull-Apart" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Band_Pull_Apart/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=kZNeqj-wtE0" title="How to Do A Band Pull Apart - Posture Exercises - Wellen, Wellen (alternative to Face Pull (Cable, Rope))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Band Pull-Apart</div></a>
+            <div class="card-sets">4 × 12-15 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rotator cuff</span></div>
+            <div class="card-cue">Band at chest height, straight arms. Squeeze rear delts.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">BICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-barbell-ez-bar-curl" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Cable EZ-Bar Curl" aria-label="Swap to Cable EZ-Bar Curl">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=dDI8ClxRS04" title="Barbell Curl - Biceps Exercise - Bodybuilding.com, Bodybuilding.com" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Curl/0.jpg" alt="Barbell / EZ-Bar Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Curl/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=dDI8ClxRS04" title="Barbell Curl - Biceps Exercise - Bodybuilding.com, Bodybuilding.com" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Barbell / EZ-Bar Curl</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=dDI8ClxRS04" title="Barbell Curl - Biceps Exercise - Bodybuilding.com, Bodybuilding.com" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Barbell / EZ-Bar Curl</div></a>
             <div class="card-sets">3 × 8-10 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Elbows pinned at sides. No swing, control the negative.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-barbell-ez-bar-curl" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Barbell / EZ-Bar Curl" aria-label="Swap to Barbell / EZ-Bar Curl">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=opFVuRi_3b8" title="Cable EZ Bar Curl, Renaissance Periodization (alternative to Barbell / EZ-Bar Curl)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Curl/0.jpg" alt="Cable EZ-Bar Curl" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Curl/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=opFVuRi_3b8" title="Cable EZ Bar Curl, Renaissance Periodization (alternative to Barbell / EZ-Bar Curl)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Cable EZ-Bar Curl</div></a>
+            <div class="card-sets">3 × 8-10 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
+            <div class="card-cue">Constant tension. Stand close to the cable column.</div>
+          </div></li>
+        <li class="card" data-pair="alt-hammer-curl" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Zottman Curl" aria-label="Swap to Zottman Curl">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=BRVDS6HVR9Q" title="How To Perform HAMMER CURLS | Biceps Exercise Tutorial, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hammer_Curls/0.jpg" alt="Hammer Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hammer_Curls/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=BRVDS6HVR9Q" title="How To Perform HAMMER CURLS | Biceps Exercise Tutorial, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Hammer Curl</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=BRVDS6HVR9Q" title="How To Perform HAMMER CURLS | Biceps Exercise Tutorial, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Hammer Curl</div></a>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Brachialis</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Neutral grip. Hits the brachialis (size driver under biceps).</div>
+          </div></li>
+        <li class="card" data-pair="alt-hammer-curl" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Hammer Curl" aria-label="Swap to Hammer Curl">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=FSGDM9-dZ9w" title="Zottman Curl | Exercise Guide, Bodybuilding.com (alternative to Hammer Curl)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Zottman_Curl/0.jpg" alt="Zottman Curl" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Zottman_Curl/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=FSGDM9-dZ9w" title="Zottman Curl | Exercise Guide, Bodybuilding.com (alternative to Hammer Curl)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Zottman Curl</div></a>
+            <div class="card-sets">3 × 10-12 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Brachialis</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
+            <div class="card-cue">Curl supinated, rotate to pronated, lower slow. Combo curl.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">FOREARMS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-farmer-s-walk" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Suitcase Carry" aria-label="Swap to Suitcase Carry">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=NH7Xv-7NQNQ" title="How To Perform Farmer Walks Exercise Tutorial, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Farmers_Walk/0.jpg" alt="Farmer&#x27;s Walk" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Farmers_Walk/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=NH7Xv-7NQNQ" title="How To Perform Farmer Walks Exercise Tutorial, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Farmer&#x27;s Walk</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=NH7Xv-7NQNQ" title="How To Perform Farmer Walks Exercise Tutorial, Buff Dudes Workouts" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Farmer&#x27;s Walk</div></a>
             <div class="card-sets">3 rounds · ~30 m</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Forearms</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
             <div class="card-cue">Stand tall, shoulders down. Heavy DBs or trap-bar. Grip + traps + core.</div>
+          </div></li>
+        <li class="card" data-pair="alt-farmer-s-walk" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Farmer&#x27;s Walk" aria-label="Swap to Farmer&#x27;s Walk">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=y-hn_Ha1-RE" title="How To Perform The Suitcase Carry, Dr. Carl Baird (alternative to Farmer's Walk)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Rickshaw_Carry/0.jpg" alt="Suitcase Carry" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Rickshaw_Carry/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=y-hn_Ha1-RE" title="How To Perform The Suitcase Carry, Dr. Carl Baird (alternative to Farmer's Walk)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Suitcase Carry</div></a>
+            <div class="card-sets">3 rounds · ~30 m</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Forearms</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
+            <div class="card-cue">One DB at your side. Stay tall, no leaning. Anti-lateral flexion.</div>
           </div></li>
         </ol>
       </div>
@@ -737,70 +989,125 @@
       <div class="muscle-group">
         <div class="muscle-label">LATS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-lat-pulldown-neutral-grip" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Lat Pulldown (Wide Grip)" aria-label="Swap to Lat Pulldown (Wide Grip)">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=SALxEARiMkw" title="How to do Lat Pulldowns (AVOID MISTAKES!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/V-Bar_Pulldown/0.jpg" alt="Lat Pulldown (Neutral Grip)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/V-Bar_Pulldown/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=SALxEARiMkw" title="How to do Lat Pulldowns (AVOID MISTAKES!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Lat Pulldown (Neutral Grip)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=SALxEARiMkw" title="How to do Lat Pulldowns (AVOID MISTAKES!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Lat Pulldown (Neutral Grip)</div></a>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
             <div class="card-cue">Lean back ~15°. Drive elbows down and back, full stretch top.</div>
+          </div></li>
+        <li class="card" data-pair="alt-lat-pulldown-neutral-grip" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Lat Pulldown (Neutral Grip)" aria-label="Swap to Lat Pulldown (Neutral Grip)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=O-_EOo6IY3U" title="Wide Grip Lat Pulldown Mistakes & How to Correct Them, nutritioneering (alternative to Lat Pulldown (Neutral Grip))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Wide-Grip_Lat_Pulldown/0.jpg" alt="Lat Pulldown (Wide Grip)" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Wide-Grip_Lat_Pulldown/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=O-_EOo6IY3U" title="Wide Grip Lat Pulldown Mistakes & How to Correct Them, nutritioneering (alternative to Lat Pulldown (Neutral Grip))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Lat Pulldown (Wide Grip)</div></a>
+            <div class="card-sets">3 × 10-12 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
+            <div class="card-cue">Grip just outside shoulders. Pull bar to upper chest.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">UPPER BACK</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-t-bar-row-seal-row" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Landmine Row" aria-label="Swap to Landmine Row">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=yPis7nlbqdY" title="T Bar Row, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/0.jpg" alt="T-Bar Row / Seal Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=yPis7nlbqdY" title="T Bar Row, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> T-Bar Row / Seal Row</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=yPis7nlbqdY" title="T Bar Row, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> T-Bar Row / Seal Row</div></a>
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Pull elbows back and down. Squeeze shoulder blades together at top.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-t-bar-row-seal-row" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: T-Bar Row / Seal Row" aria-label="Swap to T-Bar Row / Seal Row">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=9hSQVBHLOX0" title="How to do a Landmine Row, Atomic Athlete (alternative to T-Bar Row / Seal Row)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/0.jpg" alt="Landmine Row" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=9hSQVBHLOX0" title="How to do a Landmine Row, Atomic Athlete (alternative to T-Bar Row / Seal Row)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Landmine Row</div></a>
+            <div class="card-sets">3 × 8-10 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
+            <div class="card-cue">Stand over barbell, two-hand pull to chest. Easier on lower back.</div>
+          </div></li>
+        <li class="card" data-pair="alt-chest-supported-row" data-variant="primary"><button class="card-swap" type="button" title="Swap to: DB Chest-Supported Row" aria-label="Swap to DB Chest-Supported Row">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=0UBRfiO4zDs" title="Chest Supported Row, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Incline_Row/0.jpg" alt="Chest-Supported Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Incline_Row/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=0UBRfiO4zDs" title="Chest Supported Row, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Chest-Supported Row</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=0UBRfiO4zDs" title="Chest Supported Row, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Chest-Supported Row</div></a>
             <div class="card-sets">3 × 10-12 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Squeeze 1 sec at peak contraction. Eliminates lower-back assistance.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-chest-supported-row" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Chest-Supported Row" aria-label="Swap to Chest-Supported Row">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=vmX58YYK3-8" title="Perfect Dumbbell Chest Supported Rows (KING of Back Exercises), Seriously Strong Training (alternative to Chest-Supported Row)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/0.jpg" alt="DB Chest-Supported Row" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=vmX58YYK3-8" title="Perfect Dumbbell Chest Supported Rows (KING of Back Exercises), Seriously Strong Training (alternative to Chest-Supported Row)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> DB Chest-Supported Row</div></a>
+            <div class="card-sets">3 × 10-12 · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
+            <div class="card-cue">Face-down on incline bench. Pull DBs to ribs.</div>
+          </div></li>
+        <li class="card" data-pair="alt-single-arm-db-row" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Meadows Row" aria-label="Swap to Meadows Row">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=xl1YiqQY2vA" title="Single Arm Dumbbell Row, Marcus Filly" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/0.jpg" alt="Single-Arm DB Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=xl1YiqQY2vA" title="Single Arm Dumbbell Row, Marcus Filly" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Single-Arm DB Row</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=xl1YiqQY2vA" title="Single Arm Dumbbell Row, Marcus Filly" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Single-Arm DB Row</div></a>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Pull dumbbell to hip. Slight rotation OK. Full stretch each rep.</div>
+          </div></li>
+        <li class="card" data-pair="alt-single-arm-db-row" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Single-Arm DB Row" aria-label="Swap to Single-Arm DB Row">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=G-jU1aPVhnY" title="How to Meadows Row &quot;The Right Way&quot;, mountaindog1 (alternative to Single-Arm DB Row)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Long_Bar_Row/0.jpg" alt="Meadows Row" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Long_Bar_Row/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=G-jU1aPVhnY" title="How to Meadows Row &quot;The Right Way&quot;, mountaindog1 (alternative to Single-Arm DB Row)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Meadows Row</div></a>
+            <div class="card-sets">3 × 10-12 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Single-arm landmine row, staggered stance. Mountain Dog classic.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">TRAPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-shrugs-barbell-or-db" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Cable Shrug" aria-label="Swap to Cable Shrug">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=zfAHfyTB_Ao" title="Barbell Shrug Technique For Growth | Targeting The Muscle, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Shrug/0.jpg" alt="Shrugs (Barbell or DB)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Shrug/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=zfAHfyTB_Ao" title="Barbell Shrug Technique For Growth | Targeting The Muscle, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Shrugs (Barbell or DB)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=zfAHfyTB_Ao" title="Barbell Shrug Technique For Growth | Targeting The Muscle, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Shrugs (Barbell or DB)</div></a>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper traps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Straight up, not roll. Pause 2 sec at top. Use straps if grip is the limit.</div>
+          </div></li>
+        <li class="card" data-pair="alt-shrugs-barbell-or-db" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Shrugs (Barbell or DB)" aria-label="Swap to Shrugs (Barbell or DB)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=YykmcX2b-LY" title="Cable Shrug, Renaissance Periodization (alternative to Shrugs (Barbell or DB))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Shrugs/0.jpg" alt="Cable Shrug" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Shrugs/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=YykmcX2b-LY" title="Cable Shrug, Renaissance Periodization (alternative to Shrugs (Barbell or DB))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Cable Shrug</div></a>
+            <div class="card-sets">3 × 10-12 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper traps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
+            <div class="card-cue">Cable from low pulley straight up. No rolling, no rotation.</div>
           </div></li>
         </ol>
       </div>
@@ -813,7 +1120,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Machine_Flyes/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=dC7jhEk-29A" title="How to PROPERLY Reverse Pec Deck Fly (DO THIS), Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Reverse Pec Deck</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=dC7jhEk-29A" title="How to PROPERLY Reverse Pec Deck Fly (DO THIS), Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Reverse Pec Deck</div></a>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Traps</span></div>
             <div class="card-cue">Lead with pinkies. Squeeze rear delts, don&amp;#x27;t shrug.</div>
@@ -824,7 +1131,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Flyes/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=buuYPLVXsJg" title="How to PROPERLY Dumbbell Rear Delt Fly | Reverse Dumbbell Fly Tutorial, Colossus Fitness (home substitute for Reverse Pec Deck)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> DB Rear Delt Fly (Bent-Over)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=buuYPLVXsJg" title="How to PROPERLY Dumbbell Rear Delt Fly | Reverse Dumbbell Fly Tutorial, Colossus Fitness (home substitute for Reverse Pec Deck)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> DB Rear Delt Fly (Bent-Over)</div></a>
             <div class="card-sets">3 &times; 12-15 &middot; 60 s &middot; RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Rear Delts</span><span class="chip chip-S" title="Secondary">Traps</span></div>
             <div class="card-cue">Hinge to ~45 degrees. Lead with elbows, squeeze shoulder blades.</div>
@@ -834,27 +1141,49 @@
       <div class="muscle-group">
         <div class="muscle-label">BICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-incline-db-curl" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Spider Curl" aria-label="Swap to Spider Curl">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=DCe8f6vMe9A" title="Stop Screwing Up Incline Dumbbell Curls (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Curl/0.jpg" alt="Incline DB Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Curl/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=DCe8f6vMe9A" title="Stop Screwing Up Incline Dumbbell Curls (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Incline DB Curl</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=DCe8f6vMe9A" title="Stop Screwing Up Incline Dumbbell Curls (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Incline DB Curl</div></a>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps long head</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Bench at 45°. Arms behind torso for maximum long-head stretch.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-incline-db-curl" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Incline DB Curl" aria-label="Swap to Incline DB Curl">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=-4RNtxT0LwM" title="How to Perform Spider Curls - Big Biceps Arms Exercise, Buff Dudes (alternative to Incline DB Curl)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Spider_Curl/0.jpg" alt="Spider Curl" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Spider_Curl/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=-4RNtxT0LwM" title="How to Perform Spider Curls - Big Biceps Arms Exercise, Buff Dudes (alternative to Incline DB Curl)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Spider Curl</div></a>
+            <div class="card-sets">3 × 10-12 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps long head</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
+            <div class="card-cue">Face-down on incline bench, arms hang. Strict bicep curl.</div>
+          </div></li>
+        <li class="card" data-pair="alt-preacher-curl" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Concentration Curl" aria-label="Swap to Concentration Curl">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=Ja6ZlIDONac" title="Machine Preacher Curl, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Preacher_Curl/0.jpg" alt="Preacher Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Preacher_Curl/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=Ja6ZlIDONac" title="Machine Preacher Curl, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Preacher Curl</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Ja6ZlIDONac" title="Machine Preacher Curl, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Preacher Curl</div></a>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Brachialis</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
             <div class="card-cue">Elbows pinned on pad. Don&#x27;t bounce out of the bottom; full stretch.</div>
+          </div></li>
+        <li class="card" data-pair="alt-preacher-curl" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Preacher Curl" aria-label="Swap to Preacher Curl">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=ebqgIOiYGEY" title="Concentration Curls Aren't Working for You (HERE'S WHY!), ATHLEAN-X™ (alternative to Preacher Curl)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#3b82f6;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Concentration_Curls/0.jpg" alt="Concentration Curl" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Concentration_Curls/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ebqgIOiYGEY" title="Concentration Curls Aren't Working for You (HERE'S WHY!), ATHLEAN-X™ (alternative to Preacher Curl)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Concentration Curl</div></a>
+            <div class="card-sets">3 × 10-12 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Brachialis</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
+            <div class="card-cue">Seated, elbow on inner thigh. Strict, slow tempo.</div>
           </div></li>
         </ol>
       </div>
@@ -875,102 +1204,179 @@
       <div class="muscle-group">
         <div class="muscle-label">QUADS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-back-squat-high-bar" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Low Bar Back Squat" aria-label="Swap to Low Bar Back Squat">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=i7J5h7BJ07g" title="High Bar Squat, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/0.jpg" alt="Back Squat (High Bar)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=i7J5h7BJ07g" title="High Bar Squat, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Back Squat (High Bar)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=i7J5h7BJ07g" title="High Bar Squat, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Back Squat (High Bar)</div></a>
             <div class="card-sets">4 × 5-6 · 3-4 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Brace hard. Knees track over toes. Hit depth (hip crease below knee).</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-back-squat-high-bar" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Back Squat (High Bar)" aria-label="Swap to Back Squat (High Bar)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=Po9CDtfcLJI" title="How to Perform a Low Bar Back Squat, Squat University (alternative to Back Squat (High Bar))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/0.jpg" alt="Low Bar Back Squat" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Po9CDtfcLJI" title="How to Perform a Low Bar Back Squat, Squat University (alternative to Back Squat (High Bar))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Low Bar Back Squat</div></a>
+            <div class="card-sets">4 × 5-6 · 3-4 min · RPE 8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
+            <div class="card-cue">Bar across rear delts. More hip drive, less knee travel.</div>
+          </div></li>
+        <li class="card" data-pair="alt-front-squat-hack-squat" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Zercher Squat" aria-label="Swap to Zercher Squat">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=v-mQm_droHg" title="HOW TO FRONT SQUAT: Build Bigger Quads & A Stronger Squat, Jeff Nippard" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Front_Barbell_Squat/0.jpg" alt="Front Squat / Hack Squat" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Front_Barbell_Squat/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=v-mQm_droHg" title="HOW TO FRONT SQUAT: Build Bigger Quads & A Stronger Squat, Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Front Squat / Hack Squat</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=v-mQm_droHg" title="HOW TO FRONT SQUAT: Build Bigger Quads & A Stronger Squat, Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Front Squat / Hack Squat</div></a>
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Upper back</span></div>
             <div class="card-cue">Upright torso (front squat) or fixed angle (hack). Quad-dominant.</div>
+          </div></li>
+        <li class="card" data-pair="alt-front-squat-hack-squat" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Front Squat / Hack Squat" aria-label="Swap to Front Squat / Hack Squat">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=77EwFrfBdWg" title="How Zercher Squats Transform Your Body, eugene teo (alternative to Front Squat / Hack Squat)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Zercher_Squats/0.jpg" alt="Zercher Squat" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Zercher_Squats/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=77EwFrfBdWg" title="How Zercher Squats Transform Your Body, eugene teo (alternative to Front Squat / Hack Squat)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Zercher Squat</div></a>
+            <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Upper back</span></div>
+            <div class="card-cue">Bar in elbow crook. Forces upright torso. Brutal on the upper back.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">HAMSTRINGS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-romanian-deadlift" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Single-Leg RDL" aria-label="Swap to Single-Leg RDL">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=5zmlnbWb-g4" title="Stop F*cking Up RDL's (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Romanian_Deadlift/0.jpg" alt="Romanian Deadlift" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Romanian_Deadlift/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=5zmlnbWb-g4" title="Stop F*cking Up RDL's (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Romanian Deadlift</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=5zmlnbWb-g4" title="Stop F*cking Up RDL's (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Romanian Deadlift</div></a>
             <div class="card-sets">4 × 6-8 · 3 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Hip-hinge, slight knee bend. Bar drags shins. Stretch hams hard.</div>
+          </div></li>
+        <li class="card" data-pair="alt-romanian-deadlift" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Romanian Deadlift" aria-label="Swap to Romanian Deadlift">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=JQZqPsmeesc" title="Movement Demo | Body Weight Single Leg Romanian Deadlift, ConstantlyVariedFitness (alternative to Romanian Deadlift)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Single_Leg_Glute_Bridge/0.jpg" alt="Single-Leg RDL" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Single_Leg_Glute_Bridge/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=JQZqPsmeesc" title="Movement Demo | Body Weight Single Leg Romanian Deadlift, ConstantlyVariedFitness (alternative to Romanian Deadlift)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Single-Leg RDL</div></a>
+            <div class="card-sets">4 × 6-8 · 3 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Hinge on one leg, opposite leg extends back. Balance plus hamstring.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">GLUTES</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-bulgarian-split-squat-db" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Reverse Lunge (DB)" aria-label="Swap to Reverse Lunge (DB)">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=hiLF_pF3EJM" title="Stop F*cking Up Bulgarian Split Squats (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Rear_Lunge/0.jpg" alt="Bulgarian Split Squat (DB)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Rear_Lunge/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=hiLF_pF3EJM" title="Stop F*cking Up Bulgarian Split Squats (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Bulgarian Split Squat (DB)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=hiLF_pF3EJM" title="Stop F*cking Up Bulgarian Split Squats (PROPER FORM!), ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Bulgarian Split Squat (DB)</div></a>
             <div class="card-sets">3 × 8/leg · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Rear foot elevated. Front knee tracks forward, torso slightly inclined.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-bulgarian-split-squat-db" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Bulgarian Split Squat (DB)" aria-label="Swap to Bulgarian Split Squat (DB)">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=RZKXLMxPF_I" title="Dumbbell Reverse Lunges | How To | Proper Form & Technique, FITTR (alternative to Bulgarian Split Squat (DB))" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Lunges/0.jpg" alt="Reverse Lunge (DB)" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Lunges/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=RZKXLMxPF_I" title="Dumbbell Reverse Lunges | How To | Proper Form & Technique, FITTR (alternative to Bulgarian Split Squat (DB))" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Reverse Lunge (DB)</div></a>
+            <div class="card-sets">3 × 8/leg · 2 min</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">Step back, not forward. Easier on knees than Bulgarian.</div>
+          </div></li>
+        <li class="card" data-pair="alt-barbell-hip-thrust" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Single-Leg Hip Thrust" aria-label="Swap to Single-Leg Hip Thrust">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=xDmFkJxPzeM" title="How To Build Great Glutes with Perfect Hip Thrust Technique (Fix Mistakes!), Jeff Nippard" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Hip_Thrust/0.jpg" alt="Barbell Hip Thrust" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Hip_Thrust/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=xDmFkJxPzeM" title="How To Build Great Glutes with Perfect Hip Thrust Technique (Fix Mistakes!), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Barbell Hip Thrust</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=xDmFkJxPzeM" title="How To Build Great Glutes with Perfect Hip Thrust Technique (Fix Mistakes!), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Barbell Hip Thrust</div></a>
             <div class="card-sets">4 × 6-8 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-T" title="Tertiary">Quads</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Upper back on bench, chin tucked. Squeeze glutes hard, 2 sec hold top.</div>
+          </div></li>
+        <li class="card" data-pair="alt-barbell-hip-thrust" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Barbell Hip Thrust" aria-label="Swap to Barbell Hip Thrust">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=lzDgRRuBdqY" title="Single Leg Hip Thrust, Renaissance Periodization (alternative to Barbell Hip Thrust)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Single_Leg_Glute_Bridge/0.jpg" alt="Single-Leg Hip Thrust" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Single_Leg_Glute_Bridge/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=lzDgRRuBdqY" title="Single Leg Hip Thrust, Renaissance Periodization (alternative to Barbell Hip Thrust)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Single-Leg Hip Thrust</div></a>
+            <div class="card-sets">4 × 6-8 · 3 min · RPE 8</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-T" title="Tertiary">Quads</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
+            <div class="card-cue">One foot on bench. Higher difficulty per side, same load.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CALVES</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-standing-calf-raise" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Donkey Calf Raise" aria-label="Swap to Donkey Calf Raise">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=SVtg-1loH4c" title="How to PROPERLY Standing Calf Raise | Tips & Common Mistakes, Colossus Fitness" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Barbell_Calf_Raise/0.jpg" alt="Standing Calf Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Barbell_Calf_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=SVtg-1loH4c" title="How to PROPERLY Standing Calf Raise | Tips & Common Mistakes, Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Standing Calf Raise</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=SVtg-1loH4c" title="How to PROPERLY Standing Calf Raise | Tips & Common Mistakes, Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Standing Calf Raise</div></a>
             <div class="card-sets">4 × 8-10 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Gastrocnemius</span></div>
             <div class="card-cue">Full ROM: deep stretch at bottom, 1 sec hold at top. Heavy.</div>
+          </div></li>
+        <li class="card" data-pair="alt-standing-calf-raise" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Standing Calf Raise" aria-label="Swap to Standing Calf Raise">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=XEZUIXn5mgc" title="Donkey Calf Raises - Calf Exercise - Bodybuilding.com, Bodybuilding.com (alternative to Standing Calf Raise)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Donkey_Calf_Raises/0.jpg" alt="Donkey Calf Raise" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Donkey_Calf_Raises/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=XEZUIXn5mgc" title="Donkey Calf Raises - Calf Exercise - Bodybuilding.com, Bodybuilding.com (alternative to Standing Calf Raise)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Donkey Calf Raise</div></a>
+            <div class="card-sets">4 × 8-10 · 90 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Gastrocnemius</span></div>
+            <div class="card-cue">Bent forward at hips, raise heels. Classic calf builder.</div>
           </div></li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CORE</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-hanging-leg-raise" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Lying Leg Raise" aria-label="Swap to Lying Leg Raise">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=Pr1ieGZ5atk" title="Hanging Leg Raise | HOW-TO, ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hanging_Leg_Raise/0.jpg" alt="Hanging Leg Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hanging_Leg_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=Pr1ieGZ5atk" title="Hanging Leg Raise | HOW-TO, ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Hanging Leg Raise</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Pr1ieGZ5atk" title="Hanging Leg Raise | HOW-TO, ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Hanging Leg Raise</div></a>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-S" title="Secondary">Hip flexors</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Posterior tilt at top. No swing. Bent knee version if straight too hard.</div>
+          </div></li>
+        <li class="card" data-pair="alt-hanging-leg-raise" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Hanging Leg Raise" aria-label="Swap to Hanging Leg Raise">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=xJJu-WiROM8" title="How To Perform The Lying Leg Raise Exercise, Dimitri Giankoulas (alternative to Hanging Leg Raise)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Flat_Bench_Lying_Leg_Raise/0.jpg" alt="Lying Leg Raise" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Flat_Bench_Lying_Leg_Raise/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=xJJu-WiROM8" title="How To Perform The Lying Leg Raise Exercise, Dimitri Giankoulas (alternative to Hanging Leg Raise)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Lying Leg Raise</div></a>
+            <div class="card-sets">3 × 10-12 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-S" title="Secondary">Hip flexors</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
+            <div class="card-cue">On back, hands under hips. Legs to 90 degrees, lower slow.</div>
           </div></li>
         </ol>
       </div>
@@ -990,7 +1396,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Press/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=B6rGDcfyPto" title="How To Leg Press For Best Quad Growth | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Leg Press</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=B6rGDcfyPto" title="How To Leg Press For Best Quad Growth | Targeting The Muscle Series, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Leg Press</div></a>
             <div class="card-sets">3 × 10-12 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-T" title="Tertiary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Feet lower on platform for quads. Don&amp;#x27;t lock out. Full ROM.</div>
@@ -1001,7 +1407,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Goblet_Squat/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=QilYZ20kVfM" title="How to Goblet Squat (with Kettlebell), Coach Gabe West (home substitute for Leg Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> Goblet Squat</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=QilYZ20kVfM" title="How to Goblet Squat (with Kettlebell), Coach Gabe West (home substitute for Leg Press)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Goblet Squat</div></a>
             <div class="card-sets">3 &times; 10-12 &middot; 90 s &middot; RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">DB or KB held at chest. Elbows inside knees, sit straight down.</div>
@@ -1012,7 +1418,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Extensions/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=ljO4jkwv8wQ" title="How To Do Leg Extensions With Perfect Technique (Grow Every Quad Head), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Leg Extension</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=ljO4jkwv8wQ" title="How To Do Leg Extensions With Perfect Technique (Grow Every Quad Head), Jeff Nippard" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Leg Extension</div></a>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span></div>
             <div class="card-cue">Pause 1 sec at top, slow eccentric. Isolates the quads.</div>
@@ -1023,7 +1429,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Weighted_Sissy_Squat/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=zKzF4ndVPRo" title="One Simple Exercise to Blow Your Quads Up! | SISSY SQUATS Quad Exercise Tutorial, Buff Dudes Workouts (home substitute for Leg Extension)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> Sissy Squat</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=zKzF4ndVPRo" title="One Simple Exercise to Blow Your Quads Up! | SISSY SQUATS Quad Exercise Tutorial, Buff Dudes Workouts (home substitute for Leg Extension)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Sissy Squat</div></a>
             <div class="card-sets">3 &times; 12-15 &middot; 60 s &middot; RPE 9</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span></div>
             <div class="card-cue">Hold a rack post for balance. Lean back as knees travel forward.</div>
@@ -1039,7 +1445,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Leg_Curl/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=Orxowest56U" title="Seated Leg Curl, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Seated Leg Curl</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=Orxowest56U" title="Seated Leg Curl, Renaissance Periodization" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Seated Leg Curl</div></a>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Long stretch at top, full contraction at bottom. Better than lying for hams.</div>
@@ -1050,7 +1456,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Natural_Glute_Ham_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=_e9vFU9-tkc" title="How to Set Up, Perform, & Program Nordic Hamstring Curls (Progressions | Regressions | Alternatives), E3 Rehab (home substitute for Seated Leg Curl)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> Nordic Curl</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=_e9vFU9-tkc" title="How to Set Up, Perform, & Program Nordic Hamstring Curls (Progressions | Regressions | Alternatives), E3 Rehab (home substitute for Seated Leg Curl)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Nordic Curl</div></a>
             <div class="card-sets">3 &times; 6-8 &middot; 90 s &middot; RPE 9</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-S" title="Secondary">Glutes</span></div>
             <div class="card-cue">Anchor feet under the rack. Lower slowly, catch with hands.</div>
@@ -1066,7 +1472,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Calf_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=6O5hh1rBtx8" title="How to PROPERLY Calf Raise (SEATED CALF RAISE TIPS), Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Seated Calf Raise</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=6O5hh1rBtx8" title="How to PROPERLY Calf Raise (SEATED CALF RAISE TIPS), Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Seated Calf Raise</div></a>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Soleus</span></div>
             <div class="card-cue">Knees bent isolates soleus. Pause at top, full stretch at bottom.</div>
@@ -1077,7 +1483,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Seated_Calf_Raise/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=6O5hh1rBtx8" title="How to PROPERLY Calf Raise (SEATED CALF RAISE TIPS), Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Seated Calf Raise (Barbell)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=6O5hh1rBtx8" title="How to PROPERLY Calf Raise (SEATED CALF RAISE TIPS), Colossus Fitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Seated Calf Raise (Barbell)</div></a>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Soleus</span></div>
             <div class="card-cue">Knees bent isolates soleus. Pause at top, full stretch at bottom.</div>
@@ -1087,27 +1493,49 @@
       <div class="muscle-group">
         <div class="muscle-label">CORE</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card" data-pair="alt-ab-wheel-rollout" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Cable Crunch" aria-label="Swap to Cable Crunch">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=A3uK5TPzHq8" title="Never Do Ab Wheel Rollouts Like This!, ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Ab_Roller/0.jpg" alt="Ab Wheel Rollout" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Ab_Roller/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=A3uK5TPzHq8" title="Never Do Ab Wheel Rollouts Like This!, ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Ab Wheel Rollout</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=A3uK5TPzHq8" title="Never Do Ab Wheel Rollouts Like This!, ATHLEAN-X™" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Ab Wheel Rollout</div></a>
             <div class="card-sets">3 × 10-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-P" title="Primary">Core stabilizers</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-X" title="Stabilizer">Shoulders</span></div>
             <div class="card-cue">Posterior tilt, ribs down. Knees or toes. No lower-back sag at full extension.</div>
           </div></li>
-        <li class="card">
+        <li class="card" data-pair="alt-ab-wheel-rollout" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Ab Wheel Rollout" aria-label="Swap to Ab Wheel Rollout">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=3qjoXDTuyOE" title="Cable Crunch - Abs / Core Exercise - Bodybuilding.com, Bodybuilding.com (alternative to Ab Wheel Rollout)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Crunch/0.jpg" alt="Cable Crunch" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Crunch/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=3qjoXDTuyOE" title="Cable Crunch - Abs / Core Exercise - Bodybuilding.com, Bodybuilding.com (alternative to Ab Wheel Rollout)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Cable Crunch</div></a>
+            <div class="card-sets">3 × 10-15 · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-P" title="Primary">Core stabilizers</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-X" title="Stabilizer">Shoulders</span></div>
+            <div class="card-cue">Kneel, rope behind head. Crunch with abs, not hip flexors.</div>
+          </div></li>
+        <li class="card" data-pair="alt-cable-woodchopper" data-variant="primary"><button class="card-swap" type="button" title="Swap to: Pallof Press" aria-label="Swap to Pallof Press">&#8646;</button>
           <a class="card-photo-link" href="https://www.youtube.com/watch?v=pAplQXk3dkU" title="How To: Oblique Twist &quot;Wood Chopper&quot; (LF CAble), ScottHermanFitness" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Cable_Wood_Chop/0.jpg" alt="Cable Woodchopper" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Cable_Wood_Chop/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=pAplQXk3dkU" title="How To: Oblique Twist &quot;Wood Chopper&quot; (LF CAble), ScottHermanFitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Cable Woodchopper</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=pAplQXk3dkU" title="How To: Oblique Twist &quot;Wood Chopper&quot; (LF CAble), ScottHermanFitness" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Cable Woodchopper</div></a>
             <div class="card-sets">3 × 12/side · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Obliques</span><span class="chip chip-P" title="Primary">Core</span><span class="chip chip-S" title="Secondary">Shoulders</span></div>
             <div class="card-cue">Hips stay square. Anti-rotation focus. Pivot through the obliques.</div>
+          </div></li>
+        <li class="card" data-pair="alt-cable-woodchopper" data-variant="alt" hidden><button class="card-swap" type="button" title="Swap to: Cable Woodchopper" aria-label="Swap to Cable Woodchopper">&#8646;</button>
+          <a class="card-photo-link" href="https://www.youtube.com/watch?v=_2xWmYNnFS8" title="How to Do the Pallof Press (Perfect Form for a Stronger Core), Colossus Fitness (alternative to Cable Woodchopper)" target="_blank" rel="noopener"><div class="card-photo" style="--accent:#22c55e;">
+            <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pallof_Press/0.jpg" alt="Pallof Press" loading="lazy">
+            <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pallof_Press/1.jpg" alt="" loading="lazy">
+          </div></a>
+          <div class="card-body">
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=_2xWmYNnFS8" title="How to Do the Pallof Press (Perfect Form for a Stronger Core), Colossus Fitness (alternative to Cable Woodchopper)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Pallof Press</div></a>
+            <div class="card-sets">3 × 12/side · 60 sec</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Obliques</span><span class="chip chip-P" title="Primary">Core</span><span class="chip chip-S" title="Secondary">Shoulders</span></div>
+            <div class="card-cue">Side to cable, press straight out. Anti-rotation core.</div>
           </div></li>
         </ol>
       </div>
@@ -1120,7 +1548,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sled_Push/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=QaTrePoCT4g" title="The ULTIMATE Sled Push/Pull Tutorial, Squat University" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> Sled Push (Conditioning)</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=QaTrePoCT4g" title="The ULTIMATE Sled Push/Pull Tutorial, Squat University" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">▶</span> <span class="card-loc card-loc-gym" title="Gym only">&#127947;</span> Sled Push (Conditioning)</div></a>
             <div class="card-sets">3 rounds · ~20 m</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Calves</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Low angle, drive through the balls of the feet. Heavy enough to fatigue, not crawl.</div>
@@ -1131,7 +1559,7 @@
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Walking_Treadmill/1.jpg" alt="" loading="lazy">
           </div></a>
           <div class="card-body">
-            <a class="card-title-link" href="https://www.youtube.com/watch?v=NAsObfFJXvE" title="How To: Incline Treadmill Walk (12-3-30 Workout), Live Lean TV Daily Exercises (home substitute for Sled Push)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> Treadmill Incline Walk</div></a>
+            <a class="card-title-link" href="https://www.youtube.com/watch?v=NAsObfFJXvE" title="How To: Incline Treadmill Walk (12-3-30 Workout), Live Lean TV Daily Exercises (home substitute for Sled Push)" target="_blank" rel="noopener"><div class="card-title"><span class="card-play" aria-hidden="true">&#9654;</span> <span class="card-loc card-loc-home" title="Home doable">&#127968;</span> Treadmill Incline Walk</div></a>
             <div class="card-sets">30 min &middot; 12-15% incline &middot; 3 mph</div>
             <div class="card-chips"><span class="chip chip-S" title="Secondary">Calves</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-X" title="Stabilizer">Conditioning</span></div>
             <div class="card-cue">Max incline, slow pace. Don't hold the rails.</div>
