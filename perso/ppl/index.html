@@ -319,6 +319,17 @@
       margin-bottom: calc(-594mm * 0.5 + 6mm);
     }
   }
+
+  .card-link {
+    display: contents;
+    color: inherit;
+    text-decoration: none;
+  }
+  .card { cursor: pointer; transition: transform 0.12s ease, box-shadow 0.12s ease; }
+  .card:hover { transform: translateY(-0.5mm); box-shadow: 0 1.5mm 3mm rgba(0,0,0,0.18); }
+  .card:hover .card-title { text-decoration: underline; text-decoration-color: currentColor; text-underline-offset: 1.5px; }
+  @media print { .card { cursor: default; transform: none !important; box-shadow: none !important; } }
+
 </style>
 </head>
 <body>
@@ -378,7 +389,7 @@
       <div class="muscle-group">
         <div class="muscle-label">CHEST</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/chest/barbell-bench-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg" alt="Barbell Bench Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Bench_Press_-_Medium_Grip/1.jpg" alt="" loading="lazy">
@@ -388,9 +399,9 @@
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Lats</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Pause at chest. Drive through mid-foot, slight arch, retract scapulae.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/chest/dumbbell-incline-bench-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Press/0.jpg" alt="Incline DB Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Press/1.jpg" alt="" loading="lazy">
@@ -400,14 +411,14 @@
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">30° bench. Dumbbells stack over elbows at the bottom, no flare.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">SHOULDERS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/shoulders/dumbbell-seated-shoulder-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Dumbbell_Press/0.jpg" alt="Seated DB Shoulder Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Dumbbell_Press/1.jpg" alt="" loading="lazy">
@@ -417,9 +428,9 @@
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Upper chest</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Back supported. Press in a slight arc, lock out without shrugging.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/shoulders/cable-lateral-raise" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Seated_Lateral_Raise/0.jpg" alt="Cable Lateral Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Seated_Lateral_Raise/1.jpg" alt="" loading="lazy">
@@ -429,14 +440,14 @@
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
             <div class="card-cue">Cable behind body. Lead with elbow, slow eccentric, no momentum.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">TRICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/bodyweight/chest/dips" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dips_-_Triceps_Version/0.jpg" alt="Weighted Dips" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dips_-_Triceps_Version/1.jpg" alt="" loading="lazy">
@@ -446,9 +457,9 @@
             <div class="card-sets">3 × 8-12 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lower chest</span><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Slight forward lean for chest emphasis, upright for triceps. Full ROM.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/triceps/cable-tricep-pushdown" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown_-_Rope_Attachment/0.jpg" alt="Tricep Pushdown (Cable)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown_-_Rope_Attachment/1.jpg" alt="" loading="lazy">
@@ -458,9 +469,9 @@
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Elbows pinned to ribs. Lock out fully, squeeze 1 sec.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/triceps/cable-overhead-tricep-extension" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Rope_Overhead_Triceps_Extension/0.jpg" alt="Overhead Rope Triceps Ext." loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Rope_Overhead_Triceps_Extension/1.jpg" alt="" loading="lazy">
@@ -470,7 +481,7 @@
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps long head</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Arms by ears, full stretch at bottom. Hits the long head.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
@@ -485,7 +496,7 @@
       <div class="muscle-group">
         <div class="muscle-label">CHEST</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/chest/dumbbell-bench-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Bench_Press/0.jpg" alt="Flat DB Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Bench_Press/1.jpg" alt="" loading="lazy">
@@ -495,9 +506,9 @@
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Greater ROM than barbell. Squeeze chest at top, don&amp;#x27;t clank dumbbells.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/chest/cable-crossover" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Low_Cable_Crossover/0.jpg" alt="Cable Crossover (Low to High)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Low_Cable_Crossover/1.jpg" alt="" loading="lazy">
@@ -507,9 +518,9 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Biceps</span></div>
             <div class="card-cue">Pulleys low, hands meet above eye line. Upper chest fiber bias.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/chest/machine-chest-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leverage_Chest_Press/0.jpg" alt="Machine Chest Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leverage_Chest_Press/1.jpg" alt="" loading="lazy">
@@ -519,9 +530,9 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span></div>
             <div class="card-cue">Fixed path, brutal stretch. Squeeze pecs at lockout, controlled negative.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/chest/cable-fly" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Flat_Bench_Cable_Flyes/0.jpg" alt="Flat Bench Cable Flyes" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Flat_Bench_Cable_Flyes/1.jpg" alt="" loading="lazy">
@@ -531,14 +542,14 @@
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
             <div class="card-cue">Slight elbow bend, hug a tree. Constant cable tension across full ROM.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">SHOULDERS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/shoulders/barbell-standing-overhead-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Military_Press/0.jpg" alt="Standing Overhead Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Military_Press/1.jpg" alt="" loading="lazy">
@@ -548,9 +559,9 @@
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Traps</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
             <div class="card-cue">Strict, no leg drive. Squeeze glutes, brace abs. Bar over mid-foot.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/shoulders/dumbbell-lateral-raise" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/0.jpg" alt="DB Lateral Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/1.jpg" alt="" loading="lazy">
@@ -560,14 +571,14 @@
             <div class="card-sets">4 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
             <div class="card-cue">Slight forward lean. Lead with elbow. Stop just above parallel.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">REAR DELTS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/shoulders/machine-rear-delt-fly" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Machine_Flyes/0.jpg" alt="Reverse Pec Deck" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Machine_Flyes/1.jpg" alt="" loading="lazy">
@@ -577,14 +588,14 @@
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Traps</span></div>
             <div class="card-cue">Lead with pinkies. Squeeze rear delts, don&amp;#x27;t shrug.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">TRICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/triceps/barbell-close-grip-bench-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg" alt="Close-Grip Bench Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Close-Grip_Barbell_Bench_Press/1.jpg" alt="" loading="lazy">
@@ -594,9 +605,9 @@
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Inner chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
             <div class="card-cue">Grip just inside shoulder width. Elbows tucked. Triceps + inner chest.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/triceps/barbell-skull-crusher" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#ef4444;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Skullcrusher/0.jpg" alt="Skull Crushers (EZ-Bar)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Skullcrusher/1.jpg" alt="" loading="lazy">
@@ -606,7 +617,7 @@
             <div class="card-sets">3 × 8-10 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Lower to forehead or behind head. Keep elbows tucked, don&amp;#x27;t flare.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
@@ -627,7 +638,7 @@
       <div class="muscle-group">
         <div class="muscle-label">BACK</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/bodyweight/back/pullup" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pullups/0.jpg" alt="Weighted Pull-Up" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pullups/1.jpg" alt="" loading="lazy">
@@ -637,9 +648,9 @@
             <div class="card-sets">4 × 5-6 · 3 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Full hang to chin over bar. Add weight when you hit 6 clean reps.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/back/barbell-bent-over-row" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bent_Over_Barbell_Row/0.jpg" alt="Barbell Row (Pendlay/Bent-over)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bent_Over_Barbell_Row/1.jpg" alt="" loading="lazy">
@@ -649,9 +660,9 @@
             <div class="card-sets">3 × 6-8 · 2.5 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-X" title="Stabilizer">Lower back</span></div>
             <div class="card-cue">Torso ~45°. Pull bar to lower ribs. Strict, no body English.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/back/dumbbell-chest-supported-row" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Incline_Row/0.jpg" alt="Chest-Supported Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Incline_Row/1.jpg" alt="" loading="lazy">
@@ -661,9 +672,9 @@
             <div class="card-sets">3 × 10-12 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Squeeze 1 sec at peak contraction. Eliminates lower-back assistance.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/back/cable-lat-pulldown" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/V-Bar_Pulldown/0.jpg" alt="Lat Pulldown (Neutral Grip)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/V-Bar_Pulldown/1.jpg" alt="" loading="lazy">
@@ -673,14 +684,14 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
             <div class="card-cue">Lean back ~15°. Drive elbows down and back, full stretch top.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">REAR DELTS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/shoulders/cable-face-pull" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Face_Pull/0.jpg" alt="Face Pull (Cable, Rope)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Face_Pull/1.jpg" alt="" loading="lazy">
@@ -690,14 +701,14 @@
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rotator cuff</span></div>
             <div class="card-cue">Pull to nose, external rotation, elbows high. Shoulder health gold.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">BICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/biceps/barbell-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Curl/0.jpg" alt="Barbell / EZ-Bar Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Curl/1.jpg" alt="" loading="lazy">
@@ -707,9 +718,9 @@
             <div class="card-sets">3 × 8-10 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Elbows pinned at sides. No swing, control the negative.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/biceps/dumbbell-incline-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Curl/0.jpg" alt="Incline DB Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Curl/1.jpg" alt="" loading="lazy">
@@ -719,14 +730,14 @@
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps long head</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Bench at 45°. Arms behind torso for maximum long-head stretch.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">FOREARMS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/forearms/dumbbell-farmers-walk" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Farmers_Walk/0.jpg" alt="Farmer&#x27;s Walk" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Farmers_Walk/1.jpg" alt="" loading="lazy">
@@ -736,7 +747,7 @@
             <div class="card-sets">3 rounds · ~30 m</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Forearms</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
             <div class="card-cue">Stand tall, shoulders down. Heavy DBs or trap-bar. Grip + traps + core.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
@@ -751,7 +762,7 @@
       <div class="muscle-group">
         <div class="muscle-label">BACK</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/back/barbell-deadlift" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sumo_Deadlift/0.jpg" alt="Conventional / Sumo Deadlift" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sumo_Deadlift/1.jpg" alt="" loading="lazy">
@@ -761,9 +772,9 @@
             <div class="card-sets">3 × 3-5 · 3-4 min · RPE 7-8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lower back</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Brace, hinge, push the floor away. No grinders. Reset every rep.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/back/barbell-t-bar-row" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/0.jpg" alt="T-Bar Row / Seal Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/1.jpg" alt="" loading="lazy">
@@ -773,9 +784,9 @@
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Pull elbows back and down. Squeeze shoulder blades together at top.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/back/cable-wide-grip-pulldown" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Wide-Grip_Lat_Pulldown/0.jpg" alt="Lat Pulldown (Wide Grip)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Wide-Grip_Lat_Pulldown/1.jpg" alt="" loading="lazy">
@@ -785,9 +796,9 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Slightly wider than shoulders. Drive elbows down to ribs.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/back/dumbbell-row" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/0.jpg" alt="Single-Arm DB Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/1.jpg" alt="" loading="lazy">
@@ -797,9 +808,9 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Pull dumbbell to hip. Slight rotation OK. Full stretch each rep.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/back/cable-seated-row" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Cable_Rows/0.jpg" alt="Seated Cable Row" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Cable_Rows/1.jpg" alt="" loading="lazy">
@@ -809,14 +820,14 @@
             <div class="card-sets">4 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Chest up, drive elbows back. Squeeze 1 sec, slow stretch forward.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">TRAPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/traps/barbell-shrug" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Shrug/0.jpg" alt="Shrugs (Barbell or DB)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Shrug/1.jpg" alt="" loading="lazy">
@@ -826,14 +837,14 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Upper traps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Straight up, not roll. Pause 2 sec at top. Use straps if grip is the limit.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">BICEPS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/biceps/dumbbell-hammer-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hammer_Curls/0.jpg" alt="Hammer Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hammer_Curls/1.jpg" alt="" loading="lazy">
@@ -843,9 +854,9 @@
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Brachialis</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Neutral grip. Hits the brachialis (size driver under biceps).</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/biceps/cable-rope-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Biceps_Cable_Curl/0.jpg" alt="Cable Curl (Rope)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Biceps_Cable_Curl/1.jpg" alt="" loading="lazy">
@@ -855,9 +866,9 @@
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Constant tension. Twist wrists out at top for peak contraction.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/biceps/barbell-preacher-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Preacher_Curl/0.jpg" alt="Preacher Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Preacher_Curl/1.jpg" alt="" loading="lazy">
@@ -867,14 +878,14 @@
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Brachialis</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
             <div class="card-cue">Elbows pinned on pad. Don&#x27;t bounce out of the bottom; full stretch.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">FOREARMS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/forearms/barbell-wrist-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#3b82f6;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Palms-Up_Barbell_Wrist_Curl_Over_A_Bench/0.jpg" alt="Wrist Curl Superset" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Palms-Up_Barbell_Wrist_Curl_Over_A_Bench/1.jpg" alt="" loading="lazy">
@@ -884,7 +895,7 @@
             <div class="card-sets">3 × 15 + 15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Forearm flexors</span><span class="chip chip-P" title="Primary">Forearm extensors</span></div>
             <div class="card-cue">Palms-up wrist curl to failure, flip to palms-down (reverse) for the same reps.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
@@ -905,7 +916,7 @@
       <div class="muscle-group">
         <div class="muscle-label">QUADS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/quadriceps/barbell-back-squat" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/0.jpg" alt="Back Squat (High Bar)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/1.jpg" alt="" loading="lazy">
@@ -915,9 +926,9 @@
             <div class="card-sets">4 × 5-6 · 3-4 min · RPE 8</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Brace hard. Knees track over toes. Hit depth (hip crease below knee).</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/quadriceps/dumbbell-bulgarian-split-squat" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Rear_Lunge/0.jpg" alt="Bulgarian Split Squat (DB)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Rear_Lunge/1.jpg" alt="" loading="lazy">
@@ -927,9 +938,9 @@
             <div class="card-sets">3 × 8/leg · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Rear foot elevated. Front knee tracks forward, torso slightly inclined.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/quadriceps/machine-leg-press" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Press/0.jpg" alt="Leg Press" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Press/1.jpg" alt="" loading="lazy">
@@ -939,9 +950,9 @@
             <div class="card-sets">3 × 10-12 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-T" title="Tertiary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Feet lower on platform for quads. Don&amp;#x27;t lock out. Full ROM.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/quadriceps/machine-leg-extension" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Extensions/0.jpg" alt="Leg Extension" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Extensions/1.jpg" alt="" loading="lazy">
@@ -951,14 +962,14 @@
             <div class="card-sets">3 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span></div>
             <div class="card-cue">Pause 1 sec at top, slow eccentric. Isolates the quads.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">HAMSTRINGS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/hamstrings/machine-seated-leg-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Leg_Curl/0.jpg" alt="Seated Leg Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Leg_Curl/1.jpg" alt="" loading="lazy">
@@ -968,14 +979,14 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Long stretch at top, full contraction at bottom. Better than lying for hams.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CALVES</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/calves/machine-standing-calf-raise" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Barbell_Calf_Raise/0.jpg" alt="Standing Calf Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Barbell_Calf_Raise/1.jpg" alt="" loading="lazy">
@@ -985,14 +996,14 @@
             <div class="card-sets">4 × 8-10 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Gastrocnemius</span></div>
             <div class="card-cue">Full ROM: deep stretch at bottom, 1 sec hold at top. Heavy.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CORE</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/bodyweight/abdominals/hanging-leg-raise" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hanging_Leg_Raise/0.jpg" alt="Hanging Leg Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hanging_Leg_Raise/1.jpg" alt="" loading="lazy">
@@ -1002,9 +1013,9 @@
             <div class="card-sets">3 × 10-12 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-S" title="Secondary">Hip flexors</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Posterior tilt at top. No swing. Bent knee version if straight too hard.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/bodyweight/abdominals/ab-roller" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Ab_Roller/0.jpg" alt="Ab Wheel Rollout" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Ab_Roller/1.jpg" alt="" loading="lazy">
@@ -1014,7 +1025,7 @@
             <div class="card-sets">3 × 10-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-P" title="Primary">Core stabilizers</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-X" title="Stabilizer">Shoulders</span></div>
             <div class="card-cue">Posterior tilt, ribs down. Knees or toes. No lower-back sag at full extension.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
@@ -1029,7 +1040,7 @@
       <div class="muscle-group">
         <div class="muscle-label">QUADS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/quadriceps/barbell-front-squat" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Front_Barbell_Squat/0.jpg" alt="Front Squat / Hack Squat" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Front_Barbell_Squat/1.jpg" alt="" loading="lazy">
@@ -1039,9 +1050,9 @@
             <div class="card-sets">3 × 8-10 · 2.5 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Upper back</span></div>
             <div class="card-cue">Upright torso (front squat) or fixed angle (hack). Quad-dominant.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/dumbbells/quadriceps/dumbbell-walking-lunge" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Walking_Lunge/0.jpg" alt="Walking Lunge (DB)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Walking_Lunge/1.jpg" alt="" loading="lazy">
@@ -1051,14 +1062,14 @@
             <div class="card-sets">3 × 10/leg · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-T" title="Tertiary">Calves</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Long stride for glutes, short stride for quads. Knee just kisses floor.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">HAMSTRINGS</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/hamstrings/barbell-romanian-deadlift" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Romanian_Deadlift/0.jpg" alt="Romanian Deadlift" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Romanian_Deadlift/1.jpg" alt="" loading="lazy">
@@ -1068,9 +1079,9 @@
             <div class="card-sets">4 × 6-8 · 3 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Hip-hinge, slight knee bend. Bar drags shins. Stretch hams hard.</div>
-          </div>
+          </div></a>
         </li>
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/hamstrings/machine-lying-leg-curl" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lying_Leg_Curls/0.jpg" alt="Lying Leg Curl" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lying_Leg_Curls/1.jpg" alt="" loading="lazy">
@@ -1080,14 +1091,14 @@
             <div class="card-sets">3 × 10-12 · 90 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-S" title="Secondary">Calves</span></div>
             <div class="card-cue">Point toes for ham bias, dorsiflex for calf assist. Slow eccentric.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">GLUTES</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/barbell/glutes/barbell-hip-thrust" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Hip_Thrust/0.jpg" alt="Barbell Hip Thrust" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Hip_Thrust/1.jpg" alt="" loading="lazy">
@@ -1097,14 +1108,14 @@
             <div class="card-sets">3 × 8-10 · 2 min</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-T" title="Tertiary">Quads</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Upper back on bench, chin tucked. Squeeze glutes hard, 2 sec hold top.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CALVES</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/calves/machine-seated-calf-raise" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Calf_Raise/0.jpg" alt="Seated Calf Raise" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Calf_Raise/1.jpg" alt="" loading="lazy">
@@ -1114,14 +1125,14 @@
             <div class="card-sets">4 × 12-15 · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Soleus</span></div>
             <div class="card-cue">Knees bent isolates soleus. Pause at top, full stretch at bottom.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CORE</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/cables/abdominals/cable-woodchopper" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Cable_Wood_Chop/0.jpg" alt="Cable Woodchopper" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Cable_Wood_Chop/1.jpg" alt="" loading="lazy">
@@ -1131,14 +1142,14 @@
             <div class="card-sets">3 × 12/side · 60 sec</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Obliques</span><span class="chip chip-P" title="Primary">Core</span><span class="chip chip-S" title="Secondary">Shoulders</span></div>
             <div class="card-cue">Hips stay square. Anti-rotation focus. Pivot through the obliques.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
       <div class="muscle-group">
         <div class="muscle-label">CONDITIONING</div>
         <ol class="day-cards">
-        <li class="card">
+        <li class="card"><a class="card-link" href="https://musclewiki.com/exercises/male/machine/quadriceps/sled-push" target="_blank" rel="noopener">
           <div class="card-photo" style="--accent:#22c55e;">
             <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sled_Push/0.jpg" alt="Sled Push (Conditioning)" loading="lazy">
             <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sled_Push/1.jpg" alt="" loading="lazy">
@@ -1148,7 +1159,7 @@
             <div class="card-sets">3 rounds · ~20 m</div>
             <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Calves</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Low angle, drive through the balls of the feet. Heavy enough to fatigue, not crawl.</div>
-          </div>
+          </div></a>
         </li>
         </ol>
       </div>
