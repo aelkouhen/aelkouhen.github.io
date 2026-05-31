@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Push Pull Legs · Single-Page Poster</title>
+<style>
+  :root {
+    --bg: #0b0f17;
+    --panel: #111826;
+    --panel-soft: #0f1623;
+    --ink: #f3f4f6;
+    --ink-dim: #9ca3af;
+    --ink-faint: #6b7280;
+    --rule: #1f2937;
+    --push: #ef4444;
+    --pull: #3b82f6;
+    --legs: #22c55e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #050810; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* A2 portrait: 420mm × 594mm. Scales down for screens via viewport. */
+  .poster {
+    width: 420mm; min-height: 594mm;
+    margin: 6mm auto; padding: 12mm 12mm 14mm;
+    background:
+      radial-gradient(900px 600px at 10% -10%, rgba(239,68,68,0.10), transparent 60%),
+      radial-gradient(900px 600px at 90% -10%, rgba(34,197,94,0.10), transparent 60%),
+      radial-gradient(1100px 700px at 50% -5%, rgba(59,130,246,0.10), transparent 60%),
+      linear-gradient(180deg, #0b0f17 0%, #060912 100%);
+    color: var(--ink);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media print {
+    @page { size: A2 portrait; margin: 0; }
+    body { background: #0b0f17; }
+    .poster { margin: 0; box-shadow: none; width: 420mm; min-height: 594mm; }
+    .card-photo .frame-1 { animation: none; opacity: 0; }
+  }
+
+  /* Title bar */
+  .title-bar {
+    display: grid; grid-template-columns: 1fr auto; align-items: end;
+    padding-bottom: 8mm; border-bottom: 1px solid var(--rule);
+    margin-bottom: 8mm;
+  }
+  .title-bar h1 {
+    font-size: 78pt; font-weight: 900; letter-spacing: -2px; line-height: 0.9;
+    background: linear-gradient(90deg, var(--push) 0%, var(--push) 33%, var(--pull) 33%, var(--pull) 66%, var(--legs) 66%, var(--legs) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .title-bar .sub { font-size: 16pt; color: var(--ink-dim); margin-top: 3mm; letter-spacing: 0.5px; }
+  .title-bar .schedule {
+    text-align: right; font-size: 9.5pt; color: var(--ink-dim);
+    line-height: 1.7; letter-spacing: 0.5px;
+  }
+  .title-bar .schedule strong { color: var(--ink); font-weight: 600; }
+  .schedule .pill {
+    display: inline-block; padding: 0.6mm 2mm; border-radius: 1mm;
+    color: white; font-size: 8.5pt; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; margin-left: 2mm;
+  }
+  .pill.push { background: var(--push); }
+  .pill.pull { background: var(--pull); }
+  .pill.legs { background: var(--legs); }
+  .pill.rest { background: #374151; }
+
+  /* 3-column main grid */
+  .columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7mm; }
+
+  .column {
+    background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    border-radius: 2mm;
+    padding: 5mm 5mm 4mm;
+  }
+  .column-head {
+    display: flex; align-items: baseline; gap: 3mm;
+    padding-bottom: 3mm; margin-bottom: 4mm;
+    border-bottom: 1px solid var(--rule);
+  }
+  .column-label {
+    font-size: 24pt; font-weight: 900; color: var(--accent); letter-spacing: 1px;
+    line-height: 1;
+  }
+  .column-tagline {
+    font-size: 8.5pt; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 1.5px;
+  }
+
+  /* Day blocks within a column */
+  .day { margin-bottom: 6mm; }
+  .day:last-child { margin-bottom: 0; }
+  .day-head {
+    display: flex; align-items: baseline; gap: 2mm;
+    padding: 2mm 3mm; border-radius: 1mm;
+    background: var(--accent-shade);
+    border-left: 2mm solid var(--accent);
+    margin-bottom: 3mm;
+  }
+  .day-num {
+    font-size: 7.5pt; font-weight: 700; color: var(--ink-dim);
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .day-title { font-size: 14pt; color: var(--ink); font-weight: 700; }
+  .day-focus {
+    margin-left: auto; font-size: 8pt; color: var(--ink-dim);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* Exercise cards (compact list) */
+  .day-cards { list-style: none; display: flex; flex-direction: column; gap: 2.5mm; }
+  .card {
+    display: grid; grid-template-columns: 18mm 1fr; gap: 3mm;
+    padding: 2.5mm; border-radius: 1.5mm;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    align-items: start;
+  }
+  .card-photo {
+    position: relative; width: 18mm; aspect-ratio: 1/1;
+    border-radius: 1mm; overflow: hidden;
+    background: #0b1220;
+    border: 1px solid var(--accent);
+  }
+  .card-photo img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .card-photo .frame-1 { animation: ppl-flip 1.6s steps(1) infinite; }
+  @keyframes ppl-flip {
+    0%, 50% { opacity: 0; }
+    50.01%, 100% { opacity: 1; }
+  }
+  .card-body { min-width: 0; }
+  .card-title { font-size: 9.5pt; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 1mm; }
+  .card-sets {
+    display: inline-block; font-size: 7.5pt; color: var(--accent);
+    font-weight: 700; letter-spacing: 0.5px;
+    padding: 0.4mm 1.5mm; border-radius: 0.8mm;
+    background: var(--accent-shade); margin-bottom: 1mm;
+  }
+  .card-targets {
+    font-size: 7pt; color: var(--ink-dim); text-transform: uppercase;
+    letter-spacing: 0.6px; line-height: 1.35; margin-bottom: 1mm;
+  }
+  .card-cue {
+    font-size: 7.5pt; color: var(--ink-faint); line-height: 1.35;
+  }
+
+  /* Bottom strip: warm-up, RPE, nutrition, mistakes */
+  .bottom {
+    margin-top: 8mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm;
+  }
+  .info-card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 2mm;
+    padding: 4mm 4mm 3.5mm;
+  }
+  .info-card h4 {
+    font-size: 10pt; color: var(--ink); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 2.5mm; padding-bottom: 1.5mm;
+    border-bottom: 1px solid var(--rule);
+  }
+  .info-card ul { list-style: none; }
+  .info-card li {
+    font-size: 7.8pt; color: var(--ink-dim); line-height: 1.5;
+    padding: 0.6mm 0; display: flex; gap: 2mm;
+  }
+  .info-card li::before {
+    content: "▸"; color: var(--ink-faint); flex-shrink: 0;
+  }
+  .info-card li strong { color: var(--ink); font-weight: 600; }
+  .info-card .rpe-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 7.8pt; padding: 0.8mm 0; border-bottom: 1px dashed var(--rule);
+  }
+  .info-card .rpe-row:last-child { border-bottom: none; }
+  .info-card .rpe-row .num { font-weight: 700; color: var(--ink); width: 8mm; }
+  .info-card .rpe-row .desc { color: var(--ink-dim); flex: 1; }
+
+  /* Footer */
+  .poster-footer {
+    margin-top: 6mm; display: flex; justify-content: space-between;
+    font-size: 7.5pt; color: var(--ink-faint); letter-spacing: 1px;
+    text-transform: uppercase; padding-top: 3mm;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Screen-only mobile-ish scaling */
+  @media screen and (max-width: 1200px) {
+    .poster {
+      transform-origin: top center;
+      transform: scale(0.55);
+      margin-bottom: calc(-594mm * 0.45 + 6mm);
+    }
+  }
+</style>
+</head>
+<body>
+
+<article class="poster">
+
+  <header class="title-bar">
+    <div>
+      <h1>PUSH·PULL·LEGS</h1>
+      <div class="sub">6-Day Hypertrophy + Strength Program · One-Page Poster</div>
+    </div>
+    <div class="schedule">
+      <div>Mon <span class="pill push">Push A</span></div>
+      <div>Tue <span class="pill pull">Pull A</span></div>
+      <div>Wed <span class="pill legs">Legs A</span></div>
+      <div>Thu <span class="pill push">Push B</span></div>
+      <div>Fri <span class="pill pull">Pull B</span></div>
+      <div>Sat <span class="pill legs">Legs B</span></div>
+      <div>Sun <span class="pill rest">Rest</span></div>
+    </div>
+  </header>
+
+  <div class="columns">
+    
+    <div class="column push-col" style="--accent:#ef4444; --accent-shade:rgba(239,68,68,0.12);">
+      <div class="column-head">
+        <span class="column-label">PUSH</span>
+        <span class="column-tagline">Chest · Shoulders · Triceps</span>
+      </div>
+      
+    <section class="day push-day" style="--accent:#ef4444; --accent-shade:rgba(239,68,68,0.12);">
+      <header class="day-head">
+        <span class="day-num">Day 1</span>
+        <h3 class="day-title">Push A</h3>
+        <span class="day-focus">Chest emphasis</span>
+      </header>
+      <ol class="day-cards">
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg" alt="Barbell Bench Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Bench_Press_-_Medium_Grip/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Barbell Bench Press</div>
+        <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
+        <div class="card-targets">Chest · Front delts · Triceps</div>
+        <div class="card-cue">Pause at chest. Drive through mid-foot, slight arch, retract scapulae.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Press/0.jpg" alt="Incline DB Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Press/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Incline DB Press</div>
+        <div class="card-sets">3 × 8-10 · 2 min</div>
+        <div class="card-targets">Upper chest · Front delts · Triceps</div>
+        <div class="card-cue">30° bench. Dumbbells stack over elbows at the bottom, no flare.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Dumbbell_Press/0.jpg" alt="Seated DB Shoulder Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Dumbbell_Press/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Seated DB Shoulder Press</div>
+        <div class="card-sets">3 × 8-10 · 2 min</div>
+        <div class="card-targets">Front delts · Side delts · Triceps</div>
+        <div class="card-cue">Back supported. Press in a slight arc, lock out without shrugging.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dips_-_Triceps_Version/0.jpg" alt="Weighted Dips" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dips_-_Triceps_Version/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Weighted Dips</div>
+        <div class="card-sets">3 × 8-12 · 2 min</div>
+        <div class="card-targets">Lower chest · Triceps · Front delts</div>
+        <div class="card-cue">Slight forward lean for chest emphasis, upright for triceps. Full ROM.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Seated_Lateral_Raise/0.jpg" alt="Cable Lateral Raise" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Seated_Lateral_Raise/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Cable Lateral Raise</div>
+        <div class="card-sets">4 × 12-15 · 60 sec</div>
+        <div class="card-targets">Side delts</div>
+        <div class="card-cue">Cable behind body. Lead with elbow, slow eccentric, no momentum.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown_-_Rope_Attachment/0.jpg" alt="Tricep Pushdown (Cable)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Triceps_Pushdown_-_Rope_Attachment/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Tricep Pushdown (Cable)</div>
+        <div class="card-sets">3 × 10-12 · 60 sec</div>
+        <div class="card-targets">Triceps (lateral + medial heads)</div>
+        <div class="card-cue">Elbows pinned to ribs. Lock out fully, squeeze 1 sec.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Rope_Overhead_Triceps_Extension/0.jpg" alt="Overhead Rope Triceps Ext." loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Cable_Rope_Overhead_Triceps_Extension/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Overhead Rope Triceps Ext.</div>
+        <div class="card-sets">3 × 12-15 · 60 sec</div>
+        <div class="card-targets">Triceps (long head)</div>
+        <div class="card-cue">Arms by ears, full stretch at bottom. Hits the long head.</div>
+      </div>
+    </li>
+    </ol>
+    </section>
+    
+
+    <section class="day push-day" style="--accent:#ef4444; --accent-shade:rgba(239,68,68,0.12);">
+      <header class="day-head">
+        <span class="day-num">Day 4</span>
+        <h3 class="day-title">Push B</h3>
+        <span class="day-focus">Shoulder emphasis</span>
+      </header>
+      <ol class="day-cards">
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Military_Press/0.jpg" alt="Standing Overhead Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Military_Press/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Standing Overhead Press</div>
+        <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
+        <div class="card-targets">Delts · Triceps · Traps</div>
+        <div class="card-cue">Strict, no leg drive. Squeeze glutes, brace abs. Bar over mid-foot.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Bench_Press/0.jpg" alt="Flat DB Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Bench_Press/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Flat DB Press</div>
+        <div class="card-sets">3 × 8-10 · 2 min</div>
+        <div class="card-targets">Chest · Front delts · Triceps</div>
+        <div class="card-cue">Greater ROM than barbell. Squeeze chest at top, don&#x27;t clank dumbbells.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Close-Grip_Barbell_Bench_Press/0.jpg" alt="Close-Grip Bench Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Close-Grip_Barbell_Bench_Press/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Close-Grip Bench Press</div>
+        <div class="card-sets">3 × 8-10 · 2 min</div>
+        <div class="card-targets">Triceps · Inner chest · Front delts</div>
+        <div class="card-cue">Grip just inside shoulder width. Elbows tucked. Triceps + inner chest.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Low_Cable_Crossover/0.jpg" alt="Cable Crossover (Low to High)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Low_Cable_Crossover/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Cable Crossover (Low to High)</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Upper chest · Front delts</div>
+        <div class="card-cue">Pulleys low, hands meet above eye line. Upper chest fiber bias.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/0.jpg" alt="DB Lateral Raise" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Side_Lateral_Raise/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">DB Lateral Raise</div>
+        <div class="card-sets">4 × 10-12 · 60 sec</div>
+        <div class="card-targets">Side delts</div>
+        <div class="card-cue">Slight forward lean. Lead with elbow. Stop just above parallel.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Machine_Flyes/0.jpg" alt="Reverse Pec Deck" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Reverse_Machine_Flyes/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Reverse Pec Deck</div>
+        <div class="card-sets">3 × 12-15 · 60 sec</div>
+        <div class="card-targets">Rear delts</div>
+        <div class="card-cue">Lead with pinkies. Squeeze rear delts, don&#x27;t shrug.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#ef4444;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Skullcrusher/0.jpg" alt="Skull Crushers (EZ-Bar)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/EZ-Bar_Skullcrusher/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Skull Crushers (EZ-Bar)</div>
+        <div class="card-sets">3 × 8-10 · 90 sec</div>
+        <div class="card-targets">Triceps (all heads)</div>
+        <div class="card-cue">Lower to forehead or behind head. Keep elbows tucked, don&#x27;t flare.</div>
+      </div>
+    </li>
+    </ol>
+    </section>
+    
+    </div>
+    
+    
+    <div class="column pull-col" style="--accent:#3b82f6; --accent-shade:rgba(59,130,246,0.12);">
+      <div class="column-head">
+        <span class="column-label">PULL</span>
+        <span class="column-tagline">Back · Rear delts · Biceps</span>
+      </div>
+      
+    <section class="day pull-day" style="--accent:#3b82f6; --accent-shade:rgba(59,130,246,0.12);">
+      <header class="day-head">
+        <span class="day-num">Day 2</span>
+        <h3 class="day-title">Pull A</h3>
+        <span class="day-focus">Back width</span>
+      </header>
+      <ol class="day-cards">
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pullups/0.jpg" alt="Weighted Pull-Up" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Pullups/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Weighted Pull-Up</div>
+        <div class="card-sets">4 × 5-6 · 3 min</div>
+        <div class="card-targets">Lats · Mid-back · Biceps</div>
+        <div class="card-cue">Full hang to chin over bar. Add weight when you hit 6 clean reps.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bent_Over_Barbell_Row/0.jpg" alt="Barbell Row (Pendlay/Bent-over)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Bent_Over_Barbell_Row/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Barbell Row (Pendlay/Bent-over)</div>
+        <div class="card-sets">3 × 6-8 · 2.5 min</div>
+        <div class="card-targets">Lats · Mid-back · Rear delts · Biceps</div>
+        <div class="card-cue">Torso ~45°. Pull bar to lower ribs. Strict, no body English.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Incline_Row/0.jpg" alt="Chest-Supported Row" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Incline_Row/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Chest-Supported Row</div>
+        <div class="card-sets">3 × 10-12 · 2 min</div>
+        <div class="card-targets">Mid-back · Lats · Rear delts</div>
+        <div class="card-cue">Squeeze 1 sec at peak contraction. Eliminates lower-back assistance.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/V-Bar_Pulldown/0.jpg" alt="Lat Pulldown (Neutral Grip)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/V-Bar_Pulldown/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lat Pulldown (Neutral Grip)</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Lats · Biceps</div>
+        <div class="card-cue">Lean back ~15°. Drive elbows down and back, full stretch top.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Face_Pull/0.jpg" alt="Face Pull (Cable, Rope)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Face_Pull/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Face Pull (Cable, Rope)</div>
+        <div class="card-sets">4 × 12-15 · 60 sec</div>
+        <div class="card-targets">Rear delts · Traps · Mid-back</div>
+        <div class="card-cue">Pull to nose, external rotation, elbows high. Shoulder health gold.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Curl/0.jpg" alt="Barbell / EZ-Bar Curl" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Curl/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Barbell / EZ-Bar Curl</div>
+        <div class="card-sets">3 × 8-10 · 90 sec</div>
+        <div class="card-targets">Biceps (both heads)</div>
+        <div class="card-cue">Elbows pinned at sides. No swing, control the negative.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Curl/0.jpg" alt="Incline DB Curl" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Incline_Dumbbell_Curl/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Incline DB Curl</div>
+        <div class="card-sets">3 × 10-12 · 60 sec</div>
+        <div class="card-targets">Biceps (long head)</div>
+        <div class="card-cue">Bench at 45°. Arms behind torso for maximum long-head stretch.</div>
+      </div>
+    </li>
+    </ol>
+    </section>
+    
+
+    <section class="day pull-day" style="--accent:#3b82f6; --accent-shade:rgba(59,130,246,0.12);">
+      <header class="day-head">
+        <span class="day-num">Day 5</span>
+        <h3 class="day-title">Pull B</h3>
+        <span class="day-focus">Back thickness</span>
+      </header>
+      <ol class="day-cards">
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sumo_Deadlift/0.jpg" alt="Conventional / Sumo Deadlift" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Sumo_Deadlift/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Conventional / Sumo Deadlift</div>
+        <div class="card-sets">3 × 3-5 · 3-4 min · RPE 7-8</div>
+        <div class="card-targets">Posterior chain · Lats · Traps · Grip</div>
+        <div class="card-cue">Brace, hinge, push the floor away. No grinders. Reset every rep.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/0.jpg" alt="T-Bar Row / Seal Row" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/T-Bar_Row_with_Handle/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">T-Bar Row / Seal Row</div>
+        <div class="card-sets">3 × 8-10 · 2 min</div>
+        <div class="card-targets">Mid-back · Lats · Rear delts</div>
+        <div class="card-cue">Pull elbows back and down. Squeeze shoulder blades together at top.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Wide-Grip_Lat_Pulldown/0.jpg" alt="Lat Pulldown (Wide Grip)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Wide-Grip_Lat_Pulldown/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lat Pulldown (Wide Grip)</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Lats (upper fibers, width)</div>
+        <div class="card-cue">Slightly wider than shoulders. Drive elbows down to ribs.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/0.jpg" alt="Single-Arm DB Row" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/One-Arm_Dumbbell_Row/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Single-Arm DB Row</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Lats · Mid-back · Rear delts</div>
+        <div class="card-cue">Pull dumbbell to hip. Slight rotation OK. Full stretch each rep.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Shrug/0.jpg" alt="Shrugs (Barbell or DB)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Shrug/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Shrugs (Barbell or DB)</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Upper traps · Grip</div>
+        <div class="card-cue">Straight up, not roll. Pause 2 sec at top. Use straps if grip is the limit.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hammer_Curls/0.jpg" alt="Hammer Curl" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hammer_Curls/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Hammer Curl</div>
+        <div class="card-sets">3 × 10-12 · 60 sec</div>
+        <div class="card-targets">Brachialis · Biceps · Forearms</div>
+        <div class="card-cue">Neutral grip. Hits the brachialis (size driver under biceps).</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#3b82f6;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Biceps_Cable_Curl/0.jpg" alt="Cable Curl (Rope)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Biceps_Cable_Curl/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Cable Curl (Rope)</div>
+        <div class="card-sets">3 × 12-15 · 60 sec</div>
+        <div class="card-targets">Biceps (peak emphasis)</div>
+        <div class="card-cue">Constant tension. Twist wrists out at top for peak contraction.</div>
+      </div>
+    </li>
+    </ol>
+    </section>
+    
+    </div>
+    
+    
+    <div class="column legs-col" style="--accent:#22c55e; --accent-shade:rgba(34,197,94,0.12);">
+      <div class="column-head">
+        <span class="column-label">LEGS</span>
+        <span class="column-tagline">Quads · Hams · Glutes · Calves · Core</span>
+      </div>
+      
+    <section class="day legs-day" style="--accent:#22c55e; --accent-shade:rgba(34,197,94,0.12);">
+      <header class="day-head">
+        <span class="day-num">Day 3</span>
+        <h3 class="day-title">Legs A</h3>
+        <span class="day-focus">Quad emphasis</span>
+      </header>
+      <ol class="day-cards">
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/0.jpg" alt="Back Squat (High Bar)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Squat/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Back Squat (High Bar)</div>
+        <div class="card-sets">4 × 5-6 · 3-4 min · RPE 8</div>
+        <div class="card-targets">Quads · Glutes · Lower back · Core</div>
+        <div class="card-cue">Brace hard. Knees track over toes. Hit depth (hip crease below knee).</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Rear_Lunge/0.jpg" alt="Bulgarian Split Squat (DB)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Dumbbell_Rear_Lunge/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Bulgarian Split Squat (DB)</div>
+        <div class="card-sets">3 × 8/leg · 2 min</div>
+        <div class="card-targets">Quads · Glutes</div>
+        <div class="card-cue">Rear foot elevated. Front knee tracks forward, torso slightly inclined.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Press/0.jpg" alt="Leg Press" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Press/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Leg Press</div>
+        <div class="card-sets">3 × 10-12 · 2 min</div>
+        <div class="card-targets">Quads · Glutes</div>
+        <div class="card-cue">Feet lower on platform for quads. Don&#x27;t lock out. Full ROM.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Extensions/0.jpg" alt="Leg Extension" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Leg_Extensions/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Leg Extension</div>
+        <div class="card-sets">3 × 12-15 · 60 sec</div>
+        <div class="card-targets">Quads (rectus femoris + vastus)</div>
+        <div class="card-cue">Pause 1 sec at top, slow eccentric. Isolates the quads.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Leg_Curl/0.jpg" alt="Seated Leg Curl" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Leg_Curl/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Seated Leg Curl</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Hamstrings</div>
+        <div class="card-cue">Long stretch at top, full contraction at bottom. Better than lying for hams.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Barbell_Calf_Raise/0.jpg" alt="Standing Calf Raise" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Barbell_Calf_Raise/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Standing Calf Raise</div>
+        <div class="card-sets">4 × 8-10 · 90 sec</div>
+        <div class="card-targets">Calves (gastrocnemius)</div>
+        <div class="card-cue">Full ROM: deep stretch at bottom, 1 sec hold at top. Heavy.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hanging_Leg_Raise/0.jpg" alt="Hanging Leg Raise" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Hanging_Leg_Raise/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Hanging Leg Raise</div>
+        <div class="card-sets">3 × 10-12 · 60 sec</div>
+        <div class="card-targets">Abs · Hip flexors</div>
+        <div class="card-cue">Posterior tilt at top. No swing. Bent knee version if straight too hard.</div>
+      </div>
+    </li>
+    </ol>
+    </section>
+    
+
+    <section class="day legs-day" style="--accent:#22c55e; --accent-shade:rgba(34,197,94,0.12);">
+      <header class="day-head">
+        <span class="day-num">Day 6</span>
+        <h3 class="day-title">Legs B</h3>
+        <span class="day-focus">Posterior chain</span>
+      </header>
+      <ol class="day-cards">
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Romanian_Deadlift/0.jpg" alt="Romanian Deadlift" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Romanian_Deadlift/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Romanian Deadlift</div>
+        <div class="card-sets">4 × 6-8 · 3 min</div>
+        <div class="card-targets">Hamstrings · Glutes · Lower back</div>
+        <div class="card-cue">Hip-hinge, slight knee bend. Bar drags shins. Stretch hams hard.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Front_Barbell_Squat/0.jpg" alt="Front Squat / Hack Squat" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Front_Barbell_Squat/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Front Squat / Hack Squat</div>
+        <div class="card-sets">3 × 8-10 · 2.5 min</div>
+        <div class="card-targets">Quads · Glutes · Core</div>
+        <div class="card-cue">Upright torso (front squat) or fixed angle (hack). Quad-dominant.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Walking_Lunge/0.jpg" alt="Walking Lunge (DB)" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Walking_Lunge/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Walking Lunge (DB)</div>
+        <div class="card-sets">3 × 10/leg · 2 min</div>
+        <div class="card-targets">Quads · Glutes · Hamstrings</div>
+        <div class="card-cue">Long stride for glutes, short stride for quads. Knee just kisses floor.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lying_Leg_Curls/0.jpg" alt="Lying Leg Curl" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Lying_Leg_Curls/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Lying Leg Curl</div>
+        <div class="card-sets">3 × 10-12 · 90 sec</div>
+        <div class="card-targets">Hamstrings</div>
+        <div class="card-cue">Point toes for ham bias, dorsiflex for calf assist. Slow eccentric.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Hip_Thrust/0.jpg" alt="Barbell Hip Thrust" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Barbell_Hip_Thrust/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Barbell Hip Thrust</div>
+        <div class="card-sets">3 × 8-10 · 2 min</div>
+        <div class="card-targets">Glutes · Hamstrings</div>
+        <div class="card-cue">Upper back on bench, chin tucked. Squeeze glutes hard, 2 sec hold top.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Calf_Raise/0.jpg" alt="Seated Calf Raise" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Seated_Calf_Raise/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Seated Calf Raise</div>
+        <div class="card-sets">4 × 12-15 · 60 sec</div>
+        <div class="card-targets">Calves (soleus)</div>
+        <div class="card-cue">Knees bent isolates soleus. Pause at top, full stretch at bottom.</div>
+      </div>
+    </li>
+    
+
+    <li class="card">
+      <div class="card-photo" style="--accent:#22c55e;">
+        <img class="frame frame-0" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Cable_Wood_Chop/0.jpg" alt="Cable Woodchopper" loading="lazy">
+        <img class="frame frame-1" src="https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/Standing_Cable_Wood_Chop/1.jpg" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-title">Cable Woodchopper</div>
+        <div class="card-sets">3 × 12/side · 60 sec</div>
+        <div class="card-targets">Obliques · Core</div>
+        <div class="card-cue">Hips stay square. Anti-rotation focus. Pivot through the obliques.</div>
+      </div>
+    </li>
+    </ol>
+    </section>
+    
+    </div>
+    
+  </div>
+
+  <div class="bottom">
+    <div class="info-card">
+      <h4>Warm-Up · 8 min</h4>
+      <ul>
+        <li><strong>3 min</strong> bike or row easy</li>
+        <li><strong>Mobility:</strong> hips, T-spine, shoulders</li>
+        <li><strong>Activation:</strong> band pull-aparts, scap pulls</li>
+        <li><strong>Ramp sets:</strong> 50% × 5, 70% × 3, 85% × 1</li>
+        <li>Add 1 specific warm-up per heavy compound</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h4>Progression</h4>
+      <ul>
+        <li><strong>Compounds:</strong> +2.5 kg upper / +5 kg lower when top set hits target reps</li>
+        <li><strong>Accessories:</strong> add 1 rep per session until top of range, then +weight</li>
+        <li><strong>Deload</strong> every 4 to 6 weeks: 60% load, half volume</li>
+        <li><strong>Log every set:</strong> weight, reps, RPE</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h4>Nutrition · Daily</h4>
+      <ul>
+        <li><strong>Protein:</strong> 1.6 to 2.2 g/kg body weight</li>
+        <li><strong>Cut:</strong> 300 to 500 kcal deficit</li>
+        <li><strong>Maintain:</strong> TDEE</li>
+        <li><strong>Lean bulk:</strong> +200 to 300 kcal</li>
+        <li><strong>Sleep:</strong> 7 to 9 h, consistent timing</li>
+        <li><strong>Creatine:</strong> 5 g/day, any time</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h4>RPE Scale</h4>
+      <div class="rpe-row"><span class="num">6</span><span class="desc">4+ reps in reserve, easy</span></div>
+      <div class="rpe-row"><span class="num">7</span><span class="desc">3 RIR, brisk but controlled</span></div>
+      <div class="rpe-row"><span class="num">8</span><span class="desc">2 RIR, working hard</span></div>
+      <div class="rpe-row"><span class="num">9</span><span class="desc">1 RIR, grinding</span></div>
+      <div class="rpe-row"><span class="num">10</span><span class="desc">0 RIR, true max</span></div>
+    </div>
+  </div>
+
+  <footer class="poster-footer">
+    <span>Push · Pull · Legs · 6-Day Split</span>
+    <span>Compounds 5–6 reps · Accessories 8–15 reps · 2 to 3 min rest heavy</span>
+    <span>One Page</span>
+  </footer>
+
+</article>
+
+</body>
+</html>
