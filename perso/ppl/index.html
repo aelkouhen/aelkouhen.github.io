@@ -53,9 +53,13 @@
   }
   .title-bar h1 {
     font-size: 78pt; font-weight: 900; letter-spacing: -2px; line-height: 0.9;
-    background: linear-gradient(90deg, var(--push) 0%, var(--push) 33%, var(--pull) 33%, var(--pull) 66%, var(--legs) 66%, var(--legs) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+    color: var(--ink);
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 0;
   }
+  .title-bar h1 .word-push { color: var(--push); }
+  .title-bar h1 .word-pull { color: var(--pull); }
+  .title-bar h1 .word-legs { color: var(--legs); }
+  .title-bar h1 .word-sep { color: var(--ink-faint); padding: 0 4mm; font-weight: 700; }
   .title-bar .sub { font-size: 16pt; color: var(--ink-dim); margin-top: 3mm; letter-spacing: 0.5px; }
   .title-bar .schedule {
     text-align: right; font-size: 9.5pt; color: var(--ink-dim);
@@ -211,7 +215,7 @@
 
   <header class="title-bar">
     <div>
-      <h1>PUSH·PULL·LEGS</h1>
+      <h1><span class="word-push">PUSH</span><span class="word-sep">·</span><span class="word-pull">PULL</span><span class="word-sep">·</span><span class="word-legs">LEGS</span></h1>
       <div class="sub">6-Day Hypertrophy + Strength Program · One-Page Poster</div>
     </div>
     <div class="schedule">
