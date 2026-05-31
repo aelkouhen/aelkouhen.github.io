@@ -16,6 +16,11 @@
     --pull: #3b82f6;
     --legs: #22c55e;
     --gold: #f59e0b;
+
+    --tier-P: #ef4444;
+    --tier-S: #f97316;
+    --tier-T: #a855f7;
+    --tier-X: #14b8a6;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
@@ -24,7 +29,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* A2 portrait; will scale-down on screen via @media. */
   .poster {
     width: 420mm; min-height: 594mm;
     margin: 6mm auto; padding: 10mm 10mm 12mm;
@@ -48,7 +52,7 @@
   .title-bar {
     display: grid; grid-template-columns: 1.4fr 1fr 1fr; align-items: start;
     gap: 6mm; padding-bottom: 6mm; border-bottom: 1px solid var(--rule);
-    margin-bottom: 6mm;
+    margin-bottom: 4mm;
   }
   .title-bar h1 {
     font-size: 56pt; font-weight: 900; letter-spacing: -2px; line-height: 0.9;
@@ -88,7 +92,28 @@
   }
   .goals-list li::before { content: "✓"; color: var(--gold); font-weight: 700; }
 
-  /* Main layout: 3 PPL columns + right side rail */
+  /* Muscle tier legend strip */
+  .legend-strip {
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+    gap: 4mm; padding: 2.5mm 4mm; margin-bottom: 5mm;
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 2mm;
+  }
+  .legend-strip .legend-label {
+    font-size: 8pt; font-weight: 700; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .legend-strip .legend-item {
+    display: inline-flex; align-items: center; gap: 1.5mm;
+    font-size: 8pt; color: var(--ink);
+  }
+  .legend-strip .legend-swatch {
+    display: inline-block; width: 3mm; height: 3mm; border-radius: 0.6mm;
+  }
+  .legend-strip .legend-divider {
+    width: 1px; height: 4mm; background: var(--rule);
+  }
+
+  /* Main grid */
   .main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 0.55fr;
@@ -115,7 +140,6 @@
     font-size: 7.5pt; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 1.2px;
   }
 
-  /* Day blocks within a column */
   .day { margin-bottom: 5mm; }
   .day:last-child { margin-bottom: 0; }
   .day-head {
@@ -135,7 +159,6 @@
     text-transform: uppercase; letter-spacing: 1px;
   }
 
-  /* Muscle group sub-header */
   .muscle-group { margin-bottom: 2.5mm; }
   .muscle-group:last-child { margin-bottom: 0; }
   .muscle-label {
@@ -145,7 +168,6 @@
     border-bottom: 1px dashed var(--rule);
   }
 
-  /* Exercise cards */
   .day-cards { list-style: none; display: flex; flex-direction: column; gap: 1.8mm; }
   .card {
     display: grid; grid-template-columns: 16mm 1fr; gap: 2.5mm;
@@ -174,13 +196,25 @@
     display: inline-block; font-size: 7pt; color: var(--accent);
     font-weight: 700; letter-spacing: 0.4px;
     padding: 0.3mm 1.2mm; border-radius: 0.7mm;
-    background: var(--accent-shade); margin-bottom: 0.8mm;
+    background: var(--accent-shade); margin-bottom: 1mm;
   }
-  .card-targets {
-    font-size: 6.5pt; color: var(--ink-dim); text-transform: uppercase;
-    letter-spacing: 0.5px; line-height: 1.3; margin-bottom: 0.8mm;
+
+  /* 4-tier muscle chips */
+  .card-chips {
+    display: flex; flex-wrap: wrap; gap: 0.8mm; margin-bottom: 1mm;
   }
-  .card-targets b { color: var(--ink); font-weight: 600; }
+  .chip {
+    display: inline-flex; align-items: center;
+    font-size: 6.4pt; font-weight: 600; letter-spacing: 0.3px;
+    padding: 0.3mm 1.2mm; border-radius: 0.6mm;
+    line-height: 1.3;
+    border: 1px solid currentColor;
+  }
+  .chip-P { color: var(--tier-P); background: rgba(239,68,68,0.12); }
+  .chip-S { color: var(--tier-S); background: rgba(249,115,22,0.12); }
+  .chip-T { color: var(--tier-T); background: rgba(168,85,247,0.12); }
+  .chip-X { color: var(--tier-X); background: rgba(20,184,166,0.12); }
+
   .card-cue {
     font-size: 7pt; color: var(--ink-faint); line-height: 1.3;
   }
@@ -220,7 +254,6 @@
   .vol-table td:first-child { color: var(--ink); font-weight: 600; }
   .vol-table td:last-child { text-align: right; color: var(--gold); font-weight: 700; }
 
-  /* Progression weeks table */
   .week-table { width: 100%; border-collapse: collapse; margin-top: 1.5mm; }
   .week-table td {
     font-size: 7.5pt; padding: 0.8mm 1.5mm; border: 1px solid var(--rule);
@@ -259,7 +292,6 @@
   .info-card .rpe-row .num { font-weight: 700; color: var(--ink); width: 8mm; }
   .info-card .rpe-row .desc { color: var(--ink-dim); flex: 1; }
 
-  /* Tagline */
   .tagline {
     margin-top: 6mm; padding: 5mm; text-align: center;
     background: linear-gradient(90deg, rgba(239,68,68,0.10), rgba(59,130,246,0.10), rgba(34,197,94,0.10));
@@ -280,7 +312,6 @@
     border-top: 1px solid var(--rule);
   }
 
-  /* Screen scaling */
   @media screen and (max-width: 1400px) {
     .poster {
       transform-origin: top center;
@@ -321,6 +352,17 @@
     </div>
   </header>
 
+  <div class="legend-strip">
+    <span class="legend-label">Muscle Tiers</span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--tier-P);"></span>Primary</span>
+    <span class="legend-divider"></span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--tier-S);"></span>Secondary</span>
+    <span class="legend-divider"></span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--tier-T);"></span>Tertiary</span>
+    <span class="legend-divider"></span>
+    <span class="legend-item"><span class="legend-swatch" style="background: var(--tier-X);"></span>Stabilizer</span>
+  </div>
+
   <div class="main-grid">
   <div class="column push-col" style="--accent:#ef4444; --accent-shade:rgba(239,68,68,0.12);">
     <div class="column-head">
@@ -344,7 +386,7 @@
           <div class="card-body">
             <div class="card-title">Barbell Bench Press</div>
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
-            <div class="card-targets">Chest · Front delts · Triceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Lats</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Pause at chest. Drive through mid-foot, slight arch, retract scapulae.</div>
           </div>
         </li>
@@ -356,7 +398,7 @@
           <div class="card-body">
             <div class="card-title">Incline DB Press</div>
             <div class="card-sets">3 × 8-10 · 2 min</div>
-            <div class="card-targets">Upper chest · Front delts · Triceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">30° bench. Dumbbells stack over elbows at the bottom, no flare.</div>
           </div>
         </li>
@@ -373,7 +415,7 @@
           <div class="card-body">
             <div class="card-title">Seated DB Shoulder Press</div>
             <div class="card-sets">3 × 8-10 · 2 min</div>
-            <div class="card-targets">Front delts · Side delts · Triceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Upper chest</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Back supported. Press in a slight arc, lock out without shrugging.</div>
           </div>
         </li>
@@ -385,7 +427,7 @@
           <div class="card-body">
             <div class="card-title">Cable Lateral Raise</div>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
-            <div class="card-targets">Side delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
             <div class="card-cue">Cable behind body. Lead with elbow, slow eccentric, no momentum.</div>
           </div>
         </li>
@@ -402,7 +444,7 @@
           <div class="card-body">
             <div class="card-title">Weighted Dips</div>
             <div class="card-sets">3 × 8-12 · 2 min</div>
-            <div class="card-targets">Lower chest · Triceps · Front delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lower chest</span><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Slight forward lean for chest emphasis, upright for triceps. Full ROM.</div>
           </div>
         </li>
@@ -414,7 +456,7 @@
           <div class="card-body">
             <div class="card-title">Tricep Pushdown (Cable)</div>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
-            <div class="card-targets">Triceps (lateral + medial heads)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Elbows pinned to ribs. Lock out fully, squeeze 1 sec.</div>
           </div>
         </li>
@@ -426,7 +468,7 @@
           <div class="card-body">
             <div class="card-title">Overhead Rope Triceps Ext.</div>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
-            <div class="card-targets">Triceps (long head)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps long head</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Arms by ears, full stretch at bottom. Hits the long head.</div>
           </div>
         </li>
@@ -451,7 +493,7 @@
           <div class="card-body">
             <div class="card-title">Flat DB Press</div>
             <div class="card-sets">3 × 8-10 · 2 min</div>
-            <div class="card-targets">Chest · Front delts · Triceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Greater ROM than barbell. Squeeze chest at top, don&amp;#x27;t clank dumbbells.</div>
           </div>
         </li>
@@ -463,7 +505,7 @@
           <div class="card-body">
             <div class="card-title">Cable Crossover (Low to High)</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Upper chest · Front delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-X" title="Stabilizer">Biceps</span></div>
             <div class="card-cue">Pulleys low, hands meet above eye line. Upper chest fiber bias.</div>
           </div>
         </li>
@@ -475,7 +517,7 @@
           <div class="card-body">
             <div class="card-title">Machine Chest Press</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets"><b>Chest</b> · <b>Front delts</b> · <b>Triceps</b></div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-S" title="Secondary">Front delts</span><span class="chip chip-S" title="Secondary">Triceps</span></div>
             <div class="card-cue">Fixed path, brutal stretch. Squeeze pecs at lockout, controlled negative.</div>
           </div>
         </li>
@@ -487,7 +529,7 @@
           <div class="card-body">
             <div class="card-title">Flat Bench Cable Flyes</div>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
-            <div class="card-targets"><b>Chest</b> (inner + outer fibers)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
             <div class="card-cue">Slight elbow bend, hug a tree. Constant cable tension across full ROM.</div>
           </div>
         </li>
@@ -504,7 +546,7 @@
           <div class="card-body">
             <div class="card-title">Standing Overhead Press</div>
             <div class="card-sets">4 × 5-6 · 3 min · RPE 8</div>
-            <div class="card-targets">Delts · Triceps · Traps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Front delts</span><span class="chip chip-S" title="Secondary">Side delts</span><span class="chip chip-S" title="Secondary">Triceps</span><span class="chip chip-T" title="Tertiary">Traps</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
             <div class="card-cue">Strict, no leg drive. Squeeze glutes, brace abs. Bar over mid-foot.</div>
           </div>
         </li>
@@ -516,7 +558,7 @@
           <div class="card-body">
             <div class="card-title">DB Lateral Raise</div>
             <div class="card-sets">4 × 10-12 · 60 sec</div>
-            <div class="card-targets">Side delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Side delts</span><span class="chip chip-T" title="Tertiary">Front delts</span><span class="chip chip-X" title="Stabilizer">Traps</span></div>
             <div class="card-cue">Slight forward lean. Lead with elbow. Stop just above parallel.</div>
           </div>
         </li>
@@ -533,7 +575,7 @@
           <div class="card-body">
             <div class="card-title">Reverse Pec Deck</div>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
-            <div class="card-targets">Rear delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Traps</span></div>
             <div class="card-cue">Lead with pinkies. Squeeze rear delts, don&amp;#x27;t shrug.</div>
           </div>
         </li>
@@ -550,7 +592,7 @@
           <div class="card-body">
             <div class="card-title">Close-Grip Bench Press</div>
             <div class="card-sets">3 × 8-10 · 2 min</div>
-            <div class="card-targets">Triceps · Inner chest · Front delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-S" title="Secondary">Inner chest</span><span class="chip chip-T" title="Tertiary">Front delts</span></div>
             <div class="card-cue">Grip just inside shoulder width. Elbows tucked. Triceps + inner chest.</div>
           </div>
         </li>
@@ -562,7 +604,7 @@
           <div class="card-body">
             <div class="card-title">Skull Crushers (EZ-Bar)</div>
             <div class="card-sets">3 × 8-10 · 90 sec</div>
-            <div class="card-targets">Triceps (all heads)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Triceps</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Lower to forehead or behind head. Keep elbows tucked, don&amp;#x27;t flare.</div>
           </div>
         </li>
@@ -593,7 +635,7 @@
           <div class="card-body">
             <div class="card-title">Weighted Pull-Up</div>
             <div class="card-sets">4 × 5-6 · 3 min</div>
-            <div class="card-targets">Lats · Mid-back · Biceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Full hang to chin over bar. Add weight when you hit 6 clean reps.</div>
           </div>
         </li>
@@ -605,7 +647,7 @@
           <div class="card-body">
             <div class="card-title">Barbell Row (Pendlay/Bent-over)</div>
             <div class="card-sets">3 × 6-8 · 2.5 min</div>
-            <div class="card-targets">Lats · Mid-back · Rear delts · Biceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-X" title="Stabilizer">Lower back</span></div>
             <div class="card-cue">Torso ~45°. Pull bar to lower ribs. Strict, no body English.</div>
           </div>
         </li>
@@ -617,7 +659,7 @@
           <div class="card-body">
             <div class="card-title">Chest-Supported Row</div>
             <div class="card-sets">3 × 10-12 · 2 min</div>
-            <div class="card-targets">Mid-back · Lats · Rear delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Squeeze 1 sec at peak contraction. Eliminates lower-back assistance.</div>
           </div>
         </li>
@@ -629,7 +671,7 @@
           <div class="card-body">
             <div class="card-title">Lat Pulldown (Neutral Grip)</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Lats · Biceps</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
             <div class="card-cue">Lean back ~15°. Drive elbows down and back, full stretch top.</div>
           </div>
         </li>
@@ -646,7 +688,7 @@
           <div class="card-body">
             <div class="card-title">Face Pull (Cable, Rope)</div>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
-            <div class="card-targets">Rear delts · Traps · Mid-back</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Rear delts</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rotator cuff</span></div>
             <div class="card-cue">Pull to nose, external rotation, elbows high. Shoulder health gold.</div>
           </div>
         </li>
@@ -663,7 +705,7 @@
           <div class="card-body">
             <div class="card-title">Barbell / EZ-Bar Curl</div>
             <div class="card-sets">3 × 8-10 · 90 sec</div>
-            <div class="card-targets">Biceps (both heads)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Elbows pinned at sides. No swing, control the negative.</div>
           </div>
         </li>
@@ -675,7 +717,7 @@
           <div class="card-body">
             <div class="card-title">Incline DB Curl</div>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
-            <div class="card-targets">Biceps (long head)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps long head</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Bench at 45°. Arms behind torso for maximum long-head stretch.</div>
           </div>
         </li>
@@ -692,7 +734,7 @@
           <div class="card-body">
             <div class="card-title">Farmer&#x27;s Walk</div>
             <div class="card-sets">3 rounds · ~30 m</div>
-            <div class="card-targets"><b>Forearms</b> · <b>Traps</b> · <b>Core</b></div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Forearms</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Core</span><span class="chip chip-X" title="Stabilizer">Glutes</span></div>
             <div class="card-cue">Stand tall, shoulders down. Heavy DBs or trap-bar. Grip + traps + core.</div>
           </div>
         </li>
@@ -717,7 +759,7 @@
           <div class="card-body">
             <div class="card-title">Conventional / Sumo Deadlift</div>
             <div class="card-sets">3 × 3-5 · 3-4 min · RPE 7-8</div>
-            <div class="card-targets">Posterior chain · Lats · Traps · Grip</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lower back</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Traps</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-T" title="Tertiary">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Brace, hinge, push the floor away. No grinders. Reset every rep.</div>
           </div>
         </li>
@@ -729,7 +771,7 @@
           <div class="card-body">
             <div class="card-title">T-Bar Row / Seal Row</div>
             <div class="card-sets">3 × 8-10 · 2 min</div>
-            <div class="card-targets">Mid-back · Lats · Rear delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Pull elbows back and down. Squeeze shoulder blades together at top.</div>
           </div>
         </li>
@@ -741,7 +783,7 @@
           <div class="card-body">
             <div class="card-title">Lat Pulldown (Wide Grip)</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Lats (upper fibers, width)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Slightly wider than shoulders. Drive elbows down to ribs.</div>
           </div>
         </li>
@@ -753,7 +795,7 @@
           <div class="card-body">
             <div class="card-title">Single-Arm DB Row</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Lats · Mid-back · Rear delts</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Lats</span><span class="chip chip-S" title="Secondary">Mid-back</span><span class="chip chip-T" title="Tertiary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Pull dumbbell to hip. Slight rotation OK. Full stretch each rep.</div>
           </div>
         </li>
@@ -765,7 +807,7 @@
           <div class="card-body">
             <div class="card-title">Seated Cable Row</div>
             <div class="card-sets">4 × 10-12 · 90 sec</div>
-            <div class="card-targets"><b>Mid-back</b> · <b>Lats</b> · <b>Rear delts</b></div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Mid-back</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-S" title="Secondary">Rear delts</span><span class="chip chip-T" title="Tertiary">Biceps</span></div>
             <div class="card-cue">Chest up, drive elbows back. Squeeze 1 sec, slow stretch forward.</div>
           </div>
         </li>
@@ -782,7 +824,7 @@
           <div class="card-body">
             <div class="card-title">Shrugs (Barbell or DB)</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Upper traps · Grip</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Upper traps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Straight up, not roll. Pause 2 sec at top. Use straps if grip is the limit.</div>
           </div>
         </li>
@@ -799,7 +841,7 @@
           <div class="card-body">
             <div class="card-title">Hammer Curl</div>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
-            <div class="card-targets">Brachialis · Biceps · Forearms</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Brachialis</span><span class="chip chip-S" title="Secondary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Neutral grip. Hits the brachialis (size driver under biceps).</div>
           </div>
         </li>
@@ -811,7 +853,7 @@
           <div class="card-body">
             <div class="card-title">Cable Curl (Rope)</div>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
-            <div class="card-targets">Biceps (peak emphasis)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Forearms</span></div>
             <div class="card-cue">Constant tension. Twist wrists out at top for peak contraction.</div>
           </div>
         </li>
@@ -823,7 +865,7 @@
           <div class="card-body">
             <div class="card-title">Preacher Curl</div>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
-            <div class="card-targets"><b>Biceps</b> (short head bias)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Biceps</span><span class="chip chip-S" title="Secondary">Brachialis</span><span class="chip chip-T" title="Tertiary">Forearms</span></div>
             <div class="card-cue">Elbows pinned on pad. Don&#x27;t bounce out of the bottom; full stretch.</div>
           </div>
         </li>
@@ -840,7 +882,7 @@
           <div class="card-body">
             <div class="card-title">Wrist Curl Superset</div>
             <div class="card-sets">3 × 15 + 15 · 60 sec</div>
-            <div class="card-targets"><b>Forearms</b> (flexors + extensors)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Forearm flexors</span><span class="chip chip-P" title="Primary">Forearm extensors</span></div>
             <div class="card-cue">Palms-up wrist curl to failure, flip to palms-down (reverse) for the same reps.</div>
           </div>
         </li>
@@ -871,7 +913,7 @@
           <div class="card-body">
             <div class="card-title">Back Squat (High Bar)</div>
             <div class="card-sets">4 × 5-6 · 3-4 min · RPE 8</div>
-            <div class="card-targets">Quads · Glutes · Lower back · Core</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Brace hard. Knees track over toes. Hit depth (hip crease below knee).</div>
           </div>
         </li>
@@ -883,7 +925,7 @@
           <div class="card-body">
             <div class="card-title">Bulgarian Split Squat (DB)</div>
             <div class="card-sets">3 × 8/leg · 2 min</div>
-            <div class="card-targets">Quads · Glutes</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Rear foot elevated. Front knee tracks forward, torso slightly inclined.</div>
           </div>
         </li>
@@ -895,7 +937,7 @@
           <div class="card-body">
             <div class="card-title">Leg Press</div>
             <div class="card-sets">3 × 10-12 · 2 min</div>
-            <div class="card-targets">Quads · Glutes</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-T" title="Tertiary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Feet lower on platform for quads. Don&amp;#x27;t lock out. Full ROM.</div>
           </div>
         </li>
@@ -907,7 +949,7 @@
           <div class="card-body">
             <div class="card-title">Leg Extension</div>
             <div class="card-sets">3 × 12-15 · 60 sec</div>
-            <div class="card-targets">Quads (rectus femoris + vastus)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span></div>
             <div class="card-cue">Pause 1 sec at top, slow eccentric. Isolates the quads.</div>
           </div>
         </li>
@@ -924,7 +966,7 @@
           <div class="card-body">
             <div class="card-title">Seated Leg Curl</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Hamstrings</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-X" title="Stabilizer">Calves</span></div>
             <div class="card-cue">Long stretch at top, full contraction at bottom. Better than lying for hams.</div>
           </div>
         </li>
@@ -941,7 +983,7 @@
           <div class="card-body">
             <div class="card-title">Standing Calf Raise</div>
             <div class="card-sets">4 × 8-10 · 90 sec</div>
-            <div class="card-targets">Calves (gastrocnemius)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Gastrocnemius</span></div>
             <div class="card-cue">Full ROM: deep stretch at bottom, 1 sec hold at top. Heavy.</div>
           </div>
         </li>
@@ -958,7 +1000,7 @@
           <div class="card-body">
             <div class="card-title">Hanging Leg Raise</div>
             <div class="card-sets">3 × 10-12 · 60 sec</div>
-            <div class="card-targets">Abs · Hip flexors</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-S" title="Secondary">Hip flexors</span><span class="chip chip-X" title="Stabilizer">Forearms</span></div>
             <div class="card-cue">Posterior tilt at top. No swing. Bent knee version if straight too hard.</div>
           </div>
         </li>
@@ -970,7 +1012,7 @@
           <div class="card-body">
             <div class="card-title">Ab Wheel Rollout</div>
             <div class="card-sets">3 × 10-15 · 60 sec</div>
-            <div class="card-targets"><b>Abs</b> · <b>Core stabilizers</b></div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Abs</span><span class="chip chip-P" title="Primary">Core stabilizers</span><span class="chip chip-S" title="Secondary">Lats</span><span class="chip chip-X" title="Stabilizer">Shoulders</span></div>
             <div class="card-cue">Posterior tilt, ribs down. Knees or toes. No lower-back sag at full extension.</div>
           </div>
         </li>
@@ -995,7 +1037,7 @@
           <div class="card-body">
             <div class="card-title">Front Squat / Hack Squat</div>
             <div class="card-sets">3 × 8-10 · 2.5 min</div>
-            <div class="card-targets">Quads · Glutes · Core</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-S" title="Secondary">Glutes</span><span class="chip chip-X" title="Stabilizer">Core</span><span class="chip chip-X" title="Stabilizer">Upper back</span></div>
             <div class="card-cue">Upright torso (front squat) or fixed angle (hack). Quad-dominant.</div>
           </div>
         </li>
@@ -1007,7 +1049,7 @@
           <div class="card-body">
             <div class="card-title">Walking Lunge (DB)</div>
             <div class="card-sets">3 × 10/leg · 2 min</div>
-            <div class="card-targets">Quads · Glutes · Hamstrings</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-T" title="Tertiary">Calves</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Long stride for glutes, short stride for quads. Knee just kisses floor.</div>
           </div>
         </li>
@@ -1024,7 +1066,7 @@
           <div class="card-body">
             <div class="card-title">Romanian Deadlift</div>
             <div class="card-sets">4 × 6-8 · 3 min</div>
-            <div class="card-targets">Hamstrings · Glutes · Lower back</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Lower back</span><span class="chip chip-X" title="Stabilizer">Forearms</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Hip-hinge, slight knee bend. Bar drags shins. Stretch hams hard.</div>
           </div>
         </li>
@@ -1036,7 +1078,7 @@
           <div class="card-body">
             <div class="card-title">Lying Leg Curl</div>
             <div class="card-sets">3 × 10-12 · 90 sec</div>
-            <div class="card-targets">Hamstrings</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Hamstrings</span><span class="chip chip-S" title="Secondary">Calves</span></div>
             <div class="card-cue">Point toes for ham bias, dorsiflex for calf assist. Slow eccentric.</div>
           </div>
         </li>
@@ -1053,7 +1095,7 @@
           <div class="card-body">
             <div class="card-title">Barbell Hip Thrust</div>
             <div class="card-sets">3 × 8-10 · 2 min</div>
-            <div class="card-targets">Glutes · Hamstrings</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Hamstrings</span><span class="chip chip-T" title="Tertiary">Quads</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Upper back on bench, chin tucked. Squeeze glutes hard, 2 sec hold top.</div>
           </div>
         </li>
@@ -1070,7 +1112,7 @@
           <div class="card-body">
             <div class="card-title">Seated Calf Raise</div>
             <div class="card-sets">4 × 12-15 · 60 sec</div>
-            <div class="card-targets">Calves (soleus)</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Soleus</span></div>
             <div class="card-cue">Knees bent isolates soleus. Pause at top, full stretch at bottom.</div>
           </div>
         </li>
@@ -1087,7 +1129,7 @@
           <div class="card-body">
             <div class="card-title">Cable Woodchopper</div>
             <div class="card-sets">3 × 12/side · 60 sec</div>
-            <div class="card-targets">Obliques · Core</div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Obliques</span><span class="chip chip-P" title="Primary">Core</span><span class="chip chip-S" title="Secondary">Shoulders</span></div>
             <div class="card-cue">Hips stay square. Anti-rotation focus. Pivot through the obliques.</div>
           </div>
         </li>
@@ -1104,7 +1146,7 @@
           <div class="card-body">
             <div class="card-title">Sled Push (Conditioning)</div>
             <div class="card-sets">3 rounds · ~20 m</div>
-            <div class="card-targets"><b>Quads</b> · <b>Glutes</b> · <b>Calves</b> · <b>Conditioning</b></div>
+            <div class="card-chips"><span class="chip chip-P" title="Primary">Quads</span><span class="chip chip-P" title="Primary">Glutes</span><span class="chip chip-S" title="Secondary">Calves</span><span class="chip chip-X" title="Stabilizer">Core</span></div>
             <div class="card-cue">Low angle, drive through the balls of the feet. Heavy enough to fatigue, not crawl.</div>
           </div>
         </li>
