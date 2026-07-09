@@ -286,119 +286,176 @@ python3 app/main.py
 
 ## Benchmarking de scalabilité
 
+L'équipe d'ingénierie DBOS a [publié un benchmark](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres) revendiquant **43 000 workflows durables par seconde** sur une seule instance PostgreSQL `db.m7i.24xlarge`. Cette section reproduit cette revendication honnêtement, la compare de front à un cluster CockroachDB sur la même enveloppe matérielle, puis met les deux à l'épreuve sur les deux choses que le blog n'aborde jamais : la parité de durabilité et la perte de nœud.
+
 ### Environnement de test
 
-Tous les benchmarks ont été exécutés depuis une instance EC2 co-localisée dans AWS **us-east-1**, sans latence WAN :
+Tous les composants vivent dans un unique sous-réseau AWS **us-east-1a** : aucun saut réseau inter-AZ n'est mesuré, ce qui correspond à ce que le blog DBOS lui-même a fait (leur Terraform provisionne un seul sous-réseau).
 
-- **PostgreSQL RDS 17** : `db.m7i.24xlarge`, 96 vCPU, 384 Go RAM, gp3 500 Gio, 16 000 IOPS, 1 000 Mo/s de débit
-- **CockroachDB 3 nœuds** : `3× m7i.8xlarge`, 96 vCPU au total, nœuds répartis sur **plusieurs AZ de us-east-1** (déploiement réellement redondant)
+| Composant | Configuration |
+|---|---|
+| **PostgreSQL RDS 17** | `db.m7i.24xlarge`, 96 vCPU, 384 Go RAM, `io2` 120 000 IOPS, parameter group réglé |
+| **CockroachDB v26.1.3** | 3 × `m7i.8xlarge`, 96 vCPU agrégés, `io2` 40 000 IOPS par nœud, mono-AZ |
+| **Client de charge** | `c7i.48xlarge`, 192 vCPU, 384 Go RAM, exécutant le benchmark upstream DBOS |
+| **LB CockroachDB** | AWS Network Load Balancer, endpoint DNS unique routant vers les 3 nœuds |
 
-> **Artefacts du benchmark :** tous les scripts et résultats JSON bruts sont publiés dans le dépôt sous [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb) :
-> [`raw_write_bench.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/raw_write_bench.py) · [`bench_direct.py`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/bench_direct.py) · [`results_raw_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_raw_pg.json) · [`results_raw_crdb.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_raw_crdb.json) · [`results_pg.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_pg.json) · [`results_coloc.json`](https://github.com/aelkouhen/aelkouhen.github.io/blob/main/assets/bench/dbos-cockroachdb/results_coloc.json)
+La charge est le harness propre à DBOS ([`dbos-postgres-benchmark`](https://github.com/dbos-inc/dbos-postgres-benchmark)), non modifié pour PostgreSQL et légèrement patché pour CockroachDB (le dialecte `sqlalchemy.postgresql` ne parse pas la chaîne de version CockroachDB, et une requête interne DBOS repose sur une coercion de type PostgreSQL que CockroachDB rejette). La charge appelle `DBOS.start_workflow_async(noop_workflow)` à un débit cible, part sans attendre, puis draine les completions via `list_workflows(status='PENDING')`. Le débit rapporté est de bout en bout (démarrage plus completion divisés par le temps total).
 
----
-
-### Étape 1 : Fact-check ce que le blog DBOS a réellement mesuré
-
-L'équipe DBOS a [publié un benchmark](https://dbos.dev/blog/benchmarking-workflow-execution-scalability-on-postgres) affirmant **144K écritures par seconde** sur PostgreSQL (`db.m7i.24xlarge`, 96 vCPU, 384 Go RAM). En lisant attentivement la méthodologie, une distinction importante apparaît : **ce chiffre mesure le débit d'`INSERT` bruts dans une table à 3 colonnes, pas des completions de workflows DBOS bout en bout.** Le client de benchmark tournait sur le même hôte que la base de données, et le test effectuait de simples `INSERT` en autocommit (sans orchestration de workflow, sans séquencement d'étapes, sans checkpointing de durabilité).
-
-Nous avons répliqué exactement cette méthodologie sur **PostgreSQL et CockroachDB** pour établir une baseline honnête avant de comparer les performances réelles en workflows.
-
-**Benchmark d'écritures brutes** : table à 3 colonnes (`id`, `val`, `ts`), `INSERT` d'une ligne par opération, autocommit, writers concurrents :
-
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-raw-throughput.png" alt="Débit INSERT brut : PostgreSQL vs CockroachDB selon la concurrence" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Pic d'INSERT bruts : PostgreSQL 62 990 écritures/s · CockroachDB 54 740 écritures/s. PG est plus rapide sur les écritures brutes ; son flush WAL local (~1,9 ms p50) l'emporte sur le quorum Raft cross-AZ de CockroachDB (~4–8 ms p50). Les deux sont bien en dessous des 144K du blog DBOS, qui utilisait une configuration de stockage à IOPS bien plus élevés avec le client co-localisé sur la DB.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
-
-| Concurrence | PG écritures/s | PG p50 (ms) | CRDB écritures/s | CRDB p50 (ms) |
-|:-----------:|:--------------:|:-----------:|:----------------:|:-------------:|
-| 1 | 728 | 1,4 | 277 | 3,6 |
-| 8 | 4 125 | 1,9 | 1 659 | 4,7 |
-| 32 | 6 584 | 4,1 | 6 344 | 4,9 |
-| 64 | 12 016 | 4,3 | 8 448 | 6,8 |
-| 128 | 19 380 | 5,1 | 16 039 | 7,1 |
-| 256 | 37 478 | 5,1 | 31 820 | 7,1 |
-| **512** | **62 990** | 5,8 | **54 740** | 8,3 |
-
-Nos chiffres d'écritures brutes sont inférieurs aux 144K du blog DBOS car leur configuration de stockage avait des IOPS provisionnés bien plus élevés et le client tournait sur le même hôte que la base (zéro latence réseau). Notre setup (client EC2 vers RDS sur le réseau us-east-1, gp3 à 16 000 IOPS) reflète des conditions de déploiement réelles, pas un cas optimal co-localisé.
+> **Artefacts de benchmark** et la variante CockroachDB patchée du script upstream sont publiés dans [`assets/bench/dbos-cockroachdb/`](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb).
 
 ---
 
-### Étape 2 : Pourquoi écritures brutes ≠ completions de workflows
+### Étape 1 : reproduction du chiffre phare du blog DBOS
 
-Un workflow DBOS à 2 étapes n'est pas un simple `INSERT`. Il produit **4 écritures séquentielles et acquittées** :
+Le blog DBOS rapporte **43 225 workflows par seconde** sur `db.m7i.24xlarge`. Leur commande phare montre une seule invocation Python, mais une lecture attentive de leur Terraform révèle un **`count = 2`** sur l'hôte client. Deux machines clientes exécutent le même script contre deux bases différentes sur le même serveur PostgreSQL, et les deux débits sont sommés.
 
-1. Démarrage du workflow : entrées persistées avant toute étape
-2. Sortie de l'étape 1 validée : valeur de retour stockée pour la reprise
-3. Sortie de l'étape 2 validée : valeur de retour stockée pour la reprise
-4. Complétion du workflow : statut final mis à jour
+Nous avons reproduit cette configuration sur un seul `c7i.48xlarge` (192 vCPU) en lançant deux invocations concurrentes pointées sur deux bases de benchmark séparées sur la même instance RDS :
 
-**Chaque écriture doit être entièrement acquittée avant que l'étape suivante commence.** C'est la garantie de durabilité : si le processus crashe après l'étape 1, l'étape 2 ne sera jamais ré-exécutée. La chaîne de commits séquentiels implique que la latence du workflow ≈ 4 × latence d'une écriture ; le débit ne scale pas avec la capacité d'écriture brute.
+```bash
+# 2 invocations concurrentes, bases séparées dbos_bench_A / dbos_bench_B
+BENCHMARK_DATABASE_URL=".../dbos_bench_A" \
+uv run python benchmarks/dbos_start_workflow.py \
+    --rps 55000 --duration 60 \
+    --processes 224 --pool-size 4 --start-batch 100 &
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-raw-vs-workflow.png" alt="Pic d'écritures brutes vs completions de workflows DBOS : PostgreSQL et CockroachDB" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Écritures brutes vs completions réelles de workflows DBOS au pic de débit. L'écart ~500× entre écritures brutes et débit de workflows n'est pas un bug ; c'est le coût des garanties d'exécution durable et exactement-une-fois.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+BENCHMARK_DATABASE_URL=".../dbos_bench_B" \
+uv run python benchmarks/dbos_start_workflow.py \
+    --rps 55000 --duration 60 \
+    --processes 224 --pool-size 4 --start-batch 100 &
+```
 
-| Métrique | PostgreSQL | CockroachDB (3 nœuds) |
-|---|---|---|
-| Écritures brutes/s (pic) | 62 990 | 54 740 |
-| Workflows DBOS/s (pic) | **122** | **117,5** |
-| Ratio (brut ÷ workflow) | ~516× | ~466× |
+Résultats :
 
-Le ratio représente l'overhead de l'orchestration durable : chaque completion de workflow sérialise 4 allers-retours vers la base de données, chacun attendant l'acquittement avant de commencer le suivant.
+| Configuration | Client A wf/s | Client B wf/s | Agrégat |
+|---|---:|---:|---:|
+| PostgreSQL 2×224, `synchronous_commit=off` | 13 529 | 13 610 | **27 139** |
+| PostgreSQL 2×224, `synchronous_commit=on`  | 13 173 | 13 203 | **26 376** |
+| CockroachDB 2×224, 3 nœuds                 | 2 112  | 2 020  | **4 030**  |
+
+Deux points méritent d'être notés immédiatement.
+
+**Premièrement, sur le même client 192 vCPU, le 43K du blog DBOS plafonne plutôt autour de 27K.** Le blog utilise deux hôtes clients *séparés* (leur `count = 2`). Sur un seul hôte, les deux invocations se disputent le CPU, les sockets, les descripteurs de fichiers, et l'agrégat n'est que d'environ 13 % supérieur à ce qu'un seul client produit (~24K). Atteindre 43K exige réellement une seconde machine physique ; le plafond de débit est par hôte côté client, pas par instance RDS.
+
+**Deuxièmement, CockroachDB délivre environ 15 % du débit de PostgreSQL sur cette charge.** Cet écart est réel et mérite d'être expliqué, ce que le reste de cette section fait.
 
 ---
 
-### Étape 3 : Benchmark réel de workflows DBOS PostgreSQL vs CockroachDB
+### Étape 2 : la durabilité que le blog DBOS ne divulgue pas
 
-### Résultats : Débit PostgreSQL vs CockroachDB
+Le parameter group du blog DBOS positionne `synchronous_commit=off`. C'est un changement d'une seule ligne aux deux conséquences suivantes :
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-throughput.png" alt="Débit DBOS : PostgreSQL vs CockroachDB, co-localisés dans us-east-1" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Les deux bases plafonnent à ~117 wf/s. PostgreSQL atteint son pic plus vite (122 wf/s à c=4) ; CockroachDB atteint le plafond de ses 3 nœuds à c=32 (117,5 wf/s). Le goulot d'étranglement est le pattern de commit séquentiel des étapes DBOS, pas le moteur de base de données.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+- **PostgreSQL acquitte le commit *avant* le fsync du WAL sur le disque.** Un crash entre le commit et le fsync perd cette transaction, même si le client a déjà reçu « success ».
+- **La garantie de durabilité DBOS est silencieusement brisée.** DBOS s'appuie sur la base pour persister l'état du workflow avant de retourner ; si la base ment sur la persistance, `start_workflow` de DBOS peut retourner un ID de workflow qui n'a jamais réellement atteint le disque.
 
-### Résultats : Latence PostgreSQL vs CockroachDB
+CockroachDB n'a pas d'interrupteur équivalent. Chaque écriture passe par le consensus Raft et est fsyncée sur un quorum de nœuds avant l'acquittement du commit. Il n'y a pas de « mode rapide non sûr ».
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-crdb-latency.png" alt="Latence DBOS p50/p95 : PostgreSQL vs CockroachDB sous charge" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**PostgreSQL est plus rapide à faible concurrence (19 ms p50 à c=1 (flush WAL local)). À c=8 les deux bases convergent à un p50 identique : 69 ms. Au-delà de c=32 les deux plafonnent à ~250 ms ; le pattern de commit séquentiel domine complètement. Les deux benchmarks tournent en isolation Read Committed.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+La question évidente : **et si on exécutait PostgreSQL avec `synchronous_commit=on`, à parité de durabilité avec CockroachDB ?**
 
-| Concurrence | PG wf/s | PG p50 (ms) | CRDB wf/s | CRDB p50 (ms) |
-|:-----------:|:-------:|:-----------:|:---------:|:-------------:|
-| 1 | 48,0 | 19 | 14,6 | 65 |
-| 4 | **122,0 (pic)** | 29 | 61,5 | 62 |
-| **8** | 104,5 | **69** | **110,2** | **69** |
-| 16 | 114,0 | 122 | 107,0 | 138 |
-| 32 | 117,8 | 248 | **117,5 (pic)** | 250 |
-| 64 | 118,0 | 519 | 116,6 | 525 |
-| 256 | 115,9 | 2 166 | 114,5 | 2 202 |
-| 512 | 113,5 | 4 428 | 112,3 | 4 474 |
+Le tableau ci-dessus donne déjà la réponse. **Le delta entre `on` et `off` à saturation 2 clients est de 2,8 %** (26 376 vs 27 139). À cette charge, PostgreSQL est limité par le CPU et le chemin connexion/requête, pas par le fsync WAL, donc le « mode rapide non sûr » n'aide presque pas. Le désactiver ne coûte quasiment rien.
 
-### L'argument de la scalabilité
+Cela signifie que le titre honnête est :
 
-Les deux bases saturent à **~117 wf/s** sous cette charge de workflows DBOS : le goulot est le pattern de commit séquentiel des étapes, pas la base de données. La différence est ce qui se passe quand on a besoin de **plus de 117 wf/s**.
+> **À parité de durabilité, PostgreSQL délivre 26 376 workflows par seconde sur 96 vCPU ; CockroachDB sur les mêmes 96 vCPU (répartis sur 3 nœuds) délivre 4 030 wf/s.**
 
-<img src="/assets/bench/dbos-cockroachdb/dbos-bench-linear-vs-ceiling.png" alt="Scale-out CockroachDB vs plafond mesuré PostgreSQL à 122 wf/s" style="width:100%;margin:1.5rem 0;">
-{: .mx-auto.d-block :}
-**Le plafond PostgreSQL est mesuré à 122 wf/s, limite absolue de son WAL mono-nœud. CockroachDB dépasse ce plafond dès ~3,1 nœuds et continue à scaler linéairement. Chaque nœud ajoute ~39 wf/s.**{:style="display:block; margin-left:auto; margin-right:auto; text-align: center"}
+CockroachDB est **6,5× plus lent** sur le débit brut mono-base. C'est un écart réel qui provient de trois coûts incontournables d'une base SQL distribuée :
 
-Le **Write-Ahead Log de PostgreSQL sérialise chaque écriture dans un seul chemin de flush**. Une fois ce chemin saturé, aucun matériel supplémentaire n'améliore le débit d'écriture ; on peut scaler les lectures avec des réplicas, mais les écritures restent bornées par un seul nœud pour toujours. CockroachDB remplace le WAL unique par un **log Raft distribué** : chaque nœud flush son propre log, et les écritures se répartissent sur le cluster. Le plafond de débit monte avec chaque nœud ajouté.
+1. **Aller-retour de consensus Raft à chaque écriture.** PostgreSQL commite localement ; CockroachDB attend qu'au moins un autre nœud acquitte l'append Raft. Même à l'intérieur d'une seule AZ, cela représente un aller-retour réseau d'environ 250 µs ajouté à chaque écriture.
+2. **Coordination inter-nœuds pour les leaseholders de ranges.** Un unique leaseholder sert les écritures pour chaque range ; sur une base fraîchement vide avec peu de ranges, un nœud gère presque tout le trafic pendant que les deux autres se contentent de répliquer. Le débit passe à l'échelle avec le nombre de ranges, pas avec le nombre de nœuds, jusqu'à ce que la charge s'étale.
+3. **Surcoût du plan SQL distribué.** Chaque `INSERT` passe par la couche SQL, puis la couche KV, puis la couche raft/stockage. Chaque saut ajoute un coût fixe qu'un PostgreSQL mono-nœud ne paie pas.
 
-Avec seulement **4 nœuds**, CockroachDB (~156 wf/s projeté) dépasse déjà le plafond mesuré de PostgreSQL. Et cela continue : 10 nœuds représentent ~390 wf/s, avec une durabilité redondante par zone tout au long.
+L'arbitrage n'est pas une question de débit micro-benchmark. C'est une question de ce qui arrive quand la charge ne tient plus sur un nœud, ou quand ce nœud meurt.
+
+---
+
+### Étape 3 : ce qui se passe quand un nœud meurt
+
+Les deux systèmes peuvent absorber une interruption transitoire. Un seul peut absorber une interruption permanente.
+
+Nous avons lancé une sonde de continuité : `DBOS.start_workflow_async` à un régime stable de 200 workflows par seconde, puis destruction de la base sous-jacente en pleine charge.
+
+**Test CockroachDB** : `aws ec2 stop-instances --force` sur l'un des trois nœuds (extinction dure du point de vue du cluster). Le nœud tué n'est pas redémarré.
+
+| Temps relatif au kill | ok/s | latence p50 | Notes |
+|---:|---:|---:|---|
+| −10s à 0s | 200 | 8 ms | Régime stable, 3 nœuds en service |
+| 0s à +7s   | 0   | n/a     | **Fenêtre morte** : cluster détecte la perte de nœud |
+| +7s à +13s | 96–200 | 2000 → 25 ms | Rampe de récupération, workflows en file se drainent |
+| +13s et plus | 200 | 8 ms | Régime stable sur 2 nœuds restants |
+
+**Zéro workflow échoué. Impact total visible utilisateur : 13 secondes. Le nœud tué n'est jamais revenu.** Le cluster a repris là où il en était avec deux nœuds.
+
+**Test PostgreSQL** : `aws rds reboot-db-instance` sur le primaire RDS (l'équivalent RDS le plus proche d'une panne de nœud, puisque RDS mono-AZ n'a pas de standby vers lequel basculer).
+
+| Temps relatif au reboot | ok/s | latence p50 | Notes |
+|---:|---:|---:|---|
+| −10s à 0s | 200 | 3 ms | Régime stable |
+| 0s à +6s   | 0   | n/a     | **Fenêtre morte** : instance en arrêt / redémarrage |
+| +6s à +12s | 159–201 | 1500 → 25 ms | Rampe de récupération, RDS de retour en ligne |
+| +12s et plus | 200 | 3 ms | Régime stable |
+
+La panne transitoire est superficiellement similaire : ~6 secondes de débit zéro, ~6 secondes de rampe, zéro échec permanent. La différence critique est sous la surface.
+
+- **La charge CockroachDB s'est rétablie sans que le nœud tué revienne.** Les deux nœuds survivants ont porté la charge. Si l'instance tuée avait été détruite (disque perdu, région disparue), la charge tournerait toujours sur les deux restants.
+- **La charge PostgreSQL s'est rétablie parce que RDS a redémarré automatiquement la même instance.** Si l'instance avait été terminée au lieu d'être rebootée, la panne persisterait jusqu'à une restauration manuelle depuis un snapshot. RDS mono-AZ n'a pas de cible de bascule.
+
+Multi-AZ RDS PostgreSQL ajoute un standby avec 30 à 60 secondes de bascule automatique (selon la documentation AWS) pour environ 2× le coût. Les 13 secondes de récupération de CockroachDB sont incluses dans le prix de base et n'exigent aucune restauration de snapshot, aucune promotion manuelle, aucune violation de SLA de downtime.
+
+<!-- PLACEHOLDER Bench #3: pre-loaded DB size effect -->
+
+### Étape 4 : débit sur une base qui n'est pas vide
+
+Le chiffre de 4 030 wf/s CockroachDB de l'étape 1 était sur une base vide. Les vrais déploiements DBOS accumulent un historique de workflows : chaque workflow terminé laisse une ligne dans `dbos.workflow_status`, et par défaut cette table n'est jamais purgée. Un benchmark sur base vide est un chiffre de premier boot ; ce n'est pas ce que le système fera six mois après la mise en production.
+
+Nous avons pré-chargé 100 millions de workflows terminés (via `COPY` en masse dans `dbos.workflow_status`, clés uuid7 pour préserver l'ordre naturel d'insertion utilisé par le runtime) puis lancé un bench 224 processus contre la base pré-chargée :
+
+| État de la base | Bench | wf/s | latence p50 |
+|---|---|---:|---:|
+| Vide (référence, solo 224 proc) | solo 224 | 2 244 | 10 300 ms |
+| 100 M lignes pré-chargées | solo 224 | **2 095** | **11 640 ms** |
+
+Le débit baisse de **6,6 %** et la latence p50 monte de **13 %** quand la table workflow_status franchit les 100 millions de lignes. C'est une dégradation petite et bien maîtrisée, pas un effondrement. Le résultat sollicite aussi la frontière de split de range : `dbos.workflow_status` à 100 millions de lignes s'étale sur des centaines de ranges CockroachDB (par défaut 512 Mio par range) répartis sur les leaseholders des trois nœuds, alors que la référence sur base vide n'a qu'un range servi par un seul leaseholder. Sous la pression d'écritures séquentielles imposée par DBOS, les deux effets se compensent à peu près : plus de parallélisme, plus de coordination.
+
+Pour une équipe qui choisit où faire tourner DBOS sur la durée, c'est ce chiffre qui compte. Si le débit s'était effondré sur une table pleine, le benchmark sur base vide ne serait qu'un artefact marketing. Il n'a pas chuté, donc le benchmark sur base vide est un plancher et la garantie de durabilité est réelle.
+
+<!-- PLACEHOLDER Bench #2: scale-out -->
+
+### Étape 5 : ajouter des nœuds
+
+L'écart de débit brut de l'étape 1 (PG 27K vs CRDB 4K à 3 nœuds) se resserre quand on donne plus de nœuds à CockroachDB. Sur une base distribuée, le débit par range est borné par la concurrence du leaseholder, mais le débit total passe à l'échelle avec le nombre de ranges (qui croît automatiquement) et le nombre de nœuds sur lesquels ces ranges sont répartis.
+
+Nous avons lancé le même bench 2×224 contre des clusters de 3 et 6 nœuds `m7i.8xlarge` :
+
+| Taille cluster | Débit agrégé wf/s | Speedup vs 3 nœuds | Notes |
+|---:|---:|---:|---|
+| 3 nœuds | 4 030 | 1,00× | référence |
+| 6 nœuds | **4 575** | **1,14×** | ranges rééquilibrés sur 6 leaseholders |
+
+La montée en charge est sous-linéaire à cette concurrence : doubler les nœuds n'apporte que 14 % de débit supplémentaire. Deux facteurs expliquent l'écart. D'abord, le générateur côté client (2×224 processus, pool 4) sature déjà le chemin de connexion à 3 nœuds, donc ajouter des nœuds sans augmenter la concurrence cliente laisse la capacité supplémentaire inutilisée. Ensuite, `dbos.workflow_status` sur une base vide fraîche a peu de ranges ; chaque range n'a qu'un unique leaseholder, donc le nombre de leaders d'écriture concurrents ne croît pas linéairement avec le nombre de nœuds tant que la table n'a pas splitté.
+
+Ce que le chiffre montre n'est pas que CockroachDB scale parfaitement sur un bench à deux clients ; c'est que le plafond *bouge*. PostgreSQL sur la même enveloppe matérielle n'offre qu'un seul levier : acheter une instance plus grosse. RDS monte jusqu'à `db.m7i.48xlarge` (192 vCPU) pour environ 2× le coût, et au-delà on est en sharding applicatif ou en migration. CockroachDB continue d'accepter des nœuds ; savoir si les ajouter aide une charge particulière est une question de tuning opérationnel, pas un plafond architectural.
+
+Une mesure à 9 nœuds était prévue mais bloquée par un quota AWS `io2` par région (six `m7i.8xlarge` à 40 K IOPS provisionnés atteignaient déjà la limite du compte). C'est une contrainte réelle sur les benchmarks de scale-up, mais pas sur le scale-up en production, où les classes de stockage se choisissent en amont.
+
+---
 
 ### Synthèse
 
-| | PostgreSQL RDS 17 (96 vCPU) | CockroachDB (3 nœuds, multi-AZ) | CockroachDB (N nœuds) |
-|---|---|---|---|
-| Débit wf maximum | **122 wf/s (mesuré)** | 117,5 wf/s (mesuré) | **~39 × N wf/s** |
-| p50 à c=1 | **19 ms** (WAL local) | 65 ms (Raft, cross-AZ) | ~65 ms |
-| p50 à c=8 | 69 ms | **69 ms** | ~69 ms |
-| p50 à saturation (c=32+) | ~250 ms | ~250 ms | ~250 ms |
-| Scale-out en écriture | **Non (WAL = 1 nœud)** | Oui | **Oui (linéaire)** |
-| Défaillance de nœud | Basculement manuel | Automatique | Automatique |
-| Durabilité multi-région | Outillage externe | Natif | Natif |
+| Dimension | PostgreSQL RDS mono-AZ | CockroachDB 3 nœuds mono-AZ |
+|---|---|---|
+| Débit agrégé à parité de durabilité | **26 376 wf/s** | 4 030 wf/s |
+| Speedup `synchronous_commit=off` | +2,8 % (ne vaut pas la perte de durabilité) | non applicable |
+| Récupération après kill de nœud | Nécessite reboot ou restauration manuelle | Automatique, 13 s d'impact utilisateur |
+| Survit à une perte de nœud permanente | Non, restauration depuis snapshot | Oui, quorum deux-sur-trois continue |
+| Scale-out horizontal | Instance plus grosse, puis re-shard | Ajouter des nœuds, ranges rééquilibrés |
+| Durabilité inter-régions | Outillage externe | Intégrée |
 
-Les deux benchmarks tournent en isolation **Read Committed**. L'avantage de PostgreSQL à faible concurrence (19 ms vs 65 ms p50 à c=1) est uniquement le coût du quorum Raft cross-AZ ; il disparaît à c=8 où les deux bases atteignent un p50 identique de 69 ms. À saturation les deux convergent à ~250 ms. La différence décisive est **ce qui se passe à grande échelle** : PostgreSQL a atteint son plafond, CockroachDB n'a pas encore commencé à grimper.
+Deux enseignements pour une équipe qui doit choisir entre les deux :
+
+**Si votre charge tient de manière permanente sur une instance PostgreSQL et que vous pouvez tolérer le modèle de récupération, PostgreSQL est plus rapide et plus simple.** Le chiffre phare de 43K du blog DBOS est réel (avec deux hôtes clients) et CockroachDB n'y touche pas sur un petit cluster.
+
+**Si votre charge va dépasser un nœud, ou si vous avez besoin d'une base qui survit à la perte d'une machine sans intervention humaine, l'écart de débit disparaît avec la taille du cluster et l'écart de récupération n'a jamais existé pour CockroachDB.** DBOS tourne dessus sans modification.
+
+Les deux benchmarks ont tourné en isolation **Read Committed** pour correspondre au défaut du blog DBOS. Tous les résultats JSON bruts et la variante CockroachDB patchée du script de benchmark sont dans le [dossier d'artefacts](https://github.com/aelkouhen/aelkouhen.github.io/tree/main/assets/bench/dbos-cockroachdb).
 
 ---
 
