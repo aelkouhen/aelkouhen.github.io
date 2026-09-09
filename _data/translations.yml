@@ -25,6 +25,7 @@ en:
     "Identity and Access Management with CockroachDB": "IAM with CockroachDB"
     "CockroachDB & AI": "CockroachDB & AI"
     "CockroachDB - Integration Guides": "CRDB Integrations"
+    "Postman Persona Playbook": "Postman Persona Playbook"
 fr:
   ui:
     keep_reading: "Continuer à lire"
@@ -53,3 +54,4 @@ fr:
     "Identity and Access Management with CockroachDB": "IAM avec CockroachDB"
     "CockroachDB & AI": "CockroachDB & IA"
     "CockroachDB - Integration Guides": "Intégrations CRDB"
+    "Postman Persona Playbook": "Playbook personas Postman"

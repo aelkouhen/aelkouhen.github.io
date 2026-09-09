@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Postman Buyer Persona Playbook — Solution Architect Edition</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #f0f2f5;
+    --border: #dfe3e8;
+    --border-strong: #c7ccd4;
+    --text: #16191d;
+    --text-2: #4d5560;
+    --text-3: #767f8c;
+    --accent: #ff6c37;
+    --accent-text: #b8420f;
+    --accent-soft: #fff1ea;
+    --speed: #1d6fd0;
+    --speed-soft: #e8f1fc;
+    --risk: #7b41c9;
+    --risk-soft: #f2eafc;
+    --outcome: #0f7a52;
+    --outcome-soft: #e6f5ef;
+    --cost: #96601a;
+    --cost-soft: #fbf1e2;
+    --shadow: 0 1px 2px rgba(16,20,26,.06), 0 4px 16px rgba(16,20,26,.05);
+    --radius: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101216;
+      --surface: #181b21;
+      --surface-2: #1f232a;
+      --border: #2b3038;
+      --border-strong: #3b424c;
+      --text: #eef0f3;
+      --text-2: #b3bac4;
+      --text-3: #848d99;
+      --accent: #ff6c37;
+      --accent-text: #ff9166;
+      --accent-soft: #2a1a12;
+      --speed: #6ba9ee;
+      --speed-soft: #16222f;
+      --risk: #b48ce8;
+      --risk-soft: #211a2e;
+      --outcome: #4fc194;
+      --outcome-soft: #12241d;
+      --cost: #dda44f;
+      --cost-soft: #29200f;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { margin: 0; font-weight: 620; letter-spacing: -0.011em; }
+
+  /* ---------- Layout ---------- */
+  .app { display: grid; grid-template-columns: 268px minmax(0, 1fr); min-height: 100vh; }
+  @media (max-width: 880px) { .app { grid-template-columns: 1fr; } }
+
+  /* ---------- Sidebar ---------- */
+  .side {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 22px 16px 32px;
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  @media (max-width: 880px) { .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); } }
+
+  .brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 18px; }
+  .brand-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); flex: none; }
+  .brand-name { font-size: 14px; font-weight: 660; letter-spacing: -0.01em; }
+  .brand-sub { font-size: 11.5px; color: var(--text-3); margin-top: 1px; }
+
+  .nav-label { font-size: 10.5px; font-weight: 680; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); padding: 12px 8px 7px; }
+
+  .nav-item {
+    display: grid; grid-template-columns: 40px minmax(0,1fr); gap: 10px; align-items: center;
+    width: 100%; text-align: left; cursor: pointer;
+    background: transparent; border: 1px solid transparent; border-radius: 10px;
+    padding: 8px; margin-bottom: 2px; color: inherit; font: inherit;
+  }
+  .nav-item:hover { background: var(--surface-2); }
+  .nav-item[aria-current="true"] { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 32%, transparent); }
+  .nav-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .tag {
+    width: 40px; height: 30px; border-radius: 7px; display: grid; place-items: center;
+    font-size: 10px; font-weight: 720; letter-spacing: .03em;
+    background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border);
+  }
+  .nav-item[aria-current="true"] .tag { background: var(--accent); color: #fff; border-color: transparent; }
+  .nav-title { font-size: 13.5px; font-weight: 570; line-height: 1.25; }
+  .nav-meta { font-size: 11px; color: var(--text-3); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
+  .mini-bar { flex: 1; height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; max-width: 62px; }
+  .mini-bar > i { display: block; height: 100%; background: var(--accent); width: 0%; transition: width .2s ease; }
+
+  .side-foot { margin-top: 18px; padding: 12px 8px 0; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-3); }
+  .kbd { font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--surface-2); border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; padding: 3px 5px; color: var(--text-2); }
+
+  /* ---------- Main ---------- */
+  .main { padding: 30px clamp(18px, 4vw, 44px) 80px; max-width: 1080px; }
+
+  .head { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+  .head h1 { font-size: 27px; }
+  .role-line { color: var(--text-2); font-size: 14.5px; margin-top: 7px; max-width: 62ch; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0 26px; }
+  .badge {
+    font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+    border: 1px solid var(--border-strong); color: var(--text-2); background: var(--surface);
+  }
+  .badge.speed   { color: var(--speed);   background: var(--speed-soft);   border-color: color-mix(in srgb, var(--speed) 30%, transparent); }
+  .badge.risk    { color: var(--risk);    background: var(--risk-soft);    border-color: color-mix(in srgb, var(--risk) 30%, transparent); }
+  .badge.outcome,
+  .badge.revenue { color: var(--outcome); background: var(--outcome-soft); border-color: color-mix(in srgb, var(--outcome) 30%, transparent); }
+  .badge.cost    { color: var(--cost);    background: var(--cost-soft);    border-color: color-mix(in srgb, var(--cost) 34%, transparent); }
+
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    font: inherit; font-size: 12.5px; font-weight: 560; cursor: pointer;
+    background: var(--surface); color: var(--text-2);
+    border: 1px solid var(--border-strong); border-radius: 8px; padding: 7px 12px;
+  }
+  .btn:hover { background: var(--surface-2); color: var(--text); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.06); background: var(--accent); color: #fff; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 17px 19px; box-shadow: var(--shadow);
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-size: 10.5px; font-weight: 690; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 11px; display: flex; align-items: center; gap: 8px;
+  }
+  .card h3::before { content: ""; width: 3px; height: 12px; border-radius: 2px; background: var(--accent); flex: none; }
+
+  ul.plain { margin: 0; padding: 0; list-style: none; }
+  ul.plain li { position: relative; padding: 4px 0 4px 17px; color: var(--text-2); font-size: 14px; }
+  ul.plain li::before { content: ""; position: absolute; left: 3px; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: var(--border-strong); }
+  ul.plain li strong { color: var(--text); font-weight: 600; }
+
+  .card p.body { margin: 0; font-size: 14px; color: var(--text-2); }
+  .chip.key {
+    background: var(--accent-soft); color: var(--accent-text); font-weight: 620;
+    border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+  }
+  .sub {
+    font-size: 10.5px; font-weight: 660; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--text-3); margin: 13px 0 7px;
+  }
+  .card.goal h3::before { background: var(--outcome); }
+  .card.impact h3::before { background: var(--speed); }
+  .card.drv-speed   h3::before { background: var(--speed); }
+  .card.drv-risk    h3::before { background: var(--risk); }
+  .card.drv-revenue h3::before { background: var(--outcome); }
+  .card.drv-cost    h3::before { background: var(--cost); }
+  .who { font-size: 12px; font-weight: 620; color: var(--text-2); margin: -3px 0 9px; }
+
+  .card.listen h3::before { background: var(--speed); }
+  .lf { display: grid; gap: 7px; }
+  .lf-q {
+    display: block; font-size: 14px; font-style: italic; color: var(--text-2);
+    background: var(--surface-2); border-left: 3px solid var(--speed);
+    border-radius: 0 8px 8px 0; padding: 8px 12px;
+  }
+  .lf-note { font-size: 12px; color: var(--text-3); margin-top: 10px; }
+
+  .card.value {
+    background: var(--accent-soft);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  .card.value p.body { color: var(--text); font-size: 15px; }
+
+  .metric-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    font-size: 12.5px; padding: 5px 10px; border-radius: 7px;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2);
+  }
+
+  /* ---------- Checklist ---------- */
+  .checklist-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin: 30px 0 12px; }
+  .checklist-head h2 { font-size: 18px; }
+  .progress { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--text-3); }
+  .bar { width: 128px; height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0%; background: var(--accent); transition: width .2s ease; }
+
+  .group { margin-bottom: 12px; }
+  .group-title {
+    font-size: 12px; font-weight: 660; color: var(--text); margin: 0 0 8px;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .group-title span { font-size: 11px; font-weight: 500; color: var(--text-3); }
+
+  .q {
+    display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 11px; align-items: start;
+    padding: 8px 10px; border-radius: 8px; cursor: pointer; border: 1px solid transparent;
+  }
+  .q:hover { background: var(--surface-2); }
+  .q input { appearance: none; -webkit-appearance: none; margin: 2px 0 0; width: 17px; height: 17px; flex: none;
+    border: 1.5px solid var(--border-strong); border-radius: 5px; background: var(--surface); cursor: pointer; position: relative; }
+  .q input:checked { background: var(--accent); border-color: var(--accent); }
+  .q input:checked::after {
+    content: ""; position: absolute; left: 5px; top: 1.5px; width: 4px; height: 9px;
+    border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(43deg);
+  }
+  .q input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .q span { font-size: 14px; color: var(--text-2); line-height: 1.45; }
+  .q input:checked + span { color: var(--text-3); text-decoration: line-through; text-decoration-color: var(--border-strong); }
+
+  /* ---------- Objections ---------- */
+  .obj { padding: 11px 0; border-top: 1px dashed var(--border); }
+  .obj:first-of-type { border-top: 0; padding-top: 2px; }
+  .obj b { display: block; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .obj b::before { content: "“"; color: var(--text-3); }
+  .obj b::after { content: "”"; color: var(--text-3); }
+  .obj p { margin: 0; font-size: 13.5px; color: var(--text-2); }
+  .obj p::before { content: "→ "; color: var(--accent-text); font-weight: 700; }
+
+  .warn { border-color: color-mix(in srgb, var(--risk) 26%, var(--border)); }
+  .warn h3::before { background: var(--risk); }
+  .exit h3::before { background: var(--outcome); }
+
+  /* ---------- Notes ---------- */
+  textarea {
+    width: 100%; min-height: 130px; resize: vertical; font: inherit; font-size: 14px;
+    color: var(--text); background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 9px; padding: 11px 13px;
+  }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  .toast {
+    position: fixed; bottom: 22px; left: 50%; transform: translate(-50%, 14px);
+    background: var(--text); color: var(--bg); font-size: 13px; font-weight: 550;
+    padding: 9px 16px; border-radius: 9px; opacity: 0; pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease; z-index: 50;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* ---------- Meeting setup ---------- */
+  .att { display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); gap: 12px; }
+  .att-card {
+    display: grid; gap: 7px; text-align: left; font: inherit; color: inherit; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 15px 16px; box-shadow: var(--shadow);
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .att-card:hover { border-color: var(--border-strong); }
+  .att-card[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .att-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .att-top { display: flex; align-items: center; gap: 9px; }
+  .att-name { font-size: 15px; font-weight: 620; letter-spacing: -0.01em; }
+  .att-role { font-size: 12.5px; color: var(--text-3); line-height: 1.42; }
+  .att-check {
+    margin-left: auto; flex: none; width: 20px; height: 20px; border-radius: 6px;
+    border: 1.5px solid var(--border-strong); background: var(--surface); position: relative;
+  }
+  .att-card[aria-pressed="true"] .att-check { background: var(--accent); border-color: var(--accent); }
+  .att-card[aria-pressed="true"] .att-check::after {
+    content: ""; position: absolute; left: 6px; top: 2.5px; width: 5px; height: 10px;
+    border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(43deg);
+  }
+
+  .insight { display: block; padding: 9px 0; border-top: 1px dashed var(--border); font-size: 13.5px; color: var(--text-2); }
+  .insight:first-of-type { border-top: 0; padding-top: 1px; }
+  .insight b { color: var(--text); font-weight: 620; }
+
+  .qtag {
+    display: inline-block; font-size: 9.5px; font-weight: 720; letter-spacing: .05em;
+    padding: 2px 6px; border-radius: 5px; margin-left: 6px; vertical-align: 1px;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-3);
+  }
+  .q input:checked + span .qtag { opacity: .5; }
+
+  /* ---------- Decision tree ---------- */
+  .node { padding: 14px 0; border-top: 1px dashed var(--border); }
+  .node:first-of-type { border-top: 0; padding-top: 2px; }
+  .node-q { font-size: 14px; font-weight: 600; color: var(--text); }
+  .opts { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+  .opt {
+    font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer;
+    padding: 6px 11px; border-radius: 8px;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2);
+  }
+  .opt:hover { border-color: var(--border-strong); color: var(--text); }
+  .opt[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .read {
+    margin-top: 10px; padding: 11px 13px; border-radius: 9px; font-size: 13.5px; color: var(--text-2);
+    background: var(--surface-2); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  }
+  .read b { display: block; color: var(--text); font-weight: 620; margin-bottom: 3px; }
+  .read .nx { display: block; margin-top: 7px; color: var(--accent-text); font-weight: 570; }
+  .read .nx::before { content: "Next: "; font-weight: 720; }
+
+  .posture { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 34%, transparent); }
+  .posture h3::before { background: var(--accent); }
+  .p-label { font-size: 20px; font-weight: 660; letter-spacing: -0.014em; color: var(--text); }
+  .p-detail { font-size: 13.5px; color: var(--text-2); margin-top: 6px; }
+  .p-open { font-size: 12.5px; color: var(--text-3); margin-top: 10px; }
+
+  .locked, .empty { text-align: center; padding: 32px 22px; color: var(--text-3); font-size: 13.5px; }
+  .locked b, .empty b { display: block; color: var(--text); font-size: 15px; font-weight: 620; margin-bottom: 7px; }
+  .locked .btn, .empty .btn { margin-top: 14px; }
+
+  .nav-item.dim { opacity: .4; }
+  .nav-item.att-on .tag { box-shadow: inset 0 0 0 1.5px var(--accent); }
+
+  /* ---------- Flashcards ---------- */
+  .fc-stage { display: grid; place-items: center; padding: 8px 0 4px; }
+  .fc {
+    display: block;
+    width: 100%; max-width: 620px; height: 320px; cursor: pointer;
+    background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit;
+    perspective: 1400px;
+  }
+  .fc:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: var(--radius); }
+  .fc-inner {
+    display: block;
+    position: relative; width: 100%; height: 100%;
+    transition: transform .5s cubic-bezier(.22,.75,.3,1); transform-style: preserve-3d;
+  }
+  .fc[data-flipped="true"] .fc-inner { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; text-align: center; padding: 30px 34px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+  }
+  .fc-face.back { transform: rotateY(180deg); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+  .fc-tag {
+    font-size: 10px; font-weight: 720; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .fc-face h2 { font-size: 25px; letter-spacing: -0.015em; }
+  .fc-prompt { font-size: 13.5px; color: var(--text-3); }
+  .fc-metrics { display: flex; flex-direction: column; gap: 9px; width: 100%; max-width: 400px; }
+  .fc-metric {
+    font-size: 16px; font-weight: 600; color: var(--accent-text);
+    background: var(--surface); border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+    border-radius: 9px; padding: 11px 14px;
+  }
+  .fc-controls { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .fc-count { font-size: 12.5px; color: var(--text-3); min-width: 62px; text-align: center; }
+  .fc-hint { text-align: center; font-size: 12px; color: var(--text-3); margin-top: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fc-inner { transition: none; }
+  }
+
+  @media print {
+    .side, .actions, .toast { display: none !important; }
+    .app { display: block; }
+    .main { max-width: none; padding: 0; }
+    .card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="side">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <div>
+        <div class="brand-name">Persona Playbook</div>
+        <div class="brand-sub">Solution Architect edition</div>
+      </div>
+    </div>
+    <div class="nav-label">This meeting</div>
+    <div id="nav-meeting"></div>
+    <div class="nav-label">Before any meeting</div>
+    <div id="nav-common"></div>
+    <div class="nav-label">Buyer personas</div>
+    <div id="nav-personas"></div>
+    <div class="nav-label">Recall</div>
+    <div id="nav-drill"></div>
+    <div class="side-foot">
+      Press <span class="kbd">1</span>–<span class="kbd">9</span> and <span class="kbd">0</span> to switch tabs. Attendees, answers, and notes save to this browser.
+    </div>
+  </nav>
+
+  <main class="main" id="main"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   DATA
+   ============================================================ */
+
+const COMMON = {
+  id: "common",
+  tag: "ALL",
+  name: "Every Meeting",
+  driver: [],
+  role: "The two-beat structure behind every persona scenario: ask how they do it today, then position against the gap that surfaces. Never open with the product.",
+  owns: null,
+  cares: [
+    "Same product, different framing per seat at the table. Match the frame to the category that person is measured on.",
+    "<strong>Personas sit in more than one category.</strong> CIO/CISO is risk <em>and</em> cost. Platform Engineering is risk, cost, and sometimes revenue.",
+    "<strong>Speed and risk pull against each other.</strong> When both are in the room, name the tension before they do.",
+    "The category tells you decision <em>speed</em> and risk appetite, not just vocabulary — a cost-driven buyer moves on the budget cycle, a speed-driven one on the sprint."
+  ],
+  metrics: null,
+  discovery: [
+    { title: "Prep", note: "before you walk in", items: [
+      "Confirmed who is in the room, their persona, and who the real decision-maker is",
+      "Read the account history — prior POCs, open opportunities, existing footprint",
+      "Checked whether they already use Postman anywhere in the org (and how)",
+      "Identified which of the three drivers (speed / risk / outcomes) this person is measured on",
+      "Prepared one current-state question I genuinely do not know the answer to",
+      "Prepared a demo path that runs against something recognisable to them, not a generic sample"
+    ]},
+    { title: "Open", note: "first 10 minutes", items: [
+      "Stated the purpose and the time box, and asked what they want out of the meeting",
+      "Asked the current-state question first — resisted opening with product",
+      "Established what 'good' looks like in their words before positioning anything",
+      "Confirmed the technical and commercial constraints early (security review, budget cycle, timeline)"
+    ]},
+    { title: "Close", note: "last 10 minutes", items: [
+      "Played back what I heard, in their metrics, and got agreement",
+      "Named the specific gap Postman addresses, tied to one thing they said",
+      "Agreed a concrete next step with an owner and a date",
+      "Identified who else needs to be in the next conversation",
+      "Asked what could stop this from happening"
+    ]}
+  ],
+  positioning: [
+    "Lead with the current state, not the capability. The gap is the pitch.",
+    "Use their metric, not ours. 'Fewer breaking changes' beats 'governance features'.",
+    "One persona's win is another's objection — check for conflict before you promise anything.",
+    "Multi-threading is the job: technical validation (Platform/Product/Quality) plus a funding path (API PO / CIO / CISO)."
+  ],
+  demo: [
+    "Show against their spec, their repo, or their API — a generic sample halves the impact.",
+    "One flow, done well, beats a feature tour.",
+    "Have the admin/security view ready even in a technical meeting; it comes up unprompted."
+  ],
+  language: [
+    "Say <strong>Agent Mode</strong>, not Postbot — Postbot is being deprecated.",
+    "Say <strong>Spec Hub</strong>, not API Builder — API Builder is deprecated.",
+    "Newman does not support v12 collections. Use the <strong>Postman CLI</strong>.",
+    "Lead with the pain and the metric. The capability is the last thing you name, not the first."
+  ],
+  outcomes: null,
+  objections: [
+    { o: "Send me a deck and I'll review it.", r: "Offer a 30-minute working session against their own API instead — the artifact is the follow-up, not the ask." },
+    { o: "We're happy with what we have.", r: "Fine — ask what it costs to maintain and what it does not cover. The gap, not the comparison, is the opening." },
+    { o: "Come back next quarter.", r: "Find the event that changes the priority (audit, incident, launch, re-org) and anchor the follow-up to it." }
+  ],
+  redFlags: [
+    "No one in the room can describe the current process end-to-end — you are talking to the wrong people.",
+    "Every answer is aspirational future-state; nothing is measured today.",
+    "You have a champion but no path to budget.",
+    "Enthusiasm with no named next step or date."
+  ],
+  exit: [
+    "A named next step with an owner and a date",
+    "One number you did not have before the meeting",
+    "The name of the person who has to say yes",
+    "Agreement on what would count as success"
+  ]
+};
+
+const PERSONAS = [
+  {
+    id: "platform",
+    tag: "PLAT",
+    name: "Platform Engineering",
+    driver: ["risk", "cost", "revenue"],
+    value: "Focus on how Postman standardizes governance, reduces chaos, and increases API visibility — directly addressing their need for consistency and scale.",
+    role: "Technical gatekeeper. Owns the internal API platform, standards, and governance — they can unblock or stall the entire evaluation. Central to lifecycle management and usually the deepest technical review you will face.",
+    goal: "Build and maintain a reliable internal API platform that supports developers across the organization — defining standards, enabling consistent workflows, and providing tools that make it easier for teams to design, test, and manage APIs.",
+    impact: "Improves developer productivity, increases API consistency, and reduces operational risk. By standardizing how APIs are built and managed, they let the organization scale development while maintaining quality and reliability.",
+    priorities: [
+      "Standardizing API design and governance",
+      "Increasing API discoverability and reuse",
+      "Reducing operational risk and chaos"
+    ],
+    pains: [
+      "Managing API sprawl and inconsistency",
+      "Manual enablement and change management overhead",
+      "Lack of visibility across services"
+    ],
+    owns: [
+      "Internal API platform and the paved road for other teams",
+      "API standards, style guides, and design review",
+      "Governance and API lifecycle management",
+      "Developer experience for internal consumers"
+    ],
+    cares: [
+      "Consistency and scalability across many teams",
+      "Reducing operational risk from breaking changes",
+      "Self-service — not becoming the bottleneck everyone queues behind",
+      "Standards that are actually adopted, not just published"
+    ],
+    metricsKey: ["% of cataloged APIs", "Breaking-change rate", "Internal API reuse across business units"],
+    listenFor: [
+      "We think we have about… [n] APIs.",
+      "It's in Confluence somewhere.",
+      "We find out during incidents.",
+      "It depends on who's online.",
+      "Platform reviews PRs manually.",
+      "We try to enforce standards.",
+      "Specs get outdated. Docs lag behind."
+    ],
+    capabilities: ["API Catalog / Private API Network", "Service Graph", "Spec Hub", "API Governance linting", "API Governance Report Dashboard", "RBAC", "Audit Logs"],
+    metrics: ["Standard/spec conformance", "Time for a team to ship a compliant API", "Audit findings", "Design-review hours per week", "Platform adoption across teams"],
+    discovery: [
+      { title: "Current state", note: "ask first", items: [
+        "How do you define and publish API standards today — style guide, RFC, wiki?",
+        "Where is the source of truth for an API spec, and is it in sync with what's deployed?",
+        "Walk me through the path when a team wants to ship a new API.",
+        "How much of governance is manual review versus automated enforcement?",
+        "How many APIs are in the estate, and who owns each one?"
+      ]},
+      { title: "Pain and impact", note: "quantify it", items: [
+        "What breaks most often when a team does not follow the standard?",
+        "How often does a breaking change reach a consumer — and what did the last one cost?",
+        "How many hours a week does your team spend in design reviews?",
+        "Who complains loudest today: consumers, auditors, or your own developers?",
+        "Which part of this does not scale as you add teams?"
+      ]},
+      { title: "Technical fit", note: "SA lens", items: [
+        "What runs in CI today for API validation — linting, contract tests, spec diffing?",
+        "Which spec formats and protocols matter: OpenAPI, AsyncAPI, gRPC, GraphQL?",
+        "Where should this sit relative to source control and the gateway?",
+        "What is your SSO/SCIM setup, and what RBAC granularity do you need?",
+        "Any data residency, network isolation, or self-hosted requirements?",
+        "What would integration with your existing catalog or service registry need to look like?"
+      ]},
+      { title: "Decision and process", note: "map the path", items: [
+        "Who else has to say yes — security, procurement, an architecture board?",
+        "What would this replace, and what would it sit alongside?",
+        "How do you roll out and enable a new platform tool internally?",
+        "What is your track record adopting tools like this — what worked, what did not?"
+      ]},
+      { title: "Success criteria", note: "get the number", items: [
+        "If this works, what is measurably different in 90 days?",
+        "What would make you tell another team to adopt it?",
+        "What is the smallest scope where you would call it proven?"
+      ]}
+    ],
+    positioning: [
+      "Standardize API design reviews and governance across teams — shift from manual review to enforced-by-default.",
+      "Make the paved road the easy road: reusable specs, collections, and standards developers actually adopt.",
+      "Central visibility into every API in the org, who owns it, and who consumes it.",
+      "Simplify internal enablement and support compliance without adding a review queue."
+    ],
+    demo: [
+      "Spec linting against their own style guide, failing in a pull request",
+      "API inventory with ownership and consumer relationships",
+      "Audit trail on a design change — who changed what, when, and who approved",
+      "Admin surface: SSO, SCIM, RBAC scoping to their team structure"
+    ],
+    outcomes: ["Fewer breaking changes", "Increased API reuse", "Better cross-team visibility", "Stronger audit trails", "Faster delivery of compliant APIs", "Less manual review load"],
+    objections: [
+      { o: "We built this internally already.", r: "Ask what it costs to maintain and what it does not cover — lifecycle, testing, the consumer side. Position as removing maintenance burden, not replacing their philosophy." },
+      { o: "Developers will not adopt another tool.", r: "Meet developers where they already work — CI, source control, IDE. Offer adoption rate on the pilot team as the proof point." },
+      { o: "Governance tooling slows teams down.", r: "Enforcement in CI is faster than a review board. Contrast time-to-merge under both models." },
+      { o: "We need to run security review first.", r: "Bring SSO/SCIM, RBAC, audit logging, data-handling, and deployment options to the meeting — do not schedule a second call to answer them." }
+    ],
+    redFlags: [
+      "No named owner for API standards",
+      "Governance is aspirational — no budget, no mandate",
+      "\"We'll revisit after the platform re-org\"",
+      "They want a gateway replacement — wrong fit, say so early",
+      "Standards exist on paper but nobody measures conformance"
+    ],
+    exit: [
+      "Agreed pilot scope: 1–2 teams, a specific set of APIs",
+      "One named success metric with a baseline",
+      "Security review scheduled with a date",
+      "Introduction to the CI pipeline owner"
+    ]
+  },
+
+  {
+    id: "product",
+    tag: "PROD",
+    name: "Product Engineering",
+    driver: ["speed"],
+    value: "Highlight how Postman accelerates release cycles, enables parallel work, and helps catch issues early — supporting their drive for speed and reliability.",
+    role: "Daily users and the source of your champion. Full-stack squads taking ideas from concept to release — designing, developing, testing, and maintaining customer-facing products and APIs alongside product managers, designers, and other stakeholders. Adoption lives or dies here, but they often do not control budget.",
+    goal: "Design, build, and deliver customer-facing products and APIs that align with business goals and directly impact revenue and customer satisfaction.",
+    impact: "Enhances the customer experience, ensures rapid delivery of high-quality products, and provides a competitive edge in the market — driving business growth.",
+    priorities: [
+      "Accelerating time-to-market for new features",
+      "Ensuring product reliability and quality",
+      "Enabling efficient cross-team collaboration"
+    ],
+    pains: [
+      "Delays from waiting on other teams",
+      "Difficulty catching breaking changes early",
+      "Complexity managing multiple environments"
+    ],
+    owns: [
+      "Customer-facing products and their APIs",
+      "Feature delivery and release cadence",
+      "Day-to-day reliability of what they ship"
+    ],
+    cares: [
+      "Shipping fast and not being blocked by other teams",
+      "Fewer production surprises",
+      "Less environment and setup toil",
+      "Collaboration across dev, QA, and stakeholders"
+    ],
+    metricsKey: ["Time-to-market", "Pre-production defect rate", "Developer productivity"],
+    listenFor: [
+      "Releases feel probabilistic.",
+      "We roll forward or roll back.",
+      "We rely on logs.",
+      "We have Datadog but it's high-level.",
+      "Hotfixes happen.",
+      "It takes time to recreate the issue."
+    ],
+    capabilities: ["Collection Runner in CI/CD", "Mock Servers", "Collections as single source of truth", "Native Git workflow", "Agent Mode (test generation)", "Monitors", "REPRO mode"],
+    metrics: ["Release frequency and lead time", "MTTR on API failures", "PR cycle time", "Time from spec to first working call", "Sprint time lost to setup toil"],
+    discovery: [
+      { title: "Current state", note: "ask first", items: [
+        "Walk me through how a new endpoint goes from design to production.",
+        "How do frontend, backend, and QA work in parallel today — or do they wait on each other?",
+        "What do you use to mock or stub an API before it exists?",
+        "Where do specs live relative to the code?"
+      ]},
+      { title: "Pain and impact", note: "quantify it", items: [
+        "How do you catch breaking changes before release today?",
+        "When an API fails in production, what is the first thing you look at?",
+        "What is the most recent incident a better test would have caught?",
+        "How much time per sprint goes to environment and setup toil?",
+        "What is the slowest step in your release path right now?"
+      ]},
+      { title: "Technical fit", note: "SA lens", items: [
+        "What is your CI system, and where would API tests run?",
+        "Monorepo or many repos — how would this map?",
+        "Which protocols beyond REST: GraphQL, gRPC, WebSocket, events?",
+        "How do you manage environments and secrets for testing?",
+        "What does your local development loop look like today?"
+      ]},
+      { title: "Decision and process", note: "map the path", items: [
+        "Who decides tooling for your squad — you, platform, or a central body?",
+        "What overlapping tools are you already paying for?",
+        "If this works for your squad, how does it spread to the others?"
+      ]},
+      { title: "Success criteria", note: "get the number", items: [
+        "What would you want to be true after one sprint using this?",
+        "What metric does your leadership ask you about every month?",
+        "What is the one thing that, if it got faster, would matter most?"
+      ]}
+    ],
+    positioning: [
+      "Enable parallel work across developers, QA, and stakeholders — stop teams waiting on each other.",
+      "Catch issues earlier in the development process, not in production.",
+      "Faster triage when API failures do happen.",
+      "Speed up release cycles and improve collaboration across the API lifecycle."
+    ],
+    demo: [
+      "Mock server generated from a spec so the frontend starts before the backend exists",
+      "A contract test failing on a breaking change inside a pull request",
+      "Triage flow on a failing endpoint — from alert to root cause",
+      "Environment switching without editing config by hand"
+    ],
+    outcomes: ["Faster time-to-market", "Fewer defects found in production", "Shorter lead time", "Faster MTTR", "Less waiting between roles"],
+    objections: [
+      { o: "We use curl and some scripts, it's fine.", r: "Fine for one developer, not for a team. Ask what happens when someone new joins, or when the script's author is on leave." },
+      { o: "Another tool means another context switch.", r: "Show it inside their existing flow — CI, source control, IDE. If it needs a separate ritual, you have not found the wedge yet." },
+      { o: "We have no time to adopt anything this quarter.", r: "Take the smallest possible wedge: one flaky endpoint, one flow, one sprint. Do not ask for a migration." },
+      { o: "Platform decides our tooling.", r: "Good — that is your next thread. Get the introduction and keep this squad as the reference." }
+    ],
+    redFlags: [
+      "Interest is individual, not shared — no team pain",
+      "Squad has zero autonomy over tooling and no path to those who do",
+      "Already committed to a competing standard with executive backing",
+      "Cannot name a recent incident or bottleneck — the pain is not real yet"
+    ],
+    exit: [
+      "One squad committed to a two-week trial on a real service",
+      "A working demo against their API, not a sample",
+      "A named metric they will report back on",
+      "Introduction to whoever controls tooling budget"
+    ]
+  },
+
+  {
+    id: "quality",
+    tag: "QCoE",
+    name: "Quality Center of Excellence",
+    driver: ["risk"],
+    value: "Emphasize Postman's ability to unify testing, automate evidence collection, and reduce risk — key for buyers focused on compliance and quality.",
+    role: "Standards-setter across teams for testing, compliance, and release management. Rather than doing the testing themselves, they set the framework, tools, and best practices that let teams build quality into their own workflows. Strong influencer on tool selection and often holds the testing budget — but check whether their standards are mandates or recommendations.",
+    goal: "Uphold the highest standards of reliability, compliance, and performance for all APIs and services through centralized governance, shared tools, and best practices.",
+    impact: "Reduces risk, builds customer trust, and ensures smooth and reliable product launches — safeguarding the organization's reputation and operational success.",
+    priorities: [
+      "Ensuring compliance and audit readiness",
+      "Maintaining high test coverage and reliability",
+      "Standardizing quality practices across teams"
+    ],
+    pains: [
+      "Fragmented testing frameworks",
+      "Difficulty measuring quality at scale",
+      "Challenges with change management and versioning"
+    ],
+    owns: [
+      "Testing strategy and standards across teams",
+      "Compliance evidence and audit readiness",
+      "Release gates and quality criteria"
+    ],
+    cares: [
+      "Coverage they can trust and defend",
+      "Repeatable, consistent practice across teams",
+      "Audit evidence that does not take weeks to assemble",
+      "Reducing defects before they escape"
+    ],
+    metricsKey: ["Test coverage", "Mean time to detect / triage", "Audit evidence completeness"],
+    listenFor: [
+      "Releases feel probabilistic.",
+      "Testing happens late in the cycle.",
+      "It's anecdotal — we don't have system-wide metrics.",
+      "We only really test in staging.",
+      "Coverage is hard to measure at scale."
+    ],
+    capabilities: ["Collection Runner in CI/CD", "Monitors", "Performance Testing", "API Governance linting", "API Security Report Dashboard", "Audit Logs"],
+    metrics: ["Defect escape rate", "% of releases gated by automated tests", "Audit preparation time", "Flaky test rate", "Manual test hours"],
+    discovery: [
+      { title: "Current state", note: "ask first", items: [
+        "How do you measure API test coverage today — and do you trust the number?",
+        "What is automated versus manual in the regression suite?",
+        "Which compliance regimes apply, and what evidence do auditors ask for?",
+        "Who writes the tests — QA, developers, or both?",
+        "How consistent is testing practice across teams today?"
+      ]},
+      { title: "Pain and impact", note: "quantify it", items: [
+        "Where do defects escape most — which layer?",
+        "How long does audit preparation take, and who does it?",
+        "How much of the suite is flaky, and what has that cost you in trust?",
+        "What testing work is still manual that should not be?",
+        "What did the last quality incident cost, and what was the root cause?"
+      ]},
+      { title: "Technical fit", note: "SA lens", items: [
+        "Where do tests run today, and what reporting do stakeholders consume?",
+        "How do you handle test data and environment parity?",
+        "Do results need to land in an existing dashboard or system of record?",
+        "What frameworks are already in place that this has to coexist with?",
+        "What would a release gate look like if it were enforced automatically?"
+      ]},
+      { title: "Decision and process", note: "map the path", items: [
+        "Do you set standards for all teams, or recommend them?",
+        "What is the budget cycle, and who signs?",
+        "How do teams currently get onboarded to a new quality standard?"
+      ]},
+      { title: "Success criteria", note: "get the number", items: [
+        "What coverage or escape-rate number would count as a win?",
+        "What report would you hand an auditor without editing it first?",
+        "What would let you stop doing something manual?"
+      ]}
+    ],
+    positioning: [
+      "Streamline API testing while supporting quality and compliance standards.",
+      "Increase test coverage and reduce defects with consistent practice across the organization.",
+      "Automated testing and reporting that makes audits and reporting easier, not just faster.",
+      "Maintain high standards without adding manual gates."
+    ],
+    demo: [
+      "Generating tests from an existing spec — lower the authoring bar",
+      "Scheduled runs with a coverage and results view a non-engineer can read",
+      "Exportable run history as audit evidence",
+      "A release gate blocking on a failed contract test"
+    ],
+    outcomes: ["Higher test coverage", "Reduced defects", "Consistent testing practice across teams", "Easier audits and reporting", "Fewer manual test hours"],
+    objections: [
+      { o: "We standardized on another test framework.", r: "Complement rather than replace. Target the API-layer gap and the reporting they cannot get today." },
+      { o: "Our developers will not write tests.", r: "Lower the authoring bar — generate from the spec. The objection is effort, not willingness." },
+      { o: "Audit evidence has to come from our GRC system.", r: "Export and integrate rather than replace. Ask what format the auditor actually accepts." },
+      { o: "Coverage numbers are already green.", r: "Ask whether the escape rate agrees. Green coverage with escaping defects means the coverage is measuring the wrong thing." }
+    ],
+    redFlags: [
+      "Influence without budget — they recommend, nobody has to listen",
+      "Quality initiative with no executive sponsor",
+      "Coverage numbers that nobody reviews",
+      "Compliance driver is vague — no named regime, no audit date"
+    ],
+    exit: [
+      "An agreed target metric: coverage or escape rate, with today's baseline",
+      "A sample report reviewed and approved by them",
+      "A named pilot team and the standard it will prove",
+      "Confirmation of budget owner and cycle"
+    ]
+  },
+
+  {
+    id: "apo",
+    tag: "APO",
+    name: "API Product Owner",
+    driver: ["revenue"],
+    value: "Connect Postman's onboarding and analytics features to faster partner integration and measurable business growth.",
+    role: "Business-outcome buyer. Owns the vision, strategy, and roadmap for APIs as products — packaging, pricing, and operating them for partners and customers, working across engineering, platform, and business teams. Can fund the deal when it is framed as adoption and revenue rather than tooling.",
+    goal: "Manage APIs as strategic business assets — packaging, pricing, and lifecycle management — while aligning API offerings with customer needs and business objectives.",
+    impact: "Drives revenue growth, enhances customer engagement, and ensures APIs deliver measurable business value, contributing to the organization's financial success.",
+    priorities: [
+      "Driving API adoption and monetization",
+      "Delivering a seamless onboarding experience",
+      "Maximizing customer and partner satisfaction"
+    ],
+    pains: [
+      "Slow partner onboarding and integration",
+      "Churn at version changes",
+      "Lack of actionable usage insights"
+    ],
+    owns: [
+      "API packaging, pricing, and monetization",
+      "Partner and developer experience",
+      "Onboarding, usage, and adoption",
+      "Commercial outcomes of the API portfolio"
+    ],
+    cares: [
+      "Adoption curves and partner satisfaction",
+      "Time-to-first-successful-call",
+      "Revenue and usage per API",
+      "Customer experience of consuming their APIs"
+    ],
+    metricsKey: ["Time to onboard a partner", "Active partners / customers", "Revenue / ARR by plan"],
+    listenFor: [
+      "Docs lag behind. Specs get outdated.",
+      "Teams fall back to tribal knowledge.",
+      "Partners email us to get started.",
+      "We don't really know who's using what."
+    ],
+    capabilities: ["Public & Private API Network", "Documentation on a custom domain", "Guided Auth", "Partner Workspaces", "Mock Servers", "Members Overview Dashboard"],
+    metrics: ["Calls per API", "Developer NPS", "Onboarding support ticket volume", "Signup → first successful call conversion"],
+    discovery: [
+      { title: "Current state", note: "ask first", items: [
+        "How do partners discover and start using your APIs today?",
+        "Walk me through onboarding a new partner, step by step — with timings.",
+        "What does your partner-facing documentation look like, and who maintains it?",
+        "How do you track usage per consumer?",
+        "Where does your API catalog live, and is it in sync with what is deployed?"
+      ]},
+      { title: "Pain and impact", note: "quantify it", items: [
+        "What is your current time-to-first-successful-call, and where does it stall?",
+        "How many onboarding support tickets do you get, and what are they about?",
+        "Which partners stalled or churned, and why?",
+        "What happens to your consumers when you version an API — how many churn or stall at the change?",
+        "What do you wish you knew about how your APIs are being used?",
+        "What is the revenue impact of a partner going live a month earlier?"
+      ]},
+      { title: "Technical fit", note: "SA lens", items: [
+        "What do you need for auth flows in a sandbox or trial experience?",
+        "What usage and analytics data do you need, and where does it need to land?",
+        "How are docs generated today — hand-written or from the spec?",
+        "How are your API plans or tiers structured, and can you see usage and revenue against each one?",
+        "What does a partner need before they can make their first call?",
+        "Any requirements around branding, custom domains, or access control on the catalog?"
+      ]},
+      { title: "Decision and process", note: "map the path", items: [
+        "Is this funded from a product budget or an engineering budget?",
+        "Who owns the partner relationship commercially?",
+        "Who would have to agree on the engineering side?"
+      ]},
+      { title: "Success criteria", note: "get the number", items: [
+        "What would halving time-to-onboard be worth?",
+        "What adoption number are you committed to this year?",
+        "What would you need to show your leadership to call this a success?"
+      ]}
+    ],
+    positioning: [
+      "Distribute and manage APIs as products, not just endpoints.",
+      "Faster onboarding and a better developer experience for partners and customers.",
+      "Simplify channel distribution and improve visibility into API usage.",
+      "Data-driven decisions on the portfolio — see what is adopted and what is not."
+    ],
+    demo: [
+      "A partner-facing catalog page with a working 'try it' call, end to end",
+      "Usage analytics broken down by consumer",
+      "The zero-to-first-successful-call journey, timed live",
+      "Docs staying in sync with the spec automatically"
+    ],
+    outcomes: ["Reduced time-to-onboard", "Increased partner adoption", "Revenue growth", "Fewer onboarding support tickets", "Better developer experience"],
+    objections: [
+      { o: "Our documentation is fine.", r: "Documentation is not the same as time-to-first-call. Ask for the actual number — most cannot produce it, and that is the opening." },
+      { o: "This is an engineering decision.", r: "Reframe on their adoption or revenue target. Engineering picks the tool; they own the outcome it serves." },
+      { o: "We cannot expose anything externally.", r: "Start with internal consumers — the same pattern, no external exposure, and it builds the case." },
+      { o: "We already have a developer portal.", r: "Ask how it stays in sync with deployed APIs and who maintains it. Drift and maintenance cost are usually the real problem." }
+    ],
+    redFlags: [
+      "No revenue or adoption target tied to the APIs",
+      "APIs treated purely as a cost center",
+      "Nobody owns developer experience",
+      "Cannot produce a baseline number for onboarding time"
+    ],
+    exit: [
+      "An agreed baseline for time-to-onboard",
+      "One partner journey mapped end to end",
+      "A business case framed in their metric, not ours",
+      "Named engineering counterpart for technical validation"
+    ]
+  },
+
+  {
+    id: "gtm",
+    tag: "GTM",
+    name: "GTM Engineering",
+    driver: ["speed"],
+    value: "Show how Postman enables compelling demos, smooth handoffs, and rapid customer onboarding — directly impacting their success metrics.",
+    role: "Bridge between technical implementation and business outcomes. Helps prospects and customers evaluate, integrate, and adopt the technology — building demos, running POCs, and supporting integrations. Crucial for demonstrating value and accelerating adoption, and often your fastest path to a visible win.",
+    goal: "Act as the technical bridge between the business and its customers, ensuring smooth onboarding, integration, and ongoing support for API solutions.",
+    impact: "Accelerates time-to-value, improves customer satisfaction, and fosters long-term partnerships — strengthening market presence and customer relationships.",
+    priorities: [
+      "Accelerating customer onboarding and integration",
+      "Delivering compelling demos and solutions",
+      "Ensuring smooth handoffs between teams"
+    ],
+    pains: [
+      "Manual, repetitive onboarding tasks",
+      "Difficulty reproducing customer issues",
+      "Gaps in context during handoffs"
+    ],
+    owns: [
+      "Demos, POCs, and customer integrations",
+      "Technical onboarding for customers and partners",
+      "Handoffs between sales, solutions, and support"
+    ],
+    cares: [
+      "Time-to-value for the customer",
+      "Repeatability — not rebuilding the same demo twice",
+      "Clean handoffs with nothing lost in between",
+      "Making it easy for prospects to test and adopt"
+    ],
+    metricsKey: ["POC win rate", "Time-to-value", "Deal cycle time"],
+    listenFor: [
+      "It takes time to recreate the customer's issue.",
+      "We try to reconstruct it from logs.",
+      "We jump between tools.",
+      "Every demo gets rebuilt from scratch."
+    ],
+    capabilities: ["REPRO mode", "Partner Workspaces", "Mock Servers", "Workspace collaboration for reusable demos", "Flows", "Jira integration"],
+    metrics: ["Time-to-first-integration", "Demo preparation hours", "Handoff defects between teams", "New hire ramp time"],
+    discovery: [
+      { title: "Current state", note: "ask first", items: [
+        "How do you build and maintain demos today — who owns them?",
+        "What does a typical POC look like, start to finish?",
+        "How does a customer integration hand off from sales to solutions to support?",
+        "What environments do you demo against — sandbox, prod-like, customer tenant?"
+      ]},
+      { title: "Pain and impact", note: "quantify it", items: [
+        "How much gets rebuilt per demo, and how stale do assets get?",
+        "Where do POCs stall or die?",
+        "What breaks in the handoff — what gets lost?",
+        "When a customer reports a problem, how do you reproduce it — and how often can you not?",
+        "How long does a new team member take to run a demo unaided?",
+        "What is your POC win rate today, and what would move it?"
+      ]},
+      { title: "Technical fit", note: "SA lens", items: [
+        "What would a reusable, parameterized demo need to cover?",
+        "How do you share a working workflow with a customer today?",
+        "What customer-specific configuration varies each time?",
+        "What does the customer need to run themselves versus watch you run?",
+        "Where does POC-to-production carry over, and where does it get thrown away?"
+      ]},
+      { title: "Decision and process", note: "map the path", items: [
+        "Who owns the enablement budget?",
+        "Are you standardizing across the field, or is it per-region?",
+        "Who decides what the standard POC looks like?"
+      ]},
+      { title: "Success criteria", note: "get the number", items: [
+        "What change in POC win rate or cycle time would be meaningful?",
+        "What would let a new SA be productive in week one?",
+        "What asset would you most want to stop rebuilding?"
+      ]}
+    ],
+    positioning: [
+      "Accelerate customer onboarding and integrations — shorten time-to-value.",
+      "Reusable demos and consistent API workflows instead of one-off rebuilds.",
+      "Smoother handoffs between sales, solutions, and support.",
+      "Make it easy for prospects to test and adopt APIs themselves."
+    ],
+    demo: [
+      "One parameterized demo run against two different customer configurations",
+      "A shareable workflow handed to a prospect that they can run unaided",
+      "A handoff artifact that support can pick up without a call",
+      "Version history on a demo asset — how it stays current"
+    ],
+    outcomes: ["Improved POC win rates", "Shorter deal cycles", "Less demo maintenance", "Faster ramp for new hires", "Cleaner handoffs"],
+    objections: [
+      { o: "Every customer is different.", r: "Parameterize the 80% that repeats, customize the 20% that does not. Ask them to estimate the split — it is usually more repeatable than they think." },
+      { o: "We already have a demo environment.", r: "Target maintenance cost and the handoff, not the environment itself. Ask who updates it and how often it is stale." },
+      { o: "This is not my budget.", r: "Find the sales leader who owns cycle time or win rate — that is where this gets funded." },
+      { o: "We're too busy running POCs to change how we run POCs.", r: "Exactly the symptom. Rebuild one flagship demo as a reusable asset and measure the prep time saved on the next three." }
+    ],
+    redFlags: [
+      "No owner for demo assets — everyone maintains their own",
+      "Enablement is a side-of-desk task with no time allocated",
+      "POC process is undefined, so there is no baseline to improve against",
+      "Interest is enthusiasm-only with no link to a sales metric"
+    ],
+    exit: [
+      "One flagship demo rebuilt as a reusable asset",
+      "An agreed baseline POC metric — win rate or prep hours",
+      "A sponsor identified in sales leadership",
+      "A date for the next customer-facing use of the asset"
+    ]
+  },
+
+  {
+    id: "cio",
+    tag: "CIO",
+    name: "CIO / CISO",
+    driver: ["risk", "cost"],
+    value: "Address their priorities by demonstrating how Postman improves visibility, reduces risk, and supports organization-wide standards and efficiency.",
+    role: "Executive approver. Owns technology strategy, governance, compliance, and security across the organization, guiding how technology is adopted while balancing innovation against risk. Can fund, accelerate, or kill. Expect a short meeting where the framing matters more than the depth.",
+    goal: "Oversee governance, risk management, and technology strategy, ensuring the organization's operations are secure, compliant, and aligned with business objectives.",
+    impact: "Mitigates risk, ensures regulatory compliance, and drives operational excellence — enabling the organization to achieve its strategic goals with confidence.",
+    priorities: [
+      "Reducing operational and compliance risk",
+      "Standardizing technology and processes",
+      "Lowering platform and tooling costs"
+    ],
+    pains: [
+      "Limited visibility across the API lifecycle",
+      "Managing security incidents and compliance",
+      "High cost of failures or outages"
+    ],
+    owns: [
+      "Technology strategy and the vendor portfolio",
+      "Governance and organizational standards",
+      "Security posture and compliance",
+      "Budget and consolidation mandates"
+    ],
+    cares: [
+      "Risk exposure across the estate",
+      "Standardization and control",
+      "Cost control and vendor consolidation",
+      "Auditability and operational efficiency"
+    ],
+    metricsKey: ["Compliance success rate", "Security incident reduction", "Tooling consolidation ROI"],
+    listenFor: [
+      "We can't secure what we can't count.",
+      "It's hard to keep track of who has access.",
+      "We're under pressure to tighten our security practices.",
+      "We're focused on improving compliance this year.",
+      "We're moving to a new identity provider.",
+      "We've recently merged with another company.",
+      "We jump between tools — it's in Datadog, GitHub, Confluence…",
+      "We don't have system-wide metrics. It's anecdotal."
+    ],
+    capabilities: ["SSO", "SCIM", "RBAC", "Domain Capture", "Audit Logs", "Advanced Secret Scanner", "Third-party vault integrations", "API Security Report Dashboard"],
+    metrics: ["Audit findings", "% of estate under governance", "Mean time to detect and remediate", "Tool spend and license sprawl"],
+    discovery: [
+      { title: "Current state", note: "ask first", items: [
+        "How many APIs are in the estate, and how confident are you in that number?",
+        "How do you know which APIs handle sensitive data?",
+        "How many tools cover the API lifecycle today, and what do they cost together?",
+        "What is your governance model — centralized, federated, or ad hoc?"
+      ]},
+      { title: "Pain and impact", note: "quantify it", items: [
+        "What was the last API-related incident or audit finding, and what did it cost?",
+        "Where is shadow or undocumented API usage a concern?",
+        "What are your board or regulators asking about that you cannot answer today?",
+        "What is the cost of the current tool sprawl, in licenses and in people?"
+      ]},
+      { title: "Technical fit", note: "SA lens", items: [
+        "What are the non-negotiables — SSO/SCIM, RBAC, audit logging, data residency, network isolation?",
+        "What is your security review process and its typical timeline?",
+        "How does this need to fit your identity, SIEM, and GRC stack?",
+        "What deployment model is acceptable — cloud, isolated, self-hosted?",
+        "What data can and cannot leave your environment?"
+      ]},
+      { title: "Decision and process", note: "map the path", items: [
+        "What is the approval path, and what is the budget cycle?",
+        "What is your standard for vendor risk assessment?",
+        "Is there a consolidation mandate this year?",
+        "Who owns this outcome below you, day to day?"
+      ]},
+      { title: "Success criteria", note: "get the number", items: [
+        "What would you need to see to treat this as a strategic standard rather than a team tool?",
+        "What is the one metric you would hold this to?",
+        "What would make this a board-level story rather than a line item?"
+      ]}
+    ],
+    positioning: [
+      "Centralized visibility across every API in the estate.",
+      "Enforce organization-wide standards — governance that scales without a review queue.",
+      "Consolidate tools across the API lifecycle and control cost.",
+      "Support compliance and reduce security incidents through standardization."
+    ],
+    demo: [
+      "Org-wide API inventory with ownership — the answer to \"how many do we have?\"",
+      "Policy enforcement and conformance reporting across teams",
+      "Admin and security configuration: SSO, SCIM, RBAC, audit log",
+      "One consolidation view: what this replaces and what it costs today"
+    ],
+    outcomes: ["Fewer security incidents", "Compliance support and audit readiness", "Controlled costs and reduced tool sprawl", "Standardization across the estate", "Improved operational efficiency"],
+    objections: [
+      { o: "We have too many vendors already.", r: "Lead with the consolidation math. Name what this replaces and what the combined current spend is. Agreeing with the objection is the strongest opening here." },
+      { o: "Show me your security posture.", r: "Have certifications, data-handling, deployment options, and the standard security questionnaire ready in the room. This is a qualification question." },
+      { o: "This is a tools decision below my level.", r: "Connect it to the estate-wide risk they are personally accountable for — unknown API inventory, audit findings, shadow usage." },
+      { o: "No budget this cycle.", r: "Ask what the next cycle's mandate is and what event would change the priority. Get the follow-up anchored to it." }
+    ],
+    redFlags: [
+      "No consolidation or governance mandate this year",
+      "The conversation stays at feature level — you have not reached the executive frame",
+      "No budget cycle inside the deal horizon",
+      "Security review not scoped, and nobody will own scoping it",
+      "They delegate immediately without a sponsor mandate attached"
+    ],
+    exit: [
+      "Security review initiated with a named owner",
+      "A consolidation or business case expressed in their numbers",
+      "The sponsor and the full approval path named",
+      "A follow-up with a date, not \"circle back later\""
+    ]
+  }
+];
+
+const ALL = [COMMON, ...PERSONAS];
+const DRIVER_LABEL = { speed: "Speed-driven", risk: "Risk-driven", revenue: "Revenue-driven", cost: "Cost-driven" };
+
+/* The four metric categories that shape buyer behaviour — decision speed,
+   risk appetite, and how a persona evaluates a solution. */
+const DRIVERS = [
+  {
+    id: "speed",
+    name: "Speed-driven",
+    who: "Product Engineering · GTM Engineering",
+    desc: "How quickly teams can deliver value.",
+    examples: ["Time-to-market", "Lead time for changes", "Deployment frequency"],
+    strategy: "Highlight how Postman accelerates releases, reduces bottlenecks, and enables faster onboarding or integration."
+  },
+  {
+    id: "risk",
+    name: "Risk-driven",
+    who: "Quality Center of Excellence · CIO/CISO",
+    desc: "Minimizing errors, failures, and compliance issues.",
+    examples: ["Audit success rate", "Escaped defects", "Security incident reduction"],
+    strategy: "Emphasize how Postman supports governance, reduces operational risk, and ensures quality and compliance at scale."
+  },
+  {
+    id: "revenue",
+    name: "Revenue-driven",
+    who: "API Product Owner · Platform Engineering (in some cases)",
+    desc: "Business growth, monetization, and customer retention.",
+    examples: ["Active partners", "Annual Recurring Revenue (ARR)", "Time-to-value"],
+    strategy: "Connect Postman's capabilities to revenue impact, customer satisfaction, and measurable business outcomes."
+  },
+  {
+    id: "cost",
+    name: "Cost-driven",
+    who: "CIO/CISO · Platform Engineering",
+    desc: "Reducing expense, improving operational efficiency, and maximizing the value of technology investments.",
+    examples: ["Reduced tool sprawl", "Infrastructure and operational cost savings", "Developer productivity gains", "Incident reduction and lower remediation costs"],
+    strategy: "Connect Postman's capabilities to operational efficiency, reduced tooling costs, and measurable improvements in how teams build, test, and manage APIs."
+  }
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const STORE_KEY = "postman-persona-playbook.v1";
+const state = load();
+let current = "setup";   // SETUP_ID, declared below — literal here to stay out of its TDZ
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }
+  catch { return {}; }
+}
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch { /* private browsing — session-only is acceptable */ }
+}
+function entry(id) {
+  if (!state[id]) state[id] = { checked: {}, notes: "" };
+  return state[id];
+}
+
+/* The meeting: who is actually in the room. Empty attendee list = browsing mode,
+   every persona open. Once someone is selected, only attendees can be interrogated. */
+const SETUP_ID = "setup";
+const SESSION_ID = "session";
+
+function meeting() {
+  if (!state.__meeting) state.__meeting = { attendees: [], notes: "" };
+  if (!Array.isArray(state.__meeting.attendees)) state.__meeting.attendees = [];
+  return state.__meeting;
+}
+const isConfigured = () => meeting().attendees.length > 0;
+const isAttending = id => meeting().attendees.includes(id);
+const attendees = () => PERSONAS.filter(p => isAttending(p.id));
+
+function toggleAttendee(id) {
+  const m = meeting();
+  const i = m.attendees.indexOf(id);
+  if (i === -1) m.attendees.push(id); else m.attendees.splice(i, 1);
+  m.attendees.sort((a, b) => PERSONAS.findIndex(p => p.id === a) - PERSONAS.findIndex(p => p.id === b));
+  save();
+}
+
+/* Merge every attendee's discovery questions into one agenda ordered by stage,
+   so a mixed room is worked stage by stage rather than persona by persona.
+   Identical questions asked by two personas collapse into one, tagged with both. */
+const STAGE_ORDER = ["Current state", "Pain and impact", "Technical fit", "Decision and process", "Success criteria"];
+
+function buildAgenda() {
+  const stages = new Map();
+  attendees().forEach(p => {
+    p.discovery.forEach((g, gi) => {
+      if (!stages.has(g.title)) stages.set(g.title, { title: g.title, note: g.note, items: new Map() });
+      const bucket = stages.get(g.title).items;
+      g.items.forEach((text, ii) => {
+        const k = text.trim().toLowerCase();
+        if (!bucket.has(k)) bucket.set(k, { text, sources: [] });
+        bucket.get(k).sources.push({ pid: p.id, tag: p.tag, key: `${gi}.${ii}` });
+      });
+    });
+  });
+  const seen = [...stages.keys()];
+  const order = [...STAGE_ORDER.filter(t => seen.includes(t)), ...seen.filter(t => !STAGE_ORDER.includes(t))];
+  return order.map(t => ({ ...stages.get(t), items: [...stages.get(t).items.values()] }));
+}
+
+const itemDone = it => it.sources.every(s => entry(s.pid).checked[s.key]);
+function setItem(it, on) {
+  it.sources.forEach(s => { entry(s.pid).checked[s.key] = on; });
+  save();
+}
+
+/* Read the room: what the combination of attendees implies for how you run it. */
+function meetingInsights() {
+  const who = attendees();
+  const out = [];
+  if (!who.length) return out;
+
+  const cats = new Set(who.flatMap(p => p.driver));
+  const has = id => who.some(p => p.id === id);
+
+  if (cats.has("speed") && cats.has("risk")) out.push(["Speed and risk are both in the room.", "These pull against each other. Name the tension before they do — whoever you leave unaddressed becomes the objection after you leave."]);
+  if (!cats.has("revenue") && !cats.has("cost")) out.push(["No economic buyer present.", "Everyone here is technical. Your exit criterion is a name: who owns the budget, and who has to say yes?"]);
+  if (has("cio")) out.push(["Executive in the room.", "Expect a short window and interruptions. Lead with consolidation and risk framing, not features. Have SSO, RBAC, residency, and the security questionnaire ready."]);
+  if (who.length === 1) out.push(["Single-threaded.", "One persona is one point of failure. Ask who else touches this problem and get the next introduction before you leave."]);
+  if (who.length >= 4) out.push(["Large room.", "You will not get depth on everything. Pick two stages, go deep, and take the rest to follow-ups."]);
+  if (has("platform") && has("product")) out.push(["Platform plus Product together.", "Product feels the pain, Platform owns the fix and the budget. Let Product describe the breakage, then ask Platform what it would take to prevent it."]);
+  if (has("apo") && (has("product") || has("platform"))) out.push(["Business and engineering in one room.", "Rare and valuable. Get the revenue metric stated out loud in front of the engineers — it reframes the whole evaluation."]);
+  return out;
+}
+function totalQuestions(p) {
+  return p.discovery.reduce((n, g) => n + g.items.length, 0);
+}
+function checkedCount(p) {
+  const c = entry(p.id).checked;
+  return Object.keys(c).filter(k => c[k]).length;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+
+const esc = s => String(s).replace(/[&<>"]/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
+const list = items => `<ul class="plain">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
+
+function renderNav() {
+  const build = p => {
+    const total = totalQuestions(p);
+    const done = checkedCount(p);
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const locked = isConfigured() && p.id !== COMMON.id && !isAttending(p.id);
+    const cls = ["nav-item", locked ? "dim" : "", (isConfigured() && isAttending(p.id)) ? "att-on" : ""].filter(Boolean).join(" ");
+    return `<button class="${cls}" data-id="${p.id}" aria-current="${p.id === current}">
+      <span class="tag">${esc(p.tag)}</span>
+      <span>
+        <span class="nav-title">${esc(p.name)}</span>
+        <span class="nav-meta">${locked ? "not in this meeting"
+          : `<span class="mini-bar"><i style="width:${pct}%"></i></span>${done}/${total}`}</span>
+      </span>
+    </button>`;
+  };
+
+  const n = meeting().attendees.length;
+  const agenda = n ? buildAgenda() : [];
+  const qs = agenda.reduce((a, g) => a + g.items.length, 0);
+  const asked = agenda.reduce((a, g) => a + g.items.filter(itemDone).length, 0);
+
+  document.getElementById("nav-meeting").innerHTML = `
+    <button class="nav-item" data-id="${SETUP_ID}" aria-current="${current === SETUP_ID}">
+      <span class="tag">WHO</span>
+      <span>
+        <span class="nav-title">Meeting setup</span>
+        <span class="nav-meta">${n ? `${n} attending` : "no one selected yet"}</span>
+      </span>
+    </button>
+    <button class="nav-item ${n ? "" : "dim"}" data-id="${SESSION_ID}" aria-current="${current === SESSION_ID}">
+      <span class="tag">LIVE</span>
+      <span>
+        <span class="nav-title">Live session</span>
+        <span class="nav-meta">${n
+          ? `<span class="mini-bar"><i style="width:${qs ? (asked / qs) * 100 : 0}%"></i></span>${asked}/${qs}`
+          : "pick attendees first"}</span>
+      </span>
+    </button>`;
+
+  document.getElementById("nav-common").innerHTML = build(COMMON);
+  document.getElementById("nav-personas").innerHTML = PERSONAS.map(build).join("");
+  document.getElementById("nav-drill").innerHTML = `<button class="nav-item" data-id="${DRILL_ID}" aria-current="${current === DRILL_ID}">
+      <span class="tag">CARD</span>
+      <span>
+        <span class="nav-title">Metrics flashcards</span>
+        <span class="nav-meta">${PERSONAS.length} cards &middot; self-test</span>
+      </span>
+    </button>`;
+  document.querySelectorAll(".nav-item").forEach(b =>
+    b.addEventListener("click", () => select(b.dataset.id))
+  );
+}
+
+function renderMain() {
+  if (current === DRILL_ID) return renderDrill();
+  if (current === SETUP_ID) return renderSetup();
+  if (current === SESSION_ID) return renderSession();
+  const p = ALL.find(x => x.id === current);
+  const e = entry(p.id);
+  const total = totalQuestions(p);
+  const done = checkedCount(p);
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  const badges = [
+    ...p.driver.map(d => `<span class="badge ${d}">${DRIVER_LABEL[d]}</span>`),
+    ...(p.metrics ? [] : [])
+  ].join("");
+
+  const purpose = (p.goal || p.impact) ? `<div class="grid">
+      ${p.goal   ? `<div class="card goal"><h3>Their goal</h3><p class="body">${esc(p.goal)}</p></div>` : ""}
+      ${p.impact ? `<div class="card impact"><h3>Impact on the business</h3><p class="body">${esc(p.impact)}</p></div>` : ""}
+    </div>` : "";
+
+  const valueCard = p.value
+    ? `<div class="card value"><h3>The Postman value to lead with</h3><p class="body">${esc(p.value)}</p></div>`
+    : "";
+
+  const driverCards = p.id === "common" ? `
+    <div class="checklist-head"><h2>The four metric categories</h2></div>
+    <p class="role-line" style="margin:-2px 0 14px">Different personas are motivated by different categories of metric. These shape how quickly they decide, their appetite for risk, and how they evaluate a solution.</p>
+    <div class="grid">
+      ${DRIVERS.map(d => `<div class="card drv-${d.id}">
+        <h3>${esc(d.name)}</h3>
+        <div class="who">${esc(d.who)}</div>
+        <p class="body">${esc(d.desc)}</p>
+        <div class="sub">Examples</div>
+        <div class="metric-row">${d.examples.map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+        <div class="sub">Sales strategy</div>
+        <p class="body">${esc(d.strategy)}</p>
+      </div>`).join("")}
+    </div>` : "";
+
+  const snapshot = [
+    p.priorities ? `<div class="card"><h3>Top priorities</h3>${list(p.priorities)}</div>` : "",
+    p.pains ? `<div class="card warn"><h3>Pain points</h3>${list(p.pains)}</div>` : "",
+    p.listenFor ? `<div class="card listen"><h3>Listen for</h3>
+      <div class="lf">${p.listenFor.map(q => `<span class="lf-q">&ldquo;${esc(q)}&rdquo;</span>`).join("")}</div>
+      <div class="lf-note">Their words, not yours. Hearing one of these means you are in a real opportunity — follow it rather than moving to your next question.</div>
+    </div>` : "",
+    p.language ? `<div class="card warn"><h3>Language check</h3>${list(p.language)}</div>` : "",
+    p.owns   ? `<div class="card"><h3>What they own</h3>${list(p.owns)}</div>` : "",
+    p.cares  ? `<div class="card"><h3>${p.id === "common" ? "Using the categories" : "What they care about"}</h3>${list(p.cares)}</div>` : "",
+    (p.metricsKey || p.metrics) ? `<div class="card"><h3>How they are measured</h3>
+      ${p.metricsKey ? `<div class="metric-row">${p.metricsKey.map(m => `<span class="chip key">${esc(m)}</span>`).join("")}</div>` : ""}
+      ${p.metrics ? `${p.metricsKey ? `<div class="sub">Also worth probing</div>` : ""}<div class="metric-row">${p.metrics.map(m => `<span class="chip">${esc(m)}</span>`).join("")}</div>` : ""}
+    </div>` : ""
+  ].filter(Boolean).join("");
+
+  const locked = p.id !== COMMON.id && isConfigured() && !isAttending(p.id);
+
+  const checklist = p.discovery.map((g, gi) => `
+    <div class="group">
+      <div class="group-title">${esc(g.title)} <span>${esc(g.note)}</span></div>
+      ${g.items.map((item, ii) => {
+        const key = `${gi}.${ii}`;
+        return `<label class="q">
+          <input type="checkbox" data-key="${key}" ${e.checked[key] ? "checked" : ""} />
+          <span>${esc(item)}</span>
+        </label>`;
+      }).join("")}
+    </div>`).join("");
+
+  document.getElementById("main").innerHTML = `
+    <header class="head">
+      <div>
+        <h1>${esc(p.name)}</h1>
+        <p class="role-line">${p.role}</p>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btn-print">Print</button>
+        <button class="btn" id="btn-reset">Reset</button>
+        <button class="btn primary" id="btn-export">Copy debrief</button>
+      </div>
+    </header>
+    ${badges ? `<div class="badges">${badges}</div>` : `<div style="height:18px"></div>`}
+
+    ${valueCard}
+    ${purpose}
+    <div class="grid">${snapshot}</div>
+    ${driverCards}
+
+    <div class="checklist-head">
+      <h2>${p.id === "common" ? "Meeting checklist" : "Discovery checklist"}</h2>
+      ${locked ? "" : `<div class="progress">
+        <div class="bar"><i style="width:${pct}%"></i></div>
+        <span>${done} of ${total}</span>
+      </div>`}
+    </div>
+    <div class="card">${locked ? `<div class="locked">
+        <b>${esc(p.name)} is not in this meeting</b>
+        You have ${meeting().attendees.length} attendee${meeting().attendees.length === 1 ? "" : "s"} selected, and this persona is not one of them.
+        Everything above is still here as background — only the discovery questions are held back.
+        <div><button class="btn primary" id="btn-add">Add to the meeting</button></div>
+      </div>` : checklist}</div>
+
+    <div class="grid">
+      <div class="card"><h3>${p.id === "common" ? "How to frame it" : "How to position Postman"}</h3>${list(p.positioning)}</div>
+      <div class="card"><h3>${p.id === "common" ? "Demo principles" : "What to show them"}</h3>${list(p.demo)}</div>
+      ${p.capabilities ? `<div class="card"><h3>Capabilities that answer this</h3>
+        <div class="metric-row">${p.capabilities.map(c => `<span class="chip">${esc(c)}</span>`).join("")}</div>
+        <div class="lf-note">Name these last. The pain and the metric come first.</div>
+      </div>` : ""}
+    </div>
+
+    ${p.outcomes ? `<div class="card"><h3>Outcomes to cite</h3><div class="metric-row">${p.outcomes.map(o => `<span class="chip">${esc(o)}</span>`).join("")}</div></div>` : ""}
+
+    <div class="card"><h3>Objections and how to handle them</h3>
+      ${p.objections.map(o => `<div class="obj"><b>${esc(o.o)}</b><p>${esc(o.r)}</p></div>`).join("")}
+    </div>
+
+    <div class="grid">
+      <div class="card warn"><h3>Red flags</h3>${list(p.redFlags)}</div>
+      <div class="card exit"><h3>Do not leave without</h3>${list(p.exit)}</div>
+    </div>
+
+    <div class="card"><h3>Meeting notes</h3>
+      <textarea id="notes" placeholder="Their words, their numbers, names, next steps…">${esc(e.notes)}</textarea>
+    </div>
+  `;
+
+  document.querySelectorAll('.q input').forEach(input => {
+    input.addEventListener("change", () => {
+      e.checked[input.dataset.key] = input.checked;
+      save();
+      renderNav();
+      const t = totalQuestions(p), d = checkedCount(p);
+      document.querySelector(".progress .bar > i").style.width = (t ? (d / t) * 100 : 0) + "%";
+      document.querySelector(".progress span").textContent = `${d} of ${t}`;
+    });
+  });
+
+  const addBtn = document.getElementById("btn-add");
+  if (addBtn) addBtn.addEventListener("click", () => {
+    toggleAttendee(p.id);
+    renderNav(); renderMain();
+    toast(`${p.name} added to the meeting`);
+  });
+
+  const notes = document.getElementById("notes");
+  notes.addEventListener("input", () => { e.notes = notes.value; save(); });
+
+  document.getElementById("btn-print").addEventListener("click", () => window.print());
+  document.getElementById("btn-export").addEventListener("click", () => exportDebrief(p));
+  document.getElementById("btn-reset").addEventListener("click", () => {
+    if (!confirm(`Clear checklist and notes for ${p.name}?`)) return;
+    state[p.id] = { checked: {}, notes: "" };
+    save(); renderNav(); renderMain();
+  });
+}
+
+function exportDebrief(p) {
+  const e = entry(p.id);
+  const lines = [`# ${p.name} — meeting debrief`, ""];
+
+  p.discovery.forEach((g, gi) => {
+    const asked = g.items.filter((_, ii) => e.checked[`${gi}.${ii}`]);
+    const missed = g.items.filter((_, ii) => !e.checked[`${gi}.${ii}`]);
+    if (!asked.length && !missed.length) return;
+    lines.push(`## ${g.title}`);
+    asked.forEach(i => lines.push(`- [x] ${i}`));
+    missed.forEach(i => lines.push(`- [ ] ${i}`));
+    lines.push("");
+  });
+
+  const t = totalQuestions(p), d = checkedCount(p);
+  lines.push(`**Coverage:** ${d}/${t} questions asked`, "");
+  if (e.notes.trim()) lines.push("## Notes", "", e.notes.trim(), "");
+  lines.push("## Do not leave without", ...p.exit.map(x => `- [ ] ${x}`));
+
+  const text = lines.join("\n");
+  navigator.clipboard.writeText(text)
+    .then(() => toast("Debrief copied as Markdown"))
+    .catch(() => toast("Copy failed — check clipboard permissions"));
+}
+
+/* ============================================================
+   DECISION TREE
+   Four qualification questions asked of any room, plus one branch per
+   attending persona. Each answer yields a read and a next step; the
+   qualification spine resolves to an overall posture.
+   ============================================================ */
+
+const TREE = [
+  { id: "initiative", scope: "all", q: "Is there a named, funded initiative behind this?", options: [
+    { label: "Yes, funded", read: "A real project with money attached. The evaluation is about fit, not persuasion.", next: "Scope a pilot with a named success metric and a date. Ask what else is competing for the same budget." },
+    { label: "Named, not funded", read: "Someone cares, but nobody has paid for it. You are building a business case, not running an evaluation.", next: "Get the baseline number and co-write the internal case with your champion. Find out when the budget cycle opens." },
+    { label: "Nothing yet", read: "Education stage. A POC now would burn goodwill and prove nothing anyone is accountable for.", next: "Do not scope a POC. Find the triggering event — an audit, incident, launch, or re-org — and anchor a follow-up to it." }
+  ]},
+  { id: "baseline", scope: "all", q: "Can they state a current-state number for their main pain?", options: [
+    { label: "Yes, measured", read: "You have something to move. Every later claim can be tested against it.", next: "Anchor the pilot on moving that specific number, and agree what change counts as success." },
+    { label: "Rough estimate", read: "Directionally useful, but it will not survive a business case review.", next: "Offer to help them measure it properly — that exercise is itself a reason for a follow-up meeting." },
+    { label: "Not tracked", read: "No baseline means no business case, and no way to prove value later. This is the single most common reason a good POC fails to convert.", next: "Make measurement the next step, not a demo. Agree what to instrument and who will own the number." }
+  ]},
+  { id: "sponsor", scope: "all", q: "Is the approval path identified?", options: [
+    { label: "Yes, named", read: "You know who signs and who can block. Multi-threading has a target.", next: "Get an introduction or an agreed path to that person, and ask your champion what would make them say no." },
+    { label: "Partly", read: "You know some of the room but not the decision. Deals stall here more than anywhere.", next: "Map the rest explicitly — ask who else has to agree, and what procurement and security require." },
+    { label: "No idea", read: "Interest without a path. Enthusiasm at this stage is not a signal.", next: "Before anything technical, ask directly: if this works, what has to happen for it to get bought?" }
+  ]},
+  { id: "incumbent", scope: "all", q: "What is in place today?", options: [
+    { label: "A commercial tool", read: "Displacement. You need a reason to switch that outweighs the cost of switching — 'better' is not enough.", next: "Find what the incumbent structurally cannot do, and get the renewal date." },
+    { label: "Homegrown", read: "Your competitor is sunk cost and pride. Attacking the build is attacking the builder, who is probably in the room.", next: "Ask what it costs to maintain and what it does not cover. Position as removing burden, never as replacing their judgement." },
+    { label: "Nothing formal", read: "Greenfield. No switching cost, but also no proven appetite — nobody has felt the problem enough to solve it yet.", next: "Establish the cost of the status quo first. Without that, there is no urgency and the deal drifts." }
+  ]},
+
+  { id: "gov", scope: "platform", q: "How is API governance enforced today?", options: [
+    { label: "Manual review", read: "The strongest wedge available. Review hours are visible, hated, and easy to quantify.", next: "Count the design-review hours per week and show the same check running in CI." },
+    { label: "Partly automated", read: "They believe in the model already. The gap is coverage, not conviction.", next: "Find which standards are not enforced and why — that gap is your scope." },
+    { label: "Nothing formal", read: "Do not lead with policy. Enforcement on an estate nobody can see is unsellable.", next: "Start with inventory and visibility. Answer 'how many APIs do we have' before proposing to govern them." }
+  ]},
+  { id: "breaking", scope: "product", q: "Do they catch breaking changes before release?", options: [
+    { label: "Reliably", read: "Speed, not safety, is your angle here. They have solved the fear.", next: "Pivot to lead time and parallel work — mocks, earlier starts, less waiting between roles." },
+    { label: "Sometimes", read: "Inconsistent coverage. There is a recent incident behind this answer — find it.", next: "Ask for the last escape and what it cost. Reproduce that class of failure in a contract test." },
+    { label: "Not really", read: "High pain, high urgency, and the demo almost writes itself.", next: "Demo a breaking change failing in a pull request against their own spec." }
+  ]},
+  { id: "compliance", scope: "quality", q: "Is there a named compliance regime with an audit date?", options: [
+    { label: "Yes, dated", read: "A deadline you did not have to manufacture. This is the strongest forcing function in the deck.", next: "Work backwards from the audit date and show evidence output an auditor would accept unedited." },
+    { label: "Internal standards only", read: "Real but soft. No external deadline means it slips whenever something louder appears.", next: "Tie the work to escaped defects or release confidence instead — find the metric with teeth." },
+    { label: "Neither", read: "Quality is aspirational here. Be careful how much you invest.", next: "Qualify hard: who is accountable if quality slips, and what happens to them? If nobody, deprioritise." }
+  ]},
+  { id: "ttfc", scope: "apo", q: "Do they know their time-to-first-successful-call?", options: [
+    { label: "Yes, measured", read: "A commercially literate buyer. They can build the case themselves once you give them the lever.", next: "Model the revenue impact of halving it and let them check your arithmetic." },
+    { label: "Anecdotal", read: "They feel the pain but cannot price it, so it loses to whatever is quantified.", next: "Walk one real partner onboarding end to end and time each step with them in the room." },
+    { label: "Not tracked", read: "The gap itself is the pitch — they own adoption but cannot see where it stalls.", next: "Lead with visibility, not onboarding. You cannot fix a funnel nobody can see." }
+  ]},
+  { id: "poc", scope: "gtm", q: "Is there a defined, repeatable POC process?", options: [
+    { label: "Defined", read: "A baseline exists, so improvement is measurable. Unusual and useful.", next: "Target the win rate directly and agree the comparison window." },
+    { label: "Ad hoc per rep", read: "Every SE has their own kit and none of it compounds. The cost is invisible but large.", next: "Rebuild one flagship demo as a reusable asset and measure prep time on the next three." },
+    { label: "No process", read: "Nothing to improve against, and no way to prove you helped.", next: "Define the process with them first. Without a baseline, any win is deniable." }
+  ]},
+  { id: "mandate", scope: "cio", q: "Is there a consolidation or governance mandate this year?", options: [
+    { label: "Active mandate", read: "Top-down air cover. This is the fastest executive path available to you.", next: "Lead with the consolidation math — name what this replaces and the combined current spend." },
+    { label: "Cost pressure, no mandate", read: "The appetite is there but nothing is forcing a decision this cycle.", next: "Frame as cost avoidance against a specific renewal or headcount plan, and find the next budget gate." },
+    { label: "Neither", read: "You are below their line. Feature conversations with an executive without a mandate go nowhere.", next: "Work the technical personas, build a case from the bottom, and come back with numbers." }
+  ]}
+];
+
+const visibleNodes = () => TREE.filter(n => n.scope === "all" || isAttending(n.scope));
+function answers() {
+  const m = meeting();
+  if (!m.answers) m.answers = {};
+  return m.answers;
+}
+
+/* The qualification spine resolves to a posture — what this deal actually is right now. */
+function posture() {
+  const a = answers();
+  const got = id => a[id] !== undefined;
+  const spine = ["initiative", "baseline", "sponsor", "incumbent"];
+  const open = spine.filter(id => !got(id));
+  if (open.length === spine.length) {
+    return { label: "Not yet assessed", detail: "Answer the qualification questions below and this resolves to a posture.", open };
+  }
+  if (a.initiative === 2) {
+    return { label: "Too early — educate", detail: "No initiative means no deal this cycle. Your job is to find the triggering event and be the person they call when it happens. Do not spend POC effort here.", open };
+  }
+  if (a.baseline === 2) {
+    return { label: "Blocked on a baseline", detail: "There is appetite but nothing measurable. Any value you deliver will be arguable and any POC will end in opinion. Make measurement the next step.", open };
+  }
+  if (a.sponsor === 2) {
+    return { label: "Multi-thread before you build", detail: "You have interest without a path to a decision. More technical depth will not fix that — another name will.", open };
+  }
+  if (a.initiative === 0 && a.baseline === 0 && a.sponsor === 0) {
+    return { label: "Ready to scope a pilot", detail: "Funded, measurable, and with a known approval path. Convert now: agree scope, metric, and date before the energy in the room decays.", open };
+  }
+  return { label: "Build the case", detail: "The pieces are partly in place. Close the gaps below — usually the missing one is a number or a name, not a technical proof point.", open };
+}
+
+/* ============================================================
+   MEETING SETUP
+   ============================================================ */
+
+function renderSetup() {
+  const who = attendees();
+  const cats = [...new Set(who.flatMap(p => p.driver))];
+  const insights = meetingInsights();
+
+  document.getElementById("main").innerHTML = `
+    <header class="head">
+      <div>
+        <h1>Who is in the room?</h1>
+        <p class="role-line">Select the personas attending this discovery meeting. The live session then builds one agenda from just those people, and the personas you leave out are held back so you are not asking questions nobody in the room can answer.</p>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btn-all">Select all</button>
+        <button class="btn" id="btn-none">Clear</button>
+      </div>
+    </header>
+    <div style="height:20px"></div>
+
+    <div class="att">
+      ${PERSONAS.map(p => `
+        <button class="att-card" data-id="${p.id}" aria-pressed="${isAttending(p.id)}">
+          <span class="att-top">
+            <span class="tag">${esc(p.tag)}</span>
+            <span class="att-name">${esc(p.name)}</span>
+            <span class="att-check"></span>
+          </span>
+          <span class="badges" style="margin:0">${p.driver.map(d => `<span class="badge ${d}">${DRIVER_LABEL[d]}</span>`).join("")}</span>
+          <span class="att-role">${esc(p.metricsKey.join(" · "))}</span>
+        </button>`).join("")}
+    </div>
+
+    ${who.length ? `
+      <div class="checklist-head"><h2>Reading the room</h2></div>
+      <div class="grid">
+        <div class="card">
+          <h3>Attending</h3>
+          <div class="metric-row">${who.map(p => `<span class="chip key">${esc(p.name)}</span>`).join("")}</div>
+          <div class="sub">Metric categories in play</div>
+          <div class="badges" style="margin:0">${cats.map(c => `<span class="badge ${c}">${DRIVER_LABEL[c]}</span>`).join("")}</div>
+        </div>
+        <div class="card">
+          <h3>Value to lead with</h3>
+          ${who.map(p => `<div class="obj"><b style="font-style:normal">${esc(p.name)}</b><p>${esc(p.value)}</p></div>`).join("")}
+        </div>
+      </div>
+      ${insights.length ? `<div class="card warn"><h3>What this combination means</h3>
+        ${insights.map(([t, b]) => `<div class="insight"><b>${esc(t)}</b> ${esc(b)}</div>`).join("")}
+      </div>` : ""}
+      <div style="text-align:center;margin-top:8px">
+        <button class="btn primary" id="btn-start">Start the session &rarr;</button>
+      </div>
+    ` : `<div class="card"><div class="empty">
+        <b>No attendees selected</b>
+        Every persona stays unlocked while the list is empty, so you can browse freely.
+        Select at least one to build a focused agenda.
+      </div></div>`}
+  `;
+
+  document.querySelectorAll(".att-card").forEach(b =>
+    b.addEventListener("click", () => { toggleAttendee(b.dataset.id); renderNav(); renderSetup(); })
+  );
+  document.getElementById("btn-all").addEventListener("click", () => {
+    meeting().attendees = PERSONAS.map(p => p.id); save(); renderNav(); renderSetup();
+  });
+  document.getElementById("btn-none").addEventListener("click", () => {
+    meeting().attendees = []; save(); renderNav(); renderSetup();
+  });
+  const start = document.getElementById("btn-start");
+  if (start) start.addEventListener("click", () => select(SESSION_ID));
+}
+
+/* ============================================================
+   LIVE SESSION
+   ============================================================ */
+
+function renderSession() {
+  const who = attendees();
+  if (!who.length) {
+    document.getElementById("main").innerHTML = `
+      <header class="head"><div>
+        <h1>Live session</h1>
+        <p class="role-line">One merged agenda for whoever is in the room.</p>
+      </div></header>
+      <div class="card"><div class="empty">
+        <b>Nobody is in the room yet</b>
+        Choose the personas attending and the agenda builds itself.
+        <div><button class="btn primary" id="btn-goto">Choose attendees</button></div>
+      </div></div>`;
+    document.getElementById("btn-goto").addEventListener("click", () => select(SETUP_ID));
+    return;
+  }
+
+  const m = meeting();
+  const agenda = buildAgenda();
+  const total = agenda.reduce((a, g) => a + g.items.length, 0);
+  const done = agenda.reduce((a, g) => a + g.items.filter(itemDone).length, 0);
+  const shared = agenda.reduce((a, g) => a + g.items.filter(i => i.sources.length > 1).length, 0);
+
+  const nodes = visibleNodes();
+  const answered = nodes.filter(n => answers()[n.id] !== undefined).length;
+  const pos = posture();
+  const steps = nodes
+    .filter(n => answers()[n.id] !== undefined)
+    .map(n => ({ q: n.q.replace(/\?$/, ""), next: n.options[answers()[n.id]].next }));
+
+  document.getElementById("main").innerHTML = `
+    <header class="head">
+      <div>
+        <h1>Live session</h1>
+        <p class="role-line">${who.length} persona${who.length === 1 ? "" : "s"} in the room, worked stage by stage. Tags show who each question is for; a question tagged twice covers both at once.</p>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btn-edit">Edit attendees</button>
+        <button class="btn" id="btn-print">Print</button>
+        <button class="btn primary" id="btn-export">Copy debrief</button>
+      </div>
+    </header>
+    <div class="badges">
+      ${who.map(p => `<span class="badge">${esc(p.name)}</span>`).join("")}
+      ${shared ? `<span class="badge outcome">${shared} shared question${shared === 1 ? "" : "s"}</span>` : ""}
+    </div>
+
+    <div class="checklist-head">
+      <h2>Agenda</h2>
+      <div class="progress">
+        <div class="bar"><i style="width:${total ? (done / total) * 100 : 0}%"></i></div>
+        <span>${done} of ${total}</span>
+      </div>
+    </div>
+
+    <div class="card">
+      ${agenda.map((g, gi) => `
+        <div class="group">
+          <div class="group-title">${esc(g.title)} <span>${esc(g.note)}</span></div>
+          ${g.items.map((it, ii) => `
+            <label class="q">
+              <input type="checkbox" data-g="${gi}" data-i="${ii}" ${itemDone(it) ? "checked" : ""} />
+              <span>${esc(it.text)}${it.sources.map(s => `<span class="qtag">${esc(s.tag)}</span>`).join("")}</span>
+            </label>`).join("")}
+        </div>`).join("")}
+    </div>
+
+    <div class="checklist-head">
+      <h2>Where to take it</h2>
+      <div class="progress"><span>${answered} of ${nodes.length} answered</span></div>
+    </div>
+
+    <div class="card posture">
+      <h3>Deal posture</h3>
+      <div class="p-label">${esc(pos.label)}</div>
+      <div class="p-detail">${esc(pos.detail)}</div>
+      ${pos.open.length ? `<div class="p-open">Still unanswered: ${esc(pos.open.map(id => TREE.find(n => n.id === id).q.replace(/\?$/, "").toLowerCase()).join(" · "))}</div>` : ""}
+    </div>
+
+    <div class="card">
+      <h3>Qualification and branches</h3>
+      ${nodes.map(n => {
+        const sel = answers()[n.id];
+        const o = sel === undefined ? null : n.options[sel];
+        const tag = n.scope === "all" ? "" : `<span class="qtag">${esc(PERSONAS.find(p => p.id === n.scope).tag)}</span>`;
+        return `<div class="node">
+          <div class="node-q">${esc(n.q)}${tag}</div>
+          <div class="opts">
+            ${n.options.map((op, i) =>
+              `<button class="opt" data-node="${n.id}" data-opt="${i}" aria-pressed="${sel === i}">${esc(op.label)}</button>`
+            ).join("")}
+          </div>
+          ${o ? `<div class="read"><b>${esc(o.read)}</b><span class="nx">${esc(o.next)}</span></div>` : ""}
+        </div>`;
+      }).join("")}
+    </div>
+
+    ${steps.length ? `<div class="card exit"><h3>Your next steps, from the answers above</h3>
+      ${list(steps.map(s => `<strong>${esc(s.q)}</strong> — ${esc(s.next)}`))}
+    </div>` : ""}
+
+    <div class="card exit"><h3>Do not leave without</h3>
+      ${who.map(p => `<div class="sub" style="margin-top:12px">${esc(p.name)}</div>${list(p.exit)}`).join("")}
+    </div>
+
+    <div class="card"><h3>Meeting notes</h3>
+      <textarea id="notes" placeholder="Their words, their numbers, names, next steps…">${esc(m.notes || "")}</textarea>
+    </div>
+  `;
+
+  document.querySelectorAll('.q input').forEach(input => {
+    input.addEventListener("change", () => {
+      setItem(agenda[+input.dataset.g].items[+input.dataset.i], input.checked);
+      renderNav();
+      const d = agenda.reduce((a, g) => a + g.items.filter(itemDone).length, 0);
+      document.querySelector(".progress .bar > i").style.width = (total ? (d / total) * 100 : 0) + "%";
+      document.querySelector(".progress span").textContent = `${d} of ${total}`;
+    });
+  });
+
+  const notes = document.getElementById("notes");
+  notes.addEventListener("input", () => { m.notes = notes.value; save(); });
+
+  document.querySelectorAll(".opt").forEach(b =>
+    b.addEventListener("click", () => {
+      const a = answers(), id = b.dataset.node, i = +b.dataset.opt;
+      if (a[id] === i) delete a[id]; else a[id] = i;   // click the active option to unset
+      save();
+      const y = window.scrollY;
+      renderSession();
+      window.scrollTo({ top: y });
+    })
+  );
+
+  document.getElementById("btn-edit").addEventListener("click", () => select(SETUP_ID));
+  document.getElementById("btn-print").addEventListener("click", () => window.print());
+  document.getElementById("btn-export").addEventListener("click", () => exportSession(agenda, who, m));
+}
+
+function exportSession(agenda, who, m) {
+  const lines = [`# Discovery debrief`, "", `**In the room:** ${who.map(p => p.name).join(", ")}`, ""];
+  agenda.forEach(g => {
+    lines.push(`## ${g.title}`);
+    g.items.forEach(it => {
+      const tags = it.sources.map(s => s.tag).join("/");
+      lines.push(`- [${itemDone(it) ? "x" : " "}] ${it.text} _(${tags})_`);
+    });
+    lines.push("");
+  });
+  const total = agenda.reduce((a, g) => a + g.items.length, 0);
+  const done = agenda.reduce((a, g) => a + g.items.filter(itemDone).length, 0);
+  lines.push(`**Coverage:** ${done}/${total} questions asked`, "");
+
+  const pos = posture();
+  lines.push("## Deal posture", "", `**${pos.label}** — ${pos.detail}`, "");
+
+  const nodes = visibleNodes().filter(n => answers()[n.id] !== undefined);
+  if (nodes.length) {
+    lines.push("## What we learned", "");
+    nodes.forEach(n => {
+      const o = n.options[answers()[n.id]];
+      lines.push(`- **${n.q.replace(/\?$/, "")}:** ${o.label}`, `  - ${o.read}`, `  - **Next:** ${o.next}`);
+    });
+    lines.push("");
+  }
+
+  if ((m.notes || "").trim()) lines.push("## Notes", "", m.notes.trim(), "");
+  lines.push("## Do not leave without", "");
+  who.forEach(p => { lines.push(`### ${p.name}`); p.exit.forEach(x => lines.push(`- [ ] ${x}`)); lines.push(""); });
+
+  navigator.clipboard.writeText(lines.join("\n"))
+    .then(() => toast("Session debrief copied as Markdown"))
+    .catch(() => toast("Copy failed — check clipboard permissions"));
+}
+
+/* ============================================================
+   FLASHCARD DRILL
+   ============================================================ */
+
+const DRILL_ID = "drill";
+const drill = { order: PERSONAS.map((_, i) => i), i: 0, flipped: false };
+
+function renderDrill() {
+  const p = PERSONAS[drill.order[drill.i]];
+  document.getElementById("main").innerHTML = `
+    <header class="head">
+      <div>
+        <h1>Metrics flashcards</h1>
+        <p class="role-line">Knowing which metrics each persona cares about is what lets you tailor the pitch. Name the metrics before you flip.</p>
+      </div>
+      <div class="actions"><button class="btn" id="fc-shuffle">Shuffle</button></div>
+    </header>
+    <div style="height:20px"></div>
+
+    <div class="fc-stage">
+      <button class="fc" id="fc" type="button" data-flipped="${drill.flipped}"
+              aria-label="Flashcard for ${esc(p.name)} — activate to flip">
+        <div class="fc-inner">
+          <div class="fc-face">
+            <span class="fc-tag">${esc(p.tag)}</span>
+            <h2>${esc(p.name)}</h2>
+            <span class="fc-prompt">Which metrics drive their decisions?</span>
+          </div>
+          <div class="fc-face back">
+            <span class="fc-tag">${esc(p.name)}</span>
+            <div class="fc-metrics">${p.metricsKey.map(m => `<div class="fc-metric">${esc(m)}</div>`).join("")}</div>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="fc-controls">
+      <button class="btn" id="fc-prev">&larr; Previous</button>
+      <span class="fc-count">${drill.i + 1} / ${PERSONAS.length}</span>
+      <button class="btn" id="fc-next">Next &rarr;</button>
+    </div>
+    <p class="fc-hint">
+      <span class="kbd">Space</span> to flip &middot;
+      <span class="kbd">&larr;</span> <span class="kbd">&rarr;</span> to move &middot;
+      <span class="kbd">S</span> to shuffle
+    </p>
+  `;
+  document.getElementById("fc").addEventListener("click", flipCard);
+  document.getElementById("fc-prev").addEventListener("click", () => stepCard(-1));
+  document.getElementById("fc-next").addEventListener("click", () => stepCard(1));
+  document.getElementById("fc-shuffle").addEventListener("click", shuffleDeck);
+}
+
+function flipCard() {
+  drill.flipped = !drill.flipped;
+  document.getElementById("fc").dataset.flipped = String(drill.flipped);
+}
+
+function stepCard(delta) {
+  drill.i = (drill.i + delta + PERSONAS.length) % PERSONAS.length;
+  drill.flipped = false;
+  renderDrill();
+  document.getElementById("fc").focus();
+}
+
+function shuffleDeck() {
+  for (let i = drill.order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [drill.order[i], drill.order[j]] = [drill.order[j], drill.order[i]];
+  }
+  drill.i = 0;
+  drill.flipped = false;
+  renderDrill();
+  toast("Deck shuffled");
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+function select(id) {
+  current = id;
+  if (location.hash.slice(1) !== id) history.replaceState(null, "", "#" + id);
+  renderNav();
+  renderMain();
+  window.scrollTo({ top: 0 });
+}
+
+const NAV_ORDER = [SETUP_ID, SESSION_ID, ...ALL.map(x => x.id), DRILL_ID];
+const VALID_IDS = NAV_ORDER;
+if (VALID_IDS.includes(location.hash.slice(1))) current = location.hash.slice(1);
+window.addEventListener("hashchange", () => {
+  const id = location.hash.slice(1);
+  if (VALID_IDS.includes(id) && id !== current) select(id);
+});
+
+document.addEventListener("keydown", ev => {
+  if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  if (/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) return;
+
+  if (current === DRILL_ID) {
+    const onCard = document.activeElement && document.activeElement.id === "fc";
+    if (ev.key === " " || ev.key === "Enter") {
+      if (onCard) return;           // let the button's native click flip it
+      ev.preventDefault(); flipCard(); return;
+    }
+    if (ev.key === "ArrowRight") { ev.preventDefault(); stepCard(1); return; }
+    if (ev.key === "ArrowLeft")  { ev.preventDefault(); stepCard(-1); return; }
+    if (ev.key === "s" || ev.key === "S") { shuffleDeck(); return; }
+  }
+
+  if (!/^[0-9]$/.test(ev.key)) return;
+  const idx = ev.key === "0" ? 9 : parseInt(ev.key, 10) - 1;
+  if (idx < NAV_ORDER.length) select(NAV_ORDER[idx]);
+});
+
+renderNav();
+renderMain();
+</script>
+</body>
+</html>

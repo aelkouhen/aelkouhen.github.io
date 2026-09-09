@@ -28,6 +28,7 @@ navbar-links:
     - Identity and Access Management with CockroachDB: "/iam"
     - CockroachDB & AI: "/cockroachdb-ai"
     - CockroachDB - Integration Guides: "/cockroachdb-integrations"
+    - Postman Persona Playbook: "/postman-persona-playbook/"
     #- Business Analytics: "/analytics-101"
   Resources:
     - Martin Fowler's Blog : "https://martinfowler.com/"
@@ -340,5 +341,5 @@ plugins:
 languages: ["en", "fr"]
 default_lang: "en"
 
-exclude_from_localization: ["javascript", "images", "css", "assets"]
+exclude_from_localization: ["javascript", "images", "css", "assets", "postman-persona-playbook"]
 parallel_localization: false
