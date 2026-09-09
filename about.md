@@ -28,9 +28,9 @@ Partner with The Data Crafters Lab, and embark on a transformative data journey 
     </a>
   </div>
   <div class="column right">
-With more than 15 years of experience in building and promoting Data, Analytics, and Machine Learning platforms, Amine designed and implemented thousands of data pipelines and analytics artifacts for top-tier European companies. 
+With more than 20 years of experience building and promoting data, analytics, and machine learning platforms, Amine has designed and delivered hundreds of data pipelines and analytics solutions for top-tier European companies. His recent work focuses on distributed SQL, API platforms, and AI-driven data systems.
 
-Amine held a Ph.D. in Computer Sciences from the University of Lille (North of France) and pursued his post-doc research in Canada as a research associate in a few big academic institutions (ETS - University of Quebec, Concordia University...). He has a solid research record (authoring many Springer, ACL, and IEEE publications) in Model-Driven Engineering, Critical Systems Engineering, Language Engineering, Data Modeling, and Software Craftsmanship.
+Amine holds a Ph.D. in Computer Science from the University of Lille and pursued post-doctoral research in Canada as a research associate at ÉTS (Université du Québec) and Concordia University. He has a solid research record, with publications in Springer, ACL, and IEEE venues, spanning model-driven engineering, critical systems engineering, language engineering, data modeling, and software craftsmanship.
   </div>
 </div>
 <!--

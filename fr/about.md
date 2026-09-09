@@ -30,8 +30,8 @@ Faites équipe avec le Data Crafters Lab, et embarquez pour un voyage de transfo
     </a>
   </div>
   <div class="column right">
-Fort de plus de 15 ans d'expérience dans la conception et la promotion de plateformes de données, d'analytique et d'apprentissage automatique, Amine a conçu et mis en œuvre des milliers de pipelines de données et d'artefacts analytiques pour des entreprises européennes de premier plan.
+Fort de plus de 20 ans d'expérience dans la conception et la promotion de plateformes de données, d'analytique et d'apprentissage automatique, Amine a conçu et livré des centaines de pipelines de données et de solutions analytiques pour des entreprises européennes de premier plan. Ses travaux récents portent sur le SQL distribué, les plateformes d'API et les systèmes de données pilotés par l'IA.
 
-Amine est titulaire d'un doctorat en informatique de l'Université de Lille (Nord de la France) et a poursuivi ses recherches post-doctorales au Canada en tant qu'associé de recherche dans plusieurs grandes institutions académiques (ÉTS - Université du Québec, Université Concordia...). Il possède un solide dossier de recherche (auteur de nombreuses publications Springer, ACL et IEEE) en ingénierie dirigée par les modèles, ingénierie des systèmes critiques, ingénierie des langages, modélisation des données et artisanat logiciel.
+Amine est titulaire d'un doctorat en informatique de l'Université de Lille et a poursuivi des recherches post-doctorales au Canada en tant qu'associé de recherche à l'ÉTS (Université du Québec) et à l'Université Concordia. Il possède un solide dossier de recherche, avec des publications chez Springer, ACL et IEEE, couvrant l'ingénierie dirigée par les modèles, l'ingénierie des systèmes critiques, l'ingénierie des langages, la modélisation des données et l'artisanat logiciel.
   </div>
 </div>
