@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AE + SA Working Process · Postman</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20fill%3D%22none%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m18.0379.13033c-3.1388-.403077-6.3266.133689-9.16038%201.54242-2.83373%201.40873-5.18608%203.62614-6.75956%206.37182-1.573474%202.74573-2.297402%205.89633-2.0802323%209.05343.2171693%203.1571%201.3656823%206.179%203.3002923%208.6833%201.93461%202.5044%204.56843%204.3788%207.56838%205.3863%202.9999%201.0074%206.2312%201.1026%209.2853.2736%203.054-.8291%205.7937-2.5452%207.8724-4.9313%202.0787-2.3862%203.4031-5.3351%203.8058-8.474.5399-4.2086-.614-8.45933-3.208-11.81721-2.5939-3.35789-6.4154-5.547909-10.624-6.08836z%22%20fill%3D%22%23ff6c37%22%2F%3E%3Cg%20fill%3D%22%23fff%22%3E%3Cpath%20d%3D%22m11.5675%2017.0112c.0062.0127.0167.0228.0295.0286.0128.0059.0273.0071.0409.0034l2.56-.552-1.0768-1.0912-1.5344%201.5344c-.0121.0082-.0207.0205-.0243.0347-.0035.0142-.0017.0292.0051.0421z%22%2F%3E%3Cpath%20d%3D%22m23.5547%206.01921c-.3567.00036-.7089.08074-1.0305.23521-.3215.15447-.6044.3791-.8277.65736-.2232.27825-.3813.60304-.4624.95045s-.0833.70859-.0064%201.05696.231.67505.4509.95599c.2199.28092.5.50902.8197.66732.3197.1584.6708.243%201.0275.2477s.71-.0707%201.0337-.2206l-1.6224-1.62239c-.0186-.01858-.0334-.04065-.0435-.06495-.01-.0243-.0152-.05035-.0152-.07665%200-.02631.0052-.05236.0152-.07666.0101-.0243.0249-.04637.0435-.06494l2.12-2.1184c-.4257-.34232-.9561-.52814-1.5024-.5264z%22%2F%3E%3Cpath%20d%3D%22m25.3483%206.8208-1.9872%201.9792%201.5584%201.5584c.1148-.0806.2219-.1717.32-.272.4271-.43.6757-1.00568.6959-1.61142.0202-.60575-.1896-1.1967-.5871-1.65418z%22%2F%3E%3Cpath%20d%3D%22m21.3723%2010.4736h-.0352c-.0413-.0003-.0826.0034-.1232.0112h-.0144c-.0446.0096-.0884.0224-.1312.0384l-.0336.016c-.0322.0134-.0632.0295-.0928.048l-.0352.0224c-.0387.0267-.0751.0567-.1088.0896l-5.8928%205.8944.7296.7296%206.24-5.4768c.0353-.0309.0674-.0652.096-.1024l.0272-.0352c.0213-.0312.0406-.0638.0576-.0976.0096-.0192.0176-.0384.0256-.0576.0108-.0255.0198-.0517.0272-.0784%200-.0192.0112-.0384.016-.0576.0079-.0396.0132-.0797.016-.12v-.0528c0-.0288%200-.0576%200-.0864s0-.0384-.008-.0576c-.0296-.151-.1033-.2898-.2118-.3989s-.247-.1835-.3978-.2139h-.0304c-.0396-.0076-.0797-.0124-.12-.0144z%22%2F%3E%3Cpath%20d%3D%22m13.3963%2015.1168%201.2096%201.2032%205.9088-5.9088c.1923-.188.4428-.3048.7104-.3312-1.0448-.8-2.184-.5904-7.8288%205.0368z%22%2F%3E%3Cpath%20d%3D%22m22.2075%2012.0768-.072.0704-6.24%205.4752%201.0608%201.0592c2.6304-2.488%204.9648-4.8576%205.2512-6.6048z%22%2F%3E%3Cpath%20d%3D%22m6.64277%2024.904c.00324.0113.0099.0214.01905.0288.00916.0075.02038.0119.03215.0128l2.71999.1872-1.5248-1.5248-1.23359%201.232c-.008.0083-.01345.0188-.01572.0301-.00226.0114-.00125.0231.00292.0339z%22%2F%3E%3Cpath%20d%3D%22m8.17394%2023.3248%201.60799%201.608c.01909.0204.04463.0336.07231.0374s.05582-.0021.07969-.0166c.02493-.0124.04478-.033.05617-.0584.0114-.0254.0136-.054.00623-.0808l-.2704-1.1552c-.01751-.0749-.00955-.1535.02262-.2233.03216-.0698.0867-.1269.15498-.1623%202.81917-1.4128%205.09277-2.8672%206.76157-4.32l-1.12-1.12-2.4.5168z%22%2F%3E%3Cpath%20d%3D%22m15.2011%2017.4944-.6016-.6016-.832.8304c-.006.0072-.0093.0163-.0093.0256%200%20.0094.0033.0184.0093.0256.0039.0085.0107.0154.0193.0192.0085.0038.0181.0044.0271.0016z%22%2F%3E%3C%2Fg%3E%3Cpath%20d%3D%22m25.4043%208.1104c-.0082-.02518-.0217-.04831-.0396-.06784-.0178-.01953-.0397-.03501-.0641-.04539-.0243-.01039-.0506-.01544-.0771-.01481-.0265.00062-.0525.00691-.0764.01843-.0238.01152-.0449.02801-.0619.04836-.0169.02035-.0293.04409-.0363.06963s-.0085.05229-.0043.07844.0139.0511.0285.07318c.0478.09622.0668.20422.0546.31097s-.0551.20768-.1234.29063c-.0224.0271-.0367.06001-.0411.09492-.0045.0349.0011.07035.016.10221s.0386.05883.0683.07775c.0296.01892.0641.02902.0992.02912.0272-.00029.054-.00645.0786-.01805.0246-.01159.0463-.02836.0638-.04915.1133-.13769.1844-.30513.2048-.48222s-.0107-.35632-.0896-.51618z%22%20fill%3D%22%23ff6c37%22%2F%3E%3C%2Fsvg%3E">
+<style>
+:root {
+  color-scheme: light;
+  --plane:        #f9f9f7;
+  --surface:      #fcfcfb;
+  --surface-2:    #f2f1ee;
+  --ink:          #0b0b0b;
+  --ink-2:        #52514e;
+  --ink-muted:    #898781;
+  --hair:         rgba(11,11,11,0.10);
+  --rule:         #e1e0d9;
+  --brand:        #ff6c37;   /* Postman orange: identity and marks, never behind text */
+  --accent:       #ff6c37;
+  --accent-press: #d2481c;   /* white text sits on this step, never on #ff6c37 */
+  --accent-soft:  #ffd0bb;
+  --accent-ink:   #a8320f;
+  --good:         #0ca30c;
+  --warning:      #fab219;
+  --serious:      #ec835a;
+  --critical:     #d03b3b;
+  --good-wash:    rgba(12,163,12,0.09);
+  --warn-wash:    rgba(250,178,25,0.14);
+  --crit-wash:    rgba(208,59,59,0.09);
+  --ae:           #2a78d6;
+  --sa:           #4a3aa7;
+  --radius:       8px;
+  --shadow:       0 1px 2px rgba(11,11,11,0.04), 0 4px 16px rgba(11,11,11,0.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --plane: #0d0d0d; --surface: #1a1a19; --surface-2: #232322;
+    --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #898781;
+    --hair: rgba(255,255,255,0.10); --rule: #2c2c2a;
+    --brand: #ff6c37; --accent: #ff6c37; --accent-press: #d2481c; --accent-soft: #6b2410; --accent-ink: #ffb494;
+    --good-wash: rgba(12,163,12,0.16); --warn-wash: rgba(250,178,25,0.16); --crit-wash: rgba(208,59,59,0.16);
+    --ae: #3987e5; --sa: #9085e9;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --plane: #0d0d0d; --surface: #1a1a19; --surface-2: #232322;
+  --ink: #ffffff; --ink-2: #c3c2b7; --ink-muted: #898781;
+  --hair: rgba(255,255,255,0.10); --rule: #2c2c2a;
+  --brand: #ff6c37; --accent: #ff6c37; --accent-press: #d2481c; --accent-soft: #6b2410; --accent-ink: #ffb494;
+  --good-wash: rgba(12,163,12,0.16); --warn-wash: rgba(250,178,25,0.16); --crit-wash: rgba(208,59,59,0.16);
+  --ae: #3987e5; --sa: #9085e9;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+}
+
+* { box-sizing: border-box; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--plane); color: var(--ink);
+  font: 15px/1.5 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1,h2,h3,h4 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+p { margin: 0 0 8px; }
+a { color: var(--accent); }
+button { font: inherit; cursor: pointer; }
+input, textarea, select { font: inherit; color: var(--ink); }
+
+/* ---------- chrome ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  border-top: 3px solid var(--brand);
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 10px 20px; background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { display: flex; align-items: center; gap: 9px; margin-right: auto; }
+.brand svg { flex: none; display: block; }
+.brand h1 { font-size: 15px; }
+.brand .div { width: 1px; height: 18px; background: var(--rule); }
+.brand span { font-size: 12px; color: var(--ink-muted); }
+.spacer { flex: 1; }
+
+.btn {
+  border: 1px solid var(--hair); background: var(--surface);
+  color: var(--ink); padding: 6px 12px; border-radius: 8px;
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+}
+.btn:hover { background: var(--surface-2); }
+.btn.primary { background: var(--accent-press); border-color: transparent; color: #fff; font-weight: 500; }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn.ghost { border-color: transparent; background: transparent; color: var(--ink-2); }
+.btn.ghost:hover { background: var(--surface-2); }
+.btn.sm { padding: 3px 9px; font-size: 13px; border-radius: 7px; }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+select.deal-select { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--hair); background: var(--surface); max-width: 280px; }
+
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 8px; padding: 2px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--ink-2); padding: 5px 12px; border-radius: 6px; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(11,11,11,0.08); font-weight: 600; }
+
+/* ---------- layout ---------- */
+.wrap { max-width: 1080px; margin: 0 auto; padding: 20px; }
+.card {
+  background: var(--surface); border: 1px solid var(--hair);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 18px; margin-bottom: 16px;
+}
+.card > h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 12px; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* ---------- deal head ---------- */
+.dealhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.dealhead h2 { font-size: 22px; letter-spacing: -0.02em; }
+.dealmeta { font-size: 13px; color: var(--ink-2); margin-top: 4px; }
+.dealmeta b { font-weight: 600; color: var(--ink); }
+
+/* ---------- phase meter ---------- */
+.meter { display: flex; gap: 2px; margin: 16px 0 10px; }
+.meter-seg { flex: 1; height: 8px; border-radius: 2px; background: var(--accent-soft); position: relative; }
+.meter-seg:first-child { border-radius: 4px 2px 2px 4px; }
+.meter-seg:last-child  { border-radius: 2px 4px 4px 2px; }
+.meter-seg.done { background: var(--accent); }
+.meter-seg.now  { background: var(--accent); box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent-soft); }
+.meter-labels { display: flex; gap: 2px; font-size: 12px; color: var(--ink-muted); }
+.meter-labels span { flex: 1; }
+.meter-labels span.now { color: var(--ink); font-weight: 600; }
+
+.exitq { margin-top: 14px; padding: 12px 14px; background: var(--surface-2); border-radius: 8px; border-left: 3px solid var(--accent); }
+.exitq .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
+.exitq .q { font-size: 16px; font-weight: 600; margin-top: 2px; }
+
+/* ---------- stat tiles ---------- */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 860px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+.tile { background: var(--surface); border: 1px solid var(--hair); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow); }
+.tile .tl { font-size: 12px; color: var(--ink-2); }
+.tile .tv { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; margin: 4px 0 2px; }
+.tile .tv small { font-size: 15px; font-weight: 500; color: var(--ink-muted); }
+.tile .td { font-size: 12px; color: var(--ink-muted); }
+.tile .track { height: 6px; border-radius: 3px; background: var(--accent-soft); margin-top: 8px; overflow: hidden; }
+.tile .fill { height: 100%; border-radius: 3px; background: var(--accent); }
+.tile .fill.warning { background: var(--warning); }
+.tile .fill.critical { background: var(--critical); }
+.tile .fill.good { background: var(--good); }
+
+/* ---------- banners ---------- */
+.banner { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: 6px; margin-bottom: 10px; font-size: 14px; background: var(--surface); border: 1px solid var(--hair); border-left: 3px solid var(--ink-muted); }
+.banner .ic { font-weight: 700; flex: none; width: 18px; text-align: center; }
+.banner.critical { background: var(--crit-wash); border-color: rgba(208,59,59,0.35); border-left-color: var(--critical); }
+.banner.critical .ic { color: var(--critical); }
+.banner.warning  { border-left-color: var(--warning); }
+.banner.warning .ic { color: #8a5c00; }
+:root[data-theme="dark"] .banner.warning .ic { color: var(--warning); }
+.banner.good { border-left-color: var(--good); }
+.banner.good .ic { color: var(--good); }
+.banner b { font-weight: 600; }
+
+/* ---------- tabs ---------- */
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--rule); margin-bottom: 16px; }
+.tabs button {
+  border: 0; background: transparent; color: var(--ink-2);
+  padding: 9px 13px; border-radius: 8px 8px 0 0; white-space: nowrap;
+  border-bottom: 2px solid transparent; font-size: 14px;
+}
+.tabs button:hover { background: var(--surface-2); }
+.tabs button[aria-selected="true"] { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
+.tabs .count { font-size: 11px; color: var(--ink-muted); margin-left: 4px; }
+
+/* ---------- meddpicc ---------- */
+.med-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 900px) { .med-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .med-grid { grid-template-columns: 1fr; } }
+.med {
+  border: 1px solid var(--hair); border-radius: 9px; padding: 11px 12px;
+  background: var(--surface); display: flex; flex-direction: column; gap: 7px;
+}
+.med.s0 { background: var(--surface); }
+.med.s1 { background: var(--warn-wash); border-color: rgba(250,178,25,0.5); }
+.med.s2 { background: var(--good-wash); border-color: rgba(12,163,12,0.4); }
+.med-top { display: flex; align-items: center; gap: 8px; }
+.med-letter { font-size: 19px; font-weight: 700; line-height: 1; width: 20px; }
+.med-name { font-size: 13px; font-weight: 600; flex: 1; }
+.chip { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; padding: 2px 6px; border-radius: 5px; border: 1px solid currentColor; }
+.chip.ae { color: var(--ae); } .chip.sa { color: var(--sa); } .chip.both { color: var(--ink-muted); }
+.med-q { font-size: 12px; color: var(--ink-2); line-height: 1.4; }
+.state-btn {
+  display: flex; align-items: center; gap: 7px; width: 100%;
+  border: 1px solid var(--hair); border-radius: 7px; background: var(--surface);
+  padding: 5px 9px; font-size: 12px; font-weight: 600; color: var(--ink);
+}
+.state-btn:hover { background: var(--surface-2); }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px var(--surface); }
+.dot.s0 { background: transparent; border: 2px solid var(--ink-muted); width: 11px; height: 11px; }
+.dot.s1 { background: var(--warning); }
+.dot.s2 { background: var(--good); }
+.state-glyph { font-size: 11px; width: 12px; text-align: center; }
+.med-note { border: 1px solid var(--hair); border-radius: 6px; padding: 5px 7px; font-size: 12px; background: var(--plane); width: 100%; resize: vertical; min-height: 28px; }
+
+/* ---------- checklists ---------- */
+.checks { display: flex; flex-direction: column; gap: 2px; }
+.check { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; }
+.check:hover { background: var(--surface-2); }
+.check input { margin: 3px 0 0; width: 16px; height: 16px; accent-color: var(--accent); flex: none; }
+.check label { flex: 1; cursor: pointer; }
+.check.hard label::after { content: " hard rule"; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--critical); border: 1px solid var(--critical); border-radius: 4px; padding: 1px 5px; margin-left: 6px; white-space: nowrap; }
+.check .who { font-size: 11px; font-weight: 700; margin-left: 6px; }
+.check .who.ae { color: var(--ae); } .check .who.sa { color: var(--sa); } .check .who.both { color: var(--ink-muted); }
+.check.dim { opacity: 0.55; }
+
+/* ---------- lanes ---------- */
+.lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 760px) { .lanes { grid-template-columns: 1fr; } }
+.lane { border: 1px solid var(--hair); border-radius: 9px; padding: 14px; background: var(--surface); }
+.lane.mine { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.lane h3 { font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.lane ul { margin: 0; padding-left: 18px; }
+.lane li { margin-bottom: 6px; font-size: 14px; color: var(--ink-2); }
+.lane .yours { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 1px 5px; }
+
+/* ---------- forms ---------- */
+.field { margin-bottom: 12px; }
+.field > label { display: block; font-size: 12px; font-weight: 600; color: var(--ink-2); margin-bottom: 4px; }
+.field .hint { font-size: 12px; color: var(--ink-muted); font-weight: 400; }
+.field input[type=text], .field input[type=date], .field input[type=number], .field textarea, .field select {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--hair); border-radius: 8px;
+  background: var(--plane);
+}
+.field textarea { min-height: 64px; resize: vertical; line-height: 1.45; }
+.inline { display: flex; gap: 10px; flex-wrap: wrap; }
+.inline > .field { flex: 1; min-width: 150px; }
+
+table.att { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.att th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); padding: 0 6px 6px; font-weight: 600; }
+table.att td { padding: 3px 4px; vertical-align: top; }
+table.att input, table.att select { width: 100%; padding: 6px 7px; border: 1px solid var(--hair); border-radius: 6px; background: var(--plane); font-size: 13px; }
+
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.entry { border: 1px solid var(--hair); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px; background: var(--surface); }
+.entry .eh { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; }
+.entry .eh b { color: var(--ink); font-size: 13px; }
+.pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--hair); }
+.pill.good { color: var(--good); border-color: var(--good); }
+.pill.warning { color: #8a5c00; border-color: var(--warning); background: var(--warn-wash); }
+:root[data-theme="dark"] .pill.warning { color: var(--warning); }
+.pill.critical { color: var(--critical); border-color: var(--critical); }
+.pill.muted { color: var(--ink-muted); }
+
+pre.md { background: var(--plane); border: 1px solid var(--hair); border-radius: 8px; padding: 14px; font: 12.5px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; max-height: 460px; overflow: auto; }
+
+.owns { font-size: 12.5px; color: var(--ink-2); background: var(--surface-2); border-left: 3px solid var(--brand); padding: 9px 12px; border-radius: 6px; margin-bottom: 14px; }
+.owns b { color: var(--ink); font-weight: 600; }
+.empty { text-align: center; padding: 60px 20px; color: var(--ink-2); }
+.empty h2 { font-size: 20px; margin-bottom: 8px; color: var(--ink); }
+
+dialog { border: 1px solid var(--hair); border-radius: 14px; padding: 0; max-width: 720px; width: calc(100% - 32px); background: var(--surface); color: var(--ink); box-shadow: 0 24px 64px rgba(0,0,0,0.28); }
+dialog::backdrop { background: rgba(11,11,11,0.4); }
+dialog .dh { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--rule); }
+dialog .db { padding: 18px; max-height: 70vh; overflow: auto; }
+dialog h3 { font-size: 16px; }
+.rules-sec { margin-bottom: 18px; }
+.rules-sec h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 8px; }
+.rules-sec ul { margin: 0; padding-left: 20px; }
+.rules-sec li { margin-bottom: 6px; color: var(--ink-2); }
+.rules-sec li b { color: var(--ink); }
+
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--plane); padding: 9px 16px; border-radius: 999px; font-size: 13px; z-index: 100; opacity: 0; transition: opacity .18s, transform .18s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.foot { text-align: center; font-size: 12px; color: var(--ink-muted); padding: 10px 0 30px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <svg role="img" aria-label="Postman" fill="none" height="24" viewBox="0 0 32 32" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m18.0379.13033c-3.1388-.403077-6.3266.133689-9.16038 1.54242-2.83373 1.40873-5.18608 3.62614-6.75956 6.37182-1.573474 2.74573-2.297402 5.89633-2.0802323 9.05343.2171693 3.1571 1.3656823 6.179 3.3002923 8.6833 1.93461 2.5044 4.56843 4.3788 7.56838 5.3863 2.9999 1.0074 6.2312 1.1026 9.2853.2736 3.054-.8291 5.7937-2.5452 7.8724-4.9313 2.0787-2.3862 3.4031-5.3351 3.8058-8.474.5399-4.2086-.614-8.45933-3.208-11.81721-2.5939-3.35789-6.4154-5.547909-10.624-6.08836z" fill="#ff6c37"/><g fill="#fff"><path d="m11.5675 17.0112c.0062.0127.0167.0228.0295.0286.0128.0059.0273.0071.0409.0034l2.56-.552-1.0768-1.0912-1.5344 1.5344c-.0121.0082-.0207.0205-.0243.0347-.0035.0142-.0017.0292.0051.0421z"/><path d="m23.5547 6.01921c-.3567.00036-.7089.08074-1.0305.23521-.3215.15447-.6044.3791-.8277.65736-.2232.27825-.3813.60304-.4624.95045s-.0833.70859-.0064 1.05696.231.67505.4509.95599c.2199.28092.5.50902.8197.66732.3197.1584.6708.243 1.0275.2477s.71-.0707 1.0337-.2206l-1.6224-1.62239c-.0186-.01858-.0334-.04065-.0435-.06495-.01-.0243-.0152-.05035-.0152-.07665 0-.02631.0052-.05236.0152-.07666.0101-.0243.0249-.04637.0435-.06494l2.12-2.1184c-.4257-.34232-.9561-.52814-1.5024-.5264z"/><path d="m25.3483 6.8208-1.9872 1.9792 1.5584 1.5584c.1148-.0806.2219-.1717.32-.272.4271-.43.6757-1.00568.6959-1.61142.0202-.60575-.1896-1.1967-.5871-1.65418z"/><path d="m21.3723 10.4736h-.0352c-.0413-.0003-.0826.0034-.1232.0112h-.0144c-.0446.0096-.0884.0224-.1312.0384l-.0336.016c-.0322.0134-.0632.0295-.0928.048l-.0352.0224c-.0387.0267-.0751.0567-.1088.0896l-5.8928 5.8944.7296.7296 6.24-5.4768c.0353-.0309.0674-.0652.096-.1024l.0272-.0352c.0213-.0312.0406-.0638.0576-.0976.0096-.0192.0176-.0384.0256-.0576.0108-.0255.0198-.0517.0272-.0784 0-.0192.0112-.0384.016-.0576.0079-.0396.0132-.0797.016-.12v-.0528c0-.0288 0-.0576 0-.0864s0-.0384-.008-.0576c-.0296-.151-.1033-.2898-.2118-.3989s-.247-.1835-.3978-.2139h-.0304c-.0396-.0076-.0797-.0124-.12-.0144z"/><path d="m13.3963 15.1168 1.2096 1.2032 5.9088-5.9088c.1923-.188.4428-.3048.7104-.3312-1.0448-.8-2.184-.5904-7.8288 5.0368z"/><path d="m22.2075 12.0768-.072.0704-6.24 5.4752 1.0608 1.0592c2.6304-2.488 4.9648-4.8576 5.2512-6.6048z"/><path d="m6.64277 24.904c.00324.0113.0099.0214.01905.0288.00916.0075.02038.0119.03215.0128l2.71999.1872-1.5248-1.5248-1.23359 1.232c-.008.0083-.01345.0188-.01572.0301-.00226.0114-.00125.0231.00292.0339z"/><path d="m8.17394 23.3248 1.60799 1.608c.01909.0204.04463.0336.07231.0374s.05582-.0021.07969-.0166c.02493-.0124.04478-.033.05617-.0584.0114-.0254.0136-.054.00623-.0808l-.2704-1.1552c-.01751-.0749-.00955-.1535.02262-.2233.03216-.0698.0867-.1269.15498-.1623 2.81917-1.4128 5.09277-2.8672 6.76157-4.32l-1.12-1.12-2.4.5168z"/><path d="m15.2011 17.4944-.6016-.6016-.832.8304c-.006.0072-.0093.0163-.0093.0256 0 .0094.0033.0184.0093.0256.0039.0085.0107.0154.0193.0192.0085.0038.0181.0044.0271.0016z"/></g><path d="m25.4043 8.1104c-.0082-.02518-.0217-.04831-.0396-.06784-.0178-.01953-.0397-.03501-.0641-.04539-.0243-.01039-.0506-.01544-.0771-.01481-.0265.00062-.0525.00691-.0764.01843-.0238.01152-.0449.02801-.0619.04836-.0169.02035-.0293.04409-.0363.06963s-.0085.05229-.0043.07844.0139.0511.0285.07318c.0478.09622.0668.20422.0546.31097s-.0551.20768-.1234.29063c-.0224.0271-.0367.06001-.0411.09492-.0045.0349.0011.07035.016.10221s.0386.05883.0683.07775c.0296.01892.0641.02902.0992.02912.0272-.00029.054-.00645.0786-.01805.0246-.01159.0463-.02836.0638-.04915.1133-.13769.1844-.30513.2048-.48222s-.0107-.35632-.0896-.51618z" fill="#ff6c37"/></svg>
+    <h1>AE + SA Working Process</h1>
+    <div class="div"></div>
+    <span id="roleHint">one deal, two owners</span>
+  </div>
+  <select class="deal-select" id="dealSelect" aria-label="Select deal"></select>
+  <button class="btn sm" id="newDeal">+ Deal</button>
+  <div class="seg" role="group" aria-label="Your role">
+    <button id="roleAE" aria-pressed="true">AE</button>
+    <button id="roleSA" aria-pressed="false">SA</button>
+  </div>
+  <button class="btn ghost sm" id="rulesBtn">Rules</button>
+  <button class="btn ghost sm" id="dataBtn">Data</button>
+  <button class="btn ghost sm" id="themeBtn" aria-label="Toggle theme">Theme</button>
+</div>
+
+<div class="wrap" id="app"></div>
+<div class="foot">Internal tool for the Postman field team. Local to this browser, nothing is sent anywhere. Use Data to export, import, or make a share link.</div>
+
+<dialog id="rulesDlg"></dialog>
+<dialog id="dataDlg"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   CONTENT: the process itself
+   ============================================================ */
+
+const PHASES = [
+  {
+    n: 1, name: "Qualify", lead: "AE leads. SA advises, usually async or by listening in.",
+    exitQ: "What is the pain, what does it cost them, and who cares enough to fund fixing it?",
+    note: "Discovery with the customer's technical team is not the tool for finding budget.",
+    ae: [
+      "Why this account, why now, what we think hurts",
+      "The first call, and a seat for the SA if useful",
+      "Budget reality tested out loud, not assumed"
+    ],
+    sa: [
+      "A quick read: is this technically plausible?",
+      "Three questions that would confirm or kill the hypothesis",
+      "Red flags called out early, before we invest"
+    ],
+    checks: [
+      { id: "p1a", who: "AE",   t: "Pain described in the customer's own words" },
+      { id: "p1b", who: "AE",   t: "Cost of the pain quantified, even roughly" },
+      { id: "p1c", who: "AE",   t: "A named person who wants it fixed" },
+      { id: "p1d", who: "AE",   t: "Budget reality tested: funded, fundable, or neither" },
+      { id: "p1e", who: "SA",   t: "Technical plausibility read given, with three confirming questions" }
+    ]
+  },
+  {
+    n: 2, name: "Discover", lead: "SA leads the room. AE opens and closes it.",
+    exitQ: "What will they judge us on, in their order of priority, and can we win on it?",
+    note: "Whoever writes the criteria usually wins the deal. This is the SA's highest-leverage hour in the whole cycle.",
+    ae: [
+      "The brief, and three working days notice",
+      "The right people: a practitioner, an architect, someone who sets priorities",
+      "Business framing at the start, a dated next step at the end"
+    ],
+    sa: [
+      "Their current state, written down and confirmed by the customer",
+      "Requirements marked: we do this / we partly do this / we do not do this",
+      "The decision criteria, ranked and written, ideally co-written with our champion",
+      "An honest fit call: go, go with caveats, or walk away"
+    ],
+    checks: [
+      { id: "p2a", who: "SA",   t: "Current state written down and confirmed by the customer" },
+      { id: "p2b", who: "SA",   t: "Requirements listed and marked for fit" },
+      { id: "p2c", who: "SA",   t: "Decision criteria written and ranked" },
+      { id: "p2d", who: "SA",   t: "Technical champion identified by name" },
+      { id: "p2e", who: "AE",   t: "Right people were in the room, or the gap is named" },
+      { id: "p2f", who: "SA",   t: "Fit call made: go, go with caveats, or walk away" }
+    ]
+  },
+  {
+    n: 3, name: "Prove", lead: "Both in the room. SA drives the content, AE drives the commercial thread.",
+    exitQ: "Has the customer confirmed we meet their criteria, and do they know what it is worth to them?",
+    note: "A POC is there to remove the customer's risk, not to fill a stage. If the criteria are already proven, skip it and go to proposal.",
+    ae: [
+      "A confirmed audience, including someone who can say yes",
+      "The question asked out loud: what would you need to see to be convinced?",
+      "The value conversation and the pricing conversation",
+      "A dated next step before anyone leaves the call"
+    ],
+    sa: [
+      "A demo where every scene maps to a ranked criterion, and nothing else is shown",
+      "A short target-state design they can circulate internally without us",
+      "The numbers: baseline, expected improvement, and the assumptions behind them",
+      "Every gap stated plainly, with a workaround, a date, or an admission"
+    ],
+    checks: [
+      { id: "p3a", who: "SA",   t: "Every demo scene maps to one of their ranked criteria" },
+      { id: "p3b", who: "AE",   t: "Someone who can say yes was in the room" },
+      { id: "p3c", who: "Both", t: "Customer confirmed the solution meets their criteria" },
+      { id: "p3d", who: "SA",   t: "Gaps stated plainly, with a workaround, a date, or an admission" },
+      { id: "p3e", who: "Both", t: "Value numbers agreed: baseline, improvement, assumptions" },
+      { id: "p3f", who: "Both", t: "Answered: do we actually need a POC?" },
+      { id: "p3g", who: "Both", t: "If running a POC: success criteria agreed with the customer before day one", hard: true }
+    ]
+  },
+  {
+    n: 4, name: "Close and hand over", lead: "AE leads. SA on call.",
+    exitQ: "Is there any technical reason this cannot be signed, and does the delivery team know what we committed to?",
+    note: "An SA's work is not finished at signature.",
+    ae: [
+      "Proposal, pricing, and the path to signature with names and dates",
+      "Procurement, legal, and security steps sequenced",
+      "A handover meeting booked within a week of signature"
+    ],
+    sa: [
+      "Security and architecture answers, within the deadline given",
+      "Confirmation that nothing technical is still open",
+      "A handover pack: what we sold, what we promised, what to watch, who is who"
+    ],
+    checks: [
+      { id: "p4a", who: "SA",   t: "Security and architecture answers delivered on time" },
+      { id: "p4b", who: "SA",   t: "Nothing technical still open, and the SA has said so" },
+      { id: "p4c", who: "AE",   t: "Signature path mapped: named people, dated steps" },
+      { id: "p4d", who: "AE",   t: "Handover meeting booked within a week of signature" },
+      { id: "p4e", who: "SA",   t: "Handover pack written and accepted by delivery" }
+    ]
+  }
+];
+
+const MEDDPICC = [
+  { k: "M",  letter: "M", name: "Metrics",           who: "AE",   note: "SA on the arithmetic",      q: "What number changes, from what to what?" },
+  { k: "E",  letter: "E", name: "Economic Buyer",    who: "AE",   note: "",                          q: "Have we met the person who can fund this, not just approve it?" },
+  { k: "DC", letter: "D", name: "Decision Criteria", who: "SA",   note: "",                          q: "Do we have their ranked list in writing?" },
+  { k: "DP", letter: "D", name: "Decision Process",  who: "AE",   note: "",                          q: "What are the steps and dates from here to signature?" },
+  { k: "P",  letter: "P", name: "Paper Process",     who: "AE",   note: "SA on security reviews",    q: "Who else has to sign, and how long do they take?" },
+  { k: "I",  letter: "I", name: "Identify Pain",     who: "Both", note: "",                          q: "What breaks if they do nothing?" },
+  { k: "C",  letter: "C", name: "Champion",          who: "Both", note: "AE business, SA technical", q: "Who sells for us when we are not in the room?" },
+  { k: "CO", letter: "C", name: "Competition",       who: "AE",   note: "SA on differentiation",     q: "Including doing nothing and building it themselves, why us?" }
+];
+
+const STATES = [
+  { v: 0, label: "Unknown",   glyph: "?", cls: "s0" },
+  { v: 1, label: "Assumed",   glyph: "◑", cls: "s1" },
+  { v: 2, label: "Validated", glyph: "✓", cls: "s2" }
+];
+
+const TIERS = [
+  { id: "advice",    label: "Advice, or a listening seat on a call", days: 1 },
+  { id: "discovery", label: "Discovery, a workshop, or a standard demo", days: 3 },
+  { id: "tailored",  label: "Tailored demo, POC, hands-on work, or an RFP response", days: 5, ideal: 10 }
+];
+
+const RULES = {
+  "The AE always": [
+    "<b>Briefs before booking.</b> A calendar invite is not a brief.",
+    "Gets the right people in the room, and tells the SA who did not show up.",
+    "<b>Never commits to product behaviour, timelines, or roadmap.</b> Route it to the SA, every time.",
+    "Opens with business context and closes with a dated next step.",
+    "Keeps the deal record current, so the SA is not the last to know."
+  ],
+  "The SA always": [
+    "Responds to a request within one working day: accept, or propose what would make it work.",
+    "Says “I do not know, I will find out by X” instead of guessing. Credibility is the product.",
+    "Writes down the decision criteria and shares them back to the customer.",
+    "<b>Tells the truth about fit, including when the answer is no.</b> A clean disqualification is a win.",
+    "Sends a short written debrief the same day."
+  ],
+  "Both always": [
+    "Pre-brief for fifteen minutes before anything that matters, and debrief for ten minutes right after.",
+    "Never end a customer call without a next step that has a date and an owner.",
+    "<b>Disagree before the call, never in front of the customer.</b>",
+    "When the answer is “we cannot do that”, also say what we can do."
+  ],
+  "Who decides what": [
+    "<b>Feasibility and technical truth:</b> the SA decides. Not negotiable, not overridable by the AE.",
+    "<b>Commercial strategy, pricing, and timing:</b> the AE decides.",
+    "<b>Priority when the SA is stretched:</b> the SA's manager decides.",
+    "<b>Stuck for more than a day:</b> the two managers settle it within 24 hours, and we move on."
+  ],
+  "When to bend this": [
+    "Two people who trust each other and talk daily need less of this. A new pairing or a complex deal needs more. Bend it deliberately and say so.",
+    "<b>The one thing that does not bend:</b> a POC without agreed success criteria. That is the mistake that costs weeks, every single time."
+  ]
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const KEY = "aesa.process.v1";
+let DB = load();
+let ui = { tab: "phase", role: DB.role || "AE", dealId: DB.lastDeal || null };
+
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return { deals: [], role: "AE", lastDeal: null, theme: null };
+}
+let saveWarned = false;
+function save() {
+  DB.role = ui.role; DB.lastDeal = ui.dealId;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(DB));
+  } catch (e) {
+    if (!saveWarned) {
+      saveWarned = true;
+      toast("This browser is not letting the page save. Use Data to export before you close the tab.");
+    }
+  }
+}
+function uid() { return Math.random().toString(36).slice(2, 9); }
+
+const b64enc = str => btoa(String.fromCharCode.apply(null, new TextEncoder().encode(str)));
+const b64dec = b64 => new TextDecoder().decode(Uint8Array.from(atob(b64), c => c.charCodeAt(0)));
+function shareLink(d) { return location.href.split("#")[0] + "#deal=" + b64enc(JSON.stringify(d)); }
+function maybeImportFromHash() {
+  const m = location.hash.match(/^#deal=(.+)$/);
+  if (!m) return;
+  try {
+    const d = JSON.parse(b64dec(m[1]));
+    if (confirm('Import "' + (d.name || "untitled") + '" from this link? It becomes a copy in this browser.')) {
+      d.id = uid(); DB.deals.push(d); ui.dealId = d.id; save();
+    }
+  } catch (e) { /* not a deal link */ }
+  history.replaceState(null, "", location.pathname + location.search);
+}
+function deal() { return DB.deals.find(d => d.id === ui.dealId) || null; }
+
+function newDeal(name) {
+  const d = {
+    id: uid(), name: name || "New deal", company: "", ae: "", sa: "",
+    value: "", closeDate: "", phase: 1,
+    med: Object.fromEntries(MEDDPICC.map(m => [m.k, { s: 0, note: "" }])),
+    checks: {}, overrides: [],
+    brief: { tier: "discovery", meetingDate: "", objective: "", agenda: "", known: "", competition: "", status: "draft", note: "", attendees: [] },
+    debriefs: [],
+    poc: { needed: "undecided", why: "", inScope: "", outScope: "", passFail: "", provides: "", start: "", end: "", checkpoints: "", nextIfPass: "", agreed: false },
+    created: today()
+  };
+  DB.deals.push(d); ui.dealId = d.id; save(); return d;
+}
+
+function today() { return new Date().toISOString().slice(0, 10); }
+function workingDaysUntil(dateStr) {
+  if (!dateStr) return null;
+  const target = new Date(dateStr + "T00:00:00");
+  const now = new Date(today() + "T00:00:00");
+  if (isNaN(target)) return null;
+  let n = 0, dir = target >= now ? 1 : -1, cur = new Date(now);
+  while (cur.getTime() !== target.getTime()) {
+    cur.setDate(cur.getDate() + dir);
+    const w = cur.getDay();
+    if (w !== 0 && w !== 6) n += dir;
+  }
+  return n;
+}
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/* ============================================================
+   DERIVED READINESS
+   ============================================================ */
+
+function medStats(d) {
+  const vals = MEDDPICC.map(m => (d.med[m.k] || { s: 0 }).s);
+  return {
+    validated: vals.filter(v => v === 2).length,
+    assumed: vals.filter(v => v === 1).length,
+    unknown: vals.filter(v => v === 0).length,
+    blanks: MEDDPICC.filter(m => (d.med[m.k] || { s: 0 }).s === 0)
+  };
+}
+function phaseStats(d) {
+  const p = PHASES[d.phase - 1];
+  const done = p.checks.filter(c => d.checks[c.id]).length;
+  const hardOpen = p.checks.filter(c => c.hard && !d.checks[c.id]);
+  return { done, total: p.checks.length, open: p.checks.filter(c => !d.checks[c.id]), hardOpen, phase: p };
+}
+function lastDebrief(d) {
+  if (!d.debriefs.length) return null;
+  return d.debriefs.slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0];
+}
+function daysSince(dateStr) {
+  if (!dateStr) return null;
+  return Math.round((new Date(today()) - new Date(dateStr)) / 86400000);
+}
+function noticeCheck(d) {
+  const t = TIERS.find(t => t.id === d.brief.tier) || TIERS[1];
+  const wd = workingDaysUntil(d.brief.meetingDate);
+  if (wd === null) return null;
+  return { tier: t, wd, short: wd < t.days, ideal: t.ideal && wd < t.ideal };
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+
+const app = document.getElementById("app");
+
+function render() {
+  renderDealSelect();
+  document.getElementById("roleAE").setAttribute("aria-pressed", ui.role === "AE");
+  document.getElementById("roleSA").setAttribute("aria-pressed", ui.role === "SA");
+  document.getElementById("roleHint").textContent =
+    ui.role === "AE" ? "you are the AE: you bring the context" : "you are the SA: you bring the technical truth";
+
+  const d = deal();
+  if (!d) { app.innerHTML = emptyState(); wire(); return; }
+
+  const ps = phaseStats(d), ms = medStats(d), nc = noticeCheck(d), ld = lastDebrief(d);
+
+  app.innerHTML = `
+    ${dealHead(d)}
+    ${meterCard(d, ps)}
+    ${tiles(d, ps, ms, ld, nc)}
+    <div id="banners">${banners(d, ps, ms, nc, ld)}</div>
+    <div class="tabs" role="tablist">
+      ${tabBtn("phase", "Phase and checks", ps.done + "/" + ps.total)}
+      ${tabBtn("med", "MEDDPICC", ms.validated + "/8")}
+      ${tabBtn("brief", "Call brief", d.brief.status === "draft" ? "draft" : d.brief.status)}
+      ${tabBtn("debrief", "Debriefs", String(d.debriefs.length))}
+      ${tabBtn("poc", "POC criteria", d.poc.needed === "yes" ? (d.poc.agreed ? "agreed" : "open") : d.poc.needed)}
+      ${tabBtn("summary", "Summary", "")}
+    </div>
+    <div id="panel">${panel(d)}</div>
+  `;
+  wire();
+}
+
+function renderDealSelect() {
+  const sel = document.getElementById("dealSelect");
+  sel.innerHTML = DB.deals.length
+    ? DB.deals.map(d => `<option value="${d.id}" ${d.id === ui.dealId ? "selected" : ""}>${esc(d.name)}${d.company ? " (" + esc(d.company) + ")" : ""}</option>`).join("")
+    : `<option value="">No deals yet</option>`;
+}
+
+function emptyState() {
+  return `<div class="card"><div class="empty">
+    <div style="max-width:190px;margin:0 auto 22px"><svg role="img" aria-label="Postman" style="width:100%;height:auto" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 381.5 115"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#ff6c37;}</style></defs><circle class="cls-1" cx="57.06" cy="58.1" r="51.39"/><path class="cls-2" d="M139.84,73.66V41a1.27,1.27,0,0,1,.46-1,1.74,1.74,0,0,1,1.19-.42h9.2a10.79,10.79,0,0,1,7.48,2.53c1.88,1.69,2.81,4.34,2.81,8v.43c0,3.64-.95,6.3-2.86,8a11,11,0,0,1-7.6,2.55H144V73.66a1.12,1.12,0,0,1-.15.62,1.15,1.15,0,0,1-.45.45,2.77,2.77,0,0,1-1.43.39,2.81,2.81,0,0,1-1.44-.39,1.17,1.17,0,0,1-.47-.44A1.27,1.27,0,0,1,139.84,73.66Zm4.08-16h6.6a6.2,6.2,0,0,0,2.56-.37,6.4,6.4,0,0,0,2.19-1.36,7.13,7.13,0,0,0,1.67-5.18v-.59A7.13,7.13,0,0,0,155.27,45a6.22,6.22,0,0,0-2.19-1.35,6.37,6.37,0,0,0-2.56-.37H144Z"/><path class="cls-2" d="M175.27,64.81V50.16q0-5.47,2.84-8a12.68,12.68,0,0,1,15.25,0c1.91,1.71,2.86,4.39,2.87,8V64.81c0,3.67-.95,6.35-2.87,8a12.63,12.63,0,0,1-15.27,0C176.21,71.15,175.27,68.49,175.27,64.81Zm4.09,0q0,6.9,6.37,6.91a6.35,6.35,0,0,0,2.55-.37A6.16,6.16,0,0,0,190.47,70a7.18,7.18,0,0,0,1.68-5.18V50.16a7.13,7.13,0,0,0-.33-2.75A7.21,7.21,0,0,0,190.47,45a6.35,6.35,0,0,0-4.75-1.73c-4.25,0-6.36,2.31-6.36,6.9Z"/><path class="cls-2" d="M210.69,70.11a2.47,2.47,0,0,1,.55-1.5,1.65,1.65,0,0,1,.51-.51,1.53,1.53,0,0,1,.68-.23,2,2,0,0,1,1.12.62c.45.4.92.85,1.41,1.34a6.35,6.35,0,0,0,2.3,1.37,9.43,9.43,0,0,0,3.56.6,7.42,7.42,0,0,0,5-1.53,5.56,5.56,0,0,0,1.81-4.49,6.07,6.07,0,0,0-.38-2.35,5.81,5.81,0,0,0-1.27-2,11,11,0,0,0-4-2.55c-1.57-.58-3.13-1.18-4.75-1.87a10.09,10.09,0,0,1-4-3.06,8.32,8.32,0,0,1-1.65-5.33,9.64,9.64,0,0,1,1-4.45,6.81,6.81,0,0,1,2.6-2.85,13.49,13.49,0,0,1,3.38-1.4,15.26,15.26,0,0,1,3.75-.44,18.76,18.76,0,0,1,5.76.87c1.83.6,2.76,1.4,2.76,2.37a2.72,2.72,0,0,1-.49,1.46,1.39,1.39,0,0,1-.53.57A1.49,1.49,0,0,1,229,45a16.5,16.5,0,0,1-2.18-.87,10.87,10.87,0,0,0-4.52-.93,8.59,8.59,0,0,0-4.75,1.19,4.27,4.27,0,0,0-1.83,3.85,4.34,4.34,0,0,0,.37,2,4.44,4.44,0,0,0,1.23,1.64,12.6,12.6,0,0,0,4,2.21c1.58.56,3.15,1.19,4.75,1.9a10.12,10.12,0,0,1,4,3.43,10.28,10.28,0,0,1,1.64,6q0,5-2.92,7.57a11.28,11.28,0,0,1-7.72,2.55,13.81,13.81,0,0,1-7.32-1.82C211.68,72.49,210.69,71.29,210.69,70.11Z"/><path class="cls-2" d="M243.86,41.36a2.06,2.06,0,0,1,.39-1.25,1.16,1.16,0,0,1,.46-.42,1.18,1.18,0,0,1,.61-.13h19.8a1.18,1.18,0,0,1,.61.13,1.23,1.23,0,0,1,.46.42,2.2,2.2,0,0,1,.39,1.25,2.3,2.3,0,0,1-.39,1.33,1.14,1.14,0,0,1-.46.44,1.18,1.18,0,0,1-.61.13h-7.78v30.4a1.12,1.12,0,0,1-.15.62,1.15,1.15,0,0,1-.45.45,2.77,2.77,0,0,1-1.43.39,2.81,2.81,0,0,1-1.44-.39,1.21,1.21,0,0,1-.45-.45,1.32,1.32,0,0,1-.15-.62V43.26h-7.89a1.09,1.09,0,0,1-.61-.13,1.14,1.14,0,0,1-.46-.41A2.29,2.29,0,0,1,243.86,41.36Z"/><path class="cls-2" d="M280.44,73.66v-32a1.82,1.82,0,0,1,.31-1.32,1.79,1.79,0,0,1,1.15-.72,2.29,2.29,0,0,1,.64,0c1.3,0,2.37.86,3.27,2.58l7.63,14.64,7.69-14.64c.94-1.72,2-2.58,3.25-2.58a1.76,1.76,0,0,1,2,1.47v0a1.46,1.46,0,0,1,0,.51v32a1.32,1.32,0,0,1-.15.62,1.15,1.15,0,0,1-.45.45,2.82,2.82,0,0,1-1.44.4,2.78,2.78,0,0,1-1.43-.4,1.15,1.15,0,0,1-.45-.45,1.12,1.12,0,0,1-.15-.62V48.12L295,61.93a1.75,1.75,0,0,1-.62.85,1.49,1.49,0,0,1-1.92,0,1.73,1.73,0,0,1-.57-.83l-7.34-14V73.66a1.22,1.22,0,0,1-.16.62,1.19,1.19,0,0,1-.44.45,2.55,2.55,0,0,1-1.38.45,2.47,2.47,0,0,1-1.43-.39,1.16,1.16,0,0,1-.52-.46A1.2,1.2,0,0,1,280.44,73.66Z"/><path class="cls-2" d="M320.38,73.44a1.37,1.37,0,0,1,.09-.4l10-32c.29-.94,1.1-1.42,2.48-1.42s2.2.48,2.48,1.42l10,32.2a.54.54,0,0,0,0,.18.33.33,0,0,1,0,.14,1.36,1.36,0,0,1-.23.7,1.43,1.43,0,0,1-.57.49,3.17,3.17,0,0,1-1.78.47,1.33,1.33,0,0,1-.89-.19,1.35,1.35,0,0,1-.57-.72l-2.13-7.12H326.45l-2.13,7.11a1.32,1.32,0,0,1-.57.74,1.27,1.27,0,0,1-.91.2,3,3,0,0,1-1.65-.49,1.35,1.35,0,0,1-.59-.52A1.32,1.32,0,0,1,320.38,73.44Zm7.06-9.75h10.88l-5.45-18.18Z"/><path class="cls-2" d="M359.49,73.66V41c0-.93.67-1.41,2-1.41a2.66,2.66,0,0,1,1.73.6,6.32,6.32,0,0,1,1.38,2l12.12,23.74V41a1.21,1.21,0,0,1,.16-.61,1.24,1.24,0,0,1,.44-.44,3,3,0,0,1,1.44-.36,3,3,0,0,1,1.43.36,1.27,1.27,0,0,1,.45.44,1.32,1.32,0,0,1,.16.61V73.66a1.13,1.13,0,0,1-.16.62,1.08,1.08,0,0,1-.45.45,2.51,2.51,0,0,1-1.43.39,2.91,2.91,0,0,1-2.58-1.85L363.57,48.81V73.66a1.18,1.18,0,0,1-.6,1.07,2.84,2.84,0,0,1-2.87,0,1.17,1.17,0,0,1-.46-.45A1.21,1.21,0,0,1,359.49,73.66Z"/><path class="cls-2" d="M89.63,29.34a.53.53,0,0,0-.2.16.61.61,0,0,0-.13.22.73.73,0,0,0,0,.25.72.72,0,0,0,.07.25,1.9,1.9,0,0,1,.19,1.1,2,2,0,0,1-.43,1,.61.61,0,0,0-.14.47.63.63,0,0,0,.24.43.64.64,0,0,0,.46.15.63.63,0,0,0,.44-.22,3.3,3.3,0,0,0,.74-1.71,3.26,3.26,0,0,0-.33-1.84.65.65,0,0,0-.37-.32A.71.71,0,0,0,89.63,29.34Z"/><path class="cls-2" d="M64.46,1.46A56.5,56.5,0,1,0,113.38,64.7,56.57,56.57,0,0,0,64.46,1.46ZM76.11,36.71a4,4,0,0,0-2.8,1.18l-21,21-4.48-4.48C68.52,33.77,72.26,33.57,76.11,36.71ZM53.17,59.59l20.94-20.9a2.92,2.92,0,0,1,4.78,1,3,3,0,0,1,.2,1.16A2.86,2.86,0,0,1,78.81,42a3,3,0,0,1-.71.95L55.94,62.36Zm1.56,3.27L49.54,64a.22.22,0,0,1-.18,0,.28.28,0,0,1-.14-.12.29.29,0,0,1,0-.18.38.38,0,0,1,.08-.17l3-3ZM41.51,60.7,47,55.18l4.15,4.13-9.34,2a.31.31,0,0,1-.23,0,.37.37,0,0,1-.17-.16.35.35,0,0,1,0-.22A.33.33,0,0,1,41.51,60.7ZM24.31,89.23a.33.33,0,0,1-.18-.08A.36.36,0,0,1,24,89a.27.27,0,0,1,0-.2.4.4,0,0,1,.09-.17l4.46-4.46,5.77,5.76Zm11.44-5.92a1.11,1.11,0,0,0-.48.5,1.05,1.05,0,0,0-.07.7l.95,4.07a.58.58,0,0,1,0,.37.55.55,0,0,1-.25.27.53.53,0,0,1-.37.07.59.59,0,0,1-.33-.15l-5.79-5.78L47.1,65.65l8.59-1.84,4.12,4.12c-5.93,5.17-14,10.35-24.06,15.37ZM60.64,67.17l-4-4L78.84,43.79a3.53,3.53,0,0,0,.56-.6c-.7,6.34-9.57,15.28-18.75,24ZM77.88,36.74a8.58,8.58,0,0,1,11.6-12.63L81.87,31.7a.71.71,0,0,0-.12.18.51.51,0,0,0,0,.44.71.71,0,0,0,.12.18l5.88,5.87a8.58,8.58,0,0,1-9.86-1.63Zm12.16,0a8,8,0,0,1-1.28,1L83.07,32.1l7.23-7.22A8.57,8.57,0,0,1,90,36.74Z"/></svg></div>
+    <h2>One deal, two owners</h2>
+    <p>The AE owns the business outcome. The SA owns the technical outcome.<br>Neither wins alone, so neither works alone.</p>
+    <p style="font-size:13px;max-width:520px;margin:14px auto 0">Both of you keep this current. The AE fills the brief and the commercial letters; the SA fills the criteria and the technical truth. It is one record, not two.</p>
+    <p style="margin:18px 0 20px;color:var(--ink-muted);font-size:14px">
+      ${PHASES.map(p => "<b style='color:var(--ink)'>" + p.n + ". " + p.name + "</b>").join(" &rarr; ")}
+    </p>
+    <button class="btn primary" id="newDeal2">Start a deal</button>
+  </div></div>`;
+}
+
+function dealHead(d) {
+  return `<div class="card"><div class="dealhead">
+    <div style="flex:1;min-width:240px">
+      <h2 contenteditable="true" data-edit="name" spellcheck="false">${esc(d.name)}</h2>
+      <div class="dealmeta">
+        <b contenteditable="true" data-edit="company" spellcheck="false">${esc(d.company) || "Company"}</b>
+        &middot; AE <b contenteditable="true" data-edit="ae" spellcheck="false">${esc(d.ae) || "unnamed"}</b>
+        &middot; SA <b contenteditable="true" data-edit="sa" spellcheck="false">${esc(d.sa) || "unnamed"}</b>
+        &middot; <b contenteditable="true" data-edit="value" spellcheck="false">${esc(d.value) || "value?"}</b>
+        &middot; close <b contenteditable="true" data-edit="closeDate" spellcheck="false">${esc(d.closeDate) || "date?"}</b>
+      </div>
+    </div>
+    <button class="btn ghost sm" id="delDeal">Delete deal</button>
+  </div></div>`;
+}
+
+function meterCard(d, ps) {
+  const p = ps.phase;
+  return `<div class="card">
+    <h2>Phase ${p.n} of 4</h2>
+    <div class="row" style="justify-content:space-between">
+      <div>
+        <h2 style="font-size:20px">${p.name}</h2>
+        <div class="dealmeta">${esc(p.lead)}</div>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn sm" id="phaseBack" ${d.phase === 1 ? "disabled" : ""}>&larr; Back</button>
+        <button class="btn primary sm" id="phaseFwd" ${d.phase === 4 ? "disabled" : ""}>Advance phase &rarr;</button>
+      </div>
+    </div>
+    <div class="meter" role="img" aria-label="Phase ${p.n} of 4: ${p.name}">
+      ${PHASES.map(x => `<div class="meter-seg ${x.n < d.phase ? "done" : x.n === d.phase ? "now" : ""}"></div>`).join("")}
+    </div>
+    <div class="meter-labels">${PHASES.map(x => `<span class="${x.n === d.phase ? "now" : ""}">${x.n}. ${x.name}</span>`).join("")}</div>
+    <div class="exitq">
+      <div class="lbl">Move on only when you can answer</div>
+      <div class="q">${esc(p.exitQ)}</div>
+    </div>
+  </div>`;
+}
+
+function tiles(d, ps, ms, ld, nc) {
+  const medPct = Math.round((ms.validated / 8) * 100);
+  const medCls = ms.unknown >= 2 ? "warning" : ms.validated >= 6 ? "good" : "";
+  const chkPct = Math.round((ps.done / ps.total) * 100);
+  const ds = ld ? daysSince(ld.date) : null;
+  let noticeVal = "–", noticeSub = "no meeting date set";
+  if (nc && nc.wd < 0) { noticeVal = "past"; noticeSub = "the date on the brief has gone by"; }
+  else if (nc) {
+    noticeVal = nc.wd + (nc.wd === 1 ? " day" : " days");
+    noticeSub = nc.short ? "short notice for this ask" : "meets the " + nc.tier.days + " day minimum";
+  }
+  return `<div class="tiles" style="margin-bottom:16px">
+    <div class="tile">
+      <div class="tl">MEDDPICC validated</div>
+      <div class="tv">${ms.validated}<small> / 8</small></div>
+      <div class="td">${ms.assumed} assumed, ${ms.unknown} unknown</div>
+      <div class="track"><div class="fill ${medCls}" style="width:${medPct}%"></div></div>
+    </div>
+    <div class="tile">
+      <div class="tl">Phase ${ps.phase.n} exit checks</div>
+      <div class="tv">${ps.done}<small> / ${ps.total}</small></div>
+      <div class="td">${ps.open.length ? ps.open.length + " still open" : "all clear"}</div>
+      <div class="track"><div class="fill ${ps.done === ps.total ? "good" : ""}" style="width:${chkPct}%"></div></div>
+    </div>
+    <div class="tile">
+      <div class="tl">Notice on next call</div>
+      <div class="tv" style="color:${nc && (nc.short || nc.wd < 0) ? "var(--critical)" : "inherit"}">${noticeVal}</div>
+      <div class="td">${esc(noticeSub)}</div>
+    </div>
+    <div class="tile">
+      <div class="tl">Last debrief</div>
+      <div class="tv">${ds === null ? "–" : ds === 0 ? "today" : ds + "d"}</div>
+      <div class="td">${ld ? esc(ld.outcome || "logged") : "nothing logged yet"}</div>
+    </div>
+  </div>`;
+}
+
+function banner(kind, glyph, html) {
+  return `<div class="banner ${kind}"><div class="ic" aria-hidden="true">${glyph}</div><div>${html}</div></div>`;
+}
+
+function banners(d, ps, ms, nc, ld) {
+  const out = [];
+  if (ms.unknown >= 2) {
+    out.push(banner("warning", "!", `<b>${ms.unknown} MEDDPICC letters are blank</b> (${ms.blanks.map(b => b.letter + " " + b.name).join(", ")}). That is what the next customer meeting is for, not a demo.`));
+  }
+  if (d.phase >= 3 && d.poc.needed === "yes" && !d.poc.agreed) {
+    out.push(banner("critical", "✕", `<b>POC success criteria are not agreed.</b> This is the one rule that does not bend: the POC does not start until the customer has agreed what passes, who judges, and what they do next if it passes.`));
+  }
+  if (nc && nc.wd < 0) {
+    out.push(banner("warning", "!", `<b>The meeting date on the brief has passed.</b> Log a debrief, then set the next one.`));
+  } else if (nc && nc.short) {
+    out.push(banner("critical", "✕", `<b>Short notice.</b> ${esc(nc.tier.label)} needs ${nc.tier.days} working days. This call is in ${nc.wd}. Either move the date, cut the scope, or say out loud why it is worth doing rushed.`));
+  } else if (nc && nc.ideal && !nc.short && nc.wd >= 0) {
+    out.push(banner("warning", "!", `<b>Tight.</b> ${nc.wd} working days is workable, but ${nc.tier.ideal} is where tailored work gets good.`));
+  }
+  if (d.brief.status === "returned") {
+    out.push(banner("warning", "!", `<b>Brief sent back by the SA.</b> ${esc(d.brief.note) || "No reason given."}`));
+  }
+  if (d.phase === 2 && (d.med.DC || {}).s !== 2) {
+    out.push(banner("warning", "!", `<b>Decision criteria are not validated.</b> This is the SA's job in Phase 2 and the single highest-leverage artefact in the cycle. Whoever writes the criteria usually wins.`));
+  }
+  if (ld && daysSince(ld.date) > 21) {
+    out.push(banner("warning", "!", `<b>No debrief in ${daysSince(ld.date)} days.</b> If the deal is alive, something happened. If nothing happened, the deal is not alive.`));
+  }
+  if (ps.done === ps.total && d.phase < 4) {
+    out.push(banner("good", "✓", `<b>Phase ${ps.phase.n} checks are complete.</b> Answer the exit question together, out loud, then advance.`));
+  }
+  if (!out.length) out.push(banner("good", "✓", `Nothing flagged. Keep the weekly thirty minutes and a dated next step on every call.`));
+  return out.join("");
+}
+
+function tabBtn(id, label, count) {
+  return `<button role="tab" data-tab="${id}" aria-selected="${ui.tab === id}">${label}${count ? `<span class="count">${esc(count)}</span>` : ""}</button>`;
+}
+
+function panel(d) {
+  switch (ui.tab) {
+    case "phase": return phasePanel(d);
+    case "med": return medPanel(d);
+    case "brief": return briefPanel(d);
+    case "debrief": return debriefPanel(d);
+    case "poc": return pocPanel(d);
+    case "summary": return summaryPanel(d);
+  }
+}
+
+/* ---------- phase panel ---------- */
+function phasePanel(d) {
+  const p = PHASES[d.phase - 1];
+  const mine = ui.role;
+  return `
+  <div class="card">
+    <h2>What each of you brings, in this phase</h2>
+    <div class="owns"><b>Who fills this:</b> both of you, and only your own lane. Each exit check is tagged AE or SA. Tick your own, chase the other, never tick on someone else's behalf.</div>
+    <div class="lanes">
+      <div class="lane ${mine === "AE" ? "mine" : ""}">
+        <h3><span class="chip ae">AE</span> The AE brings ${mine === "AE" ? '<span class="yours">YOURS</span>' : ""}</h3>
+        <ul>${p.ae.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      </div>
+      <div class="lane ${mine === "SA" ? "mine" : ""}">
+        <h3><span class="chip sa">SA</span> The SA gives back ${mine === "SA" ? '<span class="yours">YOURS</span>' : ""}</h3>
+        <ul>${p.sa.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:var(--ink-muted)">${esc(p.note)}</p>
+  </div>
+
+  <div class="card">
+    <h2>Exit checks for Phase ${p.n}</h2>
+    <div class="checks">
+      ${p.checks.map(c => `
+        <div class="check ${c.hard ? "hard" : ""}">
+          <input type="checkbox" id="chk_${c.id}" data-check="${c.id}" ${d.checks[c.id] ? "checked" : ""}>
+          <label for="chk_${c.id}">${esc(c.t)}<span class="who ${c.who.toLowerCase()}">${c.who}</span></label>
+        </div>`).join("")}
+    </div>
+    ${d.overrides.length ? `<div style="margin-top:14px"><h2>Bent deliberately</h2>${d.overrides.map(o => `<div class="entry" style="border-left-color:var(--warning)"><div class="eh"><b>Phase ${o.phase} advanced early</b><span class="pill warning">${esc(o.date)}</span></div>${esc(o.why)}</div>`).join("")}</div>` : ""}
+  </div>`;
+}
+
+/* ---------- meddpicc panel ---------- */
+function medPanel(d) {
+  const ms = medStats(d);
+  return `
+  <div class="card">
+    <h2>MEDDPICC: who chases what</h2>
+    <p style="font-size:13px;color:var(--ink-2);margin-bottom:14px">
+      Click a state to cycle it: <b>unknown</b> &rarr; <b>assumed</b> (we think so, nobody confirmed) &rarr; <b>validated</b> (a named person told us, and it is written down).
+      Use this in the weekly thirty minutes to find the weakest link, not to fill in a form.
+    </p>
+    <div class="owns"><b>Who fills this:</b> the AE keeps Metrics, Economic Buyer, Decision Process, Paper Process and Competition current. The SA owns Decision Criteria and the technical half of Champion. Identify Pain gets filled together, out loud.</div>
+    <div class="med-grid">
+      ${MEDDPICC.map(m => {
+        const st = (d.med[m.k] || { s: 0, note: "" });
+        const s = STATES[st.s];
+        return `<div class="med ${s.cls}">
+          <div class="med-top">
+            <div class="med-letter">${m.letter}</div>
+            <div class="med-name">${esc(m.name)}${m.note ? `<div style="font-weight:400;font-size:11px;color:var(--ink-muted)">${esc(m.note)}</div>` : ""}</div>
+            <span class="chip ${m.who.toLowerCase()}">${m.who}</span>
+          </div>
+          <div class="med-q">${esc(m.q)}</div>
+          <button class="state-btn" data-med="${m.k}" aria-label="${esc(m.name)} is ${s.label}. Click to change.">
+            <span class="dot ${s.cls}" aria-hidden="true"></span>
+            <span class="state-glyph" aria-hidden="true">${s.glyph}</span>
+            <span>${s.label}</span>
+          </button>
+          <textarea class="med-note" data-mednote="${m.k}" placeholder="Evidence, name, or what is missing">${esc(st.note)}</textarea>
+        </div>`;
+      }).join("")}
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:var(--ink-2)">
+      <b>Rule of thumb:</b> if two or more letters are blank, that is what the next customer meeting is for. Not a demo.
+      Right now: <b>${ms.validated} validated, ${ms.assumed} assumed, ${ms.unknown} unknown</b>.
+    </p>
+  </div>`;
+}
+
+/* ---------- brief panel ---------- */
+function briefPanel(d) {
+  const b = d.brief, nc = noticeCheck(d);
+  const isSA = ui.role === "SA";
+  const statusPill = { draft: "muted", sent: "warning", accepted: "good", returned: "critical" }[b.status] || "muted";
+  return `
+  <div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:6px">
+      <h2 style="margin:0">The brief: five things, before anything customer-facing</h2>
+      <span class="pill ${statusPill}">${esc(b.status)}</span>
+    </div>
+    <div class="owns"><b>Who fills this:</b> the AE writes it, before booking the SA. The SA reads it and either accepts or sends it back. Ten minutes here saves an hour of recovery.</div>
+
+    <div class="inline">
+      <div class="field">
+        <label for="b_tier">What are you asking the SA for</label>
+        <select id="b_tier" data-brief="tier">
+          ${TIERS.map(t => `<option value="${t.id}" ${b.tier === t.id ? "selected" : ""}>${esc(t.label)} (${t.days}${t.ideal ? " to " + t.ideal : ""} working days notice)</option>`).join("")}
+        </select>
+      </div>
+      <div class="field" style="max-width:180px">
+        <label for="b_date">Meeting date</label>
+        <input type="date" id="b_date" data-brief="meetingDate" value="${esc(b.meetingDate)}">
+      </div>
+    </div>
+    ${nc ? `<p style="font-size:13px;color:${nc.short ? "var(--critical)" : "var(--ink-muted)"};margin:-4px 0 14px">
+      ${nc.wd} working days from today. Minimum for this ask: ${nc.tier.days}.${nc.tier.ideal ? " Ideal: " + nc.tier.ideal + "." : ""}
+    </p>` : ""}
+
+    <div class="field">
+      <label for="b_obj">1. Objective <span class="hint">What must be true at the end of this call that is not true now?</span></label>
+      <textarea id="b_obj" data-brief="objective" placeholder="Not &quot;show them the platform&quot;. Something that can be true or false afterwards.">${esc(b.objective)}</textarea>
+    </div>
+
+    <div class="field">
+      <label>2. Who is in the room <span class="hint">Name, title, what they decide, how technical, and whether they are friendly, neutral, or hostile. &quot;The team&quot; is not an answer.</span></label>
+      <table class="att">
+        <thead><tr><th>Name</th><th>Title</th><th>What they decide</th><th>Depth</th><th>Stance</th><th></th></tr></thead>
+        <tbody>
+        ${(b.attendees || []).map((a, i) => `<tr>
+          <td><input type="text" data-att="${i}.name" value="${esc(a.name)}" placeholder="Name"></td>
+          <td><input type="text" data-att="${i}.title" value="${esc(a.title)}" placeholder="Title"></td>
+          <td><input type="text" data-att="${i}.decides" value="${esc(a.decides)}" placeholder="Budget, architecture, nothing"></td>
+          <td><select data-att="${i}.depth">${["", "Practitioner", "Architect", "Manager", "Executive"].map(o => `<option ${a.depth === o ? "selected" : ""}>${o}</option>`).join("")}</select></td>
+          <td><select data-att="${i}.stance">${["Unknown", "Friendly", "Neutral", "Hostile"].map(o => `<option ${a.stance === o ? "selected" : ""}>${o}</option>`).join("")}</select></td>
+          <td><button class="btn ghost sm" data-attdel="${i}" aria-label="Remove attendee">&times;</button></td>
+        </tr>`).join("")}
+        </tbody>
+      </table>
+      <button class="btn sm" id="addAtt" style="margin-top:8px">+ Add a name</button>
+      ${(b.attendees || []).length === 0 ? `<p style="font-size:13px;color:var(--critical);margin-top:8px">No named attendees. An SA is entitled to send this back.</p>` : ""}
+      ${(b.attendees || []).length && !(b.attendees || []).some(a => (a.decides || "").trim()) ? `<p style="font-size:13px;color:#8a5c00;margin-top:8px">Nobody in this room is recorded as deciding anything. Is that really true?</p>` : ""}
+    </div>
+
+    <div class="field">
+      <label for="b_ag">3. Agenda <span class="hint">Rough timings, and who runs which part.</span></label>
+      <textarea id="b_ag" data-brief="agenda" placeholder="0-5 AE: context and why we are here&#10;5-25 SA: ...&#10;25-30 AE: next step">${esc(b.agenda)}</textarea>
+    </div>
+
+    <div class="field">
+      <label for="b_kn">4. What they have already told us <span class="hint">Requirements, constraints, environment, and anything you have already promised them.</span></label>
+      <textarea id="b_kn" data-brief="known" placeholder="Including the awkward promises. This is a disclosure field, not a licence.">${esc(b.known)}</textarea>
+    </div>
+
+    <div class="field">
+      <label for="b_co">5. Competition and traps <span class="hint">Who else is in this, and what not to say.</span></label>
+      <textarea id="b_co" data-brief="competition" placeholder="Including doing nothing, and building it in-house.">${esc(b.competition)}</textarea>
+    </div>
+
+    <div class="row" style="margin-top:4px">
+      ${isSA ? `
+        <button class="btn primary sm" data-bstatus="accepted">Accept this request</button>
+        <button class="btn sm" data-bstatus="returned">Send it back</button>
+        <input type="text" id="b_note" placeholder="If sending back: what would make it workable" value="${esc(b.note)}" style="flex:1;min-width:220px;padding:6px 10px;border:1px solid var(--hair);border-radius:8px;background:var(--plane)">
+      ` : `
+        <button class="btn primary sm" data-bstatus="sent">Send to the SA</button>
+        <span style="font-size:13px;color:var(--ink-muted)">A calendar invite is not a brief.</span>
+      `}
+      <span class="spacer"></span>
+      <button class="btn sm" id="copyBrief">Copy as markdown</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- debrief panel ---------- */
+function debriefPanel(d) {
+  return `
+  <div class="card">
+    <h2>Debriefs</h2>
+    <p style="font-size:13px;color:var(--ink-2);margin-bottom:14px">
+      Ten minutes right after the call, written up the same day. Never end a customer call without a next step that has a date and an owner.
+    </p>
+    <div class="owns"><b>Who fills this:</b> whoever ran the call, the same day. Both of you read it before the next one.</div>
+    <div class="inline">
+      <div class="field" style="max-width:170px"><label for="db_date">Date</label><input type="date" id="db_date" value="${today()}"></div>
+      <div class="field" style="max-width:190px"><label for="db_out">Did we hit the objective</label>
+        <select id="db_out"><option>Hit it</option><option>Partly</option><option>Missed it</option></select></div>
+    </div>
+    <div class="field"><label for="db_learn">What did we learn</label><textarea id="db_learn" placeholder="What we did not know before this call"></textarea></div>
+    <div class="field"><label for="db_change">What changed in the deal</label><textarea id="db_change" placeholder="MEDDPICC moves, new requirements, new risks, new people"></textarea></div>
+    <div class="inline">
+      <div class="field"><label for="db_next">Next step</label><input type="text" id="db_next" placeholder="Something specific"></div>
+      <div class="field" style="max-width:130px"><label for="db_owner">Owner</label><select id="db_owner"><option>AE</option><option>SA</option><option>Customer</option></select></div>
+      <div class="field" style="max-width:170px"><label for="db_due">By when</label><input type="date" id="db_due"></div>
+    </div>
+    <button class="btn primary sm" id="addDebrief">Log debrief</button>
+  </div>
+  ${d.debriefs.length ? `<div class="card"><h2>History</h2><div class="stack">
+    ${d.debriefs.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "")).map(x => `
+      <div class="entry" style="border-left-color:${x.outcome === "Hit it" ? "var(--good)" : x.outcome === "Missed it" ? "var(--critical)" : "var(--warning)"}">
+        <div class="eh"><b>${esc(x.date)}</b>
+          <span class="pill ${x.outcome === "Hit it" ? "good" : x.outcome === "Missed it" ? "critical" : "warning"}">${esc(x.outcome)}</span>
+          <span class="spacer"></span>
+          <button class="btn ghost sm" data-dbdel="${x.id}">Remove</button>
+        </div>
+        ${x.learned ? `<p><b>Learned:</b> ${esc(x.learned)}</p>` : ""}
+        ${x.changed ? `<p><b>Changed:</b> ${esc(x.changed)}</p>` : ""}
+        ${x.next ? `<p><b>Next:</b> ${esc(x.next)} &middot; ${esc(x.owner)}${x.due ? " by " + esc(x.due) : " (no date, which is a problem)"}</p>` : `<p style="color:var(--critical)"><b>No next step recorded.</b></p>`}
+      </div>`).join("")}
+  </div></div>` : ""}`;
+}
+
+/* ---------- poc panel ---------- */
+function pocPanel(d) {
+  const p = d.poc;
+  return `
+  <div class="card">
+    <h2>Do we actually need a POC?</h2>
+    <p style="font-size:13px;color:var(--ink-2);margin-bottom:12px">
+      A POC is there to remove the customer's risk, not to fill a stage. If the criteria are already proven, skip it and go to proposal.
+    </p>
+    <div class="inline">
+      <div class="field" style="max-width:200px"><label for="p_need">Answer</label>
+        <select id="p_need" data-poc="needed">
+          ${["undecided", "no", "yes"].map(o => `<option value="${o}" ${p.needed === o ? "selected" : ""}>${o === "undecided" ? "Not answered yet" : o === "no" ? "No, skip to proposal" : "Yes, and here is why"}</option>`).join("")}
+        </select></div>
+      <div class="field"><label for="p_why">Why</label><input type="text" id="p_why" data-poc="why" value="${esc(p.why)}" placeholder="What risk does it remove, for whom"></div>
+    </div>
+  </div>
+  ${p.needed === "yes" ? `
+  <div class="card" style="${p.agreed ? "" : "border-color:var(--critical);box-shadow:0 0 0 3px var(--crit-wash)"}">
+    <div class="row" style="justify-content:space-between;margin-bottom:6px">
+      <h2 style="margin:0">One page, agreed with the customer before day one</h2>
+      <span class="pill ${p.agreed ? "good" : "critical"}">${p.agreed ? "agreed" : "not agreed"}</span>
+    </div>
+    <div class="owns"><b>Who fills this:</b> the SA drafts the page, the AE negotiates it with the customer, the customer agrees it. Nobody starts before that.</div>
+    <p style="font-size:13px;color:var(--ink-2);margin-bottom:16px">Timebox it to two to four weeks. Weekly one-page status. At the end, the SA says in writing whether we won it technically or what is still missing.</p>
+    <div class="field"><label for="p_in">1. Which use cases are in scope</label><textarea id="p_in" data-poc="inScope" placeholder="Numbered and specific. For example: governance rules enforced on two pilot APIs, SSO and SCIM against their IdP, one CI pipeline running a collection on every merge.">${esc(p.inScope)}</textarea></div>
+    <div class="field"><label for="p_out">And which are explicitly not <span class="hint">The out-of-scope list is what protects the POC.</span></label><textarea id="p_out" data-poc="outScope">${esc(p.outScope)}</textarea></div>
+    <div class="field"><label for="p_pf">2. How each one passes or fails, and who judges</label><textarea id="p_pf" data-poc="passFail" placeholder="Per use case: the test, the measure, and the named person who calls it.">${esc(p.passFail)}</textarea></div>
+    <div class="field"><label for="p_pr">3. What the customer provides, and by when <span class="hint">Access, data, people, hours. Named owners.</span></label><textarea id="p_pr" data-poc="provides" placeholder="Environments, an IdP test tenant, a repo, two named engineers for four hours a week, and the date each lands.">${esc(p.provides)}</textarea></div>
+    <div class="inline">
+      <div class="field" style="max-width:170px"><label for="p_start">4. Start</label><input type="date" id="p_start" data-poc="start" value="${esc(p.start)}"></div>
+      <div class="field" style="max-width:170px"><label for="p_end">End</label><input type="date" id="p_end" data-poc="end" value="${esc(p.end)}"></div>
+      <div class="field"><label for="p_cp">Checkpoints</label><input type="text" id="p_cp" data-poc="checkpoints" value="${esc(p.checkpoints)}" placeholder="Weekly, with whom"></div>
+    </div>
+    ${p.start && p.end ? (() => {
+      const wk = Math.round((new Date(p.end) - new Date(p.start)) / 604800000 * 10) / 10;
+      return wk > 4 ? `<p style="font-size:13px;color:var(--critical);margin:-4px 0 12px">${wk} weeks. Over the four week timebox. What is the plan to cut it?</p>` : `<p style="font-size:13px;color:var(--ink-muted);margin:-4px 0 12px">${wk} weeks, inside the timebox.</p>`;
+    })() : ""}
+    <div class="field"><label for="p_next">5. What the customer does next if it passes <span class="hint">Without this, it is a free trial, not a POC.</span></label><textarea id="p_next" data-poc="nextIfPass" placeholder="If the criteria pass, the customer will do X by date Y.">${esc(p.nextIfPass)}</textarea></div>
+    <div class="check" style="padding-left:0">
+      <input type="checkbox" id="p_agreed" data-poc="agreed" ${p.agreed ? "checked" : ""}>
+      <label for="p_agreed"><b>The customer has agreed this page.</b> Not "seen it". Agreed it.</label>
+    </div>
+    <button class="btn sm" id="copyPoc" style="margin-top:10px">Copy as markdown</button>
+  </div>` : p.needed === "no" ? `<div class="card">${banner("good", "✓", "<b>No POC.</b> Good. Phase 3 ends with a proposal instead. Make sure the value numbers and the confirmation of criteria are solid, because you are not getting a second proof point.")}</div>` : ""}`;
+}
+
+/* ---------- summary ---------- */
+function summaryPanel(d) {
+  return `<div class="card">
+    <div class="row" style="justify-content:space-between;margin-bottom:12px">
+      <h2 style="margin:0">Deal summary</h2>
+      <div class="row" style="gap:6px">
+        <button class="btn sm" id="copySummary">Copy as markdown</button>
+        <button class="btn sm" id="dlSummary">Download .md</button>
+      </div>
+    </div>
+    <pre class="md" id="summaryMd">${esc(summaryMarkdown(d))}</pre>
+  </div>`;
+}
+
+/* ============================================================
+   MARKDOWN
+   ============================================================ */
+
+function briefMarkdown(d) {
+  const b = d.brief, nc = noticeCheck(d);
+  const t = TIERS.find(x => x.id === b.tier) || TIERS[1];
+  return [
+    `# Call brief: ${d.name}${d.company ? " (" + d.company + ")" : ""}`,
+    ``,
+    `**Ask:** ${t.label}`,
+    `**Meeting date:** ${b.meetingDate || "not set"}${nc ? `  (${nc.wd} working days out, minimum ${t.days})` : ""}`,
+    `**AE:** ${d.ae || "unnamed"}   **SA:** ${d.sa || "unnamed"}   **Phase:** ${d.phase}. ${PHASES[d.phase - 1].name}`,
+    ``,
+    `## 1. Objective`, b.objective || "_not written_", ``,
+    `## 2. Who is in the room`,
+    (b.attendees || []).length
+      ? [`| Name | Title | Decides | Depth | Stance |`, `| --- | --- | --- | --- | --- |`,
+         ...b.attendees.map(a => `| ${a.name || "?"} | ${a.title || "?"} | ${a.decides || "?"} | ${a.depth || "?"} | ${a.stance || "Unknown"} |`)].join("\n")
+      : "_nobody named_",
+    ``,
+    `## 3. Agenda`, b.agenda || "_not written_", ``,
+    `## 4. What they have already told us`, b.known || "_not written_", ``,
+    `## 5. Competition and traps`, b.competition || "_not written_", ``,
+    `## MEDDPICC right now`,
+    ...MEDDPICC.map(m => `- **${m.letter} ${m.name}** (${m.who}): ${STATES[(d.med[m.k] || { s: 0 }).s].label}${(d.med[m.k] || {}).note ? " — " + d.med[m.k].note : ""}`)
+  ].join("\n");
+}
+
+function pocMarkdown(d) {
+  const p = d.poc;
+  return [
+    `# POC success criteria: ${d.name}${d.company ? " (" + d.company + ")" : ""}`,
+    ``, `Agreed with the customer: **${p.agreed ? "yes" : "NO, and therefore this POC must not start"}**`, ``,
+    `**Why a POC:** ${p.why || "_not answered_"}`, ``,
+    `## 1. In scope`, p.inScope || "_not written_", ``,
+    `## Explicitly out of scope`, p.outScope || "_not written_", ``,
+    `## 2. Pass or fail, and who judges`, p.passFail || "_not written_", ``,
+    `## 3. What the customer provides, and by when`, p.provides || "_not written_", ``,
+    `## 4. Dates`, `Start ${p.start || "?"} to end ${p.end || "?"}. Checkpoints: ${p.checkpoints || "none set"}.`, ``,
+    `## 5. What the customer does next if it passes`, p.nextIfPass || "_not written, so this is a free trial and not a POC_"
+  ].join("\n");
+}
+
+function summaryMarkdown(d) {
+  const ps = phaseStats(d), ms = medStats(d);
+  const lines = [
+    `# ${d.name}${d.company ? " (" + d.company + ")" : ""}`,
+    ``,
+    `AE ${d.ae || "unnamed"} / SA ${d.sa || "unnamed"} | value ${d.value || "?"} | close ${d.closeDate || "?"}`,
+    ``,
+    `## Phase ${ps.phase.n} of 4: ${ps.phase.name}`,
+    `> ${ps.phase.exitQ}`,
+    ``,
+    `Exit checks ${ps.done}/${ps.total}.`,
+    ...ps.phase.checks.map(c => `- [${d.checks[c.id] ? "x" : " "}] (${c.who}) ${c.t}${c.hard ? "  **hard rule**" : ""}`),
+    ``,
+    `## MEDDPICC: ${ms.validated} validated, ${ms.assumed} assumed, ${ms.unknown} unknown`,
+    ...MEDDPICC.map(m => {
+      const st = d.med[m.k] || { s: 0, note: "" };
+      return `- **${m.letter} ${m.name}** (${m.who}) ${STATES[st.s].label}${st.note ? ": " + st.note : ""}`;
+    })
+  ];
+  if (ms.unknown >= 2) lines.push(``, `> ${ms.unknown} letters blank: ${ms.blanks.map(b => b.name).join(", ")}. The next customer meeting is discovery, not a demo.`);
+  lines.push(``, `## Next call`, `**Objective:** ${d.brief.objective || "_not written_"}`);
+  const nc = noticeCheck(d);
+  if (nc) lines.push(`**Date:** ${d.brief.meetingDate} (${nc.wd} working days out, minimum ${nc.tier.days} for "${nc.tier.label}")${nc.short ? "  **SHORT NOTICE**" : ""}`);
+  lines.push(`**Brief status:** ${d.brief.status}${d.brief.note ? " (" + d.brief.note + ")" : ""}`);
+  if (d.poc.needed !== "undecided") {
+    lines.push(``, `## POC`, d.poc.needed === "no" ? `Not needed: ${d.poc.why || "no reason recorded"}` : `Needed: ${d.poc.why || "no reason recorded"}. Criteria agreed: **${d.poc.agreed ? "yes" : "NO"}**.`);
+  }
+  const ld = lastDebrief(d);
+  if (ld) {
+    lines.push(``, `## Last debrief: ${ld.date} (${ld.outcome})`);
+    if (ld.learned) lines.push(`Learned: ${ld.learned}`);
+    if (ld.changed) lines.push(`Changed: ${ld.changed}`);
+    lines.push(`Next: ${ld.next || "**none recorded**"}${ld.owner ? " / " + ld.owner : ""}${ld.due ? " by " + ld.due : ""}`);
+  }
+  if (d.overrides.length) {
+    lines.push(``, `## Bent deliberately`, ...d.overrides.map(o => `- ${o.date}: advanced out of Phase ${o.phase} early. ${o.why}`));
+  }
+  return lines.join("\n");
+}
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1900);
+}
+async function copy(text, what) {
+  try { await navigator.clipboard.writeText(text); toast(what + " copied"); }
+  catch (e) { toast("Copy blocked by the browser. Select the text instead."); }
+}
+function repaint(keepFocus) {
+  save();
+  const active = document.activeElement;
+  const id = active && active.id, sel = active && active.selectionStart;
+  render();
+  if (keepFocus && id) {
+    const el = document.getElementById(id);
+    if (el) { el.focus(); try { el.setSelectionRange(sel, sel); } catch (e) {} }
+  }
+}
+
+function wire() {
+  const d = deal();
+
+  const nd = document.getElementById("newDeal2");
+  if (nd) nd.onclick = promptNewDeal;
+  if (!d) return;
+
+  document.getElementById("delDeal").onclick = () => {
+    if (!confirm(`Delete "${d.name}"? This cannot be undone.`)) return;
+    DB.deals = DB.deals.filter(x => x.id !== d.id);
+    ui.dealId = DB.deals.length ? DB.deals[0].id : null;
+    repaint();
+  };
+
+  document.querySelectorAll("[data-edit]").forEach(el => {
+    el.onblur = () => { d[el.dataset.edit] = el.textContent.trim(); save(); renderDealSelect(); };
+    el.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } };
+  });
+
+  const fwd = document.getElementById("phaseFwd");
+  if (fwd) fwd.onclick = () => {
+    const ps = phaseStats(d);
+    if (ps.hardOpen.length) {
+      alert("Hard rule still open:\n\n" + ps.hardOpen.map(c => "- " + c.t).join("\n") + "\n\nThis one does not bend.");
+      return;
+    }
+    if (ps.open.length) {
+      const why = prompt(`${ps.open.length} check(s) still open:\n\n${ps.open.map(c => "- " + c.t).join("\n")}\n\nBend it deliberately and say why. Leave blank to cancel.`);
+      if (!why) return;
+      d.overrides.push({ date: today(), phase: d.phase, why });
+    }
+    d.phase = Math.min(4, d.phase + 1); repaint();
+  };
+  const back = document.getElementById("phaseBack");
+  if (back) back.onclick = () => { d.phase = Math.max(1, d.phase - 1); repaint(); };
+
+  document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { ui.tab = b.dataset.tab; repaint(); });
+
+  document.querySelectorAll("[data-check]").forEach(cb => cb.onchange = () => {
+    d.checks[cb.dataset.check] = cb.checked; repaint();
+  });
+
+  document.querySelectorAll("[data-med]").forEach(b => b.onclick = () => {
+    const k = b.dataset.med; const cur = d.med[k] || { s: 0, note: "" };
+    cur.s = (cur.s + 1) % 3; d.med[k] = cur; repaint();
+  });
+  document.querySelectorAll("[data-mednote]").forEach(t => {
+    t.oninput = () => { const k = t.dataset.mednote; d.med[k] = d.med[k] || { s: 0 }; d.med[k].note = t.value; save(); };
+  });
+
+  document.querySelectorAll("[data-brief]").forEach(el => {
+    if (el.tagName === "SELECT" || el.type === "date")
+      el.addEventListener("change", () => { d.brief[el.dataset.brief] = el.value; repaint(); });
+    else
+      el.addEventListener("input", () => { d.brief[el.dataset.brief] = el.value; save(); });
+  });
+  const addAtt = document.getElementById("addAtt");
+  if (addAtt) addAtt.onclick = () => {
+    d.brief.attendees = d.brief.attendees || [];
+    d.brief.attendees.push({ name: "", title: "", decides: "", depth: "", stance: "Unknown" });
+    repaint();
+  };
+  document.querySelectorAll("[data-att]").forEach(el => {
+    const [i, f] = el.dataset.att.split(".");
+    if (el.tagName === "SELECT")
+      el.addEventListener("change", () => { d.brief.attendees[i][f] = el.value; repaint(); });
+    else
+      el.addEventListener("input", () => { d.brief.attendees[i][f] = el.value; save(); });
+  });
+  document.querySelectorAll("[data-attdel]").forEach(b => b.onclick = () => {
+    d.brief.attendees.splice(+b.dataset.attdel, 1); repaint();
+  });
+  document.querySelectorAll("[data-bstatus]").forEach(b => b.onclick = () => {
+    const s = b.dataset.bstatus;
+    if (s === "sent") {
+      const missing = [];
+      if (!d.brief.objective.trim()) missing.push("an objective");
+      if (!(d.brief.attendees || []).length) missing.push("named attendees");
+      if (!d.brief.agenda.trim()) missing.push("an agenda");
+      if (missing.length && !confirm("This brief is missing " + missing.join(", ") + ".\n\nAn SA is entitled to send it straight back. Send anyway?")) return;
+    }
+    const note = document.getElementById("b_note");
+    if (note) d.brief.note = note.value;
+    d.brief.status = s;
+    repaint();
+    toast(s === "sent" ? "Brief sent" : s === "accepted" ? "Request accepted" : "Sent back to the AE");
+  });
+  const cb = document.getElementById("copyBrief");
+  if (cb) cb.onclick = () => copy(briefMarkdown(d), "Brief");
+
+  const addDb = document.getElementById("addDebrief");
+  if (addDb) addDb.onclick = () => {
+    const g = id => document.getElementById(id).value;
+    if (!g("db_learn").trim() && !g("db_next").trim()) { toast("Write at least what you learned or what is next"); return; }
+    d.debriefs.push({ id: uid(), date: g("db_date"), outcome: g("db_out"), learned: g("db_learn"), changed: g("db_change"), next: g("db_next"), owner: g("db_owner"), due: g("db_due") });
+    repaint(); toast("Debrief logged");
+  };
+  document.querySelectorAll("[data-dbdel]").forEach(b => b.onclick = () => {
+    d.debriefs = d.debriefs.filter(x => x.id !== b.dataset.dbdel); repaint();
+  });
+
+  document.querySelectorAll("[data-poc]").forEach(el => {
+    const f = el.dataset.poc;
+    if (el.type === "checkbox") el.onchange = () => { d.poc[f] = el.checked; repaint(); };
+    else if (el.tagName === "SELECT" || el.type === "date")
+      el.addEventListener("change", () => { d.poc[f] = el.value; repaint(); });
+    else
+      el.addEventListener("input", () => { d.poc[f] = el.value; save(); });
+  });
+  const cp = document.getElementById("copyPoc");
+  if (cp) cp.onclick = () => copy(pocMarkdown(d), "POC criteria");
+
+  const cs = document.getElementById("copySummary");
+  if (cs) cs.onclick = () => copy(summaryMarkdown(d), "Summary");
+  const ds = document.getElementById("dlSummary");
+  if (ds) ds.onclick = () => {
+    const blob = new Blob([summaryMarkdown(d)], { type: "text/markdown" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = (d.name || "deal").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + ".md";
+    a.click();
+  };
+}
+
+function promptNewDeal() {
+  const n = prompt("Deal or opportunity name");
+  if (!n) return;
+  newDeal(n.trim()); ui.tab = "phase"; repaint();
+}
+
+document.getElementById("newDeal").onclick = promptNewDeal;
+document.getElementById("dealSelect").onchange = e => { ui.dealId = e.target.value; ui.tab = "phase"; repaint(); };
+document.getElementById("roleAE").onclick = () => { ui.role = "AE"; repaint(); };
+document.getElementById("roleSA").onclick = () => { ui.role = "SA"; repaint(); };
+document.getElementById("themeBtn").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  DB.theme = next; save();
+};
+
+const rulesDlg = document.getElementById("rulesDlg");
+document.getElementById("rulesBtn").onclick = () => {
+  rulesDlg.innerHTML = `
+    <div class="dh"><h3>Rules of engagement</h3><button class="btn ghost sm" onclick="this.closest('dialog').close()">Close</button></div>
+    <div class="db">
+      ${Object.entries(RULES).map(([k, v]) => `<div class="rules-sec"><h4>${k}</h4><ul>${v.map(x => `<li>${x}</li>`).join("")}</ul></div>`).join("")}
+    </div>`;
+  rulesDlg.showModal();
+};
+
+const dataDlg = document.getElementById("dataDlg");
+document.getElementById("dataBtn").onclick = () => {
+  dataDlg.innerHTML = `
+    <div class="dh"><h3>Data</h3><button class="btn ghost sm" onclick="this.closest('dialog').close()">Close</button></div>
+    <div class="db">
+      <p style="font-size:13px;color:var(--ink-2)">Everything lives in this browser only. Export to share a deal with the other half of the pair, or to back it up.</p>
+      <p style="font-size:13px;color:var(--ink-2)"><b>Working in tandem:</b> this app is local, so you each hold your own copy. Use a share link to hand the current state to the other half of the pair, and let whoever is doing the work in this phase hold the master.</p>
+      <div class="row" style="margin:14px 0">
+        ${deal() ? '<button class="btn primary sm" id="shareBtn">Copy share link for this deal</button>' : ""}
+        <button class="btn sm" id="expAll">Export all deals (.json)</button>
+        <button class="btn sm" id="impBtn">Import .json</button>
+        <input type="file" id="impFile" accept="application/json" class="sr">
+        <span class="spacer"></span>
+        <button class="btn ghost sm" id="wipe">Erase everything</button>
+      </div>
+      <p style="font-size:12px;color:var(--ink-muted)">${DB.deals.length} deal(s) stored.</p>
+    </div>`;
+  dataDlg.showModal();
+  const shb = document.getElementById("shareBtn");
+  if (shb) shb.onclick = () => {
+    const link = shareLink(deal());
+    if (link.length > 12000) { toast("This deal is too big for a link. Export the .json instead."); return; }
+    copy(link, "Share link");
+  };
+  document.getElementById("expAll").onclick = () => {
+    const blob = new Blob([JSON.stringify(DB, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "ae-sa-deals.json"; a.click();
+  };
+  document.getElementById("impBtn").onclick = () => document.getElementById("impFile").click();
+  document.getElementById("impFile").onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const inc = JSON.parse(r.result);
+        const incoming = Array.isArray(inc) ? inc : (inc.deals || []);
+        if (!incoming.length) { toast("No deals in that file"); return; }
+        incoming.forEach(x => { x.id = uid(); DB.deals.push(x); });
+        ui.dealId = DB.deals[DB.deals.length - 1].id;
+        dataDlg.close(); repaint(); toast(incoming.length + " deal(s) imported");
+      } catch (err) { toast("That file did not parse"); }
+    };
+    r.readAsText(f);
+  };
+  document.getElementById("wipe").onclick = () => {
+    if (!confirm("Erase every deal stored in this browser?")) return;
+    DB = { deals: [], role: ui.role, lastDeal: null };
+    ui.dealId = null; dataDlg.close(); repaint();
+  };
+};
+
+if (DB.theme) document.documentElement.setAttribute("data-theme", DB.theme);
+maybeImportFromHash();
+if (!ui.dealId && DB.deals.length) ui.dealId = DB.deals[0].id;
+render();
+</script>
+</body>
+</html>
