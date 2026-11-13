@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<title>Croquis Dressing en U</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: planche d'atelier. Plan de dessus, puis deux elevations, puis fiche modules et points a valider. */
+:root {
+  --bg: #eceee9;
+  --paper: #f7f8f5;
+  --ink: #1c2420;
+  --muted: #5d6860;
+  --rule: #cfd4cb;
+  --wood: #b27648;
+  --wood-dark: #8a5632;
+  --glass: #d9a441;
+  --cavity: #5a3a24;
+  --led: #f2a900;
+  --dim: #b2402b;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151a17; --paper: #1c2320; --ink: #e8ece6; --muted: #98a39b; --rule: #34403a;
+    --wood: #a56a40; --wood-dark: #7c4c2b; --glass: #c28f2e; --cavity: #2a1b11; --led: #ffc43a; --dim: #ee7c64;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151a17; --paper: #1c2320; --ink: #e8ece6; --muted: #98a39b; --rule: #34403a;
+  --wood: #a56a40; --wood-dark: #7c4c2b; --glass: #c28f2e; --cavity: #2a1b11; --led: #ffc43a; --dim: #ee7c64;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55;
+  padding-block: 32px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 980px; margin: 0 auto; display: grid; gap: 28px; }
+h1 { font-family: var(--f-display); font-weight: 600; font-size: 44px; line-height: 1; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h2 { font-family: var(--f-display); font-weight: 600; font-size: 24px; margin: 0 0 4px; letter-spacing: .02em; text-transform: uppercase; }
+p { margin: 0; max-width: 68ch; }
+.sub { color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 24px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); margin-top: 12px; }
+.meta b { color: var(--ink); font-weight: 500; }
+.sheet { background: var(--paper); border: 1px solid var(--rule); padding: 18px 18px 14px; display: grid; gap: 10px; min-width: 0; }
+.sheet header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; align-items: baseline; }
+.sheet header span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.scroll { overflow-x: auto; }
+.scroll svg { display: block; min-width: 720px; width: 100%; height: auto; }
+.photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.photos figure { margin: 0; display: grid; gap: 6px; align-content: start; }
+.photos img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border: 1px solid var(--rule); background: var(--rule); }
+.photos figcaption { display: grid; font-size: 13px; line-height: 1.35; }
+.photos figcaption span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 10px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--ink); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--f-mono); font-weight: 500; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+td.n { font-family: var(--f-mono); white-space: nowrap; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 6px; }
+li { max-width: 62ch; }
+
+/* svg */
+svg text { font-family: var(--f-mono); fill: var(--ink); }
+.t-dim { font-size: 6px; fill: var(--dim); }
+.t-lbl { font-size: 5px; fill: var(--ink); }
+.t-lbl-w { font-size: 5px; fill: #fff; }
+.t-big { font-size: 7px; font-weight: 500; }
+.dimline { stroke: var(--dim); stroke-width: .5; fill: none; }
+.wall { stroke: var(--ink); stroke-width: 2.4; fill: none; }
+.wood { fill: var(--wood); stroke: var(--ink); stroke-width: .6; }
+.wood2 { fill: var(--wood-dark); stroke: var(--ink); stroke-width: .6; }
+.plinth { fill: var(--wood-dark); stroke: var(--ink); stroke-width: .6; }
+.cavity { fill: var(--cavity); stroke: var(--ink); stroke-width: .6; }
+.glass { fill: var(--glass); fill-opacity: .38; stroke: var(--ink); stroke-width: .7; }
+.glassq { fill: var(--glass); fill-opacity: .55; stroke: var(--ink); stroke-width: .7; }
+.drawer { fill: none; stroke: #fff; stroke-opacity: .8; stroke-width: .6; }
+.rail { stroke: #fff; stroke-opacity: .9; stroke-width: 1; }
+.garment { fill: #fff; fill-opacity: .55; }
+.shelf { stroke: var(--ink); stroke-width: 1.2; }
+.hook { fill: var(--ink); }
+.dash { stroke: var(--ink); stroke-width: .5; stroke-dasharray: 2 2; opacity: .55; fill: none; }
+.led { stroke: var(--led); stroke-width: 1.6; stroke-linecap: round; filter: drop-shadow(0 0 1.5px var(--led)); }
+.ledfill { fill: var(--led); }
+.doorframe { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.beam { fill: var(--muted); fill-opacity: .6; stroke: var(--dim); stroke-width: .8; }
+svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-order: stroke; stroke: #000; stroke-width: 1.1px; }
+.hide { fill: var(--paper); fill-opacity: .72; stroke: var(--ink); stroke-width: .6; stroke-dasharray: 3 2; }
+.handle { stroke: var(--ink); stroke-width: 1; }
+.glassline { stroke: #fff; stroke-width: 1.1; stroke-opacity: .85; }
+</style>
+
+</head>
+<body>
+<main>
+  <div>
+    <h1>Dressing en U</h1>
+    <p class="sub" style="margin-top:10px">Deuxième proposition pour le menuisier : un U symétrique, de la niche vitrée de gauche à la niche vitrée de droite. Les cotes sont en centimètres. <a href="3d/" style="color:inherit">Voir la maquette 3D</a>.</p>
+    <div class="meta">
+      <span>Hauteur totale <b>252</b></span>
+      <span>Estrade / plinthe <b>7</b></span>
+      <span>Meubles <b>245</b></span>
+      <span>Fond <b>353</b></span>
+      <span>Passage entre retours <b>273</b></span>
+    </div>
+  </div>
+
+  <section class="sheet">
+    <header><h2>Plan, vue de dessus</h2><span>échelle libre, mur du fond en haut</span></header>
+    <div class="scroll"><svg id="plan" viewBox="-44 -26 445 196" role="img" aria-label="Plan de dessus du dressing en U"></svg></div>
+    <div class="legend">
+      <span><i style="background:var(--wood)"></i>bois</span>
+      <span><i style="background:var(--glass);opacity:.7"></i>verre</span>
+      <span><i style="background:var(--led)"></i>éclairage LED (trait : horizontale, point : verticale)</span>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <header><h2>Élévation du fond</h2><span>vue depuis le centre de la pièce</span></header>
+    <div class="scroll"><svg id="back" viewBox="-16 -12 424 300" role="img" aria-label="Élévation du mur du fond"></svg></div>
+    <p class="sub">Les zones hachurées aux deux extrémités sont masquées par les retours latéraux de 40 de large. Les meubles vitrés sont dessinés avec leur contenu visible à travers le verre.</p>
+  </section>
+
+  <section class="sheet">
+    <header><h2>Retour gauche et niche</h2><span>le retour droit est identique, en miroir</span></header>
+    <div class="scroll"><svg id="arm" viewBox="-50 -12 275 300" role="img" aria-label="Élévation du retour gauche et vue de face de la niche"></svg></div>
+    <p class="sub">À gauche : le retour vu depuis le centre, niche au bout, placard, puis l'angle en L. À droite : la niche vue de face, avec ses étagères en verre.</p>
+  </section>
+
+  <section class="sheet">
+    <header><h2>Fiche des modules</h2><span>de gauche à droite</span></header>
+    <div class="scroll">
+    <table style="min-width:640px">
+      <thead><tr><th>Module</th><th>Largeur x prof.</th><th>Contenu</th></tr></thead>
+      <tbody>
+        <tr><td><b>Niche vitrée</b> (x2, bouts de U)</td><td class="n">40 x 12</td><td>Façade vitrée, étagères en verre, LED verticale. Hauteur 245.</td></tr>
+        <tr><td><b>Placard</b> (x2)</td><td class="n">60 x 40</td><td>3 tiroirs de 25 (75 au total), puis 2 portes bois de 30 avec 4 étagères (145), puis rangement ouvert de 25. LED horizontale dans le rangement ouvert, et LED latérales (verticales, de chaque côté) derrière les portes.</td></tr>
+        <tr><td><b>Angle en L</b> (x2)</td><td class="n">86,5 x 55</td><td>Rangement ouvert de 25 en haut, étagère en L de 30 de haut au-dessus de la tringle, porte-manteaux sur le reste. LED horizontales dans le rangement ouvert, au-dessus de la tringle et sous l'étagère en L, plus des LED latérales sous la tringle.</td></tr>
+        <tr><td><b>Meuble vitré</b> (x2, au centre)</td><td class="n">90 x 55</td><td>Rangement ouvert de 25, 2 portes en verre de 45. De haut en bas : porte-chemises rétractable (90), tiroir bijoux et montres (15), porte-pantalons rétractable (80), tiroir à chaussures (35). LED dans le rangement ouvert, en haut et aux deux coins.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <header><h2>Accessoires des meubles vitrés</h2><span>un jeu par meuble, 2 au total</span></header>
+    <div class="scroll">
+    <table style="min-width:640px">
+      <thead><tr><th>Accessoire</th><th>Zone</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><b>Tringle de penderie rétractable</b></td><td class="n">90</td><td>Se fixe sur le côté du meuble et sort vers l'avant. Elle occupe la profondeur du meuble, avec environ 40 à 45 de long. Il en faut probablement deux par meuble, une de chaque côté. Dessinée en tringle fixe pour l'instant, modèle à confirmer avec le menuisier.</td></tr>
+        <tr><td><b>Tiroir bijoux et montres</b></td><td class="n">15</td><td>Tiroir à extraction totale, cadre sombre, casiers amovibles et coussinets pour les montres.</td></tr>
+        <tr><td><b>Porte-pantalons extractible</b></td><td class="n">80</td><td>Cadre à barres à extraction totale. Les pantalons se plient sur les barres et pendent dessous. Profondeur utile à confirmer.</td></tr>
+        <tr><td><b>Porte-chaussures extractible</b></td><td class="n">35</td><td>Cadre à barres inclinées, une rangée, pour environ 4 à 5 paires par meuble.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="photos"><figure><img src="img/tringle.jpg" alt="Tringle de penderie rétractable sortie vers l'avant avec cintres" loading="lazy"><figcaption><b>Tringle de penderie rétractable</b><span>zone 90</span></figcaption></figure><figure><img src="img/bijoux.jpg" alt="Tiroir à casiers pour montres et accessoires" loading="lazy"><figcaption><b>Tiroir bijoux et montres</b><span>zone 15</span></figcaption></figure><figure><img src="img/pantalons.jpg" alt="Porte-pantalons extractible à barres" loading="lazy"><figcaption><b>Porte-pantalons extractible</b><span>zone 80</span></figcaption></figure><figure><img src="img/chaussures.jpg" alt="Porte-chaussures extractible à barres inclinées" loading="lazy"><figcaption><b>Porte-chaussures extractible</b><span>zone 35</span></figcaption></figure></div>
+    <p class="sub" style="font-size:13px">Photos indicatives. La finition retenue est le noir mat, quelle que soit la teinte sur les photos.</p>
+    <ul>
+      <li>Finition commune : métal noir mat, comme les poignées et les cadres de portes. Si les poignées passent en bronze foncé, tous les accessoires passent en bronze foncé.</li>
+      <li>Coulisses à fermeture amortie.</li>
+      <li>Les accessoires se vendent par largeur de meuble : le menuisier doit confirmer la largeur intérieure retenue pour les meubles de 90.</li>
+    </ul>
+  </section>
+
+  <section class="sheet">
+    <header><h2>Spécifications</h2><span>à joindre à la demande de devis</span></header>
+    <div class="cols">
+      <div>
+        <h2 style="font-size:19px">Éclairage LED</h2>
+        <ul>
+          <li>Blanc chaud, 2700 à 3000 K, avec variateur.</li>
+          <li>Profilés aluminium avec diffuseur, pas de LED nues.</li>
+          <li>Horizontales : rangements ouverts du haut, au-dessus de la tringle et sous l'étagère en L des angles, en haut des meubles vitrés.</li>
+          <li>Verticales : aux deux coins de chaque meuble vitré, sous la tringle des angles, de chaque côté derrière les portes en bois des placards, dans chaque niche.</li>
+          <li>Détection d'ouverture sur les portes en bois, pour que les LED derrière les portes ne s'allument qu'à l'ouverture.</li>
+          <li>Alimentation accessible, avec une prise dans un meuble. Les tiroirs ne sont pas éclairés.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 style="font-size:19px">Verre</h2>
+        <ul>
+          <li>Verre trempé teinté pour les portes des meubles vitrés (2 portes de 45 par meuble) et pour les portes des niches.</li>
+          <li>Cadre noir et poignée verticale, même style sur les meubles vitrés et sur les niches.</li>
+          <li>Étagères en verre des niches : verre trempé, teinte à préciser.</li>
+          <li>Épaisseurs à confirmer avec le menuisier.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  var H = 252;
+  function S(z) { return H - z; }
+  function R(x, y, w, h, c, ex) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" class="' + c + '" ' + (ex || '') + '/>'; }
+  function L(x1, y1, x2, y2, c, ex) { return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" class="' + c + '" ' + (ex || '') + '/>'; }
+  function T(x, y, t, c, a, ex) { return '<text x="' + x + '" y="' + y + '" class="' + c + '" text-anchor="' + (a || 'middle') + '" ' + (ex || '') + '>' + t + '</text>'; }
+  function C(x, y, r, c) { return '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" class="' + c + '"/>'; }
+
+  /* cotes */
+  function dimH(x1, x2, y, txt) {
+    return L(x1, y, x2, y, 'dimline') + L(x1, y - 2.5, x1, y + 2.5, 'dimline') + L(x2, y - 2.5, x2, y + 2.5, 'dimline') +
+      T((x1 + x2) / 2, y - 2, txt, 't-dim');
+  }
+  function dimV(y1, y2, x, txt) {
+    return L(x, y1, x, y2, 'dimline') + L(x - 2.5, y1, x + 2.5, y1, 'dimline') + L(x - 2.5, y2, x + 2.5, y2, 'dimline') +
+      T(x - 3, (y1 + y2) / 2 + 2, txt, 't-dim', 'end');
+  }
+
+  /* briques d'elevation (x = bord gauche, w = largeur, z en cm depuis le sol) */
+  function openTop(x, w, lat) {
+    return R(x, S(252), w, 25, 'wood') + R(x + 1.5, S(250.5), w - 3, 22, 'cavity') + L(x + 1.5, S(239), x + w - 1.5, S(239), 'dash') +
+      (lat ? L(x + 3, S(249), x + 3, S(229), 'led') + L(x + w - 3, S(249), x + w - 3, S(229), 'led') : L(x + 4, S(248), x + w - 4, S(248), 'led'));
+  }
+  function cornerL(x, w) {
+    var s = R(x, S(227), w, 220, 'wood') + openTop(x, w);
+    s += R(x + 1.5, S(226), w - 3, 29, 'cavity');
+    s += L(x + 1.5, S(197), x + w - 1.5, S(197), 'shelf');
+    s += L(x + 4, S(224), x + w - 4, S(224), 'led') + L(x + 4, S(194), x + w - 4, S(194), 'led');
+    s += L(x + 3, S(190), x + 3, S(11), 'led') + L(x + w - 3, S(190), x + w - 3, S(11), 'led');
+    s += L(x + 5, S(186), x + w - 5, S(186), 'rail');
+    for (var r = 0; r < 2; r++) {
+      for (var k = 0; k < 5; k++) { s += C(x + 8 + k * (w - 16) / 4, S(r ? 150 : 180), 1.6, 'hook'); }
+    }
+    s += T(x + w / 2, S(212), '30', 't-lbl-w');
+    s += T(x + w / 2, S(110), 'angle en L', 't-lbl-w');
+    return s;
+  }
+  function glassUnit(x, w) {
+    var s = openTop(x, w);
+    s += R(x, S(227), w, 220, 'cavity');
+    /* porte-chemises */
+    s += L(x + 3, S(220), x + w - 3, S(220), 'rail');
+    for (var i = 0; i < 8; i++) { s += R(x + 5 + i * ((w - 12) / 8), S(216), 7, 76, 'garment'); }
+    /* tiroir bijoux 122..137 */
+    s += R(x + 3, S(137), w - 6, 15, 'drawer') + L(x + w / 2 - 6, S(129.5), x + w / 2 + 6, S(129.5), 'drawer');
+    /* porte-pantalons 42..122 */
+    s += R(x + 3, S(122), w - 6, 80, 'drawer');
+    for (var j = 0; j < 6; j++) { s += L(x + 5, S(116 - j * 12), x + w - 5, S(116 - j * 12), 'drawer'); }
+    /* tiroir chaussures 7..42 */
+    s += R(x + 3, S(41), w - 6, 33, 'drawer') + L(x + w / 2 - 8, S(26), x + w / 2 + 8, S(26), 'drawer');
+    s += L(x + 4, S(224), x + w - 4, S(224), 'led');
+    /* verre */
+    s += R(x + 1, S(226), w / 2 - 1.5, 218, 'glass') + R(x + w / 2 + .5, S(226), w / 2 - 1.5, 218, 'glass');
+    s += R(x + 1, S(226), w / 2 - 1.5, 218, 'doorframe') + R(x + w / 2 + .5, S(226), w / 2 - 1.5, 218, 'doorframe');
+    s += L(x + w / 2 - 4, S(150), x + w / 2 - 4, S(110), 'handle') + L(x + w / 2 + 3, S(150), x + w / 2 + 3, S(110), 'handle');
+    /* LED aux deux coins */
+    s += L(x + 3, S(222), x + 3, S(11), 'led') + L(x + w - 3, S(222), x + w - 3, S(11), 'led');
+    return s;
+  }
+  function placardFace(x, w) {
+    var s = '';
+    for (var d = 0; d < 3; d++) {
+      s += R(x, S(32 + 25 * d), w, 25, 'wood') + L(x + w * .25, S(29 + 25 * d), x + w * .75, S(29 + 25 * d), 'handle');
+    }
+    s += R(x, S(227), w / 2, 145, 'wood') + R(x + w / 2, S(227), w / 2, 145, 'wood');
+    s += L(x + w / 2 - 3, S(135), x + w / 2 - 3, S(160), 'handle') + L(x + w / 2 + 3, S(135), x + w / 2 + 3, S(160), 'handle');
+    [111, 140, 169, 198].forEach(function (z) { s += L(x + 1, S(z), x + w - 1, S(z), 'dash'); });
+    s += L(x + 3, S(225), x + 3, S(84), 'led', 'opacity=".6"') + L(x + w - 3, S(225), x + w - 3, S(84), 'led', 'opacity=".6"');
+    s += openTop(x, w);
+    return s;
+  }
+  function niche(x, w) {
+    var s = R(x, S(252), w, 245, 'wood') + R(x + 3, S(249), w - 6, 239, 'cavity');
+    [40, 75, 110, 145, 180, 215].forEach(function (z) { s += L(x + 3, S(z), x + w - 3, S(z), 'glassline'); });
+    s += L(x + 5, S(246), x + 5, S(14), 'led');
+    s += R(x + 1, S(251), w - 2, 243, 'glass') + R(x + 1, S(251), w - 2, 243, 'doorframe');
+    s += L(x + w - 6, S(150), x + w - 6, S(110), 'handle');
+    return s;
+  }
+
+  /* ---------- ELEVATION DU FOND ---------- */
+  var b = '';
+  b += cornerL(0, 86.5) + glassUnit(86.5, 90) + glassUnit(176.5, 90) + cornerL(266.5, 86.5);
+  b += R(0, S(7), 353, 7, 'plinth');
+  b += R(334.5, 0, 18.5, 252, 'beam');
+  b += R(0, 0, 40, 252, 'hide') + R(313, 0, 40, 252, 'hide');
+  b += T(20, 120, 'retour masque', 't-lbl', 'middle', 'transform="rotate(-90 20 120)"');
+  b += T(333, 120, 'retour masque', 't-lbl', 'middle', 'transform="rotate(-90 333 120)"');
+  b += T(131.5, S(232), 'ouvert 25', 't-lbl-w') + T(221.5, S(232), 'ouvert 25', 't-lbl-w');
+  var halo = 'style="paint-order:stroke;stroke:#000;stroke-width:1.2px"';
+  b += T(131.5, S(172), 'chemises 90', 't-lbl-w', 'middle', halo);
+  b += T(131.5, S(129), 'bijoux 15', 't-lbl-w', 'middle', halo);
+  b += T(131.5, S(82), 'pantalons 80', 't-lbl-w', 'middle', halo);
+  b += T(131.5, S(24), 'chaussures 35', 't-lbl-w', 'middle', halo);
+  b += T(33, S(237), 'LED', 't-led') + T(131.5, S(244), 'LED', 't-led') + T(221.5, S(244), 'LED', 't-led') + T(320, S(237), 'LED', 't-led');
+  b += dimH(0, 86.5, 266, '86,5') + dimH(86.5, 176.5, 266, '90') + dimH(176.5, 266.5, 266, '90') + dimH(266.5, 353, 266, '86,5');
+  b += dimH(0, 353, 280, '353');
+  b += dimV(S(7), S(0), 364, '7').replace('text-anchor="end"', 'text-anchor="start"');
+  b += dimV(S(227), S(7), 364, '220').replace('text-anchor="end"', 'text-anchor="start"');
+  b += dimV(S(252), S(227), 364, '25').replace('text-anchor="end"', 'text-anchor="start"');
+  b += dimV(S(252), S(0), 392, '252').replace('text-anchor="end"', 'text-anchor="start"');
+  document.getElementById('back').innerHTML = b;
+
+  /* ---------- RETOUR GAUCHE + NICHE ---------- */
+  var a = '';
+  /* axe horizontal p : 0 = bout du retour (niche), 127 = mur du fond */
+  a += R(0, S(252), 12, 245, 'wood2') + T(6, 120, 'niche', 't-lbl-w', 'middle', 'transform="rotate(-90 6 120)"');
+  a += placardFace(12, 60);
+  a += cornerL(72, 55);
+  a += R(0, S(7), 127, 7, 'plinth');
+  a += dimH(0, 12, 266, '12') + dimH(12, 72, 266, '60') + dimH(72, 127, 266, '55') + dimH(0, 127, 280, '127');
+  a += dimV(S(7), S(0), -6, '7') + dimV(S(82), S(7), -6, '75') + dimV(S(227), S(82), -6, '145') + dimV(S(252), S(227), -6, '25');
+  a += dimV(S(252), S(0), -30, '252');
+  a += T(42, S(45), '3 tiroirs de 25', 't-lbl-w') + T(42, S(120), '2 portes, 4 étagères', 't-lbl-w');
+  a += T(42, S(244), 'LED', 't-led') + T(100, S(244), 'LED', 't-led');
+  /* niche de face */
+  a += niche(165, 40);
+  a += R(165, S(7), 40, 7, 'plinth');
+  a += dimH(165, 205, 266, '40') + T(185, 280, 'niche, façade vitrée', 't-lbl');
+  a += dimV(S(252), S(0), 215, '252').replace('text-anchor="end"', 'text-anchor="start"');
+  document.getElementById('arm').innerHTML = a;
+
+  /* ---------- PLAN ---------- */
+  var p = '';
+  var D = 55;
+  p += R(0, 0, 86.5, D, 'wood') + R(86.5, 0, 90, D, 'glass') + R(176.5, 0, 90, D, 'glass') + R(266.5, 0, 86.5, D, 'wood');
+  /* retours */
+  p += R(0, D, 40, 60, 'wood') + R(0, 115, 40, 12, 'glassq');
+  p += R(313, D, 40, 60, 'wood') + R(313, 115, 40, 12, 'glassq');
+  /* portes en verre */
+  [86.5, 176.5].forEach(function (x) {
+    p += L(x + 45, D - 2, x + 45, D + 2, 'handle');
+    p += C(x + 3, D - 4, 1.6, 'ledfill') + C(x + 87, D - 4, 1.6, 'ledfill');
+  });
+  /* poutre apparente, coin droit du fond */
+  p += R(334.5, 0, 18.5, 13.5, 'beam');
+  p += dimH(334.5, 353, -12, '18,5') + dimV(0, 13.5, 366, '13,5').replace('text-anchor="end"', 'text-anchor="start"');
+  /* LED dans chaque espace */
+  [[0, 86.5], [86.5, 90], [176.5, 90], [266.5, 86.5]].forEach(function (m) {
+    p += L(m[0] + 5, 5, m[0] + m[1] - 5, 5, 'led');
+    p += T(m[0] + m[1] / 2, 46, 'LED', 't-led');
+  });
+  /* retours : bandes horizontales le long du retour, contre le mur */
+  p += L(3, D + 4, 3, 111, 'led') + L(350, D + 4, 350, 111, 'led');
+  /* LED verticales : points (coins des angles, niches) */
+  [3, 83.5, 269.8, 331.2].forEach(function (x) { p += C(x, 3, 1.4, 'ledfill'); });
+  p += C(4, 121, 1.4, 'ledfill') + C(349, 121, 1.4, 'ledfill');
+  [[35, 58], [35, 112], [318, 58], [318, 112]].forEach(function (c) { p += C(c[0], c[1], 1.4, 'ledfill'); });
+  p += T(20, 104, 'LED', 't-led') + T(333, 104, 'LED', 't-led');
+  /* murs */
+  p += L(-6, 0, 359, 0, 'wall') + L(0, 0, 0, 140, 'wall') + L(353, 0, 353, 140, 'wall');
+  /* libelles */
+  p += T(43, 28, 'Angle L', 't-lbl-w') + T(43, 36, '86,5 x 55', 't-lbl-w');
+  p += T(131.5, 28, 'Vitré', 't-big') + T(131.5, 36, '90 x 55', 't-lbl');
+  p += T(221.5, 28, 'Vitré', 't-big') + T(221.5, 36, '90 x 55', 't-lbl');
+  p += T(310, 28, 'Angle L', 't-lbl-w') + T(310, 36, '86,5 x 55', 't-lbl-w');
+  p += T(20, 88, 'Placard', 't-lbl-w') + T(20, 95, '60 x 40', 't-lbl-w');
+  p += T(333, 88, 'Placard', 't-lbl-w') + T(333, 95, '60 x 40', 't-lbl-w');
+  p += T(20, 123.5, 'niche 12', 't-lbl');
+  p += T(333, 123.5, 'niche 12', 't-lbl');
+  /* passage libre */
+  p += dimH(40, 313, 78, 'passage libre 273');
+  /* cotes largeur */
+  p += dimH(0, 86.5, 150, '86,5') + dimH(86.5, 176.5, 150, '90') + dimH(176.5, 266.5, 150, '90') + dimH(266.5, 353, 150, '86,5');
+  p += dimH(0, 353, 163, '353');
+  /* cotes profondeur */
+  p += dimV(0, 55, -6, '55') + dimV(55, 115, -6, '60') + dimV(115, 127, -6, '12') + dimV(0, 127, -24, '127');
+  p += T(176.5, -8, 'mur du fond', 't-lbl');
+  document.getElementById('plan').innerHTML = p;
+})();
+</script>
+</body>
+</html>

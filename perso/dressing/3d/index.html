@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<title>Dressing en U 3D</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: une scene 3D pleine largeur, barre de vues et d'options dessous, puis les cotes cles. */
+:root {
+  --bg: #eceee9; --paper: #f7f8f5; --ink: #1c2420; --muted: #5d6860; --rule: #cfd4cb; --accent: #b27648; --stage: #d9dcd4;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #151a17; --paper: #1c2320; --ink: #e8ece6; --muted: #98a39b; --rule: #34403a; --accent: #d49060; --stage: #232b27; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #151a17; --paper: #1c2320; --ink: #e8ece6; --muted: #98a39b; --rule: #34403a; --accent: #d49060; --stage: #232b27; color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55;
+  padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+h1 { font-family: var(--f-display); font-weight: 600; font-size: 40px; line-height: 1; margin: 0; }
+p { margin: 0; max-width: 70ch; }
+.sub { color: var(--muted); }
+#stage { background: var(--stage); border: 1px solid var(--rule); height: min(70vh, 62vw); min-height: 340px; position: relative; touch-action: none; }
+#stage canvas { display: block; width: 100%; height: 100%; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.bar .sep { width: 1px; align-self: stretch; background: var(--rule); margin: 0 4px; }
+button {
+  font: 500 13px var(--f-mono); color: var(--ink); background: var(--paper); border: 1px solid var(--rule);
+  padding: 8px 12px; cursor: pointer;
+}
+button:hover { border-color: var(--ink); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 22px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.facts b { color: var(--ink); font-weight: 500; }
+</style>
+
+</head>
+<body>
+<main>
+  <div>
+    <h1>Dressing en U, vue 3D</h1>
+    <p class="sub" style="margin-top:8px">Faites glisser pour tourner, molette ou pincement pour zoomer. Les boutons changent de point de vue et montrent l'intérieur. <a href="../" style="color:inherit">Retour au plan coté</a>.</p>
+  </div>
+  <div id="stage"></div>
+  <div class="bar">
+    <button data-view="face">Face</button>
+    <button data-view="top">Dessus</button>
+    <button data-view="left">Trois quarts gauche</button>
+    <button data-view="right">Trois quarts droit</button>
+    <span class="sep"></span>
+    <button id="doors" aria-pressed="false">Portes ouvertes</button>
+    <button id="leds" aria-pressed="true">LED allumées</button>
+  </div>
+  <div class="facts">
+    <span>Hauteur <b>252</b> (estrade 7)</span>
+    <span>Fond <b>353</b></span>
+    <span>Retours <b>127</b></span>
+    <span>Passage <b>273</b></span>
+    <span>Poutre <b>18,5 x 13,5</b>, angle droit</span>
+  </div>
+  <p class="sub">Le modèle reprend les cotes du croquis. Les cintres, vêtements et poignées sont indicatifs.</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  var W = 353, T = 1.5;
+  var stage = document.getElementById('stage');
+  var cs = getComputedStyle(document.documentElement);
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(cs.getPropertyValue('--stage').trim() || '#d9dcd4');
+  var camera = new THREE.PerspectiveCamera(38, 1, 5, 3000);
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  stage.appendChild(renderer.domElement);
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.maxPolarAngle = Math.PI * 0.62;
+  var root = new THREE.Group();
+  scene.add(root);
+
+  /* matieres */
+  function std(c, r) { return new THREE.MeshStandardMaterial({ color: c, roughness: r === undefined ? .75 : r }); }
+  var wood = std(0xb27648), woodD = std(0x8a5632), cav = std(0x6b4a30), metal = new THREE.MeshStandardMaterial({ color: 0x2b2b2b, metalness: .5, roughness: .45 });
+  var handle = std(0x1a1a1a, .4), wallM = std(0xe6e0cf, 1), floorM = std(0xb08a5c, .8), estr = std(0x6a4b33), beamM = std(0xb7b2a6, 1);
+  var glassM = new THREE.MeshPhysicalMaterial({ color: 0xd9a441, transparent: true, opacity: .3, roughness: .1, depthWrite: false });
+  var glassClear = new THREE.MeshPhysicalMaterial({ color: 0xcfe3e0, transparent: true, opacity: .22, roughness: .05, depthWrite: false });
+  var ledM = new THREE.MeshBasicMaterial({ color: 0xffc23a });
+  var garm = [0xf1efe8, 0x3f6a58, 0x6f7f9a, 0xd9d5c8, 0x2f3a46, 0xb8c2b0, 0x8a8f99, 0xe7e2d3].map(function (c) { return std(c, .9); });
+  var drawerM = std(0x2b2b2b, .5);
+
+  function mk(mirror) {
+    function B(x, y, z, w, h, d, mat) {
+      var px = mirror ? W - x - w : x;
+      var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+      m.position.set(px + w / 2, y + h / 2, z + d / 2);
+      root.add(m);
+      return m;
+    }
+    return B;
+  }
+  var B0 = mk(false);
+
+  /* compartiment ouvert (5 panneaux), face ouverte donnee par open : '+z', '+x' ou '-x' */
+  function cab(B, x, y, z, w, h, d, open, mat) {
+    if (open !== '-z') B(x, y, z, w, h, T, mat);
+    if (open !== '+z') B(x, y, z + d - T, w, h, T, mat);
+    if (open !== '-x') B(x, y, z, T, h, d, mat);
+    if (open !== '+x') B(x + w - T, y, z, T, h, d, mat);
+    B(x, y, z, w, T, d, mat);
+    B(x, y + h - T, z, w, T, d, mat);
+  }
+  function rod(x, y, z, len, axis) {
+    var g = new THREE.CylinderGeometry(1.1, 1.1, len, 12);
+    var m = new THREE.Mesh(g, metal);
+    if (axis === 'x') { m.rotation.z = Math.PI / 2; m.position.set(x + len / 2, y, z); }
+    root.add(m);
+    return m;
+  }
+  var doorMeshes = [], lights = [];
+  function ptLight(x, y, z, i) {
+    var l = new THREE.PointLight(0xffc27a, i, 170, 1.6);
+    l.position.set(x, y, z); l.userData.i = i; root.add(l); lights.push(l);
+  }
+
+  /* piece */
+  var floor = new THREE.Mesh(new THREE.PlaneGeometry(W + 220, 330), floorM);
+  floor.rotation.x = -Math.PI / 2; floor.position.set(W / 2, 0, 130); root.add(floor);
+  var back = new THREE.Mesh(new THREE.PlaneGeometry(W + 220, 300), wallM);
+  back.position.set(W / 2, 150, -0.3); root.add(back);
+  var lw = new THREE.Mesh(new THREE.PlaneGeometry(330, 300), wallM);
+  lw.rotation.y = Math.PI / 2; lw.position.set(-0.3, 150, 130); root.add(lw);
+  var rw = new THREE.Mesh(new THREE.PlaneGeometry(330, 300), wallM);
+  rw.rotation.y = -Math.PI / 2; rw.position.set(W + 0.3, 150, 130); root.add(rw);
+  B0(0, 0, 0, W, 7, 127, estr);
+  /* poutre dans l'angle droit du fond : 18,5 de large, 13,5 de profondeur */
+  B0(W - 18.5, 0, 0, 18.5, 300, 13.5, beamM);
+
+  /* angle en L (mirror : 0 = gauche, 1 = droite avec poutre) */
+  function corner(mirror) {
+    var B = mk(mirror), w = 86.5, d = 55;
+    var nx = mirror ? 18.5 : 0, nz = mirror ? 13.5 : 0;
+    /* rangement ouvert du haut */
+    B(nx, 227, 0, w - nx, 25, T, wood);
+    if (nx) B(0, 227, nz, nx, 25, T, wood);
+    B(0, 227, nz, T, 25, d - nz, wood);
+    B(w - T, 227, 0, T, 25, d, wood);
+    B(nx, 250.5, 0, w - nx, T, d, wood);
+    B(nx, 227, 0, w - nx, T, d, wood);
+    if (nx) { B(0, 250.5, nz, nx, T, d - nz, wood); B(0, 227, nz, nx, T, d - nz, wood); }
+    /* corps ouvert : fond, flanc exterieur, etagere en L */
+    B(nx, 7, 0, w - nx, 220, T, wood);
+    if (nx) B(0, 7, nz, nx, 220, T, wood);
+    B(0, 7, nz, T, 220, d - nz, wood);
+    B(nx, 196, 0, w - nx, T, d, wood);
+    if (nx) B(0, 196, nz, nx, T, d - nz, wood);
+    /* tringle et manteaux */
+    var rx = mirror ? W - w : 0;
+    rod(rx + 3, 186, 28, w - 6, 'x');
+    [[8, 0x2f3a46], [20, 0x6a5a4a], [33, 0x3f6a58], [46, 0x8a8f99], [60, 0x2f3a46]].forEach(function (c) {
+      var m = new THREE.Mesh(new THREE.BoxGeometry(5, 70, 36), std(c[1], .9));
+      m.position.set(rx + c[0] + (mirror ? nx * .3 : 0) + 8, 150, 28); root.add(m);
+    });
+    /* LED : horizontales (ouvert, au-dessus de la tringle, sous l'etagere) et laterales sous la tringle */
+    B(nx + 3, 250, 3, w - nx - 6, .8, .8, ledM); B(nx + 3, 225, 3, w - nx - 6, .8, .8, ledM); B(nx + 3, 194, 3, w - nx - 6, .8, .8, ledM);
+    B(nx + 2.5, 10, 2.5, .8, 180, .8, ledM); B(w - 3.3, 10, 2.5, .8, 180, .8, ledM);
+    ptLight(rx + w / 2 + (mirror ? nx / 2 : 0), 238, 28, .5);
+    ptLight(rx + w / 2 + (mirror ? nx / 2 : 0), 140, 28, .5);
+  }
+  corner(false); corner(true);
+
+  /* retour (placard + niche), mirror : 0 gauche, 1 droite */
+  function arm(mirror) {
+    var B = mk(mirror), sgn = mirror ? -1 : 1;
+    var fx = mirror ? 'fx-' : 'fx+';
+    /* tiroirs 3 x 20 */
+    B(0, 7, 55, 38.5, 75, 60, woodD);
+    for (var i = 0; i < 3; i++) {
+      B(38.5, 7.4 + 25 * i, 55.2, 1.5, 24.2, 59.6, wood);
+      B(40, 19 + 25 * i, 75, 1.2, 1.5, 20, handle);
+    }
+    /* caisson derriere les portes + 4 etageres */
+    cab(B, 0, 82, 55, 40, 145, 60, '+x', woodD);
+    [111, 140, 169, 198].forEach(function (y) { B(0, y, 55, 38.5, T, 60, woodD); });
+    B(35, 84, 57, .8, 141, .8, ledM); B(35, 84, 112.2, .8, 141, .8, ledM);
+    /* deux portes bois de 30 */
+    [0, 30].forEach(function (dz) {
+      var m = B(38.5, 82.4, 55.2 + dz, 1.5, 144.2, 29.6, wood); doorMeshes.push(m);
+      var hd = B(40, 150, dz ? 57.5 + dz : 80, 1.2, 25, 1.5, handle); doorMeshes.push(hd);
+    });
+    /* rangement ouvert du haut, ouvert vers le centre */
+    cab(B, 0, 227, 55, 40, 25, 60, '+x', wood);
+    B(2.5, 250, 57, .8, .8, 56, ledM);
+    /* niche vitree */
+    cab(B, 0, 7, 115, 40, 245, 12, '+z', wood);
+    [40, 75, 110, 145, 180, 215].forEach(function (y) { B(2, y, 116.5, 36, .6, 10.5, glassClear); });
+    /* porte vitree, meme style que les meubles vitres */
+    doorMeshes.push(B(1, 8.5, 126.4, 38, 242, .8, glassM));
+    [B(1, 8.5, 126.4, 38, 1.4, 1.2, handle), B(1, 249.1, 126.4, 38, 1.4, 1.2, handle),
+      B(1, 8.5, 126.4, 1.4, 242, 1.2, handle), B(37.6, 8.5, 126.4, 1.4, 242, 1.2, handle),
+      B(34, 110, 127.6, 1.4, 40, 1.2, metal)].forEach(function (m) { doorMeshes.push(m); });
+    B(3, 12, 117, .8, 235, .8, ledM);
+    var cx = mirror ? W - 20 : 20;
+    ptLight(cx, 150, 90, .55);
+    ptLight(cx, 245, 90, .35);
+  }
+  arm(false); arm(true);
+
+  /* meubles vitres */
+  function glassUnit(x) {
+    var w = 90, B = B0;
+    cab(B, x, 7, 0, w, 220, 55, '+z', woodD);
+    cab(B, x, 227, 0, w, 25, 55, '+z', wood);
+    B(x + 3, 250, 3, w - 6, .8, .8, ledM);
+    B(x + 3, 224, 52, w - 6, .8, .8, ledM);
+    B(x + 2, 10, 52, .8, 212, .8, ledM); B(x + w - 2.8, 10, 52, .8, 212, .8, ledM);
+    /* porte-chemises 80 */
+    rod(x + 3, 220, 27, w - 6, 'x');
+    for (var i = 0; i < 8; i++) { B(x + 6 + i * 10.2, 140, 22, 4, 76, 36, garm[i % garm.length]); }
+    /* tiroir bijoux 15 */
+    B(x + 3, 122, 51, w - 6, 15, 2, drawerM); B(x + w / 2 - 8, 128, 53, 16, 1.2, 1.2, metal);
+    /* porte-pantalons 80 */
+    B(x + 3, 42, 51, w - 6, 80, .8, glassClear);
+    for (var j = 0; j < 6; j++) { B(x + 4, 116 - j * 12, 24, w - 8, 1, 1.2, metal); }
+    /* tiroir chaussures 35 */
+    B(x + 3, 8, 51, w - 6, 33, 2, drawerM); B(x + w / 2 - 8, 24, 53, 16, 1.2, 1.2, metal);
+    /* deux portes en verre de 45 */
+    [0, 45].forEach(function (dx) {
+      var g = B(x + dx + .5, 8, 54.2, 44, 218, .8, glassM); doorMeshes.push(g);
+      [B(x + dx + .5, 8, 54.2, 44, 1.4, 1.2, handle), B(x + dx + .5, 224.6, 54.2, 44, 1.4, 1.2, handle),
+        B(x + dx + .5, 8, 54.2, 1.4, 218, 1.2, handle), B(x + dx + 43.1, 8, 54.2, 1.4, 218, 1.2, handle)].forEach(function (m) { doorMeshes.push(m); });
+      doorMeshes.push(B(x + dx + (dx ? 4 : 39), 100, 55.4, 1.4, 40, 1.2, metal));
+    });
+    ptLight(x + w / 2, 160, 40, .6);
+    ptLight(x + w / 2, 70, 40, .45);
+  }
+  glassUnit(86.5); glassUnit(176.5);
+
+  /* lumieres generales */
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a7a66, .75));
+  var sun = new THREE.DirectionalLight(0xffffff, .65);
+  sun.position.set(200, 400, 450); scene.add(sun);
+
+  /* vues */
+  var views = {
+    face: { p: [176, 150, 500], t: [176, 120, 40] },
+    top: { p: [176, 560, 140], t: [176, 0, 55] },
+    left: { p: [-110, 190, 340], t: [150, 115, 40] },
+    right: { p: [460, 190, 340], t: [200, 115, 40] }
+  };
+  function setView(k) {
+    var v = views[k];
+    camera.position.set(v.p[0], v.p[1], v.p[2]);
+    controls.target.set(v.t[0], v.t[1], v.t[2]);
+    controls.update();
+  }
+  document.querySelectorAll('[data-view]').forEach(function (b) {
+    b.addEventListener('click', function () { setView(b.getAttribute('data-view')); });
+  });
+  var dbtn = document.getElementById('doors');
+  dbtn.addEventListener('click', function () {
+    var open = dbtn.getAttribute('aria-pressed') !== 'true';
+    dbtn.setAttribute('aria-pressed', String(open));
+    doorMeshes.forEach(function (m) { m.visible = !open; });
+  });
+  var lbtn = document.getElementById('leds');
+  lbtn.addEventListener('click', function () {
+    var on = lbtn.getAttribute('aria-pressed') !== 'true';
+    lbtn.setAttribute('aria-pressed', String(on));
+    ledM.color.set(on ? 0xffc23a : 0x4a3a22);
+    lights.forEach(function (l) { l.intensity = on ? l.userData.i : 0; });
+  });
+
+  function resize() {
+    var w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+  resize(); setView('face');
+  (function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
+})();
+</script>
+</body>
+</html>
