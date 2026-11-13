@@ -364,6 +364,9 @@ svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-ord
   p += C(4, 121, 1.4, 'ledfill') + C(349, 121, 1.4, 'ledfill');
   [[35, 58], [35, 112], [318, 58], [318, 112]].forEach(function (c) { p += C(c[0], c[1], 1.4, 'ledfill'); });
   p += T(20, 104, 'LED', 't-led') + T(333, 104, 'LED', 't-led');
+  /* estrade : emprise des meubles, 5 de débord */
+  p += '<path d="M0 0 H353 V60 H308 V132 H45 V60 H0 Z" class="dash"/>';
+  p += T(176.5, 66, 'estrade 7, 5 de débord', 't-lbl');
   /* murs */
   p += L(-6, 0, 359, 0, 'wall') + L(0, 0, 0, 140, 'wall') + L(353, 0, 353, 140, 'wall');
   /* libelles */
