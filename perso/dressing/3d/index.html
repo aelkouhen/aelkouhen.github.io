@@ -71,7 +71,7 @@ button[aria-pressed="true"] { background: var(--ink); color: var(--paper); borde
     <span>Fond <b>353</b></span>
     <span>Retours <b>127</b></span>
     <span>Passage <b>273</b></span>
-    <span>Poutre <b>18,5 x 13,5</b>, angle droit</span>
+    <span>Poutre <b>13,5 x 18,5</b>, angle droit</span>
   </div>
   <p class="sub">Le modèle reprend les cotes du croquis. Les cintres, vêtements et poignées sont indicatifs.</p>
 </main>
@@ -152,13 +152,13 @@ button[aria-pressed="true"] { background: var(--ink); color: var(--paper); borde
   B0(0, 0, 0, W, 7, 60, estr);
   B0(0, 0, 55, 45, 7, 77, estr);
   B0(W - 45, 0, 55, 45, 7, 77, estr);
-  /* poutre dans l'angle droit du fond : 18,5 de large, 13,5 de profondeur */
-  B0(W - 18.5, 0, 0, 18.5, 300, 13.5, beamM);
+  /* poutre dans l'angle droit du fond : 13,5 de large, 18,5 de profondeur */
+  B0(W - 13.5, 0, 0, 13.5, 300, 18.5, beamM);
 
   /* angle en L (mirror : 0 = gauche, 1 = droite avec poutre) */
   function corner(mirror) {
     var B = mk(mirror), w = 86.5, d = 55;
-    var nx = mirror ? 18.5 : 0, nz = mirror ? 13.5 : 0;
+    var nx = mirror ? 13.5 : 0, nz = mirror ? 18.5 : 0;
     /* rangement ouvert du haut */
     B(nx, 227, 0, w - nx, 25, T, wood);
     if (nx) B(0, 227, nz, nx, 25, T, wood);

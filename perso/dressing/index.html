@@ -299,7 +299,7 @@ svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-ord
   var b = '';
   b += cornerL(0, 86.5) + glassUnit(86.5, 90) + glassUnit(176.5, 90) + cornerL(266.5, 86.5);
   b += R(0, S(7), 353, 7, 'plinth');
-  b += R(334.5, 0, 18.5, 252, 'beam');
+  b += R(339.5, 0, 13.5, 252, 'beam');
   b += R(0, 0, 40, 252, 'hide') + R(313, 0, 40, 252, 'hide');
   b += T(20, 120, 'retour masque', 't-lbl', 'middle', 'transform="rotate(-90 20 120)"');
   b += T(333, 120, 'retour masque', 't-lbl', 'middle', 'transform="rotate(-90 333 120)"');
@@ -350,8 +350,8 @@ svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-ord
     p += C(x + 3, D - 4, 1.6, 'ledfill') + C(x + 87, D - 4, 1.6, 'ledfill');
   });
   /* poutre apparente, coin droit du fond */
-  p += R(334.5, 0, 18.5, 13.5, 'beam');
-  p += dimH(334.5, 353, -12, '18,5') + dimV(0, 13.5, 366, '13,5').replace('text-anchor="end"', 'text-anchor="start"');
+  p += R(339.5, 0, 13.5, 18.5, 'beam');
+  p += dimH(339.5, 353, -12, '13,5') + dimV(0, 18.5, 366, '18,5').replace('text-anchor="end"', 'text-anchor="start"');
   /* LED dans chaque espace */
   [[0, 86.5], [86.5, 90], [176.5, 90], [266.5, 86.5]].forEach(function (m) {
     p += L(m[0] + 5, 5, m[0] + m[1] - 5, 5, 'led');
@@ -360,7 +360,7 @@ svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-ord
   /* retours : bandes horizontales le long du retour, contre le mur */
   p += L(3, D + 4, 3, 111, 'led') + L(350, D + 4, 350, 111, 'led');
   /* LED verticales : points (coins des angles, niches) */
-  [3, 83.5, 269.8, 331.2].forEach(function (x) { p += C(x, 3, 1.4, 'ledfill'); });
+  [3, 83.5, 269.8, 336.2].forEach(function (x) { p += C(x, 3, 1.4, 'ledfill'); });
   p += C(4, 121, 1.4, 'ledfill') + C(349, 121, 1.4, 'ledfill');
   [[35, 58], [35, 112], [318, 58], [318, 112]].forEach(function (c) { p += C(c[0], c[1], 1.4, 'ledfill'); });
   p += T(20, 104, 'LED', 't-led') + T(333, 104, 'LED', 't-led');
