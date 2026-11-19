@@ -65,6 +65,7 @@ p { margin: 0; max-width: 68ch; }
 .cta:hover { background: var(--accent); }
 .cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .render img { width: 100%; height: auto; display: block; border: 1px solid var(--rule); }
+.ghost { opacity: .5; filter: grayscale(1); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
 .legend i { display: inline-block; width: 14px; height: 10px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--ink); }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -144,9 +145,9 @@ svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-ord
   </section>
 
   <section class="sheet">
-    <header><h2>Retour gauche et niche</h2><span>le retour droit est identique, en miroir</span></header>
-    <div class="scroll"><svg id="arm" viewBox="-50 -12 275 300" role="img" aria-label="Élévation du retour gauche et vue de face de la niche"></svg></div>
-    <p class="sub">À gauche : le retour vu depuis le centre, niche au bout, placard, puis l'angle en L. À droite : la niche vue de face, avec ses étagères en verre.</p>
+    <header><h2>Éléments en vue détachée</h2><span>le retour droit est identique, en miroir</span></header>
+    <div class="scroll"><svg id="arm" viewBox="-50 -12 495 300" role="img" aria-label="Vues détachées de la niche, du retour gauche, de l'angle en L et du meuble vitré"></svg></div>
+    <p class="sub">Dans l'ordre : la niche vue de face, avec ses étagères en verre ; le retour gauche vu depuis le centre, niche de côté puis placard ; l'angle en L en vue détachée, de face, car il est dans un autre plan que le placard, plus près du centre ; le meuble vitré de face, avec la répartition intérieure et les cotes de chaque zone.</p>
   </section>
 
   <section class="sheet">
@@ -320,21 +321,40 @@ svg text.t-led { font-size: 4.6px; font-weight: 500; fill: var(--led); paint-ord
 
   /* ---------- RETOUR GAUCHE + NICHE ---------- */
   var a = '';
-  /* axe horizontal p : 0 = bout du retour (niche), 127 = mur du fond */
+  /* 1. niche de face (vue detachee) */
+  a += niche(0, 40);
+  a += R(0, S(7), 40, 7, 'plinth');
+  a += dimH(0, 40, 266, '40') + T(20, 280, 'niche, façade vitrée', 't-lbl');
+  a += dimV(S(252), S(0), -6, '252');
+  /* 2. retour gauche vu depuis le centre : niche (cote) puis placard */
+  a += '<g transform="translate(75 0)">';
   a += R(0, S(252), 12, 245, 'wood2') + T(6, 120, 'niche', 't-lbl-w', 'middle', 'transform="rotate(-90 6 120)"');
   a += placardFace(12, 60);
-  a += cornerL(72, 55);
-  a += R(0, S(7), 127, 7, 'plinth');
-  a += dimH(0, 12, 266, '12') + dimH(12, 72, 266, '60') + dimH(72, 127, 266, '55') + dimH(0, 127, 280, '127');
+  a += R(0, S(7), 72, 7, 'plinth');
+  a += dimH(0, 12, 266, '12') + dimH(12, 72, 266, '60') + T(36, 280, 'retour gauche, vu du centre', 't-lbl');
   a += dimV(S(7), S(0), -6, '7') + dimV(S(82), S(7), -6, '75') + dimV(S(227), S(82), -6, '145') + dimV(S(252), S(227), -6, '25');
-  a += dimV(S(252), S(0), -30, '252');
   a += T(42, S(45), '3 tiroirs de 25', 't-lbl-w') + T(42, S(120), '2 portes, 4 étagères', 't-lbl-w');
-  a += T(42, S(244), 'LED', 't-led') + T(100, S(244), 'LED', 't-led');
-  /* niche de face */
-  a += niche(165, 40);
-  a += R(165, S(7), 40, 7, 'plinth');
-  a += dimH(165, 205, 266, '40') + T(185, 280, 'niche, façade vitrée', 't-lbl');
-  a += dimV(S(252), S(0), 215, '252').replace('text-anchor="end"', 'text-anchor="start"');
+  a += T(42, S(244), 'LED', 't-led');
+  a += '</g>';
+  /* 3. angle en L (vue detachee, vu depuis le centre) */
+  a += cornerL(185, 86.5);
+  a += R(185, S(7), 86.5, 7, 'plinth');
+  a += T(228.25, S(244), 'LED', 't-led');
+  a += dimH(185, 271.5, 266, '86,5') + T(228.25, 280, 'angle en L, de face', 't-lbl');
+  a += dimV(S(252), S(0), 281, '252').replace('text-anchor="end"', 'text-anchor="start"');
+  /* 4. meuble vitre */
+  a += '<g transform="translate(22 0)">';
+  a += glassUnit(285, 90);
+  a += R(285, S(7), 90, 7, 'plinth');
+  a += T(330, S(244), 'LED', 't-led');
+  a += T(330, S(172), 'chemises', 't-lbl-w', 'middle', halo) + T(330, S(129), 'bijoux', 't-lbl-w', 'middle', halo) + T(330, S(82), 'pantalons', 't-lbl-w', 'middle', halo) + T(330, S(24), 'chaussures', 't-lbl-w', 'middle', halo);
+  a += T(330, S(232), 'ouvert', 't-lbl-w');
+  [[7, 42, '35'], [42, 122, '80'], [122, 137, '15'], [137, 227, '90'], [227, 252, '25']].forEach(function (z) {
+    a += dimV(S(z[1]), S(z[0]), 380, z[2]).replace('text-anchor="end"', 'text-anchor="start"');
+  });
+  a += dimV(S(252), S(0), 404, '252').replace('text-anchor="end"', 'text-anchor="start"');
+  a += dimH(285, 375, 266, '90') + T(330, 280, 'meuble vitré, vu de face', 't-lbl');
+  a += '</g>';
   document.getElementById('arm').innerHTML = a;
 
   /* ---------- PLAN ---------- */
